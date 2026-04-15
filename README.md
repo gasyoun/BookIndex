@@ -17,6 +17,7 @@
 - `app_data.json` — данные справочника.
 - `runtime_test.py` — smoke-проверка выполнения (`20/20`).
 - `scripts/validate_content.py` — структурная валидация данных.
+- `scripts/build_aaz_index.py` — сборка итогового `aaz-index.html`.
 - `scripts/migrate_app_data.py` — миграция `app_data.json` к актуальной схеме.
 - `.github/workflows/ci.yml` — CI-пайплайн GitHub Actions.
 
@@ -56,6 +57,14 @@ python scripts/migrate_app_data.py app_data.json app_data.migrated.json
 ```
 
 ## Пересборка `aaz-index.html`
+
+Быстрый способ:
+
+```bash
+python scripts/build_aaz_index.py
+```
+
+Эквивалент вручную:
 
 ```python
 import pathlib

@@ -778,6 +778,62 @@
   }
   .theme-btn:hover { background: var(--surface-soft-2); }
 
+  .density-select {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface-soft);
+    color: var(--title);
+    font-family: inherit;
+    font-size: 12px;
+    padding: 5px 8px;
+    min-height: 28px;
+  }
+  .density-select:hover { background: var(--surface-soft-2); }
+  .density-select:focus { outline: 2px solid var(--line-strong); outline-offset: 1px; }
+
+  body.density-compact .entity-btn,
+  body.density-compact .tab,
+  body.density-compact .filter-chip,
+  body.density-compact .related-link {
+    padding: 4px 9px;
+    font-size: 11px;
+  }
+  body.density-compact .name-item { padding: 4px 8px; font-size: 12px; }
+  body.density-compact .name-item .pages-count { font-size: 10px; }
+  body.density-compact .card { padding: 10px; }
+  body.density-compact .context-text { font-size: 11px; line-height: 1.5; }
+  body.density-compact .header-search input { padding: 5px 8px; font-size: 11px; }
+
+  body.density-reader .entity-btn,
+  body.density-reader .tab,
+  body.density-reader .filter-chip,
+  body.density-reader .related-link {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  body.density-reader .name-item { padding: 7px 12px; font-size: 14px; }
+  body.density-reader .name-item .pages-count { font-size: 12px; }
+  body.density-reader .card { padding: 15px; }
+  body.density-reader .card h2 { font-size: 24px; }
+  body.density-reader .context-text { font-size: 13px; line-height: 1.65; }
+  body.density-reader .header-search input { padding: 7px 10px; font-size: 13px; }
+
+  body.density-research .entity-btn,
+  body.density-research .tab,
+  body.density-research .filter-chip,
+  body.density-research .related-link {
+    padding: 5px 11px;
+    font-size: 12px;
+  }
+  body.density-research .name-item { padding: 5px 10px; font-size: 13px; }
+  body.density-research .name-item .pages-count { font-size: 11px; }
+  body.density-research .card { padding: 12px; }
+  body.density-research .context-text { font-size: 12px; line-height: 1.55; }
+
+  @media (max-width: 900px) {
+    .density-select { font-size: 11px; padding: 4px 7px; }
+  }
+
   /* Theme overrides */
   html, body { background: var(--bg); color: var(--text); }
   header { border-bottom-color: var(--line-strong); }
@@ -922,6 +978,11 @@
       <span class="meta-inline">А. А. Зализняк. Из жизни слов и языков · Альпина нон-фикшн, 2026 · 404 с.</span>
       <button class="back-btn" id="back-btn" type="button">← назад</button>
       <button class="theme-btn" id="theme-btn" type="button" aria-label="Переключить тему" title="Переключить тему">◐</button>
+      <select class="density-select" id="density-select" aria-label="Плотность интерфейса" title="Плотность интерфейса">
+        <option value="compact">compact</option>
+        <option value="reader">reader</option>
+        <option value="research" selected>research</option>
+      </select>
     </span>
     <div class="header-search header-search-inline">
       <input id="global-search" type="text" placeholder="Глобальный поиск: имя, язык, топоним, термин, лекция…" />
@@ -938,6 +999,10 @@
 <script>
 // Данные хранятся как строка и парсятся асинхронно после первого отображения интерфейса
 const APP_DATA_STRING = `{
+  "schema_version": 2,
+  "schema_migrations": [
+    "1->2: editorial_flags_and_sources"
+  ],
   "names": [
     {
       "head": "Аванесов Р. И.",
@@ -72665,17 +72730,37 @@ const APP_DATA_STRING = `{
       ]
     }
   ]
-}`;
+}
+`;
 let APP_DATA = null;
 let LABELS = null, COLORS = null, EPOCH_LABELS = null, EPOCH_COLORS = null, FAMILY_COLORS = null;
+const APP_DATA_SCHEMA_CURRENT = 2;
 
 function parseAppData() {
   APP_DATA = JSON.parse(APP_DATA_STRING);
+  migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
   COLORS = APP_DATA.colors;
   EPOCH_LABELS = APP_DATA.epoch_labels;
   EPOCH_COLORS = APP_DATA.epoch_colors;
   FAMILY_COLORS = APP_DATA.family_colors;
+}
+
+function migrateAppDataSchema(data) {
+  if (!data || typeof data !== 'object') return;
+  let version = Number.isInteger(data.schema_version) ? data.schema_version : 1;
+  data.schema_migrations = Array.isArray(data.schema_migrations) ? data.schema_migrations : [];
+
+  if (version < 2) {
+    const marker = '1->2: editorial_flags_and_sources';
+    if (!data.schema_migrations.includes(marker)) data.schema_migrations.push(marker);
+    data.schema_version = 2;
+    version = 2;
+  }
+
+  if (version > APP_DATA_SCHEMA_CURRENT && typeof console !== 'undefined' && typeof console.warn === 'function') {
+    console.warn(`[schema] app_data schema_version ${version} is newer than supported ${APP_DATA_SCHEMA_CURRENT}`);
+  }
 }
 
 function normalizeAppData() {
@@ -72691,6 +72776,15 @@ function normalizeAppData() {
   const names = Array.isArray(APP_DATA.names) ? APP_DATA.names : [];
   for (const n of names) {
     if (n.subcategory === 'schoolchild' || n.subcategory === 'lecture_host') n.subcategory = 'participant';
+  }
+
+  const editorialKeys = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse', 'lexicon_tech', 'subject_index'];
+  for (const key of editorialKeys) {
+    const arr = Array.isArray(APP_DATA[key]) ? APP_DATA[key] : [];
+    for (const item of arr) {
+      normalizeEditorialFlags(item);
+      normalizeItemSources(item);
+    }
   }
 
   const stats = APP_DATA.book_stats || (APP_DATA.book_stats = {});
@@ -72726,6 +72820,59 @@ function normalizeAppData() {
   scholar.slovo_links = Array.isArray(scholar.slovo_links) ? scholar.slovo_links : [];
 }
 
+function normalizeEditorialFlags(item) {
+  if (!item || typeof item !== 'object') return;
+  const raw = (item.editorial_flags && typeof item.editorial_flags === 'object') ? item.editorial_flags : {};
+  const head = String(item.head || '').trim();
+  const suspectByLegacy = head.startsWith('?') || item.needs_review === true;
+  const flags = {
+    verified: raw.verified === true || item.verified === true,
+    suspect: raw.suspect === true || suspectByLegacy,
+    source_confirmed: raw.source_confirmed === true || item.source_confirmed === true || !!item.wiki,
+  };
+  const note = (typeof raw.note === 'string' && raw.note.trim())
+    ? raw.note.trim()
+    : ((typeof item.note === 'string' && item.note.trim()) ? item.note.trim() : '');
+  if (note) flags.note = note;
+  item.editorial_flags = flags;
+}
+
+function getFirstContextQuote(item) {
+  if (!item || !item.contexts || typeof item.contexts !== 'object') return '';
+  const pages = Object.keys(item.contexts).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+  for (const pg of pages) {
+    const snippets = Array.isArray(item.contexts[pg]) ? item.contexts[pg] : [];
+    for (const raw of snippets) {
+      const text = String(raw || '').replace(/\s+/g, ' ').trim();
+      if (text) return text;
+    }
+  }
+  return '';
+}
+
+function normalizeItemSources(item) {
+  if (!item || typeof item !== 'object') return;
+  const arr = Array.isArray(item.sources) ? item.sources : [];
+  const normalized = [];
+  for (const src of arr) {
+    if (!src || typeof src !== 'object') continue;
+    const label = String(src.label || '').trim();
+    const url = String(src.url || '').trim();
+    const quote = String(src.quote || '').trim();
+    const page = src.page != null ? String(src.page).trim() : '';
+    if (!label && !url && !quote && !page) continue;
+    normalized.push({ label, url, quote, page });
+  }
+  if (!normalized.length && item.wiki) {
+    normalized.push({ label: 'Wikipedia', url: String(item.wiki), quote: '', page: '' });
+  }
+  if (normalized.length && !normalized.some(s => s.quote)) {
+    const firstQuote = getFirstContextQuote(item);
+    if (firstQuote) normalized[0].quote = firstQuote;
+  }
+  item.sources = normalized;
+}
+
 // =========================================================
 // КОНФИГУРАЦИЯ ТИПОВ СУЩНОСТЕЙ — строится после парсинга
 // =========================================================
@@ -72744,12 +72891,12 @@ function initEntityTypes() {
   materials: {
     title: 'Материалы',
     items: [],
-    tabs: ['lectures','lecture_pages','further_reading','glossary','gallery','russian_evolution','phonetic_laws','tasks'],
+    tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','gallery','russian_evolution','phonetic_laws','tasks'],
   },
   scholar: {
     title: 'Профессиональный аппарат',
     items: [],
-    tabs: ['scholar'],
+    tabs: ['scholar','page_trends'],
   },
   all: {
     title: 'Сводный указатель',
@@ -72819,6 +72966,7 @@ const TAB_LABELS = {
   tree: 'Древо языков',
   home: 'Главная',
   lectures: 'Лекции',
+  lecture_compare: 'Сравнение лекций',
   lecture_pages: 'Страница лекции',
   tasks: 'Проверьте себя',
   further_reading: 'Что почитать ещё',
@@ -72827,6 +72975,7 @@ const TAB_LABELS = {
   russian_evolution: 'Русский во времени',
   phonetic_laws: 'Фонетические законы',
   scholar: 'Профессиональный аппарат',
+  page_trends: 'Динамика по страницам',
 };
 
 // Единый сводный словник: все элементы из всех типов с пометкой
@@ -72927,6 +73076,10 @@ let selectedItemType = null; // тип сущности выбранного —
 let rightPaneMode = 'histogram'; // 'histogram' до выбора, 'card' после
 let graphStrongOnly = false;     // Фильтр графа: только вес ≥ 2
 let currentLecture = 0;
+let lectureCompareA = 1;
+let lectureCompareB = 2;
+let trendsRangeStart = 1;
+let trendsRangeEnd = 404;
 let historyStack = [];
 let isNavigatingHistory = false;
 let suppressHashSync = false;
@@ -72936,6 +73089,7 @@ let pendingGlossaryQuery = '';
 const UI_STATE_STORAGE_KEY = 'zaliznyakiada.ui.v1';
 const UI_STATE_SCHEMA_VERSION = 2;
 const THEME_STORAGE_KEY = 'zaliznyakiada.theme.v1';
+const DENSITY_STORAGE_KEY = 'zaliznyakiada.density.v1';
 const READING_PAGE_STORAGE_KEY = 'zaliznyakiada.readingPage.v1';
 const RECENT_ITEMS_STORAGE_KEY = 'zaliznyakiada.recentItems.v1';
 let globalKeyHandlersWired = false;
@@ -72953,6 +73107,11 @@ let aggregateCache = new Map();
 function nowMs() {
   if (typeof performance !== 'undefined' && typeof performance.now === 'function') return performance.now();
   return Date.now();
+}
+
+function safeSetAttr(el, name, value) {
+  if (!el || typeof el.setAttribute !== 'function') return;
+  el.setAttribute(name, value);
 }
 
 function perfDebug(label, ms, meta = '') {
@@ -73135,6 +73294,10 @@ function captureViewState() {
     selectedItemType,
     rightPaneMode,
     currentLecture,
+    lectureCompareA,
+    lectureCompareB,
+    trendsRangeStart,
+    trendsRangeEnd,
     searchQuery,
     onlyDiscussed,
     onlyQuestionCandidates,
@@ -73167,6 +73330,10 @@ function restoreViewState() {
     if (!tabs.includes(parsed.currentTab)) parsed.currentTab = tabs[0];
     if (parsed.rightPaneMode !== 'card' && parsed.rightPaneMode !== 'histogram') parsed.rightPaneMode = 'histogram';
     if (!Number.isInteger(parsed.currentLecture)) parsed.currentLecture = 0;
+    if (!Number.isInteger(parsed.lectureCompareA)) parsed.lectureCompareA = 1;
+    if (!Number.isInteger(parsed.lectureCompareB)) parsed.lectureCompareB = 2;
+    if (!Number.isInteger(parsed.trendsRangeStart)) parsed.trendsRangeStart = 1;
+    if (!Number.isInteger(parsed.trendsRangeEnd)) parsed.trendsRangeEnd = 404;
     if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
     parsed.onlyDiscussed = !!parsed.onlyDiscussed;
     parsed.onlyQuestionCandidates = !!parsed.onlyQuestionCandidates;
@@ -73238,6 +73405,48 @@ function toggleTheme() {
   applyTheme(bodyHasDarkTheme() ? 'light' : 'dark');
 }
 
+function normalizeDensityMode(mode) {
+  return ['compact', 'reader', 'research'].includes(mode) ? mode : 'research';
+}
+
+function getSavedDensityMode() {
+  if (typeof localStorage === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(DENSITY_STORAGE_KEY);
+    return normalizeDensityMode(raw);
+  } catch (e) {
+    return null;
+  }
+}
+
+function applyDensityMode(mode) {
+  if (typeof document === 'undefined' || !document.body) return;
+  const nextMode = normalizeDensityMode(mode);
+  const body = document.body;
+  const classes = ['density-compact', 'density-reader', 'density-research'];
+  const nextClass = `density-${nextMode}`;
+
+  if (body.classList && typeof body.classList.add === 'function' && typeof body.classList.remove === 'function') {
+    for (const cls of classes) body.classList.remove(cls);
+    body.classList.add(nextClass);
+  } else {
+    const parts = String(body.className || '').split(/\s+/).filter(Boolean).filter(c => !classes.includes(c));
+    parts.push(nextClass);
+    body.className = parts.join(' ');
+  }
+
+  if (typeof localStorage !== 'undefined') {
+    try { localStorage.setItem(DENSITY_STORAGE_KEY, nextMode); } catch (e) {}
+  }
+  const select = document.getElementById('density-select');
+  if (select && 'value' in select) select.value = nextMode;
+}
+
+function initDensityMode() {
+  const saved = getSavedDensityMode();
+  applyDensityMode(saved || 'research');
+}
+
 function applyViewState(state) {
   if (!state) return;
   currentEntity = ENTITY_TYPES[state.currentEntity] ? state.currentEntity : 'home';
@@ -73247,6 +73456,10 @@ function applyViewState(state) {
   selectedItemType = state.selectedItemType || null;
   rightPaneMode = state.rightPaneMode || 'histogram';
   currentLecture = Number.isInteger(state.currentLecture) ? state.currentLecture : 0;
+  lectureCompareA = Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1;
+  lectureCompareB = Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2;
+  trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
+  trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : 404;
   searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
   onlyDiscussed = !!state.onlyDiscussed;
   onlyQuestionCandidates = !!state.onlyQuestionCandidates;
@@ -73268,6 +73481,10 @@ function sameViewState(a, b) {
     a.selectedItemType === b.selectedItemType &&
     a.rightPaneMode === b.rightPaneMode &&
     a.currentLecture === b.currentLecture &&
+    a.lectureCompareA === b.lectureCompareA &&
+    a.lectureCompareB === b.lectureCompareB &&
+    a.trendsRangeStart === b.trendsRangeStart &&
+    a.trendsRangeEnd === b.trendsRangeEnd &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
     !!a.onlyDiscussed === !!b.onlyDiscussed &&
     !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
@@ -73811,6 +74028,15 @@ function wireGlobalUI() {
   if (backBtn) backBtn.onclick = () => goBackInApp();
   const themeBtn = document.getElementById('theme-btn');
   if (themeBtn) themeBtn.onclick = () => toggleTheme();
+  const densitySelect = document.getElementById('density-select');
+  if (densitySelect) {
+    if ('value' in densitySelect) densitySelect.value = getSavedDensityMode() || 'research';
+    densitySelect.onchange = (e) => {
+      const target = e && e.target;
+      if (!target || typeof target.value !== 'string') return;
+      applyDensityMode(target.value);
+    };
+  }
   const homeLink = document.getElementById('home-link');
   if (homeLink) {
     homeLink.onclick = (e) => {
@@ -73898,8 +74124,8 @@ function slugify(text) {
     .slice(0, 80) || 'item';
 }
 
-function downloadTextFile(filename, text) {
-  const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+function downloadTextFile(filename, text, mimeType = 'text/markdown;charset=utf-8') {
+  const blob = new Blob([text], { type: mimeType });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = filename;
@@ -74010,6 +74236,8 @@ function exportWholeSiteMarkdown() {
 function renderEntitySwitcher() {
   const container = document.getElementById('entity-switcher');
   container.innerHTML = '';
+  safeSetAttr(container, 'role', 'toolbar');
+  safeSetAttr(container, 'aria-label', 'Entity switcher');
   const order = ['materials', 'scholar', 'all', 'subject', 'names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse'];
   for (const key of order) {
     const conf = ENTITY_TYPES[key];
@@ -74017,6 +74245,7 @@ function renderEntitySwitcher() {
     const btn = document.createElement('button');
     btn.className = 'entity-btn' + (key === currentEntity ? ' active' : '');
     btn.dataset.entity = key;
+    safeSetAttr(btn, 'aria-pressed', key === currentEntity ? 'true' : 'false');
     const count = Array.isArray(conf.items) ? conf.items.length : 0;
     const showCount = !['materials', 'scholar'].includes(key);
     btn.textContent = conf.title;
@@ -74033,11 +74262,15 @@ function renderEntitySwitcher() {
 function renderTabs() {
   const container = document.getElementById('tabs');
   container.innerHTML = '';
+  safeSetAttr(container, 'role', 'tablist');
+  safeSetAttr(container, 'aria-label', 'View tabs');
   const conf = ENTITY_TYPES[currentEntity];
   for (const tab of conf.tabs) {
     const btn = document.createElement('button');
     btn.className = 'tab' + (tab === currentTab ? ' active' : '');
     btn.dataset.tab = tab;
+    safeSetAttr(btn, 'role', 'tab');
+    safeSetAttr(btn, 'aria-selected', tab === currentTab ? 'true' : 'false');
     btn.textContent = TAB_LABELS[tab];
     container.appendChild(btn);
   }
@@ -74076,6 +74309,7 @@ function renderContent() {
   const renderers = {
     home: renderHomePanel,
     lectures: renderLecturesPanel,
+    lecture_compare: renderLectureComparePanel,
     lecture_pages: renderLecturePagePanel,
     tasks: renderTasksPanel,
     further_reading: renderFurtherReadingPanel,
@@ -74084,6 +74318,7 @@ function renderContent() {
     russian_evolution: renderRussianEvolutionPanel,
     phonetic_laws: renderPhoneticLawsPanel,
     scholar: renderScholarPanel,
+    page_trends: renderPageTrendsPanel,
     list: renderListPanel,
     cards: renderCardsPanel,
     histogram: renderHistogramPanel,
@@ -74160,6 +74395,7 @@ function renderListPanel(container) {
 
   const searchInput = document.getElementById('search-input');
   let searchTimeout = null;
+  if (searchInput) safeSetAttr(searchInput, 'aria-label', 'List search');
   searchInput.oninput = (e) => {
     const val = e.target.value.trim();
     if (searchTimeout) clearTimeout(searchTimeout);
@@ -74184,6 +74420,20 @@ function renderListPanel(container) {
       const rowType = row.dataset.type || currentEntity;
       const it = getIndexedItem(rowType, head);
       if (!it) return;
+      selectListItem(it, rowType);
+    };
+    nameListEl.onkeydown = (e) => {
+      const key = e.key;
+      if (key !== 'Enter' && key !== ' ') return;
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+      const row = target.closest('.name-item[data-head]');
+      if (!row || !nameListEl.contains(row)) return;
+      const head = row.dataset.head || '';
+      const rowType = row.dataset.type || currentEntity;
+      const it = getIndexedItem(rowType, head);
+      if (!it) return;
+      e.preventDefault();
       selectListItem(it, rowType);
     };
   }
@@ -74346,6 +74596,9 @@ function appendItemsWithLetters(list, items, fallbackType) {
     const item = document.createElement('div');
     const isSelected = selectedItem === it.head && (currentEntity !== 'all' || selectedItemType === it._entityType);
     item.className = 'name-item' + (isSelected ? ' selected' : '');
+    safeSetAttr(item, 'role', 'button');
+    item.tabIndex = 0;
+    safeSetAttr(item, 'aria-label', `${it.head || ''} (${(it.page_list || []).length})`);
     item.dataset.head = it.head || '';
     item.dataset.type = it._entityType || fallbackType || currentEntity;
     item.innerHTML = buildListItemInnerHtml(it, currentEntity === 'all');
@@ -74383,6 +74636,9 @@ function appendListRow(list, row, fallbackType, reverseColumns) {
   const item = document.createElement('div');
   const isSelected = selectedItem === it.head && (currentEntity !== 'all' || selectedItemType === it._entityType);
   item.className = 'name-item' + (isSelected ? ' selected' : '');
+  safeSetAttr(item, 'role', 'button');
+  item.tabIndex = 0;
+  safeSetAttr(item, 'aria-label', `${it.head || ''} (${(it.page_list || []).length})`);
   item.dataset.head = it.head || '';
   item.dataset.type = it._entityType || fallbackType || currentEntity;
   item.innerHTML = buildListItemInnerHtml(it, currentEntity === 'all');
@@ -74741,6 +74997,7 @@ function renderCardInRight() {
   const photo = it.img ? `<img class="card-photo" src="${escapeHtml(safeImageUrl(it.img))}" alt="">` : '';
   const wikiLink = it.wiki ? `<a class="wiki-link" href="${escapeHtml(safeUrl(it.wiki))}" target="_blank" rel="noopener noreferrer">Статья в Википедии →</a>` : '';
   const eType = it._entityType || currentEntity;
+  const editorial = (it.editorial_flags && typeof it.editorial_flags === 'object') ? it.editorial_flags : {};
   let category = '';
   if (eType === 'names') category = LABELS[it.subcategory] || 'Имя';
   else if (eType === 'toponyms') {
@@ -74760,6 +75017,10 @@ function renderCardInRight() {
   else if (eType === 'subject') category = it.needs_review ? 'Понятие / термин (требует сверки — артефакт парсинга двухколоночной верстки)' : 'Понятие / термин';
   if (it.head && it.head.startsWith('?')) category = 'Кандидат — требует проверки редактором' + (it.note ? ' · ' + it.note : '');
 
+  if (eType === 'subject' && editorial.suspect) category = 'Понятие / термин (требует сверки редактором)';
+  if (editorial.suspect && it.head && it.head.startsWith('?')) {
+    category = 'Кандидат — требует проверки редактором' + ((editorial.note || it.note) ? ' · ' + (editorial.note || it.note) : '');
+  }
   const allPages = (it.page_list || []);
   let pagesText = it.pages || it.head_pages || '';
 
@@ -74786,6 +75047,18 @@ function renderCardInRight() {
         ${it.discussed ? ' · <em>обсуждается</em>' : ' · однократное упоминание'}
       </div>
   `;
+  const flagBadges = [];
+  if (editorial.verified) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#e7f7ed;border:1px solid #b5e2c4;color:#2e6d44;font-size:11px;">verified</span>');
+  if (editorial.suspect) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#fff6e8;border:1px solid #f0d1a6;color:#8b5a2b;font-size:11px;">suspect</span>');
+  if (editorial.source_confirmed) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#eef4ff;border:1px solid #c3d6ff;color:#355a9a;font-size:11px;">source confirmed</span>');
+  if (flagBadges.length) {
+    html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">${flagBadges.join('')}</div>`;
+  }
+  if (editorial.note) {
+    html += `<div style="margin-top:8px;padding:8px 10px;background:#fffdf5;border-left:3px solid #d9c28a;border-radius:4px;font-size:12px;color:#6a5a3c;">
+      <strong>Editor note:</strong> ${escapeHtml(editorial.note)}
+    </div>`;
+  }
   if (it.is_moderator && it.moderator_note) {
     html += `<div style="margin-top:10px;padding:8px 10px;background:#fff8e8;border-left:3px solid #8a7050;border-radius:4px;font-size:12px;color:#6a5040;">
       <strong>Примечание о подсчёте:</strong> ${escapeHtml(it.moderator_note)}
@@ -74793,6 +75066,19 @@ function renderCardInRight() {
   }
 
   // Контексты
+  if (Array.isArray(it.sources) && it.sources.length > 0) {
+    html += '<h3>Sources</h3><div class="related">';
+    for (const src of it.sources.slice(0, 5)) {
+      const label = escapeHtml(src.label || 'Source');
+      const pageHint = src.page ? ` · p. ${escapeHtml(src.page)}` : '';
+      const link = src.url
+        ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
+        : `<span>${label}</span>`;
+      const quote = src.quote ? `<div style="font-size:12px;color:#444;line-height:1.45;margin:4px 0 2px 0;">“${escapeHtml(src.quote)}”</div>` : '';
+      html += `<div style="padding:6px 0;border-bottom:1px dashed #ddd;">${link}<span style="color:#888;font-size:11px;">${pageHint}</span>${quote}</div>`;
+    }
+    html += '</div>';
+  }
   const ctxKeys = it.contexts ? Object.keys(it.contexts).sort((a, b) => parseInt(a) - parseInt(b)) : [];
   if (ctxKeys.length > 0) {
     html += '<h3>Контексты упоминаний (KWIC)</h3>';
@@ -75917,6 +76203,113 @@ function renderLecturesPanel(container) {
   });
 }
 
+function renderLectureComparePanel(container) {
+  const chapters = APP_DATA.chapters || [];
+  if (chapters.length < 2) {
+    container.innerHTML = '<div class="panel active"><div style="padding:20px;color:#777;">Недостаточно лекций для сравнения.</div></div>';
+    return;
+  }
+
+  const clampIdx = (idx) => Math.max(0, Math.min(chapters.length - 1, Number.isInteger(idx) ? idx : 0));
+  lectureCompareA = clampIdx(lectureCompareA);
+  lectureCompareB = clampIdx(lectureCompareB);
+  if (lectureCompareA === lectureCompareB) lectureCompareB = (lectureCompareA + 1) % chapters.length;
+
+  const chapterA = chapters[lectureCompareA];
+  const chapterB = chapters[lectureCompareB];
+  const types = [
+    { key: 'names', label: 'Имена' },
+    { key: 'toponyms', label: 'Топонимы' },
+    { key: 'ethnonyms', label: 'Этнонимы' },
+    { key: 'languages', label: 'Языки' },
+    { key: 'lexicon', label: 'Лексика' },
+    { key: 'subject', label: 'Предметный' },
+  ];
+
+  const headsFor = (type, chapter) => {
+    const set = new Set();
+    for (const it of getItemsForChapter(type, chapter)) {
+      if (it && it.head) set.add(it.head);
+    }
+    return set;
+  };
+  const asSorted = (arr) => arr.sort(compareHeadsRu);
+  const renderHeadLinks = (type, heads, max = 10) => {
+    if (!heads.length) return '<span style="color:#999;font-size:12px;">—</span>';
+    let out = '';
+    for (const head of heads.slice(0, max)) {
+      out += `<span class="lecture-compare-link" data-type="${escapeHtml(type)}" data-head="${escapeHtml(head)}" style="display:inline-block;margin:2px 6px 2px 0;padding:2px 7px;border-radius:10px;background:#f0e8d8;color:#5a3818;cursor:pointer;font-size:11px;">${escapeHtml(head)}</span>`;
+    }
+    if (heads.length > max) out += `<span style="color:#888;font-size:11px;">+${heads.length - max}</span>`;
+    return out;
+  };
+  const chapterLabel = (idx, ch) => (idx === 0 ? 'Предисловие' : `Лекция ${idx}`) + ` · ${ch.name}`;
+
+  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
+  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Сравнение двух лекций</h2>';
+  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:14px;">Показываем пересечения и уникальные сущности по типам. Нажмите на элемент, чтобы открыть карточку.</div>';
+  html += `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px;">
+    <label style="display:block;">
+      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Лекция A</div>
+      <select id="lecture-compare-a" style="width:100%;padding:7px 9px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:12px;background:#fff;">
+        ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareA ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
+      </select>
+    </label>
+    <label style="display:block;">
+      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Лекция B</div>
+      <select id="lecture-compare-b" style="width:100%;padding:7px 9px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:12px;background:#fff;">
+        ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareB ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
+      </select>
+    </label>
+  </div>`;
+
+  html += `<div style="font-size:12px;color:#5a3818;margin-bottom:10px;"><strong>A:</strong> ${escapeHtml(chapterA.name)} <span style="color:#888;">(стр. ${chapterA.start}-${chapterA.end})</span><br><strong>B:</strong> ${escapeHtml(chapterB.name)} <span style="color:#888;">(стр. ${chapterB.start}-${chapterB.end})</span></div>`;
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;">';
+
+  for (const t of types) {
+    const setA = headsFor(t.key, chapterA);
+    const setB = headsFor(t.key, chapterB);
+    const inter = asSorted([...setA].filter(h => setB.has(h)));
+    const onlyA = asSorted([...setA].filter(h => !setB.has(h)));
+    const onlyB = asSorted([...setB].filter(h => !setA.has(h)));
+    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:8px;padding:12px 14px;border-top:3px solid #8a7050;">
+      <div style="font-size:15px;color:#5a3818;font-weight:bold;margin-bottom:6px;">${t.label}</div>
+      <div style="font-size:11px;color:#666;margin-bottom:8px;">Общие: <strong>${inter.length}</strong> · Только A: <strong>${onlyA.length}</strong> · Только B: <strong>${onlyB.length}</strong></div>
+      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Пересечение</div>
+      <div style="margin-bottom:7px;">${renderHeadLinks(t.key, inter, 10)}</div>
+      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Только A</div>
+      <div style="margin-bottom:7px;">${renderHeadLinks(t.key, onlyA, 8)}</div>
+      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Только B</div>
+      <div>${renderHeadLinks(t.key, onlyB, 8)}</div>
+    </div>`;
+  }
+
+  html += '</div></div></div>';
+  container.innerHTML = html;
+
+  const selA = document.getElementById('lecture-compare-a');
+  const selB = document.getElementById('lecture-compare-b');
+  if (selA) {
+    selA.onchange = () => {
+      lectureCompareA = clampIdx(parseInt(selA.value, 10));
+      if (lectureCompareA === lectureCompareB) lectureCompareB = (lectureCompareA + 1) % chapters.length;
+      renderLectureComparePanel(container);
+      persistViewState();
+    };
+  }
+  if (selB) {
+    selB.onchange = () => {
+      lectureCompareB = clampIdx(parseInt(selB.value, 10));
+      if (lectureCompareA === lectureCompareB) lectureCompareA = (lectureCompareB + 1) % chapters.length;
+      renderLectureComparePanel(container);
+      persistViewState();
+    };
+  }
+  container.querySelectorAll('.lecture-compare-link[data-head]').forEach(el => {
+    el.onclick = () => navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
+  });
+}
+
 function renderLecturePagePanel(container) {
   const lectures = APP_DATA.lectures || [];
   if (!lectures.length) {
@@ -76251,6 +76644,190 @@ function renderPhoneticLawsPanel(container) {
 // =========================================================
 // ПРОФЕССИОНАЛЬНЫЙ АППАРАТ — для взрослого читателя и лингвиста
 // =========================================================
+function countMentionsInRange(pageList, start, end) {
+  if (!Array.isArray(pageList) || start > end) return 0;
+  let count = 0;
+  for (const p of pageList) {
+    if (typeof p === 'number' && p >= start && p <= end) count++;
+  }
+  return count;
+}
+
+function renderPageTrendsPanel(container) {
+  const totalPages = Math.max(1, parseInt(APP_DATA?.book_stats?.total_pages || 404, 10) || 404);
+  const clamp = (v) => Math.max(1, Math.min(totalPages, Number.isInteger(v) ? v : parseInt(v || '1', 10) || 1));
+  trendsRangeStart = clamp(trendsRangeStart);
+  trendsRangeEnd = clamp(trendsRangeEnd);
+  if (trendsRangeStart > trendsRangeEnd) [trendsRangeStart, trendsRangeEnd] = [trendsRangeEnd, trendsRangeStart];
+  const start = trendsRangeStart;
+  const end = trendsRangeEnd;
+  const mid = Math.floor((start + end) / 2);
+
+  const chapters = APP_DATA.chapters || [];
+  const types = [
+    { key: 'names', label: 'Имена' },
+    { key: 'toponyms', label: 'Топонимы' },
+    { key: 'ethnonyms', label: 'Этнонимы' },
+    { key: 'languages', label: 'Языки' },
+    { key: 'lexicon', label: 'Лексика' },
+    { key: 'subject', label: 'Предметный' },
+  ];
+
+  const stats = [];
+  const globalTrend = [];
+  for (const t of types) {
+    const items = (ENTITY_TYPES[t.key] && ENTITY_TYPES[t.key].items) || [];
+    let mentionTotal = 0;
+    const activeItems = [];
+    for (const it of items) {
+      const totalCount = countMentionsInRange(it.page_list || [], start, end);
+      if (totalCount > 0) {
+        activeItems.push({ head: it.head, count: totalCount, type: t.key });
+        mentionTotal += totalCount;
+      }
+      if (end > start) {
+        const leftCount = countMentionsInRange(it.page_list || [], start, mid);
+        const rightCount = countMentionsInRange(it.page_list || [], mid + 1, end);
+        const delta = rightCount - leftCount;
+        if (delta !== 0 && leftCount + rightCount >= 2) {
+          globalTrend.push({ head: it.head, type: t.key, delta, leftCount, rightCount });
+        }
+      }
+    }
+    activeItems.sort((a, b) => (b.count - a.count) || compareHeadsRu(a.head, b.head));
+    stats.push({ ...t, mentionTotal, activeCount: activeItems.length, top: activeItems.slice(0, 8) });
+  }
+
+  const trendUp = globalTrend.filter(x => x.delta > 0).sort((a, b) => (b.delta - a.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
+  const trendDown = globalTrend.filter(x => x.delta < 0).sort((a, b) => (a.delta - b.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
+
+  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
+  html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;">';
+  html += '<div><h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Динамика по страницам</h2>';
+  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:12px;">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div></div>';
+  html += '<div style="display:flex;gap:6px;align-items:center;">';
+  html += '<button id="trend-export-csv" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Экспорт CSV</button>';
+  html += '<button id="trend-export-md" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Экспорт Markdown</button>';
+  html += '</div></div>';
+
+  const chapterOptions = chapters.map((ch, idx) => `<option value="${idx}">${escapeHtml(ch.name)} (${ch.start}-${ch.end})</option>`).join('');
+  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:12px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end;">
+      <label style="font-size:11px;color:#6a5040;">
+        Начальная страница
+        <input id="trend-start-range" type="range" min="1" max="${totalPages}" value="${start}" style="width:100%;margin-top:4px;">
+        <input id="trend-start-input" type="number" min="1" max="${totalPages}" value="${start}" style="width:100%;margin-top:4px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;">
+      </label>
+      <label style="font-size:11px;color:#6a5040;">
+        Конечная страница
+        <input id="trend-end-range" type="range" min="1" max="${totalPages}" value="${end}" style="width:100%;margin-top:4px;">
+        <input id="trend-end-input" type="number" min="1" max="${totalPages}" value="${end}" style="width:100%;margin-top:4px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;">
+      </label>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;">
+      <label style="font-size:11px;color:#6a5040;">Быстрый выбор главы:
+        <select id="trend-chapter-select" style="margin-left:6px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+          <option value="">—</option>${chapterOptions}
+        </select>
+      </label>
+      <span style="font-size:11px;color:#888;">Диапазон: ${start}-${end} · ширина ${end - start + 1} стр.</span>
+    </div>
+  </div>`;
+
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-bottom:12px;">';
+  for (const s of stats) {
+    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
+      <div style="font-size:14px;color:#5a3818;font-weight:bold;margin-bottom:2px;">${s.label}</div>
+      <div style="font-size:11px;color:#666;margin-bottom:7px;">Сущностей: <strong>${s.activeCount}</strong> · упоминаний: <strong>${s.mentionTotal}</strong></div>
+      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Топ в выбранном окне</div>
+      <div>${s.top.length ? s.top.map(it => `<span class="trend-link" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" style="display:inline-block;padding:2px 7px;margin:2px 6px 2px 0;background:#f0e8d8;border-radius:10px;color:#5a3818;cursor:pointer;font-size:11px;">${escapeHtml(it.head)} · ${it.count}</span>`).join('') : '<span style="color:#999;font-size:12px;">—</span>'}</div>
+    </div>`;
+  }
+  html += '</div>';
+
+  const trendLinks = (rows, color) => rows.length
+    ? rows.map(r => `<div class="trend-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" style="display:flex;justify-content:space-between;gap:8px;padding:4px 0;cursor:pointer;">
+        <span style="color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)}</span>
+        <span style="color:${color};font-size:11px;">${r.delta > 0 ? '+' : ''}${r.delta} (${r.leftCount}→${r.rightCount})</span>
+      </div>`).join('')
+    : '<div style="color:#999;font-size:12px;">—</div>';
+
+  html += `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;">
+    <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
+      <div style="font-size:13px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Растут во второй половине диапазона</div>
+      ${trendLinks(trendUp, '#1f7a3e')}
+    </div>
+    <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
+      <div style="font-size:13px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Слабеют во второй половине диапазона</div>
+      ${trendLinks(trendDown, '#8b3a2a')}
+    </div>
+  </div>`;
+
+  html += '</div></div>';
+  container.innerHTML = html;
+
+  const rerender = () => {
+    renderPageTrendsPanel(container);
+    persistViewState();
+  };
+  const startRange = document.getElementById('trend-start-range');
+  const endRange = document.getElementById('trend-end-range');
+  const startInput = document.getElementById('trend-start-input');
+  const endInput = document.getElementById('trend-end-input');
+  const chapterSelect = document.getElementById('trend-chapter-select');
+  const exportCsvBtn = document.getElementById('trend-export-csv');
+  const exportMdBtn = document.getElementById('trend-export-md');
+
+  const csvEscape = (v) => {
+    const s = String(v == null ? '' : v);
+    return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const csvRows = [['range_start', 'range_end', 'section', 'type', 'head', 'value', 'delta', 'left_half', 'right_half']];
+  for (const s of stats) {
+    csvRows.push([start, end, 'summary', s.key, '', s.mentionTotal, '', '', '']);
+    for (const top of s.top) csvRows.push([start, end, 'top', s.key, top.head, top.count, '', '', '']);
+  }
+  for (const row of trendUp) csvRows.push([start, end, 'trend_up', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  for (const row of trendDown) csvRows.push([start, end, 'trend_down', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  const csvText = csvRows.map(r => r.map(csvEscape).join(',')).join('\n');
+
+  const mdLines = [];
+  mdLines.push(`# Динамика по страницам: ${start}-${end}`);
+  mdLines.push('');
+  mdLines.push(`Окно: **${start}-${end}** (ширина ${end - start + 1} стр.)`);
+  mdLines.push('');
+  mdLines.push('## Сводка по типам');
+  for (const s of stats) mdLines.push(`- ${s.label}: сущностей ${s.activeCount}, упоминаний ${s.mentionTotal}`);
+  mdLines.push('');
+  mdLines.push('## Рост во второй половине');
+  if (trendUp.length) for (const r of trendUp) mdLines.push(`- ${r.head} [${r.type}] ${r.leftCount}→${r.rightCount} (Δ ${r.delta > 0 ? '+' : ''}${r.delta})`);
+  else mdLines.push('- —');
+  mdLines.push('');
+  mdLines.push('## Снижение во второй половине');
+  if (trendDown.length) for (const r of trendDown) mdLines.push(`- ${r.head} [${r.type}] ${r.leftCount}→${r.rightCount} (Δ ${r.delta})`);
+  else mdLines.push('- —');
+  const mdText = mdLines.join('\n');
+
+  if (startRange) startRange.oninput = () => { trendsRangeStart = clamp(parseInt(startRange.value, 10)); rerender(); };
+  if (endRange) endRange.oninput = () => { trendsRangeEnd = clamp(parseInt(endRange.value, 10)); rerender(); };
+  if (startInput) startInput.onchange = () => { trendsRangeStart = clamp(parseInt(startInput.value, 10)); rerender(); };
+  if (endInput) endInput.onchange = () => { trendsRangeEnd = clamp(parseInt(endInput.value, 10)); rerender(); };
+  if (chapterSelect) {
+    chapterSelect.onchange = () => {
+      const idx = parseInt(chapterSelect.value, 10);
+      if (!Number.isInteger(idx) || idx < 0 || idx >= chapters.length) return;
+      trendsRangeStart = chapters[idx].start;
+      trendsRangeEnd = chapters[idx].end;
+      rerender();
+    };
+  }
+  if (exportCsvBtn) exportCsvBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.csv`, csvText, 'text/csv;charset=utf-8');
+  if (exportMdBtn) exportMdBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.md`, mdText, 'text/markdown;charset=utf-8');
+  container.querySelectorAll('.trend-link[data-head]').forEach(el => {
+    el.onclick = () => navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
+  });
+}
+
 function renderScholarPanel(container) {
   const s = APP_DATA.scholar || {};
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
@@ -76702,6 +77279,7 @@ setTimeout(() => {
   initEntityTypes();
   wireGlobalUI();
   initTheme();
+  initDensityMode();
   const initialHash = (typeof window !== 'undefined' && window.location && typeof window.location.hash === 'string')
     ? window.location.hash
     : '';
