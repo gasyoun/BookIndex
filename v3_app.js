@@ -145,7 +145,7 @@ function initEntityTypes() {
   scholar: {
     title: 'Профессиональный аппарат',
     items: [],
-    tabs: ['scholar'],
+    tabs: ['scholar','page_trends'],
   },
   all: {
     title: 'Сводный указатель',
@@ -224,6 +224,7 @@ const TAB_LABELS = {
   russian_evolution: 'Русский во времени',
   phonetic_laws: 'Фонетические законы',
   scholar: 'Профессиональный аппарат',
+  page_trends: 'Динамика по страницам',
 };
 
 // Единый сводный словник: все элементы из всех типов с пометкой
@@ -326,6 +327,8 @@ let graphStrongOnly = false;     // Фильтр графа: только вес
 let currentLecture = 0;
 let lectureCompareA = 1;
 let lectureCompareB = 2;
+let trendsRangeStart = 1;
+let trendsRangeEnd = 404;
 let historyStack = [];
 let isNavigatingHistory = false;
 let suppressHashSync = false;
@@ -542,6 +545,8 @@ function captureViewState() {
     currentLecture,
     lectureCompareA,
     lectureCompareB,
+    trendsRangeStart,
+    trendsRangeEnd,
     searchQuery,
     onlyDiscussed,
     onlyQuestionCandidates,
@@ -576,6 +581,8 @@ function restoreViewState() {
     if (!Number.isInteger(parsed.currentLecture)) parsed.currentLecture = 0;
     if (!Number.isInteger(parsed.lectureCompareA)) parsed.lectureCompareA = 1;
     if (!Number.isInteger(parsed.lectureCompareB)) parsed.lectureCompareB = 2;
+    if (!Number.isInteger(parsed.trendsRangeStart)) parsed.trendsRangeStart = 1;
+    if (!Number.isInteger(parsed.trendsRangeEnd)) parsed.trendsRangeEnd = 404;
     if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
     parsed.onlyDiscussed = !!parsed.onlyDiscussed;
     parsed.onlyQuestionCandidates = !!parsed.onlyQuestionCandidates;
@@ -700,6 +707,8 @@ function applyViewState(state) {
   currentLecture = Number.isInteger(state.currentLecture) ? state.currentLecture : 0;
   lectureCompareA = Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1;
   lectureCompareB = Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2;
+  trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
+  trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : 404;
   searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
   onlyDiscussed = !!state.onlyDiscussed;
   onlyQuestionCandidates = !!state.onlyQuestionCandidates;
@@ -723,6 +732,8 @@ function sameViewState(a, b) {
     a.currentLecture === b.currentLecture &&
     a.lectureCompareA === b.lectureCompareA &&
     a.lectureCompareB === b.lectureCompareB &&
+    a.trendsRangeStart === b.trendsRangeStart &&
+    a.trendsRangeEnd === b.trendsRangeEnd &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
     !!a.onlyDiscussed === !!b.onlyDiscussed &&
     !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
@@ -1556,6 +1567,7 @@ function renderContent() {
     russian_evolution: renderRussianEvolutionPanel,
     phonetic_laws: renderPhoneticLawsPanel,
     scholar: renderScholarPanel,
+    page_trends: renderPageTrendsPanel,
     list: renderListPanel,
     cards: renderCardsPanel,
     histogram: renderHistogramPanel,
@@ -3881,6 +3893,151 @@ function renderPhoneticLawsPanel(container) {
 // =========================================================
 // ПРОФЕССИОНАЛЬНЫЙ АППАРАТ — для взрослого читателя и лингвиста
 // =========================================================
+function countMentionsInRange(pageList, start, end) {
+  if (!Array.isArray(pageList) || start > end) return 0;
+  let count = 0;
+  for (const p of pageList) {
+    if (typeof p === 'number' && p >= start && p <= end) count++;
+  }
+  return count;
+}
+
+function renderPageTrendsPanel(container) {
+  const totalPages = Math.max(1, parseInt(APP_DATA?.book_stats?.total_pages || 404, 10) || 404);
+  const clamp = (v) => Math.max(1, Math.min(totalPages, Number.isInteger(v) ? v : parseInt(v || '1', 10) || 1));
+  trendsRangeStart = clamp(trendsRangeStart);
+  trendsRangeEnd = clamp(trendsRangeEnd);
+  if (trendsRangeStart > trendsRangeEnd) [trendsRangeStart, trendsRangeEnd] = [trendsRangeEnd, trendsRangeStart];
+  const start = trendsRangeStart;
+  const end = trendsRangeEnd;
+  const mid = Math.floor((start + end) / 2);
+
+  const chapters = APP_DATA.chapters || [];
+  const types = [
+    { key: 'names', label: 'Имена' },
+    { key: 'toponyms', label: 'Топонимы' },
+    { key: 'ethnonyms', label: 'Этнонимы' },
+    { key: 'languages', label: 'Языки' },
+    { key: 'lexicon', label: 'Лексика' },
+    { key: 'subject', label: 'Предметный' },
+  ];
+
+  const stats = [];
+  const globalTrend = [];
+  for (const t of types) {
+    const items = (ENTITY_TYPES[t.key] && ENTITY_TYPES[t.key].items) || [];
+    let mentionTotal = 0;
+    const activeItems = [];
+    for (const it of items) {
+      const totalCount = countMentionsInRange(it.page_list || [], start, end);
+      if (totalCount > 0) {
+        activeItems.push({ head: it.head, count: totalCount, type: t.key });
+        mentionTotal += totalCount;
+      }
+      if (end > start) {
+        const leftCount = countMentionsInRange(it.page_list || [], start, mid);
+        const rightCount = countMentionsInRange(it.page_list || [], mid + 1, end);
+        const delta = rightCount - leftCount;
+        if (delta !== 0 && leftCount + rightCount >= 2) {
+          globalTrend.push({ head: it.head, type: t.key, delta, leftCount, rightCount });
+        }
+      }
+    }
+    activeItems.sort((a, b) => (b.count - a.count) || compareHeadsRu(a.head, b.head));
+    stats.push({ ...t, mentionTotal, activeCount: activeItems.length, top: activeItems.slice(0, 8) });
+  }
+
+  const trendUp = globalTrend.filter(x => x.delta > 0).sort((a, b) => (b.delta - a.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
+  const trendDown = globalTrend.filter(x => x.delta < 0).sort((a, b) => (a.delta - b.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
+
+  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
+  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Динамика по страницам</h2>';
+  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:12px;">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div>';
+
+  const chapterOptions = chapters.map((ch, idx) => `<option value="${idx}">${escapeHtml(ch.name)} (${ch.start}-${ch.end})</option>`).join('');
+  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:12px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end;">
+      <label style="font-size:11px;color:#6a5040;">
+        Начальная страница
+        <input id="trend-start-range" type="range" min="1" max="${totalPages}" value="${start}" style="width:100%;margin-top:4px;">
+        <input id="trend-start-input" type="number" min="1" max="${totalPages}" value="${start}" style="width:100%;margin-top:4px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;">
+      </label>
+      <label style="font-size:11px;color:#6a5040;">
+        Конечная страница
+        <input id="trend-end-range" type="range" min="1" max="${totalPages}" value="${end}" style="width:100%;margin-top:4px;">
+        <input id="trend-end-input" type="number" min="1" max="${totalPages}" value="${end}" style="width:100%;margin-top:4px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;">
+      </label>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;">
+      <label style="font-size:11px;color:#6a5040;">Быстрый выбор главы:
+        <select id="trend-chapter-select" style="margin-left:6px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+          <option value="">—</option>${chapterOptions}
+        </select>
+      </label>
+      <span style="font-size:11px;color:#888;">Диапазон: ${start}-${end} · ширина ${end - start + 1} стр.</span>
+    </div>
+  </div>`;
+
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-bottom:12px;">';
+  for (const s of stats) {
+    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
+      <div style="font-size:14px;color:#5a3818;font-weight:bold;margin-bottom:2px;">${s.label}</div>
+      <div style="font-size:11px;color:#666;margin-bottom:7px;">Сущностей: <strong>${s.activeCount}</strong> · упоминаний: <strong>${s.mentionTotal}</strong></div>
+      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Топ в выбранном окне</div>
+      <div>${s.top.length ? s.top.map(it => `<span class="trend-link" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" style="display:inline-block;padding:2px 7px;margin:2px 6px 2px 0;background:#f0e8d8;border-radius:10px;color:#5a3818;cursor:pointer;font-size:11px;">${escapeHtml(it.head)} · ${it.count}</span>`).join('') : '<span style="color:#999;font-size:12px;">—</span>'}</div>
+    </div>`;
+  }
+  html += '</div>';
+
+  const trendLinks = (rows, color) => rows.length
+    ? rows.map(r => `<div class="trend-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" style="display:flex;justify-content:space-between;gap:8px;padding:4px 0;cursor:pointer;">
+        <span style="color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)}</span>
+        <span style="color:${color};font-size:11px;">${r.delta > 0 ? '+' : ''}${r.delta} (${r.leftCount}→${r.rightCount})</span>
+      </div>`).join('')
+    : '<div style="color:#999;font-size:12px;">—</div>';
+
+  html += `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;">
+    <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
+      <div style="font-size:13px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Растут во второй половине диапазона</div>
+      ${trendLinks(trendUp, '#1f7a3e')}
+    </div>
+    <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
+      <div style="font-size:13px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Слабеют во второй половине диапазона</div>
+      ${trendLinks(trendDown, '#8b3a2a')}
+    </div>
+  </div>`;
+
+  html += '</div></div>';
+  container.innerHTML = html;
+
+  const rerender = () => {
+    renderPageTrendsPanel(container);
+    persistViewState();
+  };
+  const startRange = document.getElementById('trend-start-range');
+  const endRange = document.getElementById('trend-end-range');
+  const startInput = document.getElementById('trend-start-input');
+  const endInput = document.getElementById('trend-end-input');
+  const chapterSelect = document.getElementById('trend-chapter-select');
+
+  if (startRange) startRange.oninput = () => { trendsRangeStart = clamp(parseInt(startRange.value, 10)); rerender(); };
+  if (endRange) endRange.oninput = () => { trendsRangeEnd = clamp(parseInt(endRange.value, 10)); rerender(); };
+  if (startInput) startInput.onchange = () => { trendsRangeStart = clamp(parseInt(startInput.value, 10)); rerender(); };
+  if (endInput) endInput.onchange = () => { trendsRangeEnd = clamp(parseInt(endInput.value, 10)); rerender(); };
+  if (chapterSelect) {
+    chapterSelect.onchange = () => {
+      const idx = parseInt(chapterSelect.value, 10);
+      if (!Number.isInteger(idx) || idx < 0 || idx >= chapters.length) return;
+      trendsRangeStart = chapters[idx].start;
+      trendsRangeEnd = chapters[idx].end;
+      rerender();
+    };
+  }
+  container.querySelectorAll('.trend-link[data-head]').forEach(el => {
+    el.onclick = () => navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
+  });
+}
+
 function renderScholarPanel(container) {
   const s = APP_DATA.scholar || {};
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
