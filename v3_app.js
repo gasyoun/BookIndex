@@ -1373,8 +1373,8 @@ function slugify(text) {
     .slice(0, 80) || 'item';
 }
 
-function downloadTextFile(filename, text) {
-  const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+function downloadTextFile(filename, text, mimeType = 'text/markdown;charset=utf-8') {
+  const blob = new Blob([text], { type: mimeType });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = filename;
@@ -3951,8 +3951,13 @@ function renderPageTrendsPanel(container) {
   const trendDown = globalTrend.filter(x => x.delta < 0).sort((a, b) => (a.delta - b.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
 
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Динамика по страницам</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:12px;">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div>';
+  html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;">';
+  html += '<div><h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Динамика по страницам</h2>';
+  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:12px;">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div></div>';
+  html += '<div style="display:flex;gap:6px;align-items:center;">';
+  html += '<button id="trend-export-csv" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Экспорт CSV</button>';
+  html += '<button id="trend-export-md" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Экспорт Markdown</button>';
+  html += '</div></div>';
 
   const chapterOptions = chapters.map((ch, idx) => `<option value="${idx}">${escapeHtml(ch.name)} (${ch.start}-${ch.end})</option>`).join('');
   html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:12px;">
@@ -4019,6 +4024,38 @@ function renderPageTrendsPanel(container) {
   const startInput = document.getElementById('trend-start-input');
   const endInput = document.getElementById('trend-end-input');
   const chapterSelect = document.getElementById('trend-chapter-select');
+  const exportCsvBtn = document.getElementById('trend-export-csv');
+  const exportMdBtn = document.getElementById('trend-export-md');
+
+  const csvEscape = (v) => {
+    const s = String(v == null ? '' : v);
+    return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const csvRows = [['range_start', 'range_end', 'section', 'type', 'head', 'value', 'delta', 'left_half', 'right_half']];
+  for (const s of stats) {
+    csvRows.push([start, end, 'summary', s.key, '', s.mentionTotal, '', '', '']);
+    for (const top of s.top) csvRows.push([start, end, 'top', s.key, top.head, top.count, '', '', '']);
+  }
+  for (const row of trendUp) csvRows.push([start, end, 'trend_up', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  for (const row of trendDown) csvRows.push([start, end, 'trend_down', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  const csvText = csvRows.map(r => r.map(csvEscape).join(',')).join('\n');
+
+  const mdLines = [];
+  mdLines.push(`# Динамика по страницам: ${start}-${end}`);
+  mdLines.push('');
+  mdLines.push(`Окно: **${start}-${end}** (ширина ${end - start + 1} стр.)`);
+  mdLines.push('');
+  mdLines.push('## Сводка по типам');
+  for (const s of stats) mdLines.push(`- ${s.label}: сущностей ${s.activeCount}, упоминаний ${s.mentionTotal}`);
+  mdLines.push('');
+  mdLines.push('## Рост во второй половине');
+  if (trendUp.length) for (const r of trendUp) mdLines.push(`- ${r.head} [${r.type}] ${r.leftCount}→${r.rightCount} (Δ ${r.delta > 0 ? '+' : ''}${r.delta})`);
+  else mdLines.push('- —');
+  mdLines.push('');
+  mdLines.push('## Снижение во второй половине');
+  if (trendDown.length) for (const r of trendDown) mdLines.push(`- ${r.head} [${r.type}] ${r.leftCount}→${r.rightCount} (Δ ${r.delta})`);
+  else mdLines.push('- —');
+  const mdText = mdLines.join('\n');
 
   if (startRange) startRange.oninput = () => { trendsRangeStart = clamp(parseInt(startRange.value, 10)); rerender(); };
   if (endRange) endRange.oninput = () => { trendsRangeEnd = clamp(parseInt(endRange.value, 10)); rerender(); };
@@ -4033,6 +4070,8 @@ function renderPageTrendsPanel(container) {
       rerender();
     };
   }
+  if (exportCsvBtn) exportCsvBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.csv`, csvText, 'text/csv;charset=utf-8');
+  if (exportMdBtn) exportMdBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.md`, mdText, 'text/markdown;charset=utf-8');
   container.querySelectorAll('.trend-link[data-head]').forEach(el => {
     el.onclick = () => navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
   });
