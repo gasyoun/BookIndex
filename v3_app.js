@@ -27,6 +27,12 @@ function normalizeAppData() {
     if (n.subcategory === 'schoolchild' || n.subcategory === 'lecture_host') n.subcategory = 'participant';
   }
 
+  const editorialKeys = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse', 'lexicon_tech', 'subject_index'];
+  for (const key of editorialKeys) {
+    const arr = Array.isArray(APP_DATA[key]) ? APP_DATA[key] : [];
+    for (const item of arr) normalizeEditorialFlags(item);
+  }
+
   const stats = APP_DATA.book_stats || (APP_DATA.book_stats = {});
   if (Array.isArray(APP_DATA.lectures) && stats.lectures == null) stats.lectures = APP_DATA.lectures.length;
   if (stats.has_preface == null) {
@@ -58,6 +64,23 @@ function normalizeAppData() {
   scholar.sound_correspondences = Array.isArray(scholar.sound_correspondences) ? scholar.sound_correspondences : [];
   scholar.visualization_ideas = Array.isArray(scholar.visualization_ideas) ? scholar.visualization_ideas : [];
   scholar.slovo_links = Array.isArray(scholar.slovo_links) ? scholar.slovo_links : [];
+}
+
+function normalizeEditorialFlags(item) {
+  if (!item || typeof item !== 'object') return;
+  const raw = (item.editorial_flags && typeof item.editorial_flags === 'object') ? item.editorial_flags : {};
+  const head = String(item.head || '').trim();
+  const suspectByLegacy = head.startsWith('?') || item.needs_review === true;
+  const flags = {
+    verified: raw.verified === true || item.verified === true,
+    suspect: raw.suspect === true || suspectByLegacy,
+    source_confirmed: raw.source_confirmed === true || item.source_confirmed === true || !!item.wiki,
+  };
+  const note = (typeof raw.note === 'string' && raw.note.trim())
+    ? raw.note.trim()
+    : ((typeof item.note === 'string' && item.note.trim()) ? item.note.trim() : '');
+  if (note) flags.note = note;
+  item.editorial_flags = flags;
 }
 
 // =========================================================
@@ -2075,6 +2098,7 @@ function renderCardInRight() {
   const photo = it.img ? `<img class="card-photo" src="${escapeHtml(safeImageUrl(it.img))}" alt="">` : '';
   const wikiLink = it.wiki ? `<a class="wiki-link" href="${escapeHtml(safeUrl(it.wiki))}" target="_blank" rel="noopener noreferrer">Статья в Википедии →</a>` : '';
   const eType = it._entityType || currentEntity;
+  const editorial = (it.editorial_flags && typeof it.editorial_flags === 'object') ? it.editorial_flags : {};
   let category = '';
   if (eType === 'names') category = LABELS[it.subcategory] || 'Имя';
   else if (eType === 'toponyms') {
@@ -2094,6 +2118,10 @@ function renderCardInRight() {
   else if (eType === 'subject') category = it.needs_review ? 'Понятие / термин (требует сверки — артефакт парсинга двухколоночной верстки)' : 'Понятие / термин';
   if (it.head && it.head.startsWith('?')) category = 'Кандидат — требует проверки редактором' + (it.note ? ' · ' + it.note : '');
 
+  if (eType === 'subject' && editorial.suspect) category = 'Понятие / термин (требует сверки редактором)';
+  if (editorial.suspect && it.head && it.head.startsWith('?')) {
+    category = 'Кандидат — требует проверки редактором' + ((editorial.note || it.note) ? ' · ' + (editorial.note || it.note) : '');
+  }
   const allPages = (it.page_list || []);
   let pagesText = it.pages || it.head_pages || '';
 
@@ -2120,6 +2148,18 @@ function renderCardInRight() {
         ${it.discussed ? ' · <em>обсуждается</em>' : ' · однократное упоминание'}
       </div>
   `;
+  const flagBadges = [];
+  if (editorial.verified) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#e7f7ed;border:1px solid #b5e2c4;color:#2e6d44;font-size:11px;">verified</span>');
+  if (editorial.suspect) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#fff6e8;border:1px solid #f0d1a6;color:#8b5a2b;font-size:11px;">suspect</span>');
+  if (editorial.source_confirmed) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#eef4ff;border:1px solid #c3d6ff;color:#355a9a;font-size:11px;">source confirmed</span>');
+  if (flagBadges.length) {
+    html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">${flagBadges.join('')}</div>`;
+  }
+  if (editorial.note) {
+    html += `<div style="margin-top:8px;padding:8px 10px;background:#fffdf5;border-left:3px solid #d9c28a;border-radius:4px;font-size:12px;color:#6a5a3c;">
+      <strong>Editor note:</strong> ${escapeHtml(editorial.note)}
+    </div>`;
+  }
   if (it.is_moderator && it.moderator_note) {
     html += `<div style="margin-top:10px;padding:8px 10px;background:#fff8e8;border-left:3px solid #8a7050;border-radius:4px;font-size:12px;color:#6a5040;">
       <strong>Примечание о подсчёте:</strong> ${escapeHtml(it.moderator_note)}

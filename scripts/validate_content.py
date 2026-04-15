@@ -45,7 +45,7 @@ def build_entity_index(data: dict[str, Any]) -> dict[str, set[str]]:
     return idx
 
 
-def validate_duplicates(data: dict[str, Any], warnings: list[str]) -> None:
+def validate_duplicates(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
     for key in ENTITY_KEYS:
         arr = data.get(key, [])
         if not isinstance(arr, list):
@@ -55,6 +55,34 @@ def validate_duplicates(data: dict[str, Any], warnings: list[str]) -> None:
         dup = [h for h, c in Counter(heads).items() if h and c > 1]
         if dup:
             warn(f"[{key}] duplicate heads: {', '.join(sorted(dup)[:15])}", warnings)
+
+
+def validate_editorial_flags(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
+    allowed = {"verified", "suspect", "source_confirmed", "note"}
+    for key in ENTITY_KEYS:
+        arr = data.get(key, [])
+        if not isinstance(arr, list):
+            continue
+        for i, item in enumerate(arr):
+            if not isinstance(item, dict):
+                continue
+            head = str(item.get("head", f"#{i}"))
+            flags = item.get("editorial_flags")
+            if flags is None:
+                continue
+            if not isinstance(flags, dict):
+                fail(f"[{key}] {head}: editorial_flags must be object", errors)
+                continue
+            unknown = sorted(set(flags.keys()) - allowed)
+            if unknown:
+                warn(f"[{key}] {head}: unknown editorial_flags keys: {', '.join(unknown)}", warnings)
+            for field in ("verified", "suspect", "source_confirmed"):
+                if field in flags and not isinstance(flags[field], bool):
+                    fail(f"[{key}] {head}: editorial_flags.{field} must be bool", errors)
+            if "note" in flags and not isinstance(flags["note"], str):
+                fail(f"[{key}] {head}: editorial_flags.note must be string", errors)
+            if flags.get("verified") is True and flags.get("suspect") is True:
+                warn(f"[{key}] {head}: both verified and suspect are true", warnings)
 
 
 def validate_pages(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
@@ -220,7 +248,8 @@ def main() -> int:
     warnings: list[str] = []
     entity_index = build_entity_index(data)
 
-    validate_duplicates(data, warnings)
+    validate_duplicates(data, errors, warnings)
+    validate_editorial_flags(data, errors, warnings)
     validate_pages(data, errors, warnings)
     validate_contexts(data, errors)
     validate_chapters(data, errors)
