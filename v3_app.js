@@ -30,7 +30,10 @@ function normalizeAppData() {
   const editorialKeys = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse', 'lexicon_tech', 'subject_index'];
   for (const key of editorialKeys) {
     const arr = Array.isArray(APP_DATA[key]) ? APP_DATA[key] : [];
-    for (const item of arr) normalizeEditorialFlags(item);
+    for (const item of arr) {
+      normalizeEditorialFlags(item);
+      normalizeItemSources(item);
+    }
   }
 
   const stats = APP_DATA.book_stats || (APP_DATA.book_stats = {});
@@ -81,6 +84,42 @@ function normalizeEditorialFlags(item) {
     : ((typeof item.note === 'string' && item.note.trim()) ? item.note.trim() : '');
   if (note) flags.note = note;
   item.editorial_flags = flags;
+}
+
+function getFirstContextQuote(item) {
+  if (!item || !item.contexts || typeof item.contexts !== 'object') return '';
+  const pages = Object.keys(item.contexts).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+  for (const pg of pages) {
+    const snippets = Array.isArray(item.contexts[pg]) ? item.contexts[pg] : [];
+    for (const raw of snippets) {
+      const text = String(raw || '').replace(/\s+/g, ' ').trim();
+      if (text) return text;
+    }
+  }
+  return '';
+}
+
+function normalizeItemSources(item) {
+  if (!item || typeof item !== 'object') return;
+  const arr = Array.isArray(item.sources) ? item.sources : [];
+  const normalized = [];
+  for (const src of arr) {
+    if (!src || typeof src !== 'object') continue;
+    const label = String(src.label || '').trim();
+    const url = String(src.url || '').trim();
+    const quote = String(src.quote || '').trim();
+    const page = src.page != null ? String(src.page).trim() : '';
+    if (!label && !url && !quote && !page) continue;
+    normalized.push({ label, url, quote, page });
+  }
+  if (!normalized.length && item.wiki) {
+    normalized.push({ label: 'Wikipedia', url: String(item.wiki), quote: '', page: '' });
+  }
+  if (normalized.length && !normalized.some(s => s.quote)) {
+    const firstQuote = getFirstContextQuote(item);
+    if (firstQuote) normalized[0].quote = firstQuote;
+  }
+  item.sources = normalized;
 }
 
 // =========================================================
@@ -2167,6 +2206,19 @@ function renderCardInRight() {
   }
 
   // Контексты
+  if (Array.isArray(it.sources) && it.sources.length > 0) {
+    html += '<h3>Sources</h3><div class="related">';
+    for (const src of it.sources.slice(0, 5)) {
+      const label = escapeHtml(src.label || 'Source');
+      const pageHint = src.page ? ` · p. ${escapeHtml(src.page)}` : '';
+      const link = src.url
+        ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
+        : `<span>${label}</span>`;
+      const quote = src.quote ? `<div style="font-size:12px;color:#444;line-height:1.45;margin:4px 0 2px 0;">“${escapeHtml(src.quote)}”</div>` : '';
+      html += `<div style="padding:6px 0;border-bottom:1px dashed #ddd;">${link}<span style="color:#888;font-size:11px;">${pageHint}</span>${quote}</div>`;
+    }
+    html += '</div>';
+  }
   const ctxKeys = it.contexts ? Object.keys(it.contexts).sort((a, b) => parseInt(a) - parseInt(b)) : [];
   if (ctxKeys.length > 0) {
     html += '<h3>Контексты упоминаний (KWIC)</h3>';

@@ -85,6 +85,32 @@ def validate_editorial_flags(data: dict[str, Any], errors: list[str], warnings: 
                 warn(f"[{key}] {head}: both verified and suspect are true", warnings)
 
 
+def validate_sources(data: dict[str, Any], errors: list[str]) -> None:
+    for key in ENTITY_KEYS:
+        arr = data.get(key, [])
+        if not isinstance(arr, list):
+            continue
+        for i, item in enumerate(arr):
+            if not isinstance(item, dict):
+                continue
+            head = str(item.get("head", f"#{i}"))
+            sources = item.get("sources")
+            if sources is None:
+                continue
+            if not isinstance(sources, list):
+                fail(f"[{key}] {head}: sources must be list", errors)
+                continue
+            for j, src in enumerate(sources):
+                if not isinstance(src, dict):
+                    fail(f"[{key}] {head}: sources[{j}] must be object", errors)
+                    continue
+                for field in ("label", "url", "quote"):
+                    if field in src and not isinstance(src[field], str):
+                        fail(f"[{key}] {head}: sources[{j}].{field} must be string", errors)
+                if "page" in src and not isinstance(src["page"], (int, str)):
+                    fail(f"[{key}] {head}: sources[{j}].page must be int|string", errors)
+
+
 def validate_pages(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
     total_pages = int(data.get("book_stats", {}).get("total_pages", 404))
     for key in ENTITY_KEYS:
@@ -250,6 +276,7 @@ def main() -> int:
 
     validate_duplicates(data, errors, warnings)
     validate_editorial_flags(data, errors, warnings)
+    validate_sources(data, errors)
     validate_pages(data, errors, warnings)
     validate_contexts(data, errors)
     validate_chapters(data, errors)
