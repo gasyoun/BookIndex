@@ -778,6 +778,62 @@
   }
   .theme-btn:hover { background: var(--surface-soft-2); }
 
+  .density-select {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface-soft);
+    color: var(--title);
+    font-family: inherit;
+    font-size: 12px;
+    padding: 5px 8px;
+    min-height: 28px;
+  }
+  .density-select:hover { background: var(--surface-soft-2); }
+  .density-select:focus { outline: 2px solid var(--line-strong); outline-offset: 1px; }
+
+  body.density-compact .entity-btn,
+  body.density-compact .tab,
+  body.density-compact .filter-chip,
+  body.density-compact .related-link {
+    padding: 4px 9px;
+    font-size: 11px;
+  }
+  body.density-compact .name-item { padding: 4px 8px; font-size: 12px; }
+  body.density-compact .name-item .pages-count { font-size: 10px; }
+  body.density-compact .card { padding: 10px; }
+  body.density-compact .context-text { font-size: 11px; line-height: 1.5; }
+  body.density-compact .header-search input { padding: 5px 8px; font-size: 11px; }
+
+  body.density-reader .entity-btn,
+  body.density-reader .tab,
+  body.density-reader .filter-chip,
+  body.density-reader .related-link {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  body.density-reader .name-item { padding: 7px 12px; font-size: 14px; }
+  body.density-reader .name-item .pages-count { font-size: 12px; }
+  body.density-reader .card { padding: 15px; }
+  body.density-reader .card h2 { font-size: 24px; }
+  body.density-reader .context-text { font-size: 13px; line-height: 1.65; }
+  body.density-reader .header-search input { padding: 7px 10px; font-size: 13px; }
+
+  body.density-research .entity-btn,
+  body.density-research .tab,
+  body.density-research .filter-chip,
+  body.density-research .related-link {
+    padding: 5px 11px;
+    font-size: 12px;
+  }
+  body.density-research .name-item { padding: 5px 10px; font-size: 13px; }
+  body.density-research .name-item .pages-count { font-size: 11px; }
+  body.density-research .card { padding: 12px; }
+  body.density-research .context-text { font-size: 12px; line-height: 1.55; }
+
+  @media (max-width: 900px) {
+    .density-select { font-size: 11px; padding: 4px 7px; }
+  }
+
   /* Theme overrides */
   html, body { background: var(--bg); color: var(--text); }
   header { border-bottom-color: var(--line-strong); }
@@ -922,6 +978,11 @@
       <span class="meta-inline">А. А. Зализняк. Из жизни слов и языков · Альпина нон-фикшн, 2026 · 404 с.</span>
       <button class="back-btn" id="back-btn" type="button">← назад</button>
       <button class="theme-btn" id="theme-btn" type="button" aria-label="Переключить тему" title="Переключить тему">◐</button>
+      <select class="density-select" id="density-select" aria-label="Плотность интерфейса" title="Плотность интерфейса">
+        <option value="compact">compact</option>
+        <option value="reader">reader</option>
+        <option value="research" selected>research</option>
+      </select>
     </span>
     <div class="header-search header-search-inline">
       <input id="global-search" type="text" placeholder="Глобальный поиск: имя, язык, топоним, термин, лекция…" />

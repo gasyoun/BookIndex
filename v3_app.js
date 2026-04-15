@@ -332,6 +332,7 @@ let pendingGlossaryQuery = '';
 const UI_STATE_STORAGE_KEY = 'zaliznyakiada.ui.v1';
 const UI_STATE_SCHEMA_VERSION = 2;
 const THEME_STORAGE_KEY = 'zaliznyakiada.theme.v1';
+const DENSITY_STORAGE_KEY = 'zaliznyakiada.density.v1';
 const READING_PAGE_STORAGE_KEY = 'zaliznyakiada.readingPage.v1';
 const RECENT_ITEMS_STORAGE_KEY = 'zaliznyakiada.recentItems.v1';
 let globalKeyHandlersWired = false;
@@ -637,6 +638,48 @@ function initTheme() {
 
 function toggleTheme() {
   applyTheme(bodyHasDarkTheme() ? 'light' : 'dark');
+}
+
+function normalizeDensityMode(mode) {
+  return ['compact', 'reader', 'research'].includes(mode) ? mode : 'research';
+}
+
+function getSavedDensityMode() {
+  if (typeof localStorage === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(DENSITY_STORAGE_KEY);
+    return normalizeDensityMode(raw);
+  } catch (e) {
+    return null;
+  }
+}
+
+function applyDensityMode(mode) {
+  if (typeof document === 'undefined' || !document.body) return;
+  const nextMode = normalizeDensityMode(mode);
+  const body = document.body;
+  const classes = ['density-compact', 'density-reader', 'density-research'];
+  const nextClass = `density-${nextMode}`;
+
+  if (body.classList && typeof body.classList.add === 'function' && typeof body.classList.remove === 'function') {
+    for (const cls of classes) body.classList.remove(cls);
+    body.classList.add(nextClass);
+  } else {
+    const parts = String(body.className || '').split(/\s+/).filter(Boolean).filter(c => !classes.includes(c));
+    parts.push(nextClass);
+    body.className = parts.join(' ');
+  }
+
+  if (typeof localStorage !== 'undefined') {
+    try { localStorage.setItem(DENSITY_STORAGE_KEY, nextMode); } catch (e) {}
+  }
+  const select = document.getElementById('density-select');
+  if (select && 'value' in select) select.value = nextMode;
+}
+
+function initDensityMode() {
+  const saved = getSavedDensityMode();
+  applyDensityMode(saved || 'research');
 }
 
 function applyViewState(state) {
@@ -1212,6 +1255,15 @@ function wireGlobalUI() {
   if (backBtn) backBtn.onclick = () => goBackInApp();
   const themeBtn = document.getElementById('theme-btn');
   if (themeBtn) themeBtn.onclick = () => toggleTheme();
+  const densitySelect = document.getElementById('density-select');
+  if (densitySelect) {
+    if ('value' in densitySelect) densitySelect.value = getSavedDensityMode() || 'research';
+    densitySelect.onchange = (e) => {
+      const target = e && e.target;
+      if (!target || typeof target.value !== 'string') return;
+      applyDensityMode(target.value);
+    };
+  }
   const homeLink = document.getElementById('home-link');
   if (homeLink) {
     homeLink.onclick = (e) => {
@@ -4161,6 +4213,7 @@ setTimeout(() => {
   initEntityTypes();
   wireGlobalUI();
   initTheme();
+  initDensityMode();
   const initialHash = (typeof window !== 'undefined' && window.location && typeof window.location.hash === 'string')
     ? window.location.hash
     : '';
