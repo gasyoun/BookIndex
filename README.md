@@ -17,6 +17,7 @@
 - `app_data.json` — данные справочника.
 - `runtime_test.py` — smoke-проверка выполнения (`20/20`).
 - `scripts/validate_content.py` — структурная валидация данных.
+- `scripts/migrate_app_data.py` — миграция `app_data.json` к актуальной схеме.
 - `.github/workflows/ci.yml` — CI-пайплайн GitHub Actions.
 
 ## Локальная проверка перед выкладкой
@@ -38,6 +39,21 @@ Workflow `CI` запускается на `push` и `pull_request` в `main` и 
 - `scripts/validate_content.py`;
 - `runtime_test.py`;
 - smoke-сборку `aaz-index.html`.
+
+## Схема данных и миграции
+
+- Текущая версия схемы: `schema_version = 2` (см. начало `app_data.json`).
+- Миграция файла к текущей схеме:
+
+```bash
+python scripts/migrate_app_data.py app_data.json
+```
+
+- Миграция в новый файл (без перезаписи исходника):
+
+```bash
+python scripts/migrate_app_data.py app_data.json app_data.migrated.json
+```
 
 ## Пересборка `aaz-index.html`
 

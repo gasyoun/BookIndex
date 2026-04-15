@@ -1,4 +1,8 @@
 {
+  "schema_version": 2,
+  "schema_migrations": [
+    "1->2: editorial_flags_and_sources"
+  ],
   "names": [
     {
       "head": "Аванесов Р. И.",

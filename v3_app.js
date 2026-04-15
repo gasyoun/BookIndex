@@ -2,14 +2,33 @@
 const APP_DATA_STRING = __APP_DATA_STRING__;
 let APP_DATA = null;
 let LABELS = null, COLORS = null, EPOCH_LABELS = null, EPOCH_COLORS = null, FAMILY_COLORS = null;
+const APP_DATA_SCHEMA_CURRENT = 2;
 
 function parseAppData() {
   APP_DATA = JSON.parse(APP_DATA_STRING);
+  migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
   COLORS = APP_DATA.colors;
   EPOCH_LABELS = APP_DATA.epoch_labels;
   EPOCH_COLORS = APP_DATA.epoch_colors;
   FAMILY_COLORS = APP_DATA.family_colors;
+}
+
+function migrateAppDataSchema(data) {
+  if (!data || typeof data !== 'object') return;
+  let version = Number.isInteger(data.schema_version) ? data.schema_version : 1;
+  data.schema_migrations = Array.isArray(data.schema_migrations) ? data.schema_migrations : [];
+
+  if (version < 2) {
+    const marker = '1->2: editorial_flags_and_sources';
+    if (!data.schema_migrations.includes(marker)) data.schema_migrations.push(marker);
+    data.schema_version = 2;
+    version = 2;
+  }
+
+  if (version > APP_DATA_SCHEMA_CURRENT && typeof console !== 'undefined' && typeof console.warn === 'function') {
+    console.warn(`[schema] app_data schema_version ${version} is newer than supported ${APP_DATA_SCHEMA_CURRENT}`);
+  }
 }
 
 function normalizeAppData() {

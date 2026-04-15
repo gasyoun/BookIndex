@@ -20,6 +20,7 @@ ENTITY_KEYS = (
     "lexicon_tech",
     "subject_index",
 )
+SCHEMA_CURRENT = 2
 
 
 def fail(msg: str, errors: list[str]) -> None:
@@ -55,6 +56,23 @@ def validate_duplicates(data: dict[str, Any], errors: list[str], warnings: list[
         dup = [h for h, c in Counter(heads).items() if h and c > 1]
         if dup:
             warn(f"[{key}] duplicate heads: {', '.join(sorted(dup)[:15])}", warnings)
+
+
+def validate_schema(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
+    schema_version = data.get("schema_version")
+    if not isinstance(schema_version, int):
+        fail("[schema] schema_version must be integer", errors)
+        return
+    if schema_version < 1:
+        fail("[schema] schema_version must be >= 1", errors)
+    if schema_version > SCHEMA_CURRENT:
+        warn(
+            f"[schema] schema_version {schema_version} is newer than validator support {SCHEMA_CURRENT}",
+            warnings,
+        )
+    migrations = data.get("schema_migrations")
+    if migrations is not None and not isinstance(migrations, list):
+        fail("[schema] schema_migrations must be list when present", errors)
 
 
 def validate_editorial_flags(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
@@ -274,6 +292,7 @@ def main() -> int:
     warnings: list[str] = []
     entity_index = build_entity_index(data)
 
+    validate_schema(data, errors, warnings)
     validate_duplicates(data, errors, warnings)
     validate_editorial_flags(data, errors, warnings)
     validate_sources(data, errors)
