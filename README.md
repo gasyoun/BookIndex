@@ -1,31 +1,43 @@
 # BookIndex / «Зализнякиада»
 
-Автономный интерактивный веб-справочник к книге А. А. Зализняка «Из жизни слов и языков» (Альпина нон-фикшн, 2026, 404 с.).
+Автономный интерактивный веб-справочник к книге А. А. Зализняка  
+«Из жизни слов и языков» (Альпина нон-фикшн, 2026, 404 с.).
 
 ## Быстрый старт
 
 1. Откройте `aaz-index.html` в браузере.
-2. Интерфейс и данные работают офлайн.
-3. Интернет нужен только для тайлов карты (Leaflet) и внешних изображений.
+2. Базовый интерфейс и данные работают офлайн.
+3. Интернет нужен для тайлов карты (Leaflet) и внешних изображений.
 
-## Состав файлов
+## Файлы проекта
 
-- `aaz-index.html` — готовый автономный артефакт для просмотра.
+- `aaz-index.html` — готовый автономный артефакт.
 - `v3_template.html` — HTML-шаблон с `__APP_SCRIPT__`.
-- `v3_app.js` — логика приложения.
+- `v3_app.js` — JS-логика приложения.
 - `app_data.json` — данные справочника.
-- `runtime_test.py` — контрольный прогон (синтаксис + runtime smoke).
-- `RELEASE_NOTES_2026-04-14.md` — текущий релизный срез.
+- `runtime_test.py` — smoke-проверка выполнения (`20/20`).
+- `scripts/validate_content.py` — структурная валидация данных.
+- `.github/workflows/ci.yml` — CI-пайплайн GitHub Actions.
 
-## Стандарт перед выкладкой
-
-Обязательно:
+## Локальная проверка перед выкладкой
 
 ```bash
+node --check v3_app.js
+python scripts/validate_content.py app_data.json
 python runtime_test.py
 ```
 
-Ожидаемый результат: `20/20`.
+Ожидается:
+- валидация данных без ошибок;
+- `runtime_test.py` -> `20/20`.
+
+## CI (GitHub Actions)
+
+Workflow `CI` запускается на `push` и `pull_request` в `main` и выполняет:
+- синтаксическую проверку `v3_app.js`;
+- `scripts/validate_content.py`;
+- `runtime_test.py`;
+- smoke-сборку `aaz-index.html`.
 
 ## Пересборка `aaz-index.html`
 
@@ -44,10 +56,6 @@ pathlib.Path("aaz-index.html").write_text(html, encoding="utf-8-sig")
 
 ## Технологии
 
-- Vanilla JS, HTML, CSS
-- Leaflet (карта)
-- Python runtime smoke-тест
-
-## Примечание
-
-Основная ветка ведётся через issues в GitHub. На дату релиза 2026-04-14 backlog задач #1–#15 закрыт.
+- Vanilla JS / HTML / CSS
+- Leaflet
+- Python (runtime/data checks)
