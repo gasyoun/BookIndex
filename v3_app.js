@@ -351,6 +351,11 @@ function nowMs() {
   return Date.now();
 }
 
+function safeSetAttr(el, name, value) {
+  if (!el || typeof el.setAttribute !== 'function') return;
+  el.setAttribute(name, value);
+}
+
 function perfDebug(label, ms, meta = '') {
   if (typeof console === 'undefined' || typeof console.debug !== 'function') return;
   const extra = meta ? ` · ${meta}` : '';
@@ -1406,6 +1411,8 @@ function exportWholeSiteMarkdown() {
 function renderEntitySwitcher() {
   const container = document.getElementById('entity-switcher');
   container.innerHTML = '';
+  safeSetAttr(container, 'role', 'toolbar');
+  safeSetAttr(container, 'aria-label', 'Entity switcher');
   const order = ['materials', 'scholar', 'all', 'subject', 'names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse'];
   for (const key of order) {
     const conf = ENTITY_TYPES[key];
@@ -1413,6 +1420,7 @@ function renderEntitySwitcher() {
     const btn = document.createElement('button');
     btn.className = 'entity-btn' + (key === currentEntity ? ' active' : '');
     btn.dataset.entity = key;
+    safeSetAttr(btn, 'aria-pressed', key === currentEntity ? 'true' : 'false');
     const count = Array.isArray(conf.items) ? conf.items.length : 0;
     const showCount = !['materials', 'scholar'].includes(key);
     btn.textContent = conf.title;
@@ -1429,11 +1437,15 @@ function renderEntitySwitcher() {
 function renderTabs() {
   const container = document.getElementById('tabs');
   container.innerHTML = '';
+  safeSetAttr(container, 'role', 'tablist');
+  safeSetAttr(container, 'aria-label', 'View tabs');
   const conf = ENTITY_TYPES[currentEntity];
   for (const tab of conf.tabs) {
     const btn = document.createElement('button');
     btn.className = 'tab' + (tab === currentTab ? ' active' : '');
     btn.dataset.tab = tab;
+    safeSetAttr(btn, 'role', 'tab');
+    safeSetAttr(btn, 'aria-selected', tab === currentTab ? 'true' : 'false');
     btn.textContent = TAB_LABELS[tab];
     container.appendChild(btn);
   }
@@ -1556,6 +1568,7 @@ function renderListPanel(container) {
 
   const searchInput = document.getElementById('search-input');
   let searchTimeout = null;
+  if (searchInput) safeSetAttr(searchInput, 'aria-label', 'List search');
   searchInput.oninput = (e) => {
     const val = e.target.value.trim();
     if (searchTimeout) clearTimeout(searchTimeout);
@@ -1580,6 +1593,20 @@ function renderListPanel(container) {
       const rowType = row.dataset.type || currentEntity;
       const it = getIndexedItem(rowType, head);
       if (!it) return;
+      selectListItem(it, rowType);
+    };
+    nameListEl.onkeydown = (e) => {
+      const key = e.key;
+      if (key !== 'Enter' && key !== ' ') return;
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+      const row = target.closest('.name-item[data-head]');
+      if (!row || !nameListEl.contains(row)) return;
+      const head = row.dataset.head || '';
+      const rowType = row.dataset.type || currentEntity;
+      const it = getIndexedItem(rowType, head);
+      if (!it) return;
+      e.preventDefault();
       selectListItem(it, rowType);
     };
   }
@@ -1742,6 +1769,9 @@ function appendItemsWithLetters(list, items, fallbackType) {
     const item = document.createElement('div');
     const isSelected = selectedItem === it.head && (currentEntity !== 'all' || selectedItemType === it._entityType);
     item.className = 'name-item' + (isSelected ? ' selected' : '');
+    safeSetAttr(item, 'role', 'button');
+    item.tabIndex = 0;
+    safeSetAttr(item, 'aria-label', `${it.head || ''} (${(it.page_list || []).length})`);
     item.dataset.head = it.head || '';
     item.dataset.type = it._entityType || fallbackType || currentEntity;
     item.innerHTML = buildListItemInnerHtml(it, currentEntity === 'all');
@@ -1779,6 +1809,9 @@ function appendListRow(list, row, fallbackType, reverseColumns) {
   const item = document.createElement('div');
   const isSelected = selectedItem === it.head && (currentEntity !== 'all' || selectedItemType === it._entityType);
   item.className = 'name-item' + (isSelected ? ' selected' : '');
+  safeSetAttr(item, 'role', 'button');
+  item.tabIndex = 0;
+  safeSetAttr(item, 'aria-label', `${it.head || ''} (${(it.page_list || []).length})`);
   item.dataset.head = it.head || '';
   item.dataset.type = it._entityType || fallbackType || currentEntity;
   item.innerHTML = buildListItemInnerHtml(it, currentEntity === 'all');
