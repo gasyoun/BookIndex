@@ -140,7 +140,7 @@ function initEntityTypes() {
   materials: {
     title: 'Материалы',
     items: [],
-    tabs: ['lectures','lecture_pages','further_reading','glossary','gallery','russian_evolution','phonetic_laws','tasks'],
+    tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','gallery','russian_evolution','phonetic_laws','tasks'],
   },
   scholar: {
     title: 'Профессиональный аппарат',
@@ -215,6 +215,7 @@ const TAB_LABELS = {
   tree: 'Древо языков',
   home: 'Главная',
   lectures: 'Лекции',
+  lecture_compare: 'Сравнение лекций',
   lecture_pages: 'Страница лекции',
   tasks: 'Проверьте себя',
   further_reading: 'Что почитать ещё',
@@ -323,6 +324,8 @@ let selectedItemType = null; // тип сущности выбранного —
 let rightPaneMode = 'histogram'; // 'histogram' до выбора, 'card' после
 let graphStrongOnly = false;     // Фильтр графа: только вес ≥ 2
 let currentLecture = 0;
+let lectureCompareA = 1;
+let lectureCompareB = 2;
 let historyStack = [];
 let isNavigatingHistory = false;
 let suppressHashSync = false;
@@ -537,6 +540,8 @@ function captureViewState() {
     selectedItemType,
     rightPaneMode,
     currentLecture,
+    lectureCompareA,
+    lectureCompareB,
     searchQuery,
     onlyDiscussed,
     onlyQuestionCandidates,
@@ -569,6 +574,8 @@ function restoreViewState() {
     if (!tabs.includes(parsed.currentTab)) parsed.currentTab = tabs[0];
     if (parsed.rightPaneMode !== 'card' && parsed.rightPaneMode !== 'histogram') parsed.rightPaneMode = 'histogram';
     if (!Number.isInteger(parsed.currentLecture)) parsed.currentLecture = 0;
+    if (!Number.isInteger(parsed.lectureCompareA)) parsed.lectureCompareA = 1;
+    if (!Number.isInteger(parsed.lectureCompareB)) parsed.lectureCompareB = 2;
     if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
     parsed.onlyDiscussed = !!parsed.onlyDiscussed;
     parsed.onlyQuestionCandidates = !!parsed.onlyQuestionCandidates;
@@ -691,6 +698,8 @@ function applyViewState(state) {
   selectedItemType = state.selectedItemType || null;
   rightPaneMode = state.rightPaneMode || 'histogram';
   currentLecture = Number.isInteger(state.currentLecture) ? state.currentLecture : 0;
+  lectureCompareA = Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1;
+  lectureCompareB = Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2;
   searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
   onlyDiscussed = !!state.onlyDiscussed;
   onlyQuestionCandidates = !!state.onlyQuestionCandidates;
@@ -712,6 +721,8 @@ function sameViewState(a, b) {
     a.selectedItemType === b.selectedItemType &&
     a.rightPaneMode === b.rightPaneMode &&
     a.currentLecture === b.currentLecture &&
+    a.lectureCompareA === b.lectureCompareA &&
+    a.lectureCompareB === b.lectureCompareB &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
     !!a.onlyDiscussed === !!b.onlyDiscussed &&
     !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
@@ -1536,6 +1547,7 @@ function renderContent() {
   const renderers = {
     home: renderHomePanel,
     lectures: renderLecturesPanel,
+    lecture_compare: renderLectureComparePanel,
     lecture_pages: renderLecturePagePanel,
     tasks: renderTasksPanel,
     further_reading: renderFurtherReadingPanel,
@@ -3425,6 +3437,113 @@ function renderLecturesPanel(container) {
       if (e) e.stopPropagation();
       openLectureTerm(chip.dataset.term || chip.textContent || '');
     };
+  });
+}
+
+function renderLectureComparePanel(container) {
+  const chapters = APP_DATA.chapters || [];
+  if (chapters.length < 2) {
+    container.innerHTML = '<div class="panel active"><div style="padding:20px;color:#777;">Недостаточно лекций для сравнения.</div></div>';
+    return;
+  }
+
+  const clampIdx = (idx) => Math.max(0, Math.min(chapters.length - 1, Number.isInteger(idx) ? idx : 0));
+  lectureCompareA = clampIdx(lectureCompareA);
+  lectureCompareB = clampIdx(lectureCompareB);
+  if (lectureCompareA === lectureCompareB) lectureCompareB = (lectureCompareA + 1) % chapters.length;
+
+  const chapterA = chapters[lectureCompareA];
+  const chapterB = chapters[lectureCompareB];
+  const types = [
+    { key: 'names', label: 'Имена' },
+    { key: 'toponyms', label: 'Топонимы' },
+    { key: 'ethnonyms', label: 'Этнонимы' },
+    { key: 'languages', label: 'Языки' },
+    { key: 'lexicon', label: 'Лексика' },
+    { key: 'subject', label: 'Предметный' },
+  ];
+
+  const headsFor = (type, chapter) => {
+    const set = new Set();
+    for (const it of getItemsForChapter(type, chapter)) {
+      if (it && it.head) set.add(it.head);
+    }
+    return set;
+  };
+  const asSorted = (arr) => arr.sort(compareHeadsRu);
+  const renderHeadLinks = (type, heads, max = 10) => {
+    if (!heads.length) return '<span style="color:#999;font-size:12px;">—</span>';
+    let out = '';
+    for (const head of heads.slice(0, max)) {
+      out += `<span class="lecture-compare-link" data-type="${escapeHtml(type)}" data-head="${escapeHtml(head)}" style="display:inline-block;margin:2px 6px 2px 0;padding:2px 7px;border-radius:10px;background:#f0e8d8;color:#5a3818;cursor:pointer;font-size:11px;">${escapeHtml(head)}</span>`;
+    }
+    if (heads.length > max) out += `<span style="color:#888;font-size:11px;">+${heads.length - max}</span>`;
+    return out;
+  };
+  const chapterLabel = (idx, ch) => (idx === 0 ? 'Предисловие' : `Лекция ${idx}`) + ` · ${ch.name}`;
+
+  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
+  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Сравнение двух лекций</h2>';
+  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:14px;">Показываем пересечения и уникальные сущности по типам. Нажмите на элемент, чтобы открыть карточку.</div>';
+  html += `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px;">
+    <label style="display:block;">
+      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Лекция A</div>
+      <select id="lecture-compare-a" style="width:100%;padding:7px 9px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:12px;background:#fff;">
+        ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareA ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
+      </select>
+    </label>
+    <label style="display:block;">
+      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Лекция B</div>
+      <select id="lecture-compare-b" style="width:100%;padding:7px 9px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:12px;background:#fff;">
+        ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareB ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
+      </select>
+    </label>
+  </div>`;
+
+  html += `<div style="font-size:12px;color:#5a3818;margin-bottom:10px;"><strong>A:</strong> ${escapeHtml(chapterA.name)} <span style="color:#888;">(стр. ${chapterA.start}-${chapterA.end})</span><br><strong>B:</strong> ${escapeHtml(chapterB.name)} <span style="color:#888;">(стр. ${chapterB.start}-${chapterB.end})</span></div>`;
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;">';
+
+  for (const t of types) {
+    const setA = headsFor(t.key, chapterA);
+    const setB = headsFor(t.key, chapterB);
+    const inter = asSorted([...setA].filter(h => setB.has(h)));
+    const onlyA = asSorted([...setA].filter(h => !setB.has(h)));
+    const onlyB = asSorted([...setB].filter(h => !setA.has(h)));
+    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:8px;padding:12px 14px;border-top:3px solid #8a7050;">
+      <div style="font-size:15px;color:#5a3818;font-weight:bold;margin-bottom:6px;">${t.label}</div>
+      <div style="font-size:11px;color:#666;margin-bottom:8px;">Общие: <strong>${inter.length}</strong> · Только A: <strong>${onlyA.length}</strong> · Только B: <strong>${onlyB.length}</strong></div>
+      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Пересечение</div>
+      <div style="margin-bottom:7px;">${renderHeadLinks(t.key, inter, 10)}</div>
+      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Только A</div>
+      <div style="margin-bottom:7px;">${renderHeadLinks(t.key, onlyA, 8)}</div>
+      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Только B</div>
+      <div>${renderHeadLinks(t.key, onlyB, 8)}</div>
+    </div>`;
+  }
+
+  html += '</div></div></div>';
+  container.innerHTML = html;
+
+  const selA = document.getElementById('lecture-compare-a');
+  const selB = document.getElementById('lecture-compare-b');
+  if (selA) {
+    selA.onchange = () => {
+      lectureCompareA = clampIdx(parseInt(selA.value, 10));
+      if (lectureCompareA === lectureCompareB) lectureCompareB = (lectureCompareA + 1) % chapters.length;
+      renderLectureComparePanel(container);
+      persistViewState();
+    };
+  }
+  if (selB) {
+    selB.onchange = () => {
+      lectureCompareB = clampIdx(parseInt(selB.value, 10));
+      if (lectureCompareA === lectureCompareB) lectureCompareA = (lectureCompareB + 1) % chapters.length;
+      renderLectureComparePanel(container);
+      persistViewState();
+    };
+  }
+  container.querySelectorAll('.lecture-compare-link[data-head]').forEach(el => {
+    el.onclick = () => navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
   });
 }
 
