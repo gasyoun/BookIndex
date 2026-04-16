@@ -74328,8 +74328,14 @@ function wireGlobalUI() {
         }
         return;
       }
-      if (e.key === 'Enter' && box.classList.contains('open')) {
-        const matches = Array.isArray(box._matches) ? box._matches : [];
+      if (e.key === 'Enter') {
+        let matches = [];
+        if (box.classList.contains('open')) {
+          matches = Array.isArray(box._matches) ? box._matches : [];
+        } else {
+          const q = clampUiInput(input.value, MAX_GLOBAL_QUERY_LENGTH);
+          matches = getGlobalSearchMatches(q);
+        }
         if (!matches.length) return;
         const idx = globalSearchActiveIndex < 0 ? 0 : globalSearchActiveIndex;
         openGlobalSearchMatch(matches[idx]);

@@ -48,6 +48,15 @@ test.describe('aaz-index smoke', () => {
     await expect(page).not.toHaveURL(/#home\/home$/);
   });
 
+  test('global search enter opens first match without explicit dropdown navigation', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const input = page.locator('#global-search');
+    await input.fill('iv');
+    await input.press('Enter');
+    await expect(page.locator('#content .panel.active')).toBeVisible();
+    await expect(page).not.toHaveURL(/#home\/home$/);
+  });
+
   test('global search opens glossary term results', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
