@@ -1,5 +1,4 @@
-require('./smoke.spec.new');
-/*
+const { test, expect } = require('@playwright/test');
 
 test.describe('aaz-index smoke', () => {
   test('loads home and renders navigation', async ({ page }) => {
@@ -26,7 +25,7 @@ test.describe('aaz-index smoke', () => {
   test('global search returns navigable results', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
-    await input.fill('иткин');
+    await input.fill('\u0438\u0442\u043a\u0438\u043d');
     const results = page.locator('#global-search-results.open .header-search-item');
     await expect(results.first()).toBeVisible();
     const before = page.url();
@@ -38,9 +37,8 @@ test.describe('aaz-index smoke', () => {
   test('global search supports keyboard navigation (down/up/enter)', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
-    await input.fill('РёС‚РєРёРЅ');
-    const results = page.locator('#global-search-results.open .header-search-item');
     await input.fill('iv');
+    const results = page.locator('#global-search-results.open .header-search-item');
     await input.press('ArrowDown');
     await expect(results.first()).toBeVisible();
     await expect(results.first()).toHaveClass(/active/);
@@ -82,19 +80,22 @@ test.describe('aaz-index smoke', () => {
   test('global search opens glossary term results', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
-    await input.fill('энклит');
-    const glossaryResult = page.locator('#global-search-results.open .header-search-item').filter({ has: page.locator('.kind', { hasText: 'термин' }) }).first();
+    await input.fill('\u044d\u043d\u043a\u043b\u0438\u0442');
+    const glossaryResult = page
+      .locator('#global-search-results.open .header-search-item')
+      .filter({ has: page.locator('.kind', { hasText: '\u0442\u0435\u0440\u043c\u0438\u043d' }) })
+      .first();
     await expect(glossaryResult).toBeVisible();
     await glossaryResult.click();
     await expect(page).toHaveURL(/#materials\/glossary\/term\//);
     await expect(page.locator('#glossary-search')).toBeVisible();
-    await expect(page.locator('#glossary-search')).toHaveValue(/энклит/i);
+    await expect(page.locator('#glossary-search')).toHaveValue(/\u044d\u043d\u043a\u043b\u0438\u0442/i);
   });
 
   test('list hash query restores list search input', async ({ page }) => {
     await page.goto('/aaz-index.html#all/list/q/%D0%B6%D0%B5');
     await expect(page).toHaveURL(/#all\/list\/q\//);
-    await expect(page.locator('#search-input')).toHaveValue('же');
+    await expect(page.locator('#search-input')).toHaveValue('\u0436\u0435');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
   });
 
@@ -147,13 +148,13 @@ test.describe('aaz-index smoke', () => {
 
     await input.fill('120');
     await go.click();
-    await expect(results).toContainText('Страница 120');
+    await expect(results).toContainText('\u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0430 120');
 
     await next.click();
-    await expect(results).toContainText('Страница 121');
+    await expect(results).toContainText('\u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0430 121');
 
     await prev.click();
-    await expect(results).toContainText('Страница 120');
+    await expect(results).toContainText('\u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0430 120');
 
     await openTrends.click();
     await expect(page).toHaveURL(/#scholar\/page_trends/);
@@ -163,12 +164,22 @@ test.describe('aaz-index smoke', () => {
 
   test('lexicon card links to glossary deep-link', async ({ page }) => {
     await page.goto('/aaz-index.html#lexicon/list/item/lexicon/%D0%B6%D0%B5');
-    await expect(page.locator('#right-content .card h2')).toHaveText(/же/i);
+    await expect(page.locator('#right-content .card h2')).toHaveText(/\u0436\u0435/i);
     const glossaryBacklink = page.locator('#right-content .glossary-backlink[data-term]').first();
     await expect(glossaryBacklink).toBeVisible();
     await glossaryBacklink.click();
     await expect(page).toHaveURL(/#materials\/glossary\/term\//);
     await expect(page.locator('#glossary-search')).toBeVisible();
   });
+
+  test('related card links are clickable and keyboard reachable', async ({ page }) => {
+    await page.goto('/aaz-index.html#names/list/item/names/%D0%98%D1%82%D0%BA%D0%B8%D0%BD%20%D0%98.%20%D0%91.');
+    const firstRelated = page.locator('#right-content .xlink[data-head]').first();
+    await expect(firstRelated).toBeVisible();
+    const before = page.url();
+    await firstRelated.focus();
+    await page.keyboard.press('Enter');
+    await expect(page).not.toHaveURL(before);
+    await expect(page.locator('#right-content .card h2')).toBeVisible();
+  });
 });
-*/

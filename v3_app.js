@@ -1139,17 +1139,36 @@ function navigateToItem(type, head) {
   syncNavigationState();
 }
 
+function bindActionWithKeyboard(el, handler) {
+  if (!el || typeof handler !== 'function') return;
+  const tag = String(el.tagName || '').toLowerCase();
+  if (tag !== 'a' && tag !== 'button') {
+    safeSetAttr(el, 'role', 'button');
+    safeSetAttr(el, 'tabindex', '0');
+  }
+  el.onclick = (e) => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    handler();
+  };
+  el.onkeydown = (e) => {
+    const key = e && e.key ? String(e.key) : '';
+    if (key === 'Enter' || key === ' ') {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      handler();
+    }
+  };
+}
+
 function bindNavigateLinks(root, selector, defaultType = 'all') {
   if (!root || typeof root.querySelectorAll !== 'function') return;
   root.querySelectorAll(selector).forEach(el => {
     if (!el) return;
-    el.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    bindActionWithKeyboard(el, () => {
       const t = el.dataset && el.dataset.type ? el.dataset.type : defaultType;
       const h = el.dataset && el.dataset.head ? el.dataset.head : '';
       if (!h) return;
       navigateToItem(t || defaultType, h);
-    };
+    });
   });
 }
 
@@ -2662,7 +2681,14 @@ function renderCardInRight() {
   // Главы
   if (it.chapters && it.chapters.length > 0) {
     html += '<h3>Лекции</h3><ul style="margin:0; padding-left:18px; font-size:12px;">';
-    for (const ch of it.chapters) html += `<li>${escapeHtml(ch)}</li>`;
+    for (const ch of it.chapters) {
+      const lectureIdx = findLectureIndexByName(ch);
+      if (lectureIdx >= 0) {
+        html += `<li><a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}" style="text-decoration:underline dotted;">${escapeHtml(ch)}</a></li>`;
+      } else {
+        html += `<li>${escapeHtml(ch)}</li>`;
+      }
+    }
     html += '</ul>';
   }
 
@@ -2759,6 +2785,12 @@ function renderCardInRight() {
       if (e && typeof e.preventDefault === 'function') e.preventDefault();
       openGlossaryTerm(el.dataset.term || '');
     };
+  });
+  right.querySelectorAll('.lecture-open-link[data-lecture-idx]').forEach(el => {
+    bindActionWithKeyboard(el, () => {
+      const idx = parseInt((el.dataset && el.dataset.lectureIdx) || '0', 10);
+      openLecturePage(Number.isFinite(idx) ? idx : 0);
+    });
   });
   right.querySelectorAll('.related-link[data-name]').forEach(el => {
     el.onclick = () => {
@@ -4120,12 +4152,25 @@ function renderHomePanel(container) {
   const stats = APP_DATA.book_stats;
   const routes = APP_DATA.routes || [];
   const featured = APP_DATA.featured_quote || { text: '', page: '', lecture: '' };
-  const desktopNoInnerScroll = typeof window !== 'undefined' && typeof window.innerWidth === 'number' && window.innerWidth >= 980;
-  const routeGridStyle = desktopNoInnerScroll
-    ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px;'
-    : 'display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px;';
+  const vw = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 0;
+  const vh = (typeof window !== 'undefined' && typeof window.innerHeight === 'number') ? window.innerHeight : 0;
+  const desktopNoInnerScroll = vw >= 980;
+  const compactHome = desktopNoInnerScroll && vh > 0 && vh <= 840;
+  const routeGridStyle = compactHome
+    ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px;'
+    : desktopNoInnerScroll
+      ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px;'
+      : 'display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px;';
+  const homePanelOverflow = desktopNoInnerScroll ? 'hidden' : 'auto';
+  const homeInnerPadding = compactHome ? '10px 14px' : '14px 20px';
+  const factPairStyle = compactHome
+    ? 'display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,0.95fr);gap:8px;align-items:start;'
+    : 'display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px;align-items:start;';
+  const quoteTextClamp = compactHome
+    ? 'display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;'
+    : '';
 
-  let html = `<div class="panel active" style="overflow-y:${desktopNoInnerScroll ? 'hidden' : 'auto'};height:100%;"><div style="padding:14px 20px;max-width:1200px;margin:0 auto;">`;
+  let html = `<div class="panel active home-panel" style="overflow-y:${homePanelOverflow};height:100%;"><div style="padding:${homeInnerPadding};max-width:1200px;margin:0 auto;">`;
 
   // === БЛОК 1: КНИГА В ЦИФРАХ ===
   html += `<div style="background:linear-gradient(135deg,#5a3818,#8a7050);color:#fff8e8;padding:16px 20px;border-radius:6px;margin-bottom:14px;">
@@ -4155,8 +4200,8 @@ function renderHomePanel(container) {
   html += '</div>';
 
   // Изюминки
-  html += `<div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,248,232,0.25);font-size:12px;line-height:1.7;">
-    <div id="home-fact-pair" style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px;align-items:start;">
+  html += `<div style="margin-top:${compactHome ? 10 : 14}px;padding-top:${compactHome ? 10 : 14}px;border-top:1px solid rgba(255,248,232,0.25);font-size:12px;line-height:${compactHome ? 1.55 : 1.7};">
+    <div id="home-fact-pair" style="${factPairStyle}">
       <div>
         <div>📖 Самая длинная лекция — <strong>«${escapeHtml(stats.longest_lecture.name)}»</strong> (${stats.longest_lecture.pages} страниц)</div>
         <div>🗣 Самый часто упоминаемый язык — <strong>${escapeHtml(stats.top_lang.head)}</strong> (${stats.top_lang.count} упоминаний)</div>
@@ -4166,7 +4211,9 @@ function renderHomePanel(container) {
         <div>⏳ Самый ранний из упомянутых — <strong>${escapeHtml(stats.earliest_person.head)}</strong> (${Math.abs(stats.earliest_person.epoch)} ${stats.earliest_person.epoch < 0 ? 'до н.&nbsp;э.' : 'г.'})</div>
         <div>🌐 Самая представленная семья — <strong>${escapeHtml(stats.top_family[0])}</strong> (${stats.top_family[1]} языков)</div>
       </div>
-      <div style="padding-left:10px;border-left:2px solid rgba(255,248,232,0.45);font-style:italic;">«${escapeHtml(featured.text)}» <span style="font-style:normal;opacity:0.85;">— стр. ${escapeHtml(featured.page)}, лекция «${escapeHtml(featured.lecture)}»</span>
+      <div id="home-featured-quote" style="padding-left:${compactHome ? 8 : 10}px;border-left:2px solid rgba(255,248,232,0.45);font-style:italic;align-self:start;">
+        <div id="home-featured-quote-text" style="${quoteTextClamp}">«${escapeHtml(featured.text)}»</div>
+        <div style="margin-top:6px;font-style:normal;opacity:0.85;">— стр. ${escapeHtml(featured.page)}, лекция «${escapeHtml(featured.lecture)}»</div>
         <div style="margin-top:8px;font-style:normal;opacity:0.9;font-size:11px;">Выберите свой путь по книге — если не знаете, с чего начать, выберите тему, которая вас интересует.</div>
       </div>
     </div>
@@ -4187,14 +4234,22 @@ function renderHomePanel(container) {
   </div>`;
 
   const recentItems = loadRecentItems().slice(0, 10);
-  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:14px;">
-    <div style="font-size:14px;color:#5a3818;font-weight:normal;margin-bottom:6px;">Недавно открывали</div>
-    <div id="home-recent-items" style="font-size:12px;line-height:1.6;">${recentItems.length ? '' : '<span style="color:#888;">Пока пусто — откройте любую карточку.</span>'}</div>
-  </div>`;
+  if (!compactHome) {
+    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:14px;">
+      <div style="font-size:14px;color:#5a3818;font-weight:normal;margin-bottom:6px;">Недавно открывали</div>
+      <div id="home-recent-items" style="font-size:12px;line-height:1.6;">${recentItems.length ? '' : '<span style="color:#888;">Пока пусто — откройте любую карточку.</span>'}</div>
+    </div>`;
+  }
 
   // === БЛОК 2: МАРШРУТЫ ===
-  html += `<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:14px 0 4px 0;">Выберите свой путь по книге</h2>
-    <div style="${routeGridStyle}">`;
+  if (compactHome) {
+    html += `<details id="home-routes-details" style="margin-top:8px;border:1px solid #d4c8b0;border-radius:6px;background:#fff;padding:8px 10px;">
+      <summary style="cursor:pointer;color:#5a3818;font-size:15px;">Выберите свой путь по книге (${routes.length})</summary>
+      <div style="margin-top:8px;${routeGridStyle}">`;
+  } else {
+    html += `<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:14px 0 4px 0;">Выберите свой путь по книге</h2>
+      <div style="${routeGridStyle}">`;
+  }
   for (const r of routes) {
     html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;border-top:3px solid #8a7050;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:4px;">
@@ -4210,6 +4265,7 @@ function renderHomePanel(container) {
     html += '</div></div>';
   }
   html += '</div>';
+  if (compactHome) html += '</details>';
 
   html += '</div></div>';
 
@@ -4249,13 +4305,12 @@ function renderHomePanel(container) {
     ];
     for (let i = 0; i < factRows.length && i < factActions.length; i++) {
       const row = factRows[i];
-      row.style.cursor = 'pointer';
       row.style.textDecoration = 'underline dotted';
-      row.onclick = factActions[i];
+      bindActionWithKeyboard(row, factActions[i]);
     }
     if (quoteCol) {
-      quoteCol.style.fontSize = '15px';
-      quoteCol.style.lineHeight = '1.65';
+      quoteCol.style.fontSize = compactHome ? '14px' : '15px';
+      quoteCol.style.lineHeight = compactHome ? '1.55' : '1.65';
       const hint = typeof quoteCol.querySelector === 'function' ? quoteCol.querySelector('div') : null;
       if (hint) {
         hint.style.fontStyle = 'italic';

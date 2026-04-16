@@ -40,9 +40,26 @@ def check_static_guards():
         js = f.read()
     with open('v3_template.html', 'r', encoding='utf-8') as f:
         tpl = f.read()
+    smoke = ''
+    smoke_candidates = [
+        os.path.join('tests', 'e2e', 'smoke.spec.new.js'),
+        os.path.join('tests', 'e2e', 'smoke.spec.js'),
+    ]
+    smoke_path = next((p for p in smoke_candidates if os.path.exists(p)), '')
+    if smoke_path:
+        with open(smoke_path, 'r', encoding='utf-8') as f:
+            smoke = f.read()
 
     banned = [
         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    ]
+    mojibake_markers = [
+        'РёС',
+        'РЎС',
+        'СЌРЅ',
+        'Р¶Рµ',
+        'вЂ',
+        'рџ',
     ]
     required = [
         'function getListColumnCount(',
@@ -76,6 +93,17 @@ def check_static_guards():
     for needle in template_required:
         if needle not in tpl:
             print(f"[static] FAIL: required template fragment missing: {needle}")
+            return False
+
+    for marker in mojibake_markers:
+        if marker in js:
+            print(f"[static] FAIL: mojibake marker in v3_app.js: {marker}")
+            return False
+        if marker in tpl:
+            print(f"[static] FAIL: mojibake marker in v3_template.html: {marker}")
+            return False
+        if smoke and marker in smoke:
+            print(f"[static] FAIL: mojibake marker in smoke.spec.js: {marker}")
             return False
 
     print("[static] OK: guards passed")
