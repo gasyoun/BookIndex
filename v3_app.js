@@ -1091,6 +1091,20 @@ function navigateToItem(type, head) {
   syncNavigationState();
 }
 
+function bindNavigateLinks(root, selector, defaultType = 'all') {
+  if (!root || typeof root.querySelectorAll !== 'function') return;
+  root.querySelectorAll(selector).forEach(el => {
+    if (!el) return;
+    el.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      const t = el.dataset && el.dataset.type ? el.dataset.type : defaultType;
+      const h = el.dataset && el.dataset.head ? el.dataset.head : '';
+      if (!h) return;
+      navigateToItem(t || defaultType, h);
+    };
+  });
+}
+
 function openLecturePage(index) {
   currentEntity = 'materials';
   currentTab = 'lecture_pages';
@@ -2587,13 +2601,7 @@ function renderCardInRight() {
     };
   }
   // Универсальная привязка для всех кросс-ссылок (xlink) с указанием типа
-  right.querySelectorAll('.xlink[data-head]').forEach(el => {
-    el.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      const t = el.dataset.type || 'names';
-      navigateToItem(t, el.dataset.head);
-    };
-  });
+  bindNavigateLinks(right, '.xlink[data-head]', 'names');
   right.querySelectorAll('.glossary-backlink[data-term]').forEach(el => {
     el.onclick = (e) => {
       if (e && typeof e.preventDefault === 'function') e.preventDefault();
@@ -2815,15 +2823,7 @@ function renderEpochsPanel(container) {
   }
   html += '</div>';
   grid.innerHTML = html;
-  grid.querySelectorAll('.related-link[data-head]').forEach(el => {
-    el.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      selectedItem = el.dataset.head;
-      selectedItemType = 'toponyms';
-      rightPaneMode = 'card';
-      switchTab('list');
-    };
-  });
+  bindNavigateLinks(grid, '.related-link[data-head]', 'toponyms');
 }
 
 // =========================================================
@@ -4187,12 +4187,7 @@ function renderHomePanel(container) {
       }
       readingResults.innerHTML = htmlOut;
     }
-    readingResults.querySelectorAll('.reading-now-link').forEach(link => {
-      link.onclick = (e) => {
-        if (e && typeof e.preventDefault === 'function') e.preventDefault();
-        navigateToItem(link.dataset.type || 'all', link.dataset.head || '');
-      };
-    });
+    bindNavigateLinks(readingResults, '.reading-now-link', 'all');
     readingResults.querySelectorAll('.reading-now-open-trends').forEach(btn => {
       btn.onclick = () => openReadingTrends(parseInt(btn.dataset.page || '', 10));
     });
@@ -4243,23 +4238,11 @@ function renderHomePanel(container) {
       recentHtml += `<a class="home-recent-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)} <span style="color:#777;">· ${escapeHtml(label)}</span></a>`;
     }
     recentBox.innerHTML = recentHtml;
-    recentBox.querySelectorAll('.home-recent-link').forEach(link => {
-      link.onclick = (e) => {
-        if (e && typeof e.preventDefault === 'function') e.preventDefault();
-        navigateToItem(link.dataset.type || 'all', link.dataset.head || '');
-      };
-    });
+    bindNavigateLinks(recentBox, '.home-recent-link', 'all');
   }
 
   // Маршрутные ссылки
-  container.querySelectorAll('.route-link').forEach(link => {
-    link.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      const t = link.dataset.type;
-      const h = link.dataset.head;
-      navigateToItem(t, h);
-    };
-  });
+  bindNavigateLinks(container, '.route-link', 'all');
   const exportSiteBtn = document.getElementById('export-site-md');
   if (exportSiteBtn) exportSiteBtn.onclick = () => exportWholeSiteMarkdown();
 }
@@ -4579,12 +4562,7 @@ function renderLectureComparePanel(container) {
       persistViewState();
     };
   }
-  container.querySelectorAll('.lecture-compare-link[data-head]').forEach(el => {
-    el.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
-    };
-  });
+  bindNavigateLinks(container, '.lecture-compare-link[data-head]', 'all');
 }
 
 function renderLecturePagePanel(container) {
@@ -4891,12 +4869,7 @@ function renderGlossaryPanel(container) {
   } else {
     currentGlossaryTerm = String(input.value || '').trim().toLowerCase();
   }
-  container.querySelectorAll('.glossary-xlink').forEach(el => {
-    el.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      navigateToItem(el.dataset.type || 'lexicon', el.dataset.head || '');
-    };
-  });
+  bindNavigateLinks(container, '.glossary-xlink', 'lexicon');
 }
 
 // =========================================================
@@ -5182,12 +5155,7 @@ function renderPageTrendsPanel(container) {
   }
   if (exportCsvBtn) exportCsvBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.csv`, csvText, 'text/csv;charset=utf-8');
   if (exportMdBtn) exportMdBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.md`, mdText, 'text/markdown;charset=utf-8');
-  container.querySelectorAll('.trend-link[data-head]').forEach(el => {
-    el.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
-    };
-  });
+  bindNavigateLinks(container, '.trend-link[data-head]', 'all');
 }
 
 function renderScholarPanel(container) {
@@ -5377,12 +5345,7 @@ function renderScholarPanel(container) {
   container.innerHTML = html;
 
   // Привязки кликов на имена
-  container.querySelectorAll('.scholar-link').forEach(el => {
-    el.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      navigateToItem(el.dataset.type, el.dataset.head);
-    };
-  });
+  bindNavigateLinks(container, '.scholar-link', 'all');
 }
 
 // =========================================================
