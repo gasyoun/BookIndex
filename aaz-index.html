@@ -73100,6 +73100,11 @@ const NORMALIZE_CACHE_LIMIT = 8000;
 let normalizeHeadCache = new Map();
 const AGGREGATE_CACHE_MAX = 80;
 let aggregateCache = new Map();
+let nameGraphWorker = null;
+let nameGraphWorkerBlobUrl = null;
+let nameGraphWorkerRequestId = 0;
+let nameGraphRenderToken = 0;
+let nameGraphLayoutPromiseCache = new Map();
 
 // =========================================================
 // УТИЛИТЫ
@@ -73155,9 +73160,10 @@ function getCachedAggregate(kind, key, computeFn) {
 }
 
 function invalidateAggregateCache(reason = '') {
-  if (aggregateCache.size === 0) return;
+  const hadAny = aggregateCache.size > 0 || nameGraphLayoutPromiseCache.size > 0;
   aggregateCache.clear();
-  perfDebug('aggregate cache reset', 0, reason || 'clear');
+  nameGraphLayoutPromiseCache.clear();
+  if (hadAny) perfDebug('aggregate cache reset', 0, reason || 'clear');
 }
 
 function escapeHtml(s) {
@@ -74306,6 +74312,7 @@ function renderContent() {
   const container = document.getElementById('content');
   container.innerHTML = '';
   if (currentTab !== 'list') setMobileSheetOpen(false);
+  if (currentTab !== 'graph') nameGraphRenderToken += 1;
   const renderers = {
     home: renderHomePanel,
     lectures: renderLecturesPanel,
@@ -75481,7 +75488,7 @@ function renderHeatmapPanel(container) {
 // =========================================================
 // ГРАФ ИМЁН
 // =========================================================
-function getNameGraphLayout(strongOnly, W, H) {
+function getNameGraphLayoutSync(strongOnly, W, H) {
   const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
   return getCachedAggregate('graph-names', key, () => {
     const items = APP_DATA.names || [];
@@ -75538,11 +75545,217 @@ function getNameGraphLayout(strongOnly, W, H) {
   });
 }
 
+function getNameGraphLayout(strongOnly, W, H) {
+  return getNameGraphLayoutSync(strongOnly, W, H);
+}
+
+function supportsNameGraphWorker() {
+  return (
+    typeof Worker !== 'undefined' &&
+    typeof Blob !== 'undefined' &&
+    typeof URL !== 'undefined' &&
+    typeof URL.createObjectURL === 'function'
+  );
+}
+
+function disposeNameGraphWorker() {
+  if (nameGraphWorker) {
+    try { nameGraphWorker.terminate(); } catch (e) {}
+    nameGraphWorker = null;
+  }
+  if (nameGraphWorkerBlobUrl) {
+    try { URL.revokeObjectURL(nameGraphWorkerBlobUrl); } catch (e) {}
+    nameGraphWorkerBlobUrl = null;
+  }
+}
+
+function getNameGraphWorkerScript() {
+  return [
+    "function seed(text, salt) {",
+    "  var h = (2166136261 ^ salt) >>> 0;",
+    "  for (var i = 0; i < text.length; i++) {",
+    "    h ^= text.charCodeAt(i);",
+    "    h = Math.imul(h, 16777619);",
+    "  }",
+    "  h ^= h >>> 13;",
+    "  h = Math.imul(h, 1274126177);",
+    "  h ^= h >>> 16;",
+    "  return (h >>> 0) / 4294967295;",
+    "}",
+    "self.onmessage = function(event) {",
+    "  var data = event.data || {};",
+    "  var requestId = data.requestId;",
+    "  try {",
+    "    var strongOnly = !!data.strongOnly;",
+    "    var W = Number(data.W) || 1200;",
+    "    var H = Number(data.H) || 600;",
+    "    var names = Array.isArray(data.names) ? data.names : [];",
+    "    var srcEdges = Array.isArray(data.edges) ? data.edges : [];",
+    "    var edges = strongOnly ? srcEdges.filter(function(e) { return (e.weight || 0) >= 2; }) : srcEdges.slice();",
+    "    var connected = new Set();",
+    "    for (var ei = 0; ei < edges.length; ei++) {",
+    "      connected.add(edges[ei].source);",
+    "      connected.add(edges[ei].target);",
+    "    }",
+    "    var nodes = [];",
+    "    for (var ni = 0; ni < names.length; ni++) {",
+    "      var n = names[ni];",
+    "      if (!connected.has(n.head)) continue;",
+    "      var rx = seed(n.head + ':x', 11) - 0.5;",
+    "      var ry = seed(n.head + ':y', 23) - 0.5;",
+    "      nodes.push({",
+    "        name: n.head,",
+    "        subcat: n.subcat || '',",
+    "        weight: Number(n.weight) || 0,",
+    "        x: W / 2 + rx * W * 0.8,",
+    "        y: H / 2 + ry * H * 0.8,",
+    "        vx: 0,",
+    "        vy: 0",
+    "      });",
+    "    }",
+    "    var idx = {};",
+    "    for (var i = 0; i < nodes.length; i++) idx[nodes[i].name] = i;",
+    "    var validEdges = edges.filter(function(e) { return idx[e.source] !== undefined && idx[e.target] !== undefined; });",
+    "    function step() {",
+    "      for (var aIdx = 0; aIdx < nodes.length; aIdx++) {",
+    "        for (var bIdx = aIdx + 1; bIdx < nodes.length; bIdx++) {",
+    "          var a = nodes[aIdx], b = nodes[bIdx];",
+    "          var dx = b.x - a.x, dy = b.y - a.y;",
+    "          var d2 = dx * dx + dy * dy + 0.01;",
+    "          var d = Math.sqrt(d2);",
+    "          var force = 1000 / d2;",
+    "          a.vx -= (dx / d) * force; a.vy -= (dy / d) * force;",
+    "          b.vx += (dx / d) * force; b.vy += (dy / d) * force;",
+    "        }",
+    "      }",
+    "      for (var eIdx = 0; eIdx < validEdges.length; eIdx++) {",
+    "        var edge = validEdges[eIdx];",
+    "        var left = nodes[idx[edge.source]], right = nodes[idx[edge.target]];",
+    "        var ex = right.x - left.x, ey = right.y - left.y;",
+    "        var ed = Math.sqrt(ex * ex + ey * ey) + 0.01;",
+    "        var edgeForce = (ed - 90) * 0.01 * Math.sqrt(edge.weight || 0);",
+    "        left.vx += (ex / ed) * edgeForce; left.vy += (ey / ed) * edgeForce;",
+    "        right.vx -= (ex / ed) * edgeForce; right.vy -= (ey / ed) * edgeForce;",
+    "      }",
+    "      for (var nIdx = 0; nIdx < nodes.length; nIdx++) {",
+    "        var node = nodes[nIdx];",
+    "        node.vx += (W / 2 - node.x) * 0.001;",
+    "        node.vy += (H / 2 - node.y) * 0.001;",
+    "        node.vx *= 0.85;",
+    "        node.vy *= 0.85;",
+    "        node.x += node.vx;",
+    "        node.y += node.vy;",
+    "        node.x = Math.max(40, Math.min(W - 40, node.x));",
+    "        node.y = Math.max(40, Math.min(H - 40, node.y));",
+    "      }",
+    "    }",
+    "    for (var stepIdx = 0; stepIdx < 300; stepIdx++) step();",
+    "    self.postMessage({ requestId: requestId, ok: true, layout: { nodes: nodes, idx: idx, validEdges: validEdges } });",
+    "  } catch (error) {",
+    "    self.postMessage({ requestId: requestId, ok: false, error: String((error && error.message) ? error.message : error) });",
+    "  }",
+    "};",
+  ].join('\n');
+}
+
+function getNameGraphWorker() {
+  if (!supportsNameGraphWorker()) return null;
+  if (nameGraphWorker) return nameGraphWorker;
+  try {
+    const blob = new Blob([getNameGraphWorkerScript()], { type: 'text/javascript' });
+    nameGraphWorkerBlobUrl = URL.createObjectURL(blob);
+    nameGraphWorker = new Worker(nameGraphWorkerBlobUrl);
+    return nameGraphWorker;
+  } catch (e) {
+    disposeNameGraphWorker();
+    return null;
+  }
+}
+
+function requestNameGraphLayoutFromWorker(strongOnly, W, H) {
+  const worker = getNameGraphWorker();
+  if (!worker) return null;
+  const requestId = ++nameGraphWorkerRequestId;
+  const names = (APP_DATA.names || []).map(n => ({
+    head: n.head,
+    subcat: n.subcategory,
+    weight: (n.page_list || []).length,
+  }));
+  const edges = (APP_DATA.edges || []).map(e => ({
+    source: e.source,
+    target: e.target,
+    weight: Number(e.weight) || 0,
+  }));
+  return new Promise((resolve, reject) => {
+    const onMessage = (event) => {
+      const data = event.data || {};
+      if (data.requestId !== requestId) return;
+      worker.removeEventListener('message', onMessage);
+      worker.removeEventListener('error', onError);
+      if (data.ok && data.layout) resolve(data.layout);
+      else reject(new Error(data.error || 'name graph worker failed'));
+    };
+    const onError = (event) => {
+      worker.removeEventListener('message', onMessage);
+      worker.removeEventListener('error', onError);
+      const msg = event && event.message ? event.message : 'name graph worker error';
+      reject(new Error(msg));
+    };
+    worker.addEventListener('message', onMessage);
+    worker.addEventListener('error', onError);
+    worker.postMessage({ requestId, strongOnly, W, H, names, edges });
+  });
+}
+
+function getNameGraphLayoutAsync(strongOnly, W, H) {
+  const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
+  const cacheKey = `graph-names::${key}`;
+  if (aggregateCache.has(cacheKey)) {
+    perfDebug('graph-names-worker cache', 0, 'hit');
+    return Promise.resolve(aggregateCache.get(cacheKey));
+  }
+  if (nameGraphLayoutPromiseCache.has(cacheKey)) {
+    return nameGraphLayoutPromiseCache.get(cacheKey);
+  }
+  const t0 = nowMs();
+  let job = null;
+  if (supportsNameGraphWorker()) {
+    job = requestNameGraphLayoutFromWorker(strongOnly, W, H);
+  }
+  if (!job) {
+    job = Promise.resolve(getNameGraphLayoutSync(strongOnly, W, H));
+  } else {
+    job = job.catch((error) => {
+      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
+        console.warn('[graph-worker] fallback to sync layout:', error && error.message ? error.message : error);
+      }
+      disposeNameGraphWorker();
+      return getNameGraphLayoutSync(strongOnly, W, H);
+    });
+  }
+  const promise = job.then((layout) => {
+    aggregateCache.set(cacheKey, layout);
+    if (aggregateCache.size > AGGREGATE_CACHE_MAX) {
+      const oldest = aggregateCache.keys().next();
+      if (!oldest.done) aggregateCache.delete(oldest.value);
+    }
+    nameGraphLayoutPromiseCache.delete(cacheKey);
+    perfDebug('graph-names-worker', nowMs() - t0, 'miss');
+    return layout;
+  }).catch((error) => {
+    nameGraphLayoutPromiseCache.delete(cacheKey);
+    throw error;
+  });
+  nameGraphLayoutPromiseCache.set(cacheKey, promise);
+  return promise;
+}
+
 function renderGraphPanel(container) {
   const t0 = nowMs();
   container.innerHTML = `<div class="panel active"><div class="graph-container">
     <p class="chart-intro">Граф совместных упоминаний: имена соединены, если встречаются в тексте близко друг к другу. Вес связи учитывает позицию слов на странице — упоминание в конце одной страницы и в начале следующей даёт такой же вклад, как упоминание на одной строке. Иллюстрационные страницы пропускаются. Толщина линии — суммарный вес близостей всех упоминаний.</p>
     <div style="margin-bottom:8px;"><button class="filter-chip ${graphStrongOnly?'active':''}" id="graph-strong-btn">только сильные связи (вес ≥ 2)</button></div>
+    <div id="graph-status" style="font-size:12px;color:#7b5b38;margin-bottom:8px;">Рассчитываю расположение узлов…</div>
     <canvas id="graph-canvas" width="1200" height="600"></canvas></div></div>`;
 
   document.getElementById('graph-strong-btn').onclick = (e) => {
@@ -75554,69 +75767,195 @@ function renderGraphPanel(container) {
   const canvas = document.getElementById('graph-canvas');
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
-  const layout = getNameGraphLayout(graphStrongOnly, W, H);
-  const nodes = layout.nodes;
-  const idx = layout.idx;
-  const validEdges = layout.validEdges;
-  function draw(hover) {
-    ctx.clearRect(0, 0, W, H);
-    for (const e of validEdges) {
-      const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
-      ctx.strokeStyle = 'rgba(138, 112, 80, ' + Math.min(0.6, 0.2 + e.weight * 0.15) + ')';
-      ctx.lineWidth = Math.sqrt(e.weight) * 1.2;
-      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+  const status = document.getElementById('graph-status');
+  const renderToken = ++nameGraphRenderToken;
+  const modeMeta = graphStrongOnly ? 'strong' : 'all';
+
+  function mountLayout(layout) {
+    if (renderToken !== nameGraphRenderToken) return;
+    const nodes = Array.isArray(layout.nodes) ? layout.nodes : [];
+    const idx = layout.idx || {};
+    const validEdges = Array.isArray(layout.validEdges) ? layout.validEdges : [];
+    const canTransform = (
+      typeof ctx.save === 'function' &&
+      typeof ctx.restore === 'function' &&
+      typeof ctx.translate === 'function' &&
+      typeof ctx.scale === 'function'
+    );
+    let viewScale = 1;
+    let viewOffsetX = 0;
+    let viewOffsetY = 0;
+    let hoverNode = null;
+    let dragActive = false;
+    let dragMoved = false;
+    let dragLastX = 0;
+    let dragLastY = 0;
+    if (status) {
+      status.textContent = '';
+      status.style.display = 'none';
     }
-    for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.5;
-      ctx.fillStyle = safeColor(COLORS[n.subcat], '#666');
-      ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI*2); ctx.fill();
-      ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
-      if (r > 6) {
-        ctx.fillStyle = '#1a1a1a'; ctx.font = '11px Georgia';
-        ctx.textAlign = 'left'; ctx.fillText(n.name, n.x + r + 3, n.y + 4);
+
+    function eventToCanvasPoint(e) {
+      const rect = canvas.getBoundingClientRect();
+      const sx = canvas.width / rect.width;
+      const sy = canvas.height / rect.height;
+      return {
+        x: (e.clientX - rect.left) * sx,
+        y: (e.clientY - rect.top) * sy,
+      };
+    }
+
+    function screenToWorld(pt) {
+      return {
+        x: (pt.x - viewOffsetX) / viewScale,
+        y: (pt.y - viewOffsetY) / viewScale,
+      };
+    }
+
+    function pickNode(screenPt) {
+      const worldPt = screenToWorld(screenPt);
+      for (const n of nodes) {
+        const r = 4 + Math.sqrt(n.weight) * 1.5;
+        const hitR = (r + 5) / Math.max(0.25, viewScale);
+        if ((worldPt.x - n.x) ** 2 + (worldPt.y - n.y) ** 2 < hitR ** 2) return n;
+      }
+      return null;
+    }
+
+    function draw(hover) {
+      ctx.clearRect(0, 0, W, H);
+      if (canTransform) {
+        ctx.save();
+        ctx.translate(viewOffsetX, viewOffsetY);
+        ctx.scale(viewScale, viewScale);
+      }
+      for (const e of validEdges) {
+        const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
+        if (!a || !b) continue;
+        const ax = canTransform ? a.x : (a.x * viewScale + viewOffsetX);
+        const ay = canTransform ? a.y : (a.y * viewScale + viewOffsetY);
+        const bx = canTransform ? b.x : (b.x * viewScale + viewOffsetX);
+        const by = canTransform ? b.y : (b.y * viewScale + viewOffsetY);
+        ctx.strokeStyle = 'rgba(138, 112, 80, ' + Math.min(0.6, 0.2 + e.weight * 0.15) + ')';
+        ctx.lineWidth = canTransform ? Math.sqrt(e.weight) * 1.2 : Math.sqrt(e.weight) * 1.2 * viewScale;
+        ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+      }
+      for (const n of nodes) {
+        const rBase = 4 + Math.sqrt(n.weight) * 1.5;
+        const nx = canTransform ? n.x : (n.x * viewScale + viewOffsetX);
+        const ny = canTransform ? n.y : (n.y * viewScale + viewOffsetY);
+        const r = canTransform ? rBase : rBase * viewScale;
+        ctx.fillStyle = safeColor(COLORS[n.subcat], '#666');
+        ctx.beginPath(); ctx.arc(nx, ny, r, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
+        if (r > 6) {
+          ctx.fillStyle = '#1a1a1a'; ctx.font = '11px Georgia';
+          ctx.textAlign = 'left'; ctx.fillText(n.name, nx + r + 3, ny + 4);
+        }
+      }
+      if (canTransform) ctx.restore();
+      if (hover) {
+        const r = (4 + Math.sqrt(hover.weight) * 1.5) * viewScale;
+        const hx = hover.x * viewScale + viewOffsetX;
+        const hy = hover.y * viewScale + viewOffsetY;
+        ctx.font = 'bold 13px Georgia';
+        const tw = ctx.measureText(hover.name).width;
+        ctx.fillStyle = 'rgba(255,248,232,0.95)';
+        ctx.fillRect(hx + r + 2, hy - 16, tw + 8, 22);
+        ctx.strokeStyle = '#8a7050';
+        ctx.strokeRect(hx + r + 2, hy - 16, tw + 8, 22);
+        ctx.fillStyle = '#5a3818';
+        ctx.fillText(hover.name, hx + r + 6, hy);
       }
     }
-    if (hover) {
-      const r = 4 + Math.sqrt(hover.weight) * 1.5;
-      ctx.font = 'bold 13px Georgia';
-      const tw = ctx.measureText(hover.name).width;
-      ctx.fillStyle = 'rgba(255,248,232,0.95)';
-      ctx.fillRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
-      ctx.strokeStyle = '#8a7050';
-      ctx.strokeRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
-      ctx.fillStyle = '#5a3818';
-      ctx.fillText(hover.name, hover.x + r + 6, hover.y);
-    }
-  }
-  draw();
-  canvas.onmousemove = (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
-    let hover = null;
-    for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.5;
-      if ((mx - n.x)**2 + (my - n.y)**2 < (r + 4)**2) { hover = n; break; }
-    }
-    draw(hover);
-    canvas.style.cursor = hover ? 'pointer' : 'grab';
-  };
-  canvas.onclick = (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
-    for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.5;
-      if ((mx - n.x)**2 + (my - n.y)**2 < (r + 4)**2) {
-        selectedItem = n.name;
-        selectedItemType = 'names';
-        rightPaneMode = 'card';
-        switchTab('list');
+
+    draw();
+    canvas.style.cursor = 'grab';
+    canvas.onwheel = (e) => {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      const point = eventToCanvasPoint(e);
+      const before = screenToWorld(point);
+      const zoomFactor = e.deltaY < 0 ? 1.12 : (1 / 1.12);
+      const nextScale = Math.max(0.45, Math.min(3.2, viewScale * zoomFactor));
+      if (Math.abs(nextScale - viewScale) < 0.0001) return;
+      viewScale = nextScale;
+      viewOffsetX = point.x - before.x * viewScale;
+      viewOffsetY = point.y - before.y * viewScale;
+      hoverNode = pickNode(point);
+      draw(hoverNode);
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onmousedown = (e) => {
+      if (e && e.button !== undefined && e.button !== 0) return;
+      const point = eventToCanvasPoint(e);
+      dragActive = true;
+      dragMoved = false;
+      dragLastX = point.x;
+      dragLastY = point.y;
+      canvas.style.cursor = 'grabbing';
+    };
+    canvas.onmousemove = (e) => {
+      const point = eventToCanvasPoint(e);
+      if (dragActive) {
+        const dx = point.x - dragLastX;
+        const dy = point.y - dragLastY;
+        dragLastX = point.x;
+        dragLastY = point.y;
+        if (Math.abs(dx) + Math.abs(dy) > 0.4) dragMoved = true;
+        viewOffsetX += dx;
+        viewOffsetY += dy;
+        draw(hoverNode);
+        canvas.style.cursor = 'grabbing';
         return;
       }
-    }
-  };
-  perfDebug('render-graph-names', nowMs() - t0, graphStrongOnly ? 'strong' : 'all');
+      hoverNode = pickNode(point);
+      draw(hoverNode);
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onmouseup = () => {
+      if (!dragActive) return;
+      dragActive = false;
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onmouseleave = () => {
+      dragActive = false;
+      canvas.style.cursor = 'grab';
+    };
+    canvas.ondblclick = () => {
+      viewScale = 1;
+      viewOffsetX = 0;
+      viewOffsetY = 0;
+      draw(hoverNode);
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onclick = (e) => {
+      if (dragMoved) {
+        dragMoved = false;
+        return;
+      }
+      const point = eventToCanvasPoint(e);
+      const picked = pickNode(point);
+      if (!picked) return;
+      selectedItem = picked.name;
+      selectedItemType = 'names';
+      rightPaneMode = 'card';
+      switchTab('list');
+    };
+    perfDebug('render-graph-names', nowMs() - t0, modeMeta);
+  }
+
+  getNameGraphLayoutAsync(graphStrongOnly, W, H)
+    .then((layout) => mountLayout(layout))
+    .catch((error) => {
+      if (renderToken !== nameGraphRenderToken) return;
+      if (status) {
+        status.style.display = 'block';
+        status.textContent = 'Не удалось рассчитать граф.';
+      }
+      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
+        console.warn('[graph-names] render failed:', error && error.message ? error.message : error);
+      }
+    });
 }
 
 // =========================================================
@@ -75691,6 +76030,20 @@ function renderFamiliesPanel(container) {
 
   // Только рёбра между языками внутри одной подгруппы
   const validEdges = edges.filter(e => idx[e.source] !== undefined && idx[e.target] !== undefined);
+  const canTransform = (
+    typeof ctx.save === 'function' &&
+    typeof ctx.restore === 'function' &&
+    typeof ctx.translate === 'function' &&
+    typeof ctx.scale === 'function'
+  );
+  let viewScale = 1;
+  let viewOffsetX = 0;
+  let viewOffsetY = 0;
+  let hoverNode = null;
+  let dragActive = false;
+  let dragMoved = false;
+  let dragLastX = 0;
+  let dragLastY = 0;
 
   function step() {
     // Слабое отталкивание
@@ -75724,70 +76077,156 @@ function renderFamiliesPanel(container) {
   }
   for (let i = 0; i < 200; i++) step();
 
+  function eventToCanvasPoint(e) {
+    const rect = canvas.getBoundingClientRect();
+    const sx = canvas.width / rect.width;
+    const sy = canvas.height / rect.height;
+    return {
+      x: (e.clientX - rect.left) * sx,
+      y: (e.clientY - rect.top) * sy,
+    };
+  }
+
+  function screenToWorld(pt) {
+    return {
+      x: (pt.x - viewOffsetX) / viewScale,
+      y: (pt.y - viewOffsetY) / viewScale,
+    };
+  }
+
+  function pickNode(screenPt) {
+    const worldPt = screenToWorld(screenPt);
+    for (const n of nodes) {
+      const r = 4 + Math.sqrt(n.weight) * 1.2;
+      const hitR = (r + 5) / Math.max(0.25, viewScale);
+      if ((worldPt.x - n.x) ** 2 + (worldPt.y - n.y) ** 2 < hitR ** 2) return n;
+    }
+    return null;
+  }
+
   function draw(hover) {
     ctx.clearRect(0, 0, W, H);
+    if (canTransform) {
+      ctx.save();
+      ctx.translate(viewOffsetX, viewOffsetY);
+      ctx.scale(viewScale, viewScale);
+    }
     // Рёбра
     for (const e of validEdges) {
       const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
+      const ax = canTransform ? a.x : (a.x * viewScale + viewOffsetX);
+      const ay = canTransform ? a.y : (a.y * viewScale + viewOffsetY);
+      const bx = canTransform ? b.x : (b.x * viewScale + viewOffsetX);
+      const by = canTransform ? b.y : (b.y * viewScale + viewOffsetY);
       const fam = a.family;
       const color = safeColor(FAMILY_COLORS[fam], '#888');
       ctx.strokeStyle = color + '40';
-      ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      ctx.lineWidth = canTransform ? 1 : viewScale;
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
     }
     // Узлы
     for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.2;
+      const rBase = 4 + Math.sqrt(n.weight) * 1.2;
+      const nx = canTransform ? n.x : (n.x * viewScale + viewOffsetX);
+      const ny = canTransform ? n.y : (n.y * viewScale + viewOffsetY);
+      const r = canTransform ? rBase : rBase * viewScale;
       const color = safeColor(FAMILY_COLORS[n.family], '#888');
       ctx.fillStyle = color;
-      ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(nx, ny, r, 0, Math.PI*2); ctx.fill();
       ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
       if (r > 5) {
         ctx.fillStyle = '#1a1a1a'; ctx.font = '10px Georgia';
-        ctx.textAlign = 'left'; ctx.fillText(n.name, n.x + r + 3, n.y + 4);
+        ctx.textAlign = 'left'; ctx.fillText(n.name, nx + r + 3, ny + 4);
       }
     }
+    if (canTransform) ctx.restore();
     if (hover) {
-      const r = 4 + Math.sqrt(hover.weight) * 1.2;
+      const r = (4 + Math.sqrt(hover.weight) * 1.2) * viewScale;
+      const hx = hover.x * viewScale + viewOffsetX;
+      const hy = hover.y * viewScale + viewOffsetY;
       ctx.font = 'bold 12px Georgia';
       const text = hover.name + ' (' + hover.family + ')';
       const tw = ctx.measureText(text).width;
       ctx.fillStyle = 'rgba(255,248,232,0.95)';
-      ctx.fillRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
+      ctx.fillRect(hx + r + 2, hy - 16, tw + 8, 22);
       ctx.strokeStyle = '#8a7050';
-      ctx.strokeRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
+      ctx.strokeRect(hx + r + 2, hy - 16, tw + 8, 22);
       ctx.fillStyle = '#5a3818';
-      ctx.fillText(text, hover.x + r + 6, hover.y);
+      ctx.fillText(text, hx + r + 6, hy);
     }
   }
   draw();
+  canvas.style.cursor = 'grab';
 
+  canvas.onwheel = (e) => {
+    if (typeof e.preventDefault === 'function') e.preventDefault();
+    const point = eventToCanvasPoint(e);
+    const before = screenToWorld(point);
+    const zoomFactor = e.deltaY < 0 ? 1.12 : (1 / 1.12);
+    const nextScale = Math.max(0.45, Math.min(3.2, viewScale * zoomFactor));
+    if (Math.abs(nextScale - viewScale) < 0.0001) return;
+    viewScale = nextScale;
+    viewOffsetX = point.x - before.x * viewScale;
+    viewOffsetY = point.y - before.y * viewScale;
+    hoverNode = pickNode(point);
+    draw(hoverNode);
+    canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+  };
+  canvas.onmousedown = (e) => {
+    if (e && e.button !== undefined && e.button !== 0) return;
+    const point = eventToCanvasPoint(e);
+    dragActive = true;
+    dragMoved = false;
+    dragLastX = point.x;
+    dragLastY = point.y;
+    canvas.style.cursor = 'grabbing';
+  };
   canvas.onmousemove = (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
-    let hover = null;
-    for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.2;
-      if ((mx - n.x)**2 + (my - n.y)**2 < (r + 4)**2) { hover = n; break; }
+    const point = eventToCanvasPoint(e);
+    if (dragActive) {
+      const dx = point.x - dragLastX;
+      const dy = point.y - dragLastY;
+      dragLastX = point.x;
+      dragLastY = point.y;
+      if (Math.abs(dx) + Math.abs(dy) > 0.4) dragMoved = true;
+      viewOffsetX += dx;
+      viewOffsetY += dy;
+      draw(hoverNode);
+      canvas.style.cursor = 'grabbing';
+      return;
     }
-    draw(hover);
-    canvas.style.cursor = hover ? 'pointer' : 'grab';
+    hoverNode = pickNode(point);
+    draw(hoverNode);
+    canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+  };
+  canvas.onmouseup = () => {
+    if (!dragActive) return;
+    dragActive = false;
+    canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+  };
+  canvas.onmouseleave = () => {
+    dragActive = false;
+    canvas.style.cursor = 'grab';
+  };
+  canvas.ondblclick = () => {
+    viewScale = 1;
+    viewOffsetX = 0;
+    viewOffsetY = 0;
+    draw(hoverNode);
+    canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
   };
   canvas.onclick = (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
-    for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.2;
-      if ((mx - n.x)**2 + (my - n.y)**2 < (r + 4)**2) {
-        selectedItem = n.name;
-        selectedItemType = 'languages';
-        rightPaneMode = 'card';
-        switchTab('list');
-        return;
-      }
+    if (dragMoved) {
+      dragMoved = false;
+      return;
     }
+    const point = eventToCanvasPoint(e);
+    const picked = pickNode(point);
+    if (!picked) return;
+    selectedItem = picked.name;
+    selectedItemType = 'languages';
+    rightPaneMode = 'card';
+    switchTab('list');
   };
 
   const lg = document.getElementById('families-legend');
@@ -75930,8 +76369,11 @@ function renderHomePanel(container) {
     <div style="font-size:16px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Режим «Читаю сейчас»</div>
     <div style="font-size:12px;color:#777;margin-bottom:8px;">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <button id="reading-page-prev" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">←</button>
       <input id="reading-page-input" type="number" min="1" max="${escapeHtml(stats.total_pages || 404)}" step="1" style="width:120px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:13px;" />
+      <button id="reading-page-next" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">→</button>
       <button id="reading-page-go" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Показать</button>
+      <button id="reading-page-trends" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Динамика страницы</button>
     </div>
     <div id="reading-now-results" style="margin-top:10px;font-size:12px;line-height:1.6;color:#444;"></div>
   </div>`;
@@ -76019,49 +76461,117 @@ function renderHomePanel(container) {
 
   const readingInput = document.getElementById('reading-page-input');
   const readingGo = document.getElementById('reading-page-go');
+  const readingPrev = document.getElementById('reading-page-prev');
+  const readingNext = document.getElementById('reading-page-next');
+  const readingTrends = document.getElementById('reading-page-trends');
   const readingResults = document.getElementById('reading-now-results');
-  const renderReadingNow = (page) => {
-    if (!readingResults) return;
-    if (!Number.isFinite(page) || page < 1 || page > (stats.total_pages || 404)) {
-      readingResults.innerHTML = `<div style="color:#8a4d3b;">Введите страницу от 1 до ${escapeHtml(stats.total_pages || 404)}.</div>`;
-      return;
+  const maxPage = Number(stats.total_pages) || 404;
+  const clampReadingPage = (page) => {
+    const raw = Number.isFinite(page) ? page : parseInt(String(page || ''), 10);
+    if (!Number.isFinite(raw)) return 1;
+    return Math.max(1, Math.min(maxPage, raw));
+  };
+  const getInputPage = () => clampReadingPage(parseInt(readingInput?.value || '', 10));
+  const openReadingTrends = (page) => {
+    const p = clampReadingPage(page);
+    currentEntity = 'scholar';
+    currentTab = 'page_trends';
+    trendsRangeStart = p;
+    trendsRangeEnd = p;
+    selectedItem = null;
+    selectedItemType = null;
+    rightPaneMode = 'histogram';
+    renderEntitySwitcher();
+    renderTabs();
+    renderContent();
+    syncNavigationState();
+  };
+  const updateReadingPagerControls = (page) => {
+    if (readingPrev) {
+      const disabled = page <= 1;
+      readingPrev.disabled = disabled;
+      readingPrev.style.opacity = disabled ? '0.45' : '1';
+      readingPrev.style.cursor = disabled ? 'default' : 'pointer';
     }
-    saveReadingPage(page);
-    const chapter = (APP_DATA.chapters || []).find(ch => page >= ch.start && page <= ch.end);
-    const groups = collectReadingNow(page, 7);
-    let htmlOut = `<div style="margin-bottom:6px;color:#6a5040;"><strong>Страница ${page}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ''}</div>`;
+    if (readingNext) {
+      const disabled = page >= maxPage;
+      readingNext.disabled = disabled;
+      readingNext.style.opacity = disabled ? '0.45' : '1';
+      readingNext.style.cursor = disabled ? 'default' : 'pointer';
+    }
+  };
+  const renderReadingNow = (page) => {
+    const currentPage = clampReadingPage(page);
+    if (!readingResults) return;
+    saveReadingPage(currentPage);
+    updateReadingPagerControls(currentPage);
+    if (readingInput) readingInput.value = String(currentPage);
+    const chapters = APP_DATA.chapters || [];
+    const chapterIdx = chapters.findIndex(ch => currentPage >= ch.start && currentPage <= ch.end);
+    const chapter = chapterIdx >= 0 ? chapters[chapterIdx] : null;
+    const groups = collectReadingNow(currentPage, 7);
+    let htmlOut = `<div style="margin-bottom:6px;color:#6a5040;"><strong>Страница ${currentPage}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ''}</div>`;
+    htmlOut += `<div style="margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap;">`;
+    htmlOut += `<button class="reading-now-open-trends" data-page="${currentPage}" style="padding:3px 8px;border:1px solid #c4b890;background:#fff8e8;border-radius:10px;cursor:pointer;font-family:inherit;font-size:11px;color:#5a3818;">Динамика этой страницы</button>`;
+    if (chapter) {
+      htmlOut += `<button class="reading-now-open-lecture" data-idx="${chapterIdx}" style="padding:3px 8px;border:1px solid #c4b890;background:#fff8e8;border-radius:10px;cursor:pointer;font-family:inherit;font-size:11px;color:#5a3818;">Открыть лекцию</button>`;
+    }
+    htmlOut += `</div>`;
     if (!groups.length) {
       htmlOut += '<div style="color:#888;">На этой странице в базе не найдено размеченных сущностей.</div>';
       readingResults.innerHTML = htmlOut;
-      return;
-    }
-    for (const g of groups) {
-      htmlOut += `<div style="margin-bottom:6px;"><strong>${escapeHtml(g.label)}:</strong> `;
-      for (const it of g.items) {
-        htmlOut += `<span class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(it.head)}</span>`;
+    } else {
+      for (const g of groups) {
+        htmlOut += `<div style="margin-bottom:6px;"><strong>${escapeHtml(g.label)}:</strong> `;
+        for (const it of g.items) {
+          htmlOut += `<span class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(it.head)}</span>`;
+        }
+        if (g.total > g.items.length) htmlOut += `<span style="color:#888;">и ещё ${g.total - g.items.length}</span>`;
+        htmlOut += `</div>`;
       }
-      if (g.total > g.items.length) htmlOut += `<span style="color:#888;">и ещё ${g.total - g.items.length}</span>`;
-      htmlOut += `</div>`;
+      readingResults.innerHTML = htmlOut;
     }
-    readingResults.innerHTML = htmlOut;
     readingResults.querySelectorAll('.reading-now-link').forEach(link => {
       link.onclick = () => navigateToItem(link.dataset.type || 'all', link.dataset.head || '');
+    });
+    readingResults.querySelectorAll('.reading-now-open-trends').forEach(btn => {
+      btn.onclick = () => openReadingTrends(parseInt(btn.dataset.page || '', 10));
+    });
+    readingResults.querySelectorAll('.reading-now-open-lecture').forEach(btn => {
+      btn.onclick = () => openLecturePage(parseInt(btn.dataset.idx || '0', 10) || 0);
     });
   };
   if (readingInput && readingGo) {
     const savedPage = getSavedReadingPage();
-    const defaultPage = Number.isFinite(savedPage) ? savedPage : 1;
+    const defaultPage = Number.isFinite(savedPage) ? clampReadingPage(savedPage) : 1;
     readingInput.value = String(defaultPage);
     renderReadingNow(defaultPage);
     readingGo.onclick = () => {
-      const page = parseInt(readingInput.value || '', 10);
-      renderReadingNow(page);
+      renderReadingNow(getInputPage());
+    };
+    if (readingPrev) {
+      readingPrev.onclick = () => renderReadingNow(getInputPage() - 1);
+    }
+    if (readingNext) {
+      readingNext.onclick = () => renderReadingNow(getInputPage() + 1);
+    }
+    if (readingTrends) {
+      readingTrends.onclick = () => openReadingTrends(getInputPage());
     };
     readingInput.onkeydown = (e) => {
       if (e.key === 'Enter') {
-        const page = parseInt(readingInput.value || '', 10);
-        renderReadingNow(page);
+        renderReadingNow(getInputPage());
+      } else if (e.key === 'ArrowLeft') {
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+        renderReadingNow(getInputPage() - 1);
+      } else if (e.key === 'ArrowRight') {
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+        renderReadingNow(getInputPage() + 1);
       }
+    };
+    readingInput.onblur = () => {
+      readingInput.value = String(getInputPage());
+      updateReadingPagerControls(getInputPage());
     };
   }
 
@@ -76091,12 +76601,96 @@ function renderHomePanel(container) {
   if (exportSiteBtn) exportSiteBtn.onclick = () => exportWholeSiteMarkdown();
 }
 
+function buildTopQuestion(items, entityType, question, hintPrefix, limitOptions = 4, skipModerator = false) {
+  const list = (Array.isArray(items) ? items : [])
+    .filter(it => it && it.head)
+    .filter(it => !skipModerator || !it.is_moderator)
+    .map(it => ({ head: it.head, count: (it.page_list || []).length }))
+    .filter(it => it.count > 0)
+    .sort((a, b) => b.count - a.count || compareHeadsRu(a.head, b.head));
+  if (list.length < 2) return null;
+  const options = list.slice(0, Math.max(2, limitOptions)).map(it => it.head);
+  const top = list[0];
+  return {
+    id: `dyn_${entityType}_top`,
+    question,
+    options,
+    correct: 0,
+    hint: `${hintPrefix}: ${top.head} (${top.count}).`,
+    entity: { type: entityType, head: top.head },
+  };
+}
+
+function buildLectureLengthQuestion() {
+  const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+  const lectureRows = chapters
+    .map((ch, idx) => {
+      const span = Math.max(1, (Number(ch.end) || 0) - (Number(ch.start) || 0) + 1);
+      return { idx, name: ch.name || '', span };
+    })
+    .filter(ch => ch.idx > 0);
+  if (lectureRows.length < 2) return null;
+  lectureRows.sort((a, b) => b.span - a.span || compareHeadsRu(a.name, b.name));
+  const options = lectureRows.slice(0, 4).map(ch => ch.name);
+  const top = lectureRows[0];
+  return {
+    id: 'dyn_lecture_length',
+    question: 'Какая лекция в книге самая длинная?',
+    options,
+    correct: 0,
+    hint: `Самая длинная лекция — ${top.name} (${top.span} стр.).`,
+    entity: { type: 'lecture', index: top.idx },
+  };
+}
+
+function buildDynamicTasks() {
+  const out = [];
+  const topNameTask = buildTopQuestion(
+    APP_DATA.names || [],
+    'names',
+    'Кто чаще всего упоминается в книге среди персональных имён?',
+    'Чаще всего упоминается',
+    4,
+    true
+  );
+  if (topNameTask) out.push(topNameTask);
+
+  const topLangTask = buildTopQuestion(
+    APP_DATA.languages || [],
+    'languages',
+    'Какой язык упоминается чаще всего?',
+    'Чаще всего упоминается',
+    4,
+    false
+  );
+  if (topLangTask) out.push(topLangTask);
+
+  const topTopoTask = buildTopQuestion(
+    APP_DATA.toponyms || [],
+    'toponyms',
+    'Какой топоним встречается чаще всего?',
+    'Чаще всего встречается',
+    4,
+    false
+  );
+  if (topTopoTask) out.push(topTopoTask);
+
+  const lectureLenTask = buildLectureLengthQuestion();
+  if (lectureLenTask) out.push(lectureLenTask);
+  return out;
+}
+
 function renderTasksPanel(container) {
-  const tasks = APP_DATA.tasks || [];
+  const baseTasks = Array.isArray(APP_DATA.tasks) ? APP_DATA.tasks : [];
+  const dynamicTasks = buildDynamicTasks();
+  const tasks = [...baseTasks, ...dynamicTasks];
   const tasksShuffled = shuffleArray(tasks);
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:980px;margin:0 auto;">';
   html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Проверьте себя</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:14px;">Шесть вопросов по содержанию книги. Кликните на ответ, чтобы проверить.</div>';
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">';
+  html += `<div style="font-size:12px;color:#888;font-style:italic;">${baseTasks.length} базовых + ${dynamicTasks.length} динамических вопросов. Кликните на ответ, чтобы проверить.</div>`;
+  html += '<button id="tasks-regen" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Новая подборка</button>';
+  html += '</div>';
   html += '<div id="tasks-container"></div></div></div>';
   container.innerHTML = html;
 
@@ -76144,16 +76738,24 @@ function renderTasksPanel(container) {
         res.style.background = isCorrect ? '#e8f5e9' : '#fff8e8';
         res.style.borderLeft = '3px solid ' + (isCorrect ? '#5cb85c' : '#8a7050');
         const linkBtn = t.entity
-        ? ` <span class="task-card-link" data-type="${escapeHtml(t.entity.type)}" data-head="${escapeHtml(t.entity.head)}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">Открыть карточку →</span>`
+        ? ` <span class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">Открыть карточку →</span>`
           : '';
         res.innerHTML = (isCorrect ? '<strong>Верно!</strong> ' : '<strong>Не угадали.</strong> ') + escapeHtml(t.hint) + linkBtn;
         res.querySelectorAll('.task-card-link').forEach(el => {
-          el.onclick = () => navigateToItem(el.dataset.type, el.dataset.head);
+          el.onclick = () => {
+            if ((el.dataset.type || '') === 'lecture') {
+              openLecturePage(parseInt(el.dataset.lectureIdx || '0', 10) || 0);
+              return;
+            }
+            navigateToItem(el.dataset.type, el.dataset.head);
+          };
         });
       };
       optsDiv.appendChild(btn);
     }
   }
+  const regenBtn = document.getElementById('tasks-regen');
+  if (regenBtn) regenBtn.onclick = () => renderTasksPanel(container);
 }
 
 // =========================================================

@@ -47,4 +47,29 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#trend-export-csv')).toBeVisible();
     await expect(page.locator('#trend-export-md')).toBeVisible();
   });
+
+  test('reading-now pager and quick trends navigation works', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const input = page.locator('#reading-page-input');
+    const go = page.locator('#reading-page-go');
+    const prev = page.locator('#reading-page-prev');
+    const next = page.locator('#reading-page-next');
+    const openTrends = page.locator('#reading-page-trends');
+    const results = page.locator('#reading-now-results');
+
+    await input.fill('120');
+    await go.click();
+    await expect(results).toContainText('Страница 120');
+
+    await next.click();
+    await expect(results).toContainText('Страница 121');
+
+    await prev.click();
+    await expect(results).toContainText('Страница 120');
+
+    await openTrends.click();
+    await expect(page).toHaveURL(/#scholar\/page_trends/);
+    await expect(page.locator('#trend-start-range')).toHaveValue('120');
+    await expect(page.locator('#trend-end-range')).toHaveValue('120');
+  });
 });
