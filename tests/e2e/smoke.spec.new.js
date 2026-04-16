@@ -234,6 +234,20 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#trend-export-md')).toBeVisible();
   });
 
+  test('scholar chronology tab supports filters and event navigation', async ({ page }) => {
+    await page.goto('/aaz-index.html#scholar/chronology');
+    await expect(page.locator('#chronology-type')).toBeVisible();
+    await expect(page.locator('#chronology-zoom')).toBeVisible();
+    await expect(page.locator('#chronology-export-md')).toBeVisible();
+    await page.selectOption('#chronology-type', 'publication');
+    await page.selectOption('#chronology-zoom', 'xx');
+    const row = page.locator('.chronology-event-link').first();
+    await expect(row).toBeVisible();
+    const before = page.url();
+    await row.click();
+    await expect(page).not.toHaveURL(before);
+  });
+
   test('scholar slovo section supports thesis anchors and further reading links', async ({ page }) => {
     await page.goto('/aaz-index.html#scholar/scholar/anchor/sch-slovo-arg-2');
     const arg = page.locator('#sch-slovo-arg-2');

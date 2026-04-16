@@ -66,6 +66,7 @@ def check_static_guards():
         'function buildListSearchHash(',
         'function buildItemHash(',
         'function buildScholarAnchorHash(',
+        'function renderScholarChronologyPanel(container) {',
         "APP_DATA.labels.literator = 'Носитель языка';",
         'const MAX_URL_LENGTH = 2048;',
         'if (raw.length > MAX_URL_LENGTH) return fallback;',

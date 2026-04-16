@@ -72974,7 +72974,7 @@ function initEntityTypes() {
   scholar: {
     title: 'Профессиональный аппарат',
     items: [],
-    tabs: ['scholar','page_trends'],
+    tabs: ['scholar','chronology','page_trends'],
   },
   all: {
     title: 'Сводный указатель',
@@ -73053,6 +73053,7 @@ const TAB_LABELS = {
   russian_evolution: 'Русский во времени',
   phonetic_laws: 'Фонетические законы',
   scholar: 'Профессиональный аппарат',
+  chronology: 'Хронология открытий',
   page_trends: 'Динамика по страницам',
 };
 
@@ -74748,6 +74749,7 @@ function renderContent() {
     russian_evolution: renderRussianEvolutionPanel,
     phonetic_laws: renderPhoneticLawsPanel,
     scholar: renderScholarPanel,
+    chronology: renderScholarChronologyPanel,
     page_trends: renderPageTrendsPanel,
     list: renderListPanel,
     cards: renderCardsPanel,
@@ -78046,6 +78048,306 @@ function countMentionsInRange(pageList, start, end) {
     if (typeof p === 'number' && p >= start && p <= end) count++;
   }
   return count;
+}
+
+function renderScholarChronologyPanel(container) {
+  const scholar = APP_DATA.scholar || {};
+  const rawEvents = Array.isArray(scholar.chronology) ? scholar.chronology : [];
+  const typeLabels = {
+    all: 'Все типы',
+    discovery: 'Открытия и находки',
+    publication: 'Публикации',
+    decipherment: 'Расшифровки',
+    law: 'Законы и теории',
+    milestone: 'Ключевые вехи',
+  };
+  const chronologyMap = [
+    { needle: 'бопп', type: 'names', heads: ['Бопп Фр.'] },
+    { needle: 'раск', type: 'names', heads: ['Раск Р. К.'] },
+    { needle: 'гримм', type: 'names', heads: ['Гримм Я.'] },
+    { needle: 'вернер', type: 'names', heads: ['Вернер К.'] },
+    { needle: 'вакернагель', type: 'names', heads: ['Вакернагель Я.'] },
+    { needle: 'шампольон', type: 'names', heads: ['Шампольон Ф.'] },
+    { needle: 'вентрис', type: 'names', heads: ['Вентрис М.'] },
+    { needle: 'зализняк', type: 'names', heads: ['Зализняк А. А.'] },
+    { needle: 'берестян', type: 'toponyms', heads: ['Новгород'] },
+    { needle: 'санскрит', type: 'languages', heads: ['санскрит'] },
+    { needle: 'древнеперсид', type: 'languages', heads: ['древнеперсидский'] },
+    { needle: 'линейное письмо', type: 'languages', heads: ['древнегреческий'] },
+  ];
+  const pickExistingHead = (type, heads) => {
+    for (const h of (heads || [])) {
+      const resolved = resolveExistingHead(type, h);
+      if (getIndexedItem(type, resolved)) return resolved;
+    }
+    return '';
+  };
+  const classifyEvent = (ev) => {
+    const text = String(ev && ev.event ? ev.event : '').toLowerCase();
+    if (text.includes('расшифров')) return 'decipherment';
+    if (text.includes('закон') || text.includes('теор')) return 'law';
+    if (text.includes('публику') || text.includes('изда')) return 'publication';
+    if (text.includes('найден') || text.includes('обнаруж')) return 'discovery';
+    return 'milestone';
+  };
+  const romanToInt = (roman) => {
+    const map = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+    let prev = 0;
+    let sum = 0;
+    const raw = String(roman || '').toUpperCase();
+    for (let i = raw.length - 1; i >= 0; i--) {
+      const cur = map[raw[i]] || 0;
+      if (cur < prev) sum -= cur;
+      else sum += cur;
+      prev = cur;
+    }
+    return sum;
+  };
+  const parseYearSpan = (value) => {
+    if (Number.isFinite(value)) return { from: value, to: value, label: String(value) };
+    const raw = String(value || '').trim();
+    if (!raw) return { from: 0, to: 0, label: '—' };
+    if (/^\d{3,4}$/.test(raw)) {
+      const y = parseInt(raw, 10);
+      return { from: y, to: y, label: raw };
+    }
+    const range = raw.match(/(\d{3,4})\s*[–-]\s*(\d{2,4})/);
+    if (range) {
+      const left = parseInt(range[1], 10);
+      let right = parseInt(range[2], 10);
+      if (range[2].length === 2) {
+        const prefix = Math.floor(left / 100) * 100;
+        right = prefix + right;
+      }
+      return { from: Math.min(left, right), to: Math.max(left, right), label: raw };
+    }
+    const decade = raw.match(/(\d{3,4})\s*-\s*е/);
+    if (decade) {
+      const left = parseInt(decade[1], 10);
+      return { from: left, to: left + 9, label: raw };
+    }
+    const century = raw.match(/([IVXLCDM]+)\s*в/i);
+    if (century) {
+      const cent = romanToInt(century[1]);
+      const bce = /до\s*н\.?\s*э\.?/i.test(raw);
+      if (cent > 0) {
+        if (bce) return { from: -cent * 100 + 1, to: -(cent - 1) * 100, label: raw };
+        return { from: (cent - 1) * 100 + 1, to: cent * 100, label: raw };
+      }
+    }
+    const firstInt = raw.match(/-?\d{3,4}/);
+    if (firstInt) {
+      const y = parseInt(firstInt[0], 10);
+      return { from: y, to: y, label: raw };
+    }
+    return { from: 0, to: 0, label: raw };
+  };
+  const resolveTarget = (ev) => {
+    const text = String(ev && ev.event ? ev.event : '');
+    const lower = text.toLowerCase();
+    for (const row of chronologyMap) {
+      if (!lower.includes(row.needle)) continue;
+      const head = pickExistingHead(row.type, row.heads);
+      if (head) return { mode: 'item', type: row.type, head, href: buildItemHash(row.type, head) };
+    }
+    const firstToken = text.split(/[,\s]+/).filter(Boolean)[0] || '';
+    const query = firstToken.length >= 3 ? firstToken : text.slice(0, 40);
+    return { mode: 'search', query, href: buildListSearchHash('all', query) };
+  };
+
+  const events = rawEvents.map((ev, idx) => {
+    const span = parseYearSpan(ev.year);
+    const target = resolveTarget(ev);
+    const type = classifyEvent(ev);
+    return {
+      ...ev,
+      _idx: idx,
+      _from: span.from,
+      _to: span.to,
+      _yearLabel: span.label,
+      _type: type,
+      _target: target,
+    };
+  }).sort((a, b) => a._from - b._from || a._to - b._to || a._idx - b._idx);
+
+  const minYear = events.length ? Math.min(...events.map(e => e._from)) : 0;
+  const maxYear = events.length ? Math.max(...events.map(e => e._to)) : 0;
+  const state = { type: 'all', start: minYear, end: maxYear };
+
+  container.innerHTML = `<div class="panel active" style="overflow-y:auto;height:100%;">
+    <div style="padding:16px 22px;max-width:1200px;margin:0 auto;">
+      <h2 style="font-size:22px;color:#5a3818;font-weight:normal;margin:0 0 6px 0;">Хронология лингвистических открытий</h2>
+      <div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Отдельный интерактивный таб: фильтры по типам событий, диапазон лет (включая диапазоны/века), переходы к карточкам и экспорт в Markdown.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;margin-bottom:10px;">
+        <label style="font-size:11px;color:#6a5040;">Тип события
+          <select id="chronology-type" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+            ${Object.keys(typeLabels).map(k => `<option value="${escapeHtml(k)}">${escapeHtml(typeLabels[k])}</option>`).join('')}
+          </select>
+        </label>
+        <label style="font-size:11px;color:#6a5040;">Zoom
+          <select id="chronology-zoom" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+            <option value="all">Весь диапазон</option>
+            <option value="xix">XIX век</option>
+            <option value="xx">XX век</option>
+            <option value="xxi">XXI век</option>
+            <option value="custom">Пользовательский</option>
+          </select>
+        </label>
+        <label style="font-size:11px;color:#6a5040;">От
+          <input id="chronology-start" type="number" value="${escapeHtml(String(minYear))}" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;max-width:120px;">
+        </label>
+        <label style="font-size:11px;color:#6a5040;">До
+          <input id="chronology-end" type="number" value="${escapeHtml(String(maxYear))}" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;max-width:120px;">
+        </label>
+        <button id="chronology-export-md" type="button" class="related-link related-link-btn">Экспорт диапазона в Markdown</button>
+      </div>
+      <div id="chronology-stats" style="font-size:12px;color:#6a5040;margin-bottom:8px;"></div>
+      <div id="chronology-list" style="display:grid;gap:8px;"></div>
+    </div>
+  </div>`;
+
+  const typeSelect = container.querySelector('#chronology-type');
+  const zoomSelect = container.querySelector('#chronology-zoom');
+  const startInput = container.querySelector('#chronology-start');
+  const endInput = container.querySelector('#chronology-end');
+  const exportBtn = container.querySelector('#chronology-export-md');
+  const statsEl = container.querySelector('#chronology-stats');
+  const listEl = container.querySelector('#chronology-list');
+  let lastFiltered = events.slice();
+
+  const applyZoomPreset = (zoom) => {
+    if (zoom === 'xix') { state.start = 1800; state.end = 1899; return; }
+    if (zoom === 'xx') { state.start = 1900; state.end = 1999; return; }
+    if (zoom === 'xxi') { state.start = 2000; state.end = Math.max(2000, maxYear); return; }
+    if (zoom === 'all') { state.start = minYear; state.end = maxYear; return; }
+  };
+  const syncRangeInputs = () => {
+    if (startInput) startInput.value = String(state.start);
+    if (endInput) endInput.value = String(state.end);
+  };
+  const filterEvents = () => {
+    const start = Math.min(state.start, state.end);
+    const end = Math.max(state.start, state.end);
+    return events.filter((ev) => {
+      const byType = state.type === 'all' || ev._type === state.type;
+      const byRange = ev._to >= start && ev._from <= end;
+      return byType && byRange;
+    });
+  };
+  const buildMarkdown = (rows) => {
+    const start = Math.min(state.start, state.end);
+    const end = Math.max(state.start, state.end);
+    const lines = [
+      '# Хронология лингвистических открытий',
+      '',
+      `Диапазон: ${start}—${end}`,
+      `Фильтр по типу: ${typeLabels[state.type] || typeLabels.all}`,
+      '',
+    ];
+    for (const ev of rows) {
+      const page = ev.page ? ` (стр. ${ev.page})` : '';
+      lines.push(`- [${ev._yearLabel}] ${ev.event}${page}`);
+    }
+    return lines.join('\n');
+  };
+  const renderRows = () => {
+    const rows = filterEvents();
+    lastFiltered = rows;
+    const start = Math.min(state.start, state.end);
+    const end = Math.max(state.start, state.end);
+    if (statsEl) statsEl.textContent = `Показано: ${rows.length} из ${events.length} · диапазон ${start}—${end} · тип: ${typeLabels[state.type] || typeLabels.all}`;
+    if (!listEl) return;
+    if (!rows.length) {
+      listEl.innerHTML = '<div style="padding:10px 12px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;color:#888;font-style:italic;">Нет событий в текущем фильтре.</div>';
+      return;
+    }
+    listEl.innerHTML = rows.map((ev) => {
+      const target = ev._target || {};
+      const page = ev.page ? `<span style="font-size:11px;color:#888;">стр. ${escapeHtml(String(ev.page))}</span>` : '';
+      return `<a class="chronology-event-link" href="${escapeHtml(target.href || '#scholar/chronology')}" data-mode="${escapeHtml(target.mode || '')}" data-type="${escapeHtml(target.type || '')}" data-head="${escapeHtml(target.head || '')}" data-query="${escapeHtml(target.query || '')}" style="display:grid;grid-template-columns:120px 1fr;gap:12px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;color:inherit;text-decoration:none;">
+        <div style="font-weight:bold;color:#5a3818;border-right:2px solid #8a7050;padding-right:10px;text-align:right;">${escapeHtml(String(ev._yearLabel || '—'))}</div>
+        <div>
+          <div style="font-size:13px;color:#333;line-height:1.45;">${escapeHtml(String(ev.event || ''))}</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;font-size:11px;color:#6a5040;">
+            <span>${escapeHtml(typeLabels[ev._type] || ev._type || '')}</span>
+            ${page}
+          </div>
+        </div>
+      </a>`;
+    }).join('');
+    bindActionWithKeyboardList(listEl);
+  };
+  const bindActionWithKeyboardList = (root) => {
+    if (!root || typeof root.querySelectorAll !== 'function') return;
+    root.querySelectorAll('.chronology-event-link').forEach((el) => {
+      bindActionWithKeyboard(el, () => {
+        const mode = String(el.dataset.mode || '');
+        if (mode === 'item') {
+          const type = String(el.dataset.type || '');
+          const head = String(el.dataset.head || '');
+          if (type && head) navigateToItem(type, head);
+          return;
+        }
+        const query = String(el.dataset.query || '');
+        if (!query) return;
+        currentEntity = 'all';
+        currentTab = 'list';
+        searchQuery = query;
+        selectedItem = null;
+        selectedItemType = null;
+        rightPaneMode = 'histogram';
+        renderEntitySwitcher();
+        renderTabs();
+        renderContent();
+        syncNavigationState();
+      });
+    });
+  };
+
+  if (typeSelect) {
+    typeSelect.value = state.type;
+    typeSelect.onchange = (e) => {
+      const next = e && e.target && typeof e.target.value === 'string' ? e.target.value : 'all';
+      state.type = typeLabels[next] ? next : 'all';
+      renderRows();
+    };
+  }
+  if (zoomSelect) {
+    zoomSelect.value = 'all';
+    zoomSelect.onchange = (e) => {
+      const next = e && e.target && typeof e.target.value === 'string' ? e.target.value : 'all';
+      if (next !== 'custom') {
+        applyZoomPreset(next);
+        syncRangeInputs();
+      }
+      renderRows();
+    };
+  }
+  if (startInput) {
+    startInput.onchange = () => {
+      const raw = parseInt(startInput.value || '', 10);
+      if (Number.isFinite(raw)) state.start = raw;
+      if (zoomSelect) zoomSelect.value = 'custom';
+      renderRows();
+    };
+  }
+  if (endInput) {
+    endInput.onchange = () => {
+      const raw = parseInt(endInput.value || '', 10);
+      if (Number.isFinite(raw)) state.end = raw;
+      if (zoomSelect) zoomSelect.value = 'custom';
+      renderRows();
+    };
+  }
+  if (exportBtn) {
+    exportBtn.onclick = () => {
+      const start = Math.min(state.start, state.end);
+      const end = Math.max(state.start, state.end);
+      const md = buildMarkdown(lastFiltered);
+      downloadTextFile(`chronology-${start}-${end}.md`, md, 'text/markdown;charset=utf-8');
+    };
+  }
+  renderRows();
 }
 
 function renderPageTrendsPanel(container) {
