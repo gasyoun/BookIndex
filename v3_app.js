@@ -1110,6 +1110,12 @@ function openGlossaryTerm(term) {
   syncNavigationState();
 }
 
+function buildGlossaryTermHash(term) {
+  const q = String(term || '').trim().toLowerCase();
+  if (!q) return '#materials/glossary';
+  return '#materials/glossary/term/' + encodeURIComponent(q);
+}
+
 function findLectureIndexByName(name) {
   const needle = String(name || '').trim().toLowerCase();
   if (!needle) return -1;
@@ -2443,10 +2449,10 @@ function renderCardInRight() {
       html += '<h3>Связанные термины глоссария</h3><div class="related">';
       for (const g of relatedGlossary) {
         const shortDef = g.definition.length > 92 ? (g.definition.slice(0, 89) + '…') : g.definition;
-        html += `<div class="glossary-backlink" data-term="${escapeHtml(g.term)}" style="display:flex;justify-content:space-between;gap:8px;cursor:pointer;padding:2px 0;">
+        html += `<a class="glossary-backlink" data-term="${escapeHtml(g.term)}" href="${escapeHtml(buildGlossaryTermHash(g.term))}" style="display:flex;justify-content:space-between;gap:8px;cursor:pointer;padding:2px 0;color:inherit;text-decoration:none;">
           <span>${escapeHtml(g.term)}</span>
           <span style="color:#888;font-size:10px;">${escapeHtml(shortDef)}</span>
-        </div>`;
+        </a>`;
       }
       html += '</div>';
     }
@@ -2529,7 +2535,10 @@ function renderCardInRight() {
     };
   });
   right.querySelectorAll('.glossary-backlink[data-term]').forEach(el => {
-    el.onclick = () => openGlossaryTerm(el.dataset.term || '');
+    el.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      openGlossaryTerm(el.dataset.term || '');
+    };
   });
   right.querySelectorAll('.related-link[data-name]').forEach(el => {
     el.onclick = () => {

@@ -84,4 +84,14 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#trend-start-range')).toHaveValue('120');
     await expect(page.locator('#trend-end-range')).toHaveValue('120');
   });
+
+  test('lexicon card links to glossary deep-link', async ({ page }) => {
+    await page.goto('/aaz-index.html#lexicon/list/item/lexicon/%D0%B6%D0%B5');
+    await expect(page.locator('#right-content .card h2')).toHaveText(/же/i);
+    const glossaryBacklink = page.locator('#right-content .glossary-backlink[data-term]').first();
+    await expect(glossaryBacklink).toBeVisible();
+    await glossaryBacklink.click();
+    await expect(page).toHaveURL(/#materials\/glossary\/term\//);
+    await expect(page.locator('#glossary-search')).toBeVisible();
+  });
 });
