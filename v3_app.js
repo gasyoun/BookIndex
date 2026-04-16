@@ -2809,14 +2809,15 @@ function renderEpochsPanel(container) {
       </div>
       <div style="font-size:12px;">`;
     for (const t of list) {
-      html += `<div class="related-link" data-head="${escapeHtml(t.head)}" style="padding:2px 0; ${t.discussed?'font-weight:bold;':''}">${escapeHtml(t.head)}</div>`;
+      html += `<a class="related-link" data-head="${escapeHtml(t.head)}" href="${escapeHtml(buildItemHash('toponyms', t.head))}" style="display:block;padding:2px 0; ${t.discussed?'font-weight:bold;':''}color:#5a3818;text-decoration:underline dotted;">${escapeHtml(t.head)}</a>`;
     }
     html += '</div></div>';
   }
   html += '</div>';
   grid.innerHTML = html;
   grid.querySelectorAll('.related-link[data-head]').forEach(el => {
-    el.onclick = () => {
+    el.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
       selectedItem = el.dataset.head;
       selectedItemType = 'toponyms';
       rightPaneMode = 'card';
@@ -4916,11 +4917,11 @@ function renderGalleryPanel(container) {
   html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;">';
   for (const n of names) {
     const epochLabel = n.epoch ? (n.epoch < 0 ? Math.abs(n.epoch) + ' до н.э.' : n.epoch + ' г.') : '';
-    html += `<div class="gallery-card" data-head="${escapeHtml(n.head)}" style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px;cursor:pointer;text-align:center;transition:all 0.15s;">
+    html += `<a class="gallery-card" data-head="${escapeHtml(n.head)}" href="${escapeHtml(buildItemHash('names', n.head))}" style="display:block;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px;cursor:pointer;text-align:center;transition:all 0.15s;color:inherit;text-decoration:none;">
       <img src="${escapeHtml(safeImageUrl(n.img))}" alt="" style="width:100%;height:130px;object-fit:cover;border-radius:3px;background:#f7f0e0;">
       <div style="font-size:12px;font-weight:bold;color:#5a3818;margin-top:6px;line-height:1.3;">${escapeHtml(n.head)}</div>
       <div style="font-size:10px;color:#888;margin-top:2px;">${epochLabel}</div>
-    </div>`;
+    </a>`;
   }
   html += '</div></div></div>';
   container.innerHTML = html;
@@ -4928,7 +4929,8 @@ function renderGalleryPanel(container) {
   container.querySelectorAll('.gallery-card').forEach(card => {
     card.onmouseover = () => { card.style.borderColor = '#8a7050'; card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)'; };
     card.onmouseout = () => { card.style.borderColor = '#d4c8b0'; card.style.boxShadow = 'none'; };
-    card.onclick = () => {
+    card.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
       navigateToItem('names', card.dataset.head);
     };
   });

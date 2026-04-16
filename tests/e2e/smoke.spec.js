@@ -57,6 +57,16 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#lecture-compare-b')).toBeVisible();
   });
 
+  test('toponym epochs links navigate via hash item links', async ({ page }) => {
+    await page.goto('/aaz-index.html#toponyms/epochs');
+    const firstLink = page.locator('#epochs-grid .related-link[data-head]').first();
+    await expect(firstLink).toBeVisible();
+    await expect(firstLink).toHaveAttribute('href', /#toponyms\/list\/item\/toponyms\//);
+    await firstLink.click();
+    await expect(page).toHaveURL(/#toponyms\/list\/item\/toponyms\//);
+    await expect(page.locator('#right-content .card h2')).toBeVisible();
+  });
+
   test('scholar page trends renders export controls', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await page.locator('.entity-btn[data-entity="scholar"]').click();
