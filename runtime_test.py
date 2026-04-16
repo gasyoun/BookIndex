@@ -38,6 +38,8 @@ def check_static_guards():
     """Быстрые инварианты по исходному JS, чтобы не терять критичные правки."""
     with open('v3_app.js', 'r', encoding='utf-8') as f:
         js = f.read()
+    with open('v3_template.html', 'r', encoding='utf-8') as f:
+        tpl = f.read()
 
     banned = [
         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -57,6 +59,15 @@ def check_static_guards():
     for needle in required:
         if needle not in js:
             print(f"[static] FAIL: required fragment missing: {needle}")
+            return False
+
+    template_required = [
+        'integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="',
+        'integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="',
+    ]
+    for needle in template_required:
+        if needle not in tpl:
+            print(f"[static] FAIL: required template fragment missing: {needle}")
             return False
 
     print("[static] OK: guards passed")
