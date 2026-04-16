@@ -22,6 +22,23 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#names\/list/);
   });
 
+  test('home KPI rows are clickable and navigate to target sections', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const rows = page.locator('#home-fact-pair > div').first().locator('div');
+    await expect(rows.nth(0)).toBeVisible();
+
+    await rows.nth(0).click();
+    await expect(page).toHaveURL(/#materials\/lecture_pages\//);
+
+    await page.goto('/aaz-index.html#home/home');
+    await rows.nth(1).click();
+    await expect(page).toHaveURL(/#languages\/list\/item\/languages\//);
+
+    await page.goto('/aaz-index.html#home/home');
+    await rows.nth(2).click();
+    await expect(page).toHaveURL(/#toponyms\/list\/item\/toponyms\//);
+  });
+
   test('global search returns navigable results', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
