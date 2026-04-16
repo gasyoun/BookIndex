@@ -17,6 +17,8 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#right-content .card h2')).toBeVisible();
     await expect(page.locator('#right-content button#copy-card-link')).toBeVisible();
     await expect(page.locator('#right-content button#export-card-md')).toBeVisible();
+    await page.locator('#right-content button#copy-card-link').click();
+    await expect(page.locator('#ui-live-status')).toHaveCount(1);
     await expect(page).toHaveURL(/#names\/list/);
   });
 

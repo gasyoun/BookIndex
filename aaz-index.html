@@ -73300,6 +73300,31 @@ function clampUiInput(value, maxLen) {
   return String(value || '').trim().slice(0, limit);
 }
 
+function announceUiMessage(message) {
+  if (typeof document === 'undefined' || !document.body) return;
+  const text = String(message || '').trim();
+  if (!text) return;
+  let live = document.getElementById('ui-live-status');
+  if (!live) {
+    live = document.createElement('div');
+    live.id = 'ui-live-status';
+    safeSetAttr(live, 'aria-live', 'polite');
+    safeSetAttr(live, 'aria-atomic', 'true');
+    live.style.position = 'fixed';
+    live.style.width = '1px';
+    live.style.height = '1px';
+    live.style.margin = '-1px';
+    live.style.padding = '0';
+    live.style.border = '0';
+    live.style.overflow = 'hidden';
+    live.style.clip = 'rect(0 0 0 0)';
+    live.style.whiteSpace = 'nowrap';
+    document.body.appendChild(live);
+  }
+  live.textContent = '';
+  setTimeout(() => { live.textContent = text; }, 0);
+}
+
 function shuffleArray(input) {
   const arr = Array.isArray(input) ? [...input] : [];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -75471,6 +75496,7 @@ function renderCardInRight() {
       const ok = await copyCurrentUrl();
       const prev = copyLinkBtn.textContent;
       copyLinkBtn.textContent = ok ? 'ссылка скопирована' : 'не удалось скопировать';
+      announceUiMessage(ok ? 'Link copied' : 'Failed to copy link');
       setTimeout(() => { copyLinkBtn.textContent = prev; }, 1200);
     };
   }
