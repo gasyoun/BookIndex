@@ -3637,8 +3637,11 @@ function renderHomePanel(container) {
     <div style="font-size:16px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Режим «Читаю сейчас»</div>
     <div style="font-size:12px;color:#777;margin-bottom:8px;">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <button id="reading-page-prev" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">←</button>
       <input id="reading-page-input" type="number" min="1" max="${escapeHtml(stats.total_pages || 404)}" step="1" style="width:120px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:13px;" />
+      <button id="reading-page-next" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">→</button>
       <button id="reading-page-go" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Показать</button>
+      <button id="reading-page-trends" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Динамика страницы</button>
     </div>
     <div id="reading-now-results" style="margin-top:10px;font-size:12px;line-height:1.6;color:#444;"></div>
   </div>`;
@@ -3726,49 +3729,117 @@ function renderHomePanel(container) {
 
   const readingInput = document.getElementById('reading-page-input');
   const readingGo = document.getElementById('reading-page-go');
+  const readingPrev = document.getElementById('reading-page-prev');
+  const readingNext = document.getElementById('reading-page-next');
+  const readingTrends = document.getElementById('reading-page-trends');
   const readingResults = document.getElementById('reading-now-results');
-  const renderReadingNow = (page) => {
-    if (!readingResults) return;
-    if (!Number.isFinite(page) || page < 1 || page > (stats.total_pages || 404)) {
-      readingResults.innerHTML = `<div style="color:#8a4d3b;">Введите страницу от 1 до ${escapeHtml(stats.total_pages || 404)}.</div>`;
-      return;
+  const maxPage = Number(stats.total_pages) || 404;
+  const clampReadingPage = (page) => {
+    const raw = Number.isFinite(page) ? page : parseInt(String(page || ''), 10);
+    if (!Number.isFinite(raw)) return 1;
+    return Math.max(1, Math.min(maxPage, raw));
+  };
+  const getInputPage = () => clampReadingPage(parseInt(readingInput?.value || '', 10));
+  const openReadingTrends = (page) => {
+    const p = clampReadingPage(page);
+    currentEntity = 'scholar';
+    currentTab = 'page_trends';
+    trendsRangeStart = p;
+    trendsRangeEnd = p;
+    selectedItem = null;
+    selectedItemType = null;
+    rightPaneMode = 'histogram';
+    renderEntitySwitcher();
+    renderTabs();
+    renderContent();
+    syncNavigationState();
+  };
+  const updateReadingPagerControls = (page) => {
+    if (readingPrev) {
+      const disabled = page <= 1;
+      readingPrev.disabled = disabled;
+      readingPrev.style.opacity = disabled ? '0.45' : '1';
+      readingPrev.style.cursor = disabled ? 'default' : 'pointer';
     }
-    saveReadingPage(page);
-    const chapter = (APP_DATA.chapters || []).find(ch => page >= ch.start && page <= ch.end);
-    const groups = collectReadingNow(page, 7);
-    let htmlOut = `<div style="margin-bottom:6px;color:#6a5040;"><strong>Страница ${page}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ''}</div>`;
+    if (readingNext) {
+      const disabled = page >= maxPage;
+      readingNext.disabled = disabled;
+      readingNext.style.opacity = disabled ? '0.45' : '1';
+      readingNext.style.cursor = disabled ? 'default' : 'pointer';
+    }
+  };
+  const renderReadingNow = (page) => {
+    const currentPage = clampReadingPage(page);
+    if (!readingResults) return;
+    saveReadingPage(currentPage);
+    updateReadingPagerControls(currentPage);
+    if (readingInput) readingInput.value = String(currentPage);
+    const chapters = APP_DATA.chapters || [];
+    const chapterIdx = chapters.findIndex(ch => currentPage >= ch.start && currentPage <= ch.end);
+    const chapter = chapterIdx >= 0 ? chapters[chapterIdx] : null;
+    const groups = collectReadingNow(currentPage, 7);
+    let htmlOut = `<div style="margin-bottom:6px;color:#6a5040;"><strong>Страница ${currentPage}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ''}</div>`;
+    htmlOut += `<div style="margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap;">`;
+    htmlOut += `<button class="reading-now-open-trends" data-page="${currentPage}" style="padding:3px 8px;border:1px solid #c4b890;background:#fff8e8;border-radius:10px;cursor:pointer;font-family:inherit;font-size:11px;color:#5a3818;">Динамика этой страницы</button>`;
+    if (chapter) {
+      htmlOut += `<button class="reading-now-open-lecture" data-idx="${chapterIdx}" style="padding:3px 8px;border:1px solid #c4b890;background:#fff8e8;border-radius:10px;cursor:pointer;font-family:inherit;font-size:11px;color:#5a3818;">Открыть лекцию</button>`;
+    }
+    htmlOut += `</div>`;
     if (!groups.length) {
       htmlOut += '<div style="color:#888;">На этой странице в базе не найдено размеченных сущностей.</div>';
       readingResults.innerHTML = htmlOut;
-      return;
-    }
-    for (const g of groups) {
-      htmlOut += `<div style="margin-bottom:6px;"><strong>${escapeHtml(g.label)}:</strong> `;
-      for (const it of g.items) {
-        htmlOut += `<span class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(it.head)}</span>`;
+    } else {
+      for (const g of groups) {
+        htmlOut += `<div style="margin-bottom:6px;"><strong>${escapeHtml(g.label)}:</strong> `;
+        for (const it of g.items) {
+          htmlOut += `<span class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(it.head)}</span>`;
+        }
+        if (g.total > g.items.length) htmlOut += `<span style="color:#888;">и ещё ${g.total - g.items.length}</span>`;
+        htmlOut += `</div>`;
       }
-      if (g.total > g.items.length) htmlOut += `<span style="color:#888;">и ещё ${g.total - g.items.length}</span>`;
-      htmlOut += `</div>`;
+      readingResults.innerHTML = htmlOut;
     }
-    readingResults.innerHTML = htmlOut;
     readingResults.querySelectorAll('.reading-now-link').forEach(link => {
       link.onclick = () => navigateToItem(link.dataset.type || 'all', link.dataset.head || '');
+    });
+    readingResults.querySelectorAll('.reading-now-open-trends').forEach(btn => {
+      btn.onclick = () => openReadingTrends(parseInt(btn.dataset.page || '', 10));
+    });
+    readingResults.querySelectorAll('.reading-now-open-lecture').forEach(btn => {
+      btn.onclick = () => openLecturePage(parseInt(btn.dataset.idx || '0', 10) || 0);
     });
   };
   if (readingInput && readingGo) {
     const savedPage = getSavedReadingPage();
-    const defaultPage = Number.isFinite(savedPage) ? savedPage : 1;
+    const defaultPage = Number.isFinite(savedPage) ? clampReadingPage(savedPage) : 1;
     readingInput.value = String(defaultPage);
     renderReadingNow(defaultPage);
     readingGo.onclick = () => {
-      const page = parseInt(readingInput.value || '', 10);
-      renderReadingNow(page);
+      renderReadingNow(getInputPage());
+    };
+    if (readingPrev) {
+      readingPrev.onclick = () => renderReadingNow(getInputPage() - 1);
+    }
+    if (readingNext) {
+      readingNext.onclick = () => renderReadingNow(getInputPage() + 1);
+    }
+    if (readingTrends) {
+      readingTrends.onclick = () => openReadingTrends(getInputPage());
     };
     readingInput.onkeydown = (e) => {
       if (e.key === 'Enter') {
-        const page = parseInt(readingInput.value || '', 10);
-        renderReadingNow(page);
+        renderReadingNow(getInputPage());
+      } else if (e.key === 'ArrowLeft') {
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+        renderReadingNow(getInputPage() - 1);
+      } else if (e.key === 'ArrowRight') {
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+        renderReadingNow(getInputPage() + 1);
       }
+    };
+    readingInput.onblur = () => {
+      readingInput.value = String(getInputPage());
+      updateReadingPagerControls(getInputPage());
     };
   }
 
