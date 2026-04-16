@@ -5,6 +5,9 @@ let LABELS = null, COLORS = null, EPOCH_LABELS = null, EPOCH_COLORS = null, FAMI
 const APP_DATA_SCHEMA_CURRENT = 2;
 
 function parseAppData() {
+  if (globalSearchCache && typeof globalSearchCache.clear === 'function') {
+    globalSearchCache.clear();
+  }
   APP_DATA = JSON.parse(APP_DATA_STRING);
   migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
@@ -373,8 +376,10 @@ const MAX_HASH_PARTS = 16;
 const MAX_HASH_PART_LENGTH = 220;
 const MAX_LIST_QUERY_LENGTH = 80;
 const MAX_GLOBAL_QUERY_LENGTH = 80;
+const GLOBAL_SEARCH_CACHE_MAX = 120;
 const NORMALIZE_CACHE_LIMIT = 8000;
 let normalizeHeadCache = new Map();
+let globalSearchCache = new Map();
 const AGGREGATE_CACHE_MAX = 80;
 let aggregateCache = new Map();
 let nameGraphWorker = null;
@@ -1280,6 +1285,9 @@ function highlightSearchMatch(text, query) {
 function getGlobalSearchMatches(query) {
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
   if (q.length < 2) return [];
+  const searchKey = `${getDataSignature()}::${q}`;
+  const cached = globalSearchCache.get(searchKey);
+  if (cached) return cached;
   const out = [];
   const push = (kind, type, head, meta, lectureIndex, snippet) => {
     if (!head) return;
@@ -1325,7 +1333,13 @@ function getGlobalSearchMatches(query) {
   }
 
   out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
-  return out.slice(0, 40);
+  const sliced = out.slice(0, 40);
+  globalSearchCache.set(searchKey, sliced);
+  if (globalSearchCache.size > GLOBAL_SEARCH_CACHE_MAX) {
+    const firstKey = globalSearchCache.keys().next();
+    if (!firstKey.done) globalSearchCache.delete(firstKey.value);
+  }
+  return sliced;
 }
 
 function closeGlobalSearchResults() {
