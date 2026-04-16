@@ -99,6 +99,27 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
   });
 
+  test('reverse lexicon and combined index render in multiple columns on desktop', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+
+    await page.goto('/aaz-index.html#lexicon_reverse/list');
+    await expect(page.locator('#name-list .name-item').first()).toBeVisible();
+    const reverseColumns = await page.locator('#name-list').evaluate((el) => {
+      const count = parseInt(window.getComputedStyle(el).columnCount || '1', 10);
+      return Number.isFinite(count) ? count : 1;
+    });
+    expect(reverseColumns).toBeGreaterThan(1);
+
+    await page.goto('/aaz-index.html#all/list');
+    await expect(page.locator('#name-list .name-item').first()).toBeVisible();
+    const allColumns = await page.locator('#name-list').evaluate((el) => {
+      const count = parseInt(window.getComputedStyle(el).columnCount || '1', 10);
+      return Number.isFinite(count) ? count : 1;
+    });
+    expect(allColumns).toBeGreaterThan(1);
+    await expect(page.locator('#name-list .letter-header').first()).toBeVisible();
+  });
+
   test('materials lecture compare tab renders', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await page.locator('.entity-btn[data-entity="materials"]').click();
