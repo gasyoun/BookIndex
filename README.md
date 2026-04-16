@@ -28,6 +28,7 @@
 node --check v3_app.js
 python scripts/validate_content.py app_data.json
 python runtime_test.py
+python scripts/build_aaz_index.py
 npx playwright test
 ```
 
