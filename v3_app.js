@@ -373,6 +373,11 @@ let nameGraphWorkerBlobUrl = null;
 let nameGraphWorkerRequestId = 0;
 let nameGraphRenderToken = 0;
 let nameGraphLayoutPromiseCache = new Map();
+let familiesGraphWorker = null;
+let familiesGraphWorkerBlobUrl = null;
+let familiesGraphWorkerRequestId = 0;
+let familiesGraphRenderToken = 0;
+let familiesGraphLayoutPromiseCache = new Map();
 
 // =========================================================
 // УТИЛИТЫ
@@ -428,9 +433,14 @@ function getCachedAggregate(kind, key, computeFn) {
 }
 
 function invalidateAggregateCache(reason = '') {
-  const hadAny = aggregateCache.size > 0 || nameGraphLayoutPromiseCache.size > 0;
+  const hadAny = (
+    aggregateCache.size > 0 ||
+    nameGraphLayoutPromiseCache.size > 0 ||
+    familiesGraphLayoutPromiseCache.size > 0
+  );
   aggregateCache.clear();
   nameGraphLayoutPromiseCache.clear();
+  familiesGraphLayoutPromiseCache.clear();
   if (hadAny) perfDebug('aggregate cache reset', 0, reason || 'clear');
 }
 
@@ -1581,6 +1591,7 @@ function renderContent() {
   container.innerHTML = '';
   if (currentTab !== 'list') setMobileSheetOpen(false);
   if (currentTab !== 'graph') nameGraphRenderToken += 1;
+  if (currentTab !== 'families') familiesGraphRenderToken += 1;
   const renderers = {
     home: renderHomePanel,
     lectures: renderLecturesPanel,
@@ -3229,10 +3240,309 @@ function renderGraphPanel(container) {
 // =========================================================
 // ГРАФ ЯЗЫКОВЫХ СЕМЕЙ
 // =========================================================
+function getFamiliesGraphLayoutSync(strongOnly, W, H) {
+  const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
+  return getCachedAggregate('graph-families', key, () => {
+    const items = APP_DATA.languages || [];
+    const rawEdges = APP_DATA.language_edges || [];
+    const edges = strongOnly
+      ? rawEdges.filter(e => e.weight >= 50)
+      : rawEdges.filter(e => e.weight >= 10);
+    const connectedSet = new Set();
+    for (const e of edges) {
+      connectedSet.add(e.source);
+      connectedSet.add(e.target);
+    }
+    const connectedItems = items.filter(l => connectedSet.has(l.head));
+    const byFamily = {};
+    for (const l of connectedItems) {
+      const f = l.family || 'Не классифицировано';
+      if (!byFamily[f]) byFamily[f] = [];
+      byFamily[f].push(l);
+    }
+    const families = Object.keys(byFamily).sort((a, b) => byFamily[b].length - byFamily[a].length);
+    const familyCounts = {};
+    for (const fam of families) familyCounts[fam] = byFamily[fam].length;
+
+    const nodes = [];
+    const idx = {};
+    const cx = W / 2, cy = H / 2;
+    const familyAngles = {};
+    for (let fi = 0; fi < families.length; fi++) {
+      const angle = (fi / Math.max(1, families.length)) * Math.PI * 2;
+      familyAngles[families[fi]] = angle;
+    }
+    for (let fi = 0; fi < families.length; fi++) {
+      const fam = families[fi];
+      const langs = byFamily[fam];
+      const baseAngle = familyAngles[fam];
+      const baseR = fam === 'Индоевропейская' ? 0 : 200;
+      const fcx = cx + Math.cos(baseAngle) * baseR;
+      const fcy = cy + Math.sin(baseAngle) * baseR;
+      for (let li = 0; li < langs.length; li++) {
+        const l = langs[li];
+        const a = (li / Math.max(1, langs.length)) * Math.PI * 2;
+        const r = fam === 'Индоевропейская' ? 230 : 50;
+        nodes.push({
+          name: l.head,
+          family: fam,
+          group: l.group,
+          weight: (l.page_list || []).length,
+          x: fcx + Math.cos(a) * r,
+          y: fcy + Math.sin(a) * r,
+          vx: 0,
+          vy: 0,
+        });
+        idx[l.head] = nodes.length - 1;
+      }
+    }
+    const validEdges = edges.filter(e => idx[e.source] !== undefined && idx[e.target] !== undefined);
+    function step() {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = b.x - a.x, dy = b.y - a.y;
+          const d2 = dx * dx + dy * dy + 0.01;
+          const d = Math.sqrt(d2);
+          if (d > 250) continue;
+          const force = 800 / d2;
+          a.vx -= (dx / d) * force; a.vy -= (dy / d) * force;
+          b.vx += (dx / d) * force; b.vy += (dy / d) * force;
+        }
+      }
+      for (const e of validEdges) {
+        const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const d = Math.sqrt(dx * dx + dy * dy) + 0.01;
+        const force = (d - 60) * 0.02;
+        a.vx += (dx / d) * force; a.vy += (dy / d) * force;
+        b.vx -= (dx / d) * force; b.vy -= (dy / d) * force;
+      }
+      for (const n of nodes) {
+        n.vx *= 0.8; n.vy *= 0.8;
+        n.x += n.vx; n.y += n.vy;
+        n.x = Math.max(60, Math.min(W - 60, n.x));
+        n.y = Math.max(60, Math.min(H - 60, n.y));
+      }
+    }
+    for (let i = 0; i < 200; i++) step();
+    return { nodes, idx, validEdges, families, familyCounts };
+  });
+}
+
+function supportsFamiliesGraphWorker() {
+  return (
+    typeof Worker !== 'undefined' &&
+    typeof Blob !== 'undefined' &&
+    typeof URL !== 'undefined' &&
+    typeof URL.createObjectURL === 'function'
+  );
+}
+
+function disposeFamiliesGraphWorker() {
+  if (familiesGraphWorker) {
+    try { familiesGraphWorker.terminate(); } catch (e) {}
+    familiesGraphWorker = null;
+  }
+  if (familiesGraphWorkerBlobUrl) {
+    try { URL.revokeObjectURL(familiesGraphWorkerBlobUrl); } catch (e) {}
+    familiesGraphWorkerBlobUrl = null;
+  }
+}
+
+function getFamiliesGraphWorkerScript() {
+  return [
+    "self.onmessage = function(event) {",
+    "  var data = event.data || {};",
+    "  var requestId = data.requestId;",
+    "  try {",
+    "    var strongOnly = !!data.strongOnly;",
+    "    var W = Number(data.W) || 1300;",
+    "    var H = Number(data.H) || 650;",
+    "    var items = Array.isArray(data.languages) ? data.languages : [];",
+    "    var rawEdges = Array.isArray(data.edges) ? data.edges : [];",
+    "    var edges = strongOnly ? rawEdges.filter(function(e) { return (e.weight || 0) >= 50; }) : rawEdges.filter(function(e) { return (e.weight || 0) >= 10; });",
+    "    var connectedSet = new Set();",
+    "    for (var ei = 0; ei < edges.length; ei++) { connectedSet.add(edges[ei].source); connectedSet.add(edges[ei].target); }",
+    "    var connectedItems = items.filter(function(l) { return connectedSet.has(l.head); });",
+    "    var byFamily = {};",
+    "    for (var li = 0; li < connectedItems.length; li++) {",
+    "      var lang = connectedItems[li];",
+    "      var family = lang.family || 'Не классифицировано';",
+    "      if (!byFamily[family]) byFamily[family] = [];",
+    "      byFamily[family].push(lang);",
+    "    }",
+    "    var families = Object.keys(byFamily).sort(function(a, b) { return byFamily[b].length - byFamily[a].length; });",
+    "    var familyCounts = {};",
+    "    for (var fi0 = 0; fi0 < families.length; fi0++) familyCounts[families[fi0]] = byFamily[families[fi0]].length;",
+    "    var nodes = [];",
+    "    var idx = {};",
+    "    var cx = W / 2, cy = H / 2;",
+    "    var familyAngles = {};",
+    "    for (var fi = 0; fi < families.length; fi++) { familyAngles[families[fi]] = (fi / Math.max(1, families.length)) * Math.PI * 2; }",
+    "    for (var fIdx = 0; fIdx < families.length; fIdx++) {",
+    "      var fam = families[fIdx];",
+    "      var langs = byFamily[fam];",
+    "      var baseAngle = familyAngles[fam];",
+    "      var baseR = fam === 'Индоевропейская' ? 0 : 200;",
+    "      var fcx = cx + Math.cos(baseAngle) * baseR;",
+    "      var fcy = cy + Math.sin(baseAngle) * baseR;",
+    "      for (var lIdx = 0; lIdx < langs.length; lIdx++) {",
+    "        var l = langs[lIdx];",
+    "        var a = (lIdx / Math.max(1, langs.length)) * Math.PI * 2;",
+    "        var r = fam === 'Индоевропейская' ? 230 : 50;",
+    "        nodes.push({",
+    "          name: l.head,",
+    "          family: fam,",
+    "          group: l.group,",
+    "          weight: Number(l.weight) || 0,",
+    "          x: fcx + Math.cos(a) * r,",
+    "          y: fcy + Math.sin(a) * r,",
+    "          vx: 0,",
+    "          vy: 0",
+    "        });",
+    "        idx[l.head] = nodes.length - 1;",
+    "      }",
+    "    }",
+    "    var validEdges = edges.filter(function(e) { return idx[e.source] !== undefined && idx[e.target] !== undefined; });",
+    "    function step() {",
+    "      for (var i = 0; i < nodes.length; i++) {",
+    "        for (var j = i + 1; j < nodes.length; j++) {",
+    "          var a = nodes[i], b = nodes[j];",
+    "          var dx = b.x - a.x, dy = b.y - a.y;",
+    "          var d2 = dx * dx + dy * dy + 0.01;",
+    "          var d = Math.sqrt(d2);",
+    "          if (d > 250) continue;",
+    "          var force = 800 / d2;",
+    "          a.vx -= (dx / d) * force; a.vy -= (dy / d) * force;",
+    "          b.vx += (dx / d) * force; b.vy += (dy / d) * force;",
+    "        }",
+    "      }",
+    "      for (var eIdx = 0; eIdx < validEdges.length; eIdx++) {",
+    "        var edge = validEdges[eIdx];",
+    "        var left = nodes[idx[edge.source]], right = nodes[idx[edge.target]];",
+    "        var ex = right.x - left.x, ey = right.y - left.y;",
+    "        var ed = Math.sqrt(ex * ex + ey * ey) + 0.01;",
+    "        var edgeForce = (ed - 60) * 0.02;",
+    "        left.vx += (ex / ed) * edgeForce; left.vy += (ey / ed) * edgeForce;",
+    "        right.vx -= (ex / ed) * edgeForce; right.vy -= (ey / ed) * edgeForce;",
+    "      }",
+    "      for (var nIdx = 0; nIdx < nodes.length; nIdx++) {",
+    "        var node = nodes[nIdx];",
+    "        node.vx *= 0.8; node.vy *= 0.8;",
+    "        node.x += node.vx; node.y += node.vy;",
+    "        node.x = Math.max(60, Math.min(W - 60, node.x));",
+    "        node.y = Math.max(60, Math.min(H - 60, node.y));",
+    "      }",
+    "    }",
+    "    for (var stepIdx = 0; stepIdx < 200; stepIdx++) step();",
+    "    self.postMessage({ requestId: requestId, ok: true, layout: { nodes: nodes, idx: idx, validEdges: validEdges, families: families, familyCounts: familyCounts } });",
+    "  } catch (error) {",
+    "    self.postMessage({ requestId: requestId, ok: false, error: String((error && error.message) ? error.message : error) });",
+    "  }",
+    "};",
+  ].join('\n');
+}
+
+function getFamiliesGraphWorker() {
+  if (!supportsFamiliesGraphWorker()) return null;
+  if (familiesGraphWorker) return familiesGraphWorker;
+  try {
+    const blob = new Blob([getFamiliesGraphWorkerScript()], { type: 'text/javascript' });
+    familiesGraphWorkerBlobUrl = URL.createObjectURL(blob);
+    familiesGraphWorker = new Worker(familiesGraphWorkerBlobUrl);
+    return familiesGraphWorker;
+  } catch (e) {
+    disposeFamiliesGraphWorker();
+    return null;
+  }
+}
+
+function requestFamiliesGraphLayoutFromWorker(strongOnly, W, H) {
+  const worker = getFamiliesGraphWorker();
+  if (!worker) return null;
+  const requestId = ++familiesGraphWorkerRequestId;
+  const languages = (APP_DATA.languages || []).map(l => ({
+    head: l.head,
+    family: l.family || 'Не классифицировано',
+    group: l.group || '',
+    weight: (l.page_list || []).length,
+  }));
+  const edges = (APP_DATA.language_edges || []).map(e => ({
+    source: e.source,
+    target: e.target,
+    weight: Number(e.weight) || 0,
+  }));
+  return new Promise((resolve, reject) => {
+    const onMessage = (event) => {
+      const data = event.data || {};
+      if (data.requestId !== requestId) return;
+      worker.removeEventListener('message', onMessage);
+      worker.removeEventListener('error', onError);
+      if (data.ok && data.layout) resolve(data.layout);
+      else reject(new Error(data.error || 'families graph worker failed'));
+    };
+    const onError = (event) => {
+      worker.removeEventListener('message', onMessage);
+      worker.removeEventListener('error', onError);
+      const msg = event && event.message ? event.message : 'families graph worker error';
+      reject(new Error(msg));
+    };
+    worker.addEventListener('message', onMessage);
+    worker.addEventListener('error', onError);
+    worker.postMessage({ requestId, strongOnly, W, H, languages, edges });
+  });
+}
+
+function getFamiliesGraphLayoutAsync(strongOnly, W, H) {
+  const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
+  const cacheKey = `graph-families::${key}`;
+  if (aggregateCache.has(cacheKey)) {
+    perfDebug('graph-families-worker cache', 0, 'hit');
+    return Promise.resolve(aggregateCache.get(cacheKey));
+  }
+  if (familiesGraphLayoutPromiseCache.has(cacheKey)) {
+    return familiesGraphLayoutPromiseCache.get(cacheKey);
+  }
+  const t0 = nowMs();
+  let job = null;
+  if (supportsFamiliesGraphWorker()) {
+    job = requestFamiliesGraphLayoutFromWorker(strongOnly, W, H);
+  }
+  if (!job) {
+    job = Promise.resolve(getFamiliesGraphLayoutSync(strongOnly, W, H));
+  } else {
+    job = job.catch((error) => {
+      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
+        console.warn('[families-worker] fallback to sync layout:', error && error.message ? error.message : error);
+      }
+      disposeFamiliesGraphWorker();
+      return getFamiliesGraphLayoutSync(strongOnly, W, H);
+    });
+  }
+  const promise = job.then((layout) => {
+    aggregateCache.set(cacheKey, layout);
+    if (aggregateCache.size > AGGREGATE_CACHE_MAX) {
+      const oldest = aggregateCache.keys().next();
+      if (!oldest.done) aggregateCache.delete(oldest.value);
+    }
+    familiesGraphLayoutPromiseCache.delete(cacheKey);
+    perfDebug('graph-families-worker', nowMs() - t0, 'miss');
+    return layout;
+  }).catch((error) => {
+    familiesGraphLayoutPromiseCache.delete(cacheKey);
+    throw error;
+  });
+  familiesGraphLayoutPromiseCache.set(cacheKey, promise);
+  return promise;
+}
+
 function renderFamiliesPanel(container) {
+  const t0 = nowMs();
   container.innerHTML = `<div class="panel active"><div class="graph-container">
     <p class="chart-intro">Граф языков: соединены языки, упоминаемые в книге близко друг к другу в тексте. Алгоритм позиционного взвешивания учитывает место упоминания на странице, а не только её номер — разрыв страницы между близкими упоминаниями не наказывается. Цвет узла — языковая семья. По умолчанию показаны только сильные связи (вес ≥ 10).</p>
-    <div style="margin-bottom:8px;"><button class="filter-chip ${graphStrongOnly?'active':''}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
+    <div style="margin-bottom:8px;"><button class="filter-chip ${graphStrongOnly ? 'active' : ''}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
+    <div id="families-status" style="font-size:12px;color:#7b5b38;margin-bottom:8px;">Рассчитываю расположение узлов…</div>
     <canvas id="graph-canvas" width="1300" height="650"></canvas>
     <div class="legend" id="families-legend"></div></div></div>`;
 
@@ -3245,265 +3555,212 @@ function renderFamiliesPanel(container) {
   const canvas = document.getElementById('graph-canvas');
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
-  const items = APP_DATA.languages;
-  const rawEdges = APP_DATA.language_edges;
-  const edges = graphStrongOnly ? rawEdges.filter(e => e.weight >= 50) : rawEdges.filter(e => e.weight >= 10);
+  const status = document.getElementById('families-status');
+  const renderToken = ++familiesGraphRenderToken;
 
-  // Оставляем только узлы, участвующие хотя бы в одной связи
-  const connectedSet = new Set();
-  for (const e of edges) { connectedSet.add(e.source); connectedSet.add(e.target); }
-  const connectedItems = items.filter(l => connectedSet.has(l.head));
+  function mountLayout(layout) {
+    if (renderToken !== familiesGraphRenderToken) return;
+    const nodes = Array.isArray(layout.nodes) ? layout.nodes : [];
+    const idx = layout.idx || {};
+    const validEdges = Array.isArray(layout.validEdges) ? layout.validEdges : [];
+    const families = Array.isArray(layout.families) ? layout.families : [];
+    const familyCounts = layout.familyCounts || {};
+    const canTransform = (
+      typeof ctx.save === 'function' &&
+      typeof ctx.restore === 'function' &&
+      typeof ctx.translate === 'function' &&
+      typeof ctx.scale === 'function'
+    );
+    let viewScale = 1;
+    let viewOffsetX = 0;
+    let viewOffsetY = 0;
+    let hoverNode = null;
+    let dragActive = false;
+    let dragMoved = false;
+    let dragLastX = 0;
+    let dragLastY = 0;
 
-  // Группируем по семьям (только те, у кого есть связи)
-  const byFamily = {};
-  for (const l of connectedItems) {
-    const f = l.family || 'Не классифицировано';
-    if (!byFamily[f]) byFamily[f] = [];
-    byFamily[f].push(l);
-  }
-
-  // Раскладываем семьи кругами
-  const nodes = [];
-  const idx = {};
-  const families = Object.keys(byFamily).sort((a, b) => byFamily[b].length - byFamily[a].length);
-  const cx = W/2, cy = H/2;
-  const familyAngles = {};
-  for (let fi = 0; fi < families.length; fi++) {
-    const angle = (fi / families.length) * Math.PI * 2;
-    familyAngles[families[fi]] = angle;
-  }
-  for (let fi = 0; fi < families.length; fi++) {
-    const fam = families[fi];
-    const langs = byFamily[fam];
-    const baseAngle = familyAngles[fam];
-    const baseR = fam === 'Индоевропейская' ? 0 : 200;
-    const fcx = cx + Math.cos(baseAngle) * baseR;
-    const fcy = cy + Math.sin(baseAngle) * baseR;
-    for (let li = 0; li < langs.length; li++) {
-      const l = langs[li];
-      const a = (li / Math.max(1, langs.length)) * Math.PI * 2;
-      const r = fam === 'Индоевропейская' ? 230 : 50;
-      nodes.push({
-        name: l.head,
-        family: fam,
-        group: l.group,
-        weight: (l.page_list || []).length,
-        x: fcx + Math.cos(a) * r,
-        y: fcy + Math.sin(a) * r,
-        vx: 0, vy: 0,
-      });
-      idx[l.head] = nodes.length - 1;
+    if (status) {
+      status.textContent = '';
+      status.style.display = 'none';
     }
-  }
 
-  // Только рёбра между языками внутри одной подгруппы
-  const validEdges = edges.filter(e => idx[e.source] !== undefined && idx[e.target] !== undefined);
-  const canTransform = (
-    typeof ctx.save === 'function' &&
-    typeof ctx.restore === 'function' &&
-    typeof ctx.translate === 'function' &&
-    typeof ctx.scale === 'function'
-  );
-  let viewScale = 1;
-  let viewOffsetX = 0;
-  let viewOffsetY = 0;
-  let hoverNode = null;
-  let dragActive = false;
-  let dragMoved = false;
-  let dragLastX = 0;
-  let dragLastY = 0;
+    function eventToCanvasPoint(e) {
+      const rect = canvas.getBoundingClientRect();
+      const sx = canvas.width / rect.width;
+      const sy = canvas.height / rect.height;
+      return {
+        x: (e.clientX - rect.left) * sx,
+        y: (e.clientY - rect.top) * sy,
+      };
+    }
 
-  function step() {
-    // Слабое отталкивание
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i+1; j < nodes.length; j++) {
-        const a = nodes[i], b = nodes[j];
-        const dx = b.x - a.x, dy = b.y - a.y;
-        const d2 = dx*dx + dy*dy + 0.01;
-        const d = Math.sqrt(d2);
-        if (d > 250) continue;
-        const force = 800 / d2;
-        a.vx -= (dx / d) * force; a.vy -= (dy / d) * force;
-        b.vx += (dx / d) * force; b.vy += (dy / d) * force;
+    function screenToWorld(pt) {
+      return {
+        x: (pt.x - viewOffsetX) / viewScale,
+        y: (pt.y - viewOffsetY) / viewScale,
+      };
+    }
+
+    function pickNode(screenPt) {
+      const worldPt = screenToWorld(screenPt);
+      for (const n of nodes) {
+        const r = 4 + Math.sqrt(n.weight) * 1.2;
+        const hitR = (r + 5) / Math.max(0.25, viewScale);
+        if ((worldPt.x - n.x) ** 2 + (worldPt.y - n.y) ** 2 < hitR ** 2) return n;
+      }
+      return null;
+    }
+
+    function draw(hover) {
+      ctx.clearRect(0, 0, W, H);
+      if (canTransform) {
+        ctx.save();
+        ctx.translate(viewOffsetX, viewOffsetY);
+        ctx.scale(viewScale, viewScale);
+      }
+      for (const e of validEdges) {
+        const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
+        if (!a || !b) continue;
+        const ax = canTransform ? a.x : (a.x * viewScale + viewOffsetX);
+        const ay = canTransform ? a.y : (a.y * viewScale + viewOffsetY);
+        const bx = canTransform ? b.x : (b.x * viewScale + viewOffsetX);
+        const by = canTransform ? b.y : (b.y * viewScale + viewOffsetY);
+        const fam = a.family;
+        const color = safeColor(FAMILY_COLORS[fam], '#888');
+        ctx.strokeStyle = color + '40';
+        ctx.lineWidth = canTransform ? 1 : viewScale;
+        ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+      }
+      for (const n of nodes) {
+        const rBase = 4 + Math.sqrt(n.weight) * 1.2;
+        const nx = canTransform ? n.x : (n.x * viewScale + viewOffsetX);
+        const ny = canTransform ? n.y : (n.y * viewScale + viewOffsetY);
+        const r = canTransform ? rBase : rBase * viewScale;
+        const color = safeColor(FAMILY_COLORS[n.family], '#888');
+        ctx.fillStyle = color;
+        ctx.beginPath(); ctx.arc(nx, ny, r, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
+        if (r > 5) {
+          ctx.fillStyle = '#1a1a1a'; ctx.font = '10px Georgia';
+          ctx.textAlign = 'left'; ctx.fillText(n.name, nx + r + 3, ny + 4);
+        }
+      }
+      if (canTransform) ctx.restore();
+      if (hover) {
+        const r = (4 + Math.sqrt(hover.weight) * 1.2) * viewScale;
+        const hx = hover.x * viewScale + viewOffsetX;
+        const hy = hover.y * viewScale + viewOffsetY;
+        ctx.font = 'bold 12px Georgia';
+        const text = hover.name + ' (' + hover.family + ')';
+        const tw = ctx.measureText(text).width;
+        ctx.fillStyle = 'rgba(255,248,232,0.95)';
+        ctx.fillRect(hx + r + 2, hy - 16, tw + 8, 22);
+        ctx.strokeStyle = '#8a7050';
+        ctx.strokeRect(hx + r + 2, hy - 16, tw + 8, 22);
+        ctx.fillStyle = '#5a3818';
+        ctx.fillText(text, hx + r + 6, hy);
       }
     }
-    // Притяжение по рёбрам (одна семья)
-    for (const e of validEdges) {
-      const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
-      const dx = b.x - a.x, dy = b.y - a.y;
-      const d = Math.sqrt(dx*dx + dy*dy) + 0.01;
-      const force = (d - 60) * 0.02;
-      a.vx += (dx / d) * force; a.vy += (dy / d) * force;
-      b.vx -= (dx / d) * force; b.vy -= (dy / d) * force;
-    }
-    for (const n of nodes) {
-      n.vx *= 0.8; n.vy *= 0.8;
-      n.x += n.vx; n.y += n.vy;
-      n.x = Math.max(60, Math.min(W - 60, n.x));
-      n.y = Math.max(60, Math.min(H - 60, n.y));
-    }
-  }
-  for (let i = 0; i < 200; i++) step();
 
-  function eventToCanvasPoint(e) {
-    const rect = canvas.getBoundingClientRect();
-    const sx = canvas.width / rect.width;
-    const sy = canvas.height / rect.height;
-    return {
-      x: (e.clientX - rect.left) * sx,
-      y: (e.clientY - rect.top) * sy,
+    draw();
+    canvas.style.cursor = 'grab';
+    canvas.onwheel = (e) => {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      const point = eventToCanvasPoint(e);
+      const before = screenToWorld(point);
+      const zoomFactor = e.deltaY < 0 ? 1.12 : (1 / 1.12);
+      const nextScale = Math.max(0.45, Math.min(3.2, viewScale * zoomFactor));
+      if (Math.abs(nextScale - viewScale) < 0.0001) return;
+      viewScale = nextScale;
+      viewOffsetX = point.x - before.x * viewScale;
+      viewOffsetY = point.y - before.y * viewScale;
+      hoverNode = pickNode(point);
+      draw(hoverNode);
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
     };
-  }
-
-  function screenToWorld(pt) {
-    return {
-      x: (pt.x - viewOffsetX) / viewScale,
-      y: (pt.y - viewOffsetY) / viewScale,
-    };
-  }
-
-  function pickNode(screenPt) {
-    const worldPt = screenToWorld(screenPt);
-    for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.2;
-      const hitR = (r + 5) / Math.max(0.25, viewScale);
-      if ((worldPt.x - n.x) ** 2 + (worldPt.y - n.y) ** 2 < hitR ** 2) return n;
-    }
-    return null;
-  }
-
-  function draw(hover) {
-    ctx.clearRect(0, 0, W, H);
-    if (canTransform) {
-      ctx.save();
-      ctx.translate(viewOffsetX, viewOffsetY);
-      ctx.scale(viewScale, viewScale);
-    }
-    // Рёбра
-    for (const e of validEdges) {
-      const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
-      const ax = canTransform ? a.x : (a.x * viewScale + viewOffsetX);
-      const ay = canTransform ? a.y : (a.y * viewScale + viewOffsetY);
-      const bx = canTransform ? b.x : (b.x * viewScale + viewOffsetX);
-      const by = canTransform ? b.y : (b.y * viewScale + viewOffsetY);
-      const fam = a.family;
-      const color = safeColor(FAMILY_COLORS[fam], '#888');
-      ctx.strokeStyle = color + '40';
-      ctx.lineWidth = canTransform ? 1 : viewScale;
-      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
-    }
-    // Узлы
-    for (const n of nodes) {
-      const rBase = 4 + Math.sqrt(n.weight) * 1.2;
-      const nx = canTransform ? n.x : (n.x * viewScale + viewOffsetX);
-      const ny = canTransform ? n.y : (n.y * viewScale + viewOffsetY);
-      const r = canTransform ? rBase : rBase * viewScale;
-      const color = safeColor(FAMILY_COLORS[n.family], '#888');
-      ctx.fillStyle = color;
-      ctx.beginPath(); ctx.arc(nx, ny, r, 0, Math.PI*2); ctx.fill();
-      ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
-      if (r > 5) {
-        ctx.fillStyle = '#1a1a1a'; ctx.font = '10px Georgia';
-        ctx.textAlign = 'left'; ctx.fillText(n.name, nx + r + 3, ny + 4);
-      }
-    }
-    if (canTransform) ctx.restore();
-    if (hover) {
-      const r = (4 + Math.sqrt(hover.weight) * 1.2) * viewScale;
-      const hx = hover.x * viewScale + viewOffsetX;
-      const hy = hover.y * viewScale + viewOffsetY;
-      ctx.font = 'bold 12px Georgia';
-      const text = hover.name + ' (' + hover.family + ')';
-      const tw = ctx.measureText(text).width;
-      ctx.fillStyle = 'rgba(255,248,232,0.95)';
-      ctx.fillRect(hx + r + 2, hy - 16, tw + 8, 22);
-      ctx.strokeStyle = '#8a7050';
-      ctx.strokeRect(hx + r + 2, hy - 16, tw + 8, 22);
-      ctx.fillStyle = '#5a3818';
-      ctx.fillText(text, hx + r + 6, hy);
-    }
-  }
-  draw();
-  canvas.style.cursor = 'grab';
-
-  canvas.onwheel = (e) => {
-    if (typeof e.preventDefault === 'function') e.preventDefault();
-    const point = eventToCanvasPoint(e);
-    const before = screenToWorld(point);
-    const zoomFactor = e.deltaY < 0 ? 1.12 : (1 / 1.12);
-    const nextScale = Math.max(0.45, Math.min(3.2, viewScale * zoomFactor));
-    if (Math.abs(nextScale - viewScale) < 0.0001) return;
-    viewScale = nextScale;
-    viewOffsetX = point.x - before.x * viewScale;
-    viewOffsetY = point.y - before.y * viewScale;
-    hoverNode = pickNode(point);
-    draw(hoverNode);
-    canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
-  };
-  canvas.onmousedown = (e) => {
-    if (e && e.button !== undefined && e.button !== 0) return;
-    const point = eventToCanvasPoint(e);
-    dragActive = true;
-    dragMoved = false;
-    dragLastX = point.x;
-    dragLastY = point.y;
-    canvas.style.cursor = 'grabbing';
-  };
-  canvas.onmousemove = (e) => {
-    const point = eventToCanvasPoint(e);
-    if (dragActive) {
-      const dx = point.x - dragLastX;
-      const dy = point.y - dragLastY;
+    canvas.onmousedown = (e) => {
+      if (e && e.button !== undefined && e.button !== 0) return;
+      const point = eventToCanvasPoint(e);
+      dragActive = true;
+      dragMoved = false;
       dragLastX = point.x;
       dragLastY = point.y;
-      if (Math.abs(dx) + Math.abs(dy) > 0.4) dragMoved = true;
-      viewOffsetX += dx;
-      viewOffsetY += dy;
-      draw(hoverNode);
       canvas.style.cursor = 'grabbing';
-      return;
-    }
-    hoverNode = pickNode(point);
-    draw(hoverNode);
-    canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
-  };
-  canvas.onmouseup = () => {
-    if (!dragActive) return;
-    dragActive = false;
-    canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
-  };
-  canvas.onmouseleave = () => {
-    dragActive = false;
-    canvas.style.cursor = 'grab';
-  };
-  canvas.ondblclick = () => {
-    viewScale = 1;
-    viewOffsetX = 0;
-    viewOffsetY = 0;
-    draw(hoverNode);
-    canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
-  };
-  canvas.onclick = (e) => {
-    if (dragMoved) {
-      dragMoved = false;
-      return;
-    }
-    const point = eventToCanvasPoint(e);
-    const picked = pickNode(point);
-    if (!picked) return;
-    selectedItem = picked.name;
-    selectedItemType = 'languages';
-    rightPaneMode = 'card';
-    switchTab('list');
-  };
+    };
+    canvas.onmousemove = (e) => {
+      const point = eventToCanvasPoint(e);
+      if (dragActive) {
+        const dx = point.x - dragLastX;
+        const dy = point.y - dragLastY;
+        dragLastX = point.x;
+        dragLastY = point.y;
+        if (Math.abs(dx) + Math.abs(dy) > 0.4) dragMoved = true;
+        viewOffsetX += dx;
+        viewOffsetY += dy;
+        draw(hoverNode);
+        canvas.style.cursor = 'grabbing';
+        return;
+      }
+      hoverNode = pickNode(point);
+      draw(hoverNode);
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onmouseup = () => {
+      if (!dragActive) return;
+      dragActive = false;
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onmouseleave = () => {
+      dragActive = false;
+      canvas.style.cursor = 'grab';
+    };
+    canvas.ondblclick = () => {
+      viewScale = 1;
+      viewOffsetX = 0;
+      viewOffsetY = 0;
+      draw(hoverNode);
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onclick = (e) => {
+      if (dragMoved) {
+        dragMoved = false;
+        return;
+      }
+      const point = eventToCanvasPoint(e);
+      const picked = pickNode(point);
+      if (!picked) return;
+      selectedItem = picked.name;
+      selectedItemType = 'languages';
+      rightPaneMode = 'card';
+      switchTab('list');
+    };
 
-  const lg = document.getElementById('families-legend');
-  for (const fam of families) {
-    const div = document.createElement('div');
-    div.className = 'legend-item';
-    div.innerHTML = `<span class="legend-dot" style="background:${safeColor(FAMILY_COLORS[fam], '#888')}"></span>${fam} (${byFamily[fam].length})`;
-    lg.appendChild(div);
+    const lg = document.getElementById('families-legend');
+    if (lg) {
+      lg.innerHTML = '';
+      for (const fam of families) {
+        const div = document.createElement('div');
+        div.className = 'legend-item';
+        div.innerHTML = `<span class="legend-dot" style="background:${safeColor(FAMILY_COLORS[fam], '#888')}"></span>${fam} (${familyCounts[fam] || 0})`;
+        lg.appendChild(div);
+      }
+    }
+    perfDebug('render-graph-families', nowMs() - t0, graphStrongOnly ? 'strong' : 'all');
   }
+
+  getFamiliesGraphLayoutAsync(graphStrongOnly, W, H)
+    .then((layout) => mountLayout(layout))
+    .catch((error) => {
+      if (renderToken !== familiesGraphRenderToken) return;
+      if (status) {
+        status.style.display = 'block';
+        status.textContent = 'Не удалось рассчитать граф.';
+      }
+      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
+        console.warn('[graph-families] render failed:', error && error.message ? error.message : error);
+      }
+    });
 }
 
 function getSavedReadingPage() {
