@@ -53,6 +53,8 @@ def check_static_guards():
         '<button type="button" class="related-link related-link-btn" id="export-card-md"',
         "safeSetAttr(input, 'aria-controls', 'global-search-results')",
         "safeSetAttr(input, 'aria-activedescendant', '')",
+        'function switchEntity(key) {\n  closeGlobalSearchResults();',
+        'function switchTab(tab) {\n  closeGlobalSearchResults();',
     ]
 
     for needle in banned:
