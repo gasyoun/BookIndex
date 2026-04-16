@@ -378,6 +378,7 @@ let familiesGraphWorkerBlobUrl = null;
 let familiesGraphWorkerRequestId = 0;
 let familiesGraphRenderToken = 0;
 let familiesGraphLayoutPromiseCache = new Map();
+let workersLifecycleWired = false;
 
 // =========================================================
 // УТИЛИТЫ
@@ -1319,6 +1320,7 @@ function onGlobalKeydown(e) {
 }
 
 function wireGlobalUI() {
+  wireGraphWorkersLifecycle();
   const backBtn = document.getElementById('back-btn');
   if (backBtn) backBtn.onclick = () => goBackInApp();
   const themeBtn = document.getElementById('theme-btn');
@@ -3546,6 +3548,18 @@ function getFamiliesGraphLayoutAsync(strongOnly, W, H) {
   });
   familiesGraphLayoutPromiseCache.set(cacheKey, promise);
   return promise;
+}
+
+function wireGraphWorkersLifecycle() {
+  if (workersLifecycleWired) return;
+  workersLifecycleWired = true;
+  if (typeof window === 'undefined' || typeof window.addEventListener !== 'function') return;
+  const disposeAll = () => {
+    disposeNameGraphWorker();
+    disposeFamiliesGraphWorker();
+  };
+  window.addEventListener('pagehide', disposeAll, { passive: true });
+  window.addEventListener('beforeunload', disposeAll);
 }
 
 function renderFamiliesPanel(container) {
