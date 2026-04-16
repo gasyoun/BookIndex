@@ -67,6 +67,16 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#right-content .card h2')).toBeVisible();
   });
 
+  test('gallery cards navigate via hash item links', async ({ page }) => {
+    await page.goto('/aaz-index.html#materials/gallery');
+    const firstCard = page.locator('.gallery-card[data-head]').first();
+    await expect(firstCard).toBeVisible();
+    await expect(firstCard).toHaveAttribute('href', /#names\/list\/item\/names\//);
+    await firstCard.click();
+    await expect(page).toHaveURL(/#names\/list\/item\/names\//);
+    await expect(page.locator('#right-content .card h2')).toBeVisible();
+  });
+
   test('scholar page trends renders export controls', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await page.locator('.entity-btn[data-entity="scholar"]').click();

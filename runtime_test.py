@@ -44,6 +44,8 @@ def check_static_guards():
     ]
     required = [
         'function getListColumnCount(',
+        'function buildListSearchHash(',
+        'function buildItemHash(',
         "APP_DATA.labels.literator = 'Носитель языка';",
     ]
 
