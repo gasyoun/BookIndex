@@ -354,6 +354,7 @@ let suppressHashSync = false;
 let expectedHash = null;
 let globalSearchTimer = null;
 let pendingGlossaryQuery = '';
+let currentGlossaryTerm = '';
 const UI_STATE_STORAGE_KEY = 'zaliznyakiada.ui.v1';
 const UI_STATE_SCHEMA_VERSION = 2;
 const THEME_STORAGE_KEY = 'zaliznyakiada.theme.v1';
@@ -599,6 +600,7 @@ function captureViewState() {
     searchQuery,
     onlyDiscussed,
     onlyQuestionCandidates,
+    currentGlossaryTerm,
     activeFilters: Array.from(activeFilters),
     globalSearchQuery: globalSearchInput ? String(globalSearchInput.value || '') : '',
   };
@@ -633,6 +635,7 @@ function restoreViewState() {
     if (!Number.isInteger(parsed.trendsRangeStart)) parsed.trendsRangeStart = 1;
     if (!Number.isInteger(parsed.trendsRangeEnd)) parsed.trendsRangeEnd = 404;
     if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
+    if (typeof parsed.currentGlossaryTerm !== 'string') parsed.currentGlossaryTerm = '';
     parsed.onlyDiscussed = !!parsed.onlyDiscussed;
     parsed.onlyQuestionCandidates = !!parsed.onlyQuestionCandidates;
     if (!Array.isArray(parsed.activeFilters)) parsed.activeFilters = [];
@@ -759,6 +762,10 @@ function applyViewState(state) {
   trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
   trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : 404;
   searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
+  currentGlossaryTerm = typeof state.currentGlossaryTerm === 'string' ? state.currentGlossaryTerm : '';
+  if (currentEntity === 'materials' && currentTab === 'glossary' && currentGlossaryTerm) {
+    pendingGlossaryQuery = currentGlossaryTerm;
+  }
   onlyDiscussed = !!state.onlyDiscussed;
   onlyQuestionCandidates = !!state.onlyQuestionCandidates;
   activeFilters = new Set(Array.isArray(state.activeFilters) ? state.activeFilters.filter(x => typeof x === 'string') : []);
@@ -783,6 +790,7 @@ function sameViewState(a, b) {
     a.lectureCompareB === b.lectureCompareB &&
     a.trendsRangeStart === b.trendsRangeStart &&
     a.trendsRangeEnd === b.trendsRangeEnd &&
+    (a.currentGlossaryTerm || '') === (b.currentGlossaryTerm || '') &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
     !!a.onlyDiscussed === !!b.onlyDiscussed &&
     !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
@@ -895,6 +903,9 @@ function buildHashFromState() {
   if (currentEntity === 'materials' && currentTab === 'lecture_pages') {
     parts.push(String(Math.max(0, currentLecture)));
   }
+  if (currentEntity === 'materials' && currentTab === 'glossary' && currentGlossaryTerm) {
+    parts.push('term', currentGlossaryTerm);
+  }
   if (selectedItem && rightPaneMode === 'card') {
     parts.push('item', selectedItemType || currentEntity, selectedItem);
   }
@@ -975,9 +986,18 @@ function applyHash(hash) {
     rightPaneMode: 'histogram',
     currentLecture: 0,
   };
+  pendingGlossaryQuery = '';
+  currentGlossaryTerm = '';
 
   if (entity === 'materials' && tab === 'lecture_pages' && /^\d+$/.test(parts[2] || '')) {
     state.currentLecture = parseInt(parts[2], 10);
+  }
+  if (entity === 'materials' && tab === 'glossary') {
+    const termPos = parts.indexOf('term');
+    if (termPos >= 0 && parts[termPos + 1]) {
+      pendingGlossaryQuery = String(parts[termPos + 1]).trim().toLowerCase();
+      currentGlossaryTerm = pendingGlossaryQuery;
+    }
   }
 
   if (itemPos >= 0 && parts[itemPos + 1] && parts[itemPos + 2]) {
@@ -1054,6 +1074,7 @@ function navigateToItem(type, head) {
   currentTab = 'list';
   selectedItem = resolveExistingHead(targetType, head);
   selectedItemType = targetType;
+  currentGlossaryTerm = '';
   rememberRecentItem(selectedItemType, selectedItem);
   rightPaneMode = 'card';
   renderEntitySwitcher();
@@ -1068,6 +1089,7 @@ function openLecturePage(index) {
   currentLecture = Math.max(0, index || 0);
   selectedItem = null;
   selectedItemType = null;
+  currentGlossaryTerm = '';
   rightPaneMode = 'histogram';
   renderEntitySwitcher();
   renderTabs();
@@ -1079,6 +1101,7 @@ function openGlossaryTerm(term) {
   const q = String(term || '').trim().toLowerCase();
   if (!q) return;
   pendingGlossaryQuery = q;
+  currentGlossaryTerm = q;
   currentEntity = 'materials';
   currentTab = 'glossary';
   selectedItem = null;
@@ -1118,6 +1141,7 @@ function openLectureTerm(term) {
 
   currentEntity = 'all';
   currentTab = 'list';
+  currentGlossaryTerm = '';
   activeFilters.clear();
   onlyDiscussed = false;
   searchQuery = raw;
@@ -1589,6 +1613,7 @@ function renderTabs() {
 function switchEntity(key) {
   visibleItemsCache = null;
   currentEntity = key;
+  currentGlossaryTerm = '';
   activeFilters.clear();
   onlyDiscussed = false;
   onlyQuestionCandidates = false;
@@ -1607,6 +1632,7 @@ function switchEntity(key) {
 function switchTab(tab) {
   visibleItemsCache = null;
   currentTab = tab;
+  if (!(currentEntity === 'materials' && tab === 'glossary')) currentGlossaryTerm = '';
   renderTabs();
   renderContent();
   syncNavigationState();
@@ -4756,12 +4782,25 @@ function renderGlossaryPanel(container) {
   const input = document.getElementById('glossary-search');
   input.oninput = (e) => {
     const q = e.target.value.trim().toLowerCase();
+    currentGlossaryTerm = q;
     applyGlossaryFilter(q);
+  };
+  input.onchange = () => {
+    syncNavigationState();
+  };
+  input.onkeydown = (e) => {
+    if (e.key === 'Enter') {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      syncNavigationState();
+    }
   };
   if (pendingGlossaryQuery) {
     input.value = pendingGlossaryQuery;
+    currentGlossaryTerm = pendingGlossaryQuery;
     applyGlossaryFilter(pendingGlossaryQuery);
     pendingGlossaryQuery = '';
+  } else {
+    currentGlossaryTerm = String(input.value || '').trim().toLowerCase();
   }
   container.querySelectorAll('.glossary-xlink').forEach(el => {
     el.onclick = () => navigateToItem(el.dataset.type || 'lexicon', el.dataset.head || '');

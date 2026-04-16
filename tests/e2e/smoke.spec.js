@@ -37,8 +37,9 @@ test.describe('aaz-index smoke', () => {
     const glossaryResult = page.locator('#global-search-results.open .header-search-item').filter({ has: page.locator('.kind', { hasText: 'термин' }) }).first();
     await expect(glossaryResult).toBeVisible();
     await glossaryResult.click();
-    await expect(page).toHaveURL(/#materials\/glossary/);
+    await expect(page).toHaveURL(/#materials\/glossary\/term\//);
     await expect(page.locator('#glossary-search')).toBeVisible();
+    await expect(page.locator('#glossary-search')).toHaveValue(/энклит/i);
   });
 
   test('materials lecture compare tab renders', async ({ page }) => {
