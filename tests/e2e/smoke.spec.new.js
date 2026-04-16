@@ -92,6 +92,21 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#glossary-search')).toHaveValue(/\u044d\u043d\u043a\u043b\u0438\u0442/i);
   });
 
+  test('glossary renders per-term LES links (not one shared URL)', async ({ page }) => {
+    await page.goto('/aaz-index.html#materials/glossary');
+    const links = page.locator('#glossary-list .glossary-les-link');
+    await expect(links.first()).toBeVisible();
+    const href1 = await links.nth(0).getAttribute('href');
+    const href2 = await links.nth(1).getAttribute('href');
+    expect(href1).toBeTruthy();
+    expect(href2).toBeTruthy();
+    expect(String(href1)).toContain('samskrtam.ru/sanskrit-lexicon/les-1990/');
+    expect(String(href2)).toContain('samskrtam.ru/sanskrit-lexicon/les-1990/');
+    expect(String(href1)).toContain('?s=');
+    expect(String(href2)).toContain('?s=');
+    expect(href1).not.toBe(href2);
+  });
+
   test('list hash query restores list search input', async ({ page }) => {
     await page.goto('/aaz-index.html#all/list/q/%D0%B6%D0%B5');
     await expect(page).toHaveURL(/#all\/list\/q\//);
