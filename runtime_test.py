@@ -51,6 +51,8 @@ def check_static_guards():
         "APP_DATA.labels.literator = 'Носитель языка';",
         '<button type="button" class="related-link related-link-btn" id="copy-card-link"',
         '<button type="button" class="related-link related-link-btn" id="export-card-md"',
+        "safeSetAttr(input, 'aria-controls', 'global-search-results')",
+        "safeSetAttr(input, 'aria-activedescendant', '')",
     ]
 
     for needle in banned:

@@ -41,6 +41,8 @@ test.describe('aaz-index smoke', () => {
     await input.press('ArrowDown');
     await expect(results.first()).toBeVisible();
     await expect(results.first()).toHaveClass(/active/);
+    await expect(input).toHaveAttribute('aria-expanded', 'true');
+    await expect(input).toHaveAttribute('aria-activedescendant', /global-search-item-/);
     await input.press('Enter');
     await expect(page.locator('#content .panel.active')).toBeVisible();
     await expect(page).not.toHaveURL(/#home\/home$/);
