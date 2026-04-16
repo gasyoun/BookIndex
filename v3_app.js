@@ -1098,6 +1098,7 @@ function resolveExistingHead(type, head) {
 }
 
 function navigateToItem(type, head) {
+  closeGlobalSearchResults();
   const targetType = ENTITY_TYPES[type] ? type : currentEntity;
   currentEntity = targetType;
   currentTab = 'list';
@@ -1127,6 +1128,7 @@ function bindNavigateLinks(root, selector, defaultType = 'all') {
 }
 
 function openLecturePage(index) {
+  closeGlobalSearchResults();
   currentEntity = 'materials';
   currentTab = 'lecture_pages';
   currentLecture = Math.max(0, index || 0);
@@ -1146,6 +1148,7 @@ function buildLecturePageHash(index) {
 }
 
 function openGlossaryTerm(term) {
+  closeGlobalSearchResults();
   const q = String(term || '').trim().toLowerCase();
   if (!q) return;
   pendingGlossaryQuery = q;
@@ -1205,6 +1208,7 @@ function findLectureIndexByName(name) {
 }
 
 function openLectureTerm(term) {
+  closeGlobalSearchResults();
   const raw = String(term || '').trim();
   if (!raw) return;
   const q = raw.toLowerCase();
@@ -1783,6 +1787,7 @@ function renderTabs() {
 }
 
 function switchEntity(key) {
+  closeGlobalSearchResults();
   visibleItemsCache = null;
   currentEntity = key;
   currentGlossaryTerm = '';
@@ -1802,6 +1807,7 @@ function switchEntity(key) {
 }
 
 function switchTab(tab) {
+  closeGlobalSearchResults();
   visibleItemsCache = null;
   currentTab = tab;
   if (!(currentEntity === 'materials' && tab === 'glossary')) currentGlossaryTerm = '';

@@ -57,6 +57,15 @@ test.describe('aaz-index smoke', () => {
     await expect(page).not.toHaveURL(/#home\/home$/);
   });
 
+  test('global search dropdown closes when switching entity', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const input = page.locator('#global-search');
+    await input.fill('iv');
+    await expect(page.locator('#global-search-results.open .header-search-item').first()).toBeVisible();
+    await page.locator('.entity-btn[data-entity="names"]').click();
+    await expect(page.locator('#global-search-results')).not.toHaveClass(/open/);
+  });
+
   test('global search opens glossary term results', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
