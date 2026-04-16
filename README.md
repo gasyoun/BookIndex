@@ -19,6 +19,7 @@
 - `scripts/validate_content.py` — структурная валидация данных.
 - `scripts/build_aaz_index.py` — сборка итогового `aaz-index.html`.
 - `scripts/migrate_app_data.py` — миграция `app_data.json` к актуальной схеме.
+- `playwright.config.js` + `tests/e2e/` — smoke E2E-проверки интерфейса.
 - `.github/workflows/ci.yml` — CI-пайплайн GitHub Actions.
 
 ## Локальная проверка перед выкладкой
@@ -27,6 +28,7 @@
 node --check v3_app.js
 python scripts/validate_content.py app_data.json
 python runtime_test.py
+npx playwright test
 ```
 
 Ожидается:
@@ -40,6 +42,7 @@ Workflow `CI` запускается на `push` и `pull_request` в `main` и 
 - `scripts/validate_content.py`;
 - `runtime_test.py`;
 - smoke-сборку `aaz-index.html`.
+- Playwright E2E smoke (`tests/e2e/smoke.spec.js`).
 
 ## Схема данных и миграции
 

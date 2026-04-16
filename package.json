@@ -1,0 +1,15 @@
+{
+  "name": "bookindex-aaz",
+  "version": "2.1.0",
+  "private": true,
+  "description": "E2E smoke checks for aaz-index standalone app",
+  "scripts": {
+    "e2e": "playwright test",
+    "e2e:headed": "playwright test --headed",
+    "e2e:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.0"
+  }
+}
+

@@ -26,6 +26,14 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install Node dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
       - name: JS syntax check
         run: node --check v3_app.js
 
@@ -47,3 +55,9 @@ jobs:
           pathlib.Path("aaz-index.html").write_text(html, encoding="utf-8-sig")
           print("build smoke: aaz-index.html generated, size=", pathlib.Path("aaz-index.html").stat().st_size)
           PY
+
+      - name: Install Playwright browser (Chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E smoke (Playwright)
+        run: npx playwright test
