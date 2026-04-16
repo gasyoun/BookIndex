@@ -49,6 +49,8 @@ def check_static_guards():
         'function buildListSearchHash(',
         'function buildItemHash(',
         "APP_DATA.labels.literator = 'Носитель языка';",
+        '<button type="button" class="related-link related-link-btn" id="copy-card-link"',
+        '<button type="button" class="related-link related-link-btn" id="export-card-md"',
     ]
 
     for needle in banned:
