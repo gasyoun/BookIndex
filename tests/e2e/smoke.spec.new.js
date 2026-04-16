@@ -248,6 +248,19 @@ test.describe('aaz-index smoke', () => {
     await expect(page).not.toHaveURL(before);
   });
 
+  test('scholar accent paradigms compare renders and reacts to selection', async ({ page }) => {
+    await page.goto('/aaz-index.html#scholar/scholar');
+    await expect(page.locator('#accent-compare-a')).toBeVisible();
+    await expect(page.locator('#accent-compare-b')).toBeVisible();
+    await expect(page.locator('#accent-compare-c')).toBeVisible();
+    await expect(page.locator('#accent-compare-export-md')).toBeVisible();
+    await page.selectOption('#accent-compare-a', '0');
+    await page.selectOption('#accent-compare-b', '2');
+    await page.selectOption('#accent-compare-c', '4');
+    await expect(page.locator('#accent-compare-box table')).toBeVisible();
+    await expect(page.locator('#accent-compare-box td').first()).toBeVisible();
+  });
+
   test('scholar slovo section supports thesis anchors and further reading links', async ({ page }) => {
     await page.goto('/aaz-index.html#scholar/scholar/anchor/sch-slovo-arg-2');
     const arg = page.locator('#sch-slovo-arg-2');

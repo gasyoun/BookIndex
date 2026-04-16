@@ -5944,6 +5944,26 @@ function renderScholarPanel(container) {
     }
     html += '</div>';
   }
+  const accentOptions = (s.accent_paradigms || []).map((ap, idx) => `<option value="${idx}">${escapeHtml(ap.type)}</option>`).join('');
+  html += `<div style="background:#fff8e8;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;margin-bottom:12px;">
+    <div style="font-size:12px;color:#5a3818;font-weight:bold;margin-bottom:8px;">Сравнение 2–3 парадигм</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:8px;">
+      <label style="font-size:11px;color:#6a5040;">Парадигма A
+        <select id="accent-compare-a" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">${accentOptions}</select>
+      </label>
+      <label style="font-size:11px;color:#6a5040;">Парадигма B
+        <select id="accent-compare-b" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">${accentOptions}</select>
+      </label>
+      <label style="font-size:11px;color:#6a5040;">Парадигма C (опц.)
+        <select id="accent-compare-c" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+          <option value="-1">—</option>
+          ${accentOptions}
+        </select>
+      </label>
+      <button id="accent-compare-export-md" type="button" class="related-link related-link-btn">Экспорт сравнения в Markdown</button>
+    </div>
+    <div id="accent-compare-box"></div>
+  </div>`;
 
   // 10. Сравнительная таблица
   html += '<h3 id="sch-correspondences" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">10. Сравнительная таблица фонетических соответствий</h3>';
@@ -6003,6 +6023,90 @@ function renderScholarPanel(container) {
     }
     currentScholarAnchor = pendingScholarAnchor;
     pendingScholarAnchor = '';
+  }
+  const accentCompareA = container.querySelector('#accent-compare-a');
+  const accentCompareB = container.querySelector('#accent-compare-b');
+  const accentCompareC = container.querySelector('#accent-compare-c');
+  const accentCompareBox = container.querySelector('#accent-compare-box');
+  const accentCompareExport = container.querySelector('#accent-compare-export-md');
+  if (accentCompareA && accentCompareB && accentCompareC && accentCompareBox) {
+    const paradigms = Array.isArray(s.accent_paradigms) ? s.accent_paradigms : [];
+    const splitForms = (text) => String(text || '')
+      .split(/[;,]/)
+      .map((x) => x.trim())
+      .filter(Boolean)
+      .slice(0, 12);
+    const stripAccents = (text) => String(text || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim()
+      .toLowerCase();
+    const mdEscapeCell = (text) => String(text || '').replace(/\|/g, '\\|');
+    const parseIdx = (el, fallback) => {
+      if (!el || typeof el.value !== 'string') return fallback;
+      const n = parseInt(el.value, 10);
+      if (!Number.isInteger(n)) return fallback;
+      return Math.max(-1, Math.min(n, paradigms.length - 1));
+    };
+    let lastMd = '';
+    const renderAccentCompare = () => {
+      const idxA = parseIdx(accentCompareA, 0);
+      let idxB = parseIdx(accentCompareB, paradigms.length > 1 ? 1 : 0);
+      const idxC = parseIdx(accentCompareC, -1);
+      if (idxB === idxA) idxB = paradigms.length > 1 ? ((idxA + 1) % paradigms.length) : idxA;
+      const selected = [idxA, idxB, idxC].filter((idx, pos, arr) => idx >= 0 && arr.indexOf(idx) === pos);
+      if (selected.length < 2) {
+        accentCompareBox.innerHTML = '<div style="font-size:12px;color:#888;">Выберите минимум две разные парадигмы.</div>';
+        lastMd = '';
+        return;
+      }
+      const selectedParadigms = selected.map((idx) => paradigms[idx]).filter(Boolean);
+      const labels = selectedParadigms.map((p) => String(p.type || 'тип'));
+      const rows = [];
+      let maxRows = 0;
+      for (const p of selectedParadigms) {
+        const ex = Array.isArray(p.examples) ? p.examples : [];
+        const first = ex.length ? ex[0] : { word: '', forms: '' };
+        const forms = splitForms(first.forms || first.word || '');
+        rows.push(forms);
+        if (forms.length > maxRows) maxRows = forms.length;
+      }
+      const htmlRows = [];
+      const mdRows = [];
+      for (let i = 0; i < maxRows; i++) {
+        const cells = rows.map((r) => String(r[i] || ''));
+        const norms = cells.map(stripAccents).filter(Boolean);
+        const same = norms.length > 1 && norms.every((n) => n === norms[0]);
+        const cellHtml = cells.map((cell) => {
+          const bg = !same && cell ? 'background:#fff3e4;' : '';
+          return `<td style="padding:6px 8px;border-top:1px solid #f0e8d8;${bg}">${cell ? renderAccentSafe(cell) : '<span style="color:#bbb;">—</span>'}</td>`;
+        }).join('');
+        htmlRows.push(`<tr><td style="padding:6px 8px;border-top:1px solid #f0e8d8;color:#888;font-size:11px;">${i + 1}</td>${cellHtml}</tr>`);
+        mdRows.push(`| ${i + 1} | ${cells.map(mdEscapeCell).join(' | ')} |`);
+      }
+      accentCompareBox.innerHTML = `<div style="overflow-x:auto;"><table style="width:100%;font-size:12px;border-collapse:collapse;background:#fff;border:1px solid #d4c8b0;border-radius:4px;">
+        <thead><tr style="background:#f0e8d8;"><th style="padding:6px 8px;text-align:left;">№</th>${labels.map((l) => `<th style="padding:6px 8px;text-align:left;">${escapeHtml(l)}</th>`).join('')}</tr></thead>
+        <tbody>${htmlRows.join('')}</tbody>
+      </table></div>`;
+      const mdHeader = `| № | ${labels.join(' | ')} |`;
+      const mdSep = `| ${['---', ...labels.map(() => '---')].join(' | ')} |`;
+      lastMd = ['# Сравнение акцентологических парадигм', '', mdHeader, mdSep, ...mdRows, ''].join('\n');
+    };
+    if (paradigms.length > 1) {
+      accentCompareA.value = '0';
+      accentCompareB.value = '1';
+    }
+    accentCompareC.value = '-1';
+    accentCompareA.onchange = renderAccentCompare;
+    accentCompareB.onchange = renderAccentCompare;
+    accentCompareC.onchange = renderAccentCompare;
+    if (accentCompareExport) {
+      accentCompareExport.onclick = () => {
+        if (!lastMd) return;
+        downloadTextFile('accent-paradigms-compare.md', lastMd, 'text/markdown;charset=utf-8');
+      };
+    }
+    renderAccentCompare();
   }
 
   // Локальные фильтры конкорданса берестяных грамот

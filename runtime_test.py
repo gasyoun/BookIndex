@@ -77,6 +77,8 @@ def check_static_guards():
         'class="glossary-les-link"',
         'class="scholar-slovo-anchor"',
         'if (Array.isArray(s.slovo_reading) && s.slovo_reading.length) {',
+        'id="accent-compare-a"',
+        'const renderAccentCompare = () => {',
         "safeSetAttr(input, 'aria-controls', 'global-search-results')",
         "safeSetAttr(input, 'aria-activedescendant', '')",
         'function switchEntity(key) {\n  closeGlobalSearchResults();',
