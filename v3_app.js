@@ -3044,13 +3044,51 @@ function renderGraphPanel(container) {
     const nodes = Array.isArray(layout.nodes) ? layout.nodes : [];
     const idx = layout.idx || {};
     const validEdges = Array.isArray(layout.validEdges) ? layout.validEdges : [];
+    let viewScale = 1;
+    let viewOffsetX = 0;
+    let viewOffsetY = 0;
+    let hoverNode = null;
+    let dragActive = false;
+    let dragMoved = false;
+    let dragLastX = 0;
+    let dragLastY = 0;
     if (status) {
       status.textContent = '';
       status.style.display = 'none';
     }
 
+    function eventToCanvasPoint(e) {
+      const rect = canvas.getBoundingClientRect();
+      const sx = canvas.width / rect.width;
+      const sy = canvas.height / rect.height;
+      return {
+        x: (e.clientX - rect.left) * sx,
+        y: (e.clientY - rect.top) * sy,
+      };
+    }
+
+    function screenToWorld(pt) {
+      return {
+        x: (pt.x - viewOffsetX) / viewScale,
+        y: (pt.y - viewOffsetY) / viewScale,
+      };
+    }
+
+    function pickNode(screenPt) {
+      const worldPt = screenToWorld(screenPt);
+      for (const n of nodes) {
+        const r = 4 + Math.sqrt(n.weight) * 1.5;
+        const hitR = (r + 5) / Math.max(0.25, viewScale);
+        if ((worldPt.x - n.x) ** 2 + (worldPt.y - n.y) ** 2 < hitR ** 2) return n;
+      }
+      return null;
+    }
+
     function draw(hover) {
       ctx.clearRect(0, 0, W, H);
+      ctx.save();
+      ctx.translate(viewOffsetX, viewOffsetY);
+      ctx.scale(viewScale, viewScale);
       for (const e of validEdges) {
         const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
         if (!a || !b) continue;
@@ -3068,46 +3106,86 @@ function renderGraphPanel(container) {
           ctx.textAlign = 'left'; ctx.fillText(n.name, n.x + r + 3, n.y + 4);
         }
       }
+      ctx.restore();
       if (hover) {
-        const r = 4 + Math.sqrt(hover.weight) * 1.5;
+        const r = (4 + Math.sqrt(hover.weight) * 1.5) * viewScale;
+        const hx = hover.x * viewScale + viewOffsetX;
+        const hy = hover.y * viewScale + viewOffsetY;
         ctx.font = 'bold 13px Georgia';
         const tw = ctx.measureText(hover.name).width;
         ctx.fillStyle = 'rgba(255,248,232,0.95)';
-        ctx.fillRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
+        ctx.fillRect(hx + r + 2, hy - 16, tw + 8, 22);
         ctx.strokeStyle = '#8a7050';
-        ctx.strokeRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
+        ctx.strokeRect(hx + r + 2, hy - 16, tw + 8, 22);
         ctx.fillStyle = '#5a3818';
-        ctx.fillText(hover.name, hover.x + r + 6, hover.y);
+        ctx.fillText(hover.name, hx + r + 6, hy);
       }
     }
 
     draw();
+    canvas.style.cursor = 'grab';
+    canvas.onwheel = (e) => {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      const point = eventToCanvasPoint(e);
+      const before = screenToWorld(point);
+      const zoomFactor = e.deltaY < 0 ? 1.12 : (1 / 1.12);
+      const nextScale = Math.max(0.45, Math.min(3.2, viewScale * zoomFactor));
+      if (Math.abs(nextScale - viewScale) < 0.0001) return;
+      viewScale = nextScale;
+      viewOffsetX = point.x - before.x * viewScale;
+      viewOffsetY = point.y - before.y * viewScale;
+      hoverNode = pickNode(point);
+      draw(hoverNode);
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onmousedown = (e) => {
+      if (e && e.button !== undefined && e.button !== 0) return;
+      const point = eventToCanvasPoint(e);
+      dragActive = true;
+      dragMoved = false;
+      dragLastX = point.x;
+      dragLastY = point.y;
+      canvas.style.cursor = 'grabbing';
+    };
     canvas.onmousemove = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
-      const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
-      let hover = null;
-      for (const n of nodes) {
-        const r = 4 + Math.sqrt(n.weight) * 1.5;
-        if ((mx - n.x) ** 2 + (my - n.y) ** 2 < (r + 4) ** 2) { hover = n; break; }
+      const point = eventToCanvasPoint(e);
+      if (dragActive) {
+        const dx = point.x - dragLastX;
+        const dy = point.y - dragLastY;
+        dragLastX = point.x;
+        dragLastY = point.y;
+        if (Math.abs(dx) + Math.abs(dy) > 0.4) dragMoved = true;
+        viewOffsetX += dx;
+        viewOffsetY += dy;
+        draw(hoverNode);
+        canvas.style.cursor = 'grabbing';
+        return;
       }
-      draw(hover);
-      canvas.style.cursor = hover ? 'pointer' : 'grab';
+      hoverNode = pickNode(point);
+      draw(hoverNode);
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onmouseup = () => {
+      if (!dragActive) return;
+      dragActive = false;
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
+    canvas.onmouseleave = () => {
+      dragActive = false;
+      canvas.style.cursor = 'grab';
     };
     canvas.onclick = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
-      const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
-      for (const n of nodes) {
-        const r = 4 + Math.sqrt(n.weight) * 1.5;
-        if ((mx - n.x) ** 2 + (my - n.y) ** 2 < (r + 4) ** 2) {
-          selectedItem = n.name;
-          selectedItemType = 'names';
-          rightPaneMode = 'card';
-          switchTab('list');
-          return;
-        }
+      if (dragMoved) {
+        dragMoved = false;
+        return;
       }
+      const point = eventToCanvasPoint(e);
+      const picked = pickNode(point);
+      if (!picked) return;
+      selectedItem = picked.name;
+      selectedItemType = 'names';
+      rightPaneMode = 'card';
+      switchTab('list');
     };
     perfDebug('render-graph-names', nowMs() - t0, modeMeta);
   }
