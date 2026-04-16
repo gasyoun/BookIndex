@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Контрольный набор для проверки работоспособности Указатели_визуализация.html
+Контрольный набор для проверки работоспособности aaz-index.html
 перед каждой выкладкой. Должен проходить 20/20 функций.
 
 Использование:
@@ -9,7 +9,7 @@
 Требования:
     - node.js установлен
     - В текущей директории должны быть: app_data.json, v3_app.js, v3_template.html
-      ИЛИ собранный Указатели_визуализация.html
+      ИЛИ собранный aaz-index.html
 
 Что проверяется:
     1. node --check на JS после подстановки данных (синтаксис)
@@ -134,14 +134,14 @@ let passed = 0, failed = 0;
 for (const [name, fn] of tests) {
   try {
     fn();
-    console.log('✓', name);
+    console.log('[OK]', name);
     passed++;
   } catch (e) {
-    console.log('✗', name, ':', e.message);
+    console.log('[FAIL]', name, ':', e.message);
     failed++;
   }
 }
-console.log(`\\nРезультат: ${passed}/${tests.length}`);
+console.log(`\\n[RESULT] ${passed}/${tests.length}`);
 if (failed > 0) process.exit(1);
 """
     with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as f:
@@ -164,7 +164,7 @@ if (failed > 0) process.exit(1);
 
 def main():
     print("=" * 60)
-    print("Контроль работоспособности Указатели_визуализация.html")
+    print("Контроль работоспособности aaz-index.html")
     print("=" * 60)
 
     # Шаг 1: собираем JS
