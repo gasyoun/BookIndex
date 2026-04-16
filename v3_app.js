@@ -5449,13 +5449,47 @@ function renderScholarPanel(container) {
   html += '</div>';
 
   // 5. Конкорданс берестяных грамот
+  const birchRows = (s.birch_grammar || []).map((g) => {
+    const rawUrl = String(g.url || '');
+    const cityMatch = rawUrl.match(/show\/([^/]+)\//i);
+    const city = cityMatch ? cityMatch[1].toLowerCase() : 'unknown';
+    const yearText = String(g.year || '');
+    const centuryMatch = yearText.toUpperCase().match(/X{1,3}(?:I{0,3}|V?I{0,3})/);
+    const century = centuryMatch ? `${centuryMatch[0]} в.` : 'не указано';
+    return { ...g, city, century };
+  });
+  const birchCities = Array.from(new Set(birchRows.map(r => r.city))).sort(compareHeadsRu);
+  const birchCenturies = Array.from(new Set(birchRows.map(r => r.century))).sort(compareHeadsRu);
   html += '<h3 id="sch-birch" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">5. Конкорданс берестяных грамот</h3>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Берестяные грамоты, упоминаемые в лекции, по номерам. Полная база: <a href="https://gramoty.ru/birchbark" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;">gramoty.ru/birchbark ↗</a>.</div>';
+  html += `<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:8px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;">
+    <label style="font-size:11px;color:#6a5040;">Город
+      <select id="birch-city-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+        <option value="">Все</option>
+        ${birchCities.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
+      </select>
+    </label>
+    <label style="font-size:11px;color:#6a5040;">Век
+      <select id="birch-century-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+        <option value="">Все</option>
+        ${birchCenturies.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
+      </select>
+    </label>
+    <label style="font-size:11px;color:#6a5040;">Номер грамоты
+      <input id="birch-number-filter" type="text" inputmode="numeric" placeholder="например, 776" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;min-width:140px;">
+    </label>
+  </div>`;
   html += '<table style="width:100%;font-size:13px;border-collapse:collapse;background:#fff;border:1px solid #d4c8b0;border-radius:4px;overflow:hidden;">';
-  html += '<thead><tr style="background:#f0e8d8;"><th style="padding:8px 12px;text-align:left;">№</th><th style="padding:8px 12px;text-align:left;">Дата</th><th style="padding:8px 12px;text-align:left;">Содержание</th><th style="padding:8px 12px;text-align:left;">Стр.</th></tr></thead><tbody>';
-  for (const g of (s.birch_grammar || [])) {
+  html += '<thead><tr style="background:#f0e8d8;"><th style="padding:8px 12px;text-align:left;">№</th><th style="padding:8px 12px;text-align:left;">Город</th><th style="padding:8px 12px;text-align:left;">Дата</th><th style="padding:8px 12px;text-align:left;">Содержание</th><th style="padding:8px 12px;text-align:left;">Стр.</th></tr></thead><tbody id="birch-concordance-body">';
+  for (const g of birchRows) {
     const birchLink = g.url ? `<a href="${escapeHtml(safeUrl(g.url))}" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;">№${escapeHtml(g.num)} ↗</a>` : `№${escapeHtml(g.num)}`;
-    html += `<tr style="border-top:1px solid #f0e8d8;"><td style="padding:6px 12px;font-weight:bold;color:#5a3818;">${birchLink}</td><td style="padding:6px 12px;color:#666;">${escapeHtml(g.year)}</td><td style="padding:6px 12px;">${escapeHtml(g.content)}</td><td style="padding:6px 12px;color:#888;">${escapeHtml(g.page)}</td></tr>`;
+    html += `<tr class="birch-row" data-city="${escapeHtml(g.city)}" data-century="${escapeHtml(g.century)}" data-num="${escapeHtml(String(g.num || ''))}" style="border-top:1px solid #f0e8d8;">
+      <td style="padding:6px 12px;font-weight:bold;color:#5a3818;">${birchLink}</td>
+      <td style="padding:6px 12px;color:#666;">${escapeHtml(g.city)}</td>
+      <td style="padding:6px 12px;color:#666;">${escapeHtml(g.year)}</td>
+      <td style="padding:6px 12px;">${escapeHtml(g.content)}</td>
+      <td style="padding:6px 12px;color:#888;">${escapeHtml(g.page)}</td>
+    </tr>`;
   }
   html += '</tbody></table>';
 
@@ -5559,6 +5593,51 @@ function renderScholarPanel(container) {
 
   // Привязки кликов на имена
   bindNavigateLinks(container, '.scholar-link', 'all');
+
+  // Локальные фильтры конкорданса берестяных грамот
+  const birchCityFilter = container.querySelector('#birch-city-filter');
+  const birchCenturyFilter = container.querySelector('#birch-century-filter');
+  const birchNumberFilter = container.querySelector('#birch-number-filter');
+  const birchRowsEls = Array.from(container.querySelectorAll('.birch-row'));
+  const birchBody = container.querySelector('#birch-concordance-body');
+  const applyBirchFilters = () => {
+    const city = (birchCityFilter && birchCityFilter.value ? String(birchCityFilter.value) : '').toLowerCase();
+    const century = birchCenturyFilter && birchCenturyFilter.value ? String(birchCenturyFilter.value) : '';
+    const numNeedle = normalizeHeadForMatch(birchNumberFilter && birchNumberFilter.value ? String(birchNumberFilter.value) : '');
+    let shown = 0;
+    for (const row of birchRowsEls) {
+      const rowCity = String(row.dataset.city || '').toLowerCase();
+      const rowCentury = String(row.dataset.century || '');
+      const rowNum = normalizeHeadForMatch(String(row.dataset.num || ''));
+      const byCity = !city || rowCity === city;
+      const byCentury = !century || rowCentury === century;
+      const byNum = !numNeedle || rowNum.includes(numNeedle);
+      const visible = byCity && byCentury && byNum;
+      row.style.display = visible ? '' : 'none';
+      if (visible) shown += 1;
+    }
+    if (!birchBody) return;
+    const oldEmpty = birchBody.querySelector('.birch-empty-row');
+    if (oldEmpty) oldEmpty.remove();
+    if (!shown) {
+      const tr = document.createElement('tr');
+      tr.className = 'birch-empty-row';
+      tr.innerHTML = '<td colspan="5" style="padding:10px 12px;color:#888;font-style:italic;">Ничего не найдено: попробуйте ослабить фильтры.</td>';
+      birchBody.appendChild(tr);
+    }
+  };
+  if (birchCityFilter) birchCityFilter.onchange = applyBirchFilters;
+  if (birchCenturyFilter) birchCenturyFilter.onchange = applyBirchFilters;
+  if (birchNumberFilter) {
+    birchNumberFilter.oninput = (e) => {
+      const t = e && e.target;
+      if (!t || typeof t.value !== 'string') return;
+      const next = t.value.replace(/[^\d]/g, '').slice(0, 6);
+      if (t.value !== next) t.value = next;
+      applyBirchFilters();
+    };
+  }
+  applyBirchFilters();
 }
 
 // =========================================================
