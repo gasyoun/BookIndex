@@ -368,6 +368,11 @@ const NORMALIZE_CACHE_LIMIT = 8000;
 let normalizeHeadCache = new Map();
 const AGGREGATE_CACHE_MAX = 80;
 let aggregateCache = new Map();
+let nameGraphWorker = null;
+let nameGraphWorkerBlobUrl = null;
+let nameGraphWorkerRequestId = 0;
+let nameGraphRenderToken = 0;
+let nameGraphLayoutPromiseCache = new Map();
 
 // =========================================================
 // УТИЛИТЫ
@@ -423,9 +428,10 @@ function getCachedAggregate(kind, key, computeFn) {
 }
 
 function invalidateAggregateCache(reason = '') {
-  if (aggregateCache.size === 0) return;
+  const hadAny = aggregateCache.size > 0 || nameGraphLayoutPromiseCache.size > 0;
   aggregateCache.clear();
-  perfDebug('aggregate cache reset', 0, reason || 'clear');
+  nameGraphLayoutPromiseCache.clear();
+  if (hadAny) perfDebug('aggregate cache reset', 0, reason || 'clear');
 }
 
 function escapeHtml(s) {
@@ -1574,6 +1580,7 @@ function renderContent() {
   const container = document.getElementById('content');
   container.innerHTML = '';
   if (currentTab !== 'list') setMobileSheetOpen(false);
+  if (currentTab !== 'graph') nameGraphRenderToken += 1;
   const renderers = {
     home: renderHomePanel,
     lectures: renderLecturesPanel,
@@ -2749,7 +2756,7 @@ function renderHeatmapPanel(container) {
 // =========================================================
 // ГРАФ ИМЁН
 // =========================================================
-function getNameGraphLayout(strongOnly, W, H) {
+function getNameGraphLayoutSync(strongOnly, W, H) {
   const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
   return getCachedAggregate('graph-names', key, () => {
     const items = APP_DATA.names || [];
@@ -2806,11 +2813,217 @@ function getNameGraphLayout(strongOnly, W, H) {
   });
 }
 
+function getNameGraphLayout(strongOnly, W, H) {
+  return getNameGraphLayoutSync(strongOnly, W, H);
+}
+
+function supportsNameGraphWorker() {
+  return (
+    typeof Worker !== 'undefined' &&
+    typeof Blob !== 'undefined' &&
+    typeof URL !== 'undefined' &&
+    typeof URL.createObjectURL === 'function'
+  );
+}
+
+function disposeNameGraphWorker() {
+  if (nameGraphWorker) {
+    try { nameGraphWorker.terminate(); } catch (e) {}
+    nameGraphWorker = null;
+  }
+  if (nameGraphWorkerBlobUrl) {
+    try { URL.revokeObjectURL(nameGraphWorkerBlobUrl); } catch (e) {}
+    nameGraphWorkerBlobUrl = null;
+  }
+}
+
+function getNameGraphWorkerScript() {
+  return [
+    "function seed(text, salt) {",
+    "  var h = (2166136261 ^ salt) >>> 0;",
+    "  for (var i = 0; i < text.length; i++) {",
+    "    h ^= text.charCodeAt(i);",
+    "    h = Math.imul(h, 16777619);",
+    "  }",
+    "  h ^= h >>> 13;",
+    "  h = Math.imul(h, 1274126177);",
+    "  h ^= h >>> 16;",
+    "  return (h >>> 0) / 4294967295;",
+    "}",
+    "self.onmessage = function(event) {",
+    "  var data = event.data || {};",
+    "  var requestId = data.requestId;",
+    "  try {",
+    "    var strongOnly = !!data.strongOnly;",
+    "    var W = Number(data.W) || 1200;",
+    "    var H = Number(data.H) || 600;",
+    "    var names = Array.isArray(data.names) ? data.names : [];",
+    "    var srcEdges = Array.isArray(data.edges) ? data.edges : [];",
+    "    var edges = strongOnly ? srcEdges.filter(function(e) { return (e.weight || 0) >= 2; }) : srcEdges.slice();",
+    "    var connected = new Set();",
+    "    for (var ei = 0; ei < edges.length; ei++) {",
+    "      connected.add(edges[ei].source);",
+    "      connected.add(edges[ei].target);",
+    "    }",
+    "    var nodes = [];",
+    "    for (var ni = 0; ni < names.length; ni++) {",
+    "      var n = names[ni];",
+    "      if (!connected.has(n.head)) continue;",
+    "      var rx = seed(n.head + ':x', 11) - 0.5;",
+    "      var ry = seed(n.head + ':y', 23) - 0.5;",
+    "      nodes.push({",
+    "        name: n.head,",
+    "        subcat: n.subcat || '',",
+    "        weight: Number(n.weight) || 0,",
+    "        x: W / 2 + rx * W * 0.8,",
+    "        y: H / 2 + ry * H * 0.8,",
+    "        vx: 0,",
+    "        vy: 0",
+    "      });",
+    "    }",
+    "    var idx = {};",
+    "    for (var i = 0; i < nodes.length; i++) idx[nodes[i].name] = i;",
+    "    var validEdges = edges.filter(function(e) { return idx[e.source] !== undefined && idx[e.target] !== undefined; });",
+    "    function step() {",
+    "      for (var aIdx = 0; aIdx < nodes.length; aIdx++) {",
+    "        for (var bIdx = aIdx + 1; bIdx < nodes.length; bIdx++) {",
+    "          var a = nodes[aIdx], b = nodes[bIdx];",
+    "          var dx = b.x - a.x, dy = b.y - a.y;",
+    "          var d2 = dx * dx + dy * dy + 0.01;",
+    "          var d = Math.sqrt(d2);",
+    "          var force = 1000 / d2;",
+    "          a.vx -= (dx / d) * force; a.vy -= (dy / d) * force;",
+    "          b.vx += (dx / d) * force; b.vy += (dy / d) * force;",
+    "        }",
+    "      }",
+    "      for (var eIdx = 0; eIdx < validEdges.length; eIdx++) {",
+    "        var edge = validEdges[eIdx];",
+    "        var left = nodes[idx[edge.source]], right = nodes[idx[edge.target]];",
+    "        var ex = right.x - left.x, ey = right.y - left.y;",
+    "        var ed = Math.sqrt(ex * ex + ey * ey) + 0.01;",
+    "        var edgeForce = (ed - 90) * 0.01 * Math.sqrt(edge.weight || 0);",
+    "        left.vx += (ex / ed) * edgeForce; left.vy += (ey / ed) * edgeForce;",
+    "        right.vx -= (ex / ed) * edgeForce; right.vy -= (ey / ed) * edgeForce;",
+    "      }",
+    "      for (var nIdx = 0; nIdx < nodes.length; nIdx++) {",
+    "        var node = nodes[nIdx];",
+    "        node.vx += (W / 2 - node.x) * 0.001;",
+    "        node.vy += (H / 2 - node.y) * 0.001;",
+    "        node.vx *= 0.85;",
+    "        node.vy *= 0.85;",
+    "        node.x += node.vx;",
+    "        node.y += node.vy;",
+    "        node.x = Math.max(40, Math.min(W - 40, node.x));",
+    "        node.y = Math.max(40, Math.min(H - 40, node.y));",
+    "      }",
+    "    }",
+    "    for (var stepIdx = 0; stepIdx < 300; stepIdx++) step();",
+    "    self.postMessage({ requestId: requestId, ok: true, layout: { nodes: nodes, idx: idx, validEdges: validEdges } });",
+    "  } catch (error) {",
+    "    self.postMessage({ requestId: requestId, ok: false, error: String((error && error.message) ? error.message : error) });",
+    "  }",
+    "};",
+  ].join('\n');
+}
+
+function getNameGraphWorker() {
+  if (!supportsNameGraphWorker()) return null;
+  if (nameGraphWorker) return nameGraphWorker;
+  try {
+    const blob = new Blob([getNameGraphWorkerScript()], { type: 'text/javascript' });
+    nameGraphWorkerBlobUrl = URL.createObjectURL(blob);
+    nameGraphWorker = new Worker(nameGraphWorkerBlobUrl);
+    return nameGraphWorker;
+  } catch (e) {
+    disposeNameGraphWorker();
+    return null;
+  }
+}
+
+function requestNameGraphLayoutFromWorker(strongOnly, W, H) {
+  const worker = getNameGraphWorker();
+  if (!worker) return null;
+  const requestId = ++nameGraphWorkerRequestId;
+  const names = (APP_DATA.names || []).map(n => ({
+    head: n.head,
+    subcat: n.subcategory,
+    weight: (n.page_list || []).length,
+  }));
+  const edges = (APP_DATA.edges || []).map(e => ({
+    source: e.source,
+    target: e.target,
+    weight: Number(e.weight) || 0,
+  }));
+  return new Promise((resolve, reject) => {
+    const onMessage = (event) => {
+      const data = event.data || {};
+      if (data.requestId !== requestId) return;
+      worker.removeEventListener('message', onMessage);
+      worker.removeEventListener('error', onError);
+      if (data.ok && data.layout) resolve(data.layout);
+      else reject(new Error(data.error || 'name graph worker failed'));
+    };
+    const onError = (event) => {
+      worker.removeEventListener('message', onMessage);
+      worker.removeEventListener('error', onError);
+      const msg = event && event.message ? event.message : 'name graph worker error';
+      reject(new Error(msg));
+    };
+    worker.addEventListener('message', onMessage);
+    worker.addEventListener('error', onError);
+    worker.postMessage({ requestId, strongOnly, W, H, names, edges });
+  });
+}
+
+function getNameGraphLayoutAsync(strongOnly, W, H) {
+  const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
+  const cacheKey = `graph-names::${key}`;
+  if (aggregateCache.has(cacheKey)) {
+    perfDebug('graph-names-worker cache', 0, 'hit');
+    return Promise.resolve(aggregateCache.get(cacheKey));
+  }
+  if (nameGraphLayoutPromiseCache.has(cacheKey)) {
+    return nameGraphLayoutPromiseCache.get(cacheKey);
+  }
+  const t0 = nowMs();
+  let job = null;
+  if (supportsNameGraphWorker()) {
+    job = requestNameGraphLayoutFromWorker(strongOnly, W, H);
+  }
+  if (!job) {
+    job = Promise.resolve(getNameGraphLayoutSync(strongOnly, W, H));
+  } else {
+    job = job.catch((error) => {
+      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
+        console.warn('[graph-worker] fallback to sync layout:', error && error.message ? error.message : error);
+      }
+      disposeNameGraphWorker();
+      return getNameGraphLayoutSync(strongOnly, W, H);
+    });
+  }
+  const promise = job.then((layout) => {
+    aggregateCache.set(cacheKey, layout);
+    if (aggregateCache.size > AGGREGATE_CACHE_MAX) {
+      const oldest = aggregateCache.keys().next();
+      if (!oldest.done) aggregateCache.delete(oldest.value);
+    }
+    nameGraphLayoutPromiseCache.delete(cacheKey);
+    perfDebug('graph-names-worker', nowMs() - t0, 'miss');
+    return layout;
+  }).catch((error) => {
+    nameGraphLayoutPromiseCache.delete(cacheKey);
+    throw error;
+  });
+  nameGraphLayoutPromiseCache.set(cacheKey, promise);
+  return promise;
+}
+
 function renderGraphPanel(container) {
   const t0 = nowMs();
   container.innerHTML = `<div class="panel active"><div class="graph-container">
     <p class="chart-intro">Граф совместных упоминаний: имена соединены, если встречаются в тексте близко друг к другу. Вес связи учитывает позицию слов на странице — упоминание в конце одной страницы и в начале следующей даёт такой же вклад, как упоминание на одной строке. Иллюстрационные страницы пропускаются. Толщина линии — суммарный вес близостей всех упоминаний.</p>
     <div style="margin-bottom:8px;"><button class="filter-chip ${graphStrongOnly?'active':''}" id="graph-strong-btn">только сильные связи (вес ≥ 2)</button></div>
+    <div id="graph-status" style="font-size:12px;color:#7b5b38;margin-bottom:8px;">Рассчитываю расположение узлов…</div>
     <canvas id="graph-canvas" width="1200" height="600"></canvas></div></div>`;
 
   document.getElementById('graph-strong-btn').onclick = (e) => {
@@ -2822,69 +3035,95 @@ function renderGraphPanel(container) {
   const canvas = document.getElementById('graph-canvas');
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
-  const layout = getNameGraphLayout(graphStrongOnly, W, H);
-  const nodes = layout.nodes;
-  const idx = layout.idx;
-  const validEdges = layout.validEdges;
-  function draw(hover) {
-    ctx.clearRect(0, 0, W, H);
-    for (const e of validEdges) {
-      const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
-      ctx.strokeStyle = 'rgba(138, 112, 80, ' + Math.min(0.6, 0.2 + e.weight * 0.15) + ')';
-      ctx.lineWidth = Math.sqrt(e.weight) * 1.2;
-      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+  const status = document.getElementById('graph-status');
+  const renderToken = ++nameGraphRenderToken;
+  const modeMeta = graphStrongOnly ? 'strong' : 'all';
+
+  function mountLayout(layout) {
+    if (renderToken !== nameGraphRenderToken) return;
+    const nodes = Array.isArray(layout.nodes) ? layout.nodes : [];
+    const idx = layout.idx || {};
+    const validEdges = Array.isArray(layout.validEdges) ? layout.validEdges : [];
+    if (status) {
+      status.textContent = '';
+      status.style.display = 'none';
     }
-    for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.5;
-      ctx.fillStyle = safeColor(COLORS[n.subcat], '#666');
-      ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI*2); ctx.fill();
-      ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
-      if (r > 6) {
-        ctx.fillStyle = '#1a1a1a'; ctx.font = '11px Georgia';
-        ctx.textAlign = 'left'; ctx.fillText(n.name, n.x + r + 3, n.y + 4);
+
+    function draw(hover) {
+      ctx.clearRect(0, 0, W, H);
+      for (const e of validEdges) {
+        const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
+        if (!a || !b) continue;
+        ctx.strokeStyle = 'rgba(138, 112, 80, ' + Math.min(0.6, 0.2 + e.weight * 0.15) + ')';
+        ctx.lineWidth = Math.sqrt(e.weight) * 1.2;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      }
+      for (const n of nodes) {
+        const r = 4 + Math.sqrt(n.weight) * 1.5;
+        ctx.fillStyle = safeColor(COLORS[n.subcat], '#666');
+        ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
+        if (r > 6) {
+          ctx.fillStyle = '#1a1a1a'; ctx.font = '11px Georgia';
+          ctx.textAlign = 'left'; ctx.fillText(n.name, n.x + r + 3, n.y + 4);
+        }
+      }
+      if (hover) {
+        const r = 4 + Math.sqrt(hover.weight) * 1.5;
+        ctx.font = 'bold 13px Georgia';
+        const tw = ctx.measureText(hover.name).width;
+        ctx.fillStyle = 'rgba(255,248,232,0.95)';
+        ctx.fillRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
+        ctx.strokeStyle = '#8a7050';
+        ctx.strokeRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
+        ctx.fillStyle = '#5a3818';
+        ctx.fillText(hover.name, hover.x + r + 6, hover.y);
       }
     }
-    if (hover) {
-      const r = 4 + Math.sqrt(hover.weight) * 1.5;
-      ctx.font = 'bold 13px Georgia';
-      const tw = ctx.measureText(hover.name).width;
-      ctx.fillStyle = 'rgba(255,248,232,0.95)';
-      ctx.fillRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
-      ctx.strokeStyle = '#8a7050';
-      ctx.strokeRect(hover.x + r + 2, hover.y - 16, tw + 8, 22);
-      ctx.fillStyle = '#5a3818';
-      ctx.fillText(hover.name, hover.x + r + 6, hover.y);
-    }
+
+    draw();
+    canvas.onmousemove = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
+      const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
+      let hover = null;
+      for (const n of nodes) {
+        const r = 4 + Math.sqrt(n.weight) * 1.5;
+        if ((mx - n.x) ** 2 + (my - n.y) ** 2 < (r + 4) ** 2) { hover = n; break; }
+      }
+      draw(hover);
+      canvas.style.cursor = hover ? 'pointer' : 'grab';
+    };
+    canvas.onclick = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
+      const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
+      for (const n of nodes) {
+        const r = 4 + Math.sqrt(n.weight) * 1.5;
+        if ((mx - n.x) ** 2 + (my - n.y) ** 2 < (r + 4) ** 2) {
+          selectedItem = n.name;
+          selectedItemType = 'names';
+          rightPaneMode = 'card';
+          switchTab('list');
+          return;
+        }
+      }
+    };
+    perfDebug('render-graph-names', nowMs() - t0, modeMeta);
   }
-  draw();
-  canvas.onmousemove = (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
-    let hover = null;
-    for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.5;
-      if ((mx - n.x)**2 + (my - n.y)**2 < (r + 4)**2) { hover = n; break; }
-    }
-    draw(hover);
-    canvas.style.cursor = hover ? 'pointer' : 'grab';
-  };
-  canvas.onclick = (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * sx, my = (e.clientY - rect.top) * sy;
-    for (const n of nodes) {
-      const r = 4 + Math.sqrt(n.weight) * 1.5;
-      if ((mx - n.x)**2 + (my - n.y)**2 < (r + 4)**2) {
-        selectedItem = n.name;
-        selectedItemType = 'names';
-        rightPaneMode = 'card';
-        switchTab('list');
-        return;
+
+  getNameGraphLayoutAsync(graphStrongOnly, W, H)
+    .then((layout) => mountLayout(layout))
+    .catch((error) => {
+      if (renderToken !== nameGraphRenderToken) return;
+      if (status) {
+        status.style.display = 'block';
+        status.textContent = 'Не удалось рассчитать граф.';
       }
-    }
-  };
-  perfDebug('render-graph-names', nowMs() - t0, graphStrongOnly ? 'strong' : 'all');
+      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
+        console.warn('[graph-names] render failed:', error && error.message ? error.message : error);
+      }
+    });
 }
 
 // =========================================================
