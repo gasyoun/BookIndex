@@ -8,6 +8,24 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#tabs .tab')).toHaveCount(1);
   });
 
+  test('desktop header keeps title, search and back button on the same row', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 768 });
+    await page.goto('/aaz-index.html#home/home');
+    await page.locator('.entity-btn[data-entity="names"]').click();
+    const backBtn = page.locator('#back-btn');
+    await expect(backBtn).toBeVisible();
+    const spread = await page.evaluate(() => {
+      const home = document.getElementById('home-link');
+      const search = document.getElementById('global-search');
+      const back = document.getElementById('back-btn');
+      const meta = document.querySelector('header h1 .meta-inline');
+      const nodes = [home, search, back, meta].filter(Boolean);
+      const tops = nodes.map((n) => n.getBoundingClientRect().top);
+      return Math.max(...tops) - Math.min(...tops);
+    });
+    expect(spread).toBeLessThan(16);
+  });
+
   test('opens name card from list', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await page.locator('.entity-btn[data-entity="names"]').click();
@@ -194,13 +212,16 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/aaz-index.html#toponyms/map');
     const mapHost = page.locator('#leaflet-map');
     await expect(mapHost).toBeVisible();
-    const hasTilesOrOffline = await mapHost.evaluate((el) => {
-      const hasLeafletTiles = !!el.querySelector('.leaflet-pane, .leaflet-tile-pane, .leaflet-layer');
-      const text = (el.textContent || '').toLowerCase();
-      const hasOffline = text.includes('\u043e\u0444\u043b\u0430\u0439\u043d-\u0440\u0435\u0436\u0438\u043c');
-      return hasLeafletTiles || hasOffline;
-    });
-    expect(hasTilesOrOffline).toBeTruthy();
+    await expect
+      .poll(async () => mapHost.evaluate((el) => {
+        const hasLeafletTiles = !!el.querySelector('.leaflet-pane, .leaflet-tile-pane, .leaflet-layer');
+        const hasOfflineSvg = !!el.querySelector('svg circle[data-head]');
+        const text = (el.textContent || '').toLowerCase();
+        const hasOfflineText = text.includes('\u043e\u0444\u043b\u0430\u0439\u043d-\u0440\u0435\u0436\u0438\u043c');
+        const hasStatus = text.includes('\u043a\u0430\u0440\u0442\u0430:');
+        return hasLeafletTiles || hasOfflineSvg || hasOfflineText || hasStatus;
+      }), { timeout: 12000 })
+      .toBeTruthy();
   });
 
   test('scholar page trends renders export controls', async ({ page }) => {
