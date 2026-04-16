@@ -73924,6 +73924,16 @@ function getGlobalSearchMatches(query) {
     }
   }
 
+  const glossary = APP_DATA.glossary || [];
+  for (const g of glossary) {
+    const term = String(g.term || '').trim();
+    const def = String(g.definition || '').trim();
+    if (!term) continue;
+    const hay = (term + ' ' + def).toLowerCase();
+    if (!hay.includes(q)) continue;
+    push('термин', 'glossary', term, 'глоссарий', null, def);
+  }
+
   const lectures = APP_DATA.lectures || [];
   for (let i = 0; i < lectures.length; i++) {
     const l = lectures[i];
@@ -73960,6 +73970,7 @@ function renderGlobalSearchResults(matches, query = '') {
       const m = matches[parseInt(row.dataset.idx || '0', 10)];
       if (!m) return;
       if (m.type === 'lecture') openLecturePage(m.lectureIndex || 0);
+      else if (m.type === 'glossary') openGlossaryTerm(m.head || '');
       else navigateToItem(m.type, m.head);
       const input = document.getElementById('global-search');
       if (input) input.value = '';

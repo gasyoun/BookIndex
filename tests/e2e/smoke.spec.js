@@ -30,6 +30,17 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#content .panel.active')).toBeVisible();
   });
 
+  test('global search opens glossary term results', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const input = page.locator('#global-search');
+    await input.fill('энклит');
+    const glossaryResult = page.locator('#global-search-results.open .header-search-item').filter({ has: page.locator('.kind', { hasText: 'термин' }) }).first();
+    await expect(glossaryResult).toBeVisible();
+    await glossaryResult.click();
+    await expect(page).toHaveURL(/#materials\/glossary/);
+    await expect(page.locator('#glossary-search')).toBeVisible();
+  });
+
   test('materials lecture compare tab renders', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await page.locator('.entity-btn[data-entity="materials"]').click();
