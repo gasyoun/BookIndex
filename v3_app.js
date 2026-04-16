@@ -362,6 +362,8 @@ let globalSearchTimer = null;
 let globalSearchActiveIndex = -1;
 let pendingGlossaryQuery = '';
 let currentGlossaryTerm = '';
+let pendingScholarAnchor = '';
+let currentScholarAnchor = '';
 const UI_STATE_STORAGE_KEY = 'zaliznyakiada.ui.v1';
 const UI_STATE_SCHEMA_VERSION = 2;
 const THEME_STORAGE_KEY = 'zaliznyakiada.theme.v1';
@@ -644,6 +646,7 @@ function captureViewState() {
     onlyDiscussed,
     onlyQuestionCandidates,
     currentGlossaryTerm,
+    currentScholarAnchor,
     activeFilters: Array.from(activeFilters),
     globalSearchQuery: globalSearchInput ? String(globalSearchInput.value || '') : '',
   };
@@ -679,6 +682,7 @@ function restoreViewState() {
     if (!Number.isInteger(parsed.trendsRangeEnd)) parsed.trendsRangeEnd = 404;
     if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
     if (typeof parsed.currentGlossaryTerm !== 'string') parsed.currentGlossaryTerm = '';
+    if (typeof parsed.currentScholarAnchor !== 'string') parsed.currentScholarAnchor = '';
     parsed.onlyDiscussed = !!parsed.onlyDiscussed;
     parsed.onlyQuestionCandidates = !!parsed.onlyQuestionCandidates;
     if (!Array.isArray(parsed.activeFilters)) parsed.activeFilters = [];
@@ -806,8 +810,12 @@ function applyViewState(state) {
   trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : 404;
   searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
   currentGlossaryTerm = typeof state.currentGlossaryTerm === 'string' ? state.currentGlossaryTerm : '';
+  currentScholarAnchor = typeof state.currentScholarAnchor === 'string' ? state.currentScholarAnchor : '';
   if (currentEntity === 'materials' && currentTab === 'glossary' && currentGlossaryTerm) {
     pendingGlossaryQuery = currentGlossaryTerm;
+  }
+  if (currentEntity === 'scholar' && currentTab === 'scholar' && currentScholarAnchor) {
+    pendingScholarAnchor = currentScholarAnchor;
   }
   onlyDiscussed = !!state.onlyDiscussed;
   onlyQuestionCandidates = !!state.onlyQuestionCandidates;
@@ -834,6 +842,7 @@ function sameViewState(a, b) {
     a.trendsRangeStart === b.trendsRangeStart &&
     a.trendsRangeEnd === b.trendsRangeEnd &&
     (a.currentGlossaryTerm || '') === (b.currentGlossaryTerm || '') &&
+    (a.currentScholarAnchor || '') === (b.currentScholarAnchor || '') &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
     !!a.onlyDiscussed === !!b.onlyDiscussed &&
     !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
@@ -949,6 +958,9 @@ function buildHashFromState() {
   if (currentEntity === 'materials' && currentTab === 'glossary' && currentGlossaryTerm) {
     parts.push('term', currentGlossaryTerm);
   }
+  if (currentEntity === 'scholar' && currentTab === 'scholar' && currentScholarAnchor) {
+    parts.push('anchor', currentScholarAnchor);
+  }
   if (currentTab === 'list' && searchQuery && !selectedItem) {
     parts.push('q', searchQuery);
   }
@@ -1040,9 +1052,12 @@ function applyHash(hash) {
     rightPaneMode: 'histogram',
     currentLecture: 0,
     searchQuery: '',
+    currentScholarAnchor: '',
   };
   pendingGlossaryQuery = '';
   currentGlossaryTerm = '';
+  pendingScholarAnchor = '';
+  currentScholarAnchor = '';
 
   if (entity === 'materials' && tab === 'lecture_pages' && /^\d+$/.test(parts[2] || '')) {
     state.currentLecture = parseInt(parts[2], 10);
@@ -1052,6 +1067,17 @@ function applyHash(hash) {
     if (termPos >= 0 && parts[termPos + 1]) {
       pendingGlossaryQuery = clampUiInput(parts[termPos + 1], MAX_LIST_QUERY_LENGTH).toLowerCase();
       currentGlossaryTerm = pendingGlossaryQuery;
+    }
+  }
+  if (entity === 'scholar' && tab === 'scholar') {
+    const anchorPos = parts.indexOf('anchor');
+    if (anchorPos >= 0 && parts[anchorPos + 1]) {
+      const rawAnchor = String(parts[anchorPos + 1] || '');
+      const safeAnchor = rawAnchor.replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
+      if (safeAnchor) {
+        pendingScholarAnchor = safeAnchor;
+        state.currentScholarAnchor = safeAnchor;
+      }
     }
   }
   if (tab === 'list' && queryPos >= 0 && parts[queryPos + 1]) {
@@ -1134,6 +1160,8 @@ function navigateToItem(type, head) {
   selectedItem = resolveExistingHead(targetType, head);
   selectedItemType = targetType;
   currentGlossaryTerm = '';
+  currentScholarAnchor = '';
+  pendingScholarAnchor = '';
   rememberRecentItem(selectedItemType, selectedItem);
   rightPaneMode = 'card';
   renderEntitySwitcher();
@@ -1183,6 +1211,8 @@ function openLecturePage(index) {
   selectedItem = null;
   selectedItemType = null;
   currentGlossaryTerm = '';
+  currentScholarAnchor = '';
+  pendingScholarAnchor = '';
   rightPaneMode = 'histogram';
   renderEntitySwitcher();
   renderTabs();
@@ -1201,6 +1231,8 @@ function openGlossaryTerm(term) {
   if (!q) return;
   pendingGlossaryQuery = q;
   currentGlossaryTerm = q;
+  currentScholarAnchor = '';
+  pendingScholarAnchor = '';
   currentEntity = 'materials';
   currentTab = 'glossary';
   selectedItem = null;
@@ -1229,6 +1261,12 @@ function buildItemHash(type, head) {
   const t = ENTITY_TYPES[type] ? type : 'all';
   const resolvedHead = resolveExistingHead(t, head);
   return '#' + [t, 'list', 'item', t, resolvedHead].map(x => encodeURIComponent(String(x))).join('/');
+}
+
+function buildScholarAnchorHash(anchorId) {
+  const safeAnchor = String(anchorId || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
+  if (!safeAnchor) return '#scholar/scholar';
+  return '#' + ['scholar', 'scholar', 'anchor', safeAnchor].map(x => encodeURIComponent(String(x))).join('/');
 }
 
 function buildLectureTermHash(term) {
@@ -1274,6 +1312,8 @@ function openLectureTerm(term) {
   currentEntity = 'all';
   currentTab = 'list';
   currentGlossaryTerm = '';
+  currentScholarAnchor = '';
+  pendingScholarAnchor = '';
   activeFilters.clear();
   onlyDiscussed = false;
   searchQuery = raw;
@@ -1855,6 +1895,8 @@ function switchEntity(key) {
   visibleItemsCache = null;
   currentEntity = key;
   currentGlossaryTerm = '';
+  currentScholarAnchor = '';
+  pendingScholarAnchor = '';
   activeFilters.clear();
   onlyDiscussed = false;
   onlyQuestionCandidates = false;
@@ -1875,6 +1917,10 @@ function switchTab(tab) {
   visibleItemsCache = null;
   currentTab = tab;
   if (!(currentEntity === 'materials' && tab === 'glossary')) currentGlossaryTerm = '';
+  if (!(currentEntity === 'scholar' && tab === 'scholar')) {
+    currentScholarAnchor = '';
+    pendingScholarAnchor = '';
+  }
   renderTabs();
   renderContent();
   syncNavigationState();
@@ -5524,13 +5570,7 @@ function renderScholarPanel(container) {
   if (s.slovo) {
     html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:14px 18px;margin-bottom:8px;">
       <div style="font-size:12px;color:#444;line-height:1.6;margin-bottom:10px;font-style:italic;">${escapeHtml(s.slovo.thesis)}</div>
-      <div style="font-size:11px;color:#6a5040;font-weight:bold;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Аргументы:</div>`;
-    for (const a of s.slovo.arguments) {
-      html += `<div style="background:#fbf6e8;padding:8px 12px;margin-bottom:6px;border-left:3px solid #8a7050;border-radius:3px;">
-        <div style="font-weight:bold;color:#5a3818;font-size:12px;margin-bottom:3px;">${escapeHtml(a.name)}</div>
-        <div style="font-size:12px;color:#444;line-height:1.5;">${escapeHtml(a.detail)}</div>
-      </div>`;
-    }
+      ${s.slovo.context ? `<div style="font-size:12px;color:#444;line-height:1.5;background:#fbf6e8;padding:8px 10px;border-radius:4px;">${escapeHtml(s.slovo.context)}</div>` : ''}`;
     html += `<div style="font-size:12px;margin-top:10px;color:#666;"><strong>Оппоненты:</strong> ${escapeHtml(s.slovo.opponents)}</div>
       <div style="font-size:12px;margin-top:4px;color:#5a3818;font-weight:bold;">${escapeHtml(s.slovo.verdict)}</div>
     </div>`;
@@ -5539,6 +5579,53 @@ function renderScholarPanel(container) {
     html += '<div style="font-size:12px;margin-top:6px;">';
     for (const link of s.slovo_links) {
       html += `<a href="${escapeHtml(safeUrl(link.url))}" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;margin-right:12px;">${escapeHtml(link.title)} ↗</a>`;
+    }
+    html += '</div>';
+  }
+  if (s.slovo) {
+    const slovoArgs = Array.isArray(s.slovo.arguments) ? s.slovo.arguments : [];
+    const slovoCounters = Array.isArray(s.slovo.counterarguments) ? s.slovo.counterarguments : [];
+    html += '<div style="margin-top:8px;background:#fff8e8;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">';
+    html += '<div style="font-size:12px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Тезисы / контраргументы / контекст</div>';
+    if (s.slovo.context) {
+      html += `<div style="font-size:12px;color:#444;line-height:1.5;margin-bottom:8px;">${escapeHtml(s.slovo.context)}</div>`;
+    }
+    for (let i = 0; i < slovoArgs.length; i++) {
+      const a = slovoArgs[i];
+      const anchorId = `sch-slovo-arg-${i + 1}`;
+      const pageMeta = a.page ? `<span style="font-size:11px;color:#888;">Стр. ${escapeHtml(a.page)}</span>` : '';
+      const sourceMeta = a.url ? `<a href="${escapeHtml(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:#5a3818;text-decoration:underline dotted;">источник ↗</a>` : '';
+      html += `<div id="${anchorId}" style="background:#fff;padding:8px 10px;border:1px solid #e3d6c0;border-radius:4px;margin-bottom:6px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+          <div style="font-weight:bold;color:#5a3818;font-size:12px;">${escapeHtml(a.name)}</div>
+          <a class="scholar-slovo-anchor" data-anchor="${anchorId}" href="${escapeHtml(buildScholarAnchorHash(anchorId))}" style="font-size:11px;color:#7a6048;text-decoration:underline dotted;">якорь #${i + 1}</a>
+        </div>
+        <div style="font-size:12px;color:#444;line-height:1.5;margin-top:3px;">${escapeHtml(a.detail)}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">${pageMeta}${sourceMeta}</div>
+      </div>`;
+    }
+    if (slovoCounters.length) {
+      html += '<div style="font-size:11px;color:#6a5040;font-weight:bold;text-transform:uppercase;letter-spacing:0.5px;margin:8px 0 6px;">Контраргументы:</div>';
+      for (const c of slovoCounters) {
+        const pageMeta = c.page ? `<span style="font-size:11px;color:#888;">Стр. ${escapeHtml(c.page)}</span>` : '';
+        const sourceMeta = c.url ? `<a href="${escapeHtml(safeUrl(c.url))}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:#5a3818;text-decoration:underline dotted;">источник ↗</a>` : '';
+        html += `<div style="background:#fff;padding:8px 10px;border:1px solid #e9d9c9;border-radius:4px;margin-bottom:6px;">
+          <div style="font-weight:bold;color:#6b3d31;font-size:12px;margin-bottom:3px;">${escapeHtml(c.name)}</div>
+          <div style="font-size:12px;color:#444;line-height:1.5;">${escapeHtml(c.detail)}</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">${pageMeta}${sourceMeta}</div>
+        </div>`;
+      }
+    }
+    html += '</div>';
+  }
+  if (Array.isArray(s.slovo_reading) && s.slovo_reading.length) {
+    html += '<div style="margin-top:8px;background:#fff8e8;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">';
+    html += '<div style="font-size:12px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Что читать дальше</div>';
+    for (const item of s.slovo_reading) {
+      html += `<div style="margin-bottom:6px;font-size:12px;line-height:1.45;">
+        <a href="${escapeHtml(safeUrl(item.url))}" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;">${escapeHtml(item.title)} ↗</a>
+        ${item.note ? `<div style="color:#666;font-size:11px;margin-top:2px;">${escapeHtml(item.note)}</div>` : ''}
+      </div>`;
     }
     html += '</div>';
   }
@@ -5593,6 +5680,28 @@ function renderScholarPanel(container) {
 
   // Привязки кликов на имена
   bindNavigateLinks(container, '.scholar-link', 'all');
+  container.querySelectorAll('.scholar-slovo-anchor[data-anchor]').forEach((link) => {
+    link.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      const anchorId = String(link.dataset.anchor || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
+      if (!anchorId) return;
+      currentScholarAnchor = anchorId;
+      pendingScholarAnchor = anchorId;
+      syncNavigationState();
+      const target = container.querySelector(`#${anchorId}`);
+      if (target && typeof target.scrollIntoView === 'function') {
+        target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+    };
+  });
+  if (pendingScholarAnchor) {
+    const target = container.querySelector(`#${pendingScholarAnchor}`);
+    if (target && typeof target.scrollIntoView === 'function') {
+      target.scrollIntoView({ block: 'start' });
+    }
+    currentScholarAnchor = pendingScholarAnchor;
+    pendingScholarAnchor = '';
+  }
 
   // Локальные фильтры конкорданса берестяных грамот
   const birchCityFilter = container.querySelector('#birch-city-filter');

@@ -234,6 +234,16 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#trend-export-md')).toBeVisible();
   });
 
+  test('scholar slovo section supports thesis anchors and further reading links', async ({ page }) => {
+    await page.goto('/aaz-index.html#scholar/scholar/anchor/sch-slovo-arg-2');
+    const arg = page.locator('#sch-slovo-arg-2');
+    await expect(arg).toBeVisible();
+    await expect(page.locator('.scholar-slovo-anchor[data-anchor="sch-slovo-arg-2"]')).toBeVisible();
+    await expect(page.locator('#sch-slovo')).toBeVisible();
+    await expect(page.locator('text=Что читать дальше')).toBeVisible();
+    await expect(page.locator('#content a[href*="inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"]').first()).toBeVisible();
+  });
+
   test('reading-now pager and quick trends navigation works', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#reading-page-input');
