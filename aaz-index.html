@@ -73838,6 +73838,11 @@ function openLecturePage(index) {
   syncNavigationState();
 }
 
+function buildLecturePageHash(index) {
+  const idx = Math.max(0, parseInt(String(index || '0'), 10) || 0);
+  return '#materials/lecture_pages/' + encodeURIComponent(String(idx));
+}
+
 function openGlossaryTerm(term) {
   const q = String(term || '').trim().toLowerCase();
   if (!q) return;
@@ -77127,12 +77132,18 @@ function renderTasksPanel(container) {
         res.style.display = 'block';
         res.style.background = isCorrect ? '#e8f5e9' : '#fff8e8';
         res.style.borderLeft = '3px solid ' + (isCorrect ? '#5cb85c' : '#8a7050');
+        const linkHref = t.entity
+          ? ((t.entity.type || '') === 'lecture'
+            ? buildLecturePageHash(t.entity.index)
+            : buildItemHash(t.entity.type || 'all', t.entity.head || ''))
+          : '';
         const linkBtn = t.entity
-        ? ` <span class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">Открыть карточку →</span>`
+        ? ` <a class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" href="${escapeHtml(linkHref)}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">Открыть карточку →</a>`
           : '';
         res.innerHTML = (isCorrect ? '<strong>Верно!</strong> ' : '<strong>Не угадали.</strong> ') + escapeHtml(t.hint) + linkBtn;
         res.querySelectorAll('.task-card-link').forEach(el => {
-          el.onclick = () => {
+          el.onclick = (e) => {
+            if (e && typeof e.preventDefault === 'function') e.preventDefault();
             if ((el.dataset.type || '') === 'lecture') {
               openLecturePage(parseInt(el.dataset.lectureIdx || '0', 10) || 0);
               return;
@@ -77819,16 +77830,16 @@ function renderPageTrendsPanel(container) {
       <div style="font-size:14px;color:#5a3818;font-weight:bold;margin-bottom:2px;">${s.label}</div>
       <div style="font-size:11px;color:#666;margin-bottom:7px;">Сущностей: <strong>${s.activeCount}</strong> · упоминаний: <strong>${s.mentionTotal}</strong></div>
       <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Топ в выбранном окне</div>
-      <div>${s.top.length ? s.top.map(it => `<span class="trend-link" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" style="display:inline-block;padding:2px 7px;margin:2px 6px 2px 0;background:#f0e8d8;border-radius:10px;color:#5a3818;cursor:pointer;font-size:11px;">${escapeHtml(it.head)} · ${it.count}</span>`).join('') : '<span style="color:#999;font-size:12px;">—</span>'}</div>
+      <div>${s.top.length ? s.top.map(it => `<a class="trend-link" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(it.type, it.head))}" style="display:inline-block;padding:2px 7px;margin:2px 6px 2px 0;background:#f0e8d8;border-radius:10px;color:#5a3818;cursor:pointer;font-size:11px;text-decoration:none;">${escapeHtml(it.head)} · ${it.count}</a>`).join('') : '<span style="color:#999;font-size:12px;">—</span>'}</div>
     </div>`;
   }
   html += '</div>';
 
   const trendLinks = (rows, color) => rows.length
-    ? rows.map(r => `<div class="trend-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" style="display:flex;justify-content:space-between;gap:8px;padding:4px 0;cursor:pointer;">
+    ? rows.map(r => `<a class="trend-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" style="display:flex;justify-content:space-between;gap:8px;padding:4px 0;cursor:pointer;color:inherit;text-decoration:none;">
         <span style="color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)}</span>
         <span style="color:${color};font-size:11px;">${r.delta > 0 ? '+' : ''}${r.delta} (${r.leftCount}→${r.rightCount})</span>
-      </div>`).join('')
+      </a>`).join('')
     : '<div style="color:#999;font-size:12px;">—</div>';
 
   html += `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;">
@@ -77903,7 +77914,10 @@ function renderPageTrendsPanel(container) {
   if (exportCsvBtn) exportCsvBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.csv`, csvText, 'text/csv;charset=utf-8');
   if (exportMdBtn) exportMdBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.md`, mdText, 'text/markdown;charset=utf-8');
   container.querySelectorAll('.trend-link[data-head]').forEach(el => {
-    el.onclick = () => navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
+    el.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
+    };
   });
 }
 
