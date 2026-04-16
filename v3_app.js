@@ -1980,27 +1980,16 @@ function selectListItem(it, fallbackType) {
 }
 
 function appendItemsWithLetters(list, items, fallbackType) {
-  let prevLetter = null;
-  for (const it of items) {
-    const letter = getFirstLetter(it.head);
-    if (letter !== prevLetter) {
-      const h = document.createElement('div');
-      h.className = 'letter-header';
-      h.textContent = letter;
-      list.appendChild(h);
-      prevLetter = letter;
-    }
-    const item = document.createElement('div');
-    const isSelected = selectedItem === it.head && (currentEntity !== 'all' || selectedItemType === it._entityType);
-    item.className = 'name-item' + (isSelected ? ' selected' : '');
-    safeSetAttr(item, 'role', 'button');
-    item.tabIndex = 0;
-    safeSetAttr(item, 'aria-label', `${it.head || ''} (${(it.page_list || []).length})`);
-    item.dataset.head = it.head || '';
-    item.dataset.type = it._entityType || fallbackType || currentEntity;
-    item.innerHTML = buildListItemInnerHtml(it, currentEntity === 'all');
-    list.appendChild(item);
+  const rows = buildListRowsWithLetters(items);
+  const tmp = document.createElement('div');
+  for (const row of rows) appendListRow(tmp, row, fallbackType, 1);
+  if (typeof document.createDocumentFragment === 'function') {
+    const frag = document.createDocumentFragment();
+    while (tmp.firstChild) frag.appendChild(tmp.firstChild);
+    list.appendChild(frag);
+    return;
   }
+  while (tmp.firstChild) list.appendChild(tmp.firstChild);
 }
 
 function buildListRowsWithLetters(items) {
