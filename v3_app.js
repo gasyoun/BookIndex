@@ -4574,40 +4574,102 @@ function renderFurtherReadingPanel(container) {
   container.innerHTML = html;
 }
 
-function findRelatedLexiconItems(term, limit = 4) {
+const GLOSSARY_TOKEN_STOPWORDS = new Set([
+  'это', 'этот', 'эта', 'эти', 'такой', 'также', 'который', 'которые', 'когда',
+  'где', 'что', 'как', 'для', 'или', 'при', 'под', 'над', 'без', 'между',
+  'среди', 'так', 'ещё', 'уже', 'его', 'её', 'их', 'они', 'она', 'оно',
+  'из', 'по', 'на', 'в', 'к', 'о', 'об', 'от', 'до',
+]);
+
+function tokenizeNormalizedForGlossary(value, minLen = 3) {
+  const norm = normalizeHeadForMatch(value);
+  if (!norm) return [];
+  const out = [];
+  for (const token of norm.split(/\s+/)) {
+    const t = String(token || '').trim();
+    if (!t || t.length < minLen) continue;
+    if (GLOSSARY_TOKEN_STOPWORDS.has(t)) continue;
+    out.push(t);
+  }
+  return out;
+}
+
+function findRelatedLexiconItems(term, definition = '', limit = 4) {
   const needle = normalizeHeadForMatch(term);
   if (!needle) return [];
+  const termTokens = tokenizeNormalizedForGlossary(term, 3);
+  const defTokens = new Set(tokenizeNormalizedForGlossary(definition, 4));
   const rows = [];
   const sources = [
-    { type: 'lexicon', items: APP_DATA.lexicon || [] },
-    { type: 'lexicon_reverse', items: APP_DATA.lexicon_reverse || [] },
-    { type: 'lexicon_tech', items: APP_DATA.lexicon_tech || [] },
+    { type: 'lexicon', items: APP_DATA.lexicon || [], typePriority: 0 },
+    { type: 'lexicon_reverse', items: APP_DATA.lexicon_reverse || [], typePriority: 1 },
+    { type: 'lexicon_tech', items: APP_DATA.lexicon_tech || [], typePriority: 2 },
   ];
+  const kindPriority = { exact: 0, prefix: 1, term_token: 2, definition_token: 3 };
+
   for (const src of sources) {
     for (const it of src.items) {
-      const n = normalizeHeadForMatch(it.head || '');
-      if (!n) continue;
+      const head = String(it.head || '').trim();
+      const headNorm = normalizeHeadForMatch(head);
+      if (!headNorm) continue;
+      const headTokens = tokenizeNormalizedForGlossary(head, 3);
+
       let score = 99;
-      if (n === needle) score = 0;
-      else if (n.startsWith(needle)) score = 1;
-      else if (n.includes(needle)) score = 2;
-      else if (needle.includes(n) && n.length >= 4) score = 3;
+      let matchKind = '';
+      let signal = '';
+      const assign = (nextScore, kind, nextSignal) => {
+        if (nextScore < score) {
+          score = nextScore;
+          matchKind = kind;
+          signal = nextSignal || '';
+        }
+      };
+
+      if (headNorm === needle) {
+        assign(0, 'exact', head);
+      } else if (headNorm.startsWith(needle) || needle.startsWith(headNorm)) {
+        assign(1, 'prefix', head);
+      } else {
+        const tokenHit = termTokens.find(t => headNorm.includes(t));
+        if (tokenHit) assign(2, 'term_token', tokenHit);
+        const defHit = headTokens.find(t => defTokens.has(t));
+        if (defHit) assign(3, 'definition_token', defHit);
+      }
+
       if (score < 99) {
         rows.push({
           type: src.type,
-          head: it.head,
+          typePriority: src.typePriority,
+          head,
+          headNorm,
           score,
+          matchKind,
+          signal,
           weight: (it.page_list || []).length,
+          hint: (
+            matchKind === 'exact' ? 'точное совпадение' :
+            matchKind === 'prefix' ? 'совпадение по началу термина' :
+            matchKind === 'term_token' ? `совпадение по токену: ${signal}` :
+            `совпадение по определению: ${signal}`
+          ),
         });
       }
     }
   }
-  rows.sort((a, b) => (a.score - b.score) || (b.weight - a.weight) || compareHeadsRu(a.head, b.head));
+
+  rows.sort((a, b) =>
+    (a.score - b.score) ||
+    ((kindPriority[a.matchKind] || 9) - (kindPriority[b.matchKind] || 9)) ||
+    (b.weight - a.weight) ||
+    (a.typePriority - b.typePriority) ||
+    compareHeadsRu(a.head, b.head)
+  );
+
   const unique = [];
   const seen = new Set();
   for (const r of rows) {
-    const key = `${r.type}::${r.head}`;
-    if (seen.has(key)) continue;
+    const key = r.headNorm;
+    if (!key || seen.has(key)) continue;
     seen.add(key);
     unique.push(r);
     if (unique.length >= limit) break;
@@ -4661,13 +4723,13 @@ function renderGlossaryPanel(container) {
   html += '<div id="glossary-list" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">';
   for (const g of glossary) {
     const termUrl = g.url || ('https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=' + encodeURIComponent(String(g.term || '')));
-    const related = findRelatedLexiconItems(g.term, 4);
+    const related = findRelatedLexiconItems(g.term, g.definition || '', 4);
     let relatedHtml = '';
     if (related.length) {
       relatedHtml += '<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:4px;align-items:center;">';
       relatedHtml += '<span style="font-size:10px;color:#7a6350;">Связанные лексемы:</span>';
       for (const r of related) {
-        relatedHtml += `<span class="glossary-xlink" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" style="display:inline-block;padding:2px 7px;border:1px solid #cdbb9a;border-radius:10px;background:#fff8e8;color:#5a3818;font-size:10px;cursor:pointer;text-decoration:underline dotted;">${escapeHtml(r.head)}</span>`;
+        relatedHtml += `<span class="glossary-xlink" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" title="${escapeHtml(r.hint || '')}" style="display:inline-block;padding:2px 7px;border:1px solid #cdbb9a;border-radius:10px;background:#fff8e8;color:#5a3818;font-size:10px;cursor:pointer;text-decoration:underline dotted;">${escapeHtml(r.head)}</span>`;
       }
       relatedHtml += '</div>';
     }
