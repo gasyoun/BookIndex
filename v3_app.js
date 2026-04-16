@@ -5968,10 +5968,54 @@ function renderScholarPanel(container) {
   // 10. Сравнительная таблица
   html += '<h3 id="sch-correspondences" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">10. Сравнительная таблица фонетических соответствий</h3>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Расширенный набор соответствий (ПИЕ → славянские, греческие, индоиранские и западноевропейские формы), который можно дальше наращивать на материале работ Зализняка.</div>';
+  const corrRows = (s.sound_correspondences || []).map((r) => {
+    const focusLangRaw = String(r.focus_language || 'санскрит');
+    const focusLang = resolveExistingHead('languages', focusLangRaw);
+    const langs = ['rus', 'lat', 'gre', 'san', 'eng', 'ger'].filter((key) => {
+      const v = String(r[key] == null ? '' : r[key]).trim();
+      return !!v && v !== '—';
+    });
+    return {
+      ...r,
+      _family: String(r.family || 'индоевропейская'),
+      _law: String(r.law || 'базовое соответствие'),
+      _source: String(r.source || 'Источник не указан'),
+      _focusLang: focusLang,
+      _langs: langs.join(','),
+    };
+  });
+  const corrFamilies = Array.from(new Set(corrRows.map((r) => r._family))).sort(compareHeadsRu);
+  const corrLaws = Array.from(new Set(corrRows.map((r) => r._law))).sort(compareHeadsRu);
+  html += `<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:8px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;">
+    <label style="font-size:11px;color:#6a5040;">Семья
+      <select id="corr-family-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+        <option value="">Все</option>
+        ${corrFamilies.map((f) => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('')}
+      </select>
+    </label>
+    <label style="font-size:11px;color:#6a5040;">Язык в строке
+      <select id="corr-lang-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+        <option value="">Любой</option>
+        <option value="rus">Русский</option>
+        <option value="lat">Латинский</option>
+        <option value="gre">Древнегреческий</option>
+        <option value="san">Санскрит</option>
+        <option value="eng">Английский</option>
+        <option value="ger">Немецкий</option>
+      </select>
+    </label>
+    <label style="font-size:11px;color:#6a5040;">Фонетический закон
+      <select id="corr-law-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;min-width:220px;">
+        <option value="">Все</option>
+        ${corrLaws.map((l) => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join('')}
+      </select>
+    </label>
+  </div>`;
   html += '<div style="overflow-x:auto;"><table style="width:100%;font-size:12px;border-collapse:collapse;background:#fff;border:1px solid #d4c8b0;border-radius:4px;">';
-  html += '<thead><tr style="background:#f0e8d8;"><th style="padding:6px 8px;text-align:left;">ПИЕ</th><th style="padding:6px 8px;text-align:left;">Русск.</th><th style="padding:6px 8px;text-align:left;">Лат.</th><th style="padding:6px 8px;text-align:left;">Греч.</th><th style="padding:6px 8px;text-align:left;">Санскр.</th><th style="padding:6px 8px;text-align:left;">Англ.</th><th style="padding:6px 8px;text-align:left;">Нем.</th><th style="padding:6px 8px;text-align:left;">Значение</th></tr></thead><tbody>';
-  for (const r of (s.sound_correspondences || [])) {
-    html += `<tr style="border-top:1px solid #f0e8d8;">
+  html += '<thead><tr style="background:#f0e8d8;"><th style="padding:6px 8px;text-align:left;">ПИЕ</th><th style="padding:6px 8px;text-align:left;">Русск.</th><th style="padding:6px 8px;text-align:left;">Лат.</th><th style="padding:6px 8px;text-align:left;">Греч.</th><th style="padding:6px 8px;text-align:left;">Санскр.</th><th style="padding:6px 8px;text-align:left;">Англ.</th><th style="padding:6px 8px;text-align:left;">Нем.</th><th style="padding:6px 8px;text-align:left;">Значение</th><th style="padding:6px 8px;text-align:left;">Закон/семья</th><th style="padding:6px 8px;text-align:left;">Источник</th><th style="padding:6px 8px;text-align:left;">Связи</th></tr></thead><tbody id="corr-table-body">';
+  for (const r of corrRows) {
+    const langHash = buildItemHash('languages', r._focusLang || 'санскрит');
+    html += `<tr class="corr-row" role="button" tabindex="0" data-family="${escapeHtml(r._family)}" data-law="${escapeHtml(r._law)}" data-langs="${escapeHtml(r._langs)}" data-focus-lang="${escapeHtml(r._focusLang)}" style="border-top:1px solid #f0e8d8;cursor:pointer;">
       <td style="padding:6px 8px;font-style:italic;color:#5a3818;">${renderAccentSafe(r.pie)}</td>
       <td style="padding:6px 8px;font-weight:bold;">${renderAccentSafe(r.rus)}</td>
       <td style="padding:6px 8px;">${renderAccentSafe(r.lat)}</td>
@@ -5980,6 +6024,15 @@ function renderScholarPanel(container) {
       <td style="padding:6px 8px;">${renderAccentSafe(r.eng)}</td>
       <td style="padding:6px 8px;">${renderAccentSafe(r.ger)}</td>
       <td style="padding:6px 8px;color:#888;font-style:italic;">${escapeHtml(r.meaning)}</td>
+      <td style="padding:6px 8px;">
+        <div style="font-size:11px;color:#5a3818;">${escapeHtml(r._law)}</div>
+        <div style="font-size:11px;color:#888;">${escapeHtml(r._family)}</div>
+      </td>
+      <td style="padding:6px 8px;font-size:11px;color:#666;">${escapeHtml(r._source)}</td>
+      <td style="padding:6px 8px;font-size:11px;">
+        <a class="corr-lang-link" data-type="languages" data-head="${escapeHtml(r._focusLang)}" href="${escapeHtml(langHash)}" style="color:#5a3818;text-decoration:underline dotted;">язык ↗</a><br>
+        <a class="corr-law-link" href="#materials/phonetic_laws" style="color:#5a3818;text-decoration:underline dotted;">закон ↗</a>
+      </td>
     </tr>`;
   }
   html += '</tbody></table></div>';
@@ -6108,6 +6161,79 @@ function renderScholarPanel(container) {
     }
     renderAccentCompare();
   }
+  bindNavigateLinks(container, '.corr-lang-link', 'languages');
+  container.querySelectorAll('.corr-law-link').forEach((link) => {
+    bindActionWithKeyboard(link, () => {
+      currentEntity = 'materials';
+      currentTab = 'phonetic_laws';
+      selectedItem = null;
+      selectedItemType = null;
+      rightPaneMode = 'histogram';
+      renderEntitySwitcher();
+      renderTabs();
+      renderContent();
+      syncNavigationState();
+    });
+  });
+  const corrFamilyFilter = container.querySelector('#corr-family-filter');
+  const corrLangFilter = container.querySelector('#corr-lang-filter');
+  const corrLawFilter = container.querySelector('#corr-law-filter');
+  const corrBody = container.querySelector('#corr-table-body');
+  const corrRowsEls = Array.from(container.querySelectorAll('.corr-row'));
+  const applyCorrespondenceFilters = () => {
+    const family = corrFamilyFilter && corrFamilyFilter.value ? String(corrFamilyFilter.value) : '';
+    const lang = corrLangFilter && corrLangFilter.value ? String(corrLangFilter.value) : '';
+    const law = corrLawFilter && corrLawFilter.value ? String(corrLawFilter.value) : '';
+    let shown = 0;
+    for (const row of corrRowsEls) {
+      const rowFamily = String(row.dataset.family || '');
+      const rowLaw = String(row.dataset.law || '');
+      const langs = String(row.dataset.langs || '').split(',').filter(Boolean);
+      const byFamily = !family || rowFamily === family;
+      const byLaw = !law || rowLaw === law;
+      const byLang = !lang || langs.includes(lang);
+      const visible = byFamily && byLaw && byLang;
+      row.style.display = visible ? '' : 'none';
+      if (visible) shown += 1;
+    }
+    if (!corrBody) return;
+    const oldEmpty = corrBody.querySelector('.corr-empty-row');
+    if (oldEmpty) oldEmpty.remove();
+    if (!shown) {
+      const tr = document.createElement('tr');
+      tr.className = 'corr-empty-row';
+      tr.innerHTML = '<td colspan="11" style="padding:10px 12px;color:#888;font-style:italic;">Нет строк под текущие фильтры.</td>';
+      corrBody.appendChild(tr);
+    }
+  };
+  if (corrFamilyFilter) corrFamilyFilter.onchange = applyCorrespondenceFilters;
+  if (corrLangFilter) corrLangFilter.onchange = applyCorrespondenceFilters;
+  if (corrLawFilter) corrLawFilter.onchange = applyCorrespondenceFilters;
+  if (corrBody) {
+    corrBody.onclick = (e) => {
+      const target = e && e.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (target.closest('a')) return;
+      const row = target.closest('.corr-row');
+      if (!row || !corrBody.contains(row)) return;
+      const focusLang = String(row.dataset.focusLang || '');
+      if (!focusLang) return;
+      navigateToItem('languages', focusLang);
+    };
+    corrBody.onkeydown = (e) => {
+      const key = e && e.key ? String(e.key) : '';
+      if (key !== 'Enter' && key !== ' ') return;
+      const target = e && e.target;
+      if (!(target instanceof HTMLElement)) return;
+      const row = target.closest('.corr-row');
+      if (!row || !corrBody.contains(row)) return;
+      e.preventDefault();
+      const focusLang = String(row.dataset.focusLang || '');
+      if (!focusLang) return;
+      navigateToItem('languages', focusLang);
+    };
+  }
+  applyCorrespondenceFilters();
 
   // Локальные фильтры конкорданса берестяных грамот
   const birchCityFilter = container.querySelector('#birch-city-filter');

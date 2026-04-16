@@ -261,6 +261,21 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#accent-compare-box td').first()).toBeVisible();
   });
 
+  test('phonetic correspondences table supports filters and links', async ({ page }) => {
+    await page.goto('/aaz-index.html#scholar/scholar');
+    await expect(page.locator('#corr-family-filter')).toBeVisible();
+    await expect(page.locator('#corr-lang-filter')).toBeVisible();
+    await expect(page.locator('#corr-law-filter')).toBeVisible();
+    await page.selectOption('#corr-lang-filter', 'san');
+    const row = page.locator('.corr-row').first();
+    await expect(row).toBeVisible();
+    await row.locator('.corr-lang-link').first().click();
+    await expect(page).toHaveURL(/#languages\/list\/item\/languages\//);
+    await page.goto('/aaz-index.html#scholar/scholar');
+    await page.locator('.corr-law-link').first().click();
+    await expect(page).toHaveURL(/#materials\/phonetic_laws/);
+  });
+
   test('scholar slovo section supports thesis anchors and further reading links', async ({ page }) => {
     await page.goto('/aaz-index.html#scholar/scholar/anchor/sch-slovo-arg-2');
     const arg = page.locator('#sch-slovo-arg-2');
