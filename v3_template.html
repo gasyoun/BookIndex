@@ -876,10 +876,11 @@
   /* ========= МОБИЛЬНАЯ АДАПТИВНОСТЬ ========= */
   @media (max-width: 900px) {
     body { padding: 8px 10px; }
-    header h1 { font-size: 16px; gap: 6px; }
-    header h1 .meta-inline { font-size: 10px; display: block; width: 100%; }
-    header h1 { flex-wrap: wrap; align-items: baseline; }
-    .title-group { flex-wrap: wrap; white-space: normal; }
+    header h1 { font-size: 16px; gap: 6px; flex-wrap: wrap; align-items: flex-start; }
+    header h1 .meta-inline { font-size: 10px; display: inline; width: auto; flex: 1 1 auto; min-width: 0; }
+    .title-group { gap: 6px; flex: 1 1 100%; flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
+    .title-group .home-link { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    .title-group .back-btn { flex: 0 0 auto; }
     .header-search.header-search-inline { flex: 1 1 100%; max-width: 100%; }
     .header-tools { flex-direction: column; align-items: stretch; }
     .back-btn { align-self: flex-start; }
