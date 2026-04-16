@@ -3784,12 +3784,96 @@ function renderHomePanel(container) {
   if (exportSiteBtn) exportSiteBtn.onclick = () => exportWholeSiteMarkdown();
 }
 
+function buildTopQuestion(items, entityType, question, hintPrefix, limitOptions = 4, skipModerator = false) {
+  const list = (Array.isArray(items) ? items : [])
+    .filter(it => it && it.head)
+    .filter(it => !skipModerator || !it.is_moderator)
+    .map(it => ({ head: it.head, count: (it.page_list || []).length }))
+    .filter(it => it.count > 0)
+    .sort((a, b) => b.count - a.count || compareHeadsRu(a.head, b.head));
+  if (list.length < 2) return null;
+  const options = list.slice(0, Math.max(2, limitOptions)).map(it => it.head);
+  const top = list[0];
+  return {
+    id: `dyn_${entityType}_top`,
+    question,
+    options,
+    correct: 0,
+    hint: `${hintPrefix}: ${top.head} (${top.count}).`,
+    entity: { type: entityType, head: top.head },
+  };
+}
+
+function buildLectureLengthQuestion() {
+  const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+  const lectureRows = chapters
+    .map((ch, idx) => {
+      const span = Math.max(1, (Number(ch.end) || 0) - (Number(ch.start) || 0) + 1);
+      return { idx, name: ch.name || '', span };
+    })
+    .filter(ch => ch.idx > 0);
+  if (lectureRows.length < 2) return null;
+  lectureRows.sort((a, b) => b.span - a.span || compareHeadsRu(a.name, b.name));
+  const options = lectureRows.slice(0, 4).map(ch => ch.name);
+  const top = lectureRows[0];
+  return {
+    id: 'dyn_lecture_length',
+    question: 'Какая лекция в книге самая длинная?',
+    options,
+    correct: 0,
+    hint: `Самая длинная лекция — ${top.name} (${top.span} стр.).`,
+    entity: { type: 'lecture', index: top.idx },
+  };
+}
+
+function buildDynamicTasks() {
+  const out = [];
+  const topNameTask = buildTopQuestion(
+    APP_DATA.names || [],
+    'names',
+    'Кто чаще всего упоминается в книге среди персональных имён?',
+    'Чаще всего упоминается',
+    4,
+    true
+  );
+  if (topNameTask) out.push(topNameTask);
+
+  const topLangTask = buildTopQuestion(
+    APP_DATA.languages || [],
+    'languages',
+    'Какой язык упоминается чаще всего?',
+    'Чаще всего упоминается',
+    4,
+    false
+  );
+  if (topLangTask) out.push(topLangTask);
+
+  const topTopoTask = buildTopQuestion(
+    APP_DATA.toponyms || [],
+    'toponyms',
+    'Какой топоним встречается чаще всего?',
+    'Чаще всего встречается',
+    4,
+    false
+  );
+  if (topTopoTask) out.push(topTopoTask);
+
+  const lectureLenTask = buildLectureLengthQuestion();
+  if (lectureLenTask) out.push(lectureLenTask);
+  return out;
+}
+
 function renderTasksPanel(container) {
-  const tasks = APP_DATA.tasks || [];
+  const baseTasks = Array.isArray(APP_DATA.tasks) ? APP_DATA.tasks : [];
+  const dynamicTasks = buildDynamicTasks();
+  const tasks = [...baseTasks, ...dynamicTasks];
   const tasksShuffled = shuffleArray(tasks);
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:980px;margin:0 auto;">';
   html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Проверьте себя</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:14px;">Шесть вопросов по содержанию книги. Кликните на ответ, чтобы проверить.</div>';
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">';
+  html += `<div style="font-size:12px;color:#888;font-style:italic;">${baseTasks.length} базовых + ${dynamicTasks.length} динамических вопросов. Кликните на ответ, чтобы проверить.</div>`;
+  html += '<button id="tasks-regen" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Новая подборка</button>';
+  html += '</div>';
   html += '<div id="tasks-container"></div></div></div>';
   container.innerHTML = html;
 
@@ -3837,16 +3921,24 @@ function renderTasksPanel(container) {
         res.style.background = isCorrect ? '#e8f5e9' : '#fff8e8';
         res.style.borderLeft = '3px solid ' + (isCorrect ? '#5cb85c' : '#8a7050');
         const linkBtn = t.entity
-        ? ` <span class="task-card-link" data-type="${escapeHtml(t.entity.type)}" data-head="${escapeHtml(t.entity.head)}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">Открыть карточку →</span>`
+        ? ` <span class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">Открыть карточку →</span>`
           : '';
         res.innerHTML = (isCorrect ? '<strong>Верно!</strong> ' : '<strong>Не угадали.</strong> ') + escapeHtml(t.hint) + linkBtn;
         res.querySelectorAll('.task-card-link').forEach(el => {
-          el.onclick = () => navigateToItem(el.dataset.type, el.dataset.head);
+          el.onclick = () => {
+            if ((el.dataset.type || '') === 'lecture') {
+              openLecturePage(parseInt(el.dataset.lectureIdx || '0', 10) || 0);
+              return;
+            }
+            navigateToItem(el.dataset.type, el.dataset.head);
+          };
         });
       };
       optsDiv.appendChild(btn);
     }
   }
+  const regenBtn = document.getElementById('tasks-regen');
+  if (regenBtn) regenBtn.onclick = () => renderTasksPanel(container);
 }
 
 // =========================================================
