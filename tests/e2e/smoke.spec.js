@@ -42,6 +42,13 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#glossary-search')).toHaveValue(/энклит/i);
   });
 
+  test('list hash query restores list search input', async ({ page }) => {
+    await page.goto('/aaz-index.html#all/list/q/%D0%B6%D0%B5');
+    await expect(page).toHaveURL(/#all\/list\/q\//);
+    await expect(page.locator('#search-input')).toHaveValue('же');
+    await expect(page.locator('#name-list .name-item').first()).toBeVisible();
+  });
+
   test('materials lecture compare tab renders', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await page.locator('.entity-btn[data-entity="materials"]').click();

@@ -73639,6 +73639,9 @@ function buildHashFromState() {
   if (currentEntity === 'materials' && currentTab === 'glossary' && currentGlossaryTerm) {
     parts.push('term', currentGlossaryTerm);
   }
+  if (currentTab === 'list' && searchQuery && !selectedItem) {
+    parts.push('q', searchQuery);
+  }
   if (selectedItem && rightPaneMode === 'card') {
     parts.push('item', selectedItemType || currentEntity, selectedItem);
   }
@@ -73709,6 +73712,7 @@ function applyHash(hash) {
   if (!ENTITY_TYPES[entity]) return false;
   const tabCandidate = parts[1] || ENTITY_TYPES[entity].tabs[0];
   const tab = ENTITY_TYPES[entity].tabs.includes(tabCandidate) ? tabCandidate : ENTITY_TYPES[entity].tabs[0];
+  const queryPos = parts.indexOf('q');
   const itemPos = parts.indexOf('item');
 
   const state = {
@@ -73718,6 +73722,7 @@ function applyHash(hash) {
     selectedItemType: null,
     rightPaneMode: 'histogram',
     currentLecture: 0,
+    searchQuery: '',
   };
   pendingGlossaryQuery = '';
   currentGlossaryTerm = '';
@@ -73731,6 +73736,9 @@ function applyHash(hash) {
       pendingGlossaryQuery = String(parts[termPos + 1]).trim().toLowerCase();
       currentGlossaryTerm = pendingGlossaryQuery;
     }
+  }
+  if (tab === 'list' && queryPos >= 0 && parts[queryPos + 1]) {
+    state.searchQuery = String(parts[queryPos + 1] || '').trim();
   }
 
   if (itemPos >= 0 && parts[itemPos + 1] && parts[itemPos + 2]) {
@@ -73850,6 +73858,32 @@ function buildGlossaryTermHash(term) {
   const q = String(term || '').trim().toLowerCase();
   if (!q) return '#materials/glossary';
   return '#materials/glossary/term/' + encodeURIComponent(q);
+}
+
+function buildListSearchHash(entity, query) {
+  const e = ENTITY_TYPES[entity] ? entity : 'all';
+  const q = String(query || '').trim();
+  if (!q) return '#' + [e, 'list'].map(x => encodeURIComponent(String(x))).join('/');
+  return '#' + [e, 'list', 'q', q].map(x => encodeURIComponent(String(x))).join('/');
+}
+
+function buildItemHash(type, head) {
+  const t = ENTITY_TYPES[type] ? type : 'all';
+  const resolvedHead = resolveExistingHead(t, head);
+  return '#' + [t, 'list', 'item', t, resolvedHead].map(x => encodeURIComponent(String(x))).join('/');
+}
+
+function buildLectureTermHash(term) {
+  const raw = String(term || '').trim();
+  if (!raw) return '#materials/glossary';
+  const q = raw.toLowerCase();
+  const glossary = APP_DATA.glossary || [];
+  const hasGlossaryHit = glossary.some(g => {
+    const gt = String(g.term || '').toLowerCase();
+    return gt.includes(q) || q.includes(gt);
+  });
+  if (hasGlossaryHit) return buildGlossaryTermHash(raw);
+  return buildListSearchHash('all', raw);
 }
 
 function findLectureIndexByName(name) {
@@ -75218,10 +75252,10 @@ function renderCardInRight() {
       html += '<h3>Рядом в тексте</h3><div class="related">';
       for (const e of relatedEdges.slice(0, 10)) {
         const other = e.source === it.head ? e.target : e.source;
-        html += `<div class="xlink" data-type="names" data-head="${escapeHtml(other)}" style="display:flex;justify-content:space-between;gap:8px;cursor:pointer;padding:2px 0;">
+        html += `<a class="xlink" data-type="names" data-head="${escapeHtml(other)}" href="${escapeHtml(buildItemHash('names', other))}" style="display:flex;justify-content:space-between;gap:8px;cursor:pointer;padding:2px 0;color:inherit;text-decoration:none;">
           <span>${escapeHtml(other)}</span>
           ${e.weight > 1 ? `<span style="color:#888;font-size:10px;">· ${escapeHtml(e.weight)}</span>` : '<span></span>'}
-        </div>`;
+        </a>`;
       }
       html += '</div>';
     }
@@ -75236,10 +75270,10 @@ function renderCardInRight() {
     if (!links || links.length === 0) continue;
     html += `<h3>${crossLabels[tgtType] || tgtType}</h3><div class="related">`;
     for (const lnk of links.slice(0, 8)) {
-    html += `<div class="xlink" data-type="${escapeHtml(tgtType)}" data-head="${escapeHtml(lnk.head)}" style="display:flex;justify-content:space-between;gap:8px;cursor:pointer;padding:2px 0;">
+    html += `<a class="xlink" data-type="${escapeHtml(tgtType)}" data-head="${escapeHtml(lnk.head)}" href="${escapeHtml(buildItemHash(tgtType, lnk.head))}" style="display:flex;justify-content:space-between;gap:8px;cursor:pointer;padding:2px 0;color:inherit;text-decoration:none;">
         <span>${escapeHtml(lnk.head)}</span>
         ${lnk.weight > 1 ? `<span style="color:#888;font-size:10px;">· ${escapeHtml(lnk.weight)}</span>` : '<span></span>'}
-      </div>`;
+      </a>`;
     }
     html += '</div>';
   }
@@ -75282,7 +75316,8 @@ function renderCardInRight() {
   }
   // Универсальная привязка для всех кросс-ссылок (xlink) с указанием типа
   right.querySelectorAll('.xlink[data-head]').forEach(el => {
-    el.onclick = () => {
+    el.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
       const t = el.dataset.type || 'names';
       navigateToItem(t, el.dataset.head);
     };
@@ -76745,7 +76780,7 @@ function renderHomePanel(container) {
       <div style="font-size:11px;color:#888;margin-bottom:6px;">📑 страницы ${escapeHtml(r.pages)}</div>
       <div style="font-size:11px;">`;
     for (const e of r.entities) {
-      html += `<span class="route-link" data-type="${escapeHtml(e.type)}" data-head="${escapeHtml(e.head)}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 2px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(e.head)}</span>`;
+      html += `<a class="route-link" data-type="${escapeHtml(e.type)}" data-head="${escapeHtml(e.head)}" href="${escapeHtml(buildItemHash(e.type, e.head))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 2px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(e.head)}</a>`;
     }
     html += '</div></div>';
   }
@@ -76872,7 +76907,7 @@ function renderHomePanel(container) {
       for (const g of groups) {
         htmlOut += `<div style="margin-bottom:6px;"><strong>${escapeHtml(g.label)}:</strong> `;
         for (const it of g.items) {
-          htmlOut += `<span class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(it.head)}</span>`;
+          htmlOut += `<a class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(g.type, it.head))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(it.head)}</a>`;
         }
         if (g.total > g.items.length) htmlOut += `<span style="color:#888;">и ещё ${g.total - g.items.length}</span>`;
         htmlOut += `</div>`;
@@ -76880,7 +76915,10 @@ function renderHomePanel(container) {
       readingResults.innerHTML = htmlOut;
     }
     readingResults.querySelectorAll('.reading-now-link').forEach(link => {
-      link.onclick = () => navigateToItem(link.dataset.type || 'all', link.dataset.head || '');
+      link.onclick = (e) => {
+        if (e && typeof e.preventDefault === 'function') e.preventDefault();
+        navigateToItem(link.dataset.type || 'all', link.dataset.head || '');
+      };
     });
     readingResults.querySelectorAll('.reading-now-open-trends').forEach(btn => {
       btn.onclick = () => openReadingTrends(parseInt(btn.dataset.page || '', 10));
@@ -76929,17 +76967,21 @@ function renderHomePanel(container) {
     for (const r of recentItems) {
       const conf = ENTITY_TYPES[r.type];
       const label = conf ? conf.title : r.type;
-      recentHtml += `<span class="home-recent-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)} <span style="color:#777;">· ${escapeHtml(label)}</span></span>`;
+      recentHtml += `<a class="home-recent-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)} <span style="color:#777;">· ${escapeHtml(label)}</span></a>`;
     }
     recentBox.innerHTML = recentHtml;
     recentBox.querySelectorAll('.home-recent-link').forEach(link => {
-      link.onclick = () => navigateToItem(link.dataset.type || 'all', link.dataset.head || '');
+      link.onclick = (e) => {
+        if (e && typeof e.preventDefault === 'function') e.preventDefault();
+        navigateToItem(link.dataset.type || 'all', link.dataset.head || '');
+      };
     });
   }
 
   // Маршрутные ссылки
   container.querySelectorAll('.route-link').forEach(link => {
-    link.onclick = () => {
+    link.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
       const t = link.dataset.type;
       const h = link.dataset.head;
       navigateToItem(t, h);
@@ -77129,7 +77171,7 @@ function renderLecturesPanel(container) {
     html += `</ul>
       <div style="font-size:11px;color:#6a5040;font-weight:bold;margin-bottom:4px;">ТЕРМИНЫ</div>
       <div style="font-size:11px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:4px;">`;
-    for (const t of l.terms) html += `<span class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(t)}</span>`;
+    for (const t of l.terms) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(t)}</a>`;
     html += `</div>
       <div style="font-size:12px;color:#5a3818;font-style:italic;border-top:1px solid #f0e8d8;padding-top:8px;">${escapeHtml(l.why_read)}</div>
     </div>`;
@@ -77147,7 +77189,10 @@ function renderLecturesPanel(container) {
   });
   container.querySelectorAll('.lecture-term-chip').forEach(chip => {
     chip.onclick = (e) => {
-      if (e) e.stopPropagation();
+      if (e) {
+        e.stopPropagation();
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+      }
       openLectureTerm(chip.dataset.term || chip.textContent || '');
     };
   });
@@ -77188,7 +77233,7 @@ function renderLectureComparePanel(container) {
     if (!heads.length) return '<span style="color:#999;font-size:12px;">—</span>';
     let out = '';
     for (const head of heads.slice(0, max)) {
-      out += `<span class="lecture-compare-link" data-type="${escapeHtml(type)}" data-head="${escapeHtml(head)}" style="display:inline-block;margin:2px 6px 2px 0;padding:2px 7px;border-radius:10px;background:#f0e8d8;color:#5a3818;cursor:pointer;font-size:11px;">${escapeHtml(head)}</span>`;
+      out += `<a class="lecture-compare-link" data-type="${escapeHtml(type)}" data-head="${escapeHtml(head)}" href="${escapeHtml(buildItemHash(type, head))}" style="display:inline-block;margin:2px 6px 2px 0;padding:2px 7px;border-radius:10px;background:#f0e8d8;color:#5a3818;cursor:pointer;font-size:11px;text-decoration:none;">${escapeHtml(head)}</a>`;
     }
     if (heads.length > max) out += `<span style="color:#888;font-size:11px;">+${heads.length - max}</span>`;
     return out;
@@ -77256,7 +77301,10 @@ function renderLectureComparePanel(container) {
     };
   }
   container.querySelectorAll('.lecture-compare-link[data-head]').forEach(el => {
-    el.onclick = () => navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
+    el.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      navigateToItem(el.dataset.type || 'all', el.dataset.head || '');
+    };
   });
 }
 
@@ -77287,7 +77335,7 @@ function renderLecturePagePanel(container) {
   html += `</ul>
     <h3 style="font-size:12px;color:#6a5040;margin:14px 0 6px;">Термины</h3>
     <div style="font-size:12px;line-height:1.7;display:flex;flex-wrap:wrap;gap:4px;">`;
-  for (const t of (l.terms || [])) html += `<span class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(t)}</span>`;
+  for (const t of (l.terms || [])) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(t)}</a>`;
   html += `</div>
     <div style="margin-top:12px;padding-top:12px;border-top:1px solid #efe3cb;font-size:13px;color:#5a3818;font-style:italic;">${escapeHtml(l.why_read || '')}</div>
   </div>`;
@@ -77332,7 +77380,10 @@ function renderLecturePagePanel(container) {
   if (openFurther) openFurther.onclick = () => switchTab('further_reading');
   container.querySelectorAll('.lecture-term-chip').forEach(chip => {
     chip.onclick = (e) => {
-      if (e) e.stopPropagation();
+      if (e) {
+        e.stopPropagation();
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+      }
       openLectureTerm(chip.dataset.term || chip.textContent || '');
     };
   });
@@ -77514,7 +77565,7 @@ function renderGlossaryPanel(container) {
       relatedHtml += '<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:4px;align-items:center;">';
       relatedHtml += '<span style="font-size:10px;color:#7a6350;">Связанные лексемы:</span>';
       for (const r of related) {
-        relatedHtml += `<span class="glossary-xlink" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" title="${escapeHtml(r.hint || '')}" style="display:inline-block;padding:2px 7px;border:1px solid #cdbb9a;border-radius:10px;background:#fff8e8;color:#5a3818;font-size:10px;cursor:pointer;text-decoration:underline dotted;">${escapeHtml(r.head)}</span>`;
+        relatedHtml += `<a class="glossary-xlink" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" title="${escapeHtml(r.hint || '')}" style="display:inline-block;padding:2px 7px;border:1px solid #cdbb9a;border-radius:10px;background:#fff8e8;color:#5a3818;font-size:10px;cursor:pointer;text-decoration:underline dotted;">${escapeHtml(r.head)}</a>`;
       }
       relatedHtml += '</div>';
     }
@@ -77562,7 +77613,10 @@ function renderGlossaryPanel(container) {
     currentGlossaryTerm = String(input.value || '').trim().toLowerCase();
   }
   container.querySelectorAll('.glossary-xlink').forEach(el => {
-    el.onclick = () => navigateToItem(el.dataset.type || 'lexicon', el.dataset.head || '');
+    el.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      navigateToItem(el.dataset.type || 'lexicon', el.dataset.head || '');
+    };
   });
 }
 
@@ -77900,7 +77954,7 @@ function renderScholarPanel(container) {
   html += '<div>';
   const keyLinguists = ['Вакернагель Я.','Гримм Я.','Вернер К.','Раск Р. К.','Бопп Фр.','Мейе А.','Шампольон Ф.','Вентрис М.','Янин В. Л.','Гиппиус А. А.','Аванесов Р. И.','Дыбо В. А.','Иллич-Свитыч В. М.','Падучева Е. В.'];
   for (const name of keyLinguists) {
-    html += `<span class="scholar-link" data-type="names" data-head="${escapeHtml(name)}" style="display:inline-block;padding:4px 10px;background:#f0e8d8;border-radius:12px;margin:3px;cursor:pointer;color:#5a3818;text-decoration:underline dotted;font-size:12px;">${escapeHtml(name)}</span>`;
+    html += `<a class="scholar-link" data-type="names" data-head="${escapeHtml(name)}" href="${escapeHtml(buildItemHash('names', name))}" style="display:inline-block;padding:4px 10px;background:#f0e8d8;border-radius:12px;margin:3px;cursor:pointer;color:#5a3818;text-decoration:underline dotted;font-size:12px;">${escapeHtml(name)}</a>`;
   }
   html += '</div>';
 
@@ -78029,10 +78083,10 @@ function renderScholarPanel(container) {
   html += `<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">${recon.length} реконструированных и иноязычных форм, вынесенных в подраздел профессионального аппарата.</div>`;
   html += '<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">';
   for (const item of recon) {
-    html += `<div class="scholar-link" data-type="lexicon_tech" data-head="${escapeHtml(item.head)}" style="display:flex;justify-content:space-between;gap:8px;padding:3px 0;cursor:pointer;">
+    html += `<a class="scholar-link" data-type="lexicon_tech" data-head="${escapeHtml(item.head)}" href="${escapeHtml(buildItemHash('lexicon_tech', item.head))}" style="display:flex;justify-content:space-between;gap:8px;padding:3px 0;cursor:pointer;color:inherit;text-decoration:none;">
       <span style="color:#5a3818;text-decoration:underline dotted;">${escapeHtml(item.head)}</span>
       <span style="font-size:11px;color:#888;">${escapeHtml((item.page_list || []).length)} стр.</span>
-    </div>`;
+    </a>`;
   }
   html += '</div>';
 
@@ -78041,7 +78095,8 @@ function renderScholarPanel(container) {
 
   // Привязки кликов на имена
   container.querySelectorAll('.scholar-link').forEach(el => {
-    el.onclick = () => {
+    el.onclick = (e) => {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
       navigateToItem(el.dataset.type, el.dataset.head);
     };
   });
