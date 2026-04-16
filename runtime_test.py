@@ -55,6 +55,8 @@ def check_static_guards():
         "safeSetAttr(input, 'aria-activedescendant', '')",
         'function switchEntity(key) {\n  closeGlobalSearchResults();',
         'function switchTab(tab) {\n  closeGlobalSearchResults();',
+        'function announceUiMessage(message) {',
+        "live.id = 'ui-live-status';",
     ]
 
     for needle in banned:
