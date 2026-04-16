@@ -8,6 +8,7 @@ function parseAppData() {
   if (globalSearchCache && typeof globalSearchCache.clear === 'function') {
     globalSearchCache.clear();
   }
+  resetGlobalSearchFuseState();
   APP_DATA = JSON.parse(APP_DATA_STRING);
   migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
@@ -381,9 +382,13 @@ const MAX_LIST_QUERY_LENGTH = 80;
 const MAX_GLOBAL_QUERY_LENGTH = 80;
 const MAX_URL_LENGTH = 2048;
 const GLOBAL_SEARCH_CACHE_MAX = 120;
+const GLOBAL_SEARCH_FUSE_LIMIT = 80;
 const NORMALIZE_CACHE_LIMIT = 8000;
 let normalizeHeadCache = new Map();
 let globalSearchCache = new Map();
+let globalSearchFuse = null;
+let globalSearchFuseSignature = '';
+let globalSearchFuseDisabled = false;
 const AGGREGATE_CACHE_MAX = 80;
 let aggregateCache = new Map();
 let nameGraphWorker = null;
@@ -1375,7 +1380,7 @@ function highlightSearchMatch(text, query) {
   return out;
 }
 
-function getGlobalSearchMatches(query) {
+function getGlobalSearchMatchesLegacy(query) {
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
   if (q.length < 2) return [];
   const searchKey = `${getDataSignature()}::${q}`;
@@ -1427,6 +1432,193 @@ function getGlobalSearchMatches(query) {
 
   out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
   const sliced = out.slice(0, 40);
+  globalSearchCache.set(searchKey, sliced);
+  if (globalSearchCache.size > GLOBAL_SEARCH_CACHE_MAX) {
+    const firstKey = globalSearchCache.keys().next();
+    if (!firstKey.done) globalSearchCache.delete(firstKey.value);
+  }
+  return sliced;
+}
+
+function resetGlobalSearchFuseState() {
+  globalSearchFuse = null;
+  globalSearchFuseSignature = '';
+  globalSearchFuseDisabled = false;
+}
+
+function normalizeSearchText(value) {
+  return normalizeHeadForMatch(value).replace(/\s+/g, ' ').trim();
+}
+
+function buildGlobalSearchSecondaryForItem(item) {
+  const parts = [];
+  if (!item || typeof item !== 'object') return '';
+  if (Array.isArray(item.subs) && item.subs.length) parts.push(item.subs.join(' '));
+  if (Array.isArray(item.synonyms) && item.synonyms.length) parts.push(item.synonyms.join(' '));
+  if (Array.isArray(item.aliases) && item.aliases.length) parts.push(item.aliases.join(' '));
+  if (item.category) parts.push(item.category);
+  if (item.subcategory) parts.push(item.subcategory);
+  if (item.family) parts.push(item.family);
+  if (item.group) parts.push(item.group);
+  const quote = getFirstContextQuote(item);
+  if (quote) parts.push(quote);
+  return normalizeSearchText(parts.join(' '));
+}
+
+function buildGlobalSearchFuseRecords() {
+  if (!APP_DATA) return [];
+  const records = [];
+  const typedSources = [
+    { type: 'names', kind: LABELS && LABELS.name ? LABELS.name : 'name', items: APP_DATA.names || [] },
+    { type: 'toponyms', kind: LABELS && LABELS.place ? LABELS.place : 'toponym', items: APP_DATA.toponyms || [] },
+    { type: 'ethnonyms', kind: LABELS && LABELS.ethnos ? LABELS.ethnos : 'ethnonym', items: APP_DATA.ethnonyms || [] },
+    { type: 'languages', kind: LABELS && LABELS.language ? LABELS.language : 'language', items: APP_DATA.languages || [] },
+    { type: 'lexicon', kind: LABELS && LABELS.lexeme ? LABELS.lexeme : 'lexeme', items: APP_DATA.lexicon || [] },
+    { type: 'subject', kind: LABELS && LABELS.subject ? LABELS.subject : 'subject', items: APP_DATA.subject_index || [] },
+  ];
+  for (const src of typedSources) {
+    for (const it of src.items) {
+      const head = String(it && it.head ? it.head : '').trim();
+      if (!head) continue;
+      const searchHead = normalizeSearchText(head);
+      if (!searchHead) continue;
+      const pageCount = Array.isArray(it.page_list) ? it.page_list.length : 0;
+      records.push({
+        kind: src.kind,
+        type: src.type,
+        head,
+        meta: pageCount ? `${pageCount} \u0441\u0442\u0440.` : '',
+        lectureIndex: null,
+        snippet: getFirstContextQuote(it),
+        searchHead,
+        searchSecondary: buildGlobalSearchSecondaryForItem(it),
+      });
+    }
+  }
+
+  const glossary = APP_DATA.glossary || [];
+  for (const g of glossary) {
+    const term = String(g && g.term ? g.term : '').trim();
+    if (!term) continue;
+    const definition = String(g.definition || '').trim();
+    const searchHead = normalizeSearchText(term);
+    if (!searchHead) continue;
+    records.push({
+      kind: '\u0442\u0435\u0440\u043c\u0438\u043d',
+      type: 'glossary',
+      head: term,
+      meta: '\u0433\u043b\u043e\u0441\u0441\u0430\u0440\u0438\u0439',
+      lectureIndex: null,
+      snippet: definition,
+      searchHead,
+      searchSecondary: normalizeSearchText(definition),
+    });
+  }
+
+  const lectures = APP_DATA.lectures || [];
+  for (let i = 0; i < lectures.length; i++) {
+    const l = lectures[i] || {};
+    const name = String(l.name || '').trim();
+    if (!name) continue;
+    const terms = Array.isArray(l.terms) ? l.terms.join(' ') : '';
+    const facts = Array.isArray(l.key_facts) ? l.key_facts.join(' ') : '';
+    const snippet = String(l.main_idea || '').trim();
+    const searchHead = normalizeSearchText(name);
+    if (!searchHead) continue;
+    records.push({
+      kind: '\u043b\u0435\u043a\u0446\u0438\u044f',
+      type: 'lecture',
+      head: name,
+      meta: `\u0441\u0442\u0440. ${l.pages || ''}`,
+      lectureIndex: i,
+      snippet,
+      searchHead,
+      searchSecondary: normalizeSearchText([l.main_idea || '', terms, l.why_read || '', facts].join(' ')),
+    });
+  }
+  return records;
+}
+
+function ensureGlobalSearchFuse() {
+  if (globalSearchFuseDisabled) return false;
+  if (typeof Fuse !== 'function') {
+    globalSearchFuseDisabled = true;
+    return false;
+  }
+  const signature = `${getDataSignature()}::${(APP_DATA && APP_DATA.glossary ? APP_DATA.glossary.length : 0)}::${(APP_DATA && APP_DATA.lectures ? APP_DATA.lectures.length : 0)}`;
+  if (globalSearchFuse && globalSearchFuseSignature === signature) return true;
+  try {
+    const records = buildGlobalSearchFuseRecords();
+    if (!records.length) return false;
+    globalSearchFuse = new Fuse(records, {
+      includeScore: true,
+      shouldSort: true,
+      threshold: 0.36,
+      ignoreLocation: true,
+      distance: 140,
+      minMatchCharLength: 2,
+      keys: [
+        { name: 'searchHead', weight: 0.78 },
+        { name: 'searchSecondary', weight: 0.22 },
+      ],
+    });
+    globalSearchFuseSignature = signature;
+    return true;
+  } catch (e) {
+    globalSearchFuse = null;
+    globalSearchFuseSignature = '';
+    return false;
+  }
+}
+
+function getGlobalSearchMatchesFuzzy(queryNorm) {
+  if (!queryNorm || queryNorm.length < 2) return [];
+  if (!ensureGlobalSearchFuse()) return [];
+  const rows = globalSearchFuse.search(queryNorm, { limit: GLOBAL_SEARCH_FUSE_LIMIT });
+  if (!rows.length) return [];
+  const dedupe = new Set();
+  const out = [];
+  for (const row of rows) {
+    const item = row && row.item ? row.item : null;
+    if (!item || !item.head) continue;
+    const key = `${item.type}::${item.head}::${item.lectureIndex === null ? '' : item.lectureIndex}`;
+    if (dedupe.has(key)) continue;
+    dedupe.add(key);
+    let score = Number.isFinite(row.score) ? row.score : 1;
+    const headNorm = item.searchHead || '';
+    if (headNorm.startsWith(queryNorm)) score -= 0.12;
+    else if (headNorm.includes(queryNorm)) score -= 0.06;
+    out.push({
+      kind: item.kind,
+      type: item.type,
+      head: item.head,
+      meta: item.meta,
+      lectureIndex: item.lectureIndex,
+      snippet: item.snippet,
+      score,
+    });
+  }
+  out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
+  return out.slice(0, 40);
+}
+
+function getGlobalSearchMatches(query) {
+  const qRaw = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
+  const qNorm = normalizeSearchText(qRaw);
+  if (qNorm.length < 2) return [];
+  const searchKey = `${getDataSignature()}::${qNorm}`;
+  const cached = globalSearchCache.get(searchKey);
+  if (cached) return cached;
+  let matches = [];
+  try {
+    matches = getGlobalSearchMatchesFuzzy(qNorm);
+  } catch (e) {
+    matches = [];
+  }
+  if (!Array.isArray(matches) || !matches.length) {
+    matches = getGlobalSearchMatchesLegacy(qRaw);
+  }
+  const sliced = Array.isArray(matches) ? matches.slice(0, 40) : [];
   globalSearchCache.set(searchKey, sliced);
   if (globalSearchCache.size > GLOBAL_SEARCH_CACHE_MAX) {
     const firstKey = globalSearchCache.keys().next();

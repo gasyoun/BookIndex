@@ -69,6 +69,20 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#content .panel.active')).toBeVisible();
   });
 
+  test('global search fuzzy-matches typo query', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const input = page.locator('#global-search');
+    await input.fill('\u0441\u0430\u043d\u0441\u0440\u043a\u0438\u0442');
+    const fuzzyHit = page
+      .locator('#global-search-results.open .header-search-item')
+      .filter({ hasText: /\u0441\u0430\u043d\u0441\u043a\u0440\u0438\u0442/i })
+      .first();
+    await expect(fuzzyHit).toBeVisible();
+    await fuzzyHit.click();
+    await expect(page).toHaveURL(/#languages\/list\/item\/languages\//);
+    await expect(page.locator('#right-content .card h2')).toContainText(/\u0441\u0430\u043d\u0441\u043a\u0440\u0438\u0442/i);
+  });
+
   test('global search supports keyboard navigation (down/up/enter)', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
