@@ -73131,6 +73131,19 @@ function perfDebug(label, ms, meta = '') {
   console.debug(`[perf] ${label}: ${ms.toFixed(1)}ms${extra}`);
 }
 
+function deterministicUnitFromString(text, salt = 0) {
+  const src = String(text || '');
+  let h = (2166136261 ^ (salt >>> 0)) >>> 0;
+  for (let i = 0; i < src.length; i++) {
+    h ^= src.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  h ^= h >>> 13;
+  h = Math.imul(h, 1274126177);
+  h ^= h >>> 16;
+  return (h >>> 0) / 4294967295;
+}
+
 function getDataSignature() {
   if (!APP_DATA) return 'none';
   return [
@@ -75527,8 +75540,8 @@ function getNameGraphLayoutSync(strongOnly, W, H) {
       name: n.head,
       subcat: n.subcategory,
       weight: (n.page_list || []).length,
-      x: W / 2 + (Math.random() - 0.5) * W * 0.8,
-      y: H / 2 + (Math.random() - 0.5) * H * 0.8,
+      x: W / 2 + (deterministicUnitFromString(n.head + ':x', 11) - 0.5) * W * 0.8,
+      y: H / 2 + (deterministicUnitFromString(n.head + ':y', 23) - 0.5) * H * 0.8,
       vx: 0,
       vy: 0,
     }));
