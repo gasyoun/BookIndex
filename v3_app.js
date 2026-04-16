@@ -3189,6 +3189,13 @@ function renderGraphPanel(container) {
       dragActive = false;
       canvas.style.cursor = 'grab';
     };
+    canvas.ondblclick = () => {
+      viewScale = 1;
+      viewOffsetX = 0;
+      viewOffsetY = 0;
+      draw(hoverNode);
+      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+    };
     canvas.onclick = (e) => {
       if (dragMoved) {
         dragMoved = false;
@@ -3468,6 +3475,13 @@ function renderFamiliesPanel(container) {
   canvas.onmouseleave = () => {
     dragActive = false;
     canvas.style.cursor = 'grab';
+  };
+  canvas.ondblclick = () => {
+    viewScale = 1;
+    viewOffsetX = 0;
+    viewOffsetY = 0;
+    draw(hoverNode);
+    canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
   };
   canvas.onclick = (e) => {
     if (dragMoved) {
