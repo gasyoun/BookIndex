@@ -37,6 +37,9 @@ jobs:
       - name: JS syntax check
         run: node --check v3_app.js
 
+      - name: Encoding / mojibake check
+        run: python scripts/check_encoding.py
+
       - name: Validate content data
         run: python scripts/validate_content.py app_data.json
 

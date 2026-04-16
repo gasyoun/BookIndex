@@ -17,6 +17,7 @@
 - `app_data.json` — данные справочника.
 - `runtime_test.py` — smoke-проверка выполнения (`20/20`).
 - `scripts/validate_content.py` — структурная валидация данных.
+- `scripts/check_encoding.py` — проверка UTF-8 и анти-mojibake контроль.
 - `scripts/build_aaz_index.py` — сборка итогового `aaz-index.html`.
 - `scripts/migrate_app_data.py` — миграция `app_data.json` к актуальной схеме.
 - `playwright.config.js` + `tests/e2e/` — smoke E2E-проверки интерфейса.
@@ -26,6 +27,7 @@
 
 ```bash
 node --check v3_app.js
+python scripts/check_encoding.py
 python scripts/validate_content.py app_data.json
 python runtime_test.py
 python scripts/build_aaz_index.py
@@ -40,6 +42,7 @@ npx playwright test
 
 Workflow `CI` запускается на `push` и `pull_request` в `main` и выполняет:
 - синтаксическую проверку `v3_app.js`;
+- `scripts/check_encoding.py` (UTF-8/mojibake guard);
 - `scripts/validate_content.py`;
 - `runtime_test.py`;
 - smoke-сборку `aaz-index.html`.
