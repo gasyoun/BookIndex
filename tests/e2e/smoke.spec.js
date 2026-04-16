@@ -34,12 +34,27 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#content .panel.active')).toBeVisible();
   });
 
-  test('global search supports keyboard navigation (down/up/enter)', async ({ page }) => {
+  test.skip('global search supports keyboard navigation (down/up/enter) [legacy encoding]', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
     await input.fill('РёС‚РєРёРЅ');
     const results = page.locator('#global-search-results.open .header-search-item');
     await input.fill('iv');
+    await input.press('ArrowDown');
+    await expect(results.first()).toBeVisible();
+    await expect(results.first()).toHaveClass(/active/);
+    await expect(input).toHaveAttribute('aria-expanded', 'true');
+    await expect(input).toHaveAttribute('aria-activedescendant', /global-search-item-/);
+    await input.press('Enter');
+    await expect(page.locator('#content .panel.active')).toBeVisible();
+    await expect(page).not.toHaveURL(/#home\/home$/);
+  });
+
+  test('global search supports keyboard navigation (down/up/enter) clean', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const input = page.locator('#global-search');
+    await input.fill('iv');
+    const results = page.locator('#global-search-results.open .header-search-item');
     await input.press('ArrowDown');
     await expect(results.first()).toBeVisible();
     await expect(results.first()).toHaveClass(/active/);
