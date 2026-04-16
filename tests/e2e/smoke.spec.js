@@ -66,6 +66,16 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#global-search-results')).not.toHaveClass(/open/);
   });
 
+  test('global search dropdown closes on Escape without input focus', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const input = page.locator('#global-search');
+    await input.fill('iv');
+    await expect(page.locator('#global-search-results.open .header-search-item').first()).toBeVisible();
+    await page.locator('#home-link').focus();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#global-search-results')).not.toHaveClass(/open/);
+  });
+
   test('global search opens glossary term results', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');

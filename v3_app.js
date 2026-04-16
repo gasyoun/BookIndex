@@ -983,6 +983,7 @@ function syncNavigationState() {
 }
 
 function applyHash(hash) {
+  closeGlobalSearchResults();
   if (!hash || hash === '#') return false;
   const rawParts = hash.replace(/^#/, '').split('/').filter(Boolean);
   if (rawParts.length > MAX_HASH_PARTS) return false;
@@ -1350,7 +1351,11 @@ function closeGlobalSearchResults() {
   const box = document.getElementById('global-search-results');
   if (!box) return;
   const input = document.getElementById('global-search');
-  box.classList.remove('open');
+  if (box.classList && typeof box.classList.remove === 'function') {
+    box.classList.remove('open');
+  } else {
+    box.className = String(box.className || '').replace(/\bopen\b/g, '').replace(/\s+/g, ' ').trim();
+  }
   box.innerHTML = '';
   box._matches = [];
   globalSearchActiveIndex = -1;
@@ -1490,7 +1495,19 @@ function onGlobalKeydown(e) {
     if (navigateCardByDelta(1) || stepLecture(1)) e.preventDefault();
     return;
   }
-  if (e.key === 'Escape' && closeCardView()) e.preventDefault();
+  if (e.key === 'Escape') {
+    const box = document.getElementById('global-search-results');
+    const isOpen = !!(box && (
+      (box.classList && typeof box.classList.contains === 'function' && box.classList.contains('open')) ||
+      /\bopen\b/.test(String(box.className || ''))
+    ));
+    if (isOpen) {
+      closeGlobalSearchResults();
+      e.preventDefault();
+      return;
+    }
+    if (closeCardView()) e.preventDefault();
+  }
 }
 
 function wireGlobalUI() {
