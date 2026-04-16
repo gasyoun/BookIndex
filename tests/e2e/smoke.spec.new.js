@@ -143,6 +143,16 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#lecture-compare-b')).toBeVisible();
   });
 
+  test('lectures panel keeps preface separate and lectures paired', async ({ page }) => {
+    await page.goto('/aaz-index.html#materials/lectures');
+    const cards = page.locator('#lectures-grid .lecture-card');
+    await expect(cards).toHaveCount(11);
+    await expect(cards.first()).toContainText('\u041f\u0440\u0435\u0434\u0438\u0441\u043b\u043e\u0432\u0438\u0435');
+    await expect(cards.nth(1)).toContainText('\u041b\u0435\u043a\u0446\u0438\u044f 1');
+    const firstStyle = await cards.first().getAttribute('style');
+    expect(String(firstStyle || '')).toContain('grid-column:1 / -1');
+  });
+
   test('toponym epochs links navigate via hash item links', async ({ page }) => {
     await page.goto('/aaz-index.html#toponyms/epochs');
     const firstLink = page.locator('#epochs-grid .related-link[data-head]').first();
