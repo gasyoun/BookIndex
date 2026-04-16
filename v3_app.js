@@ -5406,9 +5406,12 @@ function renderMapPanel(container) {
           options: { subdomains: 'abcd', maxZoom: 20, attribution: '© OpenStreetMap contributors © CARTO' },
         },
         {
-          name: 'OpenStreetMap',
-          url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          options: { maxZoom: 19, attribution: '© OpenStreetMap contributors' },
+          name: 'Esri WorldStreetMap',
+          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+          options: {
+            maxZoom: 19,
+            attribution: 'Tiles © Esri',
+          },
         },
         {
           name: 'OpenTopoMap',
@@ -5453,7 +5456,7 @@ function renderMapPanel(container) {
         });
         layer.on('tileerror', () => {
           tileErrors += 1;
-          if (tileErrors >= 8 && !loaded) {
+          if (tileErrors >= 6 && !loaded) {
             switchProvider();
           }
         });
