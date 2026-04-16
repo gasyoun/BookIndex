@@ -34,6 +34,33 @@ import sys
 import tempfile
 
 
+def check_static_guards():
+    """Быстрые инварианты по исходному JS, чтобы не терять критичные правки."""
+    with open('v3_app.js', 'r', encoding='utf-8') as f:
+        js = f.read()
+
+    banned = [
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    ]
+    required = [
+        'function getListColumnCount(',
+        "APP_DATA.labels.literator = 'Носитель языка';",
+    ]
+
+    for needle in banned:
+        if needle in js:
+            print(f"[static] FAIL: forbidden fragment found: {needle}")
+            return False
+
+    for needle in required:
+        if needle not in js:
+            print(f"[static] FAIL: required fragment missing: {needle}")
+            return False
+
+    print("[static] OK: guards passed")
+    return True
+
+
 def build_full_js():
     """Собирает полный JavaScript с подставленными данными."""
     if not os.path.exists('app_data.json'):
@@ -167,18 +194,23 @@ def main():
     print("Контроль работоспособности aaz-index.html")
     print("=" * 60)
 
+    # Шаг 0: статические инварианты
+    print("\n[0/4] Статические проверки инвариантов...")
+    if not check_static_guards():
+        sys.exit(1)
+
     # Шаг 1: собираем JS
-    print("\n[1/3] Собираю JS с данными...")
+    print("\n[1/4] Собираю JS с данными...")
     js_full = build_full_js()
     print(f"      JS size: {len(js_full)} символов")
 
     # Шаг 2: синтаксис JS
-    print("\n[2/3] Проверка синтаксиса JS...")
+    print("\n[2/4] Проверка синтаксиса JS...")
     if not check_syntax(js_full, "syntax"):
         sys.exit(1)
 
     # Шаг 3: runtime
-    print("\n[3/3] Runtime-тест 20 функций с DOM-заглушкой...")
+    print("\n[3/4] Runtime-тест 20 функций с DOM-заглушкой...")
     if not runtime_test(js_full):
         sys.exit(1)
 
