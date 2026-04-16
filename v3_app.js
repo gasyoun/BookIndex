@@ -566,14 +566,11 @@ function highlightInContext(text, head) {
 }
 
 function getFirstLetter(head) {
-  if (!head) return '#';
-  const cleaned = String(head)
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/^[^0-9\p{L}]+/gu, '');
-  if (!cleaned) return '#';
-  for (const ch of cleaned) {
-    if (/\p{L}/u.test(ch)) return ch.toUpperCase().replace('Ё', 'Е');
-    if (/\p{N}/u.test(ch)) return '#';
+  const normalized = normalizeHeadForMatch(head);
+  if (!normalized) return '#';
+  for (const ch of normalized) {
+    if (/[a-zа-я]/i.test(ch)) return ch.toUpperCase().replace('Ё', 'Е');
+    if (/[0-9]/.test(ch)) return '#';
   }
   return '#';
 }
