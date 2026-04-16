@@ -368,6 +368,10 @@ let globalKeyHandlersWired = false;
 let visibleItemsCache = null;
 let currentListSearchRaw = '';
 let currentListSearchNorm = '';
+const MAX_HASH_PARTS = 16;
+const MAX_HASH_PART_LENGTH = 220;
+const MAX_LIST_QUERY_LENGTH = 80;
+const MAX_GLOBAL_QUERY_LENGTH = 80;
 const NORMALIZE_CACHE_LIMIT = 8000;
 let normalizeHeadCache = new Map();
 const AGGREGATE_CACHE_MAX = 80;
@@ -535,6 +539,11 @@ function safeIcon(icon, fallback = '•') {
   if (!raw) return fallback;
   const clean = raw.replace(/[<>]/g, '').slice(0, 8);
   return escapeHtml(clean || fallback);
+}
+
+function clampUiInput(value, maxLen) {
+  const limit = Number.isFinite(maxLen) && maxLen > 0 ? maxLen : 80;
+  return String(value || '').trim().slice(0, limit);
 }
 
 function shuffleArray(input) {
@@ -970,10 +979,16 @@ function syncNavigationState() {
 function applyHash(hash) {
   if (!hash || hash === '#') return false;
   const rawParts = hash.replace(/^#/, '').split('/').filter(Boolean);
+  if (rawParts.length > MAX_HASH_PARTS) return false;
   if (!rawParts.length) return false;
-  const parts = rawParts.map(p => {
-    try { return decodeURIComponent(p); } catch (e) { return p; }
-  });
+  const parts = [];
+  for (const p of rawParts) {
+    let decoded = '';
+    try { decoded = decodeURIComponent(p); } catch (e) { decoded = p; }
+    decoded = String(decoded || '');
+    if (decoded.length > MAX_HASH_PART_LENGTH) return false;
+    parts.push(decoded);
+  }
 
   const entity = parts[0];
   if (!ENTITY_TYPES[entity]) return false;
@@ -1000,19 +1015,19 @@ function applyHash(hash) {
   if (entity === 'materials' && tab === 'glossary') {
     const termPos = parts.indexOf('term');
     if (termPos >= 0 && parts[termPos + 1]) {
-      pendingGlossaryQuery = String(parts[termPos + 1]).trim().toLowerCase();
+      pendingGlossaryQuery = clampUiInput(parts[termPos + 1], MAX_LIST_QUERY_LENGTH).toLowerCase();
       currentGlossaryTerm = pendingGlossaryQuery;
     }
   }
   if (tab === 'list' && queryPos >= 0 && parts[queryPos + 1]) {
-    state.searchQuery = String(parts[queryPos + 1] || '').trim();
+    state.searchQuery = clampUiInput(parts[queryPos + 1], MAX_LIST_QUERY_LENGTH);
   }
 
   if (itemPos >= 0 && parts[itemPos + 1] && parts[itemPos + 2]) {
     state.currentEntity = parts[itemPos + 1];
     state.currentTab = 'list';
     state.selectedItemType = parts[itemPos + 1];
-    state.selectedItem = parts[itemPos + 2];
+    state.selectedItem = clampUiInput(parts[itemPos + 2], MAX_HASH_PART_LENGTH);
     state.rightPaneMode = 'card';
   }
 
@@ -1262,7 +1277,7 @@ function highlightSearchMatch(text, query) {
 }
 
 function getGlobalSearchMatches(query) {
-  const q = (query || '').trim().toLowerCase();
+  const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
   if (q.length < 2) return [];
   const out = [];
   const push = (kind, type, head, meta, lectureIndex, snippet) => {
@@ -1320,7 +1335,7 @@ function renderGlobalSearchResults(matches, query = '') {
     box.innerHTML = '';
     return;
   }
-  const q = String(query || '').trim();
+  const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
   box.innerHTML = matches.map((m, idx) =>
     `<div class="header-search-item" data-idx="${idx}">
       <span>${highlightSearchMatch(m.head, q)}</span>
@@ -1470,7 +1485,9 @@ function wireGlobalUI() {
     input.oninput = () => {
       if (globalSearchTimer) clearTimeout(globalSearchTimer);
       globalSearchTimer = setTimeout(() => {
-        renderGlobalSearchResults(getGlobalSearchMatches(input.value), input.value);
+        const q = clampUiInput(input.value, MAX_GLOBAL_QUERY_LENGTH);
+        if (input.value !== q) input.value = q;
+        renderGlobalSearchResults(getGlobalSearchMatches(q), q);
       }, 100);
     };
     input.onkeydown = (e) => {
@@ -1794,7 +1811,8 @@ function renderListPanel(container) {
   let searchTimeout = null;
   if (searchInput) safeSetAttr(searchInput, 'aria-label', 'List search');
   searchInput.oninput = (e) => {
-    const val = e.target.value.trim();
+    const val = clampUiInput(e.target.value, MAX_LIST_QUERY_LENGTH);
+    if (e.target.value !== val) e.target.value = val;
     if (searchTimeout) clearTimeout(searchTimeout);
     // Для коротких запросов задержка больше — не дергаем рендер при печати
     const delay = val.length < 3 ? 250 : 120;
