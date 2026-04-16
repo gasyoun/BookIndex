@@ -75,6 +75,9 @@ def check_static_guards():
         'function switchTab(tab) {\n  closeGlobalSearchResults();',
         'function announceUiMessage(message) {',
         "live.id = 'ui-live-status';",
+        'basemaps.cartocdn.com/light_all',
+        'OpenTopoMap',
+        'renderOfflineMap(type, items, colorFn, radiusFn);',
     ]
 
     for needle in banned:

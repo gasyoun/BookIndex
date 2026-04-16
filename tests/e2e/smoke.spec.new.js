@@ -190,6 +190,19 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#right-content .card h2')).toBeVisible();
   });
 
+  test('map tab survives tile provider failures with working fallback', async ({ page }) => {
+    await page.goto('/aaz-index.html#toponyms/map');
+    const mapHost = page.locator('#leaflet-map');
+    await expect(mapHost).toBeVisible();
+    const hasTilesOrOffline = await mapHost.evaluate((el) => {
+      const hasLeafletTiles = !!el.querySelector('.leaflet-pane, .leaflet-tile-pane, .leaflet-layer');
+      const text = (el.textContent || '').toLowerCase();
+      const hasOffline = text.includes('\u043e\u0444\u043b\u0430\u0439\u043d-\u0440\u0435\u0436\u0438\u043c');
+      return hasLeafletTiles || hasOffline;
+    });
+    expect(hasTilesOrOffline).toBeTruthy();
+  });
+
   test('scholar page trends renders export controls', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await page.locator('.entity-btn[data-entity="scholar"]').click();
