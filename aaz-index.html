@@ -163,6 +163,7 @@
     cursor: pointer;
     font-size: 12px;
   }
+  .header-search-item.active { background: #fff2d6; }
   .header-search-item:hover { background: #fff8e8; }
   .header-search-item .kind {
     color: #888;
@@ -73103,6 +73104,7 @@ let isNavigatingHistory = false;
 let suppressHashSync = false;
 let expectedHash = null;
 let globalSearchTimer = null;
+let globalSearchActiveIndex = -1;
 let pendingGlossaryQuery = '';
 let currentGlossaryTerm = '';
 const UI_STATE_STORAGE_KEY = 'zaliznyakiada.ui.v1';
@@ -74074,35 +74076,68 @@ function getGlobalSearchMatches(query) {
   return out.slice(0, 40);
 }
 
+function closeGlobalSearchResults() {
+  const box = document.getElementById('global-search-results');
+  if (!box) return;
+  box.classList.remove('open');
+  box.innerHTML = '';
+  box._matches = [];
+  globalSearchActiveIndex = -1;
+}
+
+function setGlobalSearchActiveItem(box, idx, scrollIntoView = true) {
+  if (!box || typeof box.querySelectorAll !== 'function') return;
+  const rows = Array.from(box.querySelectorAll('.header-search-item'));
+  if (!rows.length) {
+    globalSearchActiveIndex = -1;
+    return;
+  }
+  const clamped = Math.max(0, Math.min(idx, rows.length - 1));
+  rows.forEach((row, i) => {
+    const active = i === clamped;
+    row.classList.toggle('active', active);
+    safeSetAttr(row, 'aria-selected', active ? 'true' : 'false');
+  });
+  globalSearchActiveIndex = clamped;
+  if (scrollIntoView && typeof rows[clamped].scrollIntoView === 'function') {
+    rows[clamped].scrollIntoView({ block: 'nearest' });
+  }
+}
+
+function openGlobalSearchMatch(match) {
+  if (!match) return;
+  if (match.type === 'lecture') openLecturePage(match.lectureIndex || 0);
+  else if (match.type === 'glossary') openGlossaryTerm(match.head || '');
+  else navigateToItem(match.type, match.head);
+  const input = document.getElementById('global-search');
+  if (input) input.value = '';
+  closeGlobalSearchResults();
+}
+
 function renderGlobalSearchResults(matches, query = '') {
   const box = document.getElementById('global-search-results');
   if (!box) return;
   if (!matches.length) {
-    box.classList.remove('open');
-    box.innerHTML = '';
+    closeGlobalSearchResults();
     return;
   }
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
+  safeSetAttr(box, 'role', 'listbox');
   box.innerHTML = matches.map((m, idx) =>
-    `<div class="header-search-item" data-idx="${idx}">
+    `<div class="header-search-item" data-idx="${idx}" role="option" aria-selected="false">
       <span>${highlightSearchMatch(m.head, q)}</span>
       <span class="kind">${escapeHtml(m.kind)}</span>
       ${m.meta ? `<div style="color:#888;font-size:10px;margin-top:2px;">${escapeHtml(m.meta)}</div>` : ''}
       ${m.snippet ? `<div style="color:#6c5640;font-size:10px;line-height:1.25;margin-top:2px;">${highlightSearchMatch(m.snippet, q)}</div>` : ''}
     </div>`
   ).join('');
+  box._matches = matches;
+  globalSearchActiveIndex = -1;
   box.classList.add('open');
   box.querySelectorAll('.header-search-item').forEach(row => {
     row.onclick = () => {
-      const m = matches[parseInt(row.dataset.idx || '0', 10)];
-      if (!m) return;
-      if (m.type === 'lecture') openLecturePage(m.lectureIndex || 0);
-      else if (m.type === 'glossary') openGlossaryTerm(m.head || '');
-      else navigateToItem(m.type, m.head);
-      const input = document.getElementById('global-search');
-      if (input) input.value = '';
-      box.classList.remove('open');
-      box.innerHTML = '';
+      const m = (box._matches || [])[parseInt(row.dataset.idx || '0', 10)];
+      openGlobalSearchMatch(m);
     };
   });
 }
@@ -74239,9 +74274,35 @@ function wireGlobalUI() {
     };
     input.onkeydown = (e) => {
       if (e.key === 'Escape') {
-        box.classList.remove('open');
-        box.innerHTML = '';
+        closeGlobalSearchResults();
         input.blur();
+        return;
+      }
+      if (e.key === 'ArrowDown') {
+        if (!box.classList.contains('open')) {
+          const q = clampUiInput(input.value, MAX_GLOBAL_QUERY_LENGTH);
+          renderGlobalSearchResults(getGlobalSearchMatches(q), q);
+        }
+        if (box.classList.contains('open')) {
+          setGlobalSearchActiveItem(box, globalSearchActiveIndex + 1);
+          e.preventDefault();
+        }
+        return;
+      }
+      if (e.key === 'ArrowUp') {
+        if (box.classList.contains('open')) {
+          const base = globalSearchActiveIndex < 0 ? 0 : globalSearchActiveIndex;
+          setGlobalSearchActiveItem(box, base - 1);
+          e.preventDefault();
+        }
+        return;
+      }
+      if (e.key === 'Enter' && box.classList.contains('open')) {
+        const matches = Array.isArray(box._matches) ? box._matches : [];
+        if (!matches.length) return;
+        const idx = globalSearchActiveIndex < 0 ? 0 : globalSearchActiveIndex;
+        openGlobalSearchMatch(matches[idx]);
+        e.preventDefault();
       }
     };
     if (typeof document.addEventListener === 'function') {
@@ -74250,8 +74311,7 @@ function wireGlobalUI() {
         const target = e.target;
         if (!(target instanceof HTMLElement)) return;
         if (!target.closest('.header-search')) {
-          box.classList.remove('open');
-          box.innerHTML = '';
+          closeGlobalSearchResults();
         }
       });
     }
