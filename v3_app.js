@@ -1345,26 +1345,35 @@ function getGlobalSearchMatches(query) {
 function closeGlobalSearchResults() {
   const box = document.getElementById('global-search-results');
   if (!box) return;
+  const input = document.getElementById('global-search');
   box.classList.remove('open');
   box.innerHTML = '';
   box._matches = [];
   globalSearchActiveIndex = -1;
+  if (input) {
+    safeSetAttr(input, 'aria-expanded', 'false');
+    safeSetAttr(input, 'aria-activedescendant', '');
+  }
 }
 
 function setGlobalSearchActiveItem(box, idx, scrollIntoView = true) {
   if (!box || typeof box.querySelectorAll !== 'function') return;
+  const input = document.getElementById('global-search');
   const rows = Array.from(box.querySelectorAll('.header-search-item'));
   if (!rows.length) {
     globalSearchActiveIndex = -1;
+    if (input) safeSetAttr(input, 'aria-activedescendant', '');
     return;
   }
   const clamped = Math.max(0, Math.min(idx, rows.length - 1));
   rows.forEach((row, i) => {
     const active = i === clamped;
+    if (!row.id) row.id = `global-search-item-${i}`;
     row.classList.toggle('active', active);
     safeSetAttr(row, 'aria-selected', active ? 'true' : 'false');
   });
   globalSearchActiveIndex = clamped;
+  if (input) safeSetAttr(input, 'aria-activedescendant', rows[clamped].id || '');
   if (scrollIntoView && typeof rows[clamped].scrollIntoView === 'function') {
     rows[clamped].scrollIntoView({ block: 'nearest' });
   }
@@ -1382,6 +1391,7 @@ function openGlobalSearchMatch(match) {
 
 function renderGlobalSearchResults(matches, query = '') {
   const box = document.getElementById('global-search-results');
+  const input = document.getElementById('global-search');
   if (!box) return;
   if (!matches.length) {
     closeGlobalSearchResults();
@@ -1400,6 +1410,7 @@ function renderGlobalSearchResults(matches, query = '') {
   box._matches = matches;
   globalSearchActiveIndex = -1;
   box.classList.add('open');
+  if (input) safeSetAttr(input, 'aria-expanded', 'true');
   box.querySelectorAll('.header-search-item').forEach(row => {
     row.onclick = () => {
       const m = (box._matches || [])[parseInt(row.dataset.idx || '0', 10)];
@@ -1530,6 +1541,12 @@ function wireGlobalUI() {
   const input = document.getElementById('global-search');
   const box = document.getElementById('global-search-results');
   if (input && box) {
+    safeSetAttr(input, 'role', 'combobox');
+    safeSetAttr(input, 'aria-autocomplete', 'list');
+    safeSetAttr(input, 'aria-expanded', 'false');
+    safeSetAttr(input, 'aria-controls', 'global-search-results');
+    safeSetAttr(input, 'aria-activedescendant', '');
+    safeSetAttr(box, 'role', 'listbox');
     input.oninput = () => {
       if (globalSearchTimer) clearTimeout(globalSearchTimer);
       globalSearchTimer = setTimeout(() => {
