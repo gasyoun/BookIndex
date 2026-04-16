@@ -66,6 +66,10 @@ def check_static_guards():
         'function buildListSearchHash(',
         'function buildItemHash(',
         "APP_DATA.labels.literator = 'Носитель языка';",
+        'const MAX_URL_LENGTH = 2048;',
+        'if (raw.length > MAX_URL_LENGTH) return fallback;',
+        '<div class="category">${escapeHtml(category)}</div>',
+        '<div class="mc-cat">${escapeHtml(cat)}</div>',
         '<button type="button" class="related-link related-link-btn" id="copy-card-link"',
         '<button type="button" class="related-link related-link-btn" id="export-card-md"',
         'class="glossary-les-link"',
@@ -91,6 +95,7 @@ def check_static_guards():
             return False
 
     template_required = [
+        'Content-Security-Policy',
         'integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="',
         'integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="',
     ]

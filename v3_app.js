@@ -376,6 +376,7 @@ const MAX_HASH_PARTS = 16;
 const MAX_HASH_PART_LENGTH = 220;
 const MAX_LIST_QUERY_LENGTH = 80;
 const MAX_GLOBAL_QUERY_LENGTH = 80;
+const MAX_URL_LENGTH = 2048;
 const GLOBAL_SEARCH_CACHE_MAX = 120;
 const NORMALIZE_CACHE_LIMIT = 8000;
 let normalizeHeadCache = new Map();
@@ -483,6 +484,7 @@ function safeUrl(url, fallback = '#') {
   if (url === null || url === undefined) return fallback;
   const raw = String(url).trim();
   if (!raw) return fallback;
+  if (raw.length > MAX_URL_LENGTH) return fallback;
   if (raw.startsWith('//')) return fallback;
   if (raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) return raw;
   if (raw.startsWith('#')) return raw;
@@ -502,6 +504,7 @@ function safeImageUrl(url, fallback = '') {
   if (url === null || url === undefined) return fallback;
   const raw = String(url).trim();
   if (!raw) return fallback;
+  if (raw.length > MAX_URL_LENGTH) return fallback;
   if (raw.startsWith('//')) return fallback;
   if (raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) return raw;
   if (/^data:image\/(?:png|jpe?g|gif|webp|avif);/i.test(raw)) return raw;
@@ -2614,7 +2617,7 @@ function renderCardInRight() {
         ${photo}
         <div class="card-title-block">
           <h2>${escapeHtml(it.head)}</h2>
-          <div class="category">${category}</div>
+          <div class="category">${escapeHtml(category)}</div>
           ${wikiLink}
           <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;">
             <button type="button" class="related-link related-link-btn" id="card-prev" aria-label="Предыдущая карточка" style="font-size:11px;">◀</button>
@@ -2824,7 +2827,7 @@ function renderCardsPanel(container) {
     const pages = it.pages || it.head_pages || '';
     card.innerHTML = `
       <div class="mc-head">${escapeHtml(it.head)}${it.discussed ? '<span class="mc-discussed">обсуждается</span>' : ''}</div>
-      <div class="mc-cat">${cat}</div>
+      <div class="mc-cat">${escapeHtml(cat)}</div>
       <div class="mc-pages">стр. ${escapeHtml(pages)}</div>
     `;
     card.onclick = () => {
