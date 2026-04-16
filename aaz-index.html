@@ -72771,6 +72771,9 @@ function normalizeAppData() {
   APP_DATA.colors = APP_DATA.colors || {};
 
   // Legacy compatibility: older datasets may still use schoolchild/lecture_host.
+  APP_DATA.labels.literator = 'Носитель языка';
+  APP_DATA.labels.schoolchild = 'Участник лекции';
+  APP_DATA.labels.lecture_host = 'Участник лекции';
   APP_DATA.labels.participant = APP_DATA.labels.participant || APP_DATA.labels.schoolchild || APP_DATA.labels.lecture_host || 'Участник лекции';
   APP_DATA.colors.participant = APP_DATA.colors.participant || APP_DATA.colors.schoolchild || APP_DATA.colors.lecture_host || '#16a085';
 
