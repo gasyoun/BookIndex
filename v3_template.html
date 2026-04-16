@@ -557,6 +557,15 @@
     cursor: pointer;
     text-decoration: underline dotted;
   }
+  .related-link-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+  }
   .related-link:hover { color: #c0392b; }
 
   /* Сводный словник: тип сущности рядом с именем */
@@ -845,9 +854,9 @@
   header h1, .home-link { color: var(--title); }
   header h1 .meta-inline, .header-search-item .kind, .footer-meta { color: var(--muted); }
   .home-link:hover { border-bottom-color: var(--line-strong); }
-  .entity-btn, .tab, .back-btn, .header-search input, .filter-chip, .related-link { border-color: var(--line); }
-  .entity-btn, .tab, .back-btn, .filter-chip, .related-link { background: var(--surface-soft); color: var(--title); }
-  .entity-btn:hover, .tab:hover, .filter-chip:hover, .related-link:hover { background: var(--surface-soft-2); }
+  .entity-btn, .tab, .back-btn, .header-search input, .filter-chip { border-color: var(--line); }
+  .entity-btn, .tab, .back-btn, .filter-chip { background: var(--surface-soft); color: var(--title); }
+  .entity-btn:hover, .tab:hover, .filter-chip:hover { background: var(--surface-soft-2); }
   .breadcrumbs { color: var(--muted); }
   .breadcrumb-link { color: var(--title); }
   .breadcrumb-link.current { color: var(--title); }

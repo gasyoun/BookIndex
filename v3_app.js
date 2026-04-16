@@ -2436,11 +2436,11 @@ function renderCardInRight() {
           <div class="category">${category}</div>
           ${wikiLink}
           <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;">
-            <span class="related-link" id="card-prev" style="font-size:11px;">◀</span>
-            <span class="related-link" id="card-next" style="font-size:11px;">▶</span>
-            <span class="related-link" id="back-to-histo" style="font-size:11px;">← вернуться к гистограмме</span>
-            <span class="related-link" id="export-card-md" style="font-size:11px;">экспорт карточки .md</span>
-            <span class="related-link" id="copy-card-link" style="font-size:11px;">скопировать ссылку</span>
+            <button type="button" class="related-link related-link-btn" id="card-prev" aria-label="Предыдущая карточка" style="font-size:11px;">◀</button>
+            <button type="button" class="related-link related-link-btn" id="card-next" aria-label="Следующая карточка" style="font-size:11px;">▶</button>
+            <button type="button" class="related-link related-link-btn" id="back-to-histo" style="font-size:11px;">← вернуться к гистограмме</button>
+            <button type="button" class="related-link related-link-btn" id="export-card-md" style="font-size:11px;">экспорт карточки .md</button>
+            <button type="button" class="related-link related-link-btn" id="copy-card-link" style="font-size:11px;">скопировать ссылку</button>
           </div>
         </div>
       </div>
