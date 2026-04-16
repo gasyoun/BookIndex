@@ -74857,6 +74857,27 @@ function scrollSelectedItemIntoView(list) {
   selected.scrollIntoView({ block: 'nearest' });
 }
 
+function getListColumnCount(entity, size) {
+  if (typeof window === 'undefined' || typeof window.innerWidth !== 'number') return 1;
+  const w = window.innerWidth;
+  if (entity === 'lexicon_reverse') {
+    if (size < 120) return 1;
+    if (w >= 1700) return 5;
+    if (w >= 1450) return 4;
+    if (w >= 1200) return 3;
+    if (w >= 950) return 2;
+    return 1;
+  }
+  if (entity === 'all') {
+    if (size < 180) return 1;
+    if (w >= 1700) return 4;
+    if (w >= 1350) return 3;
+    if (w >= 1050) return 2;
+    return 1;
+  }
+  return 1;
+}
+
 function renderList() {
   const list = document.getElementById('name-list');
   if (!list) return;
@@ -74877,14 +74898,10 @@ function renderList() {
   if (candidateBtn) candidateBtn.textContent = `только ?-кандидаты (${candidateCount})`;
 
   list.innerHTML = '';
-  const reverseColumns = currentEntity === 'lexicon_reverse'
-    ? (typeof window !== 'undefined' && window.innerWidth >= 1500 ? 4
-      : (typeof window !== 'undefined' && window.innerWidth >= 1200 ? 3
-      : (typeof window !== 'undefined' && window.innerWidth >= 900 ? 2 : 1)))
-    : 1;
-  const useVirtual = filtered.length > 1000 && ['all', 'lexicon', 'lexicon_reverse'].includes(currentEntity);
-  if (reverseColumns > 1 && !useVirtual) {
-    list.style.columnCount = String(reverseColumns);
+  const listColumns = getListColumnCount(currentEntity, filtered.length);
+  const useVirtual = filtered.length > 1000 && currentEntity === 'lexicon';
+  if (listColumns > 1 && !useVirtual) {
+    list.style.columnCount = String(listColumns);
     list.style.columnGap = '12px';
     list.style.paddingRight = '4px';
   } else {
@@ -74896,10 +74913,10 @@ function renderList() {
   if (useVirtual) {
     renderListVirtualized(list, filtered, currentEntity);
   } else if (useProgressive) {
-    renderListProgressive(list, filtered, currentEntity, reverseColumns);
+    renderListProgressive(list, filtered, currentEntity, listColumns);
   } else {
     appendItemsWithLetters(list, filtered, currentEntity);
-    if (reverseColumns > 1) {
+    if (listColumns > 1) {
       list.querySelectorAll('.letter-header, .name-item').forEach(el => {
         el.style.breakInside = 'avoid-column';
         el.style.webkitColumnBreakInside = 'avoid';
@@ -74911,7 +74928,7 @@ function renderList() {
   if (truncated) {
     const more = document.createElement('div');
     more.style.cssText = 'padding:12px; color:#888; text-align:center; font-size:11px;';
-    if (reverseColumns > 1) more.style.columnSpan = 'all';
+    if (listColumns > 1) more.style.columnSpan = 'all';
     more.textContent = `Показано первые ${MAX_RESULTS} результатов. Уточните запрос для сужения.`;
     list.appendChild(more);
   }
