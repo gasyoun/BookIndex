@@ -378,6 +378,7 @@ let currentListSearchRaw = '';
 let currentListSearchNorm = '';
 const MAX_HASH_PARTS = 16;
 const MAX_HASH_PART_LENGTH = 220;
+const HASH_ROUTE_PREFIX = 'v4';
 const MAX_LIST_QUERY_LENGTH = 80;
 const MAX_GLOBAL_QUERY_LENGTH = 80;
 const MAX_URL_LENGTH = 2048;
@@ -956,6 +957,15 @@ function renderBreadcrumbs() {
   });
 }
 
+function encodeHashPart(value) {
+  return encodeURIComponent(String(value));
+}
+
+function buildCanonicalHash(parts) {
+  const safeParts = [HASH_ROUTE_PREFIX, ...(Array.isArray(parts) ? parts : [])];
+  return '#' + safeParts.map(encodeHashPart).join('/');
+}
+
 function buildHashFromState() {
   const parts = [currentEntity, currentTab];
   if (currentEntity === 'materials' && currentTab === 'lecture_pages') {
@@ -973,7 +983,7 @@ function buildHashFromState() {
   if (selectedItem && rightPaneMode === 'card') {
     parts.push('item', selectedItemType || currentEntity, selectedItem);
   }
-  return '#' + parts.map(x => encodeURIComponent(String(x))).join('/');
+  return buildCanonicalHash(parts);
 }
 
 function pushHistoryState() {
@@ -992,15 +1002,23 @@ function updateBackButton() {
 }
 
 async function copyCurrentUrl() {
+  const canonicalHash = buildHashFromState();
+  const canonicalUrl = (() => {
+    if (typeof window === 'undefined' || !window.location) return canonicalHash;
+    const href = String(window.location.href || '');
+    const hashPos = href.indexOf('#');
+    const base = hashPos >= 0 ? href.slice(0, hashPos) : href;
+    return base + canonicalHash;
+  })();
   if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(canonicalUrl);
       return true;
     } catch (e) {}
   }
   try {
     const ta = document.createElement('textarea');
-    ta.value = window.location.href;
+    ta.value = canonicalUrl;
     ta.setAttribute('readonly', '');
     ta.style.position = 'fixed';
     ta.style.left = '-9999px';
@@ -1032,16 +1050,18 @@ function applyHash(hash) {
   closeGlobalSearchResults();
   if (!hash || hash === '#') return false;
   const rawParts = hash.replace(/^#/, '').split('/').filter(Boolean);
-  if (rawParts.length > MAX_HASH_PARTS) return false;
+  if (rawParts.length > MAX_HASH_PARTS + 1) return false;
   if (!rawParts.length) return false;
-  const parts = [];
+  const decodedParts = [];
   for (const p of rawParts) {
     let decoded = '';
     try { decoded = decodeURIComponent(p); } catch (e) { decoded = p; }
     decoded = String(decoded || '');
     if (decoded.length > MAX_HASH_PART_LENGTH) return false;
-    parts.push(decoded);
+    decodedParts.push(decoded);
   }
+  const parts = decodedParts[0] === HASH_ROUTE_PREFIX ? decodedParts.slice(1) : decodedParts;
+  if (!parts.length || parts.length > MAX_HASH_PARTS) return false;
 
   const entity = parts[0];
   if (!ENTITY_TYPES[entity]) return false;
@@ -1228,7 +1248,7 @@ function openLecturePage(index) {
 
 function buildLecturePageHash(index) {
   const idx = Math.max(0, parseInt(String(index || '0'), 10) || 0);
-  return '#materials/lecture_pages/' + encodeURIComponent(String(idx));
+  return buildCanonicalHash(['materials', 'lecture_pages', String(idx)]);
 }
 
 function openGlossaryTerm(term) {
@@ -1252,32 +1272,32 @@ function openGlossaryTerm(term) {
 
 function buildGlossaryTermHash(term) {
   const q = String(term || '').trim().toLowerCase();
-  if (!q) return '#materials/glossary';
-  return '#materials/glossary/term/' + encodeURIComponent(q);
+  if (!q) return buildCanonicalHash(['materials', 'glossary']);
+  return buildCanonicalHash(['materials', 'glossary', 'term', q]);
 }
 
 function buildListSearchHash(entity, query) {
   const e = ENTITY_TYPES[entity] ? entity : 'all';
   const q = String(query || '').trim();
-  if (!q) return '#' + [e, 'list'].map(x => encodeURIComponent(String(x))).join('/');
-  return '#' + [e, 'list', 'q', q].map(x => encodeURIComponent(String(x))).join('/');
+  if (!q) return buildCanonicalHash([e, 'list']);
+  return buildCanonicalHash([e, 'list', 'q', q]);
 }
 
 function buildItemHash(type, head) {
   const t = ENTITY_TYPES[type] ? type : 'all';
   const resolvedHead = resolveExistingHead(t, head);
-  return '#' + [t, 'list', 'item', t, resolvedHead].map(x => encodeURIComponent(String(x))).join('/');
+  return buildCanonicalHash([t, 'list', 'item', t, resolvedHead]);
 }
 
 function buildScholarAnchorHash(anchorId) {
   const safeAnchor = String(anchorId || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
-  if (!safeAnchor) return '#scholar/scholar';
-  return '#' + ['scholar', 'scholar', 'anchor', safeAnchor].map(x => encodeURIComponent(String(x))).join('/');
+  if (!safeAnchor) return buildCanonicalHash(['scholar', 'scholar']);
+  return buildCanonicalHash(['scholar', 'scholar', 'anchor', safeAnchor]);
 }
 
 function buildLectureTermHash(term) {
   const raw = String(term || '').trim();
-  if (!raw) return '#materials/glossary';
+  if (!raw) return buildCanonicalHash(['materials', 'glossary']);
   const q = raw.toLowerCase();
   const glossary = APP_DATA.glossary || [];
   const hasGlossaryHit = glossary.some(g => {
@@ -5652,7 +5672,7 @@ function renderScholarChronologyPanel(container) {
     listEl.innerHTML = rows.map((ev) => {
       const target = ev._target || {};
       const page = ev.page ? `<span style="font-size:11px;color:#888;">стр. ${escapeHtml(String(ev.page))}</span>` : '';
-      return `<a class="chronology-event-link" href="${escapeHtml(target.href || '#scholar/chronology')}" data-mode="${escapeHtml(target.mode || '')}" data-type="${escapeHtml(target.type || '')}" data-head="${escapeHtml(target.head || '')}" data-query="${escapeHtml(target.query || '')}" style="display:grid;grid-template-columns:120px 1fr;gap:12px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;color:inherit;text-decoration:none;">
+      return `<a class="chronology-event-link" href="${escapeHtml(target.href || buildCanonicalHash(['scholar', 'chronology']))}" data-mode="${escapeHtml(target.mode || '')}" data-type="${escapeHtml(target.type || '')}" data-head="${escapeHtml(target.head || '')}" data-query="${escapeHtml(target.query || '')}" style="display:grid;grid-template-columns:120px 1fr;gap:12px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;color:inherit;text-decoration:none;">
         <div style="font-weight:bold;color:#5a3818;border-right:2px solid #8a7050;padding-right:10px;text-align:right;">${escapeHtml(String(ev._yearLabel || '—'))}</div>
         <div>
           <div style="font-size:13px;color:#333;line-height:1.45;">${escapeHtml(String(ev.event || ''))}</div>
@@ -6223,7 +6243,7 @@ function renderScholarPanel(container) {
       <td style="padding:6px 8px;font-size:11px;color:#666;">${escapeHtml(r._source)}</td>
       <td style="padding:6px 8px;font-size:11px;">
         <a class="corr-lang-link" data-type="languages" data-head="${escapeHtml(r._focusLang)}" href="${escapeHtml(langHash)}" style="color:#5a3818;text-decoration:underline dotted;">язык ↗</a><br>
-        <a class="corr-law-link" href="#materials/phonetic_laws" style="color:#5a3818;text-decoration:underline dotted;">закон ↗</a>
+        <a class="corr-law-link" href="${escapeHtml(buildCanonicalHash(['materials', 'phonetic_laws']))}" style="color:#5a3818;text-decoration:underline dotted;">закон ↗</a>
       </td>
     </tr>`;
   }

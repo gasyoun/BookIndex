@@ -37,7 +37,7 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#right-content button#export-card-md')).toBeVisible();
     await page.locator('#right-content button#copy-card-link').click();
     await expect(page.locator('#ui-live-status')).toHaveCount(1);
-    await expect(page).toHaveURL(/#names\/list/);
+    await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
   });
 
   test('home KPI rows are clickable and navigate to target sections', async ({ page }) => {
@@ -46,15 +46,15 @@ test.describe('aaz-index smoke', () => {
     await expect(rows.nth(0)).toBeVisible();
 
     await rows.nth(0).click();
-    await expect(page).toHaveURL(/#materials\/lecture_pages\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/lecture_pages\//);
 
     await page.goto('/aaz-index.html#home/home');
     await rows.nth(1).click();
-    await expect(page).toHaveURL(/#languages\/list\/item\/languages\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?languages\/list\/item\/languages\//);
 
     await page.goto('/aaz-index.html#home/home');
     await rows.nth(2).click();
-    await expect(page).toHaveURL(/#toponyms\/list\/item\/toponyms\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?toponyms\/list\/item\/toponyms\//);
   });
 
   test('global search returns navigable results', async ({ page }) => {
@@ -79,7 +79,7 @@ test.describe('aaz-index smoke', () => {
       .first();
     await expect(fuzzyHit).toBeVisible();
     await fuzzyHit.click();
-    await expect(page).toHaveURL(/#languages\/list\/item\/languages\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?languages\/list\/item\/languages\//);
     await expect(page.locator('#right-content .card h2')).toContainText(/\u0441\u0430\u043d\u0441\u043a\u0440\u0438\u0442/i);
   });
 
@@ -95,7 +95,7 @@ test.describe('aaz-index smoke', () => {
     await expect(input).toHaveAttribute('aria-activedescendant', /global-search-item-/);
     await input.press('Enter');
     await expect(page.locator('#content .panel.active')).toBeVisible();
-    await expect(page).not.toHaveURL(/#home\/home$/);
+    await expect(page).not.toHaveURL(/#(?:v4\/)?home\/home$/);
   });
 
   test('global search enter opens first match without explicit dropdown navigation', async ({ page }) => {
@@ -104,7 +104,7 @@ test.describe('aaz-index smoke', () => {
     await input.fill('iv');
     await input.press('Enter');
     await expect(page.locator('#content .panel.active')).toBeVisible();
-    await expect(page).not.toHaveURL(/#home\/home$/);
+    await expect(page).not.toHaveURL(/#(?:v4\/)?home\/home$/);
   });
 
   test('global search dropdown closes when switching entity', async ({ page }) => {
@@ -136,7 +136,7 @@ test.describe('aaz-index smoke', () => {
       .first();
     await expect(glossaryResult).toBeVisible();
     await glossaryResult.click();
-    await expect(page).toHaveURL(/#materials\/glossary\/term\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/glossary\/term\//);
     await expect(page.locator('#glossary-search')).toBeVisible();
     await expect(page.locator('#glossary-search')).toHaveValue(/\u044d\u043d\u043a\u043b\u0438\u0442/i);
   });
@@ -158,7 +158,7 @@ test.describe('aaz-index smoke', () => {
 
   test('list hash query restores list search input', async ({ page }) => {
     await page.goto('/aaz-index.html#all/list/q/%D0%B6%D0%B5');
-    await expect(page).toHaveURL(/#all\/list\/q\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?all\/list\/q\//);
     await expect(page.locator('#search-input')).toHaveValue('\u0436\u0435');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
   });
@@ -206,9 +206,9 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/aaz-index.html#toponyms/epochs');
     const firstLink = page.locator('#epochs-grid .related-link[data-head]').first();
     await expect(firstLink).toBeVisible();
-    await expect(firstLink).toHaveAttribute('href', /#toponyms\/list\/item\/toponyms\//);
+    await expect(firstLink).toHaveAttribute('href', /#(?:v4\/)?toponyms\/list\/item\/toponyms\//);
     await firstLink.click();
-    await expect(page).toHaveURL(/#toponyms\/list\/item\/toponyms\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?toponyms\/list\/item\/toponyms\//);
     await expect(page.locator('#right-content .card h2')).toBeVisible();
   });
 
@@ -216,9 +216,9 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/aaz-index.html#materials/gallery');
     const firstCard = page.locator('.gallery-card[data-head]').first();
     await expect(firstCard).toBeVisible();
-    await expect(firstCard).toHaveAttribute('href', /#names\/list\/item\/names\//);
+    await expect(firstCard).toHaveAttribute('href', /#(?:v4\/)?names\/list\/item\/names\//);
     await firstCard.click();
-    await expect(page).toHaveURL(/#names\/list\/item\/names\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?names\/list\/item\/names\//);
     await expect(page.locator('#right-content .card h2')).toBeVisible();
   });
 
@@ -284,10 +284,10 @@ test.describe('aaz-index smoke', () => {
     const row = page.locator('.corr-row').first();
     await expect(row).toBeVisible();
     await row.locator('.corr-lang-link').first().click();
-    await expect(page).toHaveURL(/#languages\/list\/item\/languages\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?languages\/list\/item\/languages\//);
     await page.goto('/aaz-index.html#scholar/scholar');
     await page.locator('.corr-law-link').first().click();
-    await expect(page).toHaveURL(/#materials\/phonetic_laws/);
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/phonetic_laws/);
   });
 
   test('scholar slovo section supports thesis anchors and further reading links', async ({ page }) => {
@@ -320,7 +320,7 @@ test.describe('aaz-index smoke', () => {
     await expect(results).toContainText('\u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0430 120');
 
     await openTrends.click();
-    await expect(page).toHaveURL(/#scholar\/page_trends/);
+    await expect(page).toHaveURL(/#(?:v4\/)?scholar\/page_trends/);
     await expect(page.locator('#trend-start-range')).toHaveValue('120');
     await expect(page.locator('#trend-end-range')).toHaveValue('120');
   });
@@ -331,7 +331,7 @@ test.describe('aaz-index smoke', () => {
     const glossaryBacklink = page.locator('#right-content .glossary-backlink[data-term]').first();
     await expect(glossaryBacklink).toBeVisible();
     await glossaryBacklink.click();
-    await expect(page).toHaveURL(/#materials\/glossary\/term\//);
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/glossary\/term\//);
     await expect(page.locator('#glossary-search')).toBeVisible();
   });
 
@@ -344,5 +344,19 @@ test.describe('aaz-index smoke', () => {
     await page.keyboard.press('Enter');
     await expect(page).not.toHaveURL(before);
     await expect(page.locator('#right-content .card h2')).toBeVisible();
+  });
+
+  test('canonical deep-link reload keeps card state and legacy hash stays compatible', async ({ page }) => {
+    const encoded = '%D0%98%D1%82%D0%BA%D0%B8%D0%BD%20%D0%98.%20%D0%91.';
+    await page.goto(`/aaz-index.html#v4/names/list/item/names/${encoded}`);
+    await expect(page).toHaveURL(/#v4\/names\/list\/item\/names\//);
+    await expect(page.locator('#right-content .card h2')).toContainText(/\u0438\u0442\u043a\u0438\u043d/i);
+
+    await page.reload();
+    await expect(page).toHaveURL(/#v4\/names\/list\/item\/names\//);
+    await expect(page.locator('#right-content .card h2')).toContainText(/\u0438\u0442\u043a\u0438\u043d/i);
+
+    await page.goto(`/aaz-index.html#names/list/item/names/${encoded}`);
+    await expect(page.locator('#right-content .card h2')).toContainText(/\u0438\u0442\u043a\u0438\u043d/i);
   });
 });
