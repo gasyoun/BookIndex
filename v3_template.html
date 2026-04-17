@@ -5,6 +5,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="theme-color" content="#5a3818">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./icon-192.svg">
 <title>Зализнякиада (сопроводительный сайт-справочник)</title>
 <link rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -14,6 +17,7 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
 <script src="./vendor/fuse.basic.min.js"></script>
+<script src="./vendor/d3.v7.min.js"></script>
 <style>
   :root {
     --bg: #faf8f3;
@@ -468,8 +472,8 @@
     overflow: hidden;
   }
   .card {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 18px;
   }
@@ -483,10 +487,10 @@
     width: 90px;
     height: 115px;
     object-fit: cover;
-    border: 1px solid #d4c8b0;
+    border: 1px solid var(--line);
     border-radius: 3px;
     flex-shrink: 0;
-    background: #f7f0e0;
+    background: var(--surface-soft);
   }
   .card-title-block {
     flex: 1;
@@ -494,10 +498,10 @@
   .card h2 {
     margin: 0 0 4px 0;
     font-size: 21px;
-    color: #5a3818;
+    color: var(--title);
   }
   .card .category {
-    color: #6a5040;
+    color: var(--muted);
     font-style: italic;
     font-size: 12px;
     margin-bottom: 4px;
@@ -506,25 +510,25 @@
     display: inline-block;
     margin-top: 4px;
     padding: 3px 9px;
-    background: #f0e8d8;
-    color: #5a3818;
+    background: var(--surface-soft-2);
+    color: var(--title);
     text-decoration: none;
     border-radius: 12px;
     font-size: 11px;
-    border: 1px solid #c4b890;
+    border: 1px solid var(--line);
   }
   .card .wiki-link:hover { background: #5a3818; color: white; }
   .card .pages-info {
-    background: #f7f0e0;
+    background: var(--surface-soft);
     padding: 6px 10px;
     border-radius: 3px;
     margin-bottom: 10px;
     font-size: 12px;
   }
-  .card .pages-info strong { color: #5a3818; }
+  .card .pages-info strong { color: var(--title); }
   .card h3 {
     font-size: 12px;
-    color: #6a5040;
+    color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin: 12px 0 5px 0;
@@ -532,16 +536,16 @@
   .context-item {
     margin-bottom: 7px;
     padding-left: 11px;
-    border-left: 3px solid #d4c8b0;
+    border-left: 3px solid var(--line);
   }
   .context-page {
-    color: #5a3818;
+    color: var(--title);
     font-weight: bold;
     font-size: 11px;
     margin-bottom: 2px;
   }
   .context-text {
-    color: #444;
+    color: var(--text);
     font-size: 12px;
     font-style: italic;
   }
@@ -631,8 +635,8 @@
 
   /* Шкала */
   .timeline-container {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 14px;
     overflow: auto;
@@ -642,8 +646,8 @@
 
   /* Тепловая карта */
   .heatmap-container {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 14px;
     overflow: auto;
@@ -652,17 +656,94 @@
 
   /* Граф */
   .graph-container {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 14px;
     text-align: center;
     overflow: auto;
     height: 100%;
+    position: relative;
+  }
+  .graph-toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .graph-range {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .graph-range input[type="range"] {
+    width: 180px;
+    accent-color: var(--title);
+  }
+  .graph-metric {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  #graph-stage {
+    position: relative;
+    border: 1px solid var(--line-soft);
+    background: var(--surface-soft);
+    border-radius: 4px;
+    min-height: 420px;
+    overflow: hidden;
+  }
+  #graph-stage svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 420px;
+  }
+  .graph-tooltip {
+    position: absolute;
+    z-index: 4;
+    pointer-events: none;
+    padding: 6px 9px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transform: translate(10px, -10px);
+    white-space: nowrap;
+  }
+  .graph-tooltip strong {
+    display: block;
+    color: var(--title);
+    margin-bottom: 1px;
+  }
+  .graph-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 10px;
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .graph-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .graph-legend-swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.55);
   }
   #graph-canvas {
-    border: 1px solid #f0e8d8;
-    background: #fefcf8;
+    border: 1px solid var(--line-soft);
+    background: var(--surface-soft);
     cursor: grab;
     max-width: 100%;
   }
@@ -670,8 +751,8 @@
 
   /* Карта */
   .map-container {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 0;
     overflow: hidden;
@@ -683,7 +764,7 @@
   .map-container .chart-intro {
     padding: 8px 14px;
     margin: 0;
-    border-bottom: 1px solid #f0e8d8;
+    border-bottom: 1px solid var(--line-soft);
     flex-shrink: 0;
   }
   .map-iframe-wrap {
@@ -878,7 +959,7 @@
   .name-item { border-bottom-color: var(--line-soft); }
   .name-item:hover { background: var(--surface-soft); }
   .name-item.selected { background: var(--surface-soft-2); }
-  body.theme-dark .chart-intro,
+  body.theme-dark .chart-intro { color: var(--text) !important; }
   body.theme-dark .context-text,
   body.theme-dark .mc-cat,
   body.theme-dark .mc-pages,

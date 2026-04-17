@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Контрольный набор для проверки работоспособности aaz-index.html
-перед каждой выкладкой. Должен проходить 20/20 функций.
+перед каждой выкладкой. Должен проходить 21/21 функций.
 
 Использование:
     python3 runtime_test.py
@@ -14,7 +14,7 @@
 Что проверяется:
     1. node --check на JS после подстановки данных (синтаксис)
     2. node --check на JS внутри собранного HTML (после template.replace)
-    3. Runtime-вызов 20 критических функций с DOM-заглушкой:
+    3. Runtime-вызов 21 критических функций с DOM-заглушкой:
        - parseAppData, initEntityTypes
        - Главная страница (renderHomePanel)
        - Список и все 4 типа карточек (renderCardInRight для имени, топонима, языка, этнонима)
@@ -40,6 +40,16 @@ def check_static_guards():
         js = f.read()
     with open('v3_template.html', 'r', encoding='utf-8') as f:
         tpl = f.read()
+    if not os.path.exists('sw.js'):
+        print('[static] FAIL: sw.js is missing')
+        return False
+    if not os.path.exists('manifest.webmanifest'):
+        print('[static] FAIL: manifest.webmanifest is missing')
+        return False
+    with open('sw.js', 'r', encoding='utf-8') as f:
+        sw = f.read()
+    with open('manifest.webmanifest', 'r', encoding='utf-8') as f:
+        manifest = f.read()
     smoke = ''
     smoke_candidates = [
         os.path.join('tests', 'e2e', 'smoke.spec.new.js'),
@@ -92,6 +102,19 @@ def check_static_guards():
         'basemaps.cartocdn.com/light_all',
         'OpenTopoMap',
         'renderOfflineMap(type, items, colorFn, radiusFn);',
+        'function registerAppServiceWorker() {',
+        "navigator.serviceWorker.register('./sw.js', { scope: './' })",
+        'let nameGraphMinEdgeWeight = 0.1;',
+        '<input id="graph-min-weight" type="range"',
+        ".attr('class', 'name-graph-node')",
+        'const zoom = d3.zoom()',
+        'const KWIC_MAX_ROWS = 1200;',
+        'function normalizeItemContexts(item) {',
+        'function iterateKwicContextEntries(contexts, pageStart, pageEnd) {',
+        'if (rows.length >= KWIC_MAX_ROWS) {',
+        'rows._truncated = false;',
+        'rows._truncated = true;',
+        'const kwicTruncated = rows && rows._truncated === true;',
     ]
 
     for needle in banned:
@@ -108,6 +131,8 @@ def check_static_guards():
         'Content-Security-Policy',
         'integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="',
         'integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="',
+        'rel="manifest"',
+        './vendor/d3.v7.min.js',
     ]
     for needle in template_required:
         if needle not in tpl:
@@ -123,6 +148,28 @@ def check_static_guards():
             return False
         if smoke and marker in smoke:
             print(f"[static] FAIL: mojibake marker in smoke.spec.js: {marker}")
+            return False
+
+    sw_required = [
+        "const CACHE_NAME = 'bookindex-shell-v1';",
+        "self.addEventListener('install'",
+        "self.addEventListener('fetch'",
+        "caches.match(OFFLINE_URL)",
+    ]
+    for needle in sw_required:
+        if needle not in sw:
+            print(f"[static] FAIL: required sw fragment missing: {needle}")
+            return False
+
+    manifest_required = [
+        '"short_name"',
+        '"start_url"',
+        '"display"',
+        '"icons"',
+    ]
+    for needle in manifest_required:
+        if needle not in manifest:
+            print(f"[static] FAIL: required manifest fragment missing: {needle}")
             return False
 
     print("[static] OK: guards passed")
@@ -212,6 +259,27 @@ const tests = [
   ['Lang card',        () => { currentEntity='languages'; selectedItem='санскрит'; selectedItemType='languages'; renderCardInRight(); }],
   ['Eth card',         () => { currentEntity='ethnonyms'; selectedItem='греки'; selectedItemType='ethnonyms'; renderCardInRight(); }],
   ['Graph',            () => { currentEntity='names'; currentTab='graph'; renderGraphPanel(c); }],
+  ['KWIC guards',      () => {
+    const first = (APP_DATA.lexicon || [])[0];
+    if (!first) return;
+    const prev = first.contexts;
+    try {
+      first.contexts = { bad: 'oops', '12': [null, 123, 'sample kwic query context'] };
+      const rows = collectLexiconKwicRows('query', 1, 404);
+      if (!Array.isArray(rows)) throw new Error('collectLexiconKwicRows should return array');
+      const bulk = {};
+      for (let i = 1; i <= 70; i++) {
+        bulk[String(i)] = Array.from({ length: 30 }, (_, j) => `stress query ${i}-${j}`);
+      }
+      first.contexts = bulk;
+      const capped = collectLexiconKwicRows('query', 1, 404);
+      if (!Array.isArray(capped)) throw new Error('collectLexiconKwicRows should return array');
+      if (capped.length !== KWIC_MAX_ROWS) throw new Error(`kwic cap mismatch: ${capped.length}`);
+      if (capped._truncated !== true) throw new Error('kwic truncation flag should be true');
+    } finally {
+      first.contexts = prev;
+    }
+  }],
   ['Timeline',         () => { currentTab='timeline'; renderTimelinePanel(c); }],
   ['Epochs',           () => { currentEntity='toponyms'; currentTab='epochs'; renderEpochsPanel(c); }],
   ['Tree',             () => { currentEntity='languages'; currentTab='tree'; renderTreePanel(c); }],
@@ -278,7 +346,7 @@ def main():
         sys.exit(1)
 
     # Шаг 3: runtime
-    print("\n[3/4] Runtime-тест 20 функций с DOM-заглушкой...")
+    print("\n[3/4] Runtime-тест 21 функции с DOM-заглушкой...")
     if not runtime_test(js_full):
         sys.exit(1)
 
