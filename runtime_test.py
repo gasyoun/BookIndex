@@ -7,7 +7,7 @@
     python3 runtime_test.py
 
 Требования:
-    - node.js установлен
+    - node.js установлен (или указан через NODE_BINARY)
     - В текущей директории должны быть: app_data.json, v3_app.js, v3_template.html
       ИЛИ собранный aaz-index.html
 
@@ -29,6 +29,7 @@
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -176,6 +177,47 @@ def check_static_guards():
     return True
 
 
+def resolve_node_binary():
+    """Finds a runnable Node.js binary and returns (path, version)."""
+    candidates = []
+    env_node = os.environ.get('NODE_BINARY', '').strip()
+    if env_node:
+        candidates.append(env_node)
+
+    for name in ('node', 'nodejs'):
+        path = shutil.which(name)
+        if path:
+            candidates.append(path)
+
+    if os.name == 'nt':
+        candidates.extend([
+            r'C:\Program Files\nodejs\node.exe',
+            r'C:\Program Files (x86)\nodejs\node.exe',
+        ])
+
+    seen = set()
+    for candidate in candidates:
+        candidate = os.path.expandvars(os.path.expanduser(candidate.strip('"')))
+        if not candidate or candidate in seen:
+            continue
+        seen.add(candidate)
+        if os.path.isabs(candidate) and not os.path.exists(candidate):
+            continue
+        try:
+            result = subprocess.run(
+                [candidate, '--version'],
+                capture_output=True,
+                text=True,
+                timeout=8,
+            )
+        except (OSError, subprocess.SubprocessError):
+            continue
+        if result.returncode == 0:
+            version = (result.stdout or result.stderr).strip()
+            return candidate, version
+    return None, None
+
+
 def build_full_js():
     """Собирает полный JavaScript с подставленными данными."""
     if not os.path.exists('app_data.json'):
@@ -193,13 +235,13 @@ def build_full_js():
     return js.replace('__APP_DATA_STRING__', '`' + escaped + '`')
 
 
-def check_syntax(js_code, label):
+def check_syntax(js_code, label, node_bin):
     """Проверка 1: node --check на JS-файле."""
     with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as f:
         f.write(js_code)
         check_path = f.name
     try:
-        r = subprocess.run(['node', '--check', check_path],
+        r = subprocess.run([node_bin, '--check', check_path],
                            capture_output=True, text=True)
     finally:
         try:
@@ -213,7 +255,7 @@ def check_syntax(js_code, label):
     return True
 
 
-def runtime_test(js_full):
+def runtime_test(js_full, node_bin):
     """Проверка 2: вызываем все критические функции с DOM-заглушкой."""
     test_js = """
 // === DOM-заглушка ===
@@ -311,7 +353,7 @@ if (failed > 0) process.exit(1);
         f.write(test_js)
         runtest_path = f.name
     try:
-        r = subprocess.run(['node', runtest_path],
+        r = subprocess.run([node_bin, runtest_path],
                            capture_output=True, text=True, timeout=60)
     finally:
         try:
@@ -330,6 +372,15 @@ def main():
     print("Контроль работоспособности aaz-index.html")
     print("=" * 60)
 
+    node_bin, node_version = resolve_node_binary()
+    if not node_bin:
+        print("\n[env] FAIL: Node.js binary not found.")
+        print("[env] Install Node.js and ensure `node` is available in PATH,")
+        print("[env] or set NODE_BINARY to an absolute executable path.")
+        print("[env] Example: set NODE_BINARY=C:\\Program Files\\nodejs\\node.exe")
+        sys.exit(1)
+    print(f"\n[env] Node.js: {node_bin} ({node_version})")
+
     # Шаг 0: статические инварианты
     print("\n[0/4] Статические проверки инвариантов...")
     if not check_static_guards():
@@ -342,12 +393,12 @@ def main():
 
     # Шаг 2: синтаксис JS
     print("\n[2/4] Проверка синтаксиса JS...")
-    if not check_syntax(js_full, "syntax"):
+    if not check_syntax(js_full, "syntax", node_bin):
         sys.exit(1)
 
     # Шаг 3: runtime
     print("\n[3/4] Runtime-тест 21 функции с DOM-заглушкой...")
-    if not runtime_test(js_full):
+    if not runtime_test(js_full, node_bin):
         sys.exit(1)
 
     print("\n" + "=" * 60)
