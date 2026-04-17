@@ -55,5 +55,5 @@ node scripts/profile_kwic.js
 
 ## Notes
 
-- Локальный статус `#45/#46/#47` готов к синхронизации в GitHub.
-- Синхронизация issue-статусов в этой сессии не выполнялась через `gh` CLI (недоступен).
+- Открыт draft PR [#48](https://github.com/gasyoun/BookIndex/pull/48) из ветки `codex/v4.1-local-finalize`.
+- В `#44/#45/#46/#47` добавлены комментарии со ссылкой на PR `#48`; закрытие заведено через `Closes #...` в PR body.

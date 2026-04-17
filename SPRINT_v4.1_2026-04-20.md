@@ -33,7 +33,7 @@
 
 - [x] Добавить smoke-кейс: переключение темы + проверка сохранения после reload.
 - [x] Провести контрастный аудит ключевых панелей: list/card/table/graph/map-fallback.
-- [ ] Закрыть `#44` после зелёного CI (требуется sync в GitHub).
+- [x] Провести sync в GitHub: открыт PR [#48](https://github.com/gasyoun/BookIndex/pull/48) с `Closes #44`.
 
 ### Day 3 (2026-04-22) - KWIC data layer (`#43`)
 
@@ -63,15 +63,14 @@
 
 - [x] Полный прогон: `check_encoding`, `validate_content`, `runtime_test`, `playwright`.
 - [ ] Финализация changelog и выпуск `v4.1.0`.
-- [ ] Подготовка `v4.2` scope (`#45`, `#46`, `#47`) — прогресс: `#45/#46/#47` реализованы локально, ожидают sync в GitHub.
+- [x] Подготовка `v4.2` scope (`#45`, `#46`, `#47`) + sync в GitHub: открыт PR [#48](https://github.com/gasyoun/BookIndex/pull/48) с `Closes #45/#46/#47`.
 
 ## Вне Плана v4.1 (Ранний Старт v4.2)
 
 - [x] `#45` D3 graph: `names/graph` переведён на D3 (`vendor/d3.v7.min.js`) с zoom/pan, фильтром минимального веса ребра, tooltip/legend и переходом в карточку; добавлен smoke `names graph supports weight filter, tooltip and navigation to card` (pass).
 - [x] `#46` PWA foundations: добавлены `manifest.webmanifest`, `sw.js`, иконки, регистрация service worker и smoke `PWA manifest and service worker are available` (pass).
 - [x] `#47` BibTeX export: реализован экспорт `.bib` для scholar bibliography, further reading и отдельных источников карточки; добавлен e2e smoke `BibTeX export works...` (pass).
-- [ ] Синхронизировать статус `#45/#46` в GitHub (в текущей сессии недоступен `gh` CLI).
-- [ ] Синхронизировать статус `#47` в GitHub (в текущей сессии недоступен `gh` CLI).
+- [x] Синхронизировать статус `#45/#46/#47/#44` в GitHub: открыт PR [#48](https://github.com/gasyoun/BookIndex/pull/48), в issues добавлены комментарии со ссылкой на PR.
 
 ## Definition of Done (v4.1)
 
