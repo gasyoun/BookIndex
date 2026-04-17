@@ -5,6 +5,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="theme-color" content="#5a3818">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./icon-192.svg">
 <title>Зализнякиада (сопроводительный сайт-справочник)</title>
 <link rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -14,6 +17,7 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
 <script src="./vendor/fuse.basic.min.js"></script>
+<script src="./vendor/d3.v7.min.js"></script>
 <style>
   :root {
     --bg: #faf8f3;
@@ -468,8 +472,8 @@
     overflow: hidden;
   }
   .card {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 18px;
   }
@@ -483,10 +487,10 @@
     width: 90px;
     height: 115px;
     object-fit: cover;
-    border: 1px solid #d4c8b0;
+    border: 1px solid var(--line);
     border-radius: 3px;
     flex-shrink: 0;
-    background: #f7f0e0;
+    background: var(--surface-soft);
   }
   .card-title-block {
     flex: 1;
@@ -494,10 +498,10 @@
   .card h2 {
     margin: 0 0 4px 0;
     font-size: 21px;
-    color: #5a3818;
+    color: var(--title);
   }
   .card .category {
-    color: #6a5040;
+    color: var(--muted);
     font-style: italic;
     font-size: 12px;
     margin-bottom: 4px;
@@ -506,25 +510,25 @@
     display: inline-block;
     margin-top: 4px;
     padding: 3px 9px;
-    background: #f0e8d8;
-    color: #5a3818;
+    background: var(--surface-soft-2);
+    color: var(--title);
     text-decoration: none;
     border-radius: 12px;
     font-size: 11px;
-    border: 1px solid #c4b890;
+    border: 1px solid var(--line);
   }
   .card .wiki-link:hover { background: #5a3818; color: white; }
   .card .pages-info {
-    background: #f7f0e0;
+    background: var(--surface-soft);
     padding: 6px 10px;
     border-radius: 3px;
     margin-bottom: 10px;
     font-size: 12px;
   }
-  .card .pages-info strong { color: #5a3818; }
+  .card .pages-info strong { color: var(--title); }
   .card h3 {
     font-size: 12px;
-    color: #6a5040;
+    color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin: 12px 0 5px 0;
@@ -532,16 +536,16 @@
   .context-item {
     margin-bottom: 7px;
     padding-left: 11px;
-    border-left: 3px solid #d4c8b0;
+    border-left: 3px solid var(--line);
   }
   .context-page {
-    color: #5a3818;
+    color: var(--title);
     font-weight: bold;
     font-size: 11px;
     margin-bottom: 2px;
   }
   .context-text {
-    color: #444;
+    color: var(--text);
     font-size: 12px;
     font-style: italic;
   }
@@ -631,8 +635,8 @@
 
   /* Шкала */
   .timeline-container {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 14px;
     overflow: auto;
@@ -642,8 +646,8 @@
 
   /* Тепловая карта */
   .heatmap-container {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 14px;
     overflow: auto;
@@ -652,17 +656,94 @@
 
   /* Граф */
   .graph-container {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 14px;
     text-align: center;
     overflow: auto;
     height: 100%;
+    position: relative;
+  }
+  .graph-toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .graph-range {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .graph-range input[type="range"] {
+    width: 180px;
+    accent-color: var(--title);
+  }
+  .graph-metric {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  #graph-stage {
+    position: relative;
+    border: 1px solid var(--line-soft);
+    background: var(--surface-soft);
+    border-radius: 4px;
+    min-height: 420px;
+    overflow: hidden;
+  }
+  #graph-stage svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 420px;
+  }
+  .graph-tooltip {
+    position: absolute;
+    z-index: 4;
+    pointer-events: none;
+    padding: 6px 9px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transform: translate(10px, -10px);
+    white-space: nowrap;
+  }
+  .graph-tooltip strong {
+    display: block;
+    color: var(--title);
+    margin-bottom: 1px;
+  }
+  .graph-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 10px;
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .graph-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .graph-legend-swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.55);
   }
   #graph-canvas {
-    border: 1px solid #f0e8d8;
-    background: #fefcf8;
+    border: 1px solid var(--line-soft);
+    background: var(--surface-soft);
     cursor: grab;
     max-width: 100%;
   }
@@ -670,8 +751,8 @@
 
   /* Карта */
   .map-container {
-    background: white;
-    border: 1px solid #d4c8b0;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 4px;
     padding: 0;
     overflow: hidden;
@@ -683,7 +764,7 @@
   .map-container .chart-intro {
     padding: 8px 14px;
     margin: 0;
-    border-bottom: 1px solid #f0e8d8;
+    border-bottom: 1px solid var(--line-soft);
     flex-shrink: 0;
   }
   .map-iframe-wrap {
@@ -878,7 +959,7 @@
   .name-item { border-bottom-color: var(--line-soft); }
   .name-item:hover { background: var(--surface-soft); }
   .name-item.selected { background: var(--surface-soft-2); }
-  body.theme-dark .chart-intro,
+  body.theme-dark .chart-intro { color: var(--text) !important; }
   body.theme-dark .context-text,
   body.theme-dark .mc-cat,
   body.theme-dark .mc-pages,
@@ -72912,6 +72993,9 @@ const APP_DATA_STRING = `{
 let APP_DATA = null;
 let LABELS = null, COLORS = null, EPOCH_LABELS = null, EPOCH_COLORS = null, FAMILY_COLORS = null;
 const APP_DATA_SCHEMA_CURRENT = 2;
+const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
+const KWIC_MAX_SNIPPET_LENGTH = 420;
+const KWIC_MAX_ROWS = 1200;
 
 function parseAppData() {
   if (globalSearchCache && typeof globalSearchCache.clear === 'function') {
@@ -72968,6 +73052,7 @@ function normalizeAppData() {
     for (const item of arr) {
       normalizeEditorialFlags(item);
       normalizeItemSources(item);
+      normalizeItemContexts(item);
     }
   }
 
@@ -73057,6 +73142,37 @@ function normalizeItemSources(item) {
   item.sources = normalized;
 }
 
+function normalizeContextSnippet(raw) {
+  const text = String(raw == null ? '' : raw).replace(/\s+/g, ' ').trim();
+  if (!text) return '';
+  if (text.length <= KWIC_MAX_SNIPPET_LENGTH) return text;
+  return text.slice(0, KWIC_MAX_SNIPPET_LENGTH).trim();
+}
+
+function normalizeItemContexts(item) {
+  if (!item || typeof item !== 'object') return;
+  const src = item.contexts;
+  if (!src || typeof src !== 'object' || Array.isArray(src)) {
+    item.contexts = {};
+    return;
+  }
+  const normalized = {};
+  for (const [pageRaw, snippets] of Object.entries(src)) {
+    const page = parseInt(String(pageRaw || ''), 10);
+    if (!Number.isFinite(page) || page < 1 || page > 5000) continue;
+    if (!Array.isArray(snippets)) continue;
+    const out = [];
+    for (const raw of snippets) {
+      const snippet = normalizeContextSnippet(raw);
+      if (!snippet) continue;
+      out.push(snippet);
+      if (out.length >= KWIC_MAX_SNIPPETS_PER_PAGE) break;
+    }
+    if (out.length) normalized[String(page)] = out;
+  }
+  item.contexts = normalized;
+}
+
 // =========================================================
 // КОНФИГУРАЦИЯ ТИПОВ СУЩНОСТЕЙ — строится после парсинга
 // =========================================================
@@ -73075,7 +73191,7 @@ function initEntityTypes() {
   materials: {
     title: 'Материалы',
     items: [],
-    tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','gallery','russian_evolution','phonetic_laws','tasks'],
+    tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','kwic','gallery','russian_evolution','phonetic_laws','tasks'],
   },
   scholar: {
     title: 'Профессиональный аппарат',
@@ -73155,6 +73271,7 @@ const TAB_LABELS = {
   tasks: 'Проверьте себя',
   further_reading: 'Что почитать ещё',
   glossary: 'Глоссарий',
+  kwic: 'KWIC',
   gallery: 'Галерея лингвистов',
   russian_evolution: 'Русский во времени',
   phonetic_laws: 'Фонетические законы',
@@ -73259,7 +73376,8 @@ let searchQuery = '';
 let selectedItem = null;
 let selectedItemType = null; // тип сущности выбранного — нужно для сводного
 let rightPaneMode = 'histogram'; // 'histogram' до выбора, 'card' после
-let graphStrongOnly = false;     // Фильтр графа: только вес ≥ 2
+let graphStrongOnly = false;     // Фильтр графа языковых семей: только вес ≥ 50
+let nameGraphMinEdgeWeight = 0.1;
 let currentLecture = 0;
 let lectureCompareA = 1;
 let lectureCompareB = 2;
@@ -73275,6 +73393,11 @@ let pendingGlossaryQuery = '';
 let currentGlossaryTerm = '';
 let pendingScholarAnchor = '';
 let currentScholarAnchor = '';
+let currentKwicSource = 'lexicon';
+let currentKwicQuery = '';
+let currentKwicSort = 'left';
+let currentKwicPageStart = 1;
+let currentKwicPageEnd = 404;
 const UI_STATE_STORAGE_KEY = 'zaliznyakiada.ui.v1';
 const UI_STATE_SCHEMA_VERSION = 2;
 const THEME_STORAGE_KEY = 'zaliznyakiada.theme.v1';
@@ -73473,6 +73596,25 @@ function clampUiInput(value, maxLen) {
   return String(value || '').trim().slice(0, limit);
 }
 
+function getTotalBookPages() {
+  return Math.max(1, parseInt(APP_DATA?.book_stats?.total_pages || 404, 10) || 404);
+}
+
+function normalizeKwicSource(source) {
+  return source === 'glossary' ? 'glossary' : 'lexicon';
+}
+
+function normalizeKwicSort(mode) {
+  return ['left', 'right', 'page'].includes(mode) ? mode : 'left';
+}
+
+function clampPageInBook(value) {
+  const total = getTotalBookPages();
+  const raw = Number.isFinite(value) ? value : parseInt(String(value || ''), 10);
+  if (!Number.isFinite(raw)) return 1;
+  return Math.max(1, Math.min(total, raw));
+}
+
 function announceUiMessage(message) {
   if (typeof document === 'undefined' || !document.body) return;
   const text = String(message || '').trim();
@@ -73563,6 +73705,11 @@ function captureViewState() {
     onlyQuestionCandidates,
     currentGlossaryTerm,
     currentScholarAnchor,
+    currentKwicSource,
+    currentKwicQuery,
+    currentKwicSort,
+    currentKwicPageStart,
+    currentKwicPageEnd,
     activeFilters: Array.from(activeFilters),
     globalSearchQuery: globalSearchInput ? String(globalSearchInput.value || '') : '',
   };
@@ -73599,6 +73746,22 @@ function restoreViewState() {
     if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
     if (typeof parsed.currentGlossaryTerm !== 'string') parsed.currentGlossaryTerm = '';
     if (typeof parsed.currentScholarAnchor !== 'string') parsed.currentScholarAnchor = '';
+    parsed.currentKwicSource = normalizeKwicSource(parsed.currentKwicSource);
+    parsed.currentKwicQuery = typeof parsed.currentKwicQuery === 'string'
+      ? clampUiInput(parsed.currentKwicQuery, MAX_LIST_QUERY_LENGTH)
+      : '';
+    parsed.currentKwicSort = normalizeKwicSort(parsed.currentKwicSort);
+    parsed.currentKwicPageStart = parsed.currentKwicPageStart == null
+      ? 1
+      : clampPageInBook(parsed.currentKwicPageStart);
+    parsed.currentKwicPageEnd = parsed.currentKwicPageEnd == null
+      ? getTotalBookPages()
+      : clampPageInBook(parsed.currentKwicPageEnd);
+    if (parsed.currentKwicPageStart > parsed.currentKwicPageEnd) {
+      const a = parsed.currentKwicPageStart;
+      parsed.currentKwicPageStart = parsed.currentKwicPageEnd;
+      parsed.currentKwicPageEnd = a;
+    }
     parsed.onlyDiscussed = !!parsed.onlyDiscussed;
     parsed.onlyQuestionCandidates = !!parsed.onlyQuestionCandidates;
     if (!Array.isArray(parsed.activeFilters)) parsed.activeFilters = [];
@@ -73727,6 +73890,22 @@ function applyViewState(state) {
   searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
   currentGlossaryTerm = typeof state.currentGlossaryTerm === 'string' ? state.currentGlossaryTerm : '';
   currentScholarAnchor = typeof state.currentScholarAnchor === 'string' ? state.currentScholarAnchor : '';
+  currentKwicSource = normalizeKwicSource(state.currentKwicSource);
+  currentKwicQuery = typeof state.currentKwicQuery === 'string'
+    ? clampUiInput(state.currentKwicQuery, MAX_LIST_QUERY_LENGTH)
+    : '';
+  currentKwicSort = normalizeKwicSort(state.currentKwicSort);
+  currentKwicPageStart = state.currentKwicPageStart == null
+    ? 1
+    : clampPageInBook(state.currentKwicPageStart);
+  currentKwicPageEnd = state.currentKwicPageEnd == null
+    ? getTotalBookPages()
+    : clampPageInBook(state.currentKwicPageEnd);
+  if (currentKwicPageStart > currentKwicPageEnd) {
+    const a = currentKwicPageStart;
+    currentKwicPageStart = currentKwicPageEnd;
+    currentKwicPageEnd = a;
+  }
   if (currentEntity === 'materials' && currentTab === 'glossary' && currentGlossaryTerm) {
     pendingGlossaryQuery = currentGlossaryTerm;
   }
@@ -73759,6 +73938,11 @@ function sameViewState(a, b) {
     a.trendsRangeEnd === b.trendsRangeEnd &&
     (a.currentGlossaryTerm || '') === (b.currentGlossaryTerm || '') &&
     (a.currentScholarAnchor || '') === (b.currentScholarAnchor || '') &&
+    (a.currentKwicSource || 'lexicon') === (b.currentKwicSource || 'lexicon') &&
+    (a.currentKwicQuery || '') === (b.currentKwicQuery || '') &&
+    (a.currentKwicSort || 'left') === (b.currentKwicSort || 'left') &&
+    (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) &&
+    (a.currentKwicPageEnd || 404) === (b.currentKwicPageEnd || 404) &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
     !!a.onlyDiscussed === !!b.onlyDiscussed &&
     !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
@@ -74873,6 +75057,168 @@ function downloadTextFile(filename, text, mimeType = 'text/markdown;charset=utf-
   }, 0);
 }
 
+function registerAppServiceWorker() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
+  if (!('serviceWorker' in navigator)) return;
+  const register = () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {});
+  };
+  if (typeof document !== 'undefined' && document.readyState === 'complete') {
+    register();
+    return;
+  }
+  if (typeof window.addEventListener === 'function') {
+    window.addEventListener('load', register, { once: true });
+  } else {
+    register();
+  }
+}
+
+function normalizeBibtexText(value) {
+  return String(value == null ? '' : value).replace(/\s+/g, ' ').trim();
+}
+
+function escapeBibtexValue(value) {
+  return normalizeBibtexText(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/[{}]/g, '\\$&');
+}
+
+function buildBibtexKey(seed, year, index = 0) {
+  const base = slugify(seed || `ref-${index + 1}`)
+    .replace(/[^a-z0-9-]/gi, '')
+    .replace(/-/g, '')
+    .toLowerCase();
+  const yearPart = String(year == null ? '' : year).replace(/[^0-9a-z]/gi, '').slice(0, 8).toLowerCase();
+  const raw = `${base || `ref${index + 1}`}${yearPart}`;
+  return /^[a-z]/i.test(raw) ? raw : `ref${raw}`;
+}
+
+function buildBibtexEntry(fields, index = 0) {
+  const title = normalizeBibtexText(fields?.title) || `Untitled source ${index + 1}`;
+  const author = normalizeBibtexText(fields?.author) || 'Unknown';
+  const year = normalizeBibtexText(fields?.year) || 'n.d.';
+  const key = buildBibtexKey(fields?.keySeed || title, year, index);
+  const out = [
+    ['author', author],
+    ['title', title],
+    ['year', year],
+  ];
+  const url = normalizeBibtexText(fields?.url);
+  const note = normalizeBibtexText(fields?.note);
+  const howpublished = normalizeBibtexText(fields?.howpublished);
+  const keywords = normalizeBibtexText(fields?.keywords);
+  if (url) out.push(['url', url]);
+  if (howpublished) out.push(['howpublished', howpublished]);
+  if (note) out.push(['note', note]);
+  if (keywords) out.push(['keywords', keywords]);
+
+  const lines = [`@misc{${key},`];
+  for (let i = 0; i < out.length; i++) {
+    const [field, value] = out[i];
+    const comma = i === out.length - 1 ? '' : ',';
+    lines.push(`  ${field} = {${escapeBibtexValue(value)}}${comma}`);
+  }
+  lines.push('}');
+  return lines.join('\n');
+}
+
+function downloadBibtexFile(filename, entries) {
+  const rows = Array.isArray(entries) ? entries.filter(Boolean) : [];
+  if (!rows.length) return;
+  downloadTextFile(filename, `${rows.join('\n\n')}\n`, 'application/x-bibtex;charset=utf-8');
+}
+
+function guessAuthorAndTitle(rawTitle, fallbackAuthor = 'Unknown') {
+  const text = normalizeBibtexText(rawTitle);
+  const m = text.match(/^(.{2,80}?)\s*(?:-|\u2013|\u2014)\s*(.+)$/);
+  if (!m) return { author: fallbackAuthor, title: text };
+  const maybeAuthor = normalizeBibtexText(m[1]);
+  const maybeTitle = normalizeBibtexText(m[2]);
+  if (!maybeAuthor || !maybeTitle) return { author: fallbackAuthor, title: text };
+  if (maybeAuthor.split(/\s+/).length > 8) return { author: fallbackAuthor, title: text };
+  return { author: maybeAuthor, title: maybeTitle };
+}
+
+function buildCardSourceBibEntry(item, itemType, src, index = 0) {
+  if (!src || typeof src !== 'object') return '';
+  const label = normalizeBibtexText(src.label || 'Source');
+  const noteParts = [];
+  if (item && item.head) noteParts.push(`BookIndex card: ${item.head} (${itemType || 'item'})`);
+  if (src.page != null && String(src.page).trim()) noteParts.push(`page ${String(src.page).trim()}`);
+  if (src.quote) noteParts.push(String(src.quote));
+  return buildBibtexEntry({
+    author: 'Unknown',
+    title: label,
+    year: '',
+    url: String(src.url || ''),
+    note: noteParts.join('. '),
+    howpublished: 'BookIndex card source',
+    keywords: `bookindex,${itemType || 'item'},source`,
+    keySeed: `${item && item.head ? item.head : 'card'}-${label}-${index + 1}`,
+  }, index);
+}
+
+function collectScholarBibliographyBibEntries() {
+  const s = APP_DATA && APP_DATA.scholar ? APP_DATA.scholar : {};
+  const groups = Array.isArray(s.bibliography) ? s.bibliography : [];
+  const out = [];
+  let idx = 0;
+  for (const group of groups) {
+    const lecture = normalizeBibtexText(group && group.lecture);
+    const works = Array.isArray(group && group.works) ? group.works : [];
+    for (const work of works) {
+      const title = normalizeBibtexText(work && work.title);
+      if (!title) continue;
+      const noteParts = [];
+      if (lecture) noteParts.push(`Lecture: ${lecture}`);
+      if (work && work.note) noteParts.push(String(work.note));
+      out.push(buildBibtexEntry({
+        author: normalizeBibtexText(work && (work.author || work.authors)) || 'A. A. Zaliznyak',
+        title,
+        year: String(work && work.year != null ? work.year : ''),
+        url: String(work && work.url ? work.url : ''),
+        note: noteParts.join('. '),
+        howpublished: 'BookIndex scholar bibliography',
+        keywords: 'bookindex,scholar,bibliography',
+        keySeed: `${lecture || 'lecture'}-${title}`,
+      }, idx));
+      idx += 1;
+    }
+  }
+  return out;
+}
+
+function collectFurtherReadingBibEntries() {
+  const sections = Array.isArray(APP_DATA && APP_DATA.further_reading) ? APP_DATA.further_reading : [];
+  const out = [];
+  let idx = 0;
+  for (const sec of sections) {
+    const topic = normalizeBibtexText(sec && sec.topic);
+    const books = Array.isArray(sec && sec.books) ? sec.books : [];
+    for (const book of books) {
+      const rawTitle = normalizeBibtexText(book && book.title);
+      if (!rawTitle) continue;
+      const parsed = guessAuthorAndTitle(rawTitle, normalizeBibtexText(book && (book.author || book.authors)) || 'Unknown');
+      const noteParts = [];
+      if (topic) noteParts.push(`Topic: ${topic}`);
+      if (book && book.why) noteParts.push(String(book.why));
+      out.push(buildBibtexEntry({
+        author: parsed.author,
+        title: parsed.title,
+        year: String(book && book.year != null ? book.year : ''),
+        url: String(book && book.url ? book.url : ''),
+        note: noteParts.join('. '),
+        howpublished: 'BookIndex further reading',
+        keywords: 'bookindex,further_reading',
+        keySeed: `${topic || 'topic'}-${parsed.title}`,
+      }, idx));
+      idx += 1;
+    }
+  }
+  return out;
+}
+
 function getItemByTypeAndHead(type, head) {
   return getIndexedItem(type, head);
 }
@@ -75062,6 +75408,7 @@ function renderContent() {
     tasks: renderTasksPanel,
     further_reading: renderFurtherReadingPanel,
     glossary: renderGlossaryPanel,
+    kwic: renderKwicPanel,
     gallery: renderGalleryPanel,
     russian_evolution: renderRussianEvolutionPanel,
     phonetic_laws: renderPhoneticLawsPanel,
@@ -75824,14 +76171,21 @@ function renderCardInRight() {
   // Контексты
   if (Array.isArray(it.sources) && it.sources.length > 0) {
     html += '<h3>Sources</h3><div class="related">';
-    for (const src of it.sources.slice(0, 5)) {
+    const cardSources = it.sources.slice(0, 5);
+    for (let sourceIdx = 0; sourceIdx < cardSources.length; sourceIdx++) {
+      const src = cardSources[sourceIdx];
       const label = escapeHtml(src.label || 'Source');
       const pageHint = src.page ? ` · p. ${escapeHtml(src.page)}` : '';
       const link = src.url
         ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
         : `<span>${label}</span>`;
       const quote = src.quote ? `<div style="font-size:12px;color:#444;line-height:1.45;margin:4px 0 2px 0;">“${escapeHtml(src.quote)}”</div>` : '';
-      html += `<div style="padding:6px 0;border-bottom:1px dashed #ddd;">${link}<span style="color:#888;font-size:11px;">${pageHint}</span>${quote}</div>`;
+      html += `<div style="padding:6px 0;border-bottom:1px dashed #ddd;">
+        ${link}
+        <span style="color:#888;font-size:11px;">${pageHint}</span>
+        <button type="button" class="related-link related-link-btn source-export-bib" data-source-idx="${sourceIdx}" style="font-size:11px;margin-left:8px;padding:1px 8px;">BibTeX</button>
+        ${quote}
+      </div>`;
     }
     html += '</div>';
   }
@@ -75951,6 +76305,19 @@ function renderCardInRight() {
     };
   }
   // Универсальная привязка для всех кросс-ссылок (xlink) с указанием типа
+  right.querySelectorAll('.source-export-bib[data-source-idx]').forEach((btn) => {
+    bindActionWithKeyboard(btn, () => {
+      const idx = parseInt(btn.dataset.sourceIdx || '-1', 10);
+      if (!Number.isInteger(idx) || idx < 0) return;
+      const sources = Array.isArray(it.sources) ? it.sources : [];
+      const src = sources[idx];
+      if (!src) return;
+      const entry = buildCardSourceBibEntry(it, eType, src, idx);
+      if (!entry) return;
+      downloadBibtexFile(`${slugify(it.head)}-source-${idx + 1}.bib`, [entry]);
+      announceUiMessage('BibTeX exported');
+    });
+  });
   bindNavigateLinks(right, '.xlink[data-head]', 'names');
   right.querySelectorAll('.glossary-backlink[data-term]').forEach(el => {
     el.onclick = (e) => {
@@ -76242,12 +76609,13 @@ function renderHeatmapPanel(container) {
 // =========================================================
 // ГРАФ ИМЁН
 // =========================================================
-function getNameGraphLayoutSync(strongOnly, W, H) {
-  const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
+function getNameGraphLayoutSync(minEdgeWeight, W, H) {
+  const minWeight = Number.isFinite(minEdgeWeight) ? Math.max(0, minEdgeWeight) : 0;
+  const key = `${minWeight.toFixed(2)}:${W}x${H}:${getDataSignature()}`;
   return getCachedAggregate('graph-names', key, () => {
     const items = APP_DATA.names || [];
     const srcEdges = APP_DATA.edges || [];
-    const edges = strongOnly ? srcEdges.filter(e => e.weight >= 2) : srcEdges;
+    const edges = srcEdges.filter(e => (Number(e.weight) || 0) >= minWeight);
     const connectedNames = new Set();
     for (const e of edges) {
       connectedNames.add(e.source);
@@ -76299,8 +76667,8 @@ function getNameGraphLayoutSync(strongOnly, W, H) {
   });
 }
 
-function getNameGraphLayout(strongOnly, W, H) {
-  return getNameGraphLayoutSync(strongOnly, W, H);
+function getNameGraphLayout(minEdgeWeight, W, H) {
+  return getNameGraphLayoutSync(minEdgeWeight, W, H);
 }
 
 function supportsNameGraphWorker() {
@@ -76340,12 +76708,13 @@ function getNameGraphWorkerScript() {
     "  var data = event.data || {};",
     "  var requestId = data.requestId;",
     "  try {",
-    "    var strongOnly = !!data.strongOnly;",
+    "    var minWeight = Number(data.minWeight);",
+    "    if (!isFinite(minWeight) || minWeight < 0) minWeight = 0;",
     "    var W = Number(data.W) || 1200;",
     "    var H = Number(data.H) || 600;",
     "    var names = Array.isArray(data.names) ? data.names : [];",
     "    var srcEdges = Array.isArray(data.edges) ? data.edges : [];",
-    "    var edges = strongOnly ? srcEdges.filter(function(e) { return (e.weight || 0) >= 2; }) : srcEdges.slice();",
+    "    var edges = srcEdges.filter(function(e) { return Number(e.weight || 0) >= minWeight; });",
     "    var connected = new Set();",
     "    for (var ei = 0; ei < edges.length; ei++) {",
     "      connected.add(edges[ei].source);",
@@ -76426,9 +76795,10 @@ function getNameGraphWorker() {
   }
 }
 
-function requestNameGraphLayoutFromWorker(strongOnly, W, H) {
+function requestNameGraphLayoutFromWorker(minEdgeWeight, W, H) {
   const worker = getNameGraphWorker();
   if (!worker) return null;
+  const minWeight = Number.isFinite(minEdgeWeight) ? Math.max(0, minEdgeWeight) : 0;
   const requestId = ++nameGraphWorkerRequestId;
   const names = (APP_DATA.names || []).map(n => ({
     head: n.head,
@@ -76457,12 +76827,13 @@ function requestNameGraphLayoutFromWorker(strongOnly, W, H) {
     };
     worker.addEventListener('message', onMessage);
     worker.addEventListener('error', onError);
-    worker.postMessage({ requestId, strongOnly, W, H, names, edges });
+    worker.postMessage({ requestId, minWeight, W, H, names, edges });
   });
 }
 
-function getNameGraphLayoutAsync(strongOnly, W, H) {
-  const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
+function getNameGraphLayoutAsync(minEdgeWeight, W, H) {
+  const minWeight = Number.isFinite(minEdgeWeight) ? Math.max(0, minEdgeWeight) : 0;
+  const key = `${minWeight.toFixed(2)}:${W}x${H}:${getDataSignature()}`;
   const cacheKey = `graph-names::${key}`;
   if (aggregateCache.has(cacheKey)) {
     perfDebug('graph-names-worker cache', 0, 'hit');
@@ -76474,17 +76845,17 @@ function getNameGraphLayoutAsync(strongOnly, W, H) {
   const t0 = nowMs();
   let job = null;
   if (supportsNameGraphWorker()) {
-    job = requestNameGraphLayoutFromWorker(strongOnly, W, H);
+    job = requestNameGraphLayoutFromWorker(minWeight, W, H);
   }
   if (!job) {
-    job = Promise.resolve(getNameGraphLayoutSync(strongOnly, W, H));
+    job = Promise.resolve(getNameGraphLayoutSync(minWeight, W, H));
   } else {
     job = job.catch((error) => {
       if (typeof console !== 'undefined' && typeof console.warn === 'function') {
         console.warn('[graph-worker] fallback to sync layout:', error && error.message ? error.message : error);
       }
       disposeNameGraphWorker();
-      return getNameGraphLayoutSync(strongOnly, W, H);
+      return getNameGraphLayoutSync(minWeight, W, H);
     });
   }
   const promise = job.then((layout) => {
@@ -76506,205 +76877,255 @@ function getNameGraphLayoutAsync(strongOnly, W, H) {
 
 function renderGraphPanel(container) {
   const t0 = nowMs();
-  container.innerHTML = `<div class="panel active"><div class="graph-container">
-    <p class="chart-intro">Граф совместных упоминаний: имена соединены, если встречаются в тексте близко друг к другу. Вес связи учитывает позицию слов на странице — упоминание в конце одной страницы и в начале следующей даёт такой же вклад, как упоминание на одной строке. Иллюстрационные страницы пропускаются. Толщина линии — суммарный вес близостей всех упоминаний.</p>
-    <div style="margin-bottom:8px;"><button class="filter-chip ${graphStrongOnly?'active':''}" id="graph-strong-btn">только сильные связи (вес ≥ 2)</button></div>
-    <div id="graph-status" style="font-size:12px;color:#7b5b38;margin-bottom:8px;">Рассчитываю расположение узлов…</div>
-    <canvas id="graph-canvas" width="1200" height="600"></canvas></div></div>`;
+  const edgesRaw = APP_DATA.edges || [];
+  const maxEdgeWeight = edgesRaw.reduce((mx, e) => Math.max(mx, Number(e.weight) || 0), 0);
+  const sliderMax = Math.max(2, Math.ceil(maxEdgeWeight * 10) / 10);
+  if (!Number.isFinite(nameGraphMinEdgeWeight) || nameGraphMinEdgeWeight < 0) nameGraphMinEdgeWeight = 0;
+  nameGraphMinEdgeWeight = Math.min(nameGraphMinEdgeWeight, sliderMax);
+  const minWeightLabel = (Math.round(nameGraphMinEdgeWeight * 10) / 10).toFixed(1);
 
-  document.getElementById('graph-strong-btn').onclick = (e) => {
-    graphStrongOnly = !graphStrongOnly;
-    e.target.classList.toggle('active', graphStrongOnly);
-    renderGraphPanel(container);
+  container.innerHTML = `<div class="panel active"><div class="graph-container">
+    <p class="chart-intro">Person-to-person co-mention graph. Nodes are people and weighted links reflect how close their mentions are in the text.</p>
+    <div class="graph-toolbar">
+      <label class="graph-range">min edge weight
+        <input id="graph-min-weight" type="range" min="0" max="${sliderMax.toFixed(1)}" step="0.1" value="${minWeightLabel}">
+        <strong id="graph-min-weight-value">${minWeightLabel}</strong>
+      </label>
+      <span class="graph-metric" id="graph-summary"></span>
+    </div>
+    <div id="graph-status" style="font-size:12px;color:#7b5b38;margin-bottom:8px;">Calculating graph layout...</div>
+    <div id="graph-stage" aria-label="Person graph"></div>
+    <div id="graph-legend" class="graph-legend"></div>
+    <div id="graph-tooltip" class="graph-tooltip" hidden></div>
+  </div></div>`;
+
+  const slider = document.getElementById('graph-min-weight');
+  const sliderValue = document.getElementById('graph-min-weight-value');
+  const summary = document.getElementById('graph-summary');
+  const status = document.getElementById('graph-status');
+  const stage = document.getElementById('graph-stage');
+  const legend = document.getElementById('graph-legend');
+  const tooltip = document.getElementById('graph-tooltip');
+  const W = 1200;
+  const H = 620;
+  const renderToken = ++nameGraphRenderToken;
+
+  const setWeightValue = () => {
+    const raw = Number(slider && slider.value);
+    const next = Number.isFinite(raw) ? Math.max(0, Math.min(sliderMax, raw)) : 0;
+    nameGraphMinEdgeWeight = next;
+    if (slider) slider.value = next.toFixed(1);
+    if (sliderValue) sliderValue.textContent = next.toFixed(1);
   };
 
-  const canvas = document.getElementById('graph-canvas');
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  const status = document.getElementById('graph-status');
-  const renderToken = ++nameGraphRenderToken;
-  const modeMeta = graphStrongOnly ? 'strong' : 'all';
+  if (slider) {
+    slider.oninput = () => {
+      setWeightValue();
+      renderGraphPanel(container);
+    };
+  }
+  setWeightValue();
 
-  function mountLayout(layout) {
-    if (renderToken !== nameGraphRenderToken) return;
-    const nodes = Array.isArray(layout.nodes) ? layout.nodes : [];
-    const idx = layout.idx || {};
-    const validEdges = Array.isArray(layout.validEdges) ? layout.validEdges : [];
-    const canTransform = (
-      typeof ctx.save === 'function' &&
-      typeof ctx.restore === 'function' &&
-      typeof ctx.translate === 'function' &&
-      typeof ctx.scale === 'function'
-    );
-    let viewScale = 1;
-    let viewOffsetX = 0;
-    let viewOffsetY = 0;
-    let hoverNode = null;
-    let dragActive = false;
-    let dragMoved = false;
-    let dragLastX = 0;
-    let dragLastY = 0;
+  if (!stage || typeof d3 === 'undefined' || !d3 || typeof d3.select !== 'function') {
     if (status) {
-      status.textContent = '';
-      status.style.display = 'none';
+      status.style.display = 'block';
+      status.textContent = 'D3.js is unavailable, graph view is disabled.';
     }
-
-    function eventToCanvasPoint(e) {
-      const rect = canvas.getBoundingClientRect();
-      const sx = canvas.width / rect.width;
-      const sy = canvas.height / rect.height;
-      return {
-        x: (e.clientX - rect.left) * sx,
-        y: (e.clientY - rect.top) * sy,
-      };
-    }
-
-    function screenToWorld(pt) {
-      return {
-        x: (pt.x - viewOffsetX) / viewScale,
-        y: (pt.y - viewOffsetY) / viewScale,
-      };
-    }
-
-    function pickNode(screenPt) {
-      const worldPt = screenToWorld(screenPt);
-      for (const n of nodes) {
-        const r = 4 + Math.sqrt(n.weight) * 1.5;
-        const hitR = (r + 5) / Math.max(0.25, viewScale);
-        if ((worldPt.x - n.x) ** 2 + (worldPt.y - n.y) ** 2 < hitR ** 2) return n;
-      }
-      return null;
-    }
-
-    function draw(hover) {
-      ctx.clearRect(0, 0, W, H);
-      if (canTransform) {
-        ctx.save();
-        ctx.translate(viewOffsetX, viewOffsetY);
-        ctx.scale(viewScale, viewScale);
-      }
-      for (const e of validEdges) {
-        const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
-        if (!a || !b) continue;
-        const ax = canTransform ? a.x : (a.x * viewScale + viewOffsetX);
-        const ay = canTransform ? a.y : (a.y * viewScale + viewOffsetY);
-        const bx = canTransform ? b.x : (b.x * viewScale + viewOffsetX);
-        const by = canTransform ? b.y : (b.y * viewScale + viewOffsetY);
-        ctx.strokeStyle = 'rgba(138, 112, 80, ' + Math.min(0.6, 0.2 + e.weight * 0.15) + ')';
-        ctx.lineWidth = canTransform ? Math.sqrt(e.weight) * 1.2 : Math.sqrt(e.weight) * 1.2 * viewScale;
-        ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
-      }
-      for (const n of nodes) {
-        const rBase = 4 + Math.sqrt(n.weight) * 1.5;
-        const nx = canTransform ? n.x : (n.x * viewScale + viewOffsetX);
-        const ny = canTransform ? n.y : (n.y * viewScale + viewOffsetY);
-        const r = canTransform ? rBase : rBase * viewScale;
-        ctx.fillStyle = safeColor(COLORS[n.subcat], '#666');
-        ctx.beginPath(); ctx.arc(nx, ny, r, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
-        if (r > 6) {
-          ctx.fillStyle = '#1a1a1a'; ctx.font = '11px Georgia';
-          ctx.textAlign = 'left'; ctx.fillText(n.name, nx + r + 3, ny + 4);
-        }
-      }
-      if (canTransform) ctx.restore();
-      if (hover) {
-        const r = (4 + Math.sqrt(hover.weight) * 1.5) * viewScale;
-        const hx = hover.x * viewScale + viewOffsetX;
-        const hy = hover.y * viewScale + viewOffsetY;
-        ctx.font = 'bold 13px Georgia';
-        const tw = ctx.measureText(hover.name).width;
-        ctx.fillStyle = 'rgba(255,248,232,0.95)';
-        ctx.fillRect(hx + r + 2, hy - 16, tw + 8, 22);
-        ctx.strokeStyle = '#8a7050';
-        ctx.strokeRect(hx + r + 2, hy - 16, tw + 8, 22);
-        ctx.fillStyle = '#5a3818';
-        ctx.fillText(hover.name, hx + r + 6, hy);
-      }
-    }
-
-    draw();
-    canvas.style.cursor = 'grab';
-    canvas.onwheel = (e) => {
-      if (typeof e.preventDefault === 'function') e.preventDefault();
-      const point = eventToCanvasPoint(e);
-      const before = screenToWorld(point);
-      const zoomFactor = e.deltaY < 0 ? 1.12 : (1 / 1.12);
-      const nextScale = Math.max(0.45, Math.min(3.2, viewScale * zoomFactor));
-      if (Math.abs(nextScale - viewScale) < 0.0001) return;
-      viewScale = nextScale;
-      viewOffsetX = point.x - before.x * viewScale;
-      viewOffsetY = point.y - before.y * viewScale;
-      hoverNode = pickNode(point);
-      draw(hoverNode);
-      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
-    };
-    canvas.onmousedown = (e) => {
-      if (e && e.button !== undefined && e.button !== 0) return;
-      const point = eventToCanvasPoint(e);
-      dragActive = true;
-      dragMoved = false;
-      dragLastX = point.x;
-      dragLastY = point.y;
-      canvas.style.cursor = 'grabbing';
-    };
-    canvas.onmousemove = (e) => {
-      const point = eventToCanvasPoint(e);
-      if (dragActive) {
-        const dx = point.x - dragLastX;
-        const dy = point.y - dragLastY;
-        dragLastX = point.x;
-        dragLastY = point.y;
-        if (Math.abs(dx) + Math.abs(dy) > 0.4) dragMoved = true;
-        viewOffsetX += dx;
-        viewOffsetY += dy;
-        draw(hoverNode);
-        canvas.style.cursor = 'grabbing';
-        return;
-      }
-      hoverNode = pickNode(point);
-      draw(hoverNode);
-      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
-    };
-    canvas.onmouseup = () => {
-      if (!dragActive) return;
-      dragActive = false;
-      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
-    };
-    canvas.onmouseleave = () => {
-      dragActive = false;
-      canvas.style.cursor = 'grab';
-    };
-    canvas.ondblclick = () => {
-      viewScale = 1;
-      viewOffsetX = 0;
-      viewOffsetY = 0;
-      draw(hoverNode);
-      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
-    };
-    canvas.onclick = (e) => {
-      if (dragMoved) {
-        dragMoved = false;
-        return;
-      }
-      const point = eventToCanvasPoint(e);
-      const picked = pickNode(point);
-      if (!picked) return;
-      selectedItem = picked.name;
-      selectedItemType = 'names';
-      rightPaneMode = 'card';
-      switchTab('list');
-    };
-    perfDebug('render-graph-names', nowMs() - t0, modeMeta);
+    return;
   }
 
-  getNameGraphLayoutAsync(graphStrongOnly, W, H)
-    .then((layout) => mountLayout(layout))
+  function hideTooltip() {
+    if (!tooltip) return;
+    tooltip.hidden = true;
+    tooltip.innerHTML = '';
+  }
+
+  function showTooltip(event, item) {
+    if (!tooltip || !stage || !item) return;
+    const rect = stage.getBoundingClientRect();
+    const px = event.clientX - rect.left;
+    const py = event.clientY - rect.top;
+    tooltip.hidden = false;
+    tooltip.style.left = `${Math.max(0, px)}px`;
+    tooltip.style.top = `${Math.max(0, py)}px`;
+    tooltip.innerHTML = `<strong>${escapeHtml(item.name || '')}</strong>${escapeHtml(item.subcat || 'uncategorized')} - mentions: ${Number(item.weight || 0)}`;
+  }
+
+  function renderLegend(rows) {
+    if (!legend) return;
+    if (!rows.length) {
+      legend.innerHTML = '';
+      return;
+    }
+    legend.innerHTML = rows.map((row) => `
+      <span class="graph-legend-item">
+        <span class="graph-legend-swatch" style="background:${escapeHtml(row.color)};"></span>
+        ${escapeHtml(row.label)} (${row.count})
+      </span>
+    `).join('');
+  }
+
+  getNameGraphLayoutAsync(nameGraphMinEdgeWeight, W, H)
+    .then((layout) => {
+      if (renderToken !== nameGraphRenderToken) return;
+      const nodes = Array.isArray(layout.nodes) ? layout.nodes.map((n) => ({ ...n })) : [];
+      const idx = layout.idx || {};
+      const validEdges = Array.isArray(layout.validEdges) ? layout.validEdges : [];
+      const links = validEdges
+        .map((e) => ({
+          source: nodes[idx[e.source]],
+          target: nodes[idx[e.target]],
+          weight: Number(e.weight) || 0,
+        }))
+        .filter((e) => e.source && e.target);
+      if (summary) {
+        summary.textContent = `nodes: ${nodes.length} - edges: ${links.length}`;
+      }
+      if (status) {
+        status.style.display = 'none';
+        status.textContent = '';
+      }
+      if (!nodes.length || !links.length) {
+        if (status) {
+          status.style.display = 'block';
+          status.textContent = 'No edges for the selected threshold.';
+        }
+        stage.innerHTML = '';
+        renderLegend([]);
+        hideTooltip();
+        return;
+      }
+
+      const legendMap = new Map();
+      for (const n of nodes) {
+        const label = n.subcat || 'uncategorized';
+        const prev = legendMap.get(label) || 0;
+        legendMap.set(label, prev + 1);
+      }
+      const legendRows = [...legendMap.entries()]
+        .sort((a, b) => b[1] - a[1] || compareHeadsRu(a[0], b[0]))
+        .map(([label, count]) => ({ label, count, color: safeColor(COLORS[label], '#666') }));
+      renderLegend(legendRows);
+
+      const svg = d3.select(stage)
+        .html('')
+        .append('svg')
+        .attr('viewBox', `0 0 ${W} ${H}`)
+        .attr('role', 'img')
+        .attr('aria-label', 'Person graph');
+      const root = svg.append('g').attr('class', 'graph-root');
+      const linkLayer = root.append('g').attr('class', 'graph-links');
+      const nodeLayer = root.append('g').attr('class', 'graph-nodes');
+      const labelLayer = root.append('g').attr('class', 'graph-labels');
+
+      const linkSel = linkLayer
+        .selectAll('line')
+        .data(links)
+        .join('line')
+        .attr('stroke', '#8a7050')
+        .attr('stroke-opacity', (d) => Math.min(0.75, 0.18 + Math.sqrt(d.weight) * 0.12))
+        .attr('stroke-width', (d) => Math.max(0.6, Math.sqrt(d.weight) * 1.25));
+
+      const nodeSel = nodeLayer
+        .selectAll('circle')
+        .data(nodes)
+        .join('circle')
+        .attr('class', 'name-graph-node')
+        .attr('r', (d) => 4 + Math.sqrt(d.weight) * 1.45)
+        .attr('fill', (d) => safeColor(COLORS[d.subcat], '#666'))
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 1.2)
+        .style('cursor', 'pointer');
+
+      const labelSel = labelLayer
+        .selectAll('text')
+        .data(nodes.filter((n) => (4 + Math.sqrt(n.weight) * 1.45) >= 6))
+        .join('text')
+        .text((d) => d.name)
+        .attr('font-size', 11)
+        .attr('fill', '#1a1a1a')
+        .attr('paint-order', 'stroke')
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 2)
+        .attr('stroke-opacity', 0.85)
+        .attr('font-family', 'Georgia, serif');
+
+      const simulation = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink(links)
+          .distance((d) => Math.max(42, 150 - Math.sqrt(d.weight) * 18))
+          .strength((d) => Math.min(0.75, 0.12 + Math.sqrt(d.weight) * 0.09)))
+        .force('charge', d3.forceManyBody().strength(-95))
+        .force('center', d3.forceCenter(W / 2, H / 2))
+        .force('collide', d3.forceCollide().radius((d) => 7 + Math.sqrt(d.weight) * 1.7))
+        .alpha(0.65)
+        .alphaDecay(0.055);
+
+      const drag = d3.drag()
+        .on('start', (event, d) => {
+          if (!event.active) simulation.alphaTarget(0.2).restart();
+          d.fx = d.x;
+          d.fy = d.y;
+        })
+        .on('drag', (event, d) => {
+          d.fx = event.x;
+          d.fy = event.y;
+        })
+        .on('end', (event, d) => {
+          if (!event.active) simulation.alphaTarget(0);
+          d.fx = null;
+          d.fy = null;
+        });
+
+      nodeSel.call(drag);
+      nodeSel.on('mousemove', (event, d) => showTooltip(event, d));
+      nodeSel.on('mouseleave', hideTooltip);
+      nodeSel.on('click', (event, d) => {
+        event.stopPropagation();
+        hideTooltip();
+        simulation.stop();
+        selectedItem = d.name;
+        selectedItemType = 'names';
+        rightPaneMode = 'card';
+        switchTab('list');
+      });
+
+      const zoom = d3.zoom()
+        .scaleExtent([0.45, 3.4])
+        .on('zoom', (event) => {
+          root.attr('transform', event.transform);
+        });
+      svg.call(zoom);
+      svg.on('dblclick.zoom', null);
+      svg.on('dblclick', () => {
+        svg.transition().duration(180).call(zoom.transform, d3.zoomIdentity);
+      });
+      svg.on('mouseleave', hideTooltip);
+
+      simulation.on('tick', () => {
+        if (renderToken !== nameGraphRenderToken) {
+          simulation.stop();
+          return;
+        }
+        linkSel
+          .attr('x1', (d) => d.source.x)
+          .attr('y1', (d) => d.source.y)
+          .attr('x2', (d) => d.target.x)
+          .attr('y2', (d) => d.target.y);
+        nodeSel
+          .attr('cx', (d) => d.x)
+          .attr('cy', (d) => d.y);
+        labelSel
+          .attr('x', (d) => d.x + 6 + Math.sqrt(d.weight))
+          .attr('y', (d) => d.y + 4);
+      });
+
+      perfDebug('render-graph-names', nowMs() - t0, `min=${nameGraphMinEdgeWeight.toFixed(1)}`);
+    })
     .catch((error) => {
       if (renderToken !== nameGraphRenderToken) return;
       if (status) {
         status.style.display = 'block';
-        status.textContent = 'Не удалось рассчитать граф.';
+        status.textContent = 'Failed to build graph.';
       }
       if (typeof console !== 'undefined' && typeof console.warn === 'function') {
         console.warn('[graph-names] render failed:', error && error.message ? error.message : error);
@@ -76713,7 +77134,7 @@ function renderGraphPanel(container) {
 }
 
 // =========================================================
-// ГРАФ ЯЗЫКОВЫХ СЕМЕЙ
+// LANGUAGE FAMILIES GRAPH
 // =========================================================
 function getFamiliesGraphLayoutSync(strongOnly, W, H) {
   const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
@@ -78028,7 +78449,10 @@ function renderLecturePagePanel(container) {
 function renderFurtherReadingPanel(container) {
   const sections = APP_DATA.further_reading || [];
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1000px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Что почитать ещё</h2>';
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">';
+  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0;">Что почитать ещё</h2>';
+  html += '<button id="export-further-bib" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Экспорт BibTeX (.bib)</button>';
+  html += '</div>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Небольшой школьный навигатор по научно-популярным и базовым лингвистическим книгам.</div>';
   html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">';
   for (const sec of sections) {
@@ -78044,6 +78468,15 @@ function renderFurtherReadingPanel(container) {
   }
   html += '</div></div></div>';
   container.innerHTML = html;
+  const exportFurtherBibBtn = container.querySelector('#export-further-bib');
+  if (exportFurtherBibBtn) {
+    exportFurtherBibBtn.onclick = () => {
+      const entries = collectFurtherReadingBibEntries();
+      if (!entries.length) return;
+      downloadBibtexFile('further-reading.bib', entries);
+      announceUiMessage('BibTeX exported');
+    };
+  }
 }
 
 const GLOSSARY_TOKEN_STOPWORDS = new Set([
@@ -78183,6 +78616,346 @@ function findRelatedGlossaryTerms(head, limit = 5) {
     if (out.length >= limit) break;
   }
   return out;
+}
+
+function findSnippetMatch(snippet, query) {
+  const text = String(snippet || '');
+  const q = String(query || '').trim();
+  if (!text || !q) return null;
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  try {
+    const re = new RegExp(escaped, 'i');
+    const m = re.exec(text);
+    if (m && Number.isInteger(m.index)) {
+      return { index: m.index, len: String(m[0] || '').length || q.length };
+    }
+  } catch (e) {}
+  const textFold = text.toLowerCase().replace(/ё/g, 'е');
+  const qFold = q.toLowerCase().replace(/ё/g, 'е');
+  const idx = textFold.indexOf(qFold);
+  if (idx >= 0) return { index: idx, len: qFold.length };
+  return null;
+}
+
+function buildKwicContextRow(opts) {
+  const page = parseInt(String(opts.page || ''), 10);
+  if (!Number.isFinite(page) || page < 1) return null;
+  const snippet = String(opts.snippet || '').replace(/\s+/g, ' ').trim();
+  if (!snippet) return null;
+  let hit = findSnippetMatch(snippet, opts.query || '');
+  if (!hit) {
+    const hints = Array.isArray(opts.matchHints)
+      ? opts.matchHints
+      : [opts.matchHint];
+    for (const hint of hints) {
+      hit = findSnippetMatch(snippet, hint || '');
+      if (hit) break;
+    }
+  }
+  if (!hit && opts.allowLeadingFallback) {
+    const m = /[A-Za-zА-Яа-яЁё0-9-]{2,}/.exec(snippet);
+    if (m && Number.isInteger(m.index)) {
+      hit = { index: m.index, len: String(m[0] || '').length || 2 };
+    }
+  }
+  if (!hit) return null;
+  const idx = Math.max(0, hit.index);
+  const len = Math.max(1, hit.len || 1);
+  const leftStart = Math.max(0, idx - 64);
+  const rightEnd = Math.min(snippet.length, idx + len + 64);
+  const leftText = snippet.slice(leftStart, idx);
+  const keyText = snippet.slice(idx, idx + len);
+  const rightText = snippet.slice(idx + len, rightEnd);
+  return {
+    source: String(opts.source || 'lexicon'),
+    term: String(opts.term || ''),
+    itemType: String(opts.itemType || 'lexicon'),
+    itemHead: String(opts.itemHead || ''),
+    page,
+    leftPrefix: leftStart > 0 ? '…' : '',
+    leftText,
+    keyText,
+    rightText,
+    rightSuffix: rightEnd < snippet.length ? '…' : '',
+    sortLeft: normalizeHeadForMatch(leftText.slice(-40)),
+    sortRight: normalizeHeadForMatch(rightText.slice(0, 40)),
+  };
+}
+
+function iterateKwicContextEntries(contexts, pageStart, pageEnd) {
+  const safe = contexts && typeof contexts === 'object' && !Array.isArray(contexts) ? contexts : {};
+  const entries = [];
+  for (const [pageRaw, snippets] of Object.entries(safe)) {
+    const page = parseInt(String(pageRaw || ''), 10);
+    if (!Number.isFinite(page) || page < pageStart || page > pageEnd) continue;
+    if (!Array.isArray(snippets)) continue;
+    const normalizedSnippets = [];
+    for (const raw of snippets) {
+      const snippet = normalizeContextSnippet(raw);
+      if (!snippet) continue;
+      normalizedSnippets.push(snippet);
+      if (normalizedSnippets.length >= KWIC_MAX_SNIPPETS_PER_PAGE) break;
+    }
+    if (!normalizedSnippets.length) continue;
+    entries.push({ page, snippets: normalizedSnippets });
+  }
+  return entries;
+}
+
+function collectLexiconKwicRows(query, pageStart, pageEnd) {
+  const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH);
+  const qNorm = normalizeHeadForMatch(q);
+  if (qNorm.length < 2) return [];
+  const rows = [];
+  rows._truncated = false;
+  const items = Array.isArray(APP_DATA?.lexicon) ? APP_DATA.lexicon : [];
+  for (const it of items) {
+    const head = String(it?.head || '').trim();
+    if (!head) continue;
+    const contextEntries = iterateKwicContextEntries(it && it.contexts, pageStart, pageEnd);
+    for (const entry of contextEntries) {
+      const page = entry.page;
+      const snippets = entry.snippets;
+      for (const raw of snippets) {
+        const row = buildKwicContextRow({
+          source: 'lexicon',
+          term: head,
+          itemType: 'lexicon',
+          itemHead: head,
+          page,
+          snippet: raw,
+          query: q,
+          matchHint: head,
+        });
+        if (row) rows.push(row);
+        if (rows.length >= KWIC_MAX_ROWS) {
+          rows._truncated = true;
+          return rows;
+        }
+      }
+    }
+  }
+  return rows;
+}
+
+function collectGlossaryKwicRows(query, pageStart, pageEnd) {
+  const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH);
+  const qNorm = normalizeHeadForMatch(q);
+  if (qNorm.length < 2) return [];
+  const rows = [];
+  rows._truncated = false;
+  const seen = new Set();
+  const glossary = Array.isArray(APP_DATA?.glossary) ? APP_DATA.glossary : [];
+  const lexItems = Array.isArray(APP_DATA?.lexicon) ? APP_DATA.lexicon : [];
+  for (const g of glossary) {
+    const term = String(g?.term || '').trim();
+    const definition = String(g?.definition || '').trim();
+    const termNorm = normalizeHeadForMatch(term);
+    const defNorm = normalizeHeadForMatch(definition);
+    if (!termNorm) continue;
+    if (!(termNorm.includes(qNorm) || defNorm.includes(qNorm) || qNorm.includes(termNorm))) continue;
+
+    for (const item of lexItems) {
+      const itemHead = String(item?.head || '').trim();
+      if (!itemHead) continue;
+      const contextEntries = iterateKwicContextEntries(item && item.contexts, pageStart, pageEnd);
+      for (const entry of contextEntries) {
+        const page = entry.page;
+        const snippets = entry.snippets;
+        for (const raw of snippets) {
+          const row = buildKwicContextRow({
+            source: 'glossary',
+            term,
+            itemType: 'lexicon',
+            itemHead,
+            page,
+            snippet: raw,
+            query: q,
+            matchHints: [term],
+          });
+          if (!row) continue;
+          const key = `${row.term}|${row.itemType}|${row.itemHead}|${row.page}|${row.leftText}|${row.keyText}|${row.rightText}`;
+          if (seen.has(key)) continue;
+          seen.add(key);
+          rows.push(row);
+          if (rows.length >= KWIC_MAX_ROWS) {
+            rows._truncated = true;
+            return rows;
+          }
+        }
+      }
+    }
+  }
+  return rows;
+}
+
+function sortKwicRows(rows, mode) {
+  const sortMode = normalizeKwicSort(mode);
+  rows.sort((a, b) => {
+    if (sortMode === 'page') {
+      return (a.page - b.page) || compareHeadsRu(a.itemHead, b.itemHead);
+    }
+    if (sortMode === 'right') {
+      return compareHeadsRu(a.sortRight, b.sortRight) ||
+        compareHeadsRu(a.sortLeft, b.sortLeft) ||
+        (a.page - b.page) ||
+        compareHeadsRu(a.itemHead, b.itemHead);
+    }
+    return compareHeadsRu(a.sortLeft, b.sortLeft) ||
+      compareHeadsRu(a.sortRight, b.sortRight) ||
+      (a.page - b.page) ||
+      compareHeadsRu(a.itemHead, b.itemHead);
+  });
+}
+
+function renderKwicPanel(container) {
+  const totalPages = getTotalBookPages();
+  currentKwicSource = normalizeKwicSource(currentKwicSource);
+  currentKwicSort = normalizeKwicSort(currentKwicSort);
+  currentKwicQuery = clampUiInput(currentKwicQuery, MAX_LIST_QUERY_LENGTH);
+  currentKwicPageStart = clampPageInBook(currentKwicPageStart);
+  currentKwicPageEnd = clampPageInBook(currentKwicPageEnd);
+  if (currentKwicPageStart > currentKwicPageEnd) {
+    const a = currentKwicPageStart;
+    currentKwicPageStart = currentKwicPageEnd;
+    currentKwicPageEnd = a;
+  }
+
+  container.innerHTML = `<div class="panel active" style="overflow-y:auto;height:100%;">
+    <div style="padding:16px 22px;max-width:1200px;margin:0 auto;">
+      <h2 style="font-size:20px;color:var(--title);font-weight:normal;margin:0 0 4px 0;">KWIC-конкорданс</h2>
+      <div style="font-size:12px;color:var(--muted);font-style:italic;margin-bottom:12px;">
+        Key Word In Context: показывает ключевое слово в его ближайшем окружении.
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 190px 190px 150px 140px 140px;gap:8px;align-items:end;margin-bottom:10px;">
+        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+          Запрос
+          <input id="kwic-query" type="text" value="${escapeHtml(currentKwicQuery)}" placeholder="например: энклитика" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+          Источник
+          <select id="kwic-source" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+            <option value="lexicon"${currentKwicSource === 'lexicon' ? ' selected' : ''}>Лексика</option>
+            <option value="glossary"${currentKwicSource === 'glossary' ? ' selected' : ''}>Глоссарий</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+          Сортировка
+          <select id="kwic-sort" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+            <option value="left"${currentKwicSort === 'left' ? ' selected' : ''}>по левому контексту</option>
+            <option value="right"${currentKwicSort === 'right' ? ' selected' : ''}>по правому контексту</option>
+            <option value="page"${currentKwicSort === 'page' ? ' selected' : ''}>по странице</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+          Стр. от
+          <input id="kwic-page-start" type="number" min="1" max="${totalPages}" value="${currentKwicPageStart}" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+          Стр. до
+          <input id="kwic-page-end" type="number" min="1" max="${totalPages}" value="${currentKwicPageEnd}" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+        </label>
+        <button id="kwic-run" type="button" style="height:34px;padding:0 12px;border:1px solid var(--line);border-radius:4px;background:var(--surface-soft);color:var(--title);cursor:pointer;font-family:inherit;">Показать</button>
+      </div>
+      <div id="kwic-meta" style="font-size:12px;color:var(--muted);margin:6px 0 10px 0;"></div>
+      <div id="kwic-results" style="display:grid;gap:8px;"></div>
+    </div>
+  </div>`;
+
+  const queryInput = container.querySelector('#kwic-query');
+  const sourceInput = container.querySelector('#kwic-source');
+  const sortInput = container.querySelector('#kwic-sort');
+  const startInput = container.querySelector('#kwic-page-start');
+  const endInput = container.querySelector('#kwic-page-end');
+  const runBtn = container.querySelector('#kwic-run');
+  const metaEl = container.querySelector('#kwic-meta');
+  const resultsEl = container.querySelector('#kwic-results');
+  let renderTimer = null;
+
+  const renderRows = () => {
+    currentKwicSource = normalizeKwicSource(sourceInput.value);
+    currentKwicSort = normalizeKwicSort(sortInput.value);
+    currentKwicQuery = clampUiInput(queryInput.value, MAX_LIST_QUERY_LENGTH);
+    queryInput.value = currentKwicQuery;
+    currentKwicPageStart = clampPageInBook(startInput.value);
+    currentKwicPageEnd = clampPageInBook(endInput.value);
+    if (currentKwicPageStart > currentKwicPageEnd) {
+      const a = currentKwicPageStart;
+      currentKwicPageStart = currentKwicPageEnd;
+      currentKwicPageEnd = a;
+    }
+    startInput.value = String(currentKwicPageStart);
+    endInput.value = String(currentKwicPageEnd);
+
+    const qNorm = normalizeHeadForMatch(currentKwicQuery);
+    if (qNorm.length < 2) {
+      metaEl.textContent = 'Введите минимум 2 символа для KWIC-поиска.';
+      resultsEl.innerHTML = '<div style="padding:10px 12px;border:1px dashed var(--line);border-radius:6px;background:var(--surface);color:var(--muted);">Например: «энклитика», «санскрит», «закон».</div>';
+      persistViewState();
+      return;
+    }
+
+    const rows = currentKwicSource === 'glossary'
+      ? collectGlossaryKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd)
+      : collectLexiconKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd);
+    sortKwicRows(rows, currentKwicSort);
+    const kwicTruncated = rows && rows._truncated === true;
+
+    if (!rows.length) {
+      metaEl.textContent = `Совпадений не найдено: ${currentKwicSource === 'glossary' ? 'глоссарий' : 'лексика'}, стр. ${currentKwicPageStart}-${currentKwicPageEnd}.`;
+      resultsEl.innerHTML = '<div style="padding:10px 12px;border:1px dashed var(--line);border-radius:6px;background:var(--surface);color:var(--muted);">Попробуйте расширить диапазон страниц или изменить запрос.</div>';
+      persistViewState();
+      return;
+    }
+
+    const terms = new Set(rows.map(r => r.term));
+    const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : '';
+    metaEl.textContent = `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${currentKwicSource === 'glossary' ? 'глоссарий' : 'лексика'}.${truncText}`;
+    resultsEl.innerHTML = rows.map(r => `
+      <div class="kwic-row" style="background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px;">
+          <button type="button" class="kwic-open-card" data-type="${escapeHtml(r.itemType)}" data-head="${escapeHtml(r.itemHead)}" style="padding:2px 8px;border:1px solid var(--line);background:var(--surface-soft);border-radius:999px;cursor:pointer;color:var(--title);font-size:11px;font-family:inherit;">${escapeHtml(r.itemHead)}</button>
+          ${r.source === 'glossary' ? `<button type="button" class="kwic-open-glossary" data-term="${escapeHtml(r.term)}" style="padding:2px 8px;border:1px solid var(--line);background:var(--surface-soft);border-radius:999px;cursor:pointer;color:var(--title);font-size:11px;font-family:inherit;">термин: ${escapeHtml(r.term)}</button>` : ''}
+          <span style="font-size:11px;color:var(--muted);">стр. ${r.page}</span>
+        </div>
+        <div style="font-size:13px;line-height:1.55;color:var(--text);word-break:break-word;">
+          <span style="color:var(--muted);">${escapeHtml(r.leftPrefix + r.leftText)}</span><mark style="background:#ffe2a8;color:#4a2e12;padding:0 2px;border-radius:2px;">${escapeHtml(r.keyText)}</mark><span>${escapeHtml(r.rightText + r.rightSuffix)}</span>
+        </div>
+      </div>
+    `).join('');
+
+    resultsEl.querySelectorAll('.kwic-open-card').forEach(btn => {
+      bindActionWithKeyboard(btn, () => {
+        navigateToItem(btn.dataset.type || 'lexicon', btn.dataset.head || '');
+      });
+    });
+    resultsEl.querySelectorAll('.kwic-open-glossary').forEach(btn => {
+      bindActionWithKeyboard(btn, () => {
+        openGlossaryTerm(btn.dataset.term || '');
+      });
+    });
+
+    persistViewState();
+  };
+
+  const scheduleRender = () => {
+    if (renderTimer) clearTimeout(renderTimer);
+    renderTimer = setTimeout(renderRows, 120);
+  };
+
+  queryInput.oninput = scheduleRender;
+  queryInput.onkeydown = (e) => {
+    if (e.key === 'Enter') {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      renderRows();
+    }
+  };
+  sourceInput.onchange = renderRows;
+  sortInput.onchange = renderRows;
+  startInput.onchange = renderRows;
+  endInput.onchange = renderRows;
+  runBtn.onclick = renderRows;
+  renderRows();
 }
 
 function renderGlossaryPanel(container) {
@@ -78869,6 +79642,7 @@ function renderScholarPanel(container) {
   // 1. Библиография
   html += '<h3 id="sch-biblio" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;">1. Библиография работ Зализняка по темам лекций</h3>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Каждая лекция в книге — выжимка из академических работ Зализняка. Здесь — ключевые публикации, где темы изложены подробнее. PDF-подборка: <a href="https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;">страница ИСл РАН ↗</a>.</div>';
+  html += '<div style="display:flex;justify-content:flex-end;margin:-4px 0 10px 0;"><button id="export-scholar-biblio-bib" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Экспорт BibTeX (.bib)</button></div>';
   for (const lec of (s.bibliography || [])) {
     html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;margin-bottom:8px;">
       <div style="font-weight:bold;color:#5a3818;font-size:13px;margin-bottom:6px;">Лекция «${escapeHtml(lec.lecture)}»</div>`;
@@ -79175,6 +79949,15 @@ function renderScholarPanel(container) {
   container.innerHTML = html;
 
   // Привязки кликов на имена
+  const exportScholarBiblioBibBtn = container.querySelector('#export-scholar-biblio-bib');
+  if (exportScholarBiblioBibBtn) {
+    exportScholarBiblioBibBtn.onclick = () => {
+      const entries = collectScholarBibliographyBibEntries();
+      if (!entries.length) return;
+      downloadBibtexFile('scholar-bibliography.bib', entries);
+      announceUiMessage('BibTeX exported');
+    };
+  }
   bindNavigateLinks(container, '.scholar-link', 'all');
   container.querySelectorAll('.scholar-slovo-anchor[data-anchor]').forEach((link) => {
     link.onclick = (e) => {
@@ -79655,6 +80438,8 @@ function renderOfflineMap(type, items, colorFn, radiusFn) {
 // ЗАПУСК (асинхронный: сначала отрисовать каркас, потом парсить данные)
 // =========================================================
 document.getElementById('content').innerHTML = '<div style="padding:40px; text-align:center; color:#888; font-style:italic;">Загрузка указателей…</div>';
+
+registerAppServiceWorker();
 
 setTimeout(() => {
   parseAppData();

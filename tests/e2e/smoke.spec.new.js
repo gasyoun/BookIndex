@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const fs = require('node:fs/promises');
 
 test.describe('aaz-index smoke', () => {
   test('loads home and renders navigation', async ({ page }) => {
@@ -6,6 +7,34 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#home-link')).toBeVisible();
     await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(10);
     await expect(page.locator('#tabs .tab')).toHaveCount(1);
+  });
+
+  test('PWA manifest and service worker are available', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const manifestLink = page.locator('link[rel="manifest"]');
+    await expect(manifestLink).toHaveAttribute('href', /manifest\.webmanifest/);
+
+    const manifest = await page.evaluate(async () => {
+      const href = document.querySelector('link[rel="manifest"]')?.getAttribute('href');
+      if (!href) return null;
+      const res = await fetch(new URL(href, location.href).toString());
+      if (!res.ok) return null;
+      return res.json();
+    });
+    expect(manifest).toBeTruthy();
+    expect(manifest.start_url).toContain('aaz-index.html');
+    expect(Array.isArray(manifest.icons)).toBeTruthy();
+    expect(manifest.icons.length).toBeGreaterThan(0);
+
+    await expect.poll(() => page.evaluate(async () => {
+      if (!('serviceWorker' in navigator)) return '';
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (!reg) return '';
+      if (reg.active && reg.active.scriptURL) return reg.active.scriptURL;
+      if (reg.waiting && reg.waiting.scriptURL) return reg.waiting.scriptURL;
+      if (reg.installing && reg.installing.scriptURL) return reg.installing.scriptURL;
+      return '';
+    }), { timeout: 20000 }).toContain('/sw.js');
   });
 
   test('desktop header keeps title, search and back button on the same row', async ({ page }) => {
@@ -26,6 +55,129 @@ test.describe('aaz-index smoke', () => {
     expect(spread).toBeLessThan(16);
   });
 
+  test('theme toggle persists after reload', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const themeButton = page.locator('#theme-btn');
+    await expect(themeButton).toBeVisible();
+
+    const initial = await page.evaluate(() => ({
+      dark: document.body.classList.contains('theme-dark'),
+      saved: localStorage.getItem('zaliznyakiada.theme.v1'),
+    }));
+    await themeButton.click();
+
+    const expectedDark = !initial.dark;
+    const expectedSaved = expectedDark ? 'dark' : 'light';
+    await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(expectedDark);
+    await expect.poll(() => page.evaluate(() => localStorage.getItem('zaliznyakiada.theme.v1'))).toBe(expectedSaved);
+
+    await page.reload();
+    await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(expectedDark);
+    await expect.poll(() => page.evaluate(() => localStorage.getItem('zaliznyakiada.theme.v1'))).toBe(expectedSaved);
+  });
+
+  test('dark theme keeps readable contrast on key panels', async ({ page }) => {
+    const contrastFor = async (selector) => page.evaluate((sel) => {
+      const node = document.querySelector(sel);
+      if (!node) return null;
+
+      const parse = (value) => {
+        const raw = String(value || '').trim().toLowerCase();
+        if (!raw) return null;
+        if (raw === 'transparent') return { r: 0, g: 0, b: 0, a: 0 };
+
+        const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+        const parseByte = (token) => {
+          const t = String(token || '').trim();
+          if (!t) return null;
+          const n = t.endsWith('%') ? (parseFloat(t) * 255) / 100 : parseFloat(t);
+          return Number.isFinite(n) ? clamp(Math.round(n), 0, 255) : null;
+        };
+        const parseAlpha = (token) => {
+          const t = String(token || '').trim();
+          if (!t) return null;
+          const n = t.endsWith('%') ? parseFloat(t) / 100 : parseFloat(t);
+          return Number.isFinite(n) ? clamp(n, 0, 1) : null;
+        };
+
+        const rgb = raw.match(/^rgba?\((.+)\)$/i);
+        if (rgb) {
+          const tokens = rgb[1].replace(/\s*\/\s*/g, ',').split(/[\s,]+/).filter(Boolean);
+          if (tokens.length < 3) return null;
+          const r = parseByte(tokens[0]);
+          const g = parseByte(tokens[1]);
+          const b = parseByte(tokens[2]);
+          if (r == null || g == null || b == null) return null;
+          const alpha = tokens[3] == null ? 1 : parseAlpha(tokens[3]);
+          if (alpha == null) return null;
+          return { r, g, b, a: alpha };
+        }
+
+        const hex = raw.match(/^#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i);
+        if (!hex) return null;
+        const body = hex[1];
+        const expand = body.length === 3 ? body.split('').map((ch) => ch + ch).join('') : body;
+        const r = parseInt(expand.slice(0, 2), 16);
+        const g = parseInt(expand.slice(2, 4), 16);
+        const b = parseInt(expand.slice(4, 6), 16);
+        const a = expand.length === 8 ? parseInt(expand.slice(6, 8), 16) / 255 : 1;
+        return { r, g, b, a };
+      };
+      const lum = ({ r, g, b }) => {
+        const f = (x) => {
+          const v = x / 255;
+          return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+        };
+        return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+      };
+      const ratio = (fg, bg) => {
+        const l1 = lum(fg);
+        const l2 = lum(bg);
+        const top = Math.max(l1, l2);
+        const bottom = Math.min(l1, l2);
+        return (top + 0.05) / (bottom + 0.05);
+      };
+      const background = (el) => {
+        let cur = el;
+        while (cur) {
+          const color = parse(getComputedStyle(cur).backgroundColor);
+          if (color && color.a > 0.01) return color;
+          cur = cur.parentElement;
+        }
+        return { r: 28, g: 27, b: 24, a: 1 };
+      };
+
+      const fg = parse(getComputedStyle(node).color);
+      if (!fg) return null;
+      const bg = background(node);
+      return ratio(fg, bg);
+    }, selector);
+
+    await page.goto('/aaz-index.html#home/home');
+    await page.locator('#theme-btn').click();
+    await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(true);
+
+    await page.goto('/aaz-index.html#names/list');
+    await expect(page.locator('#name-list .name-item').first()).toBeVisible();
+    await page.locator('#name-list .name-item').first().click();
+    await expect(page.locator('#right-content .card h2')).toBeVisible();
+    expect(await contrastFor('#name-list .name-item')).toBeGreaterThan(3);
+    expect(await contrastFor('#right-content .card h2')).toBeGreaterThan(4);
+
+    await page.goto('/aaz-index.html#scholar/scholar');
+    await expect(page.locator('#corr-family-filter')).toBeVisible();
+    await expect(page.locator('.corr-row').first()).toBeVisible();
+    expect(await contrastFor('.corr-row td')).toBeGreaterThan(3);
+
+    await page.goto('/aaz-index.html#names/graph');
+    await expect(page.locator('.graph-container .chart-intro')).toBeVisible();
+    expect(await contrastFor('.graph-container .chart-intro')).toBeGreaterThan(3);
+
+    await page.goto('/aaz-index.html#toponyms/map');
+    await expect(page.locator('.map-container .chart-intro')).toBeVisible();
+    expect(await contrastFor('.map-container .chart-intro')).toBeGreaterThan(3);
+  });
+
   test('opens name card from list', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await page.locator('.entity-btn[data-entity="names"]').click();
@@ -38,6 +190,43 @@ test.describe('aaz-index smoke', () => {
     await page.locator('#right-content button#copy-card-link').click();
     await expect(page.locator('#ui-live-status')).toHaveCount(1);
     await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
+  });
+
+  test('names graph supports weight filter, tooltip and navigation to card', async ({ page }) => {
+    await page.goto('/aaz-index.html#names/graph');
+    const slider = page.locator('#graph-min-weight');
+    await expect(slider).toBeVisible();
+    await expect(page.locator('#graph-min-weight-value')).toBeVisible();
+
+    await expect
+      .poll(() => page.locator('svg .name-graph-node').count(), { timeout: 20000 })
+      .toBeGreaterThan(0);
+
+    const summary = page.locator('#graph-summary');
+    await expect(summary).toBeVisible();
+    const beforeSummary = (await summary.innerText()).trim();
+
+    await page.evaluate(() => {
+      const input = document.getElementById('graph-min-weight');
+      if (!input) return;
+      const max = Number(input.max || '0');
+      const next = Math.max(0.1, Math.min(max, 2));
+      input.value = next.toFixed(1);
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    await expect(page.locator('#graph-min-weight-value')).toHaveText('2.0');
+    await expect.poll(async () => (await summary.innerText()).trim()).not.toBe(beforeSummary);
+    await expect
+      .poll(() => page.locator('svg .name-graph-node').count(), { timeout: 20000 })
+      .toBeGreaterThan(0);
+
+    const firstNode = page.locator('svg .name-graph-node').first();
+    await firstNode.hover();
+    await expect(page.locator('#graph-tooltip')).toBeVisible();
+    await firstNode.click({ force: true });
+    await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
+    await expect(page.locator('#right-content .card h2')).toBeVisible();
   });
 
   test('home KPI rows are clickable and navigate to target sections', async ({ page }) => {
@@ -88,9 +277,9 @@ test.describe('aaz-index smoke', () => {
     const input = page.locator('#global-search');
     await input.fill('iv');
     const results = page.locator('#global-search-results.open .header-search-item');
-    await input.press('ArrowDown');
     await expect(results.first()).toBeVisible();
-    await expect(results.first()).toHaveClass(/active/);
+    await input.press('ArrowDown');
+    await expect.poll(() => input.getAttribute('aria-activedescendant')).toMatch(/global-search-item-/);
     await expect(input).toHaveAttribute('aria-expanded', 'true');
     await expect(input).toHaveAttribute('aria-activedescendant', /global-search-item-/);
     await input.press('Enter');
@@ -154,6 +343,77 @@ test.describe('aaz-index smoke', () => {
     expect(String(href1)).toContain('?s=');
     expect(String(href2)).toContain('?s=');
     expect(href1).not.toBe(href2);
+  });
+
+  test('materials KWIC panel filters contexts and supports navigation actions', async ({ page }) => {
+    await page.goto('/aaz-index.html#materials/kwic');
+    await expect(page.locator('#kwic-query')).toBeVisible();
+    await expect(page.locator('#kwic-source')).toBeVisible();
+    await expect(page.locator('#kwic-sort')).toBeVisible();
+
+    const lexSeed = await page.evaluate(() => {
+      const maxPage = typeof getTotalBookPages === 'function' ? getTotalBookPages() : 404;
+      const items = Array.isArray(APP_DATA?.lexicon) ? APP_DATA.lexicon : [];
+      for (const it of items) {
+        const contexts = it && typeof it.contexts === 'object' ? it.contexts : {};
+        for (const snippets of Object.values(contexts)) {
+          if (!Array.isArray(snippets)) continue;
+          for (const raw of snippets) {
+            const text = String(raw || '').replace(/\s+/g, ' ').trim();
+            if (!text) continue;
+            const words = text
+              .split(/[^A-Za-zА-Яа-яЁё0-9-]+/)
+              .map((x) => x.trim())
+              .filter((x) => x.length >= 4);
+            for (const word of words) {
+              const rows = typeof collectLexiconKwicRows === 'function'
+                ? collectLexiconKwicRows(word, 1, maxPage)
+                : [];
+              if (rows.length) return word;
+            }
+          }
+        }
+      }
+      return 'санск';
+    });
+
+    await page.locator('#kwic-source').selectOption('lexicon');
+    await page.locator('#kwic-sort').selectOption('right');
+    await page.locator('#kwic-page-start').fill('1');
+    await page.locator('#kwic-page-end').fill('404');
+    await page.locator('#kwic-query').fill(lexSeed);
+    await page.locator('#kwic-run').click();
+
+    const firstLexRow = page.locator('#kwic-results .kwic-row').first();
+    await expect(firstLexRow).toBeVisible();
+    await firstLexRow.locator('.kwic-open-card').first().click();
+    await expect(page).toHaveURL(/#(?:v4\/)?lexicon\/list\/item\/lexicon\//);
+    await expect(page.locator('#right-content .card h2')).toBeVisible();
+
+    await page.goto('/aaz-index.html#materials/kwic');
+    const glossarySeed = await page.evaluate(() => {
+      const maxPage = typeof getTotalBookPages === 'function' ? getTotalBookPages() : 404;
+      const glossary = Array.isArray(APP_DATA?.glossary) ? APP_DATA.glossary : [];
+      for (const g of glossary) {
+        const term = String(g?.term || '').trim();
+        if (!term) continue;
+        const seed = term.slice(0, Math.min(term.length, 7));
+        const rows = typeof collectGlossaryKwicRows === 'function'
+          ? collectGlossaryKwicRows(seed, 1, maxPage)
+          : [];
+        if (rows.length) return seed;
+      }
+      return 'энклит';
+    });
+
+    await page.locator('#kwic-source').selectOption('glossary');
+    await page.locator('#kwic-query').fill(glossarySeed);
+    await page.locator('#kwic-run').click();
+    const firstGlossaryRow = page.locator('#kwic-results .kwic-row').first();
+    await expect(firstGlossaryRow).toBeVisible();
+    await firstGlossaryRow.locator('.kwic-open-glossary').first().click();
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/glossary\/term\//);
+    await expect(page.locator('#glossary-search')).toBeVisible();
   });
 
   test('list hash query restores list search input', async ({ page }) => {
@@ -300,6 +560,49 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#content a[href*="inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"]').first()).toBeVisible();
   });
 
+  test('BibTeX export works for scholar bibliography, further reading and card source', async ({ page }) => {
+    const readBib = async (download) => {
+      const filePath = await download.path();
+      expect(filePath).toBeTruthy();
+      return fs.readFile(filePath, 'utf-8');
+    };
+
+    await page.goto('/aaz-index.html#scholar/scholar');
+    const scholarBtn = page.locator('#export-scholar-biblio-bib');
+    await expect(scholarBtn).toBeVisible();
+    const scholarDownloadPromise = page.waitForEvent('download');
+    await scholarBtn.click();
+    const scholarDownload = await scholarDownloadPromise;
+    expect(scholarDownload.suggestedFilename()).toBe('scholar-bibliography.bib');
+    const scholarBib = await readBib(scholarDownload);
+    expect(scholarBib).toContain('@misc{');
+    expect(scholarBib).toContain('author = {');
+    expect(scholarBib).toContain('title = {');
+    expect(scholarBib).toContain('year = {');
+
+    await page.goto('/aaz-index.html#materials/further_reading');
+    const furtherBtn = page.locator('#export-further-bib');
+    await expect(furtherBtn).toBeVisible();
+    const furtherDownloadPromise = page.waitForEvent('download');
+    await furtherBtn.click();
+    const furtherDownload = await furtherDownloadPromise;
+    expect(furtherDownload.suggestedFilename()).toBe('further-reading.bib');
+    const furtherBib = await readBib(furtherDownload);
+    expect(furtherBib).toContain('@misc{');
+    expect(furtherBib).toContain('keywords = {bookindex,further_reading}');
+
+    await page.goto('/aaz-index.html#names/list');
+    await expect(page.locator('#name-list .name-item').first()).toBeVisible();
+    await page.locator('#name-list .name-item').first().click();
+    const sourceBtn = page.locator('.source-export-bib').first();
+    await expect(sourceBtn).toBeVisible();
+    const sourceDownloadPromise = page.waitForEvent('download');
+    await sourceBtn.click();
+    const sourceDownload = await sourceDownloadPromise;
+    expect(sourceDownload.suggestedFilename()).toContain('.bib');
+    const sourceBib = await readBib(sourceDownload);
+    expect(sourceBib).toContain('howpublished = {BookIndex card source}');
+  });
   test('reading-now pager and quick trends navigation works', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#reading-page-input');
