@@ -928,6 +928,16 @@
   body.density-research .card { padding: 12px; }
   body.density-research .context-text { font-size: 12px; line-height: 1.55; }
 
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .mobile-card-sheet { transition: none !important; }
+  }
+
   @media (max-width: 900px) {
     .density-select { font-size: 11px; padding: 4px 7px; }
   }

@@ -116,6 +116,8 @@ def check_static_guards():
         'rows._truncated = false;',
         'rows._truncated = true;',
         'const kwicTruncated = rows && rows._truncated === true;',
+        'function prefersReducedMotion() {',
+        "window.matchMedia('(prefers-reduced-motion: reduce)'",
     ]
 
     for needle in banned:
@@ -134,6 +136,7 @@ def check_static_guards():
         'integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="',
         'rel="manifest"',
         './vendor/d3.v7.min.js',
+        '@media (prefers-reduced-motion: reduce) {',
     ]
     for needle in template_required:
         if needle not in tpl:
