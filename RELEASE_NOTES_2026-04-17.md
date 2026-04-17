@@ -55,5 +55,5 @@ node scripts/profile_kwic.js
 
 ## Notes
 
-- Открыт draft PR [#48](https://github.com/gasyoun/BookIndex/pull/48) из ветки `codex/v4.1-local-finalize`.
+- Открыт PR [#48](https://github.com/gasyoun/BookIndex/pull/48) (Ready for review) из ветки `codex/v4.1-local-finalize`.
 - В `#44/#45/#46/#47` добавлены комментарии со ссылкой на PR `#48`; закрытие заведено через `Closes #...` в PR body.
