@@ -15,8 +15,9 @@
 - `v3_template.html` — HTML-шаблон с `__APP_SCRIPT__`.
 - `v3_app.js` — JS-логика приложения.
 - `app_data.json` — данные справочника.
-- `runtime_test.py` — smoke-проверка выполнения (`20/20`).
+- `runtime_test.py` — smoke-проверка выполнения (`21/21`).
 - `scripts/validate_content.py` — структурная валидация данных.
+- `scripts/content_report.py` — сводный отчёт по покрытию контента (pages/contexts/sources/duplicates).
 - `scripts/check_encoding.py` — проверка UTF-8 и анти-mojibake контроль.
 - `scripts/build_aaz_index.py` — сборка итогового `aaz-index.html`.
 - `scripts/migrate_app_data.py` — миграция `app_data.json` к актуальной схеме.
@@ -29,6 +30,7 @@
 node --check v3_app.js
 python scripts/check_encoding.py
 python scripts/validate_content.py app_data.json
+python scripts/content_report.py
 python runtime_test.py
 python scripts/build_aaz_index.py
 npx playwright test
@@ -36,7 +38,16 @@ npx playwright test
 
 Ожидается:
 - валидация данных без ошибок;
-- `runtime_test.py` -> `20/20`.
+- `runtime_test.py` -> `21/21`.
+
+## Контент-аудит (метрики)
+
+Быстрый свод по качеству и покрытию `app_data.json`:
+
+```bash
+python scripts/content_report.py
+python scripts/content_report.py --format json
+```
 
 ## CI (GitHub Actions)
 
