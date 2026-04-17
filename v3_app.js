@@ -838,6 +838,15 @@ function initTheme() {
   applyTheme('light');
 }
 
+function prefersReducedMotion() {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false;
+  try {
+    return !!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) {
+    return false;
+  }
+}
+
 function toggleTheme() {
   applyTheme(bodyHasDarkTheme() ? 'light' : 'dark');
 }
@@ -6979,7 +6988,10 @@ function renderScholarPanel(container) {
       syncNavigationState();
       const target = container.querySelector(`#${anchorId}`);
       if (target && typeof target.scrollIntoView === 'function') {
-        target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        const opts = prefersReducedMotion()
+          ? { block: 'start' }
+          : { block: 'start', behavior: 'smooth' };
+        target.scrollIntoView(opts);
       }
     };
   });
