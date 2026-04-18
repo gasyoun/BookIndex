@@ -192,13 +192,57 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
   });
 
-  test('breadcrumbs stay hidden for entity/tab pages and visible for deep card state', async ({ page }) => {
-    await page.goto('/aaz-index.html#v4/subject/histogram');
-    await expect(page.locator('#breadcrumbs')).toBeHidden();
+  test('breadcrumbs render route hierarchy with live links', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/home/home');
+    const nav = page.locator('#breadcrumb-nav');
+    await expect(nav).toContainText(/\u0413\u043b\u0430\u0432\u043d\u0430\u044f/i);
+    await expect(nav.locator('a')).toHaveCount(0);
 
+    await page.goto('/aaz-index.html#v4/names/list');
+    await expect(nav.locator('a').first()).toContainText(/\u0413\u043b\u0430\u0432\u043d\u0430\u044f/i);
+    await expect(nav.locator('.breadcrumb-current')).toContainText(/\u0418\u043c\u0435\u043d\u0430/i);
+
+    await page.goto('/aaz-index.html#v4/materials/kwic');
+    await expect(nav).toContainText(/\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b/i);
+    await expect(nav.locator('.breadcrumb-current')).toContainText(/KWIC/);
+
+    await page.goto('/aaz-index.html#v4/names/list/item/names/' + encodeURIComponent('\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440 \u041c\u0430\u043a\u0435\u0434\u043e\u043d\u0441\u043a\u0438\u0439'));
+    await expect(nav.locator('a')).toHaveCount(2);
+    await expect(nav.locator('.breadcrumb-current')).toContainText(/\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440/i);
+  });
+
+  test('context autolink renders clickable entity references', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/names/list/item/names/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%20%D0%9C%D0%B0%D0%BA%D0%B5%D0%B4%D0%BE%D0%BD%D1%81%D0%BA%D0%B8%D0%B9');
-    await expect(page.locator('#breadcrumbs')).toBeVisible();
-    await expect(page.locator('#breadcrumbs .breadcrumb-link')).toHaveCount(3);
+    const link = page.locator('#right-content .context-text .ctx-link').first();
+    await expect(link).toBeVisible();
+    const prevUrl = page.url();
+    await link.click();
+    await expect(page).not.toHaveURL(prevUrl);
+    await expect(page).toHaveURL(/#v4\/(names|toponyms|ethnonyms|languages)\//);
+  });
+
+  test('subject_index item shows crosslinks to lexicon or names or languages', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/subject/list');
+    const badge = page.locator('#name-list .crosslink-badge').first();
+    await expect(badge).toBeVisible();
+    await badge.click();
+    await expect(page).toHaveURL(/#v4\/(lexicon|names|languages)\//);
+  });
+
+  test('name card shows bidirectional relations', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/names/list/item/names/' + encodeURIComponent('\u0413\u0440\u0438\u043c\u043c \u042f.'));
+    const chips = page.locator('#right-content .relation-chip');
+    await expect(chips.first()).toBeVisible();
+    await expect.poll(async () => chips.count()).toBeGreaterThan(0);
+  });
+
+  test('lexicon card KWIC jump navigates and filters', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/lexicon/list/item/lexicon/' + encodeURIComponent('\u0430'));
+    const jumpBtn = page.locator('#right-content .kwic-jump-btn').first();
+    await expect(jumpBtn).toBeVisible();
+    await jumpBtn.click();
+    await expect(page).toHaveURL(/#v4\/materials\/kwic/);
+    await expect(page.locator('#kwic-query')).toHaveValue('\u0430');
   });
 
   test('name card keeps source confirmed in header row and avoids duplicate wikipedia quote', async ({ page }) => {

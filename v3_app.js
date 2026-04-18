@@ -554,6 +554,7 @@ let currentKwicQuery = '';
 let currentKwicSort = 'left';
 let currentKwicPageStart = 1;
 let currentKwicPageEnd = 404;
+let pendingKwicTerm = '';
 const UI_STATE_STORAGE_KEY = 'zaliznyakiada.ui.v1';
 const UI_STATE_SCHEMA_VERSION = 2;
 const THEME_STORAGE_KEY = 'zaliznyakiada.theme.v1';
@@ -597,6 +598,9 @@ let familiesGraphWorkerRequestId = 0;
 let familiesGraphRenderToken = 0;
 let familiesGraphLayoutPromiseCache = new Map();
 let workersLifecycleWired = false;
+let contextEntityLinkEntriesCache = null;
+let subjectCrosslinksLookupCache = null;
+let reverseEdgesCache = null;
 const CYRILLIC_TO_LATIN_MAP = Object.freeze({
   '\u0430': 'a',    // а
   '\u0431': 'b',    // б
@@ -866,6 +870,125 @@ function renderAccentSafeInHtmlTextNodes(html) {
   return String(html || '').replace(/(^|>)([^<>]+)(?=<|$)/g, (match, prefix, textPart) => {
     return `${prefix}${wrapAccentSafeInEscapedText(textPart)}`;
   });
+}
+
+function escapeRegexLiteral(s) {
+  return String(s || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getContextEntityLinkEntries() {
+  if (Array.isArray(contextEntityLinkEntriesCache) && contextEntityLinkEntriesCache.length) {
+    return contextEntityLinkEntriesCache;
+  }
+  const out = [];
+  const seen = new Set();
+  const sources = [
+    ['names', 'names'],
+    ['toponyms', 'toponyms'],
+    ['ethnonyms', 'ethnonyms'],
+    ['languages', 'languages'],
+  ];
+  for (const [dataKey, entityType] of sources) {
+    const list = Array.isArray(APP_DATA && APP_DATA[dataKey]) ? APP_DATA[dataKey] : [];
+    for (const it of list) {
+      const head = String(it && it.head ? it.head : '').trim();
+      if (!head) continue;
+      const norm = normalizeHeadForMatch(head);
+      if (!norm) continue;
+      const uniq = `${entityType}::${norm}`;
+      if (seen.has(uniq)) continue;
+      seen.add(uniq);
+      out.push({
+        type: entityType,
+        head,
+        norm,
+        length: head.length,
+      });
+    }
+  }
+  out.sort((a, b) => (b.length - a.length) || compareHeadsRu(a.head, b.head));
+  contextEntityLinkEntriesCache = out;
+  return out;
+}
+
+function isContextLinkWordChar(ch) {
+  return /[A-Za-zА-Яа-яЁё0-9]/.test(String(ch || ''));
+}
+
+function hasContextLinkBoundaries(text, start, end) {
+  const prev = start > 0 ? text[start - 1] : '';
+  const next = end < text.length ? text[end] : '';
+  if (prev && isContextLinkWordChar(prev)) return false;
+  if (next && isContextLinkWordChar(next)) return false;
+  return true;
+}
+
+function autoLinkEntitiesPlain(rawText, currentHeadNorm) {
+  const text = String(rawText || '');
+  if (!text) return '';
+  const entries = getContextEntityLinkEntries();
+  if (!entries.length) return renderAccentSafe(text);
+  const occupied = new Array(text.length).fill(false);
+  const matches = [];
+  for (const entry of entries) {
+    if (currentHeadNorm && entry.norm === currentHeadNorm) continue;
+    let re = null;
+    try {
+      re = new RegExp(escapeRegexLiteral(entry.head), 'giu');
+    } catch (e) {
+      continue;
+    }
+    let m = null;
+    while ((m = re.exec(text)) !== null) {
+      const value = String(m[0] || '');
+      if (!value) break;
+      const start = m.index;
+      const end = start + value.length;
+      if (start < 0 || end <= start || end > text.length) continue;
+      if (!hasContextLinkBoundaries(text, start, end)) continue;
+      let overlap = false;
+      for (let i = start; i < end; i++) {
+        if (occupied[i]) {
+          overlap = true;
+          break;
+        }
+      }
+      if (overlap) continue;
+      for (let i = start; i < end; i++) occupied[i] = true;
+      matches.push({ start, end, value, entry });
+    }
+  }
+  if (!matches.length) return renderAccentSafe(text);
+  matches.sort((a, b) => a.start - b.start);
+  let html = '';
+  let cursor = 0;
+  for (const hit of matches) {
+    if (hit.start > cursor) html += renderAccentSafe(text.slice(cursor, hit.start));
+    const href = buildItemHash(hit.entry.type, hit.entry.head);
+    html += `<a href="${escapeHtml(href)}" class="ctx-link" data-type="${escapeHtml(hit.entry.type)}" data-head="${escapeHtml(hit.entry.head)}">${renderAccentSafe(hit.value)}</a>`;
+    cursor = hit.end;
+  }
+  if (cursor < text.length) html += renderAccentSafe(text.slice(cursor));
+  return html;
+}
+
+function autoLinkEntities(text, currentHead) {
+  const raw = String(text || '');
+  if (!raw) return '';
+  const currentHeadNorm = normalizeHeadForMatch(currentHead || '');
+  const anchorTagRe = /<a\b[^>]*>[\s\S]*?<\/a>/gi;
+  let html = '';
+  let cursor = 0;
+  let m = null;
+  while ((m = anchorTagRe.exec(raw)) !== null) {
+    const start = m.index;
+    const full = String(m[0] || '');
+    if (start > cursor) html += autoLinkEntitiesPlain(raw.slice(cursor, start), currentHeadNorm);
+    html += full;
+    cursor = start + full.length;
+  }
+  if (cursor < raw.length) html += autoLinkEntitiesPlain(raw.slice(cursor), currentHeadNorm);
+  return html;
 }
 
 function highlightInContext(text, head) {
@@ -1433,80 +1556,122 @@ function openMaterialsLectures() {
   syncNavigationState();
 }
 
-function buildBreadcrumbModel() {
-  const model = [];
-  const conf = ENTITY_TYPES[currentEntity];
-  if (!conf) return model;
-
-  model.push({ action: 'entity', label: conf.title || currentEntity });
-
-  if (currentEntity === 'materials' && currentTab === 'lecture_pages') {
-    model.push({ action: 'materials_lectures', label: TAB_LABELS.lectures || 'Лекции' });
-    const lectures = Array.isArray(APP_DATA?.lectures) ? APP_DATA.lectures : [];
-    const l = lectures[currentLecture] || null;
-    const lectureLabel = currentLecture === 0 ? 'Предисловие' : `Лекция ${currentLecture}`;
-    model.push({ action: 'lecture_page', label: l ? `${lectureLabel}: ${l.name}` : lectureLabel });
-  } else if (currentTab && currentTab !== 'home') {
-    model.push({ action: 'tab', label: TAB_LABELS[currentTab] || currentTab });
-  }
-
-  if (rightPaneMode === 'card' && selectedItem) {
-    model.push({ action: 'item', label: selectedItem });
-  }
-  return model;
-}
-
-function onBreadcrumbClick(action) {
-  if (!action) return;
-  if (action === 'entity') {
-    switchEntity(currentEntity);
-    return;
-  }
-  if (action === 'materials_lectures') {
-    openMaterialsLectures();
-    return;
-  }
-  if (action === 'lecture_page') {
-    openLecturePage(currentLecture);
-    return;
-  }
-  if (action === 'tab') {
-    if (currentTab === 'list' && rightPaneMode === 'card') {
-      closeCardView();
-      return;
+function decodeBreadcrumbRouteParts(routeHash) {
+  const hash = String(routeHash || '').trim();
+  if (!hash || hash === '#') return [];
+  const rawParts = hash.replace(/^#/, '').split('/').filter(Boolean);
+  if (!rawParts.length) return [];
+  const decoded = [];
+  for (const part of rawParts) {
+    try {
+      decoded.push(decodeURIComponent(part));
+    } catch (e) {
+      decoded.push(part);
     }
-    switchTab(currentTab);
-    return;
   }
-  if (action === 'item' && selectedItem) {
-    navigateToItem(selectedItemType || currentEntity, selectedItem);
-  }
+  return decoded[0] === HASH_ROUTE_PREFIX ? decoded.slice(1) : decoded;
 }
 
-function renderBreadcrumbs() {
-  const host = document.getElementById('breadcrumbs');
+function getEntityBreadcrumbLabel(entity) {
+  const map = {
+    home: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f',
+    names: '\u0418\u043c\u0435\u043d\u0430',
+    toponyms: '\u0422\u043e\u043f\u043e\u043d\u0438\u043c\u044b',
+    ethnonyms: '\u042d\u0442\u043d\u043e\u043d\u0438\u043c\u044b',
+    languages: '\u042f\u0437\u044b\u043a\u0438',
+    lexicon: '\u041b\u0435\u043a\u0441\u0438\u043a\u0430',
+    lexicon_reverse: '\u041b\u0435\u043a\u0441\u0438\u043a\u0430 (\u043e\u0431\u0440\u0430\u0442\u043d\u0430\u044f)',
+    lexicon_tech: '\u0420\u0435\u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438\u0438',
+    subject: '\u041f\u0440\u0435\u0434\u043c\u0435\u0442\u043d\u044b\u0439 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c',
+    materials: '\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b',
+    scholar: '\u041f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b\u044c\u043d\u044b\u0439 \u0430\u043f\u043f\u0430\u0440\u0430\u0442',
+    all: '\u0421\u0432\u043e\u0434\u043d\u044b\u0439 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c',
+  };
+  if (map[entity]) return map[entity];
+  if (ENTITY_TYPES[entity] && ENTITY_TYPES[entity].title) return ENTITY_TYPES[entity].title;
+  return String(entity || '');
+}
+
+function getTabBreadcrumbLabel(entity, tab) {
+  if (!entity || !tab) return '';
+  if (entity === 'materials' && tab === 'kwic') return 'KWIC';
+  return TAB_LABELS[tab] || '';
+}
+
+function buildBreadcrumbTrail(routeHash) {
+  const parts = decodeBreadcrumbRouteParts(routeHash);
+  const entity = parts[0] || currentEntity || 'home';
+  const tab = parts[1] || (ENTITY_TYPES[entity] && ENTITY_TYPES[entity].tabs ? ENTITY_TYPES[entity].tabs[0] : 'home');
+  const trail = [];
+  const homeHash = buildCanonicalHash(['home', 'home']);
+
+  if (entity === 'home' && tab === 'home') {
+    trail.push({ label: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f' });
+    return trail;
+  }
+
+  trail.push({ label: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f', href: homeHash });
+
+  const entityHash = buildCanonicalHash([entity, entity === 'home' ? 'home' : 'list']);
+  trail.push({ label: getEntityBreadcrumbLabel(entity), href: entityHash });
+
+  if (entity === 'materials' || entity === 'scholar') {
+    const tabLabel = getTabBreadcrumbLabel(entity, tab);
+    if (tabLabel) trail.push({ label: tabLabel, href: buildCanonicalHash([entity, tab]) });
+  }
+
+  const itemPos = parts.indexOf('item');
+  if (itemPos >= 0 && parts[itemPos + 1] && parts[itemPos + 2]) {
+    const itemType = ENTITY_TYPES[parts[itemPos + 1]] ? parts[itemPos + 1] : entity;
+    const encodedHead = parts[itemPos + 2];
+    const resolvedHead = resolveItemHeadFromHash(itemType, encodedHead) || encodedHead;
+    trail.push({ label: resolvedHead });
+  }
+
+  if (trail.length > 1) {
+    trail[trail.length - 1].href = '';
+  }
+
+  return trail;
+}
+
+function renderBreadcrumb(routeHash) {
+  const host = document.getElementById('breadcrumb-nav') || document.getElementById('breadcrumbs');
   if (!host) return;
-  const model = buildBreadcrumbModel();
+  const sourceHash = String(routeHash || ((typeof window !== 'undefined' && window.location) ? window.location.hash : '') || buildHashFromState());
+  const model = buildBreadcrumbTrail(sourceHash);
   host.innerHTML = '';
-  const shouldShow = model.length > 2;
-  host.hidden = !shouldShow;
-  if (!shouldShow) return;
+  if (!model.length) {
+    host.style.display = 'none';
+    return;
+  }
+  host.style.display = '';
 
   model.forEach((crumb, idx) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'breadcrumb-link' + (idx === model.length - 1 ? ' current' : '');
-    btn.dataset.action = crumb.action || '';
-    btn.textContent = crumb.label || '';
-    btn.onclick = () => onBreadcrumbClick(crumb.action || '');
-    host.appendChild(btn);
-    if (idx < model.length - 1) {
+    const isLast = idx === model.length - 1;
+    if (!isLast && crumb.href) {
+      const link = document.createElement('a');
+      link.className = 'breadcrumb-link';
+      link.href = crumb.href;
+      link.textContent = crumb.label || '';
+      host.appendChild(link);
+    } else {
+      const current = document.createElement('span');
+      current.className = 'breadcrumb-current';
+      current.textContent = crumb.label || '';
+      host.appendChild(current);
+    }
+    if (!isLast) {
       const sep = document.createElement('span');
       sep.className = 'breadcrumb-sep';
-      sep.textContent = '›';
+      sep.textContent = '\u203a';
       host.appendChild(sep);
     }
   });
+}
+
+function renderBreadcrumbs(routeHash) {
+  renderBreadcrumb(routeHash);
 }
 
 function encodeHashPart(value) {
@@ -1600,7 +1765,7 @@ async function copyCurrentUrl() {
 function syncNavigationState() {
   if (!isNavigatingHistory) pushHistoryState();
   updateBackButton();
-  renderBreadcrumbs();
+  renderBreadcrumbs(buildHashFromState());
   persistViewState();
   if (suppressHashSync) return;
   if (typeof window === 'undefined' || !window.location) return;
@@ -1713,7 +1878,7 @@ function applyHash(hash) {
   applyViewState(state);
   if (!isNavigatingHistory) pushHistoryState();
   updateBackButton();
-  renderBreadcrumbs();
+  renderBreadcrumbs(hash);
   return true;
 }
 
@@ -3201,6 +3366,15 @@ function renderListPanel(container) {
     nameListEl.onclick = (e) => {
       const target = e.target;
       if (!(target instanceof HTMLElement)) return;
+      const badge = target.closest('.crosslink-badge[data-type][data-head]');
+      if (badge && nameListEl.contains(badge)) {
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+        if (typeof e.stopPropagation === 'function') e.stopPropagation();
+        const t = badge.dataset.type || '';
+        const h = badge.dataset.head || '';
+        if (t && h) navigateToItem(t, h);
+        return;
+      }
       const row = target.closest('.name-item[data-head]');
       if (!row || !nameListEl.contains(row)) return;
       const head = row.dataset.head || '';
@@ -3214,6 +3388,14 @@ function renderListPanel(container) {
       if (key !== 'Enter' && key !== ' ') return;
       const target = e.target;
       if (!(target instanceof HTMLElement)) return;
+      const badge = target.closest('.crosslink-badge[data-type][data-head]');
+      if (badge && nameListEl.contains(badge)) {
+        e.preventDefault();
+        const t = badge.dataset.type || '';
+        const h = badge.dataset.head || '';
+        if (t && h) navigateToItem(t, h);
+        return;
+      }
       const row = target.closest('.name-item[data-head]');
       if (!row || !nameListEl.contains(row)) return;
       const head = row.dataset.head || '';
@@ -3384,6 +3566,106 @@ function getCardNavigationState() {
   return { canPrev: idx > 0, canNext: idx < filtered.length - 1 };
 }
 
+function normalizeSubjectCrosslinkHead(value) {
+  return String(value || '').trim().toLocaleLowerCase('ru');
+}
+
+function pickBestCrosslinkByPageOverlap(subjectPages, pageIndex) {
+  const pages = Array.isArray(subjectPages) ? subjectPages : [];
+  if (!pages.length || !(pageIndex instanceof Map)) return '';
+  const scoreByHead = new Map();
+  for (const rawPage of pages) {
+    const page = parseInt(rawPage, 10);
+    if (!Number.isFinite(page)) continue;
+    const heads = pageIndex.get(page);
+    if (!Array.isArray(heads) || !heads.length) continue;
+    for (const head of heads) {
+      if (!head) continue;
+      scoreByHead.set(head, (scoreByHead.get(head) || 0) + 1);
+    }
+  }
+  let bestHead = '';
+  let bestScore = -1;
+  for (const [head, score] of scoreByHead.entries()) {
+    if (score > bestScore) {
+      bestHead = head;
+      bestScore = score;
+      continue;
+    }
+    if (score === bestScore && compareHeadsRu(head, bestHead) < 0) bestHead = head;
+  }
+  return bestHead;
+}
+
+function getSubjectCrosslinksLookup() {
+  if (subjectCrosslinksLookupCache) return subjectCrosslinksLookupCache;
+  const typeMeta = {
+    lexicon: '\u041b\u0435\u043a\u0441\u0438\u043a\u043e\u043d',
+    names: '\u041f\u0435\u0440\u0441\u043e\u043d\u0430\u043b\u0438\u0438',
+    languages: '\u042f\u0437\u044b\u043a\u0438',
+  };
+  const sources = [
+    ['lexicon', APP_DATA.lexicon || []],
+    ['names', APP_DATA.names || []],
+    ['languages', APP_DATA.languages || []],
+  ];
+  const exactLookup = {};
+  const pageLookup = {};
+  for (const [type, list] of sources) {
+    exactLookup[type] = new Map();
+    pageLookup[type] = new Map();
+    for (const it of Array.isArray(list) ? list : []) {
+      const head = String(it && it.head ? it.head : '').trim();
+      if (!head) continue;
+      const exactKey = normalizeSubjectCrosslinkHead(head);
+      if (!exactKey) continue;
+      if (!exactLookup[type].has(exactKey)) exactLookup[type].set(exactKey, []);
+      exactLookup[type].get(exactKey).push(head);
+      const pages = sortUniquePages(it.page_list || []);
+      for (const rawPage of pages) {
+        const page = parseInt(rawPage, 10);
+        if (!Number.isFinite(page)) continue;
+        if (!pageLookup[type].has(page)) pageLookup[type].set(page, []);
+        pageLookup[type].get(page).push(head);
+      }
+    }
+  }
+  const bySubject = new Map();
+  const subjects = Array.isArray(APP_DATA.subject_index) ? APP_DATA.subject_index : [];
+  for (const subj of subjects) {
+    const head = String(subj && subj.head ? subj.head : '').trim();
+    if (!head) continue;
+    const subjectNorm = normalizeHeadForMatch(head);
+    if (!subjectNorm) continue;
+    const exactKey = normalizeSubjectCrosslinkHead(head);
+    const links = [];
+    for (const [type] of sources) {
+      const exactHeads = exactLookup[type].get(exactKey) || [];
+      if (exactHeads.length) links.push({ type, label: typeMeta[type], head: exactHeads[0] });
+    }
+    if (!links.length) {
+      const subjectPages = sortUniquePages(subj.page_list || []);
+      for (const [type] of sources) {
+        const fallbackHead = pickBestCrosslinkByPageOverlap(subjectPages, pageLookup[type]);
+        if (!fallbackHead) continue;
+        links.push({ type, label: typeMeta[type], head: fallbackHead });
+      }
+    }
+    if (links.length) bySubject.set(subjectNorm, links);
+  }
+  subjectCrosslinksLookupCache = { bySubject };
+  return subjectCrosslinksLookupCache;
+}
+
+function buildSubjectCrosslinks(head) {
+  const norm = normalizeHeadForMatch(head);
+  if (!norm) return [];
+  const lookup = getSubjectCrosslinksLookup();
+  if (!lookup || !(lookup.bySubject instanceof Map)) return [];
+  const links = lookup.bySubject.get(norm);
+  return Array.isArray(links) ? links : [];
+}
+
 function buildListItemInnerHtml(it, showTypeLabel) {
   let dot = '';
   if (currentEntity === 'names' && it.subcategory) {
@@ -3393,7 +3675,18 @@ function buildListItemInnerHtml(it, showTypeLabel) {
   }
   const typeLabel = showTypeLabel ? ` <span class="entity-type-tag">${it._entityLabel}</span>` : '';
   const moderatorMark = it.is_moderator ? ' <span style="color:#999;font-size:10px;">· мод.</span>' : '';
-  return `${dot}<span class="head ${it.discussed ? 'discussed' : ''}">${renderAccentSafe(it.head)}</span>${typeLabel}${moderatorMark}<span class="pages-count">${(it.page_list || []).length}</span>`;
+  const itemType = it && it._entityType ? it._entityType : currentEntity;
+  let crosslinksHtml = '';
+  if (itemType === 'subject') {
+    const links = buildSubjectCrosslinks(it.head);
+    if (links.length) {
+      crosslinksHtml = `<div class="subject-crosslinks">
+        <span class="crosslinks-label">Смотрите также:</span>
+        ${links.map((lnk) => `<a href="${escapeHtml(buildItemHash(lnk.type, lnk.head))}" class="crosslink-badge" data-type="${escapeHtml(lnk.type)}" data-head="${escapeHtml(lnk.head)}">${escapeHtml(lnk.label)}: ${escapeHtml(lnk.head)}</a>`).join('')}
+      </div>`;
+    }
+  }
+  return `${dot}<span class="head ${it.discussed ? 'discussed' : ''}">${renderAccentSafe(it.head)}</span>${typeLabel}${moderatorMark}<span class="pages-count">${(it.page_list || []).length}</span>${crosslinksHtml}`;
 }
 
 function selectListItem(it, fallbackType) {
@@ -3815,6 +4108,51 @@ function findItemByHeadAndType(head, type) {
   return getIndexedItem(targetType, head);
 }
 
+function getReverseEdgesIndex() {
+  if (reverseEdgesCache) return reverseEdgesCache;
+  const index = {};
+  const edges = Array.isArray(APP_DATA && APP_DATA.edges) ? APP_DATA.edges : [];
+  for (const edge of edges) {
+    const source = String(edge && edge.source ? edge.source : '').trim();
+    const target = String(edge && edge.target ? edge.target : '').trim();
+    if (!source || !target || source === target) continue;
+    const weightRaw = Number(edge && edge.weight);
+    const weight = Number.isFinite(weightRaw) ? weightRaw : 0;
+    if (!index[target]) index[target] = [];
+    index[target].push({ head: source, weight });
+  }
+  reverseEdgesCache = index;
+  return reverseEdgesCache;
+}
+
+function collectNameRelationLinks(head) {
+  const baseHead = String(head || '').trim();
+  if (!baseHead) return [];
+  const relationMap = new Map();
+  const edges = Array.isArray(APP_DATA && APP_DATA.edges) ? APP_DATA.edges : [];
+  for (const edge of edges) {
+    const source = String(edge && edge.source ? edge.source : '').trim();
+    const target = String(edge && edge.target ? edge.target : '').trim();
+    if (!source || !target || source !== baseHead || source === target) continue;
+    const weightRaw = Number(edge && edge.weight);
+    const weight = Number.isFinite(weightRaw) ? weightRaw : 0;
+    const prev = relationMap.get(target);
+    if (!prev || weight > prev.weight) relationMap.set(target, { head: target, weight });
+  }
+  const reverse = getReverseEdgesIndex();
+  const reverseEntries = Array.isArray(reverse[baseHead]) ? reverse[baseHead] : [];
+  for (const edge of reverseEntries) {
+    const otherHead = String(edge && edge.head ? edge.head : '').trim();
+    if (!otherHead || otherHead === baseHead) continue;
+    const weightRaw = Number(edge && edge.weight);
+    const weight = Number.isFinite(weightRaw) ? weightRaw : 0;
+    const prev = relationMap.get(otherHead);
+    if (!prev || weight > prev.weight) relationMap.set(otherHead, { head: otherHead, weight });
+  }
+  return Array.from(relationMap.values())
+    .sort((a, b) => (b.weight - a.weight) || compareHeadsRu(a.head, b.head));
+}
+
 function renderCardInRight() {
   const right = getRightContentHost();
   if (!right) return;
@@ -3885,6 +4223,11 @@ function renderCardInRight() {
         ${it.discussed ? ' · <em>обсуждается</em>' : ' · однократное упоминание'}
       </div>
   `;
+  if (eType === 'lexicon' || eType === 'lexicon_tech') {
+    html += `<div style="margin-top:8px;">
+      <button type="button" class="related-link related-link-btn kwic-jump-btn" data-term="${escapeHtml(it.head)}">\u041d\u0430\u0439\u0442\u0438 \u0432 KWIC</button>
+    </div>`;
+  }
   const flagBadges = [];
   if (editorial.verified) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#e7f7ed;border:1px solid #b5e2c4;color:#2e6d44;font-size:11px;">verified</span>');
   if (editorial.suspect) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#fff6e8;border:1px solid #f0d1a6;color:#8b5a2b;font-size:11px;">suspect</span>');
@@ -3932,10 +4275,11 @@ function renderCardInRight() {
     for (const pg of ctxKeys.slice(0, 10)) {
       const ctxs = it.contexts[pg];
       for (const ctx of ctxs.slice(0, 1)) {
+        const ctxHtml = autoLinkEntities(ctx, it.head);
         html += `
           <div class="context-item">
             <div class="context-page">стр. ${pg}</div>
-            <div class="context-text">${highlightInContext(ctx, it.head)}</div>
+            <div class="context-text">${ctxHtml}</div>
           </div>`;
       }
     }
@@ -3971,23 +4315,20 @@ function renderCardInRight() {
     }
   }
 
-  if (eType === 'names' && APP_DATA.edges) {
-    const relatedEdges = APP_DATA.edges.filter(e => e.source === it.head || e.target === it.head);
-    if (relatedEdges.length > 0) {
-      relatedEdges.sort((a, b) => b.weight - a.weight);
-      html += '<h3>Рядом в тексте</h3><div class="related">';
-      for (const e of relatedEdges.slice(0, 10)) {
-        const other = e.source === it.head ? e.target : e.source;
-        html += `<a class="xlink" data-type="names" data-head="${escapeHtml(other)}" href="${escapeHtml(buildItemHash('names', other))}" style="display:flex;justify-content:space-between;gap:8px;cursor:pointer;padding:2px 0;color:inherit;text-decoration:none;">
-          <span>${escapeHtml(other)}</span>
-          ${e.weight > 1 ? `<span style="color:#888;font-size:10px;">· ${escapeHtml(e.weight)}</span>` : '<span></span>'}
+  if (eType === 'names') {
+    const relationLinks = collectNameRelationLinks(it.head);
+    if (relationLinks.length > 0) {
+      html += '<h3>\u0421\u0432\u044f\u0437\u0430\u043d\u043d\u044b\u0435 \u0443\u0447\u0451\u043d\u044b\u0435</h3><div class="related">';
+      for (const rel of relationLinks.slice(0, 12)) {
+        const weightLabel = Number.isFinite(rel.weight) ? rel.weight.toFixed(1).replace(/\.0$/, '') : '0';
+        html += `<a class="relation-chip" data-type="names" data-head="${escapeHtml(rel.head)}" href="${escapeHtml(buildItemHash('names', rel.head))}">
+          <span>${escapeHtml(rel.head)}</span>
+          <span class="chip-weight">${escapeHtml(weightLabel)}</span>
         </a>`;
       }
       html += '</div>';
     }
   }
-
-  // Универсальные перекрёстные ссылки: связанные сущности других типов
   const crossLabels = {names: 'Связанные имена', toponyms: 'Связанные топонимы',
                        ethnonyms: 'Связанные этнонимы', languages: 'Связанные языки'};
   const cross = (APP_DATA.cross_links || {})[eType] || {};
@@ -4049,6 +4390,18 @@ function renderCardInRight() {
       openReadingNowPage(Number.isFinite(page) ? page : 1);
     });
   });
+  right.querySelectorAll('.kwic-jump-btn[data-term]').forEach((btn) => {
+    bindActionWithKeyboard(btn, () => {
+      const term = clampUiInput((btn.dataset && btn.dataset.term) || '', MAX_LIST_QUERY_LENGTH);
+      if (!term) return;
+      pendingKwicTerm = term;
+      if (typeof window !== 'undefined') window._pendingKwicTerm = term;
+      currentKwicSource = 'lexicon';
+      currentKwicQuery = term;
+      switchEntity('materials');
+      switchTab('kwic');
+    });
+  });
   right.querySelectorAll('.source-export-bib[data-source-idx]').forEach((btn) => {
     bindActionWithKeyboard(btn, () => {
       const idx = parseInt(btn.dataset.sourceIdx || '-1', 10);
@@ -4063,6 +4416,7 @@ function renderCardInRight() {
     });
   });
   bindNavigateLinks(right, '.xlink[data-head]', 'names');
+  bindNavigateLinks(right, '.relation-chip[data-head]', 'names');
   right.querySelectorAll('.glossary-backlink[data-term]').forEach(el => {
     el.onclick = (e) => {
       if (e && typeof e.preventDefault === 'function') e.preventDefault();
@@ -6884,6 +7238,18 @@ function renderKwicPanel(container) {
     const a = currentKwicPageStart;
     currentKwicPageStart = currentKwicPageEnd;
     currentKwicPageEnd = a;
+  }
+  const queuedKwicTerm = (() => {
+    const localPending = clampUiInput(pendingKwicTerm || '', MAX_LIST_QUERY_LENGTH);
+    if (localPending) return localPending;
+    if (typeof window === 'undefined') return '';
+    return clampUiInput(window._pendingKwicTerm || '', MAX_LIST_QUERY_LENGTH);
+  })();
+  if (queuedKwicTerm) {
+    currentKwicSource = 'lexicon';
+    currentKwicQuery = queuedKwicTerm;
+    pendingKwicTerm = '';
+    if (typeof window !== 'undefined') window._pendingKwicTerm = '';
   }
 
   container.innerHTML = `<div class="panel active" style="overflow-y:auto;height:100%;">
