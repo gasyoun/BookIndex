@@ -527,6 +527,8 @@ let activeFilters = new Set();
 let onlyDiscussed = false;
 let onlyQuestionCandidates = false;
 let searchQuery = '';
+let listFrequencyMin = 1;
+let listFrequencyMax = 9999;
 let selectedItem = null;
 let selectedItemType = null; // тип сущности выбранного — нужно для сводного
 let rightPaneMode = 'histogram'; // 'histogram' до выбора, 'card' после
@@ -571,6 +573,8 @@ const HASH_ROUTE_PREFIX = 'v4';
 const MAX_HASH_SLUG_LENGTH = 96;
 const MAX_LIST_QUERY_LENGTH = 80;
 const MAX_GLOBAL_QUERY_LENGTH = 80;
+const LIST_FREQ_MIN_DEFAULT = 1;
+const LIST_FREQ_MAX_DEFAULT = 9999;
 const MAX_URL_LENGTH = 2048;
 const GLOBAL_SEARCH_CACHE_MAX = 120;
 const GLOBAL_SEARCH_FUSE_LIMIT = 80;
@@ -895,6 +899,55 @@ function pluralPages(n) {
   return 'страницах';
 }
 
+function countItemMentions(it) {
+  return Array.isArray(it && it.page_list) ? it.page_list.length : 0;
+}
+
+function getListFrequencyBounds(items) {
+  const list = Array.isArray(items) ? items : [];
+  if (!list.length) return { min: LIST_FREQ_MIN_DEFAULT, max: LIST_FREQ_MIN_DEFAULT };
+  let min = Number.POSITIVE_INFINITY;
+  let max = 0;
+  for (const it of list) {
+    const count = countItemMentions(it);
+    if (count < min) min = count;
+    if (count > max) max = count;
+  }
+  if (!Number.isFinite(min)) min = LIST_FREQ_MIN_DEFAULT;
+  if (!Number.isFinite(max) || max < min) max = min;
+  return { min, max };
+}
+
+function clampListFrequencyValue(value, min, max, fallback) {
+  const parsed = Number.isFinite(value) ? value : parseInt(String(value || ''), 10);
+  if (!Number.isFinite(parsed)) return fallback;
+  const lo = Number.isFinite(min) ? min : LIST_FREQ_MIN_DEFAULT;
+  const hi = Number.isFinite(max) ? max : Math.max(lo, LIST_FREQ_MAX_DEFAULT);
+  return Math.max(lo, Math.min(hi, parsed));
+}
+
+function sortUniquePages(pages) {
+  const uniq = new Set();
+  for (const raw of Array.isArray(pages) ? pages : []) {
+    const page = Number.isFinite(raw) ? raw : parseInt(String(raw || ''), 10);
+    if (!Number.isFinite(page) || page <= 0) continue;
+    uniq.add(page);
+  }
+  return Array.from(uniq).sort((a, b) => a - b);
+}
+
+function buildCardPageLinksHtml(pages, maxLinks = 28) {
+  const list = sortUniquePages(pages);
+  if (!list.length) return '';
+  const shown = list.slice(0, Math.max(1, maxLinks));
+  let html = shown.map((page) => {
+    return `<a class="card-page-link related-link" data-page="${page}" href="${escapeHtml(buildReadingNowHash(page))}">стр. ${page}</a>`;
+  }).join(', ');
+  const hiddenCount = list.length - shown.length;
+  if (hiddenCount > 0) html += ` <span style="color:#888;">и ещё ${hiddenCount}</span>`;
+  return html;
+}
+
 function captureViewState() {
   const globalSearchInput = (typeof document !== 'undefined') ? document.getElementById('global-search') : null;
   return {
@@ -910,6 +963,8 @@ function captureViewState() {
     trendsRangeStart,
     trendsRangeEnd,
     searchQuery,
+    listFrequencyMin,
+    listFrequencyMax,
     onlyDiscussed,
     onlyQuestionCandidates,
     currentGlossaryTerm,
@@ -953,6 +1008,10 @@ function restoreViewState() {
     if (!Number.isInteger(parsed.trendsRangeStart)) parsed.trendsRangeStart = 1;
     if (!Number.isInteger(parsed.trendsRangeEnd)) parsed.trendsRangeEnd = 404;
     if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
+    if (!Number.isInteger(parsed.listFrequencyMin)) parsed.listFrequencyMin = LIST_FREQ_MIN_DEFAULT;
+    if (!Number.isInteger(parsed.listFrequencyMax)) parsed.listFrequencyMax = LIST_FREQ_MAX_DEFAULT;
+    parsed.listFrequencyMin = Math.max(LIST_FREQ_MIN_DEFAULT, parsed.listFrequencyMin);
+    parsed.listFrequencyMax = Math.max(parsed.listFrequencyMin, parsed.listFrequencyMax);
     if (typeof parsed.currentGlossaryTerm !== 'string') parsed.currentGlossaryTerm = '';
     if (typeof parsed.currentScholarAnchor !== 'string') parsed.currentScholarAnchor = '';
     parsed.currentKwicSource = normalizeKwicSource(parsed.currentKwicSource);
@@ -1246,6 +1305,10 @@ function applyViewState(state) {
   trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
   trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : 404;
   searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
+  listFrequencyMin = Number.isInteger(state.listFrequencyMin) ? state.listFrequencyMin : LIST_FREQ_MIN_DEFAULT;
+  listFrequencyMax = Number.isInteger(state.listFrequencyMax) ? state.listFrequencyMax : LIST_FREQ_MAX_DEFAULT;
+  listFrequencyMin = Math.max(LIST_FREQ_MIN_DEFAULT, listFrequencyMin);
+  listFrequencyMax = Math.max(listFrequencyMin, listFrequencyMax);
   currentGlossaryTerm = typeof state.currentGlossaryTerm === 'string' ? state.currentGlossaryTerm : '';
   currentScholarAnchor = typeof state.currentScholarAnchor === 'string' ? state.currentScholarAnchor : '';
   currentKwicSource = normalizeKwicSource(state.currentKwicSource);
@@ -1302,6 +1365,8 @@ function sameViewState(a, b) {
     (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) &&
     (a.currentKwicPageEnd || 404) === (b.currentKwicPageEnd || 404) &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
+    (a.listFrequencyMin || LIST_FREQ_MIN_DEFAULT) === (b.listFrequencyMin || LIST_FREQ_MIN_DEFAULT) &&
+    (a.listFrequencyMax || LIST_FREQ_MAX_DEFAULT) === (b.listFrequencyMax || LIST_FREQ_MAX_DEFAULT) &&
     !!a.onlyDiscussed === !!b.onlyDiscussed &&
     !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
     aFilters === bFilters;
@@ -1421,6 +1486,12 @@ function buildCanonicalHash(parts) {
 
 function buildHashFromState() {
   const parts = [currentEntity, currentTab];
+  if (currentEntity === 'materials' && currentTab === 'lectures') {
+    const readingPage = getSavedReadingPage();
+    if (Number.isFinite(readingPage)) {
+      parts.push('reading', String(clampPageInBook(readingPage)));
+    }
+  }
   if (currentEntity === 'materials' && currentTab === 'lecture_pages') {
     parts.push(String(Math.max(0, currentLecture)));
   }
@@ -1429,6 +1500,11 @@ function buildHashFromState() {
   }
   if (currentEntity === 'scholar' && currentTab === 'scholar' && currentScholarAnchor) {
     parts.push('anchor', currentScholarAnchor);
+  }
+  if (currentEntity === 'scholar' && currentTab === 'page_trends') {
+    const start = clampPageInBook(trendsRangeStart);
+    const end = clampPageInBook(trendsRangeEnd);
+    parts.push('range', String(Math.min(start, end)), String(Math.max(start, end)));
   }
   if (currentTab === 'list' && searchQuery && !selectedItem) {
     parts.push('q', searchQuery);
@@ -1501,6 +1577,13 @@ function syncNavigationState() {
   }
 }
 
+function syncNavigationHashOnly() {
+  const prev = isNavigatingHistory;
+  isNavigatingHistory = true;
+  syncNavigationState();
+  isNavigatingHistory = prev;
+}
+
 function applyHash(hash) {
   closeGlobalSearchResults();
   if (!hash || hash === '#') return false;
@@ -1532,6 +1615,8 @@ function applyHash(hash) {
     selectedItemType: null,
     rightPaneMode: 'histogram',
     currentLecture: 0,
+    trendsRangeStart: 1,
+    trendsRangeEnd: getTotalBookPages(),
     searchQuery: '',
     currentScholarAnchor: '',
   };
@@ -1542,6 +1627,12 @@ function applyHash(hash) {
 
   if (entity === 'materials' && tab === 'lecture_pages' && /^\d+$/.test(parts[2] || '')) {
     state.currentLecture = parseInt(parts[2], 10);
+  }
+  if (entity === 'materials' && tab === 'lectures') {
+    const readingPos = parts.indexOf('reading');
+    if (readingPos >= 0 && /^\d+$/.test(parts[readingPos + 1] || '')) {
+      saveReadingPage(clampPageInBook(parseInt(parts[readingPos + 1], 10)));
+    }
   }
   if (entity === 'materials' && tab === 'glossary') {
     const termPos = parts.indexOf('term');
@@ -1558,6 +1649,16 @@ function applyHash(hash) {
       if (safeAnchor) {
         pendingScholarAnchor = safeAnchor;
         state.currentScholarAnchor = safeAnchor;
+      }
+    }
+  }
+  if (entity === 'scholar' && tab === 'page_trends') {
+    const rangePos = parts.indexOf('range');
+    if (rangePos >= 0 && /^\d+$/.test(parts[rangePos + 1] || '') && /^\d+$/.test(parts[rangePos + 2] || '')) {
+      state.trendsRangeStart = clampPageInBook(parseInt(parts[rangePos + 1], 10));
+      state.trendsRangeEnd = clampPageInBook(parseInt(parts[rangePos + 2], 10));
+      if (state.trendsRangeStart > state.trendsRangeEnd) {
+        [state.trendsRangeStart, state.trendsRangeEnd] = [state.trendsRangeEnd, state.trendsRangeStart];
       }
     }
   }
@@ -2899,6 +3000,8 @@ function switchEntity(key) {
   onlyDiscussed = false;
   onlyQuestionCandidates = false;
   searchQuery = '';
+  listFrequencyMin = LIST_FREQ_MIN_DEFAULT;
+  listFrequencyMax = LIST_FREQ_MAX_DEFAULT;
   selectedItem = null;
   selectedItemType = null;
   rightPaneMode = 'histogram';
@@ -2988,6 +3091,24 @@ function renderListPanel(container) {
   const candidateBtnHtml = canFilterCandidates
     ? `<button class="filter-chip ${onlyQuestionCandidates ? 'active' : ''}" id="only-question-btn">только ?-кандидаты (${candidateTotal})</button>`
     : '';
+  const canFilterFrequency = currentEntity === 'lexicon';
+  const freqBounds = canFilterFrequency ? getListFrequencyBounds(conf.items) : { min: LIST_FREQ_MIN_DEFAULT, max: LIST_FREQ_MIN_DEFAULT };
+  if (canFilterFrequency) {
+    listFrequencyMin = clampListFrequencyValue(listFrequencyMin, freqBounds.min, freqBounds.max, freqBounds.min);
+    listFrequencyMax = clampListFrequencyValue(listFrequencyMax, freqBounds.min, freqBounds.max, freqBounds.max);
+    if (listFrequencyMin > listFrequencyMax) [listFrequencyMin, listFrequencyMax] = [listFrequencyMax, listFrequencyMin];
+  }
+  const frequencyFilterHtml = canFilterFrequency
+    ? `<div class="filter-row filter-row-frequency">
+        <label class="freq-filter-label">частотность от
+          <input id="freq-min-input" type="number" min="${freqBounds.min}" max="${freqBounds.max}" value="${listFrequencyMin}" />
+        </label>
+        <label class="freq-filter-label">до
+          <input id="freq-max-input" type="number" min="${freqBounds.min}" max="${freqBounds.max}" value="${listFrequencyMax}" />
+        </label>
+        <button class="filter-chip" id="freq-reset-btn">сброс</button>
+      </div>`
+    : '';
 
   container.innerHTML = `
     <div class="panel active">
@@ -3000,6 +3121,7 @@ function renderListPanel(container) {
               </div>
               <button class="filter-chip ${onlyDiscussed?'active':''}" id="only-discussed-btn">только обсуждаемые (≥2 стр.)</button>
             </div>
+            ${frequencyFilterHtml}
             ${catChips}
             ${candidateBtnHtml ? `<div class="filter-row">${candidateBtnHtml}</div>` : ''}
           </div>
@@ -3086,6 +3208,37 @@ function renderListPanel(container) {
       persistViewState();
     };
   }
+  const freqMinInput = document.getElementById('freq-min-input');
+  const freqMaxInput = document.getElementById('freq-max-input');
+  const freqResetBtn = document.getElementById('freq-reset-btn');
+  if (freqMinInput && freqMaxInput && canFilterFrequency) {
+    const applyFrequencyInputs = () => {
+      const nextMin = clampListFrequencyValue(freqMinInput.value, freqBounds.min, freqBounds.max, freqBounds.min);
+      const nextMax = clampListFrequencyValue(freqMaxInput.value, freqBounds.min, freqBounds.max, freqBounds.max);
+      listFrequencyMin = Math.min(nextMin, nextMax);
+      listFrequencyMax = Math.max(nextMin, nextMax);
+      freqMinInput.value = String(listFrequencyMin);
+      freqMaxInput.value = String(listFrequencyMax);
+      visibleItemsCache = null;
+      renderList();
+      persistViewState();
+    };
+    freqMinInput.onchange = applyFrequencyInputs;
+    freqMaxInput.onchange = applyFrequencyInputs;
+    freqMinInput.onkeydown = (e) => { if (e.key === 'Enter') applyFrequencyInputs(); };
+    freqMaxInput.onkeydown = (e) => { if (e.key === 'Enter') applyFrequencyInputs(); };
+    if (freqResetBtn) {
+      freqResetBtn.onclick = () => {
+        listFrequencyMin = freqBounds.min;
+        listFrequencyMax = freqBounds.max;
+        freqMinInput.value = String(listFrequencyMin);
+        freqMaxInput.value = String(listFrequencyMax);
+        visibleItemsCache = null;
+        renderList();
+        persistViewState();
+      };
+    }
+  }
   const exportSectionBtn = document.getElementById('export-section-md');
   if (exportSectionBtn) exportSectionBtn.onclick = () => exportCurrentSectionMarkdown();
   const sheetCloseBtn = document.getElementById('mobile-sheet-close');
@@ -3119,6 +3272,10 @@ function itemMatchesFilters(it) {
   if (currentEntity === 'names' && activeFilters.size > 0) {
     if (!activeFilters.has(it.subcategory)) return false;
   }
+  if (currentEntity === 'lexicon') {
+    const mentions = countItemMentions(it);
+    if (mentions < listFrequencyMin || mentions > listFrequencyMax) return false;
+  }
   if (onlyQuestionCandidates && !(it.head || '').startsWith('?')) return false;
   if (onlyDiscussed && !it.discussed) return false;
   return true;
@@ -3131,6 +3288,8 @@ function buildVisibleItemsCacheKey() {
   return [
     currentEntity,
     searchQuery || '',
+    currentEntity === 'lexicon' ? String(listFrequencyMin) : '',
+    currentEntity === 'lexicon' ? String(listFrequencyMax) : '',
     onlyDiscussed ? '1' : '0',
     onlyQuestionCandidates ? '1' : '0',
     filters,
@@ -3662,8 +3821,9 @@ function renderCardInRight() {
   const sourceConfirmedInline = editorial.source_confirmed
     ? '<span class="card-status-inline">source confirmed</span>'
     : '';
-  const allPages = (it.page_list || []);
+  const allPages = sortUniquePages(it.page_list || []);
   let pagesText = it.pages || it.head_pages || '';
+  const pageLinksHtml = buildCardPageLinksHtml(allPages);
 
   let html = `
     <div class="card">
@@ -3687,7 +3847,7 @@ function renderCardInRight() {
       </div>
       <div class="pages-info">
         <strong>Упоминается на ${allPages.length} ${pluralPages(allPages.length)}:</strong>
-        ${escapeHtml(pagesText)}
+        <span class="pages-links">${pageLinksHtml || escapeHtml(pagesText)}</span>
         ${it.discussed ? ' · <em>обсуждается</em>' : ' · однократное упоминание'}
       </div>
   `;
@@ -3849,6 +4009,12 @@ function renderCardInRight() {
     };
   }
   // Универсальная привязка для всех кросс-ссылок (xlink) с указанием типа
+  right.querySelectorAll('.card-page-link[data-page]').forEach((el) => {
+    bindActionWithKeyboard(el, () => {
+      const page = parseInt((el.dataset && el.dataset.page) || '0', 10);
+      openReadingNowPage(Number.isFinite(page) ? page : 1);
+    });
+  });
   right.querySelectorAll('.source-export-bib[data-source-idx]').forEach((btn) => {
     bindActionWithKeyboard(btn, () => {
       const idx = parseInt(btn.dataset.sourceIdx || '-1', 10);
@@ -5467,6 +5633,25 @@ function openReadingPageTrends(page) {
   currentTab = 'page_trends';
   trendsRangeStart = p;
   trendsRangeEnd = p;
+  selectedItem = null;
+  selectedItemType = null;
+  rightPaneMode = 'histogram';
+  renderEntitySwitcher();
+  renderTabs();
+  renderContent();
+  syncNavigationState();
+}
+
+function buildReadingNowHash(page) {
+  const p = clampPageInBook(Number.isFinite(page) ? page : parseInt(String(page || ''), 10));
+  return buildCanonicalHash(['materials', 'lectures', 'reading', String(p)]);
+}
+
+function openReadingNowPage(page) {
+  const p = clampPageInBook(Number.isFinite(page) ? page : parseInt(String(page || ''), 10));
+  saveReadingPage(p);
+  currentEntity = 'materials';
+  currentTab = 'lectures';
   selectedItem = null;
   selectedItemType = null;
   rightPaneMode = 'histogram';
@@ -7235,6 +7420,7 @@ function renderPageTrendsPanel(container) {
   html += '<div style="display:flex;gap:6px;align-items:center;">';
   html += '<button id="trend-export-csv" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Экспорт CSV</button>';
   html += '<button id="trend-export-md" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Экспорт Markdown</button>';
+  html += '<button id="trend-copy-link" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Скопировать ссылку</button>';
   html += '</div></div>';
 
   const chapterOptions = chapters.map((ch, idx) => `<option value="${idx}">${escapeHtml(ch.name)} (${ch.start}-${ch.end})</option>`).join('');
@@ -7295,7 +7481,7 @@ function renderPageTrendsPanel(container) {
 
   const rerender = () => {
     renderPageTrendsPanel(container);
-    persistViewState();
+    syncNavigationHashOnly();
   };
   const startRange = document.getElementById('trend-start-range');
   const endRange = document.getElementById('trend-end-range');
@@ -7304,6 +7490,7 @@ function renderPageTrendsPanel(container) {
   const chapterSelect = document.getElementById('trend-chapter-select');
   const exportCsvBtn = document.getElementById('trend-export-csv');
   const exportMdBtn = document.getElementById('trend-export-md');
+  const copyLinkBtn = document.getElementById('trend-copy-link');
 
   const csvEscape = (v) => {
     const s = String(v == null ? '' : v);
@@ -7350,6 +7537,15 @@ function renderPageTrendsPanel(container) {
   }
   if (exportCsvBtn) exportCsvBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.csv`, csvText, 'text/csv;charset=utf-8');
   if (exportMdBtn) exportMdBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.md`, mdText, 'text/markdown;charset=utf-8');
+  if (copyLinkBtn) {
+    copyLinkBtn.onclick = async () => {
+      const ok = await copyCurrentUrl();
+      const prev = copyLinkBtn.textContent;
+      copyLinkBtn.textContent = ok ? 'Ссылка скопирована' : 'Не удалось скопировать';
+      announceUiMessage(ok ? 'Link copied' : 'Failed to copy link');
+      setTimeout(() => { copyLinkBtn.textContent = prev; }, 1200);
+    };
+  }
   bindNavigateLinks(container, '.trend-link[data-head]', 'all');
 }
 

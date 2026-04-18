@@ -345,6 +345,30 @@
     gap: 5px;
     margin-top: 6px;
   }
+  .filter-row-frequency {
+    align-items: center;
+  }
+  .freq-filter-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #6a5040;
+    background: #fff;
+    border: 1px solid #c4b890;
+    border-radius: 12px;
+    padding: 3px 8px;
+  }
+  .freq-filter-label input {
+    width: 64px;
+    padding: 2px 4px;
+    border: 1px solid #c4b890;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 11px;
+    color: #5a3818;
+    background: #fff;
+  }
   .filter-chip {
     display: inline-flex;
     align-items: center;
@@ -564,6 +588,13 @@
     font-size: 12px;
   }
   .card .pages-info strong { color: var(--title); }
+  .card .pages-links {
+    display: inline;
+  }
+  .card .card-page-link {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
   .card h3 {
     font-size: 12px;
     color: var(--muted);
@@ -586,6 +617,11 @@
     color: var(--text);
     font-size: 12px;
     font-style: italic;
+    line-height: 1.55;
+    overflow-wrap: normal;
+    word-break: normal;
+    text-wrap: pretty;
+    text-wrap: balance;
   }
   .context-text mark {
     background: #ffe680;
@@ -1131,6 +1167,8 @@
     .filter-chip { font-size: 10px; padding: 2px 6px; }
     .filters-top-row { flex-wrap: wrap; gap: 4px; }
     .filters-search { flex: 1 1 100%; }
+    .freq-filter-label { width: auto; max-width: 100%; }
+    .freq-filter-label input { width: 56px; }
     .page-trends-delta-grid { grid-template-columns: 1fr; }
 
     /* Карточка */

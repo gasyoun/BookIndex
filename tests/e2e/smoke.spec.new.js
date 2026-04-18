@@ -668,6 +668,31 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#trend-export-md')).toBeVisible();
   });
 
+  test('scholar page trends keeps selected range in hash route', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/scholar/page_trends');
+    const startInput = page.locator('#trend-start-input');
+    const endInput = page.locator('#trend-end-input');
+    const copyBtn = page.locator('#trend-copy-link');
+    await expect(startInput).toBeVisible();
+    await expect(endInput).toBeVisible();
+    await expect(copyBtn).toBeVisible();
+
+    await page.evaluate(() => {
+      const start = document.getElementById('trend-start-input');
+      const end = document.getElementById('trend-end-input');
+      if (!start || !end) return;
+      start.value = '120';
+      end.value = '140';
+      start.dispatchEvent(new Event('change', { bubbles: true }));
+      end.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+
+    await expect(page).toHaveURL(/#v4\/scholar\/page_trends\/range\/120\/140$/);
+    await page.goto('/aaz-index.html#v4/scholar/page_trends/range/120/140');
+    await expect(page.locator('#trend-start-range')).toHaveValue('120');
+    await expect(page.locator('#trend-end-range')).toHaveValue('140');
+  });
+
   test('scholar chronology tab supports filters and event navigation', async ({ page }) => {
     await page.goto('/aaz-index.html#scholar/chronology');
     await expect(page.locator('#chronology-type')).toBeVisible();
@@ -787,6 +812,44 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#(?:v4\/)?scholar\/page_trends/);
     await expect(page.locator('#trend-start-range')).toHaveValue('120');
     await expect(page.locator('#trend-end-range')).toHaveValue('120');
+  });
+
+  test('lexicon list supports frequency filter controls', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/lexicon/list');
+    const minInput = page.locator('#freq-min-input');
+    const maxInput = page.locator('#freq-max-input');
+    const resetBtn = page.locator('#freq-reset-btn');
+    await expect(minInput).toBeVisible();
+    await expect(maxInput).toBeVisible();
+    await expect(resetBtn).toBeVisible();
+
+    const maxBound = Number(await maxInput.inputValue());
+    expect(Number.isFinite(maxBound)).toBeTruthy();
+    await minInput.fill(String(maxBound));
+    await minInput.press('Enter');
+
+    const filteredCount = await page.locator('#name-list .name-item').count();
+    expect(filteredCount).toBeGreaterThan(0);
+    const minVisibleMentions = await page.evaluate(() => {
+      const rows = Array.from(document.querySelectorAll('#name-list .name-item .pages-count'));
+      const nums = rows
+        .map((el) => parseInt((el.textContent || '').trim(), 10))
+        .filter((n) => Number.isFinite(n));
+      if (!nums.length) return null;
+      return Math.min(...nums);
+    });
+    expect(minVisibleMentions).toBeGreaterThanOrEqual(maxBound);
+  });
+
+  test('card page links open reading-now mode on that page', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/lexicon/list/item/lexicon/arbuz');
+    await expect(page.locator('#right-content .card h2')).toContainText(/арбуз/i);
+    const pageLink = page.locator('#right-content .card .card-page-link[data-page="187"]').first();
+    await expect(pageLink).toBeVisible();
+    await pageLink.click();
+    await expect(page).toHaveURL(/#v4\/materials\/lectures\/reading\/187$/);
+    await expect(page.locator('#reading-page-input')).toHaveValue('187');
+    await expect(page.locator('#reading-now-results')).toContainText('Страница 187');
   });
 
   test('home panel no longer renders reading-now widget', async ({ page }) => {
