@@ -948,6 +948,39 @@ function buildCardPageLinksHtml(pages, maxLinks = 28) {
   return html;
 }
 
+function renderTextWithPageLinks(text, options = {}) {
+  const raw = String(text == null ? '' : text);
+  if (!raw) return '';
+  const className = String(options.className || 'card-page-link related-link page-ref-link');
+  const style = (typeof options.style === 'string')
+    ? options.style
+    : 'text-decoration:underline dotted;color:#5a3818;';
+  const rangeTarget = String(options.rangeTarget || 'trends');
+  const matcher = /\b\u0441\u0442\u0440\.?\s*(\d{1,4})(?:\s*[\u2013\u2014-]\s*(\d{1,4}))?/giu;
+  let out = '';
+  let cursor = 0;
+  let match = null;
+  while ((match = matcher.exec(raw)) !== null) {
+    const hit = String(match[0] || '');
+    const idx = Number.isFinite(match.index) ? match.index : raw.indexOf(hit, cursor);
+    if (idx > cursor) out += escapeHtml(raw.slice(cursor, idx));
+    const startRaw = parseInt(String(match[1] || ''), 10);
+    const endRaw = match[2] ? parseInt(String(match[2] || ''), 10) : startRaw;
+    const start = clampPageInBook(Number.isFinite(startRaw) ? startRaw : 1);
+    const end = clampPageInBook(Number.isFinite(endRaw) ? endRaw : start);
+    const lo = Math.min(start, end);
+    const hi = Math.max(start, end);
+    const hasRange = hi > lo;
+    const href = (hasRange && rangeTarget === 'trends')
+      ? buildCanonicalHash(['scholar', 'page_trends', 'range', String(lo), String(hi)])
+      : buildReadingNowHash(lo);
+    out += `<a class="${escapeHtml(className)}" data-page="${lo}"${hasRange ? ` data-page-end="${hi}"` : ''} href="${escapeHtml(href)}"${style ? ` style="${escapeHtml(style)}"` : ''}>${escapeHtml(hit)}</a>`;
+    cursor = idx + hit.length;
+  }
+  if (cursor < raw.length) out += escapeHtml(raw.slice(cursor));
+  return out;
+}
+
 function captureViewState() {
   const globalSearchInput = (typeof document !== 'undefined') ? document.getElementById('global-search') : null;
   return {
@@ -5637,7 +5670,7 @@ function renderHomePanel(container) {
       </div>
       <div id="home-featured-quote" style="padding-left:${compactHome ? 8 : 10}px;border-left:2px solid rgba(255,248,232,0.45);font-style:italic;align-self:start;">
         <div id="home-featured-quote-text" style="${quoteTextClamp}">«${escapeHtml(featured.text)}»</div>
-        <div style="margin-top:6px;font-style:normal;opacity:0.85;">— стр. ${escapeHtml(featured.page)}, лекция «${escapeHtml(featured.lecture)}»</div>
+        <div style="margin-top:6px;font-style:normal;opacity:0.85;">— ${renderTextWithPageLinks(`стр. ${featured.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#fff8e8;', rangeTarget: 'trends' })}, лекция «${escapeHtml(featured.lecture)}»</div>
         <div style="margin-top:8px;font-style:normal;opacity:0.9;font-size:11px;">Выберите свой путь по книге — если не знаете, с чего начать, выберите тему, которая вас интересует.</div>
       </div>
     </div>
@@ -6111,7 +6144,13 @@ function renderTasksPanel(container, options = {}) {
         const linkBtn = t.entity
           ? ` <a class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" href="${escapeHtml(linkHref)}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0443 \u2192</a>`
           : '';
-        res.innerHTML = (isCorrect ? '<strong>\u0412\u0435\u0440\u043d\u043e!</strong> ' : '<strong>\u041d\u0435 \u0443\u0433\u0430\u0434\u0430\u043b\u0438.</strong> ') + escapeHtml(t.hint) + linkBtn;
+        res.innerHTML = (isCorrect ? '<strong>\u0412\u0435\u0440\u043d\u043e!</strong> ' : '<strong>\u041d\u0435 \u0443\u0433\u0430\u0434\u0430\u043b\u0438.</strong> ')
+          + renderTextWithPageLinks(t.hint, {
+            className: 'task-page-link card-page-link related-link',
+            style: 'text-decoration:underline dotted;color:#5a3818;',
+            rangeTarget: 'trends',
+          })
+          + linkBtn;
         res.querySelectorAll('.task-card-link').forEach(el => {
           el.onclick = (e) => {
             if (e && typeof e.preventDefault === 'function') e.preventDefault();
@@ -6860,8 +6899,8 @@ function renderKwicPanel(container) {
         <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
           Источник
           <select id="kwic-source" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
-            <option value="lexicon"${currentKwicSource === 'lexicon' ? ' selected' : ''}>Лексика</option>
-            <option value="glossary"${currentKwicSource === 'glossary' ? ' selected' : ''}>Глоссарий</option>
+            <option value="lexicon"${currentKwicSource === 'lexicon' ? ' selected' : ''}>Лексика (статьи)</option>
+            <option value="glossary"${currentKwicSource === 'glossary' ? ' selected' : ''}>Глоссарий (термины)</option>
           </select>
         </label>
         <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
@@ -6882,6 +6921,7 @@ function renderKwicPanel(container) {
         </label>
         <button id="kwic-run" type="button" style="height:34px;padding:0 12px;border:1px solid var(--line);border-radius:4px;background:var(--surface-soft);color:var(--title);cursor:pointer;font-family:inherit;">Показать</button>
       </div>
+      <div id="kwic-source-hint" style="font-size:11px;color:var(--muted);margin:0 0 8px 0;"></div>
       <div id="kwic-meta" style="font-size:12px;color:var(--muted);margin:6px 0 10px 0;"></div>
       <div id="kwic-results" style="display:grid;gap:8px;"></div>
     </div>
@@ -6893,12 +6933,23 @@ function renderKwicPanel(container) {
   const startInput = container.querySelector('#kwic-page-start');
   const endInput = container.querySelector('#kwic-page-end');
   const runBtn = container.querySelector('#kwic-run');
+  const sourceHintEl = container.querySelector('#kwic-source-hint');
   const metaEl = container.querySelector('#kwic-meta');
   const resultsEl = container.querySelector('#kwic-results');
   let renderTimer = null;
 
+  const renderSourceHint = () => {
+    if (!sourceHintEl) return;
+    if (currentKwicSource === 'glossary') {
+      sourceHintEl.innerHTML = '<strong>Глоссарий:</strong> учебные определения терминов (например, энклитика, аблаут).';
+      return;
+    }
+    sourceHintEl.innerHTML = '<strong>Лексика:</strong> словарные карточки слов/форм и их контексты в книге.';
+  };
+
   const renderRows = () => {
     currentKwicSource = normalizeKwicSource(sourceInput.value);
+    renderSourceHint();
     currentKwicSort = normalizeKwicSort(sortInput.value);
     currentKwicQuery = clampUiInput(queryInput.value, MAX_LIST_QUERY_LENGTH);
     queryInput.value = currentKwicQuery;
@@ -6941,7 +6992,7 @@ function renderKwicPanel(container) {
         <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px;">
           <button type="button" class="kwic-open-card" data-type="${escapeHtml(r.itemType)}" data-head="${escapeHtml(r.itemHead)}" style="padding:2px 8px;border:1px solid var(--line);background:var(--surface-soft);border-radius:999px;cursor:pointer;color:var(--title);font-size:11px;font-family:inherit;">${escapeHtml(r.itemHead)}</button>
           ${r.source === 'glossary' ? `<button type="button" class="kwic-open-glossary" data-term="${escapeHtml(r.term)}" style="padding:2px 8px;border:1px solid var(--line);background:var(--surface-soft);border-radius:999px;cursor:pointer;color:var(--title);font-size:11px;font-family:inherit;">термин: ${escapeHtml(r.term)}</button>` : ''}
-          <span style="font-size:11px;color:var(--muted);">стр. ${r.page}</span>
+          <a class="kwic-page-link card-page-link related-link" data-page="${escapeHtml(String(r.page))}" href="${escapeHtml(buildReadingNowHash(r.page))}" style="font-size:11px;color:var(--muted);text-decoration:underline dotted;">стр. ${r.page}</a>
         </div>
         <div style="font-size:13px;line-height:1.55;color:var(--text);word-break:break-word;">
           <span style="color:var(--muted);">${escapeHtml(r.leftPrefix + r.leftText)}</span><mark style="background:#ffe2a8;color:#4a2e12;padding:0 2px;border-radius:2px;">${escapeHtml(r.keyText)}</mark><span>${escapeHtml(r.rightText + r.rightSuffix)}</span>
@@ -6957,6 +7008,12 @@ function renderKwicPanel(container) {
     resultsEl.querySelectorAll('.kwic-open-glossary').forEach(btn => {
       bindActionWithKeyboard(btn, () => {
         openGlossaryTerm(btn.dataset.term || '');
+      });
+    });
+    resultsEl.querySelectorAll('.kwic-page-link[data-page]').forEach((el) => {
+      bindActionWithKeyboard(el, () => {
+        const page = parseInt((el.dataset && el.dataset.page) || '0', 10);
+        openReadingNowPage(Number.isFinite(page) ? page : 1);
       });
     });
 
@@ -7162,10 +7219,13 @@ function renderPhoneticLawsPanel(container) {
   html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Фонетические законы из лекций Зализняка</h2>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Восемь ключевых фонетических законов, обсуждаемых в книге, с примерами из текста. Для каждого закона показан переход «было → стало» и пояснение.</div>';
   for (const law of laws) {
+    const lawMetaText = law.page
+      ? `${law.discoverer} · ${law.year} · стр. ${law.page}`
+      : `${law.discoverer} · ${law.year}`;
     html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:14px 20px;margin-bottom:14px;border-top:3px solid #8a7050;">
       <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;">
         <div style="font-size:17px;font-weight:bold;color:#5a3818;">${escapeHtml(law.name)}</div>
-        <div style="font-size:11px;color:#888;">${escapeHtml(law.discoverer)} · ${escapeHtml(law.year)} · стр. ${escapeHtml(law.page)}</div>
+        <div style="font-size:11px;color:#888;">${renderTextWithPageLinks(lawMetaText, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })}</div>
       </div>
       <div style="font-size:13px;color:#444;line-height:1.55;margin:8px 0 12px 0;">${escapeHtml(law.description)}</div>
       <div style="background:#fbf6e8;padding:10px 14px;border-radius:4px;border-left:3px solid #8a7050;">
@@ -7744,8 +7804,11 @@ function renderScholarPanel(container) {
   // 3. Спорные вопросы
   html += '<h3 id="sch-controversies" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">3. Спорные вопросы и дискуссионные места</h3>';
   for (const c of (s.controversies || [])) {
+    const controversyPageMeta = c.page
+      ? renderTextWithPageLinks(`стр. ${c.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })
+      : '';
     html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:12px 16px;margin-bottom:10px;border-left:4px solid #c0392b;">
-      <div style="font-weight:bold;color:#5a3818;font-size:14px;margin-bottom:4px;">${escapeHtml(c.topic)} <span style="font-size:11px;color:#888;font-weight:normal;">· стр. ${escapeHtml(c.page)}</span></div>
+      <div style="font-weight:bold;color:#5a3818;font-size:14px;margin-bottom:4px;">${escapeHtml(c.topic)}${controversyPageMeta ? ` <span style="font-size:11px;color:#888;font-weight:normal;">· ${controversyPageMeta}</span>` : ''}</div>
       <div style="font-size:13px;color:#444;line-height:1.5;margin-bottom:6px;">${escapeHtml(c.description)}</div>
       <div style="font-size:12px;color:#6a5040;"><strong>Стороны:</strong> ${escapeHtml(c.sides)}</div>
     </div>`;
@@ -7761,7 +7824,10 @@ function renderScholarPanel(container) {
     html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;">
       <div style="font-weight:bold;color:#5a3818;font-size:13px;margin-bottom:6px;">${label}</div>`;
     for (const f of forms) {
-      html += `<div style="font-size:12px;margin-bottom:3px;"><span style="font-style:italic;color:#5a3818;font-family:'Noto Serif','DejaVu Serif',Georgia,serif;">${renderAccentSafe(f.form)}</span> — ${escapeHtml(f.translation)} <span style="color:#888;">(стр. ${escapeHtml(f.page)})</span></div>`;
+      const formPageMeta = f.page
+        ? renderTextWithPageLinks(`стр. ${f.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })
+        : '';
+      html += `<div style="font-size:12px;margin-bottom:3px;"><span style="font-style:italic;color:#5a3818;font-family:'Noto Serif','DejaVu Serif',Georgia,serif;">${renderAccentSafe(f.form)}</span> — ${escapeHtml(f.translation)}${formPageMeta ? ` <span style="color:#888;">(${formPageMeta})</span>` : ''}</div>`;
     }
     html += '</div>';
   }
@@ -7807,7 +7873,7 @@ function renderScholarPanel(container) {
       <td style="padding:6px 12px;color:#666;">${escapeHtml(g.city)}</td>
       <td style="padding:6px 12px;color:#666;">${escapeHtml(g.year)}</td>
       <td style="padding:6px 12px;">${escapeHtml(g.content)}</td>
-      <td style="padding:6px 12px;color:#888;">${escapeHtml(g.page)}</td>
+      <td style="padding:6px 12px;color:#888;">${g.page ? renderTextWithPageLinks(`стр. ${g.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' }) : ''}</td>
     </tr>`;
   }
   html += '</tbody></table>';
@@ -7816,9 +7882,12 @@ function renderScholarPanel(container) {
   html += '<h3 id="sch-chronology" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">6. Хронология лингвистических открытий</h3>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">События истории лингвистики, связанные с темами книги.</div>';
   for (const ev of (s.chronology || [])) {
+    const chronologyPageMeta = ev.page
+      ? renderTextWithPageLinks(`стр. ${ev.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })
+      : '';
     html += `<div style="display:grid;grid-template-columns:80px 1fr;gap:12px;padding:6px 0;border-bottom:1px solid #f0e8d8;">
       <div style="font-weight:bold;color:#5a3818;text-align:right;border-right:2px solid #8a7050;padding-right:10px;">${escapeHtml(ev.year)}</div>
-      <div style="font-size:13px;">${escapeHtml(ev.event)}${ev.page ? '<span style="color:#888;font-size:11px;"> · стр. '+escapeHtml(ev.page)+'</span>' : ''}</div>
+      <div style="font-size:13px;">${escapeHtml(ev.event)}${chronologyPageMeta ? `<span style="color:#888;font-size:11px;"> · ${chronologyPageMeta}</span>` : ''}</div>
     </div>`;
   }
   if (Array.isArray(s.visualization_ideas) && s.visualization_ideas.length) {
@@ -7832,8 +7901,11 @@ function renderScholarPanel(container) {
   html += '<h3 id="sch-isoglosses" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">7. Изоглоссы русских диалектов</h3>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Линии, разделяющие диалекты по конкретным фонетическим, морфологическим и лексическим признакам, обсуждаемым в книге.</div>';
   for (const i of (s.isoglosses || [])) {
+    const isoglossPageMeta = i.page
+      ? renderTextWithPageLinks(`стр. ${i.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })
+      : '';
     html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;margin-bottom:8px;border-left:3px solid #16a085;">
-      <div style="font-weight:bold;color:#5a3818;font-size:13px;margin-bottom:4px;">${escapeHtml(i.name)}${i.page ? ' <span style="font-weight:normal;font-size:11px;color:#888;">· стр. '+escapeHtml(i.page)+'</span>' : ''}</div>
+      <div style="font-weight:bold;color:#5a3818;font-size:13px;margin-bottom:4px;">${escapeHtml(i.name)}${isoglossPageMeta ? ` <span style="font-weight:normal;font-size:11px;color:#888;">· ${isoglossPageMeta}</span>` : ''}</div>
       <div style="font-size:12px;color:#444;line-height:1.5;">${escapeHtml(i.description)}</div>
     </div>`;
   }
@@ -7866,7 +7938,9 @@ function renderScholarPanel(container) {
     for (let i = 0; i < slovoArgs.length; i++) {
       const a = slovoArgs[i];
       const anchorId = `sch-slovo-arg-${i + 1}`;
-      const pageMeta = a.page ? `<span style="font-size:11px;color:#888;">Стр. ${escapeHtml(a.page)}</span>` : '';
+      const pageMeta = a.page
+        ? `<span style="font-size:11px;color:#888;">${renderTextWithPageLinks(`стр. ${a.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })}</span>`
+        : '';
       const sourceMeta = a.url ? `<a href="${escapeHtml(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:#5a3818;text-decoration:underline dotted;">источник ↗</a>` : '';
       html += `<div id="${anchorId}" style="background:#fff;padding:8px 10px;border:1px solid #e3d6c0;border-radius:4px;margin-bottom:6px;">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
@@ -7880,7 +7954,9 @@ function renderScholarPanel(container) {
     if (slovoCounters.length) {
       html += '<div style="font-size:11px;color:#6a5040;font-weight:bold;text-transform:uppercase;letter-spacing:0.5px;margin:8px 0 6px;">Контраргументы:</div>';
       for (const c of slovoCounters) {
-        const pageMeta = c.page ? `<span style="font-size:11px;color:#888;">Стр. ${escapeHtml(c.page)}</span>` : '';
+        const pageMeta = c.page
+          ? `<span style="font-size:11px;color:#888;">${renderTextWithPageLinks(`стр. ${c.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })}</span>`
+          : '';
         const sourceMeta = c.url ? `<a href="${escapeHtml(safeUrl(c.url))}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:#5a3818;text-decoration:underline dotted;">источник ↗</a>` : '';
         html += `<div style="background:#fff;padding:8px 10px;border:1px solid #e9d9c9;border-radius:4px;margin-bottom:6px;">
           <div style="font-weight:bold;color:#6b3d31;font-size:12px;margin-bottom:3px;">${escapeHtml(c.name)}</div>

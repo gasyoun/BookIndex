@@ -464,9 +464,21 @@ test.describe('aaz-index smoke', () => {
     await page.locator('#kwic-page-end').fill('404');
     await page.locator('#kwic-query').fill(lexSeed);
     await page.locator('#kwic-run').click();
+    await expect(page.locator('#kwic-source-hint')).toContainText('словарные карточки');
 
     const firstLexRow = page.locator('#kwic-results .kwic-row').first();
     await expect(firstLexRow).toBeVisible();
+    await firstLexRow.locator('.kwic-page-link').first().click();
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/lectures\/reading\/\d+/);
+
+    await page.goto('/aaz-index.html#materials/kwic');
+    await page.locator('#kwic-source').selectOption('lexicon');
+    await page.locator('#kwic-sort').selectOption('right');
+    await page.locator('#kwic-page-start').fill('1');
+    await page.locator('#kwic-page-end').fill('404');
+    await page.locator('#kwic-query').fill(lexSeed);
+    await page.locator('#kwic-run').click();
+    await expect(page.locator('#kwic-results .kwic-row').first()).toBeVisible();
     await firstLexRow.locator('.kwic-open-card').first().click();
     await expect(page).toHaveURL(/#(?:v4\/)?lexicon\/list\/item\/lexicon\//);
     await expect(page.locator('#right-content .card h2')).toBeVisible();
@@ -490,6 +502,7 @@ test.describe('aaz-index smoke', () => {
     await page.locator('#kwic-source').selectOption('glossary');
     await page.locator('#kwic-query').fill(glossarySeed);
     await page.locator('#kwic-run').click();
+    await expect(page.locator('#kwic-source-hint')).toContainText('учебные определения');
     const firstGlossaryRow = page.locator('#kwic-results .kwic-row').first();
     await expect(firstGlossaryRow).toBeVisible();
     await firstGlossaryRow.locator('.kwic-open-glossary').first().click();
