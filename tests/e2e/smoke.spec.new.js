@@ -495,6 +495,64 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
   });
 
+  test('list toolbar keeps search and discussed filter on one row, export stays above right pane content', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto('/aaz-index.html#v4/lexicon_reverse/list');
+    await expect(page.locator('#search-input')).toBeVisible();
+    await expect(page.locator('#only-discussed-btn')).toBeVisible();
+
+    const topSpread = await page.evaluate(() => {
+      const search = document.getElementById('search-input');
+      const discussed = document.getElementById('only-discussed-btn');
+      if (!search || !discussed) return 999;
+      return Math.abs(search.getBoundingClientRect().top - discussed.getBoundingClientRect().top);
+    });
+    expect(topSpread).toBeLessThan(10);
+
+    const exportButton = page.locator('.right-pane-tools #export-section-md');
+    await expect(exportButton).toBeVisible();
+    await expect(page.locator('.filters #export-section-md')).toHaveCount(0);
+
+    const exportAboveContent = await page.evaluate(() => {
+      const btn = document.querySelector('.right-pane-tools #export-section-md');
+      const content = document.getElementById('right-content');
+      if (!btn || !content) return false;
+      return btn.getBoundingClientRect().bottom <= content.getBoundingClientRect().top + 2;
+    });
+    expect(exportAboveContent).toBeTruthy();
+  });
+
+  test('accented heads render as accent-safe spans in list and card', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto('/aaz-index.html#v4/toponyms/list');
+
+    const target = await page.evaluate(() => {
+      const hasAccent = (text) => /[\u0300-\u036f]/.test(String(text || ''));
+      const kinds = ['toponyms', 'languages', 'lexicon', 'lexicon_reverse', 'subject', 'names'];
+      for (const type of kinds) {
+        const list = Array.isArray(APP_DATA?.[type]) ? APP_DATA[type] : [];
+        for (const item of list) {
+          const head = String(item && item.head ? item.head : '');
+          if (!hasAccent(head)) continue;
+          const hash = typeof buildItemHash === 'function' ? buildItemHash(type, head) : '';
+          if (!hash) continue;
+          return { type, head, hash };
+        }
+      }
+      return null;
+    });
+    expect(target).toBeTruthy();
+
+    await page.goto(`/aaz-index.html${target.hash}`);
+    await expect(page.locator('#right-content .card h2')).toBeVisible();
+
+    const wrappedInCard = await page.locator('#right-content .card h2 .accent-safe').count();
+    expect(wrappedInCard).toBeGreaterThan(0);
+
+    const wrappedInList = await page.locator('#name-list .name-item.selected .head .accent-safe').count();
+    expect(wrappedInList).toBeGreaterThan(0);
+  });
+
   test('reverse lexicon and combined index render in multiple columns on desktop', async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
 

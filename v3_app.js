@@ -796,23 +796,35 @@ function shuffleArray(input) {
   return arr;
 }
 
+const ACCENT_SAFE_TOKEN_RE = /([^\s,;()[\]{}<>]+[\u0300-\u036f][^\s,;()[\]{}<>]*)/g;
+
+function wrapAccentSafeInEscapedText(escapedText) {
+  return String(escapedText || '').replace(ACCENT_SAFE_TOKEN_RE, '<span class="accent-safe">$1</span>');
+}
+
 function renderAccentSafe(s) {
-  const escaped = escapeHtml(s);
-  return escaped.replace(/([^\s,;()[\]{}]+[\u0300-\u036f][^\s,;()[\]{}]*)/g, '<span class="accent-safe">$1</span>');
+  return wrapAccentSafeInEscapedText(escapeHtml(s));
+}
+
+function renderAccentSafeInHtmlTextNodes(html) {
+  return String(html || '').replace(/(^|>)([^<>]+)(?=<|$)/g, (match, prefix, textPart) => {
+    return `${prefix}${wrapAccentSafeInEscapedText(textPart)}`;
+  });
 }
 
 function highlightInContext(text, head) {
-  if (!head) return escapeHtml(text);
+  if (!head) return renderAccentSafe(text);
   const parts = head.split(/[\s,]/);
   const surname = parts[0];
-  if (!surname || surname.length < 3) return escapeHtml(text);
+  if (!surname || surname.length < 3) return renderAccentSafe(text);
   const stem = surname.length > 5 ? surname.slice(0, -2) : surname;
   const escStem = stem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   try {
     const re = new RegExp(escStem + '[А-Яа-яёЁA-Za-z]{0,5}', 'gi');
-    return escapeHtml(text).replace(re, m => '<mark>' + m + '</mark>');
+    const highlighted = escapeHtml(text).replace(re, m => '<mark>' + m + '</mark>');
+    return renderAccentSafeInHtmlTextNodes(highlighted);
   } catch (e) {
-    return escapeHtml(text);
+    return renderAccentSafe(text);
   }
 }
 
@@ -2928,17 +2940,21 @@ function renderListPanel(container) {
       <div class="list-card-layout">
         <div class="left-pane">
           <div class="filters">
-            <input type="text" id="search-input" placeholder="${currentEntity==='all'?'Поиск по всем указателям…':'Поиск…'}" value="${escapeHtml(searchQuery)}" autofocus />
-            ${catChips}
-            <div class="filter-row">
-              ${candidateBtnHtml}
+            <div class="filters-top-row">
+              <div class="filters-search">
+                <input type="text" id="search-input" placeholder="${currentEntity==='all'?'Поиск по всем указателям…':'Поиск…'}" value="${escapeHtml(searchQuery)}" autofocus />
+              </div>
               <button class="filter-chip ${onlyDiscussed?'active':''}" id="only-discussed-btn">только обсуждаемые (≥2 стр.)</button>
-              <button class="filter-chip" id="export-section-md">экспорт раздела .md</button>
             </div>
+            ${catChips}
+            ${candidateBtnHtml ? `<div class="filter-row">${candidateBtnHtml}</div>` : ''}
           </div>
           <div class="name-list" id="name-list"></div>
         </div>
         <div class="right-pane">
+          <div class="right-pane-tools">
+            <button class="filter-chip" id="export-section-md">экспорт раздела .md</button>
+          </div>
           <div id="right-content"></div>
         </div>
       </div>
@@ -3130,7 +3146,7 @@ function buildListItemInnerHtml(it, showTypeLabel) {
   }
   const typeLabel = showTypeLabel ? ` <span class="entity-type-tag">${it._entityLabel}</span>` : '';
   const moderatorMark = it.is_moderator ? ' <span style="color:#999;font-size:10px;">· мод.</span>' : '';
-  return `${dot}<span class="head ${it.discussed ? 'discussed' : ''}">${escapeHtml(it.head)}</span>${typeLabel}${moderatorMark}<span class="pages-count">${(it.page_list || []).length}</span>`;
+  return `${dot}<span class="head ${it.discussed ? 'discussed' : ''}">${renderAccentSafe(it.head)}</span>${typeLabel}${moderatorMark}<span class="pages-count">${(it.page_list || []).length}</span>`;
 }
 
 function selectListItem(it, fallbackType) {
@@ -3600,7 +3616,7 @@ function renderCardInRight() {
       <div class="card-header">
         ${photo}
         <div class="card-title-block">
-          <h2>${escapeHtml(it.head)}</h2>
+          <h2>${renderAccentSafe(it.head)}</h2>
           <div class="card-meta-row">
             <div class="category">${escapeHtml(category)}</div>
             ${sourceConfirmedInline}
