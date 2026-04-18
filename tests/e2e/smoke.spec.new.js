@@ -998,6 +998,18 @@ test.describe('aaz-index smoke', () => {
     expect(isExpanded).toBeFalsy();
   });
 
+  test('russian evolution page references are clickable and open reading mode', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/materials/russian_evolution');
+    const firstPageLink = page.locator('.russian-evolution-page-link').first();
+    await expect(firstPageLink).toBeVisible();
+    const href = await firstPageLink.getAttribute('href');
+    expect(String(href || '')).toMatch(/#(?:v4\/)?materials\/lectures\/reading\/\d+/);
+
+    await firstPageLink.click();
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/lectures\/reading\/\d+/);
+    await expect(page.locator('#reading-page-input')).toBeVisible();
+  });
+
   test('phonetic laws keep transition chunks around arrow for t to th example', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/materials/phonetic_laws');
     const targetComment = page.locator('tr', { hasText: '\u00ab\u0442\u0440\u0438\u00bb' }).locator('td').nth(2);

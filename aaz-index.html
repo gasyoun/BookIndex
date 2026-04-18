@@ -73153,7 +73153,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '7270d475814c';
+const APP_BUILD_ID = '1b9cd15a10f4';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -75805,7 +75805,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '7270d475814c' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '1b9cd15a10f4' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -80247,6 +80247,12 @@ function renderRussianEvolutionPanel(container) {
   for (let i = 0; i < samples.length; i++) {
     const s = samples[i];
     const isLast = i === samples.length - 1;
+    const pageRaw = parseInt(String(s.page || ''), 10);
+    const pageNum = clampPageInBook(Number.isFinite(pageRaw) ? pageRaw : 1);
+    const pageLabel = escapeHtml(String(s.page || pageNum));
+    const pageMetaHtml = s.page
+      ? `<a class="russian-evolution-page-link card-page-link related-link" data-page="${pageNum}" href="${escapeHtml(buildReadingNowHash(pageNum))}" style="text-decoration:underline dotted;color:#5a3818;">стр. ${pageLabel}</a>`
+      : '';
     html += `<div style="display:grid;grid-template-columns:120px 1fr;gap:18px;margin-bottom:${isLast?'0':'24px'};position:relative;">
       <div style="text-align:right;border-right:3px solid #8a7050;padding-right:14px;padding-top:6px;">
         <div style="font-size:18px;font-weight:bold;color:#5a3818;">${escapeHtml(s.epoch)}</div>
@@ -80255,12 +80261,18 @@ function renderRussianEvolutionPanel(container) {
       <div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:14px 18px;">
         <div style="font-size:15px;font-style:italic;color:#5a3818;line-height:1.6;margin-bottom:8px;">«${escapeHtml(s.sample)}»</div>
         <div style="font-size:12px;color:#666;margin-bottom:8px;">${escapeHtml(s.translation)}</div>
-        <div style="font-size:11px;color:#888;border-top:1px solid #f0e8d8;padding-top:6px;">${escapeHtml(s.note)} · стр. ${s.page}</div>
+        <div style="font-size:11px;color:#888;border-top:1px solid #f0e8d8;padding-top:6px;">${escapeHtml(s.note)}${pageMetaHtml ? ` · ${pageMetaHtml}` : ''}</div>
       </div>
     </div>`;
   }
   html += '</div></div>';
   container.innerHTML = html;
+  container.querySelectorAll('.russian-evolution-page-link[data-page]').forEach((el) => {
+    bindActionWithKeyboard(el, () => {
+      const page = parseInt((el.dataset && el.dataset.page) || '0', 10);
+      openReadingNowPage(Number.isFinite(page) ? page : 1);
+    });
+  });
 }
 
 // =========================================================

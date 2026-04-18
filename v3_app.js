@@ -7100,6 +7100,12 @@ function renderRussianEvolutionPanel(container) {
   for (let i = 0; i < samples.length; i++) {
     const s = samples[i];
     const isLast = i === samples.length - 1;
+    const pageRaw = parseInt(String(s.page || ''), 10);
+    const pageNum = clampPageInBook(Number.isFinite(pageRaw) ? pageRaw : 1);
+    const pageLabel = escapeHtml(String(s.page || pageNum));
+    const pageMetaHtml = s.page
+      ? `<a class="russian-evolution-page-link card-page-link related-link" data-page="${pageNum}" href="${escapeHtml(buildReadingNowHash(pageNum))}" style="text-decoration:underline dotted;color:#5a3818;">стр. ${pageLabel}</a>`
+      : '';
     html += `<div style="display:grid;grid-template-columns:120px 1fr;gap:18px;margin-bottom:${isLast?'0':'24px'};position:relative;">
       <div style="text-align:right;border-right:3px solid #8a7050;padding-right:14px;padding-top:6px;">
         <div style="font-size:18px;font-weight:bold;color:#5a3818;">${escapeHtml(s.epoch)}</div>
@@ -7108,12 +7114,18 @@ function renderRussianEvolutionPanel(container) {
       <div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:14px 18px;">
         <div style="font-size:15px;font-style:italic;color:#5a3818;line-height:1.6;margin-bottom:8px;">«${escapeHtml(s.sample)}»</div>
         <div style="font-size:12px;color:#666;margin-bottom:8px;">${escapeHtml(s.translation)}</div>
-        <div style="font-size:11px;color:#888;border-top:1px solid #f0e8d8;padding-top:6px;">${escapeHtml(s.note)} · стр. ${s.page}</div>
+        <div style="font-size:11px;color:#888;border-top:1px solid #f0e8d8;padding-top:6px;">${escapeHtml(s.note)}${pageMetaHtml ? ` · ${pageMetaHtml}` : ''}</div>
       </div>
     </div>`;
   }
   html += '</div></div>';
   container.innerHTML = html;
+  container.querySelectorAll('.russian-evolution-page-link[data-page]').forEach((el) => {
+    bindActionWithKeyboard(el, () => {
+      const page = parseInt((el.dataset && el.dataset.page) || '0', 10);
+      openReadingNowPage(Number.isFinite(page) ? page : 1);
+    });
+  });
 }
 
 // =========================================================
