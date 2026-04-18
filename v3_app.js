@@ -941,7 +941,7 @@ function buildCardPageLinksHtml(pages, maxLinks = 28) {
   if (!list.length) return '';
   const shown = list.slice(0, Math.max(1, maxLinks));
   let html = shown.map((page) => {
-    return `<a class="card-page-link related-link" data-page="${page}" href="${escapeHtml(buildReadingNowHash(page))}">стр. ${page}</a>`;
+    return `<a class="card-page-link related-link page-ref-link" data-page="${page}" href="${escapeHtml(buildReadingNowHash(page))}">стр. ${page}</a>`;
   }).join(', ');
   const hiddenCount = list.length - shown.length;
   if (hiddenCount > 0) html += ` <span style="color:#888;">и ещё ${hiddenCount}</span>`;
@@ -951,7 +951,8 @@ function buildCardPageLinksHtml(pages, maxLinks = 28) {
 function renderTextWithPageLinks(text, options = {}) {
   const raw = String(text == null ? '' : text);
   if (!raw) return '';
-  const className = String(options.className || 'card-page-link related-link page-ref-link');
+  const classNameRaw = String(options.className || 'card-page-link related-link');
+  const className = /\bpage-ref-link\b/.test(classNameRaw) ? classNameRaw : `${classNameRaw} page-ref-link`;
   const style = (typeof options.style === 'string')
     ? options.style
     : 'text-decoration:underline dotted;color:#5a3818;';

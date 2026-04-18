@@ -595,6 +595,14 @@
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
+  .page-ref-link {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline;
+    vertical-align: baseline;
+    font-size: inherit;
+    line-height: inherit;
+  }
   .card h3 {
     font-size: 12px;
     color: var(--muted);
@@ -73153,7 +73161,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'd911976ebd64';
+const APP_BUILD_ID = 'b77198d16f86';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -74088,7 +74096,7 @@ function buildCardPageLinksHtml(pages, maxLinks = 28) {
   if (!list.length) return '';
   const shown = list.slice(0, Math.max(1, maxLinks));
   let html = shown.map((page) => {
-    return `<a class="card-page-link related-link" data-page="${page}" href="${escapeHtml(buildReadingNowHash(page))}">стр. ${page}</a>`;
+    return `<a class="card-page-link related-link page-ref-link" data-page="${page}" href="${escapeHtml(buildReadingNowHash(page))}">стр. ${page}</a>`;
   }).join(', ');
   const hiddenCount = list.length - shown.length;
   if (hiddenCount > 0) html += ` <span style="color:#888;">и ещё ${hiddenCount}</span>`;
@@ -74098,7 +74106,8 @@ function buildCardPageLinksHtml(pages, maxLinks = 28) {
 function renderTextWithPageLinks(text, options = {}) {
   const raw = String(text == null ? '' : text);
   if (!raw) return '';
-  const className = String(options.className || 'card-page-link related-link page-ref-link');
+  const classNameRaw = String(options.className || 'card-page-link related-link');
+  const className = /\bpage-ref-link\b/.test(classNameRaw) ? classNameRaw : `${classNameRaw} page-ref-link`;
   const style = (typeof options.style === 'string')
     ? options.style
     : 'text-decoration:underline dotted;color:#5a3818;';
@@ -75838,7 +75847,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'd911976ebd64' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'b77198d16f86' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;

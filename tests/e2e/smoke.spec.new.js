@@ -247,6 +247,24 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/aaz-index.html#v4/languages/list/item/languages/sanskrit');
     await expect(page.locator('#right-content .card h2')).toContainText(/\u0441\u0430\u043d\u0441\u043a\u0440\u0438\u0442/i);
     await expect(page).toHaveURL(/#v4\/languages\/list\/item\/languages\/sanskrit$/);
+    const inlinePadding = await page.evaluate(() => {
+      const links = Array.from(document.querySelectorAll('#right-content .card .pages-info .card-page-link')).slice(0, 3);
+      if (!links.length) return null;
+      return links.map((el) => {
+        const st = window.getComputedStyle(el);
+        return {
+          left: parseFloat(st.paddingLeft || '0'),
+          right: parseFloat(st.paddingRight || '0'),
+          display: st.display,
+        };
+      });
+    });
+    expect(Array.isArray(inlinePadding)).toBeTruthy();
+    for (const row of inlinePadding || []) {
+      expect(row.left).toBeLessThanOrEqual(0.5);
+      expect(row.right).toBeLessThanOrEqual(0.5);
+      expect(row.display).toBe('inline');
+    }
 
     const generatedHash = await page.evaluate(() => {
       if (typeof buildItemHash !== 'function') return '';
