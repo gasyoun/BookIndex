@@ -1389,7 +1389,9 @@ function renderBreadcrumbs() {
   if (!host) return;
   const model = buildBreadcrumbModel();
   host.innerHTML = '';
-  if (!model.length) return;
+  const shouldShow = model.length > 2;
+  host.hidden = !shouldShow;
+  if (!shouldShow) return;
 
   model.forEach((crumb, idx) => {
     const btn = document.createElement('button');
@@ -7226,7 +7228,7 @@ function renderPageTrendsPanel(container) {
   const trendUp = globalTrend.filter(x => x.delta > 0).sort((a, b) => (b.delta - a.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
   const trendDown = globalTrend.filter(x => x.delta < 0).sort((a, b) => (a.delta - b.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
 
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
+  let html = '<div class="panel active page-trends-panel"><div class="page-trends-shell">';
   html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;">';
   html += '<div><h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Динамика по страницам</h2>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:12px;">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div></div>';
@@ -7265,19 +7267,19 @@ function renderPageTrendsPanel(container) {
       <div style="font-size:14px;color:#5a3818;font-weight:bold;margin-bottom:2px;">${s.label}</div>
       <div style="font-size:11px;color:#666;margin-bottom:7px;">Сущностей: <strong>${s.activeCount}</strong> · упоминаний: <strong>${s.mentionTotal}</strong></div>
       <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Топ в выбранном окне</div>
-      <div>${s.top.length ? s.top.map(it => `<a class="trend-link" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(it.type, it.head))}" style="display:inline-block;padding:2px 7px;margin:2px 6px 2px 0;background:#f0e8d8;border-radius:10px;color:#5a3818;cursor:pointer;font-size:11px;text-decoration:none;">${escapeHtml(it.head)} · ${it.count}</a>`).join('') : '<span style="color:#999;font-size:12px;">—</span>'}</div>
+      <div>${s.top.length ? s.top.map(it => `<a class="trend-link page-trend-chip" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(it.type, it.head))}" style="display:inline-block;padding:2px 7px;margin:2px 6px 2px 0;background:#f0e8d8;border-radius:10px;color:#5a3818;cursor:pointer;font-size:11px;text-decoration:none;">${escapeHtml(it.head)} · ${it.count}</a>`).join('') : '<span style="color:#999;font-size:12px;">—</span>'}</div>
     </div>`;
   }
   html += '</div>';
 
   const trendLinks = (rows, color) => rows.length
-    ? rows.map(r => `<a class="trend-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" style="display:flex;justify-content:space-between;gap:8px;padding:4px 0;cursor:pointer;color:inherit;text-decoration:none;">
-        <span style="color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)}</span>
-        <span style="color:${color};font-size:11px;">${r.delta > 0 ? '+' : ''}${r.delta} (${r.leftCount}→${r.rightCount})</span>
+    ? rows.map(r => `<a class="trend-link page-trend-row" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}">
+        <span class="page-trend-head">${escapeHtml(r.head)}</span>
+        <span class="page-trend-metrics" style="color:${color};">${r.delta > 0 ? '+' : ''}${r.delta} (${r.leftCount}→${r.rightCount})</span>
       </a>`).join('')
     : '<div style="color:#999;font-size:12px;">—</div>';
 
-  html += `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;">
+  html += `<div class="page-trends-delta-grid">
     <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
       <div style="font-size:13px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Растут во второй половине диапазона</div>
       ${trendLinks(trendUp, '#1f7a3e')}

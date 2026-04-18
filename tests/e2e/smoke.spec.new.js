@@ -192,6 +192,15 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
   });
 
+  test('breadcrumbs stay hidden for entity/tab pages and visible for deep card state', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/subject/histogram');
+    await expect(page.locator('#breadcrumbs')).toBeHidden();
+
+    await page.goto('/aaz-index.html#v4/names/list/item/names/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%20%D0%9C%D0%B0%D0%BA%D0%B5%D0%B4%D0%BE%D0%BD%D1%81%D0%BA%D0%B8%D0%B9');
+    await expect(page.locator('#breadcrumbs')).toBeVisible();
+    await expect(page.locator('#breadcrumbs .breadcrumb-link')).toHaveCount(3);
+  });
+
   test('name card keeps source confirmed in header row and avoids duplicate wikipedia quote', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/names/list/item/names/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%20%D0%9C%D0%B0%D0%BA%D0%B5%D0%B4%D0%BE%D0%BD%D1%81%D0%BA%D0%B8%D0%B9');
     await expect(page.locator('#right-content .card h2')).toContainText(/\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440/i);
