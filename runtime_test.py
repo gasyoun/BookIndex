@@ -104,7 +104,7 @@ def check_static_guards():
         'OpenTopoMap',
         'renderOfflineMap(type, items, colorFn, radiusFn);',
         'function registerAppServiceWorker() {',
-        "navigator.serviceWorker.register('./sw.js', { scope: './' })",
+        "navigator.serviceWorker.register(swUrl, { scope: './', updateViaCache: 'none' })",
         'let nameGraphMinEdgeWeight = 0.1;',
         '<input id="graph-min-weight" type="range"',
         ".attr('class', 'name-graph-node')",
@@ -155,7 +155,7 @@ def check_static_guards():
             return False
 
     sw_required = [
-        "const CACHE_NAME = 'bookindex-shell-v1';",
+        "const CACHE_NAME = `bookindex-shell-${SW_BUILD_ID}`;",
         "self.addEventListener('install'",
         "self.addEventListener('fetch'",
         "caches.match(OFFLINE_URL)",

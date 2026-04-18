@@ -6,6 +6,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
+const APP_BUILD_ID = '__APP_BUILD_ID__';
 
 function parseAppData() {
   if (globalSearchCache && typeof globalSearchCache.clear === 'function') {
@@ -2354,8 +2355,42 @@ function downloadTextFile(filename, text, mimeType = 'text/markdown;charset=utf-
 function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
+  const buildIdRaw = String(APP_BUILD_ID || '').trim();
+  const buildId = buildIdRaw && buildIdRaw !== '__APP_BUILD_ID__' ? buildIdRaw : 'dev';
+  const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
-    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {});
+    const hadController = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.register(swUrl, { scope: './', updateViaCache: 'none' })
+      .then((registration) => {
+        if (registration && typeof registration.update === 'function') {
+          registration.update().catch(() => {});
+        }
+        if (registration && registration.waiting && typeof registration.waiting.postMessage === 'function') {
+          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
+        if (registration && typeof registration.addEventListener === 'function') {
+          registration.addEventListener('updatefound', () => {
+            const next = registration.installing;
+            if (!next || typeof next.addEventListener !== 'function') return;
+            next.addEventListener('statechange', () => {
+              if (next.state === 'installed' && navigator.serviceWorker.controller && typeof next.postMessage === 'function') {
+                next.postMessage({ type: 'SKIP_WAITING' });
+              }
+            });
+          });
+        }
+        if (hadController && typeof navigator.serviceWorker.addEventListener === 'function') {
+          let reloaded = false;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (reloaded) return;
+            reloaded = true;
+            if (window && window.location && typeof window.location.reload === 'function') {
+              window.location.reload();
+            }
+          });
+        }
+      })
+      .catch(() => {});
   };
   if (typeof document !== 'undefined' && document.readyState === 'complete') {
     register();
@@ -3418,6 +3453,10 @@ function renderCardInRight() {
   if (editorial.suspect && it.head && it.head.startsWith('?')) {
     category = 'Кандидат — требует проверки редактором' + ((editorial.note || it.note) ? ' · ' + (editorial.note || it.note) : '');
   }
+  const useTwoColumnCardLayout = eType === 'toponyms';
+  const sourceConfirmedInline = editorial.source_confirmed
+    ? '<span class="card-status-inline">source confirmed</span>'
+    : '';
   const allPages = (it.page_list || []);
   let pagesText = it.pages || it.head_pages || '';
 
@@ -3427,7 +3466,10 @@ function renderCardInRight() {
         ${photo}
         <div class="card-title-block">
           <h2>${escapeHtml(it.head)}</h2>
-          <div class="category">${escapeHtml(category)}</div>
+          <div class="card-meta-row">
+            <div class="category">${escapeHtml(category)}</div>
+            ${sourceConfirmedInline}
+          </div>
           ${wikiLink}
           <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;">
             <button type="button" class="related-link related-link-btn" id="card-prev" aria-label="Предыдущая карточка" style="font-size:11px;">◀</button>
@@ -3447,7 +3489,6 @@ function renderCardInRight() {
   const flagBadges = [];
   if (editorial.verified) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#e7f7ed;border:1px solid #b5e2c4;color:#2e6d44;font-size:11px;">verified</span>');
   if (editorial.suspect) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#fff6e8;border:1px solid #f0d1a6;color:#8b5a2b;font-size:11px;">suspect</span>');
-  if (editorial.source_confirmed) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#eef4ff;border:1px solid #c3d6ff;color:#355a9a;font-size:11px;">source confirmed</span>');
   if (flagBadges.length) {
     html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">${flagBadges.join('')}</div>`;
   }
@@ -3463,17 +3504,20 @@ function renderCardInRight() {
   }
 
   // Контексты
+  if (useTwoColumnCardLayout) html += '<div class="card-two-col-layout">';
+
   if (Array.isArray(it.sources) && it.sources.length > 0) {
-    html += '<h3>Sources</h3><div class="related">';
+    html += useTwoColumnCardLayout ? '<section class="card-col-block"><h3>Sources</h3><div class="related">' : '<h3>Sources</h3><div class="related">';
     const cardSources = it.sources.slice(0, 5);
     for (let sourceIdx = 0; sourceIdx < cardSources.length; sourceIdx++) {
       const src = cardSources[sourceIdx];
       const label = escapeHtml(src.label || 'Source');
+      const isWikiSource = /wikipedia/i.test(String(src.label || '')) || /wikipedia\.org/i.test(String(src.url || ''));
       const pageHint = src.page ? ` · p. ${escapeHtml(src.page)}` : '';
       const link = src.url
         ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
         : `<span>${label}</span>`;
-      const quote = src.quote ? `<div style="font-size:12px;color:#444;line-height:1.45;margin:4px 0 2px 0;">“${escapeHtml(src.quote)}”</div>` : '';
+      const quote = (!isWikiSource && src.quote) ? `<div style="font-size:12px;color:#444;line-height:1.45;margin:4px 0 2px 0;">“${escapeHtml(src.quote)}”</div>` : '';
       html += `<div style="padding:6px 0;border-bottom:1px dashed #ddd;">
         ${link}
         <span style="color:#888;font-size:11px;">${pageHint}</span>
@@ -3481,7 +3525,7 @@ function renderCardInRight() {
         ${quote}
       </div>`;
     }
-    html += '</div>';
+    html += useTwoColumnCardLayout ? '</div></section>' : '</div>';
   }
   const ctxKeys = it.contexts ? Object.keys(it.contexts).sort((a, b) => parseInt(a) - parseInt(b)) : [];
   if (ctxKeys.length > 0) {
@@ -3561,6 +3605,7 @@ function renderCardInRight() {
     html += '</div>';
   }
 
+  if (useTwoColumnCardLayout) html += '</div>';
   html += '</div>';
   right.innerHTML = html;
   wireSafeImageFallback(right);

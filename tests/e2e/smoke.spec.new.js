@@ -192,6 +192,48 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
   });
 
+  test('name card keeps source confirmed in header row and avoids duplicate wikipedia quote', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/names/list/item/names/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%20%D0%9C%D0%B0%D0%BA%D0%B5%D0%B4%D0%BE%D0%BD%D1%81%D0%BA%D0%B8%D0%B9');
+    await expect(page.locator('#right-content .card h2')).toContainText(/\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440/i);
+
+    const metaRow = page.locator('#right-content .card .card-meta-row');
+    const sourceConfirmed = metaRow.locator('.card-status-inline');
+    await expect(metaRow).toBeVisible();
+    await expect(sourceConfirmed).toHaveText(/source confirmed/i);
+
+    const rowTopSpread = await page.evaluate(() => {
+      const row = document.querySelector('#right-content .card .card-meta-row');
+      const cat = row ? row.querySelector('.category') : null;
+      const badge = row ? row.querySelector('.card-status-inline') : null;
+      if (!cat || !badge) return 999;
+      return Math.abs(cat.getBoundingClientRect().top - badge.getBoundingClientRect().top);
+    });
+    expect(rowTopSpread).toBeLessThan(10);
+
+    const wikiSourceRow = page
+      .locator('#right-content .card .related div', { has: page.locator('a[href*="wikipedia.org"]') })
+      .first();
+    await expect(wikiSourceRow).toBeVisible();
+    const wikiRowHtml = await wikiSourceRow.innerHTML();
+    expect(wikiRowHtml).not.toContain('“');
+    expect(wikiRowHtml).not.toContain('”');
+  });
+
+  test('toponym card uses two-column layout on desktop to reduce extra scrolling', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto('/aaz-index.html#v4/toponyms/list');
+    const firstToponym = page.locator('#name-list .name-item').first();
+    await expect(firstToponym).toBeVisible();
+    await firstToponym.click();
+    await expect(page).toHaveURL(/#(?:v4\/)?toponyms\/list\/item\/toponyms\//);
+    await expect(page.locator('#right-content .card h2')).toBeVisible();
+
+    const layout = page.locator('#right-content .card .card-two-col-layout');
+    await expect(layout).toBeVisible();
+    const columnCount = await layout.evaluate((el) => Number.parseInt(getComputedStyle(el).columnCount || '1', 10) || 1);
+    expect(columnCount).toBeGreaterThanOrEqual(2);
+  });
+
   test('names graph supports weight filter, tooltip and navigation to card', async ({ page }) => {
     await page.goto('/aaz-index.html#names/graph');
     const slider = page.locator('#graph-min-weight');

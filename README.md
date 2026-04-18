@@ -110,7 +110,7 @@ python runtime_test.py
 
 - `validate_content.py`: `0 errors` (допустимы известные warning по дублям данных).
 - `runtime_test.py`: `21/21`.
-- `playwright test`: `39 passed`.
+- `playwright test`: `41 passed`.
 
 ## Контент-аудит (метрики)
 
@@ -150,4 +150,5 @@ GitHub Actions workflow `CI` запускается на `push` и `pull_request
 - `validate_content.py`;
 - `runtime_test.py`;
 - сборку `aaz-index.html`;
+- проверку, что закоммиченный `aaz-index.html` синхронизирован с исходниками (`git diff --exit-code -- aaz-index.html`);
 - Playwright smoke.

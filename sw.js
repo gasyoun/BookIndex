@@ -1,4 +1,6 @@
-const CACHE_NAME = 'bookindex-shell-v1';
+const SW_URL = new URL(self.location.href);
+const SW_BUILD_ID = SW_URL.searchParams.get('v') || 'dev';
+const CACHE_NAME = `bookindex-shell-${SW_BUILD_ID}`;
 const OFFLINE_URL = './aaz-index.html';
 const SHELL_ASSETS = [
   './aaz-index.html',
@@ -21,6 +23,13 @@ self.addEventListener('install', (event) => {
       .then((cache) => cache.addAll(SHELL_ASSETS))
       .then(() => self.skipWaiting())
   );
+});
+
+self.addEventListener('message', (event) => {
+  const data = event && event.data ? event.data : null;
+  if (data && data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('activate', (event) => {

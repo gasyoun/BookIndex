@@ -506,6 +506,28 @@
     font-size: 12px;
     margin-bottom: 4px;
   }
+  .card .card-meta-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .card .card-meta-row .category {
+    margin-bottom: 0;
+  }
+  .card .card-status-inline {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: #eef4ff;
+    border: 1px solid #c3d6ff;
+    color: #355a9a;
+    font-size: 11px;
+    font-style: normal;
+    line-height: 1.2;
+  }
   .card .wiki-link {
     display: inline-block;
     margin-top: 4px;
@@ -574,6 +596,18 @@
     text-align: left;
   }
   .related-link:hover { color: #c0392b; }
+  .card-two-col-layout {
+    column-count: 2;
+    column-gap: 16px;
+    margin-top: 8px;
+  }
+  .card-two-col-layout > * {
+    break-inside: avoid;
+    margin-bottom: 8px;
+  }
+  .card-col-block {
+    break-inside: avoid;
+  }
 
   /* Сводный словник: тип сущности рядом с именем */
   .entity-type-tag {
@@ -1039,6 +1073,7 @@
     .card { padding: 12px; }
     .card h2 { font-size: 18px; }
     .card-photo { width: 70px; height: 90px; }
+    .card-two-col-layout { column-count: 1; }
     .card h3 { font-size: 11px; margin: 10px 0 4px; }
     .context-text { font-size: 11px; }
 
@@ -1075,6 +1110,7 @@
     .card h2 { font-size: 16px; }
     .card-header { gap: 8px; }
     .card-photo { width: 56px; height: 72px; }
+    .card-two-col-layout { column-count: 1; }
     .entity-btn { padding: 5px 8px; font-size: 10px; }
     .tab { padding: 5px 8px; font-size: 10px; }
     .bar-row { grid-template-columns: 100px 1fr 30px; }
