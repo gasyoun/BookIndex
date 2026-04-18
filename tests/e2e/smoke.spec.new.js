@@ -902,6 +902,32 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#glossary-search')).toBeVisible();
   });
 
+  test('materials KWIC lexicon query keeps only relevant snippets for sanskrit', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/materials/kwic');
+    await page.locator('#kwic-source').selectOption('lexicon');
+    await page.locator('#kwic-page-start').fill('1');
+    await page.locator('#kwic-page-end').fill('404');
+    await page.locator('#kwic-query').fill('санскрит');
+    await page.locator('#kwic-run').click();
+    await expect(page.locator('#kwic-results .kwic-row').first()).toBeVisible();
+
+    const mismatch = await page.evaluate(() => {
+      const rows = Array.from(document.querySelectorAll('#kwic-results .kwic-row'));
+      const qNorm = typeof normalizeHeadForMatch === 'function'
+        ? normalizeHeadForMatch('санскрит')
+        : 'санскрит';
+      for (const row of rows.slice(0, 80)) {
+        const txt = String(row.textContent || '');
+        const norm = typeof normalizeHeadForMatch === 'function'
+          ? normalizeHeadForMatch(txt)
+          : txt.toLowerCase();
+        if (!norm.includes(qNorm)) return txt.slice(0, 220);
+      }
+      return '';
+    });
+    expect(mismatch).toBe('');
+  });
+
   test('materials tasks panel stores progress and answer history after reload', async ({ page }) => {
     await page.goto('/aaz-index.html#materials/tasks');
     await page.evaluate(() => {

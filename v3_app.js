@@ -5536,10 +5536,12 @@ function renderHomePanel(container) {
     html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;border-top:3px solid #8a7050;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:4px;">
         <div style="font-size:16px;font-weight:bold;color:#5a3818;">${escapeHtml(r.title)}</div>
-        <div style="font-size:20px;line-height:1;min-width:20px;text-align:right;">${safeIcon(r.icon)}</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:96px;">
+          <div style="font-size:11px;color:#888;white-space:nowrap;">📑 страницы ${escapeHtml(r.pages)}</div>
+          <div style="font-size:20px;line-height:1;min-width:20px;text-align:right;">${safeIcon(r.icon)}</div>
+        </div>
       </div>
       <div style="font-size:11px;color:#444;line-height:1.45;margin-bottom:6px;">${escapeHtml(r.desc)}</div>
-      <div style="font-size:11px;color:#888;margin-bottom:6px;">📑 страницы ${escapeHtml(r.pages)}</div>
       <div style="font-size:11px;">`;
     for (const e of r.entities) {
       html += `<a class="route-link" data-type="${escapeHtml(e.type)}" data-head="${escapeHtml(e.head)}" href="${escapeHtml(buildItemHash(e.type, e.head))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 2px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(e.head)}</a>`;
@@ -6614,6 +6616,8 @@ function collectLexiconKwicRows(query, pageStart, pageEnd) {
       const page = entry.page;
       const snippets = entry.snippets;
       for (const raw of snippets) {
+        const snippetNorm = normalizeHeadForMatch(raw);
+        if (!snippetNorm.includes(qNorm)) continue;
         const row = buildKwicContextRow({
           source: 'lexicon',
           term: head,
@@ -6622,7 +6626,6 @@ function collectLexiconKwicRows(query, pageStart, pageEnd) {
           page,
           snippet: raw,
           query: q,
-          matchHint: head,
         });
         if (row) rows.push(row);
         if (rows.length >= KWIC_MAX_ROWS) {
