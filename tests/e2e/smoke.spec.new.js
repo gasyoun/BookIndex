@@ -330,6 +330,20 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#glossary-search')).toHaveValue(/\u044d\u043d\u043a\u043b\u0438\u0442/i);
   });
 
+  test('global search opens scholar accent paradigms section by route', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const input = page.locator('#global-search');
+    await input.fill('\u0430\u043a\u0446\u0435\u043d\u0442\u043d\u044b\u0435 \u043f\u0430\u0440\u0430\u0434\u0438\u0433\u043c\u044b');
+    const routeHit = page
+      .locator('#global-search-results.open .header-search-item')
+      .filter({ hasText: /\u0430\u043a\u0446\u0435\u043d\u0442/i })
+      .first();
+    await expect(routeHit).toBeVisible();
+    await routeHit.click();
+    await expect(page).toHaveURL(/#(?:v4\/)?scholar\/scholar\/anchor\/sch-accents/);
+    await expect(page.locator('#sch-accents')).toBeVisible();
+  });
+
   test('glossary renders per-term LES links (not one shared URL)', async ({ page }) => {
     await page.goto('/aaz-index.html#materials/glossary');
     const links = page.locator('#glossary-list .glossary-les-link');
@@ -604,7 +618,8 @@ test.describe('aaz-index smoke', () => {
     expect(sourceBib).toContain('howpublished = {BookIndex card source}');
   });
   test('reading-now pager and quick trends navigation works', async ({ page }) => {
-    await page.goto('/aaz-index.html#home/home');
+    await page.goto('/aaz-index.html#materials/lectures');
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/lectures/);
     const input = page.locator('#reading-page-input');
     const go = page.locator('#reading-page-go');
     const prev = page.locator('#reading-page-prev');
@@ -628,6 +643,46 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#trend-end-range')).toHaveValue('120');
   });
 
+  test('home panel no longer renders reading-now widget', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    await expect(page.locator('#reading-page-input')).toHaveCount(0);
+    await expect(page.locator('#reading-now-results')).toHaveCount(0);
+  });
+
+  test('home panel keeps routes above recents and supports inner scroll on compact desktop', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 640 });
+    await page.goto('/aaz-index.html#v4/home/home');
+    const panel = page.locator('.home-panel');
+    await expect(panel).toBeVisible();
+
+    const info = await page.evaluate(() => {
+      const panelEl = document.querySelector('.home-panel');
+      if (!panelEl) return null;
+      const routesHost = panelEl.querySelector('#home-routes-details')
+        || panelEl.querySelector('.route-link')?.closest('div[style*="border-top:3px solid #8a7050"]');
+      const recentsHost = panelEl.querySelector('#home-recent-items')?.closest('div[style*="margin-bottom:14px"]');
+      const before = panelEl.scrollTop;
+      panelEl.scrollTop = panelEl.scrollHeight;
+      const after = panelEl.scrollTop;
+      return {
+        hasRoutesHost: !!routesHost,
+        hasRecentsHost: !!recentsHost,
+        routeBeforeRecents: !!(routesHost && recentsHost && (routesHost.compareDocumentPosition(recentsHost) & Node.DOCUMENT_POSITION_FOLLOWING)),
+        clientHeight: panelEl.clientHeight,
+        scrollHeight: panelEl.scrollHeight,
+        scrollTopBefore: before,
+        scrollTopAfter: after,
+      };
+    });
+
+    expect(info).toBeTruthy();
+    expect(info.hasRoutesHost).toBeTruthy();
+    expect(info.hasRecentsHost).toBeTruthy();
+    expect(info.routeBeforeRecents).toBeTruthy();
+    expect(info.scrollHeight).toBeGreaterThan(info.clientHeight);
+    expect(info.scrollTopAfter).toBeGreaterThan(info.scrollTopBefore);
+  });
+
   test('lexicon card links to glossary deep-link', async ({ page }) => {
     await page.goto('/aaz-index.html#lexicon/list/item/lexicon/%D0%B6%D0%B5');
     await expect(page.locator('#right-content .card h2')).toHaveText(/\u0436\u0435/i);
@@ -636,6 +691,49 @@ test.describe('aaz-index smoke', () => {
     await glossaryBacklink.click();
     await expect(page).toHaveURL(/#(?:v4\/)?materials\/glossary\/term\//);
     await expect(page.locator('#glossary-search')).toBeVisible();
+  });
+
+  test('materials tasks panel stores progress and answer history after reload', async ({ page }) => {
+    await page.goto('/aaz-index.html#materials/tasks');
+    await page.evaluate(() => {
+      localStorage.removeItem('zaliznyakiada.tasksProgress.v1');
+    });
+    await page.reload();
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/tasks/);
+
+    const firstOption = page.locator('#tasks-container .task-options button').first();
+    await expect(firstOption).toBeVisible();
+    await firstOption.click();
+
+    const summary = page.locator('#tasks-summary');
+    await expect(summary).toContainText('\u041e\u0442\u0432\u0435\u0442\u043e\u0432:');
+    await expect(summary).toContainText('1');
+    const historyRows = page.locator('#tasks-history-list .task-history-row');
+    await expect(historyRows.first()).toBeVisible();
+
+    const stored = await page.evaluate(() => {
+      const raw = localStorage.getItem('zaliznyakiada.tasksProgress.v1');
+      return raw ? JSON.parse(raw) : null;
+    });
+    expect(stored).toBeTruthy();
+    expect(Number(stored.totalAnswered || 0)).toBeGreaterThanOrEqual(1);
+    expect(Array.isArray(stored.history)).toBeTruthy();
+    expect(stored.history.length).toBeGreaterThanOrEqual(1);
+
+    await page.reload();
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/tasks/);
+    await expect(page.locator('#tasks-summary')).toContainText('\u041e\u0442\u0432\u0435\u0442\u043e\u0432:');
+    await expect(page.locator('#tasks-history-list .task-history-row').first()).toBeVisible();
+  });
+
+  test('phonetic laws keep transition chunks around arrow for t to th example', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/materials/phonetic_laws');
+    const targetComment = page.locator('tr', { hasText: '\u00ab\u0442\u0440\u0438\u00bb' }).locator('td').nth(2);
+    await expect(targetComment).toBeVisible();
+    const html = await targetComment.innerHTML();
+    expect(html).toContain('phonetic-arrow');
+    expect(html).toContain('\u043b\u0430\u0442\u0438\u043d\u0441\u043a\u043e\u0435&nbsp;t');
+    expect(html).toContain('\u0433\u0435\u0440\u043c\u0430\u043d\u0441\u043a\u043e\u0435&nbsp;\u00fe&nbsp;(th)');
   });
 
   test('related card links are clickable and keyboard reachable', async ({ page }) => {

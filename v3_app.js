@@ -414,6 +414,9 @@ const THEME_STORAGE_KEY = 'zaliznyakiada.theme.v1';
 const DENSITY_STORAGE_KEY = 'zaliznyakiada.density.v1';
 const READING_PAGE_STORAGE_KEY = 'zaliznyakiada.readingPage.v1';
 const RECENT_ITEMS_STORAGE_KEY = 'zaliznyakiada.recentItems.v1';
+const TASKS_PROGRESS_STORAGE_KEY = 'zaliznyakiada.tasksProgress.v1';
+const TASKS_PROGRESS_SCHEMA_VERSION = 1;
+const TASKS_HISTORY_LIMIT = 80;
 let globalKeyHandlersWired = false;
 let visibleItemsCache = null;
 let currentListSearchRaw = '';
@@ -781,6 +784,146 @@ function restoreViewState() {
   } catch (e) {
     return null;
   }
+}
+
+function createEmptyTasksProgress() {
+  return {
+    version: TASKS_PROGRESS_SCHEMA_VERSION,
+    totalAnswered: 0,
+    totalCorrect: 0,
+    byTask: {},
+    history: [],
+  };
+}
+
+function hashString32(text) {
+  const src = String(text || '');
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < src.length; i++) {
+    h ^= src.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  h ^= h >>> 15;
+  h = Math.imul(h, 2246822519);
+  h ^= h >>> 13;
+  return h >>> 0;
+}
+
+function getTaskStorageId(task, fallbackIndex = 0) {
+  const existing = String(task && task._storageId ? task._storageId : '').trim();
+  if (existing) return existing.slice(0, 120);
+  const preferred = String(task && task.id ? task.id : '').trim();
+  if (preferred) return preferred.slice(0, 120);
+  const question = String(task && task.question ? task.question : '');
+  const options = Array.isArray(task && task.options) ? task.options.join('|') : '';
+  const entityType = String(task && task.entity && task.entity.type ? task.entity.type : '');
+  const entityHead = String(task && task.entity && task.entity.head ? task.entity.head : '');
+  const entityIndex = String(task && task.entity && task.entity.index != null ? task.entity.index : '');
+  const coreSeed = `${question}|${options}|${entityType}|${entityHead}|${entityIndex}`.trim();
+  const seed = coreSeed || `idx:${fallbackIndex}`;
+  return `task_${hashString32(seed).toString(36)}`;
+}
+
+function normalizeTasksProgress(raw) {
+  const out = createEmptyTasksProgress();
+  if (!raw || typeof raw !== 'object') return out;
+  if (raw.version !== TASKS_PROGRESS_SCHEMA_VERSION) return out;
+  const answered = parseInt(raw.totalAnswered || 0, 10);
+  const correct = parseInt(raw.totalCorrect || 0, 10);
+  out.totalAnswered = Math.max(0, Number.isFinite(answered) ? answered : 0);
+  out.totalCorrect = Math.max(0, Math.min(out.totalAnswered, Number.isFinite(correct) ? correct : 0));
+
+  const byTask = raw.byTask && typeof raw.byTask === 'object' && !Array.isArray(raw.byTask)
+    ? raw.byTask
+    : {};
+  for (const [taskIdRaw, statRaw] of Object.entries(byTask)) {
+    const taskId = String(taskIdRaw || '').trim().slice(0, 120);
+    if (!taskId || !statRaw || typeof statRaw !== 'object') continue;
+    const itemAnswered = parseInt(statRaw.answered || 0, 10);
+    const itemCorrect = parseInt(statRaw.correct || 0, 10);
+    const answeredSafe = Math.max(0, Number.isFinite(itemAnswered) ? itemAnswered : 0);
+    const correctSafe = Math.max(0, Math.min(answeredSafe, Number.isFinite(itemCorrect) ? itemCorrect : 0));
+    out.byTask[taskId] = { answered: answeredSafe, correct: correctSafe };
+  }
+
+  const history = Array.isArray(raw.history) ? raw.history : [];
+  out.history = [];
+  for (const row of history) {
+    if (!row || typeof row !== 'object') continue;
+    const taskId = String(row.taskId || '').trim().slice(0, 120);
+    const question = String(row.question || '').trim().slice(0, 240);
+    const selected = String(row.selected || '').trim().slice(0, 240);
+    const correctAnswer = String(row.correctAnswer || '').trim().slice(0, 240);
+    const at = Number.isFinite(row.at) ? row.at : parseInt(row.at || 0, 10);
+    if (!taskId || !question || !Number.isFinite(at) || at <= 0) continue;
+    out.history.push({
+      taskId,
+      question,
+      selected,
+      correctAnswer,
+      isCorrect: row.isCorrect === true,
+      at,
+    });
+    if (out.history.length >= TASKS_HISTORY_LIMIT) break;
+  }
+  return out;
+}
+
+function getStoredTasksProgress() {
+  if (typeof localStorage === 'undefined') return createEmptyTasksProgress();
+  try {
+    const raw = localStorage.getItem(TASKS_PROGRESS_STORAGE_KEY);
+    if (!raw) return createEmptyTasksProgress();
+    return normalizeTasksProgress(JSON.parse(raw));
+  } catch (e) {
+    return createEmptyTasksProgress();
+  }
+}
+
+function persistTasksProgress(progress) {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(TASKS_PROGRESS_STORAGE_KEY, JSON.stringify(normalizeTasksProgress(progress)));
+  } catch (e) {}
+}
+
+function clearStoredTasksProgress() {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.removeItem(TASKS_PROGRESS_STORAGE_KEY);
+  } catch (e) {}
+}
+
+function recordTaskAnswer(task, selectedOption, isCorrect) {
+  const progress = getStoredTasksProgress();
+  const taskId = getTaskStorageId(task, Number.isInteger(task && task._taskIndex) ? task._taskIndex : 0);
+  const question = String(task && task.question ? task.question : '').trim().slice(0, 240);
+  const selected = String(selectedOption || '').trim().slice(0, 240);
+  const correctAnswer = Array.isArray(task && task.options) && Number.isInteger(task.correct)
+    ? String(task.options[task.correct] || '').trim().slice(0, 240)
+    : '';
+
+  progress.totalAnswered += 1;
+  if (isCorrect) progress.totalCorrect += 1;
+
+  const slot = progress.byTask[taskId] || { answered: 0, correct: 0 };
+  slot.answered += 1;
+  if (isCorrect) slot.correct += 1;
+  progress.byTask[taskId] = slot;
+
+  progress.history.unshift({
+    taskId,
+    question,
+    selected,
+    correctAnswer,
+    isCorrect: isCorrect === true,
+    at: Date.now(),
+  });
+  if (progress.history.length > TASKS_HISTORY_LIMIT) {
+    progress.history = progress.history.slice(0, TASKS_HISTORY_LIMIT);
+  }
+  persistTasksProgress(progress);
+  return progress;
 }
 
 function getSavedTheme() {
@@ -1514,15 +1657,16 @@ function highlightSearchMatch(text, query) {
 
 function getGlobalSearchMatchesLegacy(query) {
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
+  const qNorm = normalizeSearchText(q);
   if (q.length < 2) return [];
   const searchKey = `${getDataSignature()}::${q}`;
   const cached = globalSearchCache.get(searchKey);
   if (cached) return cached;
   const out = [];
-  const push = (kind, type, head, meta, lectureIndex, snippet) => {
+  const push = (kind, type, head, meta, lectureIndex, snippet, routeHash = '') => {
     if (!head) return;
     const score = head.toLowerCase().startsWith(q) ? 0 : 1;
-    out.push({ kind, type, head, meta, lectureIndex, snippet, score });
+    out.push({ kind, type, head, meta, lectureIndex, snippet, routeHash, score });
   };
 
   const typedSources = [
@@ -1562,6 +1706,15 @@ function getGlobalSearchMatchesLegacy(query) {
     }
   }
 
+  if (qNorm.length >= 2) {
+    const routeRecords = buildGlobalSearchRouteRecords();
+    for (const route of routeRecords) {
+      const hay = `${route.searchHead || ''} ${route.searchSecondary || ''}`.trim();
+      if (!hay || !hay.includes(qNorm)) continue;
+      push(route.kind, route.type, route.head, route.meta, null, route.snippet, route.routeHash || '');
+    }
+  }
+
   out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
   const sliced = out.slice(0, 40);
   globalSearchCache.set(searchKey, sliced);
@@ -1595,6 +1748,110 @@ function buildGlobalSearchSecondaryForItem(item) {
   const quote = getFirstContextQuote(item);
   if (quote) parts.push(quote);
   return normalizeSearchText(parts.join(' '));
+}
+
+function buildGlobalSearchRouteRecords() {
+  if (!ENTITY_TYPES) return [];
+  const records = [];
+  const seenHashes = new Set();
+  const routeAliases = {
+    'home/home': ['главная', 'домашняя панель', 'kpi', 'обзор'],
+    'materials/lectures': ['лекции', 'содержание лекций'],
+    'materials/lecture_compare': ['сравнение лекций', 'сопоставление лекций'],
+    'materials/lecture_pages': ['страница лекции', 'лекция по страницам'],
+    'materials/further_reading': ['что почитать еще', 'дополнительное чтение', 'рекомендуемая литература'],
+    'materials/glossary': ['глоссарий', 'термины'],
+    'materials/kwic': ['kwic', 'конкорданс', 'контексты'],
+    'materials/gallery': ['галерея лингвистов'],
+    'materials/russian_evolution': ['русский во времени', 'эволюция русского'],
+    'materials/phonetic_laws': ['фонетические законы', 'историческая фонетика'],
+    'materials/tasks': ['проверьте себя', 'тест', 'викторина'],
+    'scholar/scholar': ['профессиональный аппарат', 'аппарат для специалистов'],
+    'scholar/chronology': ['хронология открытий', 'лингвистические открытия'],
+    'scholar/page_trends': ['динамика по страницам', 'тренды по страницам'],
+  };
+
+  const pushRoute = ({ head, routeHash, meta = 'раздел интерфейса', snippet = '', aliases = [], kind = 'раздел' }) => {
+    const hash = String(routeHash || '').trim();
+    if (!head || !hash || seenHashes.has(hash)) return;
+    const searchHead = normalizeSearchText(head);
+    if (!searchHead) return;
+    seenHashes.add(hash);
+    const searchSecondary = normalizeSearchText([
+      meta,
+      snippet,
+      hash.replace(/^#/, '').replace(/[\/_]+/g, ' '),
+      ...(Array.isArray(aliases) ? aliases : []),
+    ].join(' '));
+    records.push({
+      kind,
+      type: 'route',
+      head,
+      meta,
+      lectureIndex: null,
+      snippet,
+      routeHash: hash,
+      searchHead,
+      searchSecondary,
+    });
+  };
+
+  for (const [entityKey, conf] of Object.entries(ENTITY_TYPES || {})) {
+    if (!conf || !Array.isArray(conf.tabs) || !conf.tabs.length) continue;
+    const entityTitle = String(conf.title || entityKey || '').trim();
+    for (const tab of conf.tabs) {
+      const tabLabel = String(TAB_LABELS[tab] || tab || '').trim();
+      if (!tabLabel) continue;
+      const routeKey = `${entityKey}/${tab}`;
+      const routeHash = buildCanonicalHash([entityKey, tab]);
+      const head = routeKey === 'home/home'
+        ? entityTitle
+        : `${entityTitle}: ${tabLabel}`;
+      const aliases = [
+        entityKey,
+        tab,
+        entityTitle,
+        tabLabel,
+        ...(routeAliases[routeKey] || []),
+      ];
+      pushRoute({
+        head,
+        routeHash,
+        meta: 'раздел интерфейса',
+        snippet: `${entityTitle} / ${tabLabel}`,
+        aliases,
+      });
+    }
+  }
+
+  const scholarSections = [
+    { id: 'sch-biblio', title: 'Библиография работ Зализняка', aliases: ['библиография', 'работы зализняка'] },
+    { id: 'sch-extended_cards', title: 'Ключевые лингвисты', aliases: ['лингвисты', 'карточки лингвистов'] },
+    { id: 'sch-controversies', title: 'Спорные вопросы', aliases: ['дискуссии', 'спорные места'] },
+    { id: 'sch-original', title: 'Оригинальные формы по языкам', aliases: ['оригинальные формы', 'формы по языкам'] },
+    { id: 'sch-birch', title: 'Конкорданс берестяных грамот', aliases: ['берестяные грамоты', 'конкорданс грамот'] },
+    { id: 'sch-chronology', title: 'Хронология лингвистических открытий', aliases: ['хронология', 'открытия'] },
+    { id: 'sch-isoglosses', title: 'Изоглоссы русских диалектов', aliases: ['изоглоссы', 'диалекты'] },
+    { id: 'sch-slovo', title: 'Подлинность «Слова о полку Игореве»', aliases: ['слово о полку игореве', 'подлинность слова'] },
+    { id: 'sch-accents', title: 'Акцентологические парадигмы', aliases: ['акцентные парадигмы', 'акцентология', 'ударение'] },
+    { id: 'sch-correspondences', title: 'Фонетические соответствия', aliases: ['сравнительная таблица', 'фонетическая таблица'] },
+    { id: 'sch-reconstructions', title: 'Реконструкции', aliases: ['исторические реконструкции'] },
+  ];
+  for (const section of scholarSections) {
+    pushRoute({
+      head: `Профессиональный аппарат: ${section.title}`,
+      routeHash: buildCanonicalHash(['scholar', 'scholar', 'anchor', section.id]),
+      meta: 'секция раздела',
+      snippet: `Профессиональный аппарат / ${section.title}`,
+      aliases: [
+        'профессиональный аппарат',
+        section.id,
+        section.id.replace(/^sch-/, '').replace(/[_-]+/g, ' '),
+        ...(section.aliases || []),
+      ],
+    });
+  }
+  return records;
 }
 
 function buildGlobalSearchFuseRecords() {
@@ -1668,6 +1925,8 @@ function buildGlobalSearchFuseRecords() {
       searchSecondary: normalizeSearchText([l.main_idea || '', terms, l.why_read || '', facts].join(' ')),
     });
   }
+  const routeRecords = buildGlobalSearchRouteRecords();
+  if (routeRecords.length) records.push(...routeRecords);
   return records;
 }
 
@@ -1727,6 +1986,7 @@ function getGlobalSearchMatchesFuzzy(queryNorm) {
       meta: item.meta,
       lectureIndex: item.lectureIndex,
       snippet: item.snippet,
+      routeHash: item.routeHash || '',
       score,
     });
   }
@@ -1804,6 +2064,21 @@ function openGlobalSearchMatch(match) {
   if (!match) return;
   if (match.type === 'lecture') openLecturePage(match.lectureIndex || 0);
   else if (match.type === 'glossary') openGlossaryTerm(match.head || '');
+  else if (match.type === 'route' && match.routeHash) {
+    const targetHashRaw = String(match.routeHash || '').trim();
+    const targetHash = targetHashRaw.startsWith('#') ? targetHashRaw : `#${targetHashRaw}`;
+    if (typeof window !== 'undefined' && window.location) {
+      if (window.location.hash === targetHash) {
+        applyHash(targetHash);
+      } else {
+        applyHash(targetHash);
+        expectedHash = targetHash;
+        window.location.hash = targetHash;
+      }
+    } else {
+      applyHash(targetHash);
+    }
+  }
   else navigateToItem(match.type, match.head);
   const input = document.getElementById('global-search');
   if (input) input.value = '';
@@ -4766,14 +5041,13 @@ function renderHomePanel(container) {
   const featured = APP_DATA.featured_quote || { text: '', page: '', lecture: '' };
   const vw = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 0;
   const vh = (typeof window !== 'undefined' && typeof window.innerHeight === 'number') ? window.innerHeight : 0;
-  const desktopNoInnerScroll = vw >= 980;
-  const compactHome = desktopNoInnerScroll && vh > 0 && vh <= 840;
+  const isDesktop = vw >= 980;
+  const compactHome = isDesktop && vh > 0 && vh <= 840;
   const routeGridStyle = compactHome
     ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px;'
-    : desktopNoInnerScroll
+    : isDesktop
       ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px;'
       : 'display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px;';
-  const homePanelOverflow = desktopNoInnerScroll ? 'hidden' : 'auto';
   const homeInnerPadding = compactHome ? '10px 14px' : '14px 20px';
   const factPairStyle = compactHome
     ? 'display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,0.95fr);gap:8px;align-items:start;'
@@ -4782,7 +5056,7 @@ function renderHomePanel(container) {
     ? 'display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;'
     : '';
 
-  let html = `<div class="panel active home-panel" style="overflow-y:${homePanelOverflow};height:100%;"><div style="padding:${homeInnerPadding};max-width:1200px;margin:0 auto;">`;
+  let html = `<div class="panel active home-panel" style="overflow-y:auto;height:100%;"><div style="padding:${homeInnerPadding};max-width:1200px;margin:0 auto;">`;
 
   // === БЛОК 1: КНИГА В ЦИФРАХ ===
   html += `<div style="background:linear-gradient(135deg,#5a3818,#8a7050);color:#fff8e8;padding:16px 20px;border-radius:6px;margin-bottom:14px;">
@@ -4831,27 +5105,7 @@ function renderHomePanel(container) {
     </div>
   </div></div>`;
 
-  // === БЛОК 1.5: ЧИТАЮ СЕЙЧАС ===
-  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:14px;">
-    <div style="font-size:16px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Режим «Читаю сейчас»</div>
-    <div style="font-size:12px;color:#777;margin-bottom:8px;">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-      <button id="reading-page-prev" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">←</button>
-      <input id="reading-page-input" type="number" min="1" max="${escapeHtml(stats.total_pages || 404)}" step="1" style="width:120px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:13px;" />
-      <button id="reading-page-next" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">→</button>
-      <button id="reading-page-go" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Показать</button>
-      <button id="reading-page-trends" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Динамика страницы</button>
-    </div>
-    <div id="reading-now-results" style="margin-top:10px;font-size:12px;line-height:1.6;color:#444;"></div>
-  </div>`;
-
   const recentItems = loadRecentItems().slice(0, 10);
-  if (!compactHome) {
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:14px;">
-      <div style="font-size:14px;color:#5a3818;font-weight:normal;margin-bottom:6px;">Недавно открывали</div>
-      <div id="home-recent-items" style="font-size:12px;line-height:1.6;">${recentItems.length ? '' : '<span style="color:#888;">Пока пусто — откройте любую карточку.</span>'}</div>
-    </div>`;
-  }
 
   // === БЛОК 2: МАРШРУТЫ ===
   if (compactHome) {
@@ -4878,6 +5132,10 @@ function renderHomePanel(container) {
   }
   html += '</div>';
   if (compactHome) html += '</details>';
+  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:14px;">
+    <div style="font-size:14px;color:#5a3818;font-weight:normal;margin-bottom:6px;">Недавно открывали</div>
+    <div id="home-recent-items" style="font-size:12px;line-height:1.6;">${recentItems.length ? '' : '<span style="color:#888;">Пока пусто — откройте любую карточку.</span>'}</div>
+  </div>`;
 
   html += '</div></div>';
 
@@ -4934,33 +5192,56 @@ function renderHomePanel(container) {
     homeFactPair.style.gridTemplateColumns = '1fr';
   }
 
-  const readingInput = document.getElementById('reading-page-input');
-  const readingGo = document.getElementById('reading-page-go');
-  const readingPrev = document.getElementById('reading-page-prev');
-  const readingNext = document.getElementById('reading-page-next');
-  const readingTrends = document.getElementById('reading-page-trends');
-  const readingResults = document.getElementById('reading-now-results');
-  const maxPage = Number(stats.total_pages) || 404;
+  const recentBox = document.getElementById('home-recent-items');
+  if (recentBox && recentItems.length) {
+    let recentHtml = '';
+    for (const r of recentItems) {
+      const conf = ENTITY_TYPES[r.type];
+      const label = conf ? conf.title : r.type;
+      recentHtml += `<a class="home-recent-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)} <span style="color:#777;">· ${escapeHtml(label)}</span></a>`;
+    }
+    recentBox.innerHTML = recentHtml;
+    bindNavigateLinks(recentBox, '.home-recent-link', 'all');
+  }
+
+  // Маршрутные ссылки
+  bindNavigateLinks(container, '.route-link', 'all');
+  const exportSiteBtn = document.getElementById('export-site-md');
+  if (exportSiteBtn) exportSiteBtn.onclick = () => exportWholeSiteMarkdown();
+}
+
+function openReadingPageTrends(page) {
+  const maxPage = Number((APP_DATA && APP_DATA.book_stats && APP_DATA.book_stats.total_pages) || 404) || 404;
+  const p = Math.max(1, Math.min(maxPage, Number.isFinite(page) ? page : parseInt(String(page || ''), 10) || 1));
+  currentEntity = 'scholar';
+  currentTab = 'page_trends';
+  trendsRangeStart = p;
+  trendsRangeEnd = p;
+  selectedItem = null;
+  selectedItemType = null;
+  rightPaneMode = 'histogram';
+  renderEntitySwitcher();
+  renderTabs();
+  renderContent();
+  syncNavigationState();
+}
+
+function wireReadingNowWidget(root, totalPages = 404) {
+  if (!root || typeof root.querySelector !== 'function') return;
+  const readingInput = root.querySelector('#reading-page-input');
+  const readingGo = root.querySelector('#reading-page-go');
+  const readingPrev = root.querySelector('#reading-page-prev');
+  const readingNext = root.querySelector('#reading-page-next');
+  const readingTrends = root.querySelector('#reading-page-trends');
+  const readingResults = root.querySelector('#reading-now-results');
+  if (!readingInput || !readingGo || !readingResults) return;
+  const maxPage = Math.max(1, Number(totalPages) || 404);
   const clampReadingPage = (page) => {
     const raw = Number.isFinite(page) ? page : parseInt(String(page || ''), 10);
     if (!Number.isFinite(raw)) return 1;
     return Math.max(1, Math.min(maxPage, raw));
   };
-  const getInputPage = () => clampReadingPage(parseInt(readingInput?.value || '', 10));
-  const openReadingTrends = (page) => {
-    const p = clampReadingPage(page);
-    currentEntity = 'scholar';
-    currentTab = 'page_trends';
-    trendsRangeStart = p;
-    trendsRangeEnd = p;
-    selectedItem = null;
-    selectedItemType = null;
-    rightPaneMode = 'histogram';
-    renderEntitySwitcher();
-    renderTabs();
-    renderContent();
-    syncNavigationState();
-  };
+  const getInputPage = () => clampReadingPage(parseInt(readingInput.value || '', 10));
   const updateReadingPagerControls = (page) => {
     if (readingPrev) {
       const disabled = page <= 1;
@@ -4977,10 +5258,9 @@ function renderHomePanel(container) {
   };
   const renderReadingNow = (page) => {
     const currentPage = clampReadingPage(page);
-    if (!readingResults) return;
     saveReadingPage(currentPage);
     updateReadingPagerControls(currentPage);
-    if (readingInput) readingInput.value = String(currentPage);
+    readingInput.value = String(currentPage);
     const chapters = APP_DATA.chapters || [];
     const chapterIdx = chapters.findIndex(ch => currentPage >= ch.start && currentPage <= ch.end);
     const chapter = chapterIdx >= 0 ? chapters[chapterIdx] : null;
@@ -5008,62 +5288,36 @@ function renderHomePanel(container) {
     }
     bindNavigateLinks(readingResults, '.reading-now-link', 'all');
     readingResults.querySelectorAll('.reading-now-open-trends').forEach(btn => {
-      btn.onclick = () => openReadingTrends(parseInt(btn.dataset.page || '', 10));
+      btn.onclick = () => openReadingPageTrends(parseInt(btn.dataset.page || '', 10));
     });
     readingResults.querySelectorAll('.reading-now-open-lecture').forEach(btn => {
       btn.onclick = () => openLecturePage(parseInt(btn.dataset.idx || '0', 10) || 0);
     });
   };
-  if (readingInput && readingGo) {
-    const savedPage = getSavedReadingPage();
-    const defaultPage = Number.isFinite(savedPage) ? clampReadingPage(savedPage) : 1;
-    readingInput.value = String(defaultPage);
-    renderReadingNow(defaultPage);
-    readingGo.onclick = () => {
+
+  const savedPage = getSavedReadingPage();
+  const defaultPage = Number.isFinite(savedPage) ? clampReadingPage(savedPage) : 1;
+  readingInput.value = String(defaultPage);
+  renderReadingNow(defaultPage);
+  readingGo.onclick = () => renderReadingNow(getInputPage());
+  if (readingPrev) readingPrev.onclick = () => renderReadingNow(getInputPage() - 1);
+  if (readingNext) readingNext.onclick = () => renderReadingNow(getInputPage() + 1);
+  if (readingTrends) readingTrends.onclick = () => openReadingPageTrends(getInputPage());
+  readingInput.onkeydown = (e) => {
+    if (e.key === 'Enter') {
       renderReadingNow(getInputPage());
-    };
-    if (readingPrev) {
-      readingPrev.onclick = () => renderReadingNow(getInputPage() - 1);
+    } else if (e.key === 'ArrowLeft') {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      renderReadingNow(getInputPage() - 1);
+    } else if (e.key === 'ArrowRight') {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      renderReadingNow(getInputPage() + 1);
     }
-    if (readingNext) {
-      readingNext.onclick = () => renderReadingNow(getInputPage() + 1);
-    }
-    if (readingTrends) {
-      readingTrends.onclick = () => openReadingTrends(getInputPage());
-    };
-    readingInput.onkeydown = (e) => {
-      if (e.key === 'Enter') {
-        renderReadingNow(getInputPage());
-      } else if (e.key === 'ArrowLeft') {
-        if (typeof e.preventDefault === 'function') e.preventDefault();
-        renderReadingNow(getInputPage() - 1);
-      } else if (e.key === 'ArrowRight') {
-        if (typeof e.preventDefault === 'function') e.preventDefault();
-        renderReadingNow(getInputPage() + 1);
-      }
-    };
-    readingInput.onblur = () => {
-      readingInput.value = String(getInputPage());
-      updateReadingPagerControls(getInputPage());
-    };
-  }
-
-  const recentBox = document.getElementById('home-recent-items');
-  if (recentBox && recentItems.length) {
-    let recentHtml = '';
-    for (const r of recentItems) {
-      const conf = ENTITY_TYPES[r.type];
-      const label = conf ? conf.title : r.type;
-      recentHtml += `<a class="home-recent-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)} <span style="color:#777;">· ${escapeHtml(label)}</span></a>`;
-    }
-    recentBox.innerHTML = recentHtml;
-    bindNavigateLinks(recentBox, '.home-recent-link', 'all');
-  }
-
-  // Маршрутные ссылки
-  bindNavigateLinks(container, '.route-link', 'all');
-  const exportSiteBtn = document.getElementById('export-site-md');
-  if (exportSiteBtn) exportSiteBtn.onclick = () => exportWholeSiteMarkdown();
+  };
+  readingInput.onblur = () => {
+    readingInput.value = String(getInputPage());
+    updateReadingPagerControls(getInputPage());
+  };
 }
 
 function buildTopQuestion(items, entityType, question, hintPrefix, limitOptions = 4, skipModerator = false) {
@@ -5149,28 +5403,111 @@ function renderTasksPanel(container) {
   const baseTasks = Array.isArray(APP_DATA.tasks) ? APP_DATA.tasks : [];
   const dynamicTasks = buildDynamicTasks();
   const tasks = [...baseTasks, ...dynamicTasks];
-  const tasksShuffled = shuffleArray(tasks);
+  const tasksPrepared = tasks.map((task, idx) => ({
+    ...task,
+    _taskIndex: idx,
+    _storageId: getTaskStorageId(task, idx),
+  }));
+  const tasksShuffled = shuffleArray(tasksPrepared);
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:980px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Проверьте себя</h2>';
+  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">\u041f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0441\u0435\u0431\u044f</h2>';
   html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">';
-  html += `<div style="font-size:12px;color:#888;font-style:italic;">${baseTasks.length} базовых + ${dynamicTasks.length} динамических вопросов. Кликните на ответ, чтобы проверить.</div>`;
-  html += '<button id="tasks-regen" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Новая подборка</button>';
+  html += `<div style="font-size:12px;color:#888;font-style:italic;">${baseTasks.length} \u0431\u0430\u0437\u043e\u0432\u044b\u0445 + ${dynamicTasks.length} \u0434\u0438\u043d\u0430\u043c\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0432\u043e\u043f\u0440\u043e\u0441\u043e\u0432. \u041a\u043b\u0438\u043a\u043d\u0438\u0442\u0435 \u043d\u0430 \u043e\u0442\u0432\u0435\u0442, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0440\u0438\u0442\u044c.</div>`;
+  html += '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">';
+  html += '<button id="tasks-reset-progress" style="padding:6px 10px;border:1px solid #d1b18f;background:#fff;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#8a3f1c;">\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0443</button>';
+  html += '<button id="tasks-regen" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">\u041d\u043e\u0432\u0430\u044f \u043f\u043e\u0434\u0431\u043e\u0440\u043a\u0430</button>';
+  html += '</div>';
+  html += '</div>';
+  html += '<div id="tasks-summary" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:12px;"></div>';
+  html += '<div id="tasks-history-box" style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:14px;">';
+  html += '<div style="font-size:12px;color:#6a5040;font-weight:bold;letter-spacing:0.3px;text-transform:uppercase;margin-bottom:8px;">\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u043e\u0442\u0432\u0435\u0442\u043e\u0432</div>';
+  html += '<div id="tasks-history-list" style="display:grid;gap:6px;"></div>';
   html += '</div>';
   html += '<div id="tasks-container"></div></div></div>';
   container.innerHTML = html;
 
   const tc = document.getElementById('tasks-container');
+  const summaryEl = document.getElementById('tasks-summary');
+  const historyListEl = document.getElementById('tasks-history-list');
+  const currentTaskIds = new Set(tasksShuffled.map(t => String(t._storageId || '').trim()).filter(Boolean));
+
+  const formatHistoryDate = (ts) => {
+    const d = new Date(ts);
+    if (!Number.isFinite(d.getTime())) return '\u2014';
+    try {
+      return d.toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    } catch (e) {
+      return d.toISOString();
+    }
+  };
+
+  const renderProgressPanels = (progressData = getStoredTasksProgress()) => {
+    const progress = normalizeTasksProgress(progressData);
+    const totalAnswered = progress.totalAnswered;
+    const totalCorrect = progress.totalCorrect;
+    const totalAccuracy = totalAnswered ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+    let packAnswered = 0;
+    let packCorrect = 0;
+    for (const taskId of currentTaskIds) {
+      const row = progress.byTask[taskId];
+      if (!row) continue;
+      packAnswered += Number(row.answered || 0);
+      packCorrect += Number(row.correct || 0);
+    }
+    const packAccuracy = packAnswered ? Math.round((packCorrect / packAnswered) * 100) : 0;
+
+    if (summaryEl) {
+      summaryEl.innerHTML = `
+        <div style="font-size:13px;color:#5a3818;line-height:1.5;">
+          <strong>\u0412\u0441\u0435 \u043f\u043e\u043f\u044b\u0442\u043a\u0438</strong><br>
+          \u041e\u0442\u0432\u0435\u0442\u043e\u0432: <strong>${totalAnswered}</strong> \u00b7
+          \u0432\u0435\u0440\u043d\u044b\u0445: <strong>${totalCorrect}</strong> \u00b7
+          \u0442\u043e\u0447\u043d\u043e\u0441\u0442\u044c: <strong>${totalAccuracy}%</strong>
+        </div>
+        <div style="font-size:13px;color:#5a3818;line-height:1.5;">
+          <strong>\u0422\u0435\u043a\u0443\u0449\u0430\u044f \u043f\u043e\u0434\u0431\u043e\u0440\u043a\u0430</strong><br>
+          \u041e\u0442\u0432\u0435\u0442\u043e\u0432: <strong>${packAnswered}</strong> \u00b7
+          \u0432\u0435\u0440\u043d\u044b\u0445: <strong>${packCorrect}</strong> \u00b7
+          \u0442\u043e\u0447\u043d\u043e\u0441\u0442\u044c: <strong>${packAccuracy}%</strong>
+        </div>
+      `;
+    }
+
+    if (historyListEl) {
+      const rows = progress.history.slice(0, 12);
+      if (!rows.length) {
+        historyListEl.innerHTML = '<div style="font-size:12px;color:#888;font-style:italic;">\u041f\u043e\u043a\u0430 \u043d\u0435\u0442 \u043e\u0442\u0432\u0435\u0442\u043e\u0432. \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0430\u0440\u0438\u0430\u043d\u0442 \u0432 \u043b\u044e\u0431\u043e\u043c \u0432\u043e\u043f\u0440\u043e\u0441\u0435, \u0447\u0442\u043e\u0431\u044b \u043d\u0430\u0447\u0430\u0442\u044c \u0438\u0441\u0442\u043e\u0440\u0438\u044e.</div>';
+      } else {
+        historyListEl.innerHTML = rows.map((row) => `
+          <div class="task-history-row" style="padding:7px 8px;border:1px solid #ece1cf;border-radius:4px;background:${row.isCorrect ? '#eef8ef' : '#fff7ef'};">
+            <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+              <strong style="font-size:12px;color:${row.isCorrect ? '#1f6c3a' : '#8a4c25'};">${row.isCorrect ? '\u0412\u0435\u0440\u043d\u043e' : '\u041e\u0448\u0438\u0431\u043a\u0430'}</strong>
+              <span style="font-size:11px;color:#7a6a58;">${escapeHtml(formatHistoryDate(row.at))}</span>
+            </div>
+            <div style="font-size:12px;color:#5a3818;line-height:1.4;margin-top:4px;">${escapeHtml(row.question)}</div>
+            <div style="font-size:11px;color:#6a5040;margin-top:4px;">\u0412\u0430\u0448 \u043e\u0442\u0432\u0435\u0442: <strong>${escapeHtml(row.selected || '\u2014')}</strong>${row.correctAnswer ? ` \u00b7 \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e: <strong>${escapeHtml(row.correctAnswer)}</strong>` : ''}</div>
+          </div>
+        `).join('');
+      }
+    }
+  };
+
   for (let ti = 0; ti < tasksShuffled.length; ti++) {
     const t = tasksShuffled[ti];
     const taskDiv = document.createElement('div');
     taskDiv.style.cssText = 'background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:14px 18px;margin-bottom:12px;';
     taskDiv.innerHTML = `
-      <div style="font-size:14px;color:#5a3818;font-weight:bold;margin-bottom:10px;">Вопрос ${ti+1}. ${escapeHtml(t.question)}</div>
-      <div class="task-options" id="task-tab-${t.id}-opts"></div>
-      <div class="task-result" id="task-tab-${t.id}-res" style="display:none;margin-top:10px;padding:10px 12px;border-radius:4px;font-size:12px;line-height:1.5;"></div>
+      <div style="font-size:14px;color:#5a3818;font-weight:bold;margin-bottom:10px;">\u0412\u043e\u043f\u0440\u043e\u0441 ${ti+1}. ${escapeHtml(t.question)}</div>
+      <div class="task-options" id="task-tab-${t._storageId}-opts"></div>
+      <div class="task-result" id="task-tab-${t._storageId}-res" style="display:none;margin-top:10px;padding:10px 12px;border-radius:4px;font-size:12px;line-height:1.5;"></div>
     `;
     tc.appendChild(taskDiv);
-    const optsDiv = document.getElementById(`task-tab-${t.id}-opts`);
+    const optsDiv = document.getElementById(`task-tab-${t._storageId}-opts`);
     const optionsShuffled = shuffleArray((t.options || []).map((text, idx) => ({ text, idx })));
     for (let oi = 0; oi < optionsShuffled.length; oi++) {
       const opt = optionsShuffled[oi];
@@ -5179,6 +5516,8 @@ function renderTasksPanel(container) {
       btn.dataset.sourceIndex = String(opt.idx);
       btn.textContent = String.fromCharCode(65 + oi) + '. ' + opt.text;
       btn.onclick = () => {
+        if (optsDiv.dataset.locked === '1') return;
+        optsDiv.dataset.locked = '1';
         const isCorrect = opt.idx === t.correct;
         optsDiv.querySelectorAll('button').forEach(b => { b.disabled = true; b.style.cursor = 'default'; });
         if (isCorrect) {
@@ -5198,7 +5537,7 @@ function renderTasksPanel(container) {
             correctBtn.style.fontWeight = 'bold';
           }
         }
-        const res = document.getElementById(`task-tab-${t.id}-res`);
+        const res = document.getElementById(`task-tab-${t._storageId}-res`);
         res.style.display = 'block';
         res.style.background = isCorrect ? '#e8f5e9' : '#fff8e8';
         res.style.borderLeft = '3px solid ' + (isCorrect ? '#5cb85c' : '#8a7050');
@@ -5208,9 +5547,9 @@ function renderTasksPanel(container) {
             : buildItemHash(t.entity.type || 'all', t.entity.head || ''))
           : '';
         const linkBtn = t.entity
-        ? ` <a class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" href="${escapeHtml(linkHref)}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">Открыть карточку →</a>`
+          ? ` <a class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" href="${escapeHtml(linkHref)}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0443 \u2192</a>`
           : '';
-        res.innerHTML = (isCorrect ? '<strong>Верно!</strong> ' : '<strong>Не угадали.</strong> ') + escapeHtml(t.hint) + linkBtn;
+        res.innerHTML = (isCorrect ? '<strong>\u0412\u0435\u0440\u043d\u043e!</strong> ' : '<strong>\u041d\u0435 \u0443\u0433\u0430\u0434\u0430\u043b\u0438.</strong> ') + escapeHtml(t.hint) + linkBtn;
         res.querySelectorAll('.task-card-link').forEach(el => {
           el.onclick = (e) => {
             if (e && typeof e.preventDefault === 'function') e.preventDefault();
@@ -5221,22 +5560,46 @@ function renderTasksPanel(container) {
             navigateToItem(el.dataset.type, el.dataset.head);
           };
         });
+        const progress = recordTaskAnswer(t, opt.text, isCorrect);
+        renderProgressPanels(progress);
+        persistViewState();
       };
       optsDiv.appendChild(btn);
     }
   }
+
+  renderProgressPanels();
   const regenBtn = document.getElementById('tasks-regen');
   if (regenBtn) regenBtn.onclick = () => renderTasksPanel(container);
+  const resetProgressBtn = document.getElementById('tasks-reset-progress');
+  if (resetProgressBtn) {
+    resetProgressBtn.onclick = () => {
+      clearStoredTasksProgress();
+      renderProgressPanels();
+      announceUiMessage('\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0438 \u0438\u0441\u0442\u043e\u0440\u0438\u044f \u0441\u0431\u0440\u043e\u0448\u0435\u043d\u044b');
+    };
+  }
 }
 
-// =========================================================
-// ЛЕКЦИИ — карточки-резюме
-// =========================================================
 function renderLecturesPanel(container) {
   const lectures = APP_DATA.lectures || [];
+  const stats = APP_DATA.book_stats || {};
+  const maxPage = Number(stats.total_pages) || 404;
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
   html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Все лекции книги — за пять минут</h2>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
+  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:14px;">
+    <div style="font-size:16px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Режим «Читаю сейчас»</div>
+    <div style="font-size:12px;color:#777;margin-bottom:8px;">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <button id="reading-page-prev" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">←</button>
+      <input id="reading-page-input" type="number" min="1" max="${escapeHtml(maxPage)}" step="1" style="width:120px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:13px;" />
+      <button id="reading-page-next" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">→</button>
+      <button id="reading-page-go" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Показать</button>
+      <button id="reading-page-trends" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Динамика страницы</button>
+    </div>
+    <div id="reading-now-results" style="margin-top:10px;font-size:12px;line-height:1.6;color:#444;"></div>
+  </div>`;
   html += '<div id="lectures-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;">';
   for (let i = 0; i < lectures.length; i++) {
     const l = lectures[i];
@@ -5259,6 +5622,7 @@ function renderLecturesPanel(container) {
   }
   html += '</div></div></div>';
   container.innerHTML = html;
+  wireReadingNowWidget(container, maxPage);
   const lecturesGrid = document.getElementById('lectures-grid');
   if (lecturesGrid && typeof window !== 'undefined' && typeof window.innerWidth === 'number' && window.innerWidth < 900) {
     lecturesGrid.style.gridTemplateColumns = '1fr';
@@ -6113,6 +6477,31 @@ function renderRussianEvolutionPanel(container) {
 // =========================================================
 // ФОНЕТИЧЕСКИЕ ЗАКОНЫ
 // =========================================================
+function formatPhoneticTransitionText(text) {
+  const raw = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!raw) return '';
+  const parts = raw.split('\u2192');
+  if (parts.length !== 2) return escapeHtml(raw);
+  const left = escapeHtml(parts[0].trim()).replace(/\s+/g, '&nbsp;');
+  const right = escapeHtml(parts[1].trim()).replace(/\s+/g, '&nbsp;');
+  return `${left} <span class="phonetic-arrow">\u2192</span> ${right}`;
+}
+
+function formatPhoneticCommentText(text) {
+  const raw = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!raw) return '';
+  if (!raw.includes('\u2192')) return escapeHtml(raw);
+  const colon = raw.indexOf(':');
+  if (colon > -1 && colon < raw.length - 1) {
+    const prefix = raw.slice(0, colon + 1).trim();
+    const tail = raw.slice(colon + 1).trim();
+    if (tail.includes('\u2192')) {
+      return `${escapeHtml(prefix)} ${formatPhoneticTransitionText(tail)}`;
+    }
+  }
+  return formatPhoneticTransitionText(raw);
+}
+
 function renderPhoneticLawsPanel(container) {
   const laws = APP_DATA.phonetic_laws || [];
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1100px;margin:0 auto;">';
@@ -6135,10 +6524,13 @@ function renderPhoneticLawsPanel(container) {
           </tr></thead>
           <tbody>`;
     for (const ex of law.examples) {
+      const fromHtml = escapeHtml(String(ex.from || '')).replace(/\s+/g, '&nbsp;');
+      const toHtml = escapeHtml(String(ex.to || '')).replace(/\s+/g, '&nbsp;');
+      const commentHtml = formatPhoneticCommentText(ex.comment || '');
       html += `<tr style="border-top:1px solid #f0e8d8;">
-        <td style="padding:6px 8px 6px 0;font-style:italic;color:#5a3818;">${escapeHtml(ex.from)}</td>
-        <td style="padding:6px 8px;color:#1a1a1a;"><strong>→</strong> ${escapeHtml(ex.to)}</td>
-        <td style="padding:6px 0 6px 8px;color:#666;font-size:12px;">${escapeHtml(ex.comment)}</td>
+        <td style="padding:6px 8px 6px 0;font-style:italic;color:#5a3818;">${fromHtml}</td>
+        <td style="padding:6px 8px;color:#1a1a1a;"><strong class="phonetic-arrow">\u2192</strong> <span class="phonetic-transition">${toHtml}</span></td>
+        <td style="padding:6px 0 6px 8px;color:#666;font-size:12px;">${commentHtml}</td>
       </tr>`;
     }
     html += '</tbody></table></div></div>';
