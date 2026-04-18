@@ -191,6 +191,8 @@ let ENTITY_TYPES = null;
 let ITEM_INDEX_EXACT = new Map();      // type -> Map(head -> item)
 let ITEM_INDEX_NORMALIZED = new Map(); // type -> Map(normalizedHead -> item)
 let CHAPTER_ITEM_INDEX = new Map();    // type -> Map(chapterName -> item[])
+let ITEM_HASH_SLUG_BY_HEAD = new Map(); // type -> Map(head -> slug)
+let ITEM_HASH_HEAD_BY_SLUG = new Map(); // type -> Map(slug -> head)
 
 function initEntityTypes() {
   ENTITY_TYPES = {
@@ -325,6 +327,8 @@ function buildDataIndexes() {
   ITEM_INDEX_EXACT = new Map();
   ITEM_INDEX_NORMALIZED = new Map();
   CHAPTER_ITEM_INDEX = new Map();
+  ITEM_HASH_SLUG_BY_HEAD = new Map();
+  ITEM_HASH_HEAD_BY_SLUG = new Map();
 
   const chapters = Array.isArray(APP_DATA?.chapters) ? APP_DATA.chapters : [];
   const pageToChapter = new Map();
@@ -358,6 +362,9 @@ function buildDataIndexes() {
     ITEM_INDEX_EXACT.set(type, exact);
     ITEM_INDEX_NORMALIZED.set(type, normalized);
     CHAPTER_ITEM_INDEX.set(type, byChapter);
+    const slugIndexes = buildHashSlugIndexesForItems(conf.items);
+    ITEM_HASH_SLUG_BY_HEAD.set(type, slugIndexes.byHead);
+    ITEM_HASH_HEAD_BY_SLUG.set(type, slugIndexes.bySlug);
   }
 }
 
@@ -369,6 +376,90 @@ function getIndexedItem(type, head) {
   const normalized = ITEM_INDEX_NORMALIZED.get(type);
   if (nHead && normalized && normalized.has(nHead)) return normalized.get(nHead);
   return null;
+}
+
+function normalizeHashSlug(value) {
+  if (value === null || value === undefined) return '';
+  let text = String(value).trim().toLowerCase();
+  if (!text) return '';
+  if (typeof text.normalize === 'function') text = text.normalize('NFD');
+  text = text.replace(/[\u0300-\u036f]/g, '');
+
+  let out = '';
+  for (const ch of text) {
+    const code = ch.charCodeAt(0);
+    const isAsciiAlpha = code >= 97 && code <= 122;
+    const isAsciiDigit = code >= 48 && code <= 57;
+    if (isAsciiAlpha || isAsciiDigit) {
+      out += ch;
+      continue;
+    }
+    if (Object.prototype.hasOwnProperty.call(CYRILLIC_TO_LATIN_MAP, ch)) {
+      out += CYRILLIC_TO_LATIN_MAP[ch];
+      continue;
+    }
+    out += '-';
+  }
+  out = out
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/-{2,}/g, '-');
+  if (!out) return '';
+  if (out.length > MAX_HASH_SLUG_LENGTH) {
+    out = out.slice(0, MAX_HASH_SLUG_LENGTH).replace(/-+$/g, '');
+  }
+  return out;
+}
+
+function buildHashSlugIndexesForItems(items) {
+  const byHead = new Map();
+  const bySlug = new Map();
+  if (!Array.isArray(items)) return { byHead, bySlug };
+
+  for (const it of items) {
+    const head = String(it && it.head ? it.head : '').trim();
+    if (!head || byHead.has(head)) continue;
+
+    const baseRaw = normalizeHashSlug(head);
+    const base = baseRaw || 'item';
+    let slug = base;
+    let suffix = 2;
+    while (bySlug.has(slug) && bySlug.get(slug) !== head) {
+      const suffixToken = `-${suffix}`;
+      const keep = Math.max(1, MAX_HASH_SLUG_LENGTH - suffixToken.length);
+      const trimmedBase = (base.slice(0, keep).replace(/-+$/g, '') || 'item');
+      slug = `${trimmedBase}${suffixToken}`;
+      suffix += 1;
+    }
+    byHead.set(head, slug);
+    if (!bySlug.has(slug)) bySlug.set(slug, head);
+  }
+  return { byHead, bySlug };
+}
+
+function encodeItemHeadForHash(type, head) {
+  const resolved = resolveExistingHead(type, head);
+  const byHead = ITEM_HASH_SLUG_BY_HEAD.get(type);
+  if (byHead && byHead.has(resolved)) return byHead.get(resolved);
+  const fallbackSlug = normalizeHashSlug(resolved);
+  return fallbackSlug || resolved;
+}
+
+function resolveItemHeadFromHash(type, encodedHead) {
+  const raw = clampUiInput(encodedHead, MAX_HASH_PART_LENGTH);
+  if (!raw) return '';
+
+  const exact = getIndexedItem(type, raw);
+  if (exact) return exact.head;
+
+  const bySlug = ITEM_HASH_HEAD_BY_SLUG.get(type);
+  if (bySlug) {
+    if (bySlug.has(raw)) return bySlug.get(raw);
+    const normalizedSlug = normalizeHashSlug(raw);
+    if (normalizedSlug && bySlug.has(normalizedSlug)) return bySlug.get(normalizedSlug);
+  }
+
+  return resolveExistingHead(type, raw);
 }
 
 function getChapterIndexedItems(type, chapterName) {
@@ -425,6 +516,7 @@ let currentListSearchNorm = '';
 const MAX_HASH_PARTS = 16;
 const MAX_HASH_PART_LENGTH = 220;
 const HASH_ROUTE_PREFIX = 'v4';
+const MAX_HASH_SLUG_LENGTH = 96;
 const MAX_LIST_QUERY_LENGTH = 80;
 const MAX_GLOBAL_QUERY_LENGTH = 80;
 const MAX_URL_LENGTH = 2048;
@@ -449,6 +541,45 @@ let familiesGraphWorkerRequestId = 0;
 let familiesGraphRenderToken = 0;
 let familiesGraphLayoutPromiseCache = new Map();
 let workersLifecycleWired = false;
+const CYRILLIC_TO_LATIN_MAP = Object.freeze({
+  '\u0430': 'a',    // а
+  '\u0431': 'b',    // б
+  '\u0432': 'v',    // в
+  '\u0433': 'g',    // г
+  '\u0434': 'd',    // д
+  '\u0435': 'e',    // е
+  '\u0451': 'yo',   // ё
+  '\u0436': 'zh',   // ж
+  '\u0437': 'z',    // з
+  '\u0438': 'i',    // и
+  '\u0439': 'y',    // й
+  '\u043a': 'k',    // к
+  '\u043b': 'l',    // л
+  '\u043c': 'm',    // м
+  '\u043d': 'n',    // н
+  '\u043e': 'o',    // о
+  '\u043f': 'p',    // п
+  '\u0440': 'r',    // р
+  '\u0441': 's',    // с
+  '\u0442': 't',    // т
+  '\u0443': 'u',    // у
+  '\u0444': 'f',    // ф
+  '\u0445': 'kh',   // х
+  '\u0446': 'ts',   // ц
+  '\u0447': 'ch',   // ч
+  '\u0448': 'sh',   // ш
+  '\u0449': 'shch', // щ
+  '\u044a': '',     // ъ
+  '\u044b': 'y',    // ы
+  '\u044c': '',     // ь
+  '\u044d': 'e',    // э
+  '\u044e': 'yu',   // ю
+  '\u044f': 'ya',   // я
+  '\u0456': 'i',    // і
+  '\u0457': 'yi',   // ї
+  '\u0454': 'ye',   // є
+  '\u0491': 'g',    // ґ
+});
 
 // =========================================================
 // УТИЛИТЫ
@@ -1237,7 +1368,9 @@ function buildHashFromState() {
     parts.push('q', searchQuery);
   }
   if (selectedItem && rightPaneMode === 'card') {
-    parts.push('item', selectedItemType || currentEntity, selectedItem);
+    const itemType = selectedItemType || currentEntity;
+    const itemHashHead = encodeItemHeadForHash(itemType, selectedItem);
+    parts.push('item', itemType, itemHashHead);
   }
   return buildCanonicalHash(parts);
 }
@@ -1367,10 +1500,12 @@ function applyHash(hash) {
   }
 
   if (itemPos >= 0 && parts[itemPos + 1] && parts[itemPos + 2]) {
-    state.currentEntity = parts[itemPos + 1];
+    const itemType = ENTITY_TYPES[parts[itemPos + 1]] ? parts[itemPos + 1] : state.currentEntity;
+    const resolvedHead = resolveItemHeadFromHash(itemType, parts[itemPos + 2]);
+    state.currentEntity = itemType;
     state.currentTab = 'list';
-    state.selectedItemType = parts[itemPos + 1];
-    state.selectedItem = clampUiInput(parts[itemPos + 2], MAX_HASH_PART_LENGTH);
+    state.selectedItemType = itemType;
+    state.selectedItem = resolvedHead || clampUiInput(parts[itemPos + 2], MAX_HASH_PART_LENGTH);
     state.rightPaneMode = 'card';
   }
 
@@ -1541,8 +1676,8 @@ function buildListSearchHash(entity, query) {
 
 function buildItemHash(type, head) {
   const t = ENTITY_TYPES[type] ? type : 'all';
-  const resolvedHead = resolveExistingHead(t, head);
-  return buildCanonicalHash([t, 'list', 'item', t, resolvedHead]);
+  const encodedHead = encodeItemHeadForHash(t, head);
+  return buildCanonicalHash([t, 'list', 'item', t, encodedHead]);
 }
 
 function buildScholarAnchorHash(anchorId) {

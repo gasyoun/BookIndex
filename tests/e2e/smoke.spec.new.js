@@ -234,6 +234,22 @@ test.describe('aaz-index smoke', () => {
     expect(columnCount).toBeGreaterThanOrEqual(2);
   });
 
+  test('item hash uses transliterated slugs and keeps backward compatibility with encoded cyrillic', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/languages/list/item/languages/sanskrit');
+    await expect(page.locator('#right-content .card h2')).toContainText(/\u0441\u0430\u043d\u0441\u043a\u0440\u0438\u0442/i);
+    await expect(page).toHaveURL(/#v4\/languages\/list\/item\/languages\/sanskrit$/);
+
+    const generatedHash = await page.evaluate(() => {
+      if (typeof buildItemHash !== 'function') return '';
+      return buildItemHash('languages', '\u0441\u0430\u043d\u0441\u043a\u0440\u0438\u0442');
+    });
+    expect(generatedHash).toBe('#v4/languages/list/item/languages/sanskrit');
+
+    await page.goto('/aaz-index.html#v4/languages/list/item/languages/%D1%81%D0%B0%D0%BD%D1%81%D0%BA%D1%80%D0%B8%D1%82');
+    await expect(page.locator('#right-content .card h2')).toContainText(/\u0441\u0430\u043d\u0441\u043a\u0440\u0438\u0442/i);
+    await expect(page).toHaveURL(/#v4\/languages\/list\/item\/languages\/sanskrit$/);
+  });
+
   test('names graph supports weight filter, tooltip and navigation to card', async ({ page }) => {
     await page.goto('/aaz-index.html#names/graph');
     const slider = page.locator('#graph-min-weight');
