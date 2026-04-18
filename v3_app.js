@@ -5448,6 +5448,128 @@ function rememberRecentItem(type, head) {
   saveRecentItems(filtered);
 }
 
+function buildHomeHowToGuideHtml() {
+  const demoHref = 'https://gasyoun.github.io/BookIndex/aaz-index.html#v4/home/home';
+  const namesListHash = buildCanonicalHash(['names', 'list']);
+  const toponymsListHash = buildCanonicalHash(['toponyms', 'list']);
+  const ethnonymsListHash = buildCanonicalHash(['ethnonyms', 'list']);
+  const languagesListHash = buildCanonicalHash(['languages', 'list']);
+  const lexiconListHash = buildCanonicalHash(['lexicon', 'list']);
+  const lexiconReverseHash = buildCanonicalHash(['lexicon_reverse', 'list']);
+  const reconstructionsHash = buildCanonicalHash(['lexicon_tech', 'list']);
+  const subjectListHash = buildCanonicalHash(['subject', 'list']);
+  const kwicHash = buildCanonicalHash(['materials', 'kwic']);
+  const toponymsMapHash = buildCanonicalHash(['toponyms', 'map']);
+  const ethnonymsMapHash = buildCanonicalHash(['ethnonyms', 'map']);
+  const languagesMapHash = buildCanonicalHash(['languages', 'map']);
+  const materialsPhoneticHash = buildCanonicalHash(['materials', 'phonetic_laws']);
+  const udarenieAllHash = buildListSearchHash('all', 'ударение');
+  const udarenieSubjectHash = buildListSearchHash('subject', 'ударение');
+  const akanyeSubjectHash = buildListSearchHash('subject', 'аканье');
+  const articleSubjectHash = buildListSearchHash('subject', 'артикль');
+  const birchSubjectHash = buildListSearchHash('subject', 'берестяные грамоты');
+  const avanesovHash = buildListSearchHash('names', 'Аванесов Р. И.');
+  const avvakumHash = buildListSearchHash('names', 'Аввакум');
+  const avanesovItemHash = buildItemHash('names', 'Аванесов Р. И.');
+  const angliaHash = buildListSearchHash('toponyms', 'Англия');
+  const angliaItemHash = buildItemHash('toponyms', 'Англия');
+  const rossiyaHash = buildListSearchHash('toponyms', 'Россия');
+  const austraHash = buildListSearchHash('languages', 'австралийские');
+  const austraItemHash = buildItemHash('languages', 'австралийские');
+  const sanskritHash = buildListSearchHash('all', 'санскрит');
+  const globalBerestaHash = buildListSearchHash('all', 'берестяные грамоты');
+  const globalAvanesovHash = buildListSearchHash('all', 'Аванесов Р. И.');
+  const globalAngliaHash = buildListSearchHash('all', 'Англия');
+  const globalLekciiHash = buildListSearchHash('all', 'лекция');
+  const linkStyle = 'color:#5a3818;text-decoration:underline dotted;';
+
+  return `<details id="home-howto-details" open style="margin-top:10px;margin-bottom:14px;border:1px solid #d4c8b0;border-radius:6px;background:#fff;padding:10px 12px;">
+    <summary style="cursor:pointer;color:#5a3818;font-size:18px;font-weight:normal;">Как пользоваться «Зализнякиадой»</summary>
+    <div style="margin-top:10px;display:grid;gap:10px;font-size:13px;line-height:1.6;color:#333;">
+      <p><strong>BookIndex</strong> — интерактивный указатель к книге А. А. Зализняка «Из жизни слов и языков». Он собран в один файл <code>aaz-index.html</code> и работает как навигационная надстройка над книгой: помогает быстрее находить темы, имена, термины и географию книги. Демо: <a href="${escapeHtml(demoHref)}" style="${linkStyle}">${escapeHtml(demoHref)}</a>.</p>
+
+      <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">Что это дает читателю</h3>
+      <ul style="margin:0;padding-left:18px;">
+        <li>Быстро находить нужные темы, имена и термины по странице: например, <a href="${escapeHtml(udarenieAllHash)}" style="${linkStyle}">ударение</a>, <a href="${escapeHtml(globalBerestaHash)}" style="${linkStyle}">берестяные грамоты</a>, <a href="${escapeHtml(globalAvanesovHash)}" style="${linkStyle}">Аванесов Р. И.</a> или <a href="${escapeHtml(globalAngliaHash)}" style="${linkStyle}">Англия</a>.</li>
+        <li>Видеть, насколько тема важна: не по одному упоминанию, а по тому, сколько страниц она покрывает в <a href="${escapeHtml(subjectListHash)}" style="${linkStyle}">предметном указателе</a>.</li>
+        <li>Путешествовать по книге не только по оглавлению, но и по <a href="${escapeHtml(toponymsMapHash)}" style="${linkStyle}">картам</a>, спискам <a href="${escapeHtml(languagesListHash)}" style="${linkStyle}">языков</a> и <a href="${escapeHtml(ethnonymsListHash)}" style="${linkStyle}">народов</a>.</li>
+      </ul>
+
+      <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">Какие указатели там есть</h3>
+      <p style="margin:0;">Внутри BookIndex несколько разных указателей. Они выглядят как алфавитные списки, но отвечают на разные вопросы.</p>
+
+      <h4 style="margin:0;color:#5a3818;font-size:14px;">Имена</h4>
+      <p style="margin:0;">Раздел <a href="${escapeHtml(namesListHash)}" style="${linkStyle}">«Имена»</a> — это указатель ученых, авторов и исторических фигур. Например, можно открыть <a href="${escapeHtml(avanesovItemHash)}" style="${linkStyle}">Аванесов Р. И.</a> или найти <a href="${escapeHtml(avvakumHash)}" style="${linkStyle}">Аввакум [Петров]</a>.</p>
+
+      <h4 style="margin:0;color:#5a3818;font-size:14px;">Топонимы</h4>
+      <p style="margin:0;">Раздел <a href="${escapeHtml(toponymsListHash)}" style="${linkStyle}">«Топонимы»</a> — географический указатель: страны, города, регионы. Пример: <a href="${escapeHtml(angliaItemHash)}" style="${linkStyle}">Англия</a> в списке и в <a href="${escapeHtml(toponymsMapHash)}" style="${linkStyle}">режиме карты</a>. Еще пример для поиска — <a href="${escapeHtml(rossiyaHash)}" style="${linkStyle}">Россия</a>.</p>
+
+      <h4 style="margin:0;color:#5a3818;font-size:14px;">Этнонимы</h4>
+      <p style="margin:0;">Раздел <a href="${escapeHtml(ethnonymsListHash)}" style="${linkStyle}">«Этнонимы»</a> собирает названия народов и этнических групп. Удобно проверять страницы, где народ обсуждается как носитель языка, традиции или контактной зоны.</p>
+
+      <h4 style="margin:0;color:#5a3818;font-size:14px;">Языки</h4>
+      <p style="margin:0;">Раздел <a href="${escapeHtml(languagesListHash)}" style="${linkStyle}">«Языки»</a> — указатель языков и языковых групп. Пример: <a href="${escapeHtml(austraItemHash)}" style="${linkStyle}">австралийские</a> в списке и точка в <a href="${escapeHtml(languagesMapHash)}" style="${linkStyle}">карте языков</a>.</p>
+
+      <h4 style="margin:0;color:#5a3818;font-size:14px;">Лексика</h4>
+      <p style="margin:0;">Раздел <a href="${escapeHtml(lexiconListHash)}" style="${linkStyle}">«Лексика»</a> — словарный указатель к книге. <a href="${escapeHtml(lexiconReverseHash)}" style="${linkStyle}">«Лексика (обратная)»</a> полезна, если хотите искать не по началу слова, а по окончанию, корню или модели.</p>
+
+      <h4 style="margin:0;color:#5a3818;font-size:14px;">Реконструкции</h4>
+      <p style="margin:0;"><a href="${escapeHtml(reconstructionsHash)}" style="${linkStyle}">«Реконструкции»</a> — небольшой технический раздел для восстановленных форм и специальных обозначений.</p>
+
+      <h4 style="margin:0;color:#5a3818;font-size:14px;">Предметный указатель</h4>
+      <p style="margin:0;"><a href="${escapeHtml(subjectListHash)}" style="${linkStyle}">«Предметный»</a> отвечает на вопрос не «где встречается слово», а «где в книге разбирается явление»: <a href="${escapeHtml(akanyeSubjectHash)}" style="${linkStyle}">аканье</a>, <a href="${escapeHtml(birchSubjectHash)}" style="${linkStyle}">берестяные грамоты</a>, <a href="${escapeHtml(articleSubjectHash)}" style="${linkStyle}">артикль</a>, <a href="${escapeHtml(udarenieSubjectHash)}" style="${linkStyle}">ударение</a>.</p>
+
+      <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">Как это помогает читать книгу</h3>
+      <ul style="margin:0;padding-left:18px;">
+        <li>Если вы ищете конкретное имя, BookIndex ведет прямо к страницам и контексту: <a href="${escapeHtml(avanesovHash)}" style="${linkStyle}">Аванесов Р. И.</a> или <a href="${escapeHtml(avvakumHash)}" style="${linkStyle}">Аввакум</a>.</li>
+        <li>Если нужна география, откройте <a href="${escapeHtml(toponymsListHash)}" style="${linkStyle}">топонимы</a> и посмотрите <a href="${escapeHtml(toponymsMapHash)}" style="${linkStyle}">карту</a>: например, <a href="${escapeHtml(angliaHash)}" style="${linkStyle}">Англия</a>.</li>
+        <li>Если нужны языки, используйте список + карту: пример <a href="${escapeHtml(austraHash)}" style="${linkStyle}">австралийские</a>.</li>
+        <li>Если нужна тема, <a href="${escapeHtml(subjectListHash)}" style="${linkStyle}">предметный указатель</a> покажет, где она реально разбирается по страницам.</li>
+      </ul>
+
+      <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">Два вида поиска</h3>
+      <p style="margin:0;"><strong>Глобальный поиск</strong> в шапке страницы: вводите имя, язык, топоним, термин или лекцию. Примеры: <a href="${escapeHtml(angliaHash)}" style="${linkStyle}">Англия</a>, <a href="${escapeHtml(udarenieAllHash)}" style="${linkStyle}">ударение</a>, <a href="${escapeHtml(globalLekciiHash)}" style="${linkStyle}">лекция</a>.</p>
+      <p style="margin:0;"><strong>Локальный поиск</strong> внутри раздела: фильтрует только текущий список. Для контекстов по фрагментам используйте <a href="${escapeHtml(kwicHash)}" style="${linkStyle}">KWIC</a> и, например, запрос <a href="${escapeHtml(sanskritHash)}" style="${linkStyle}">санскрит</a>.</p>
+
+      <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">Карта и примеры</h3>
+      <p style="margin:0;">Карта работает в разделах <a href="${escapeHtml(toponymsMapHash)}" style="${linkStyle}">«Топонимы»</a>, <a href="${escapeHtml(ethnonymsMapHash)}" style="${linkStyle}">«Этнонимы»</a> и <a href="${escapeHtml(languagesMapHash)}" style="${linkStyle}">«Языки»</a>.</p>
+      <ul style="margin:0;padding-left:18px;">
+        <li><a href="${escapeHtml(angliaHash)}" style="${linkStyle}">Англия</a> — точка над Британскими островами и связанная карточка.</li>
+        <li><a href="${escapeHtml(austraHash)}" style="${linkStyle}">австралийские</a> — языковая зона с привязкой к географии.</li>
+        <li>Любой этноним — возможность увидеть, где живет группа, а не только как она названа.</li>
+      </ul>
+
+      <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">Как сохранить и читать офлайн</h3>
+      <p style="margin:0;">Сайт можно открыть по ссылке или сохранить локально. Так как <code>aaz-index.html</code> автономен, списки, поиск, карточки и переходы между разделами остаются доступными без интернета; для тайлов карты может понадобиться сеть.</p>
+
+      <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">Как использовать в Obsidian</h3>
+      <ul style="margin:0;padding-left:18px;">
+        <li>Сохраните <code>aaz-index.html</code> в vault.</li>
+        <li>Сделайте заметку «Зализнякиада — навигация».</li>
+        <li>Добавьте в нее ссылки на нужные разделы, например <a href="${escapeHtml(materialsPhoneticHash)}" style="${linkStyle}">фонетические законы</a> и <a href="${escapeHtml(subjectListHash)}" style="${linkStyle}">предметный</a>.</li>
+        <li>Для важных тем заводите отдельные заметки и переносите диапазоны страниц из указателей.</li>
+      </ul>
+      <ol style="margin:0;padding-left:18px;">
+        <li>Откройте <a href="${escapeHtml(udarenieSubjectHash)}" style="${linkStyle}">ударение</a> в предметном указателе.</li>
+        <li>Добавьте страницы в заметку Obsidian.</li>
+        <li>Затем откройте <a href="${escapeHtml(angliaHash)}" style="${linkStyle}">Англия</a> в топонимах.</li>
+        <li>После этого перейдите в <a href="${escapeHtml(languagesListHash)}" style="${linkStyle}">языки</a> и свяжите материал с другими заметками.</li>
+      </ol>
+
+      <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">С чего начать</h3>
+      <ol style="margin:0;padding-left:18px;">
+        <li>Откройте <a href="${escapeHtml(demoHref)}" style="${linkStyle}">главную страницу</a>.</li>
+        <li>В шапке попробуйте глобальный поиск по слову <a href="${escapeHtml(udarenieAllHash)}" style="${linkStyle}" id="home-howto-link-udarenie">ударение</a>.</li>
+        <li>Откройте <a href="${escapeHtml(subjectListHash)}" style="${linkStyle}">«Предметный»</a> и посмотрите охват темы по страницам.</li>
+        <li>Перейдите в <a href="${escapeHtml(toponymsListHash)}" style="${linkStyle}">«Топонимы»</a> и найдите <a href="${escapeHtml(angliaHash)}" style="${linkStyle}">Англия</a>.</li>
+        <li>Откройте <a href="${escapeHtml(languagesMapHash)}" style="${linkStyle}">карту языков</a> и сравните с карточками.</li>
+      </ol>
+
+      <p style="margin:0;">Так BookIndex превращается в живую карту книги, а не просто в список ссылок.</p>
+    </div>
+  </details>`;
+}
+
 // =========================================================
 // ГЛАВНАЯ: статистика, маршруты, задачи
 // =========================================================
@@ -5554,6 +5676,7 @@ function renderHomePanel(container) {
     <div style="font-size:14px;color:#5a3818;font-weight:normal;margin-bottom:6px;">Недавно открывали</div>
     <div id="home-recent-items" style="font-size:12px;line-height:1.6;">${recentItems.length ? '' : '<span style="color:#888;">Пока пусто — откройте любую карточку.</span>'}</div>
   </div>`;
+  html += buildHomeHowToGuideHtml();
 
   html += '</div></div>';
 

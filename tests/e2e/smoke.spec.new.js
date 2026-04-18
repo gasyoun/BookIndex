@@ -858,6 +858,18 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#reading-now-results')).toHaveCount(0);
   });
 
+  test('home panel shows usage guide and navigates via quick-start links', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/home/home');
+    const guide = page.locator('#home-howto-details');
+    await expect(guide).toBeVisible();
+    await expect(guide).toContainText('Как пользоваться «Зализнякиадой»');
+    const startLink = page.locator('#home-howto-link-udarenie');
+    await expect(startLink).toBeVisible();
+    await startLink.click();
+    await expect(page).toHaveURL(/#(?:v4\/)?all\/list\/q\//);
+    await expect(page.locator('#search-input')).toHaveValue('ударение');
+  });
+
   test('home panel keeps routes above recents and supports inner scroll on compact desktop', async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 640 });
     await page.goto('/aaz-index.html#v4/home/home');
