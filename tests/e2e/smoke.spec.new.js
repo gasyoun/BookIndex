@@ -580,6 +580,22 @@ test.describe('aaz-index smoke', () => {
     await page.locator('.tab[data-tab="lecture_compare"]').click();
     await expect(page.locator('#lecture-compare-a')).toBeVisible();
     await expect(page.locator('#lecture-compare-b')).toBeVisible();
+    await expect(page.locator('.lecture-compare-pair[data-a][data-b]').first()).toBeVisible();
+  });
+
+  test('lecture compare suggested pairs are clickable and update selected lectures', async ({ page }) => {
+    await page.goto('/aaz-index.html#materials/lecture_compare');
+    const firstPair = page.locator('.lecture-compare-pair[data-a][data-b]').first();
+    await expect(firstPair).toBeVisible();
+    const a = await firstPair.getAttribute('data-a');
+    const b = await firstPair.getAttribute('data-b');
+    expect(a).toBeTruthy();
+    expect(b).toBeTruthy();
+
+    await firstPair.click();
+    await expect(page.locator('#lecture-compare-a')).toHaveValue(String(a));
+    await expect(page.locator('#lecture-compare-b')).toHaveValue(String(b));
+    await expect(page.locator(`.lecture-compare-pair[data-a="${a}"][data-b="${b}"]`)).toHaveClass(/active/);
   });
 
   test('lectures panel keeps preface separate and lectures paired', async ({ page }) => {
@@ -590,6 +606,11 @@ test.describe('aaz-index smoke', () => {
     await expect(cards.nth(1)).toContainText('\u041b\u0435\u043a\u0446\u0438\u044f 1');
     const firstStyle = await cards.first().getAttribute('style');
     expect(String(firstStyle || '')).toContain('grid-column:1 / -1');
+
+    const brotherCard = page.locator('#lectures-grid .lecture-card', { hasText: 'brother' }).first();
+    await expect(brotherCard).toBeVisible();
+    await expect(brotherCard).toContainText('\u0430 \u043d\u0435 \u0434\u0435\u0442\u0438 \xab\u0441\u0430\u043d\u0441\u043a\u0440\u0438\u0442\u0430\xbb');
+    await expect(brotherCard).not.toContainText('\u0443\u0447\u0451\u043d\u044b\u0435');
   });
 
   test('toponym epochs links navigate via hash item links', async ({ page }) => {

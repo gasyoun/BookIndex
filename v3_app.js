@@ -7,6 +7,19 @@ const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
 const APP_BUILD_ID = '__APP_BUILD_ID__';
+const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
+  'desc',
+  'about',
+  'why',
+  'why_read',
+  'description',
+  'definition',
+  'main_idea',
+  'tagline',
+  'event',
+]);
+const LECTURE_WHY_READ_BROTHER_BRAT =
+  'Чтобы понять, почему «brother» и «брат» — родственники, а не дети «санскрита», и как это узнают ученые.';
 
 function parseAppData() {
   if (globalSearchCache && typeof globalSearchCache.clear === 'function') {
@@ -98,6 +111,8 @@ function normalizeAppData() {
   scholar.sound_correspondences = Array.isArray(scholar.sound_correspondences) ? scholar.sound_correspondences : [];
   scholar.visualization_ideas = Array.isArray(scholar.visualization_ideas) ? scholar.visualization_ideas : [];
   scholar.slovo_links = Array.isArray(scholar.slovo_links) ? scholar.slovo_links : [];
+
+  applyDescriptionEditorialConventions();
 }
 
 function normalizeEditorialFlags(item) {
@@ -182,6 +197,43 @@ function normalizeItemContexts(item) {
     if (out.length) normalized[String(page)] = out;
   }
   item.contexts = normalized;
+}
+
+function normalizeDescriptionYoText(value) {
+  return String(value == null ? '' : value)
+    .replace(/е\u0308/g, 'е')
+    .replace(/Е\u0308/g, 'Е')
+    .replace(/ё/g, 'е')
+    .replace(/Ё/g, 'Е');
+}
+
+function normalizeDescriptionYoInNode(node) {
+  if (!node || typeof node !== 'object') return;
+  if (Array.isArray(node)) {
+    for (const item of node) normalizeDescriptionYoInNode(item);
+    return;
+  }
+  for (const [key, value] of Object.entries(node)) {
+    if (typeof value === 'string' && DESCRIPTION_FIELDS_WITH_NORMALIZED_YO.has(key)) {
+      node[key] = normalizeDescriptionYoText(value);
+      continue;
+    }
+    if (value && typeof value === 'object') normalizeDescriptionYoInNode(value);
+  }
+}
+
+function applyDescriptionEditorialConventions() {
+  normalizeDescriptionYoInNode(APP_DATA);
+
+  const lectures = Array.isArray(APP_DATA?.lectures) ? APP_DATA.lectures : [];
+  if (
+    lectures[2] &&
+    typeof lectures[2].why_read === 'string' &&
+    lectures[2].why_read.includes('brother') &&
+    lectures[2].why_read.includes('брат')
+  ) {
+    lectures[2].why_read = LECTURE_WHY_READ_BROTHER_BRAT;
+  }
 }
 
 // =========================================================
@@ -5880,6 +5932,61 @@ function renderLectureComparePanel(container) {
     return out;
   };
   const chapterLabel = (idx, ch) => (idx === 0 ? 'Предисловие' : `Лекция ${idx}`) + ` · ${ch.name}`;
+  const chapterSetCache = new Map();
+  const getChapterHeadsCached = (type, chapter) => {
+    const key = `${type}|${chapter.start}|${chapter.end}|${chapter.name || ''}`;
+    const cached = chapterSetCache.get(key);
+    if (cached) return cached;
+    const set = headsFor(type, chapter);
+    chapterSetCache.set(key, set);
+    return set;
+  };
+  const buildRecommendedLecturePairs = (limit = 8) => {
+    const rows = [];
+    for (let a = 0; a < chapters.length; a++) {
+      for (let b = a + 1; b < chapters.length; b++) {
+        const chA = chapters[a];
+        const chB = chapters[b];
+        let sharedTotal = 0;
+        let uniqueTotal = 0;
+        let sizeA = 0;
+        let sizeB = 0;
+        const sharedByType = [];
+        for (const t of types) {
+          const setA = getChapterHeadsCached(t.key, chA);
+          const setB = getChapterHeadsCached(t.key, chB);
+          let shared = 0;
+          for (const head of setA) if (setB.has(head)) shared += 1;
+          const onlyA = Math.max(0, setA.size - shared);
+          const onlyB = Math.max(0, setB.size - shared);
+          sharedTotal += shared;
+          uniqueTotal += onlyA + onlyB;
+          sizeA += setA.size;
+          sizeB += setB.size;
+          sharedByType.push({ label: t.label, shared });
+        }
+        if (sharedTotal < 2) continue;
+        const balance = 1 - (Math.abs(sizeA - sizeB) / Math.max(1, sizeA + sizeB));
+        const score = sharedTotal * 2 + Math.min(60, uniqueTotal) * 0.08 + balance;
+        const topSignals = sharedByType
+          .filter(x => x.shared > 0)
+          .sort((x, y) => y.shared - x.shared)
+          .slice(0, 2)
+          .map(x => `${x.label}: ${x.shared}`)
+          .join(' · ');
+        rows.push({
+          a,
+          b,
+          score,
+          sharedTotal,
+          reason: topSignals || 'общие сущности',
+        });
+      }
+    }
+    rows.sort((x, y) => y.score - x.score || y.sharedTotal - x.sharedTotal || x.a - y.a || x.b - y.b);
+    return rows.slice(0, limit);
+  };
+  const recommendedPairs = buildRecommendedLecturePairs(10);
 
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
   html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Сравнение двух лекций</h2>';
@@ -5898,6 +6005,21 @@ function renderLectureComparePanel(container) {
       </select>
     </label>
   </div>`;
+  if (recommendedPairs.length) {
+    html += '<div style="margin:0 0 12px 0;padding:10px 12px;background:#fff8e8;border:1px solid #e2d6bf;border-radius:8px;">';
+    html += '<div style="font-size:12px;color:#6a5040;font-weight:bold;margin-bottom:6px;">Осмысленные пары для сравнения</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+    for (const rec of recommendedPairs) {
+      const selected =
+        (rec.a === lectureCompareA && rec.b === lectureCompareB) ||
+        (rec.a === lectureCompareB && rec.b === lectureCompareA);
+      html += `<button type="button" class="lecture-compare-pair ${selected ? 'active' : ''}" data-a="${rec.a}" data-b="${rec.b}" style="padding:4px 10px;border:1px solid ${selected ? '#5a3818' : '#c4b890'};border-radius:999px;background:${selected ? '#5a3818' : '#fff'};color:${selected ? '#fff' : '#5a3818'};cursor:pointer;font-size:11px;">
+        ${escapeHtml(chapterLabel(rec.a, chapters[rec.a]))} ↔ ${escapeHtml(chapterLabel(rec.b, chapters[rec.b]))}
+        <span style="opacity:0.8;">(${escapeHtml(rec.reason)})</span>
+      </button>`;
+    }
+    html += '</div></div>';
+  }
 
   html += `<div style="font-size:12px;color:#5a3818;margin-bottom:10px;"><strong>A:</strong> ${escapeHtml(chapterA.name)} <span style="color:#888;">(стр. ${chapterA.start}-${chapterA.end})</span><br><strong>B:</strong> ${escapeHtml(chapterB.name)} <span style="color:#888;">(стр. ${chapterB.start}-${chapterB.end})</span></div>`;
   html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;">';
@@ -5941,6 +6063,15 @@ function renderLectureComparePanel(container) {
       persistViewState();
     };
   }
+  container.querySelectorAll('.lecture-compare-pair[data-a][data-b]').forEach(btn => {
+    btn.onclick = () => {
+      lectureCompareA = clampIdx(parseInt(btn.dataset.a || '0', 10));
+      lectureCompareB = clampIdx(parseInt(btn.dataset.b || '1', 10));
+      if (lectureCompareA === lectureCompareB) lectureCompareB = (lectureCompareA + 1) % chapters.length;
+      renderLectureComparePanel(container);
+      persistViewState();
+    };
+  });
   bindNavigateLinks(container, '.lecture-compare-link[data-head]', 'all');
 }
 
