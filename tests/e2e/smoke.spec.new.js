@@ -973,6 +973,31 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#tasks-history-list .task-history-row').first()).toBeVisible();
   });
 
+  test('materials tasks new pack collapses answer history to single-line summary', async ({ page }) => {
+    await page.goto('/aaz-index.html#materials/tasks');
+    await page.evaluate(() => {
+      localStorage.removeItem('zaliznyakiada.tasksProgress.v1');
+    });
+    await page.reload();
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/tasks/);
+
+    const firstOption = page.locator('#tasks-container .task-options button').first();
+    await expect(firstOption).toBeVisible();
+    await firstOption.click();
+    await expect(page.locator('#tasks-history-list .task-history-row').first()).toBeVisible();
+
+    await page.locator('#tasks-regen').click();
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/tasks/);
+    await expect(page.locator('#tasks-history-summary')).toBeVisible();
+    await expect(page.locator('#tasks-history-list')).not.toBeVisible();
+
+    const isExpanded = await page.evaluate(() => {
+      const box = document.getElementById('tasks-history-box');
+      return !!(box && box.hasAttribute('open'));
+    });
+    expect(isExpanded).toBeFalsy();
+  });
+
   test('phonetic laws keep transition chunks around arrow for t to th example', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/materials/phonetic_laws');
     const targetComment = page.locator('tr', { hasText: '\u00ab\u0442\u0440\u0438\u00bb' }).locator('td').nth(2);

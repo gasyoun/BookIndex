@@ -5959,7 +5959,8 @@ function buildDynamicTasks() {
   return out;
 }
 
-function renderTasksPanel(container) {
+function renderTasksPanel(container, options = {}) {
+  const collapseHistory = !!(options && options.collapseHistory);
   const baseTasks = Array.isArray(APP_DATA.tasks) ? APP_DATA.tasks : [];
   const dynamicTasks = buildDynamicTasks();
   const tasks = [...baseTasks, ...dynamicTasks];
@@ -5979,10 +5980,11 @@ function renderTasksPanel(container) {
   html += '</div>';
   html += '</div>';
   html += '<div id="tasks-summary" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:12px;"></div>';
-  html += '<div id="tasks-history-box" style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:14px;">';
-  html += '<div style="font-size:12px;color:#6a5040;font-weight:bold;letter-spacing:0.3px;text-transform:uppercase;margin-bottom:8px;">\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u043e\u0442\u0432\u0435\u0442\u043e\u0432</div>';
+  html += `<details id="tasks-history-box" style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:8px 12px;margin-bottom:14px;"${collapseHistory ? '' : ' open'}>`;
+  html += '<summary id="tasks-history-summary" style="font-size:12px;color:#6a5040;font-weight:bold;letter-spacing:0.3px;text-transform:uppercase;cursor:pointer;user-select:none;outline:none;">\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u043e\u0442\u0432\u0435\u0442\u043e\u0432</summary>';
+  html += '<div style="margin-top:8px;">';
   html += '<div id="tasks-history-list" style="display:grid;gap:6px;"></div>';
-  html += '</div>';
+  html += '</div></details>';
   html += '<div id="tasks-container"></div></div></div>';
   container.innerHTML = html;
 
@@ -6130,7 +6132,7 @@ function renderTasksPanel(container) {
 
   renderProgressPanels();
   const regenBtn = document.getElementById('tasks-regen');
-  if (regenBtn) regenBtn.onclick = () => renderTasksPanel(container);
+  if (regenBtn) regenBtn.onclick = () => renderTasksPanel(container, { collapseHistory: true });
   const resetProgressBtn = document.getElementById('tasks-reset-progress');
   if (resetProgressBtn) {
     resetProgressBtn.onclick = () => {
