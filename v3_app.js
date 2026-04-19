@@ -825,6 +825,13 @@ function clampPageInBook(value) {
   return Math.max(1, Math.min(total, raw));
 }
 
+function normalizePageRangeInBook(startValue, endValue, fallbackStart = 1, fallbackEnd = null) {
+  const resolvedFallbackEnd = fallbackEnd == null ? getTotalBookPages() : fallbackEnd;
+  const start = startValue == null ? clampPageInBook(fallbackStart) : clampPageInBook(startValue);
+  const end = endValue == null ? clampPageInBook(resolvedFallbackEnd) : clampPageInBook(endValue);
+  return start <= end ? { start, end } : { start: end, end: start };
+}
+
 function announceUiMessage(message) {
   if (typeof document === 'undefined' || !document.body) return;
   const text = String(message || '').trim();
@@ -1293,17 +1300,14 @@ function restoreViewState() {
       ? clampUiInput(parsed.currentKwicQuery, MAX_LIST_QUERY_LENGTH)
       : '';
     parsed.currentKwicSort = normalizeKwicSort(parsed.currentKwicSort);
-    parsed.currentKwicPageStart = parsed.currentKwicPageStart == null
-      ? 1
-      : clampPageInBook(parsed.currentKwicPageStart);
-    parsed.currentKwicPageEnd = parsed.currentKwicPageEnd == null
-      ? getTotalBookPages()
-      : clampPageInBook(parsed.currentKwicPageEnd);
-    if (parsed.currentKwicPageStart > parsed.currentKwicPageEnd) {
-      const a = parsed.currentKwicPageStart;
-      parsed.currentKwicPageStart = parsed.currentKwicPageEnd;
-      parsed.currentKwicPageEnd = a;
-    }
+    const kwicRange = normalizePageRangeInBook(
+      parsed.currentKwicPageStart,
+      parsed.currentKwicPageEnd,
+      1,
+      getTotalBookPages()
+    );
+    parsed.currentKwicPageStart = kwicRange.start;
+    parsed.currentKwicPageEnd = kwicRange.end;
     parsed.onlyDiscussed = !!parsed.onlyDiscussed;
     parsed.onlyQuestionCandidates = !!parsed.onlyQuestionCandidates;
     if (!Array.isArray(parsed.activeFilters)) parsed.activeFilters = [];
@@ -1590,17 +1594,14 @@ function applyViewState(state) {
     ? clampUiInput(state.currentKwicQuery, MAX_LIST_QUERY_LENGTH)
     : '';
   currentKwicSort = normalizeKwicSort(state.currentKwicSort);
-  currentKwicPageStart = state.currentKwicPageStart == null
-    ? 1
-    : clampPageInBook(state.currentKwicPageStart);
-  currentKwicPageEnd = state.currentKwicPageEnd == null
-    ? getTotalBookPages()
-    : clampPageInBook(state.currentKwicPageEnd);
-  if (currentKwicPageStart > currentKwicPageEnd) {
-    const a = currentKwicPageStart;
-    currentKwicPageStart = currentKwicPageEnd;
-    currentKwicPageEnd = a;
-  }
+  const kwicRange = normalizePageRangeInBook(
+    state.currentKwicPageStart,
+    state.currentKwicPageEnd,
+    1,
+    getTotalBookPages()
+  );
+  currentKwicPageStart = kwicRange.start;
+  currentKwicPageEnd = kwicRange.end;
   if (currentEntity === 'materials' && currentTab === 'glossary' && currentGlossaryTerm) {
     pendingGlossaryQuery = currentGlossaryTerm;
   }
@@ -4251,10 +4252,10 @@ function renderHistogramInRight() {
   if (!right) return;
   const focusedItem = getFocusedHistogramItem(currentEntity);
   const introText = buildHistogramIntroText(currentEntity, focusedItem);
-  let html = `<div class="chart">
+  const html = `<div class="chart">
     <p class="chart-intro">${escapeHtml(introText)}</p>
-    <div id="right-histogram"></div>`;
-  html += '</div></div>';
+    <div id="right-histogram"></div>
+  </div>`;
   right.innerHTML = html;
   const root = document.getElementById('right-histogram');
   if (!root) return;
@@ -7315,18 +7316,46 @@ function iterateKwicContextEntries(contexts, pageStart, pageEnd) {
   return entries;
 }
 
+function collectLexiconContextBundles(pageStart, pageEnd) {
+  const out = [];
+  const items = Array.isArray(APP_DATA?.lexicon) ? APP_DATA.lexicon : [];
+  for (const it of items) {
+    const itemHead = String(it?.head || '').trim();
+    if (!itemHead) continue;
+    const entries = iterateKwicContextEntries(it && it.contexts, pageStart, pageEnd);
+    if (!entries.length) continue;
+    out.push({ itemHead, entries });
+  }
+  return out;
+}
+
+function collectMatchingGlossaryTerms(qNorm) {
+  const out = [];
+  const seen = new Set();
+  const glossary = Array.isArray(APP_DATA?.glossary) ? APP_DATA.glossary : [];
+  for (const g of glossary) {
+    const term = String(g?.term || '').trim();
+    const definition = String(g?.definition || '').trim();
+    const termNorm = normalizeHeadForMatch(term);
+    const defNorm = normalizeHeadForMatch(definition);
+    if (!termNorm) continue;
+    if (!(termNorm.includes(qNorm) || defNorm.includes(qNorm) || qNorm.includes(termNorm))) continue;
+    if (seen.has(termNorm)) continue;
+    seen.add(termNorm);
+    out.push(term);
+  }
+  return out;
+}
+
 function collectLexiconKwicRows(query, pageStart, pageEnd) {
   const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH);
   const qNorm = normalizeHeadForMatch(q);
   if (qNorm.length < 2) return [];
   const rows = [];
   rows._truncated = false;
-  const items = Array.isArray(APP_DATA?.lexicon) ? APP_DATA.lexicon : [];
-  for (const it of items) {
-    const head = String(it?.head || '').trim();
-    if (!head) continue;
-    const contextEntries = iterateKwicContextEntries(it && it.contexts, pageStart, pageEnd);
-    for (const entry of contextEntries) {
+  const bundles = collectLexiconContextBundles(pageStart, pageEnd);
+  for (const bundle of bundles) {
+    for (const entry of bundle.entries) {
       const page = entry.page;
       const snippets = entry.snippets;
       for (const raw of snippets) {
@@ -7334,9 +7363,9 @@ function collectLexiconKwicRows(query, pageStart, pageEnd) {
         if (!snippetNorm.includes(qNorm)) continue;
         const row = buildKwicContextRow({
           source: 'lexicon',
-          term: head,
+          term: bundle.itemHead,
           itemType: 'lexicon',
-          itemHead: head,
+          itemHead: bundle.itemHead,
           page,
           snippet: raw,
           query: q,
@@ -7359,21 +7388,11 @@ function collectGlossaryKwicRows(query, pageStart, pageEnd) {
   const rows = [];
   rows._truncated = false;
   const seen = new Set();
-  const glossary = Array.isArray(APP_DATA?.glossary) ? APP_DATA.glossary : [];
-  const lexItems = Array.isArray(APP_DATA?.lexicon) ? APP_DATA.lexicon : [];
-  for (const g of glossary) {
-    const term = String(g?.term || '').trim();
-    const definition = String(g?.definition || '').trim();
-    const termNorm = normalizeHeadForMatch(term);
-    const defNorm = normalizeHeadForMatch(definition);
-    if (!termNorm) continue;
-    if (!(termNorm.includes(qNorm) || defNorm.includes(qNorm) || qNorm.includes(termNorm))) continue;
-
-    for (const item of lexItems) {
-      const itemHead = String(item?.head || '').trim();
-      if (!itemHead) continue;
-      const contextEntries = iterateKwicContextEntries(item && item.contexts, pageStart, pageEnd);
-      for (const entry of contextEntries) {
+  const matchedTerms = collectMatchingGlossaryTerms(qNorm);
+  const bundles = collectLexiconContextBundles(pageStart, pageEnd);
+  for (const term of matchedTerms) {
+    for (const bundle of bundles) {
+      for (const entry of bundle.entries) {
         const page = entry.page;
         const snippets = entry.snippets;
         for (const raw of snippets) {
@@ -7381,7 +7400,7 @@ function collectGlossaryKwicRows(query, pageStart, pageEnd) {
             source: 'glossary',
             term,
             itemType: 'lexicon',
-            itemHead,
+            itemHead: bundle.itemHead,
             page,
             snippet: raw,
             query: q,
@@ -7427,13 +7446,9 @@ function renderKwicPanel(container) {
   currentKwicSource = normalizeKwicSource(currentKwicSource);
   currentKwicSort = normalizeKwicSort(currentKwicSort);
   currentKwicQuery = clampUiInput(currentKwicQuery, MAX_LIST_QUERY_LENGTH);
-  currentKwicPageStart = clampPageInBook(currentKwicPageStart);
-  currentKwicPageEnd = clampPageInBook(currentKwicPageEnd);
-  if (currentKwicPageStart > currentKwicPageEnd) {
-    const a = currentKwicPageStart;
-    currentKwicPageStart = currentKwicPageEnd;
-    currentKwicPageEnd = a;
-  }
+  const panelRange = normalizePageRangeInBook(currentKwicPageStart, currentKwicPageEnd, 1, totalPages);
+  currentKwicPageStart = panelRange.start;
+  currentKwicPageEnd = panelRange.end;
   const queuedKwicTerm = (() => {
     const localPending = clampUiInput(pendingKwicTerm || '', MAX_LIST_QUERY_LENGTH);
     if (localPending) return localPending;
@@ -7515,13 +7530,9 @@ function renderKwicPanel(container) {
     currentKwicSort = normalizeKwicSort(sortInput.value);
     currentKwicQuery = clampUiInput(queryInput.value, MAX_LIST_QUERY_LENGTH);
     queryInput.value = currentKwicQuery;
-    currentKwicPageStart = clampPageInBook(startInput.value);
-    currentKwicPageEnd = clampPageInBook(endInput.value);
-    if (currentKwicPageStart > currentKwicPageEnd) {
-      const a = currentKwicPageStart;
-      currentKwicPageStart = currentKwicPageEnd;
-      currentKwicPageEnd = a;
-    }
+    const formRange = normalizePageRangeInBook(startInput.value, endInput.value, 1, totalPages);
+    currentKwicPageStart = formRange.start;
+    currentKwicPageEnd = formRange.end;
     startInput.value = String(currentKwicPageStart);
     endInput.value = String(currentKwicPageEnd);
 
