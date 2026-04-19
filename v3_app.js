@@ -876,6 +876,49 @@ function escapeRegexLiteral(s) {
   return String(s || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function buildContextLinkMatchTerms(head) {
+  const raw = String(head || '').trim();
+  if (!raw) return [];
+  const variants = new Set([raw]);
+  const simpleWord = /^[A-Za-zА-Яа-яЁё]+$/u.test(raw);
+  if (!simpleWord) return Array.from(variants);
+
+  if (/ь$/iu.test(raw)) {
+    const stem = raw.slice(0, -1);
+    if (stem) {
+      variants.add(`${stem}и`);
+      variants.add(`${stem}е`);
+      variants.add(`${stem}ю`);
+      variants.add(`${stem}ью`);
+    }
+  }
+
+  if (/т$/iu.test(raw)) {
+    variants.add(`${raw}а`);
+    variants.add(`${raw}у`);
+    variants.add(`${raw}е`);
+    variants.add(`${raw}ом`);
+  }
+
+  if (/(ий|ой)$/iu.test(raw)) {
+    const stem = raw.slice(0, -2);
+    if (stem.length >= 3) {
+      variants.add(`${stem}ого`);
+      variants.add(`${stem}ому`);
+      variants.add(`${stem}ым`);
+      variants.add(`${stem}ом`);
+      variants.add(`${stem}ая`);
+      variants.add(`${stem}ую`);
+      variants.add(`${stem}ое`);
+      variants.add(`${stem}ые`);
+      variants.add(`${stem}ых`);
+      variants.add(`${stem}ыми`);
+    }
+  }
+
+  return Array.from(variants);
+}
+
 function getContextEntityLinkEntries() {
   if (Array.isArray(contextEntityLinkEntriesCache) && contextEntityLinkEntriesCache.length) {
     return contextEntityLinkEntriesCache;
@@ -893,17 +936,21 @@ function getContextEntityLinkEntries() {
     for (const it of list) {
       const head = String(it && it.head ? it.head : '').trim();
       if (!head) continue;
-      const norm = normalizeHeadForMatch(head);
-      if (!norm) continue;
-      const uniq = `${entityType}::${norm}`;
-      if (seen.has(uniq)) continue;
-      seen.add(uniq);
-      out.push({
-        type: entityType,
-        head,
-        norm,
-        length: head.length,
-      });
+      const matchTerms = buildContextLinkMatchTerms(head);
+      for (const term of matchTerms) {
+        const norm = normalizeHeadForMatch(term);
+        if (!norm) continue;
+        const uniq = `${entityType}::${norm}`;
+        if (seen.has(uniq)) continue;
+        seen.add(uniq);
+        out.push({
+          type: entityType,
+          head,
+          matchText: term,
+          norm,
+          length: term.length,
+        });
+      }
     }
   }
   out.sort((a, b) => (b.length - a.length) || compareHeadsRu(a.head, b.head));
@@ -923,7 +970,7 @@ function hasContextLinkBoundaries(text, start, end) {
   return true;
 }
 
-function autoLinkEntitiesPlain(rawText, currentHeadNorm) {
+function autoLinkEntitiesPlain(rawText) {
   const text = String(rawText || '');
   if (!text) return '';
   const entries = getContextEntityLinkEntries();
@@ -931,10 +978,9 @@ function autoLinkEntitiesPlain(rawText, currentHeadNorm) {
   const occupied = new Array(text.length).fill(false);
   const matches = [];
   for (const entry of entries) {
-    if (currentHeadNorm && entry.norm === currentHeadNorm) continue;
     let re = null;
     try {
-      re = new RegExp(escapeRegexLiteral(entry.head), 'giu');
+      re = new RegExp(escapeRegexLiteral(entry.matchText || entry.head || ''), 'giu');
     } catch (e) {
       continue;
     }
@@ -972,10 +1018,9 @@ function autoLinkEntitiesPlain(rawText, currentHeadNorm) {
   return html;
 }
 
-function autoLinkEntities(text, currentHead) {
+function autoLinkEntities(text) {
   const raw = String(text || '');
   if (!raw) return '';
-  const currentHeadNorm = normalizeHeadForMatch(currentHead || '');
   const anchorTagRe = /<a\b[^>]*>[\s\S]*?<\/a>/gi;
   let html = '';
   let cursor = 0;
@@ -983,12 +1028,38 @@ function autoLinkEntities(text, currentHead) {
   while ((m = anchorTagRe.exec(raw)) !== null) {
     const start = m.index;
     const full = String(m[0] || '');
-    if (start > cursor) html += autoLinkEntitiesPlain(raw.slice(cursor, start), currentHeadNorm);
+    if (start > cursor) html += autoLinkEntitiesPlain(raw.slice(cursor, start));
     html += full;
     cursor = start + full.length;
   }
-  if (cursor < raw.length) html += autoLinkEntitiesPlain(raw.slice(cursor), currentHeadNorm);
+  if (cursor < raw.length) html += autoLinkEntitiesPlain(raw.slice(cursor));
   return html;
+}
+
+function getPreferredContextSplitIndex(text) {
+  const raw = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!raw || raw.startsWith('…')) return -1;
+  if (raw.length < 68 || raw.length > 170) return -1;
+  const dashMatch = raw.match(/\s+—\s+/u);
+  if (!dashMatch || typeof dashMatch.index !== 'number') return -1;
+  const splitIdx = dashMatch.index + 1;
+  const leftLen = splitIdx;
+  const rightLen = raw.length - splitIdx;
+  if (leftLen < 28 || rightLen < 24) return -1;
+  return splitIdx;
+}
+
+function renderContextTextWithLinks(text) {
+  const raw = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!raw) return '';
+  const splitIdx = getPreferredContextSplitIndex(raw);
+  if (splitIdx < 1 || splitIdx >= raw.length) {
+    return autoLinkEntities(raw);
+  }
+  const left = raw.slice(0, splitIdx).trimEnd();
+  const right = raw.slice(splitIdx).trimStart();
+  if (!left || !right) return autoLinkEntities(raw);
+  return `${autoLinkEntities(left)}<br class="context-balance-break"><span class="context-line-two">${autoLinkEntities(right)}</span>`;
 }
 
 function highlightInContext(text, head) {
@@ -4190,9 +4261,24 @@ function renderCardInRight() {
     category = 'Кандидат — требует проверки редактором' + ((editorial.note || it.note) ? ' · ' + (editorial.note || it.note) : '');
   }
   const useTwoColumnCardLayout = eType === 'toponyms';
+  const itemSources = Array.isArray(it.sources) ? it.sources.slice(0, 5) : [];
+  const renderSourcesInHeader = eType === 'names' && itemSources.length > 0;
   const sourceConfirmedInline = editorial.source_confirmed
     ? '<span class="card-status-inline">source confirmed</span>'
     : '';
+  let headerSourcesHtml = '';
+  if (renderSourcesInHeader) {
+    const sourcePills = itemSources.slice(0, 3).map((src, sourceIdx) => {
+      const label = escapeHtml(src.label || 'Source');
+      const link = src.url
+        ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
+        : `<span>${label}</span>`;
+      return `<span class="card-source-pill">${link}<button type="button" class="related-link related-link-btn source-export-bib" data-source-idx="${sourceIdx}" style="font-size:10px;">BibTeX</button></span>`;
+    }).join('');
+    if (sourcePills) {
+      headerSourcesHtml = `<div class="card-sources-inline"><span class="card-sources-label">Sources</span>${sourcePills}</div>`;
+    }
+  }
   const allPages = sortUniquePages(it.page_list || []);
   let pagesText = it.pages || it.head_pages || '';
   const pageLinksHtml = buildCardPageLinksHtml(allPages);
@@ -4205,7 +4291,10 @@ function renderCardInRight() {
           <h2>${renderAccentSafe(it.head)}</h2>
           <div class="card-meta-row">
             <div class="category">${escapeHtml(category)}</div>
-            ${sourceConfirmedInline}
+            <div class="card-meta-right">
+              ${sourceConfirmedInline}
+              ${headerSourcesHtml}
+            </div>
           </div>
           ${wikiLink}
           <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;">
@@ -4248,11 +4337,10 @@ function renderCardInRight() {
   // Контексты
   if (useTwoColumnCardLayout) html += '<div class="card-two-col-layout">';
 
-  if (Array.isArray(it.sources) && it.sources.length > 0) {
+  if (itemSources.length > 0 && !renderSourcesInHeader) {
     html += useTwoColumnCardLayout ? '<section class="card-col-block"><h3>Sources</h3><div class="related">' : '<h3>Sources</h3><div class="related">';
-    const cardSources = it.sources.slice(0, 5);
-    for (let sourceIdx = 0; sourceIdx < cardSources.length; sourceIdx++) {
-      const src = cardSources[sourceIdx];
+    for (let sourceIdx = 0; sourceIdx < itemSources.length; sourceIdx++) {
+      const src = itemSources[sourceIdx];
       const label = escapeHtml(src.label || 'Source');
       const isWikiSource = /wikipedia/i.test(String(src.label || '')) || /wikipedia\.org/i.test(String(src.url || ''));
       const pageHint = src.page ? ` · p. ${escapeHtml(src.page)}` : '';
@@ -4275,7 +4363,7 @@ function renderCardInRight() {
     for (const pg of ctxKeys.slice(0, 10)) {
       const ctxs = it.contexts[pg];
       for (const ctx of ctxs.slice(0, 1)) {
-        const ctxHtml = autoLinkEntities(ctx, it.head);
+        const ctxHtml = renderContextTextWithLinks(ctx);
         html += `
           <div class="context-item">
             <div class="context-page">стр. ${pg}</div>
