@@ -668,6 +668,38 @@
   .card .pages-links {
     display: inline;
   }
+  .card .pages-by-lecture {
+    margin: -4px 0 10px 0;
+    padding: 6px 10px;
+    border-radius: 3px;
+    background: var(--surface-soft-2);
+    font-size: 11px;
+    border: 1px solid var(--line);
+  }
+  .card .pages-by-lecture strong {
+    color: var(--title);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .card .pages-by-lecture-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 1px 0;
+  }
+  .card .pages-by-lecture-lecture {
+    flex: 0 0 auto;
+    min-width: 118px;
+    color: var(--title);
+    font-weight: bold;
+  }
+  .card .pages-by-lecture-sep {
+    color: var(--muted);
+  }
+  .card .pages-by-lecture-pages {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
   .card .card-page-link {
     font-variant-numeric: tabular-nums;
     white-space: nowrap;

@@ -245,6 +245,7 @@ let ITEM_INDEX_NORMALIZED = new Map(); // type -> Map(normalizedHead -> item)
 let CHAPTER_ITEM_INDEX = new Map();    // type -> Map(chapterName -> item[])
 let ITEM_HASH_SLUG_BY_HEAD = new Map(); // type -> Map(head -> slug)
 let ITEM_HASH_HEAD_BY_SLUG = new Map(); // type -> Map(slug -> head)
+let PAGE_TO_CHAPTER = new Map(); // page -> chapter object
 
 function initEntityTypes() {
   ENTITY_TYPES = {
@@ -381,11 +382,15 @@ function buildDataIndexes() {
   CHAPTER_ITEM_INDEX = new Map();
   ITEM_HASH_SLUG_BY_HEAD = new Map();
   ITEM_HASH_HEAD_BY_SLUG = new Map();
+  PAGE_TO_CHAPTER = new Map();
 
   const chapters = Array.isArray(APP_DATA?.chapters) ? APP_DATA.chapters : [];
   const pageToChapter = new Map();
   for (const ch of chapters) {
-    for (let p = ch.start; p <= ch.end; p++) pageToChapter.set(p, ch.name);
+    for (let p = ch.start; p <= ch.end; p++) {
+      pageToChapter.set(p, ch.name);
+      PAGE_TO_CHAPTER.set(p, ch);
+    }
   }
 
   for (const [type, conf] of Object.entries(ENTITY_TYPES || {})) {
@@ -1141,6 +1146,46 @@ function buildCardPageLinksHtml(pages, maxLinks = 28) {
   const hiddenCount = list.length - shown.length;
   if (hiddenCount > 0) html += ` <span style="color:#888;">и ещё ${hiddenCount}</span>`;
   return html;
+}
+
+function groupPagesByLecture(pages) {
+  const list = sortUniquePages(pages);
+  if (!list.length) return [];
+  const out = [];
+  const byKey = new Map();
+  for (const page of list) {
+    const chapter = PAGE_TO_CHAPTER.get(page) || null;
+    const key = chapter ? `chapter::${chapter.name}` : 'chapter::__other__';
+    let row = byKey.get(key);
+    if (!row) {
+      row = { chapter, pages: [] };
+      byKey.set(key, row);
+      out.push(row);
+    }
+    row.pages.push(page);
+  }
+  out.sort((a, b) => {
+    const aStart = a.chapter && Number.isFinite(a.chapter.start) ? a.chapter.start : Number.POSITIVE_INFINITY;
+    const bStart = b.chapter && Number.isFinite(b.chapter.start) ? b.chapter.start : Number.POSITIVE_INFINITY;
+    return aStart - bStart;
+  });
+  return out;
+}
+
+function buildLecturePageBreakdownHtml(pages) {
+  const groups = groupPagesByLecture(pages);
+  if (!groups.length) return '';
+  let rows = '';
+  for (const grp of groups) {
+    const chapterName = grp.chapter ? String(grp.chapter.name || '').trim() : '';
+    const lectureIdx = chapterName ? findLectureIndexByName(chapterName) : -1;
+    const lectureLabel = lectureIdx >= 0
+      ? `<a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}" style="text-decoration:underline dotted;">${escapeHtml(chapterName)}</a>`
+      : `<span>${escapeHtml(chapterName || 'Вне диапазонов лекций')}</span>`;
+    const pageLinks = buildCardPageLinksHtml(grp.pages, 18);
+    rows += `<div class="pages-by-lecture-row"><span class="pages-by-lecture-lecture">${lectureLabel}</span><span class="pages-by-lecture-sep">:</span><span class="pages-by-lecture-pages">${pageLinks}</span></div>`;
+  }
+  return `<div class="pages-by-lecture"><strong>По лекциям:</strong>${rows}</div>`;
 }
 
 function renderTextWithPageLinks(text, options = {}) {
@@ -4119,13 +4164,55 @@ function getItemsForChapter(entityKey, chapter) {
   return filtered;
 }
 
-function getChapterHistogramStats(entityKey) {
-  const key = `${entityKey}::${getDataSignature()}`;
+function getFocusedHistogramItem(entityKey) {
+  if (!selectedItem || !entityKey) return null;
+  const type = selectedItemType || entityKey;
+  if (type !== entityKey) return null;
+  return findItemByHeadAndType(selectedItem, entityKey);
+}
+
+function getHistogramSubjectLabel(entityKey) {
+  const map = {
+    names: 'имён',
+    toponyms: 'топонимов',
+    ethnonyms: 'этнонимов',
+    languages: 'языков',
+    lexicon: 'лексем',
+    lexicon_reverse: 'лексем (обратный список)',
+    lexicon_tech: 'реконструированных форм',
+    subject: 'понятий',
+    all: 'элементов',
+  };
+  return map[entityKey] || 'элементов';
+}
+
+function buildHistogramIntroText(entityKey, focusedItem) {
+  if (focusedItem && focusedItem.head) {
+    return `Распределение упоминаний «${focusedItem.head}» по лекциям книги (по страницам внутри каждой лекции).`;
+  }
+  return `Распределение ${getHistogramSubjectLabel(entityKey)} по лекциям книги: сколько элементов раздела встречается в каждой лекции. Кликните по столбцу — увидите элементы соответствующей лекции.`;
+}
+
+function getChapterHistogramStats(entityKey, focusedItem = null) {
+  const focusKey = focusedItem && focusedItem.head ? normalizeHeadForMatch(focusedItem.head) : '*';
+  const key = `${entityKey}::${focusKey}::${getDataSignature()}`;
   return getCachedAggregate('histogram', key, () => {
     const counts = {};
-    for (const ch of APP_DATA.chapters) {
-      const indexed = getChapterIndexedItems(entityKey, ch.name);
-      counts[ch.name] = indexed ? indexed.length : 0;
+    const chapters = Array.isArray(APP_DATA?.chapters) ? APP_DATA.chapters : [];
+    if (focusedItem && Array.isArray(focusedItem.page_list)) {
+      const pages = sortUniquePages(focusedItem.page_list);
+      for (const ch of chapters) {
+        let c = 0;
+        for (const p of pages) {
+          if (p >= ch.start && p <= ch.end) c += 1;
+        }
+        counts[ch.name] = c;
+      }
+    } else {
+      for (const ch of chapters) {
+        const indexed = getChapterIndexedItems(entityKey, ch.name);
+        counts[ch.name] = indexed ? indexed.length : 0;
+      }
     }
     const max = Math.max(1, ...Object.values(counts));
     return { counts, max };
@@ -4141,8 +4228,8 @@ function renderChapterListFilter(entityKey, chapterName) {
   appendItemsWithLetters(list, filtered, entityKey);
 }
 
-function renderChapterHistogramRows(host, entityKey) {
-  const stats = getChapterHistogramStats(entityKey);
+function renderChapterHistogramRows(host, entityKey, focusedItem = null) {
+  const stats = getChapterHistogramStats(entityKey, focusedItem);
   const counts = stats.counts;
   const max = stats.max;
   let html = '';
@@ -4162,14 +4249,16 @@ function renderChapterHistogramRows(host, entityKey) {
 function renderHistogramInRight() {
   const right = getRightContentHost();
   if (!right) return;
+  const focusedItem = getFocusedHistogramItem(currentEntity);
+  const introText = buildHistogramIntroText(currentEntity, focusedItem);
   let html = `<div class="chart">
-    <p class="chart-intro">Распределение элементов по лекциям. Кликните по столбцу — увидите элементы этой лекции.</p>
+    <p class="chart-intro">${escapeHtml(introText)}</p>
     <div id="right-histogram"></div>`;
   html += '</div></div>';
   right.innerHTML = html;
   const root = document.getElementById('right-histogram');
   if (!root) return;
-  renderChapterHistogramRows(root, currentEntity);
+  renderChapterHistogramRows(root, currentEntity, focusedItem);
   right.querySelectorAll('.bar-fill').forEach(bar => {
     bar.onclick = () => renderChapterListFilter(currentEntity, bar.dataset.chapter);
   });
@@ -4285,6 +4374,8 @@ function renderCardInRight() {
   const allPages = sortUniquePages(it.page_list || []);
   let pagesText = it.pages || it.head_pages || '';
   const pageLinksHtml = buildCardPageLinksHtml(allPages);
+  const showLectureBreakdown = ['lexicon', 'lexicon_tech', 'lexicon_reverse'].includes(eType);
+  const lectureBreakdownHtml = showLectureBreakdown ? buildLecturePageBreakdownHtml(allPages) : '';
 
   let html = `
     <div class="card">
@@ -4315,6 +4406,7 @@ function renderCardInRight() {
         <span class="pages-links">${pageLinksHtml || escapeHtml(pagesText)}</span>
         ${it.discussed ? ' · <em>обсуждается</em>' : ' · однократное упоминание'}
       </div>
+      ${lectureBreakdownHtml}
   `;
   if (eType === 'lexicon' || eType === 'lexicon_tech') {
     html += `<div style="margin-top:8px;">
@@ -4580,12 +4672,14 @@ function renderCardsPanel(container) {
 // =========================================================
 function renderHistogramPanel(container) {
   const t0 = nowMs();
+  const focusedItem = getFocusedHistogramItem(currentEntity);
+  const introText = buildHistogramIntroText(currentEntity, focusedItem);
   container.innerHTML = `<div class="panel active"><div class="chart">
-    <p class="chart-intro">Распределение по лекциям книги. Кликните по столбцу — увидите элементы этой лекции.</p>
+    <p class="chart-intro">${escapeHtml(introText)}</p>
     <div id="histogram"></div></div></div>`;
   const chart = document.getElementById('histogram');
   if (!chart) return;
-  renderChapterHistogramRows(chart, currentEntity);
+  renderChapterHistogramRows(chart, currentEntity, focusedItem);
   chart.querySelectorAll('.bar-fill').forEach(bar => {
     bar.onclick = () => {
       switchTab('list');
