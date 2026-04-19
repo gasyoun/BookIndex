@@ -1101,6 +1101,23 @@ function getFirstLetter(head) {
   return '#';
 }
 
+function getRightEdgeSortKey(head) {
+  const normalized = normalizeHeadForMatch(head).replace(/\s+/g, ' ').trim();
+  if (!normalized) return '';
+  return Array.from(normalized).reverse().join('');
+}
+
+function getLastLetter(head) {
+  const normalized = normalizeHeadForMatch(head);
+  if (!normalized) return '#';
+  for (let idx = normalized.length - 1; idx >= 0; idx--) {
+    const ch = normalized[idx];
+    if (/[a-zа-я]/i.test(ch)) return ch.toUpperCase().replace('Ё', 'Е');
+    if (/[0-9]/.test(ch)) return '#';
+  }
+  return '#';
+}
+
 function pluralPages(n) {
   if (n === 1) return 'странице';
   return 'страницах';
@@ -2036,6 +2053,12 @@ function compareHeadsRu(aHead, bHead) {
 }
 
 function compareItemsByHead(a, b) {
+  const aType = a && a._entityType ? a._entityType : currentEntity;
+  const bType = b && b._entityType ? b._entityType : currentEntity;
+  if (aType === 'lexicon_reverse' && bType === 'lexicon_reverse') {
+    const primary = compareHeadsRu(getRightEdgeSortKey(a && a.head), getRightEdgeSortKey(b && b.head));
+    if (primary !== 0) return primary;
+  }
   return compareHeadsRu(a && a.head, b && b.head);
 }
 
@@ -3385,6 +3408,7 @@ function renderContent() {
 // =========================================================
 function renderListPanel(container) {
   const conf = ENTITY_TYPES[currentEntity];
+  const isReverseLexicon = currentEntity === 'lexicon_reverse';
 
   let catChips = '';
   if (currentEntity === 'names') {
@@ -3429,7 +3453,7 @@ function renderListPanel(container) {
 
   container.innerHTML = `
     <div class="panel active">
-      <div class="list-card-layout">
+      <div class="list-card-layout${isReverseLexicon ? ' reverse-fullwidth' : ''}">
         <div class="left-pane">
           <div class="filters">
             <div class="filters-top-row">
@@ -3444,7 +3468,7 @@ function renderListPanel(container) {
           </div>
           <div class="name-list" id="name-list"></div>
         </div>
-        <div class="right-pane">
+        <div class="right-pane${isReverseLexicon ? ' reverse-right-pane' : ''}">
           <div class="right-pane-tools">
             <button class="filter-chip" id="export-section-md">экспорт раздела .md</button>
           </div>
@@ -3804,7 +3828,12 @@ function buildListItemInnerHtml(it, showTypeLabel) {
       </div>`;
     }
   }
-  return `${dot}<span class="head ${it.discussed ? 'discussed' : ''}">${renderAccentSafe(it.head)}</span>${typeLabel}${moderatorMark}<span class="pages-count">${(it.page_list || []).length}</span>${crosslinksHtml}`;
+  const headClass = `head ${it.discussed ? 'discussed' : ''}${itemType === 'lexicon_reverse' ? ' reverse-head' : ''}`;
+  const pagesCountHtml = `<span class="pages-count${itemType === 'lexicon_reverse' ? ' reverse-pages-count' : ''}">${(it.page_list || []).length}</span>`;
+  if (itemType === 'lexicon_reverse') {
+    return `${dot}${pagesCountHtml}<span class="${headClass}">${renderAccentSafe(it.head)}</span>${typeLabel}${moderatorMark}${crosslinksHtml}`;
+  }
+  return `${dot}<span class="${headClass}">${renderAccentSafe(it.head)}</span>${typeLabel}${moderatorMark}${pagesCountHtml}${crosslinksHtml}`;
 }
 
 function selectListItem(it, fallbackType) {
@@ -3834,9 +3863,10 @@ function buildListRowsWithLetters(items) {
   const rows = [];
   let prevLetter = null;
   for (const it of items) {
-    const letter = getFirstLetter(it.head);
+    const itemType = it && it._entityType ? it._entityType : currentEntity;
+    const letter = itemType === 'lexicon_reverse' ? getLastLetter(it.head) : getFirstLetter(it.head);
     if (letter !== prevLetter) {
-      rows.push({ kind: 'header', letter });
+      rows.push({ kind: 'header', letter, itemType });
       prevLetter = letter;
     }
     rows.push({ kind: 'item', it });
@@ -3847,7 +3877,7 @@ function buildListRowsWithLetters(items) {
 function appendListRow(list, row, fallbackType, reverseColumns) {
   if (row.kind === 'header') {
     const h = document.createElement('div');
-    h.className = 'letter-header';
+    h.className = 'letter-header' + ((row.itemType || fallbackType || currentEntity) === 'lexicon_reverse' ? ' reverse-letter-header' : '');
     h.textContent = row.letter;
     if (reverseColumns > 1) {
       h.style.breakInside = 'avoid-column';
@@ -3859,12 +3889,13 @@ function appendListRow(list, row, fallbackType, reverseColumns) {
   const it = row.it;
   const item = document.createElement('div');
   const isSelected = selectedItem === it.head && (currentEntity !== 'all' || selectedItemType === it._entityType);
-  item.className = 'name-item' + (isSelected ? ' selected' : '');
+  const itemType = it._entityType || fallbackType || currentEntity;
+  item.className = 'name-item' + (isSelected ? ' selected' : '') + (itemType === 'lexicon_reverse' ? ' name-item-reverse' : '');
   safeSetAttr(item, 'role', 'button');
   item.tabIndex = 0;
   safeSetAttr(item, 'aria-label', `${it.head || ''} (${(it.page_list || []).length})`);
   item.dataset.head = it.head || '';
-  item.dataset.type = it._entityType || fallbackType || currentEntity;
+  item.dataset.type = itemType;
   item.innerHTML = buildListItemInnerHtml(it, currentEntity === 'all');
   if (reverseColumns > 1) {
     item.style.breakInside = 'avoid-column';
@@ -4191,6 +4222,7 @@ function buildHistogramIntroText(entityKey, focusedItem) {
   if (focusedItem && focusedItem.head) {
     return `Распределение упоминаний «${focusedItem.head}» по лекциям книги (по страницам внутри каждой лекции).`;
   }
+  if (entityKey === 'lexicon_reverse') return '';
   return `Распределение ${getHistogramSubjectLabel(entityKey)} по лекциям книги: сколько элементов раздела встречается в каждой лекции. Кликните по столбцу — увидите элементы соответствующей лекции.`;
 }
 
@@ -4252,8 +4284,9 @@ function renderHistogramInRight() {
   if (!right) return;
   const focusedItem = getFocusedHistogramItem(currentEntity);
   const introText = buildHistogramIntroText(currentEntity, focusedItem);
+  const introHtml = introText ? `<p class="chart-intro">${escapeHtml(introText)}</p>` : '';
   const html = `<div class="chart">
-    <p class="chart-intro">${escapeHtml(introText)}</p>
+    ${introHtml}
     <div id="right-histogram"></div>
   </div>`;
   right.innerHTML = html;
@@ -4675,8 +4708,9 @@ function renderHistogramPanel(container) {
   const t0 = nowMs();
   const focusedItem = getFocusedHistogramItem(currentEntity);
   const introText = buildHistogramIntroText(currentEntity, focusedItem);
+  const introHtml = introText ? `<p class="chart-intro">${escapeHtml(introText)}</p>` : '';
   container.innerHTML = `<div class="panel active"><div class="chart">
-    <p class="chart-intro">${escapeHtml(introText)}</p>
+    ${introHtml}
     <div id="histogram"></div></div></div>`;
   const chart = document.getElementById('histogram');
   if (!chart) return;

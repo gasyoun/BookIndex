@@ -296,6 +296,12 @@
     height: 100%;
     overflow: hidden;
   }
+  .list-card-layout.reverse-fullwidth {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(420px, 68vh) auto;
+    height: auto;
+    overflow: visible;
+  }
   @media (max-width: 900px) {
     .list-card-layout { grid-template-columns: 1fr; }
   }
@@ -419,6 +425,23 @@
     font-weight: bold;
   }
   .name-item .head { flex: 1; }
+  .name-item-reverse {
+    justify-content: flex-end;
+    text-align: right;
+  }
+  .name-item-reverse .head {
+    flex: 0 1 auto;
+    min-width: 0;
+    text-align: right;
+  }
+  .name-item .reverse-pages-count {
+    min-width: 2.5rem;
+    text-align: left;
+    flex: 0 0 auto;
+  }
+  .reverse-letter-header {
+    text-align: right;
+  }
   .name-item .head.discussed { font-weight: bold; }
   .name-item .pages-count {
     color: #888;
@@ -485,6 +508,10 @@
   .right-pane {
     overflow-y: auto;
     min-height: 0;
+  }
+  .reverse-right-pane {
+    border-top: 1px solid #d4c8b0;
+    padding-top: 10px;
   }
   .right-pane-tools {
     display: flex;
