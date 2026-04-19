@@ -4261,6 +4261,8 @@ function renderCardInRight() {
   if (editorial.suspect && it.head && it.head.startsWith('?')) {
     category = 'Кандидат — требует проверки редактором' + ((editorial.note || it.note) ? ' · ' + (editorial.note || it.note) : '');
   }
+  const hasMapCoords = Number.isFinite(Number(it.lat)) && Number.isFinite(Number(it.lon));
+  const canOpenMapForCard = ['toponyms', 'ethnonyms', 'languages'].includes(eType) && hasMapCoords;
   const useTwoColumnCardLayout = eType === 'toponyms';
   const itemSources = Array.isArray(it.sources) ? it.sources.slice(0, 5) : [];
   const renderSourcesInHeader = eType === 'names' && itemSources.length > 0;
@@ -4302,6 +4304,7 @@ function renderCardInRight() {
             <button type="button" class="related-link related-link-btn" id="card-prev" aria-label="Предыдущая карточка" style="font-size:11px;">◀</button>
             <button type="button" class="related-link related-link-btn" id="card-next" aria-label="Следующая карточка" style="font-size:11px;">▶</button>
             <button type="button" class="related-link related-link-btn" id="back-to-histo" style="font-size:11px;">← вернуться к гистограмме</button>
+            ${canOpenMapForCard ? '<button type="button" class="related-link related-link-btn" id="open-on-map" style="font-size:11px;">📍 показать на карте</button>' : ''}
             <button type="button" class="related-link related-link-btn" id="export-card-md" style="font-size:11px;">экспорт карточки .md</button>
             <button type="button" class="related-link related-link-btn" id="copy-card-link" style="font-size:11px;">скопировать ссылку</button>
           </div>
@@ -4460,6 +4463,15 @@ function renderCardInRight() {
     renderRightContent();
     syncNavigationState();
   };
+  const openOnMapBtn = document.getElementById('open-on-map');
+  if (openOnMapBtn) {
+    openOnMapBtn.onclick = () => {
+      selectedItem = it.head;
+      selectedItemType = eType;
+      rightPaneMode = 'card';
+      switchTab('map');
+    };
+  }
   const exportCardBtn = document.getElementById('export-card-md');
   if (exportCardBtn) exportCardBtn.onclick = () => exportCurrentCardMarkdown();
   const copyLinkBtn = document.getElementById('copy-card-link');
@@ -8867,6 +8879,7 @@ function renderTreePanel(container) {
 // =========================================================
 function renderMapPanel(container) {
   const type = currentEntity;
+  const selectedHeadForMap = selectedItemType === type ? String(selectedItem || '').trim() : '';
   let note, items, colorFn, radiusFn;
   if (type === 'toponyms') {
     note = 'Топонимы лекций на карте мира. Размер точки — число упоминаний; цвет — историческая эпоха. Кликните по маркеру, чтобы открыть карточку.';
@@ -8974,11 +8987,14 @@ function renderMapPanel(container) {
       renderOfflineMap(type, items, colorFn, radiusFn);
       return;
     }
+    let focusedMarker = null;
+    let focusedLatLng = null;
     for (const it of items) {
+      const isFocused = selectedHeadForMap && String(it.head || '') === selectedHeadForMap;
       const marker = L.circleMarker([it.lat, it.lon], {
         radius: radiusFn(it),
-        color: 'white',
-        weight: 1.5,
+        color: isFocused ? '#1f2933' : 'white',
+        weight: isFocused ? 2.5 : 1.5,
         fillColor: colorFn(it),
         fillOpacity: 0.8,
       }).addTo(map);
@@ -8996,6 +9012,18 @@ function renderMapPanel(container) {
         rightPaneMode = 'card';
         switchTab('list');
       });
+      if (isFocused) {
+        focusedMarker = marker;
+        focusedLatLng = [it.lat, it.lon];
+      }
+    }
+    if (focusedMarker && focusedLatLng) {
+      try {
+        map.setView(focusedLatLng, Math.max(map.getZoom(), 5), { animate: false });
+        setTimeout(() => {
+          try { focusedMarker.openTooltip(); } catch (e) {}
+        }, 80);
+      } catch (e) {}
     }
   }, 50);
 }
@@ -9004,6 +9032,7 @@ function renderMapPanel(container) {
 function renderOfflineMap(type, items, colorFn, radiusFn) {
   const div = document.getElementById('leaflet-map');
   if (!div) return;
+  const selectedHeadForMap = selectedItemType === type ? String(selectedItem || '').trim() : '';
   const W = 1100, H = 600;
   // Простая равноугольная проекция (Plate Carrée)
   function project(lat, lon) {
@@ -9024,14 +9053,22 @@ function renderOfflineMap(type, items, colorFn, radiusFn) {
     svg += `<text x="4" y="${y - 2}" fill="#88a" font-size="9">${lat}°</text>`;
   }
   // Маркеры
+  let hasFocusedMarker = false;
   for (const it of items) {
     const [x, y] = project(it.lat, it.lon);
-    const r = radiusFn(it);
+    const isFocused = selectedHeadForMap && String(it.head || '') === selectedHeadForMap;
+    if (isFocused) hasFocusedMarker = true;
+    const r = radiusFn(it) + (isFocused ? 1 : 0);
     const color = colorFn(it);
-    svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" fill-opacity="0.75" stroke="white" stroke-width="1" data-head="${escapeHtml(it.head)}" data-type="${escapeHtml(type)}" style="cursor:pointer"><title>${escapeHtml(it.head)} · стр. ${escapeHtml(it.pages || it.head_pages || '')}</title></circle>`;
+    const strokeColor = isFocused ? '#1f2933' : 'white';
+    const strokeWidth = isFocused ? 2 : 1;
+    svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" fill-opacity="0.75" stroke="${strokeColor}" stroke-width="${strokeWidth}" data-head="${escapeHtml(it.head)}" data-type="${escapeHtml(type)}" style="cursor:pointer"><title>${escapeHtml(it.head)} · стр. ${escapeHtml(it.pages || it.head_pages || '')}</title></circle>`;
   }
   // Заглушка-текст
   svg += `<text x="${W/2}" y="24" fill="#6a5040" font-size="13" text-anchor="middle" font-style="italic">Офлайн-режим: тайлы карты недоступны, показаны только точки</text>`;
+  if (hasFocusedMarker) {
+    svg += `<text x="${W/2}" y="42" fill="#1f2933" font-size="12" text-anchor="middle" font-style="italic">Выбранный объект выделен тёмным контуром</text>`;
+  }
   svg += '</svg>';
   div.innerHTML = svg;
   div.style.background = '#e8edf3';
