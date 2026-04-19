@@ -8774,13 +8774,6 @@ function renderScholarPanel(container) {
       <div style="font-size:13px;">${escapeHtml(ev.event)}${chronologyPageMeta ? `<span style="color:#888;font-size:11px;"> · ${chronologyPageMeta}</span>` : ''}</div>
     </div>`;
   }
-  if (Array.isArray(s.visualization_ideas) && s.visualization_ideas.length) {
-    html += '<div style="margin-top:10px;background:#fff8e8;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">';
-    html += '<div style="font-size:12px;color:#5a3818;font-weight:bold;margin-bottom:4px;">Как ещё можно визуализировать</div>';
-    for (const idea of s.visualization_ideas) html += `<div style="font-size:12px;color:#444;line-height:1.5;">• ${escapeHtml(idea)}</div>`;
-    html += '</div>';
-  }
-
   // 7. Изоглоссы
   html += '<h3 id="sch-isoglosses" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">7. Изоглоссы русских диалектов</h3>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Линии, разделяющие диалекты по конкретным фонетическим, морфологическим и лексическим признакам, обсуждаемым в книге.</div>';

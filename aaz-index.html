@@ -73317,7 +73317,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '7bb8500af239';
+const APP_BUILD_ID = 'b917590a5157';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -76309,7 +76309,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '7bb8500af239' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'b917590a5157' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -82085,13 +82085,6 @@ function renderScholarPanel(container) {
       <div style="font-size:13px;">${escapeHtml(ev.event)}${chronologyPageMeta ? `<span style="color:#888;font-size:11px;"> · ${chronologyPageMeta}</span>` : ''}</div>
     </div>`;
   }
-  if (Array.isArray(s.visualization_ideas) && s.visualization_ideas.length) {
-    html += '<div style="margin-top:10px;background:#fff8e8;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">';
-    html += '<div style="font-size:12px;color:#5a3818;font-weight:bold;margin-bottom:4px;">Как ещё можно визуализировать</div>';
-    for (const idea of s.visualization_ideas) html += `<div style="font-size:12px;color:#444;line-height:1.5;">• ${escapeHtml(idea)}</div>`;
-    html += '</div>';
-  }
-
   // 7. Изоглоссы
   html += '<h3 id="sch-isoglosses" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">7. Изоглоссы русских диалектов</h3>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Линии, разделяющие диалекты по конкретным фонетическим, морфологическим и лексическим признакам, обсуждаемым в книге.</div>';
