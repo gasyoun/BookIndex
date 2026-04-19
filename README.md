@@ -5,7 +5,7 @@
 
 ## Актуальный статус
 
-- Текущая версия: `v4.2.0` (релиз от `2026-04-18`).
+- Текущая версия: `v4.2.1` (обновлено `2026-04-19`).
 - Базовый артефакт: `aaz-index.html` (single-file SPA).
 - Демо (GitHub Pages): https://gasyoun.github.io/BookIndex/aaz-index.html
 - Формат данных: `app_data.json` (`schema_version = 2`).
@@ -67,11 +67,13 @@
   - [`sw.js`](https://gasyoun.github.io/BookIndex/sw.js) (shell cache + offline fallback);
   - [иконки приложения](https://gasyoun.github.io/BookIndex/icon-512.svg).
 
-## Что нового в v4.2.0 (2026-04-18)
+## Что нового в v4.2.1 (2026-04-19)
 
-- `runtime_test.py` научился корректно искать `node` (`NODE_BINARY`, PATH, стандартные пути Windows) и выдавать понятную диагностику вместо traceback.
-- Добавлен `scripts/content_report.py` (Markdown/JSON-отчеты по покрытию контента: pages/contexts/sources/duplicates).
-- Добавлена поддержка reduced motion в CSS и якорной навигации.
+- Выполнен рефакторинг KWIC: вынесена общая нормализация диапазонов страниц, оптимизирован сбор контекстов, снижена вероятность деградации производительности на широких запросах.
+- Исправлена разметка правой панели гистограммы (устранен лишний закрывающий контейнер).
+- Усилен `scripts/issue_quality_guard.py`: добавлен детект mojibake (UTF-8/CP1251 и UTF-8/Latin-1), добавлены тесты и исключены ложные срабатывания на демонстрационные примеры в inline-коде.
+- Добавлен единый регламент работы: `CODEX_WORKFLOW_RU.md` (формат issue, labels, DoD, публикация demo, обязательные проверки).
+- Нормализована система labels в issues по шаблону #42: `priority + area + type + phase`.
 
 ## Быстрый старт
 
