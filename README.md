@@ -27,7 +27,7 @@
 - Сущности: [`names`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/names/list), [`toponyms`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/toponyms/list), [`ethnonyms`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/ethnonyms/list), [`languages`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/languages/list).
 - [Полнотекстовые карточки](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/names/list/item/names/%D0%98%D1%82%D0%BA%D0%B8%D0%BD%20%D0%98.%20%D0%91.) с перекрестными ссылками.
 - Индексные разделы: [`lexicon`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon/list), [`lexicon_reverse`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon_reverse/list), [`lexicon_tech`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon_tech/list), [`subject_index`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/subject/list).
-- [`lexicon_reverse`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon_reverse/list) в list-view сортирует по правому краю слова и показывает список на всю ширину контентной области.
+- [`lexicon_reverse`](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon_reverse/list) в list-view сортирует по правому краю слова, не уводит список в боковой скролл и на широких экранах раскладывается до 6 колонок.
 - [Фильтрация и сортировки](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/materials/kwic) в ключевых разделах.
 
 ### Материалы и аналитика
@@ -75,7 +75,7 @@
 - `home/home`: экспорт Markdown с главной панели теперь действительно охватывает весь BookIndex: обзор, маршруты, лекции, further reading, глоссарий, scholar и все карточки индексных разделов.
 - `scholar/scholar`: восстановлена битая кириллица в блоках о «Слове о полку Игореве», further reading и таблице фонетических соответствий; диапазоны страниц нормализованы к виду `317–320`.
 - `scholar/scholar#sch-reconstructions`: раздел «11. Реконструкции» перестроен в 4-колоночную сетку на широких экранах с адаптивным сжатием на меньших viewport.
-- `lexicon_reverse/list`: обратный словник переведен в полноширинный layout; сортировка и буквенные заголовки теперь идут по правому краю слова, а вводный текст aggregate-гистограммы убран.
+- `lexicon_reverse/list`: обратный словник переведен в полноширинный layout; сортировка и буквенные заголовки теперь идут по правому краю слова, боковой скролл убран, а на широких экранах используется до 6 колонок.
 - Выполнен рефакторинг KWIC: вынесена общая нормализация диапазонов страниц, оптимизирован сбор контекстов, снижена вероятность деградации производительности на широких запросах.
 - Исправлена разметка правой панели гистограммы (устранен лишний закрывающий контейнер).
 - Усилен `scripts/issue_quality_guard.py`: добавлен детект mojibake (UTF-8/CP1251 и UTF-8/Latin-1), добавлены тесты и исключены ложные срабатывания на демонстрационные примеры в inline-коде.

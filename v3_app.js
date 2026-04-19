@@ -4313,9 +4313,10 @@ function getListColumnCount(entity, size) {
   const w = window.innerWidth;
   if (entity === 'lexicon_reverse') {
     if (size < 120) return 1;
-    if (w >= 1700) return 5;
-    if (w >= 1450) return 4;
-    if (w >= 1200) return 3;
+    if (w >= 1800) return 6;
+    if (w >= 1600) return 5;
+    if (w >= 1400) return 4;
+    if (w >= 1180) return 3;
     if (w >= 950) return 2;
     return 1;
   }
@@ -4353,7 +4354,7 @@ function renderList() {
   const useVirtual = filtered.length > 1000 && currentEntity === 'lexicon';
   if (listColumns > 1 && !useVirtual) {
     list.style.columnCount = String(listColumns);
-    list.style.columnGap = '12px';
+    list.style.columnGap = currentEntity === 'lexicon_reverse' ? '8px' : '12px';
     list.style.paddingRight = '4px';
   } else {
     list.style.columnCount = '';

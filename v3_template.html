@@ -394,6 +394,7 @@
   .name-list {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     border: 1px solid #d4c8b0;
     background: white;
     border-radius: 4px;
@@ -428,11 +429,14 @@
   .name-item-reverse {
     justify-content: flex-end;
     text-align: right;
+    overflow: hidden;
   }
   .name-item-reverse .head {
     flex: 0 1 auto;
     min-width: 0;
     text-align: right;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
   .name-item .reverse-pages-count {
     min-width: 2.5rem;

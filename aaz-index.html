@@ -394,6 +394,7 @@
   .name-list {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     border: 1px solid #d4c8b0;
     background: white;
     border-radius: 4px;
@@ -428,11 +429,14 @@
   .name-item-reverse {
     justify-content: flex-end;
     text-align: right;
+    overflow: hidden;
   }
   .name-item-reverse .head {
     flex: 0 1 auto;
     min-width: 0;
     text-align: right;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
   .name-item .reverse-pages-count {
     min-width: 2.5rem;
@@ -73313,7 +73317,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '122e2575349b';
+const APP_BUILD_ID = '7bb8500af239';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -76305,7 +76309,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '122e2575349b' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '7bb8500af239' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -77620,9 +77624,10 @@ function getListColumnCount(entity, size) {
   const w = window.innerWidth;
   if (entity === 'lexicon_reverse') {
     if (size < 120) return 1;
-    if (w >= 1700) return 5;
-    if (w >= 1450) return 4;
-    if (w >= 1200) return 3;
+    if (w >= 1800) return 6;
+    if (w >= 1600) return 5;
+    if (w >= 1400) return 4;
+    if (w >= 1180) return 3;
     if (w >= 950) return 2;
     return 1;
   }
@@ -77660,7 +77665,7 @@ function renderList() {
   const useVirtual = filtered.length > 1000 && currentEntity === 'lexicon';
   if (listColumns > 1 && !useVirtual) {
     list.style.columnCount = String(listColumns);
-    list.style.columnGap = '12px';
+    list.style.columnGap = currentEntity === 'lexicon_reverse' ? '8px' : '12px';
     list.style.paddingRight = '4px';
   } else {
     list.style.columnCount = '';
