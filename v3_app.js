@@ -3259,27 +3259,297 @@ function exportCurrentSectionMarkdown() {
   downloadTextFile(`${slugify(currentEntity)}-section.md`, blocks.join('\n'));
 }
 
+function lectureToMarkdown(lecture, index) {
+  const lines = [];
+  const title = index === 0 ? 'Предисловие' : `Лекция ${index}`;
+  lines.push(`### ${title}: ${lecture.name || 'Без названия'}`);
+  lines.push('');
+  if (lecture.pages) lines.push(`Страницы: ${lecture.pages}`);
+  if (lecture.main_idea) {
+    lines.push('');
+    lines.push(lecture.main_idea);
+  }
+  if (Array.isArray(lecture.key_facts) && lecture.key_facts.length) {
+    lines.push('');
+    lines.push('Ключевые факты:');
+    for (const fact of lecture.key_facts) lines.push(`- ${fact}`);
+  }
+  if (Array.isArray(lecture.terms) && lecture.terms.length) {
+    lines.push('');
+    lines.push(`Термины: ${lecture.terms.join(', ')}`);
+  }
+  if (lecture.why_read) {
+    lines.push('');
+    lines.push(`Почему читать: ${lecture.why_read}`);
+  }
+  lines.push('');
+  return lines.join('\n');
+}
+
+function routeToMarkdown(route) {
+  const lines = [];
+  lines.push(`### ${route.title || 'Маршрут'}`);
+  lines.push('');
+  if (route.desc) lines.push(route.desc);
+  if (route.pages) {
+    lines.push('');
+    lines.push(`Страницы: ${route.pages}`);
+  }
+  if (Array.isArray(route.lectures) && route.lectures.length) {
+    lines.push('');
+    lines.push(`Лекции: ${route.lectures.join(', ')}`);
+  }
+  if (Array.isArray(route.entities) && route.entities.length) {
+    lines.push('');
+    lines.push('Опорные элементы:');
+    for (const entity of route.entities) {
+      lines.push(`- [${entity.type}] ${entity.head}`);
+    }
+  }
+  lines.push('');
+  return lines.join('\n');
+}
+
+function glossaryEntryToMarkdown(entry) {
+  const lines = [];
+  lines.push(`### ${entry.term || 'Термин'}`);
+  lines.push('');
+  if (entry.definition) lines.push(entry.definition);
+  if (entry.url) {
+    lines.push('');
+    lines.push(`Источник: ${entry.url}`);
+  }
+  lines.push('');
+  return lines.join('\n');
+}
+
+function appendScholarMarkdown(parts) {
+  const s = APP_DATA.scholar || {};
+  parts.push('## Профессиональный аппарат');
+  parts.push('');
+
+  if (Array.isArray(s.bibliography) && s.bibliography.length) {
+    parts.push('### Библиография по лекциям');
+    parts.push('');
+    for (const lecture of s.bibliography) {
+      parts.push(`#### ${lecture.lecture || 'Лекция'}`);
+      parts.push('');
+      for (const work of lecture.works || []) {
+        const suffix = work.year ? ` (${work.year})` : '';
+        parts.push(`- ${work.title || 'Работа'}${suffix}`);
+        if (work.note) parts.push(`  ${work.note}`);
+        if (work.url) parts.push(`  ${work.url}`);
+      }
+      parts.push('');
+    }
+  }
+
+  if (Array.isArray(s.controversies) && s.controversies.length) {
+    parts.push('### Спорные вопросы');
+    parts.push('');
+    for (const item of s.controversies) {
+      parts.push(`- ${item.topic}: ${item.description}${item.page ? ` (стр. ${item.page})` : ''}`);
+    }
+    parts.push('');
+  }
+
+  const originalForms = s.original_forms || {};
+  const originalOrder = [
+    ['sanskrit', 'Санскрит'],
+    ['greek', 'Древнегреческий'],
+    ['latin', 'Латинский'],
+    ['arabic', 'Арабский'],
+    ['old_russian', 'Древнерусский'],
+  ];
+  const hasOriginalForms = originalOrder.some(([key]) => Array.isArray(originalForms[key]) && originalForms[key].length);
+  if (hasOriginalForms) {
+    parts.push('### Оригинальные формы');
+    parts.push('');
+    for (const [key, label] of originalOrder) {
+      const forms = Array.isArray(originalForms[key]) ? originalForms[key] : [];
+      if (!forms.length) continue;
+      parts.push(`#### ${label}`);
+      parts.push('');
+      for (const form of forms) {
+        const tail = form.page ? ` (стр. ${form.page})` : '';
+        parts.push(`- ${form.form} — ${form.translation}${tail}`);
+      }
+      parts.push('');
+    }
+  }
+
+  if (Array.isArray(s.birch_grammar) && s.birch_grammar.length) {
+    parts.push('### Конкорданс берестяных грамот');
+    parts.push('');
+    for (const item of s.birch_grammar) {
+      const bits = [`№${item.num}`, item.year, item.content].filter(Boolean);
+      const tail = item.page ? ` (стр. ${item.page})` : '';
+      parts.push(`- ${bits.join(' — ')}${tail}`);
+    }
+    parts.push('');
+  }
+
+  if (Array.isArray(s.chronology) && s.chronology.length) {
+    parts.push('### Хронология');
+    parts.push('');
+    for (const event of s.chronology) {
+      parts.push(`- ${event.year}: ${event.event}${event.page ? ` (стр. ${event.page})` : ''}`);
+    }
+    parts.push('');
+  }
+
+  if (Array.isArray(s.isoglosses) && s.isoglosses.length) {
+    parts.push('### Изоглоссы');
+    parts.push('');
+    for (const item of s.isoglosses) {
+      parts.push(`- ${item.name}: ${item.description}${item.page ? ` (стр. ${item.page})` : ''}`);
+    }
+    parts.push('');
+  }
+
+  if (s.slovo) {
+    parts.push('### «Слово о полку Игореве»');
+    parts.push('');
+    if (s.slovo.thesis) parts.push(s.slovo.thesis);
+    if (s.slovo.context) {
+      parts.push('');
+      parts.push(`Контекст: ${s.slovo.context}`);
+    }
+    if (s.slovo.opponents) {
+      parts.push('');
+      parts.push(`Оппоненты: ${s.slovo.opponents}`);
+    }
+    if (Array.isArray(s.slovo.arguments) && s.slovo.arguments.length) {
+      parts.push('');
+      parts.push('Тезисы:');
+      for (const item of s.slovo.arguments) {
+        parts.push(`- ${item.name}: ${item.detail}${item.page ? ` (стр. ${item.page})` : ''}`);
+      }
+    }
+    if (Array.isArray(s.slovo.counterarguments) && s.slovo.counterarguments.length) {
+      parts.push('');
+      parts.push('Контраргументы:');
+      for (const item of s.slovo.counterarguments) {
+        parts.push(`- ${item.name}: ${item.detail}${item.page ? ` (стр. ${item.page})` : ''}`);
+      }
+    }
+    if (Array.isArray(s.slovo_reading) && s.slovo_reading.length) {
+      parts.push('');
+      parts.push('Что читать дальше:');
+      for (const item of s.slovo_reading) {
+        parts.push(`- ${item.title}${item.note ? ` — ${item.note}` : ''}${item.url ? ` (${item.url})` : ''}`);
+      }
+    }
+    parts.push('');
+  }
+
+  if (Array.isArray(s.accent_paradigms) && s.accent_paradigms.length) {
+    parts.push('### Акцентные парадигмы');
+    parts.push('');
+    for (const paradigm of s.accent_paradigms) {
+      parts.push(`- Тип ${paradigm.type}: ${paradigm.description}`);
+      for (const example of paradigm.examples || []) {
+        parts.push(`  ${example.word} — ${example.forms}`);
+      }
+    }
+    parts.push('');
+  }
+
+  if (Array.isArray(s.sound_correspondences) && s.sound_correspondences.length) {
+    parts.push('### Фонетические соответствия');
+    parts.push('');
+    for (const row of s.sound_correspondences) {
+      const languages = [row.rus, row.lat, row.gre, row.san, row.eng, row.ger].filter(Boolean).join(' | ');
+      parts.push(`- ${row.pie} → ${languages} — ${row.meaning}`);
+    }
+    parts.push('');
+  }
+
+  const recon = APP_DATA.lexicon_tech || [];
+  if (recon.length) {
+    parts.push('### Реконструкции');
+    parts.push('');
+    for (const item of recon) {
+      parts.push(`- ${item.head} (${(item.page_list || []).length} стр.)`);
+    }
+    parts.push('');
+  }
+}
+
 function exportWholeSiteMarkdown() {
+  const stats = APP_DATA.book_stats || {};
+  const featured = APP_DATA.featured_quote || {};
   const parts = [];
   parts.push('# Зализнякиада');
   parts.push('');
-  parts.push('## Разделы');
-  for (const [key, conf] of Object.entries(ENTITY_TYPES)) {
-    if (!Array.isArray(conf.items)) continue;
-    parts.push(`- ${conf.title}: ${conf.items.length}`);
-    if (['home', 'materials', 'scholar', 'all'].includes(key)) continue;
-    for (const it of conf.items.slice(0, 2000)) {
-      parts.push(`  - [[${it.head}]] (${key})`);
+  parts.push('## Обзор');
+  parts.push('');
+  const overviewBits = [
+    stats.total_pages ? `Страниц: ${stats.total_pages}` : '',
+    stats.lectures ? `Лекций: ${stats.lectures}` : '',
+    stats.names ? `Имен: ${stats.names}` : '',
+    stats.languages ? `Языков: ${stats.languages}` : '',
+    stats.toponyms ? `Топонимов: ${stats.toponyms}` : '',
+    stats.ethnonyms ? `Этнонимов: ${stats.ethnonyms}` : '',
+    stats.lexicon ? `Лексем: ${stats.lexicon}` : '',
+    stats.subject_index ? `Понятий: ${stats.subject_index}` : '',
+  ].filter(Boolean);
+  for (const bit of overviewBits) parts.push(`- ${bit}`);
+  if (featured.text) {
+    parts.push('');
+    parts.push(`Цитата: «${featured.text}»${featured.page ? ` (стр. ${featured.page})` : ''}`);
+  }
+  parts.push('');
+
+  if (Array.isArray(APP_DATA.routes) && APP_DATA.routes.length) {
+    parts.push('## Маршруты');
+    parts.push('');
+    for (const route of APP_DATA.routes) parts.push(routeToMarkdown(route));
+  }
+
+  if (Array.isArray(APP_DATA.lectures) && APP_DATA.lectures.length) {
+    parts.push('## Лекции');
+    parts.push('');
+    for (let i = 0; i < APP_DATA.lectures.length; i++) {
+      parts.push(lectureToMarkdown(APP_DATA.lectures[i], i));
     }
   }
-  parts.push('');
-  parts.push('## Лекции');
-  for (let i = 0; i < (APP_DATA.lectures || []).length; i++) {
-    const l = APP_DATA.lectures[i];
-    const label = i === 0 ? 'Предисловие' : `Лекция ${i}`;
-    parts.push(`- ${label}: ${l.name} (стр. ${l.pages || ''})`);
+
+  if (Array.isArray(APP_DATA.further_reading) && APP_DATA.further_reading.length) {
+    parts.push('## Что почитать ещё');
+    parts.push('');
+    for (const topic of APP_DATA.further_reading) {
+      parts.push(`### ${topic.topic || 'Тема'}`);
+      parts.push('');
+      for (const book of topic.books || []) {
+        const suffix = book.year ? ` (${book.year})` : '';
+        parts.push(`- ${book.title || 'Книга'}${suffix}${book.why ? ` — ${book.why}` : ''}`);
+      }
+      parts.push('');
+    }
   }
-  parts.push('');
+
+  if (Array.isArray(APP_DATA.glossary) && APP_DATA.glossary.length) {
+    parts.push('## Глоссарий');
+    parts.push('');
+    for (const entry of APP_DATA.glossary) parts.push(glossaryEntryToMarkdown(entry));
+  }
+
+  appendScholarMarkdown(parts);
+
+  const exportOrder = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse', 'lexicon_tech', 'subject'];
+  for (const key of exportOrder) {
+    const conf = ENTITY_TYPES[key];
+    if (!conf || !Array.isArray(conf.items)) continue;
+    parts.push(`## ${conf.title}`);
+    parts.push('');
+    parts.push(`Всего карточек: ${conf.items.length}`);
+    parts.push('');
+    for (const it of conf.items) {
+      parts.push(itemToMarkdown(it, key));
+      parts.push('');
+    }
+  }
   downloadTextFile('zaliznyakiada-site.md', parts.join('\n'));
 }
 
@@ -6222,7 +6492,7 @@ function renderHomePanel(container) {
   html += `<div style="background:linear-gradient(135deg,#5a3818,#8a7050);color:#fff8e8;padding:16px 20px;border-radius:6px;margin-bottom:14px;">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
       <h2 style="margin:0 0 4px 0;font-size:22px;font-weight:normal;">Книга в цифрах</h2>
-      <button id="export-site-md" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;white-space:nowrap;">Экспорт всего сайта в Markdown</button>
+      <button id="export-site-md" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;white-space:nowrap;">Экспорт всего BookIndex в Markdown</button>
     </div>
     <div style="font-size:13px;opacity:0.85;font-style:italic;margin-bottom:14px;">Что внутри 404 страниц лекций А. А. Зализняка</div>
     <div id="home-stats-grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;">`;

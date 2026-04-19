@@ -60,6 +60,7 @@
 
 ### Экспорт и PWA
 
+- Экспорт всего сайта в Markdown с [домашней панели](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/home/home): обзор, маршруты, лекции, `further_reading`, глоссарий, `scholar` и все индексные карточки.
 - Экспорт BibTeX:
   - [scholar bibliography](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/scholar/anchor/sch-biblio);
   - [further reading](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/materials/further_reading);
@@ -71,6 +72,7 @@
 
 ## Что нового в v4.2.1 (2026-04-19)
 
+- `home/home`: экспорт Markdown с главной панели теперь действительно охватывает весь BookIndex: обзор, маршруты, лекции, further reading, глоссарий, scholar и все карточки индексных разделов.
 - `scholar/scholar`: восстановлена битая кириллица в блоках о «Слове о полку Игореве», further reading и таблице фонетических соответствий; диапазоны страниц нормализованы к виду `317–320`.
 - `scholar/scholar#sch-reconstructions`: раздел «11. Реконструкции» перестроен в 4-колоночную сетку на широких экранах с адаптивным сжатием на меньших viewport.
 - `lexicon_reverse/list`: обратный словник переведен в полноширинный layout; сортировка и буквенные заголовки теперь идут по правому краю слова, а вводный текст aggregate-гистограммы убран.
