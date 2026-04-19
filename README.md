@@ -10,6 +10,7 @@
 - Демо (GitHub Pages): https://gasyoun.github.io/BookIndex/aaz-index.html
 - Формат данных: `app_data.json` (`schema_version = 2`).
 - Детская инструкция: [KIDS_GUIDE_RU.md](KIDS_GUIDE_RU.md).
+- Регламент оформления и публикации: [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md).
 
 ## Что заложено в функционал
 
