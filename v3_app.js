@@ -8362,6 +8362,8 @@ function renderPageTrendsPanel(container) {
 
 function renderScholarPanel(container) {
   const s = APP_DATA.scholar || {};
+  const scholarViewportWidth = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 1280;
+  const reconstructionColumns = scholarViewportWidth >= 1280 ? 4 : (scholarViewportWidth >= 980 ? 3 : (scholarViewportWidth >= 680 ? 2 : 1));
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
   html += '<h2 style="font-size:22px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Профессиональный аппарат</h2>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:20px;">Дополнительные материалы для взрослого читателя, студента-лингвиста, преподавателя и специалиста-русиста.</div>';
@@ -8699,10 +8701,10 @@ function renderScholarPanel(container) {
   const recon = APP_DATA.lexicon_tech || [];
   html += '<h3 id="sch-reconstructions" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">11. Реконструкции</h3>';
   html += `<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">${recon.length} реконструированных и иноязычных форм, вынесенных в подраздел профессионального аппарата.</div>`;
-  html += '<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">';
+  html += `<div style="display:grid;grid-template-columns:repeat(${reconstructionColumns},minmax(0,1fr));gap:10px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">`;
   for (const item of recon) {
-    html += `<a class="scholar-link" data-type="lexicon_tech" data-head="${escapeHtml(item.head)}" href="${escapeHtml(buildItemHash('lexicon_tech', item.head))}" style="display:flex;justify-content:space-between;gap:8px;padding:3px 0;cursor:pointer;color:inherit;text-decoration:none;">
-      <span style="color:#5a3818;text-decoration:underline dotted;">${escapeHtml(item.head)}</span>
+    html += `<a class="scholar-link" data-type="lexicon_tech" data-head="${escapeHtml(item.head)}" href="${escapeHtml(buildItemHash('lexicon_tech', item.head))}" style="display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-width:0;padding:8px 10px;border:1px solid #eadfca;border-radius:4px;background:#fffaf0;cursor:pointer;color:inherit;text-decoration:none;">
+      <span style="color:#5a3818;text-decoration:underline dotted;line-height:1.35;word-break:break-word;">${escapeHtml(item.head)}</span>
       <span style="font-size:11px;color:#888;">${escapeHtml((item.page_list || []).length)} стр.</span>
     </a>`;
   }

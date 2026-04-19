@@ -41,7 +41,8 @@
 - [Профессиональный аппарат](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/scholar):
   - [хронология](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/chronology);
   - [акцентные парадигмы](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/scholar/anchor/sch-accents);
-  - [сравнительные таблицы](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/scholar/anchor/sch-correspondences).
+  - [сравнительные таблицы](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/scholar/anchor/sch-correspondences);
+  - [реконструкции](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/scholar/anchor/sch-reconstructions) в 4 колонки на десктопе.
 
 ### Визуализации
 
@@ -70,6 +71,8 @@
 
 ## Что нового в v4.2.1 (2026-04-19)
 
+- `scholar/scholar`: восстановлена битая кириллица в блоках о «Слове о полку Игореве», further reading и таблице фонетических соответствий; диапазоны страниц нормализованы к виду `317–320`.
+- `scholar/scholar#sch-reconstructions`: раздел «11. Реконструкции» перестроен в 4-колоночную сетку на широких экранах с адаптивным сжатием на меньших viewport.
 - `lexicon_reverse/list`: обратный словник переведен в полноширинный layout; сортировка и буквенные заголовки теперь идут по правому краю слова, а вводный текст aggregate-гистограммы убран.
 - Выполнен рефакторинг KWIC: вынесена общая нормализация диапазонов страниц, оптимизирован сбор контекстов, снижена вероятность деградации производительности на широких запросах.
 - Исправлена разметка правой панели гистограммы (устранен лишний закрывающий контейнер).
