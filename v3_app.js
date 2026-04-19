@@ -532,8 +532,7 @@ let activeFilters = new Set();
 let onlyDiscussed = false;
 let onlyQuestionCandidates = false;
 let searchQuery = '';
-let listFrequencyMin = 1;
-let listFrequencyMax = 9999;
+let sortMostFrequentFirst = false;
 let selectedItem = null;
 let selectedItemType = null; // тип сущности выбранного — нужно для сводного
 let rightPaneMode = 'histogram'; // 'histogram' до выбора, 'card' после
@@ -579,8 +578,6 @@ const HASH_ROUTE_PREFIX = 'v4';
 const MAX_HASH_SLUG_LENGTH = 96;
 const MAX_LIST_QUERY_LENGTH = 80;
 const MAX_GLOBAL_QUERY_LENGTH = 80;
-const LIST_FREQ_MIN_DEFAULT = 1;
-const LIST_FREQ_MAX_DEFAULT = 9999;
 const MAX_URL_LENGTH = 2048;
 const GLOBAL_SEARCH_CACHE_MAX = 120;
 const GLOBAL_SEARCH_FUSE_LIMIT = 80;
@@ -1127,27 +1124,10 @@ function countItemMentions(it) {
   return Array.isArray(it && it.page_list) ? it.page_list.length : 0;
 }
 
-function getListFrequencyBounds(items) {
-  const list = Array.isArray(items) ? items : [];
-  if (!list.length) return { min: LIST_FREQ_MIN_DEFAULT, max: LIST_FREQ_MIN_DEFAULT };
-  let min = Number.POSITIVE_INFINITY;
-  let max = 0;
-  for (const it of list) {
-    const count = countItemMentions(it);
-    if (count < min) min = count;
-    if (count > max) max = count;
-  }
-  if (!Number.isFinite(min)) min = LIST_FREQ_MIN_DEFAULT;
-  if (!Number.isFinite(max) || max < min) max = min;
-  return { min, max };
-}
-
-function clampListFrequencyValue(value, min, max, fallback) {
-  const parsed = Number.isFinite(value) ? value : parseInt(String(value || ''), 10);
-  if (!Number.isFinite(parsed)) return fallback;
-  const lo = Number.isFinite(min) ? min : LIST_FREQ_MIN_DEFAULT;
-  const hi = Number.isFinite(max) ? max : Math.max(lo, LIST_FREQ_MAX_DEFAULT);
-  return Math.max(lo, Math.min(hi, parsed));
+function getItemFrequencyScore(it, typeHint = currentEntity) {
+  const itemType = it && it._entityType ? it._entityType : typeHint;
+  if (itemType === 'lexicon') return countItemMentions(it);
+  return Array.isArray(it && it.page_list) ? it.page_list.length : 0;
 }
 
 function sortUniquePages(pages) {
@@ -1261,8 +1241,7 @@ function captureViewState() {
     trendsRangeStart,
     trendsRangeEnd,
     searchQuery,
-    listFrequencyMin,
-    listFrequencyMax,
+    sortMostFrequentFirst,
     onlyDiscussed,
     onlyQuestionCandidates,
     currentGlossaryTerm,
@@ -1306,10 +1285,7 @@ function restoreViewState() {
     if (!Number.isInteger(parsed.trendsRangeStart)) parsed.trendsRangeStart = 1;
     if (!Number.isInteger(parsed.trendsRangeEnd)) parsed.trendsRangeEnd = 404;
     if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
-    if (!Number.isInteger(parsed.listFrequencyMin)) parsed.listFrequencyMin = LIST_FREQ_MIN_DEFAULT;
-    if (!Number.isInteger(parsed.listFrequencyMax)) parsed.listFrequencyMax = LIST_FREQ_MAX_DEFAULT;
-    parsed.listFrequencyMin = Math.max(LIST_FREQ_MIN_DEFAULT, parsed.listFrequencyMin);
-    parsed.listFrequencyMax = Math.max(parsed.listFrequencyMin, parsed.listFrequencyMax);
+    parsed.sortMostFrequentFirst = !!parsed.sortMostFrequentFirst;
     if (typeof parsed.currentGlossaryTerm !== 'string') parsed.currentGlossaryTerm = '';
     if (typeof parsed.currentScholarAnchor !== 'string') parsed.currentScholarAnchor = '';
     parsed.currentKwicSource = normalizeKwicSource(parsed.currentKwicSource);
@@ -1600,10 +1576,7 @@ function applyViewState(state) {
   trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
   trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : 404;
   searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
-  listFrequencyMin = Number.isInteger(state.listFrequencyMin) ? state.listFrequencyMin : LIST_FREQ_MIN_DEFAULT;
-  listFrequencyMax = Number.isInteger(state.listFrequencyMax) ? state.listFrequencyMax : LIST_FREQ_MAX_DEFAULT;
-  listFrequencyMin = Math.max(LIST_FREQ_MIN_DEFAULT, listFrequencyMin);
-  listFrequencyMax = Math.max(listFrequencyMin, listFrequencyMax);
+  sortMostFrequentFirst = !!state.sortMostFrequentFirst;
   currentGlossaryTerm = typeof state.currentGlossaryTerm === 'string' ? state.currentGlossaryTerm : '';
   currentScholarAnchor = typeof state.currentScholarAnchor === 'string' ? state.currentScholarAnchor : '';
   currentKwicSource = normalizeKwicSource(state.currentKwicSource);
@@ -1657,8 +1630,7 @@ function sameViewState(a, b) {
     (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) &&
     (a.currentKwicPageEnd || 404) === (b.currentKwicPageEnd || 404) &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
-    (a.listFrequencyMin || LIST_FREQ_MIN_DEFAULT) === (b.listFrequencyMin || LIST_FREQ_MIN_DEFAULT) &&
-    (a.listFrequencyMax || LIST_FREQ_MAX_DEFAULT) === (b.listFrequencyMax || LIST_FREQ_MAX_DEFAULT) &&
+    !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst &&
     !!a.onlyDiscussed === !!b.onlyDiscussed &&
     !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
     aFilters === bFilters;
@@ -3610,8 +3582,7 @@ function switchEntity(key) {
   onlyDiscussed = false;
   onlyQuestionCandidates = false;
   searchQuery = '';
-  listFrequencyMin = LIST_FREQ_MIN_DEFAULT;
-  listFrequencyMax = LIST_FREQ_MAX_DEFAULT;
+  sortMostFrequentFirst = false;
   selectedItem = null;
   selectedItemType = null;
   rightPaneMode = 'histogram';
@@ -3702,23 +3673,8 @@ function renderListPanel(container) {
   const candidateBtnHtml = canFilterCandidates
     ? `<button class="filter-chip ${onlyQuestionCandidates ? 'active' : ''}" id="only-question-btn">только ?-кандидаты (${candidateTotal})</button>`
     : '';
-  const canFilterFrequency = currentEntity === 'lexicon';
-  const freqBounds = canFilterFrequency ? getListFrequencyBounds(conf.items) : { min: LIST_FREQ_MIN_DEFAULT, max: LIST_FREQ_MIN_DEFAULT };
-  if (canFilterFrequency) {
-    listFrequencyMin = clampListFrequencyValue(listFrequencyMin, freqBounds.min, freqBounds.max, freqBounds.min);
-    listFrequencyMax = clampListFrequencyValue(listFrequencyMax, freqBounds.min, freqBounds.max, freqBounds.max);
-    if (listFrequencyMin > listFrequencyMax) [listFrequencyMin, listFrequencyMax] = [listFrequencyMax, listFrequencyMin];
-  }
-  const frequencyFilterHtml = canFilterFrequency
-    ? `<div class="filter-row filter-row-frequency">
-        <label class="freq-filter-label">частотность от
-          <input id="freq-min-input" type="number" min="${freqBounds.min}" max="${freqBounds.max}" value="${listFrequencyMin}" />
-        </label>
-        <label class="freq-filter-label">до
-          <input id="freq-max-input" type="number" min="${freqBounds.min}" max="${freqBounds.max}" value="${listFrequencyMax}" />
-        </label>
-        <button class="filter-chip" id="freq-reset-btn">сброс</button>
-      </div>`
+  const sortMostFrequentBtnHtml = Array.isArray(conf.items) && conf.items.length > 1
+    ? `<div class="filter-row"><button class="filter-chip ${sortMostFrequentFirst ? 'active' : ''}" id="sort-most-frequent-btn">наиболее частотные сверху</button></div>`
     : '';
 
   container.innerHTML = `
@@ -3732,7 +3688,7 @@ function renderListPanel(container) {
               </div>
               <button class="filter-chip ${onlyDiscussed?'active':''}" id="only-discussed-btn">только обсуждаемые (≥2 стр.)</button>
             </div>
-            ${frequencyFilterHtml}
+            ${sortMostFrequentBtnHtml}
             ${catChips}
             ${candidateBtnHtml ? `<div class="filter-row">${candidateBtnHtml}</div>` : ''}
           </div>
@@ -3836,36 +3792,15 @@ function renderListPanel(container) {
       persistViewState();
     };
   }
-  const freqMinInput = document.getElementById('freq-min-input');
-  const freqMaxInput = document.getElementById('freq-max-input');
-  const freqResetBtn = document.getElementById('freq-reset-btn');
-  if (freqMinInput && freqMaxInput && canFilterFrequency) {
-    const applyFrequencyInputs = () => {
-      const nextMin = clampListFrequencyValue(freqMinInput.value, freqBounds.min, freqBounds.max, freqBounds.min);
-      const nextMax = clampListFrequencyValue(freqMaxInput.value, freqBounds.min, freqBounds.max, freqBounds.max);
-      listFrequencyMin = Math.min(nextMin, nextMax);
-      listFrequencyMax = Math.max(nextMin, nextMax);
-      freqMinInput.value = String(listFrequencyMin);
-      freqMaxInput.value = String(listFrequencyMax);
+  const sortMostFrequentBtn = document.getElementById('sort-most-frequent-btn');
+  if (sortMostFrequentBtn) {
+    sortMostFrequentBtn.onclick = (e) => {
+      sortMostFrequentFirst = !sortMostFrequentFirst;
+      e.target.classList.toggle('active', sortMostFrequentFirst);
       visibleItemsCache = null;
       renderList();
       persistViewState();
     };
-    freqMinInput.onchange = applyFrequencyInputs;
-    freqMaxInput.onchange = applyFrequencyInputs;
-    freqMinInput.onkeydown = (e) => { if (e.key === 'Enter') applyFrequencyInputs(); };
-    freqMaxInput.onkeydown = (e) => { if (e.key === 'Enter') applyFrequencyInputs(); };
-    if (freqResetBtn) {
-      freqResetBtn.onclick = () => {
-        listFrequencyMin = freqBounds.min;
-        listFrequencyMax = freqBounds.max;
-        freqMinInput.value = String(listFrequencyMin);
-        freqMaxInput.value = String(listFrequencyMax);
-        visibleItemsCache = null;
-        renderList();
-        persistViewState();
-      };
-    }
   }
   const exportSectionBtn = document.getElementById('export-section-md');
   if (exportSectionBtn) exportSectionBtn.onclick = () => exportCurrentSectionMarkdown();
@@ -3900,10 +3835,6 @@ function itemMatchesFilters(it) {
   if (currentEntity === 'names' && activeFilters.size > 0) {
     if (!activeFilters.has(it.subcategory)) return false;
   }
-  if (currentEntity === 'lexicon') {
-    const mentions = countItemMentions(it);
-    if (mentions < listFrequencyMin || mentions > listFrequencyMax) return false;
-  }
   if (onlyQuestionCandidates && !(it.head || '').startsWith('?')) return false;
   if (onlyDiscussed && !it.discussed) return false;
   return true;
@@ -3916,8 +3847,7 @@ function buildVisibleItemsCacheKey() {
   return [
     currentEntity,
     searchQuery || '',
-    currentEntity === 'lexicon' ? String(listFrequencyMin) : '',
-    currentEntity === 'lexicon' ? String(listFrequencyMax) : '',
+    sortMostFrequentFirst ? 'freq-desc' : 'alpha',
     onlyDiscussed ? '1' : '0',
     onlyQuestionCandidates ? '1' : '0',
     filters,
@@ -3935,7 +3865,13 @@ function getVisibleItemsForCurrentEntity() {
   currentListSearchRaw = searchQuery ? searchQuery.toLowerCase() : '';
   currentListSearchNorm = searchQuery ? normalizeHeadForMatch(searchQuery) : '';
   let filtered = items.filter(itemMatchesFilters);
-  filtered.sort(compareItemsByHead);
+  filtered.sort((a, b) => {
+    if (sortMostFrequentFirst) {
+      const diff = getItemFrequencyScore(b, currentEntity) - getItemFrequencyScore(a, currentEntity);
+      if (diff !== 0) return diff;
+    }
+    return compareItemsByHead(a, b);
+  });
   const candidateCount = filtered.reduce((acc, it) => acc + (((it.head || '').startsWith('?')) ? 1 : 0), 0);
   const maxResults = currentEntity === 'all' ? 5000 : (currentEntity === 'lexicon_reverse' ? 2500 : 800);
   let truncated = false;

@@ -889,31 +889,23 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#trend-end-range')).toHaveValue('120');
   });
 
-  test('lexicon list supports frequency filter controls', async ({ page }) => {
+  test('lexicon list supports most-frequent sorting toggle', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/lexicon/list');
-    const minInput = page.locator('#freq-min-input');
-    const maxInput = page.locator('#freq-max-input');
-    const resetBtn = page.locator('#freq-reset-btn');
-    await expect(minInput).toBeVisible();
-    await expect(maxInput).toBeVisible();
-    await expect(resetBtn).toBeVisible();
+    const sortBtn = page.locator('#sort-most-frequent-btn');
+    await expect(sortBtn).toBeVisible();
+    await sortBtn.click();
+    await expect(sortBtn).toHaveClass(/active/);
 
-    const maxBound = Number(await maxInput.inputValue());
-    expect(Number.isFinite(maxBound)).toBeTruthy();
-    await minInput.fill(String(maxBound));
-    await minInput.press('Enter');
-
-    const filteredCount = await page.locator('#name-list .name-item').count();
-    expect(filteredCount).toBeGreaterThan(0);
-    const minVisibleMentions = await page.evaluate(() => {
-      const rows = Array.from(document.querySelectorAll('#name-list .name-item .pages-count'));
-      const nums = rows
+    const visibleCounts = await page.evaluate(() => {
+      return Array.from(document.querySelectorAll('#name-list .name-item .pages-count'))
+        .slice(0, 20)
         .map((el) => parseInt((el.textContent || '').trim(), 10))
         .filter((n) => Number.isFinite(n));
-      if (!nums.length) return null;
-      return Math.min(...nums);
     });
-    expect(minVisibleMentions).toBeGreaterThanOrEqual(maxBound);
+    expect(visibleCounts.length).toBeGreaterThan(3);
+    for (let i = 1; i < visibleCounts.length; i++) {
+      expect(visibleCounts[i - 1]).toBeGreaterThanOrEqual(visibleCounts[i]);
+    }
   });
 
   test('card page links open reading-now mode on that page', async ({ page }) => {
