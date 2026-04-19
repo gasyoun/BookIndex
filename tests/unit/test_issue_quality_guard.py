@@ -21,6 +21,11 @@ class IssueQualityGuardTests(unittest.TestCase):
         problems = detect_text_problems(text, require_template=False)
         self.assertTrue(any("mojibake" in p for p in problems))
 
+    def test_ignores_mojibake_inside_inline_code(self):
+        text = "Пример в коде: `РёС‚РєРёРЅ`."
+        problems = detect_text_problems(text, require_template=False)
+        self.assertFalse(any("mojibake" in p for p in problems))
+
     def test_accepts_normal_russian_template_text(self):
         text = (
             "Цель: исправить автолинковку.\n\n"

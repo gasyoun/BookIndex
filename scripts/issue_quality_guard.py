@@ -21,6 +21,8 @@ CYR_RE = re.compile(r"[\u0400-\u04FF]")
 LAT_RE = re.compile(r"[A-Za-z]")
 MOJIBAKE_CYRILLIC_PAIR_RE = re.compile(r"(?:[РС][\u0080-\u04FF]){3,}")
 MOJIBAKE_LATIN1_PAIR_RE = re.compile(r"(?:Ð.|Ñ.){3,}")
+FENCED_CODE_RE = re.compile(r"```.*?```", re.DOTALL)
+INLINE_CODE_RE = re.compile(r"`[^`\n]*`")
 
 
 @dataclass
@@ -48,14 +50,15 @@ def detect_text_problems(text: str, *, require_template: bool = False) -> List[s
     cyr = count_cyr(body)
     latin = count_latin(body)
     letters = cyr + latin
+    body_no_code = INLINE_CODE_RE.sub(" ", FENCED_CODE_RE.sub(" ", body))
 
     if "\ufffd" in body:
         findings.append("contains U+FFFD replacement character")
     if "???" in body:
         findings.append("contains '???' sequence")
-    if MOJIBAKE_CYRILLIC_PAIR_RE.search(body):
+    if MOJIBAKE_CYRILLIC_PAIR_RE.search(body_no_code):
         findings.append("contains probable UTF-8/CP1251 mojibake sequence")
-    if MOJIBAKE_LATIN1_PAIR_RE.search(body):
+    if MOJIBAKE_LATIN1_PAIR_RE.search(body_no_code):
         findings.append("contains probable UTF-8/Latin-1 mojibake sequence")
     # High question-mark density with no Cyrillic usually means broken RU text.
     if q_count >= 8 and cyr == 0 and letters >= 30:
