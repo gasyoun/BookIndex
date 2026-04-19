@@ -906,6 +906,7 @@ function buildContextLinkMatchTerms(head) {
       variants.add(`${stem}ого`);
       variants.add(`${stem}ому`);
       variants.add(`${stem}ым`);
+      variants.add(`${stem}им`);
       variants.add(`${stem}ом`);
       variants.add(`${stem}ая`);
       variants.add(`${stem}ую`);

@@ -73254,7 +73254,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '7c1468350046';
+const APP_BUILD_ID = '3514380ce1b7';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -74154,6 +74154,7 @@ function buildContextLinkMatchTerms(head) {
       variants.add(`${stem}ого`);
       variants.add(`${stem}ому`);
       variants.add(`${stem}ым`);
+      variants.add(`${stem}им`);
       variants.add(`${stem}ом`);
       variants.add(`${stem}ая`);
       variants.add(`${stem}ую`);
@@ -76176,7 +76177,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '7c1468350046' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '3514380ce1b7' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
