@@ -1148,4 +1148,20 @@ test.describe('aaz-index smoke', () => {
     await page.goto(`/aaz-index.html#names/list/item/names/${encoded}`);
     await expect(page.locator('#right-content .card h2')).toContainText(/\u0438\u0442\u043a\u0438\u043d/i);
   });
+
+  test('viz alias hash opens scholar visualization tab and module list', async ({ page }) => {
+    await page.goto('/aaz-index.html#viz');
+    await expect(page).toHaveURL(/#v4\/scholar\/viz/);
+    await expect(page.locator('.viz-shell')).toBeVisible();
+    await expect(page.locator('.viz-module-btn')).toHaveCount(7);
+  });
+
+  test('viz modules switch and render timeline + heatmap', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/scholar/viz/module/viz03');
+    await expect(page.locator('.tl-wrap')).toBeVisible();
+
+    await page.locator('.viz-module-btn[data-module="viz04"]').click();
+    await expect(page).toHaveURL(/module\/viz04/);
+    await expect(page.locator('#viz-heatmap-svg')).toBeVisible();
+  });
 });

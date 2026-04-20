@@ -302,6 +302,198 @@
     height: auto;
     overflow: visible;
   }
+  .viz-shell {
+    padding: 14px 16px;
+    overflow-y: auto;
+    height: 100%;
+  }
+  .viz-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .viz-title {
+    margin: 0;
+    font-size: 20px;
+    color: var(--title);
+    font-weight: normal;
+  }
+  .viz-module-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .viz-module-btn {
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-soft);
+    color: var(--title);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .viz-module-btn.active {
+    background: var(--title);
+    border-color: var(--title);
+    color: #fff;
+  }
+  .viz-module-host {
+    min-height: 520px;
+  }
+  .viz-loading {
+    padding: 16px;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    background: var(--surface);
+  }
+  .viz-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    padding: 12px;
+  }
+  .viz-map-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .viz-map-timeline .viz-toolbar {
+    order: 1;
+  }
+  .viz-map-timeline .viz-map-canvas {
+    order: 2;
+  }
+  .viz-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .viz-toolbar label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .viz-tooltip {
+    pointer-events: none;
+    z-index: 8;
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 4px 7px;
+    color: var(--title);
+    font-size: 11px;
+    max-width: 360px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  }
+  .viz-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .viz-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text);
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+  }
+  .viz-legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .viz-muted {
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .tl-wrap {
+    position: relative;
+    padding-left: 14px;
+  }
+  .tl-line {
+    position: absolute;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--line);
+  }
+  .tl-item {
+    position: relative;
+    margin: 0 0 8px 0;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--title);
+    left: -16px;
+    top: 12px;
+  }
+  .tl-item.clickable:hover {
+    background: var(--surface-soft-2);
+  }
+  .tl-year {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .tl-label {
+    font-size: 13px;
+    color: var(--text);
+    margin-top: 3px;
+  }
+  .tl-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .viz-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    gap: 10px;
+    align-items: start;
+  }
+  .viz-detail {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-soft);
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--text);
+    min-height: 200px;
+  }
+  .viz-detail h4 {
+    margin: 0 0 6px 0;
+    color: var(--title);
+    font-size: 14px;
+  }
+  .viz-detail p {
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+  }
+
   @media (max-width: 900px) {
     .list-card-layout { grid-template-columns: 1fr; }
   }
@@ -1371,6 +1563,31 @@
 
     /* Карта */
     .map-iframe-wrap { min-height: 300px; }
+    .viz-module-tabs {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: 2px;
+    }
+    .viz-module-btn {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      font-size: 11px;
+      padding: 6px 8px;
+    }
+    .viz-grid { grid-template-columns: 1fr; }
+    .viz-map-timeline .viz-toolbar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+      order: 2;
+      margin-top: 8px;
+    }
+    .viz-map-timeline .viz-toolbar label {
+      justify-content: space-between;
+    }
+    .viz-map-timeline .viz-map-canvas {
+      order: 1;
+    }
 
     /* Сетки карточек */
     .cards-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
@@ -1426,6 +1643,15 @@
 </header>
 
 <div class="content" id="content"></div>
+
+<script src="./scripts/viz/build-viz-cache.js"></script>
+<script src="./scripts/viz/discovery-timeline.js"></script>
+<script src="./scripts/viz/heatmap-matrix.js"></script>
+<script src="./scripts/viz/cooccurrence-graph.js"></script>
+<script src="./scripts/viz/term-bump-chart.js"></script>
+<script src="./scripts/viz/lang-chord.js"></script>
+<script src="./scripts/viz/map-timeline.js"></script>
+<script src="./scripts/viz/narrative-sankey.js"></script>
 
 <script>
 __APP_SCRIPT__

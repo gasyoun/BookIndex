@@ -80,6 +80,10 @@
 
 - **Автолинки `glossary` в контекстах** — термины глоссария теперь автоматически становятся ссылками в текстах контекстов всех сущностей (`.ctx-link[data-type="glossary"]`); клик открывает соответствующую статью глоссария.
 - **Обратные ссылки `lexicon → subject_index`** — в карточке каждого термина `lexicon` появился блок «В предметном указателе» со ссылками на соответствующие рубрики `subject_index` (`.subject-crosslinks`, `getSubjectByLexiconIndex()`).
+- **Новый таб визуализаций `scholar/viz`** — добавлен роутинг по модулям (`#v4/scholar/viz/module/<id>`) и короткий алиас `#viz`.
+- **Общий препроцессор `__vizCache`** — вынесен в `scripts/viz/build-viz-cache.js`, с прогревом через `scripts/viz/build-viz-cache-worker.js` при открытии вкладки визуализаций.
+- **Реализованы модули VIZ-01…VIZ-07** в `scripts/viz/*`: timeline, heatmap, cooccurrence graph, bump chart, chord, map timeline, narrative sankey.
+- **`chapters.century` добавлен в `app_data.json`** для поддержки сценариев визуализаций по векам.
 - **`codex_instruction_v2.md` синхронизирован с `main`** — статусы всех задач спринта v4.3 обновлены, line-based ссылки заменены именами функций, DoD приведён к актуальному состоянию (closes #70, #71).
 
 ### v4.2.1 (2026-04-19)
