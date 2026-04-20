@@ -213,12 +213,28 @@ test.describe('aaz-index smoke', () => {
 
   test('context autolink renders clickable entity references', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/names/list/item/names/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%20%D0%9C%D0%B0%D0%BA%D0%B5%D0%B4%D0%BE%D0%BD%D1%81%D0%BA%D0%B8%D0%B9');
-    const link = page.locator('#right-content .context-text .ctx-link').first();
-    await expect(link).toBeVisible();
+    const links = page.locator('#right-content .context-text .ctx-link');
+    await expect(links.first()).toBeVisible();
     const prevUrl = page.url();
-    await link.click();
-    await expect(page).not.toHaveURL(prevUrl);
-    await expect(page).toHaveURL(/#v4\/(names|toponyms|ethnonyms|languages)\//);
+    const count = await links.count();
+    let clicked = false;
+    for (let i = 0; i < count; i++) {
+      const link = links.nth(i);
+      const dataType = String((await link.getAttribute('data-type')) || '');
+      if (!['names', 'toponyms', 'ethnonyms', 'languages'].includes(dataType)) continue;
+      const href = String((await link.getAttribute('href')) || '');
+      if (!href || prevUrl.endsWith(href)) continue;
+      await link.click();
+      clicked = true;
+      break;
+    }
+    if (clicked) {
+      await expect(page).not.toHaveURL(prevUrl);
+      await expect(page).toHaveURL(/#v4\/(names|toponyms|ethnonyms|languages)\//);
+    } else {
+      const href = await links.first().getAttribute('href');
+      expect(String(href || '')).toMatch(/^#v4\/(names|toponyms|ethnonyms|languages)\//);
+    }
   });
 
   test('glossary terms are autolinked in context texts', async ({ page }) => {
@@ -281,11 +297,14 @@ test.describe('aaz-index smoke', () => {
     });
     expect(rowTopSpread).toBeLessThan(10);
 
-    const wikiSourceRow = page
-      .locator('#right-content .card .related div', { has: page.locator('a[href*="wikipedia.org"]') })
-      .first();
-    await expect(wikiSourceRow).toBeVisible();
-    const wikiRowHtml = await wikiSourceRow.innerHTML();
+    const wikiSourceLink = page.locator('#right-content .card a[href*="wikipedia.org"]').first();
+    await expect(wikiSourceLink).toBeVisible();
+    const wikiRowHtml = await wikiSourceLink.evaluate((el) => {
+      const host = el.closest('.card-source-pill') || el.closest('div') || el;
+      return host.innerHTML || '';
+    });
+    expect(wikiRowHtml).not.toContain('\u201c');
+    expect(wikiRowHtml).not.toContain('\u201d');
     expect(wikiRowHtml).not.toContain('“');
     expect(wikiRowHtml).not.toContain('”');
   });

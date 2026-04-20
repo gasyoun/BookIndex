@@ -2005,8 +2005,7 @@ function applyHash(hash) {
 
   applyViewState(state);
   if (!isNavigatingHistory) pushHistoryState();
-  updateBackButton();
-  renderBreadcrumbs(hash);
+  syncNavigationHashOnly();
   return true;
 }
 
@@ -2155,6 +2154,28 @@ function openGlossaryTerm(term) {
   currentTab = 'glossary';
   selectedItem = null;
   selectedItemType = null;
+  rightPaneMode = 'histogram';
+  renderEntitySwitcher();
+  renderTabs();
+  renderContent();
+  syncNavigationState();
+}
+
+function openKwicTerm(term) {
+  closeGlobalSearchResults();
+  const q = clampUiInput(term, MAX_LIST_QUERY_LENGTH);
+  if (!q) return;
+  pendingKwicTerm = q;
+  if (typeof window !== 'undefined') window._pendingKwicTerm = q;
+  currentKwicSource = 'lexicon';
+  currentKwicQuery = q;
+  currentEntity = 'materials';
+  currentTab = 'kwic';
+  selectedItem = null;
+  selectedItemType = null;
+  currentGlossaryTerm = '';
+  currentScholarAnchor = '';
+  pendingScholarAnchor = '';
   rightPaneMode = 'histogram';
   renderEntitySwitcher();
   renderTabs();
@@ -4895,12 +4916,7 @@ function renderCardInRight() {
     bindActionWithKeyboard(btn, () => {
       const term = clampUiInput((btn.dataset && btn.dataset.term) || '', MAX_LIST_QUERY_LENGTH);
       if (!term) return;
-      pendingKwicTerm = term;
-      if (typeof window !== 'undefined') window._pendingKwicTerm = term;
-      currentKwicSource = 'lexicon';
-      currentKwicQuery = term;
-      switchEntity('materials');
-      switchTab('kwic');
+      openKwicTerm(term);
     });
   });
   right.querySelectorAll('.source-export-bib[data-source-idx]').forEach((btn) => {
