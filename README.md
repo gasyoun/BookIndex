@@ -6,9 +6,9 @@
 ## Актуальный статус
 
 - Текущая версия: `v4.3` (обновлено `2026-04-20`).
-- Базовый артефакт: `aaz-index.html` (single-file SPA).
-- Демо (GitHub Pages): https://gasyoun.github.io/BookIndex/aaz-index.html
-- Формат данных: `app_data.json` (`schema_version = 2`).
+- Базовый артефакт: [aaz-index.html](aaz-index.html) (single-file SPA).
+- Демо (GitHub Pages): [aaz-index.html](https://gasyoun.github.io/BookIndex/aaz-index.html)
+- Формат данных: [app_data.json](app_data.json) (`schema_version = 2`).
 - Детская инструкция: [KIDS_GUIDE_RU.md](KIDS_GUIDE_RU.md).
 - Регламент оформления и публикации: [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md).
 - Инструкция для Codex: [codex_instruction_v2.md](codex_instruction_v2.md).
@@ -56,7 +56,7 @@
 
 ### Визуализации
 
-- [D3-граф персоналий](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/names/graph) (`vendor/d3.v7.min.js`): zoom/pan, фильтр веса ребра, tooltip, переход в карточку.
+- [D3-граф персоналий](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/names/graph) ([vendor/d3.v7.min.js](vendor/d3.v7.min.js)): zoom/pan, фильтр веса ребра, tooltip, переход в карточку.
 - [Дерево языков](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/languages/tree) и [граф семейств](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/languages/families).
 - [Карта](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/toponyms/map) с offline-fallback, если внешние тайлы недоступны.
 
@@ -81,10 +81,10 @@
 - **Автолинки `glossary` в контекстах** — термины глоссария теперь автоматически становятся ссылками в текстах контекстов всех сущностей (`.ctx-link[data-type="glossary"]`); клик открывает соответствующую статью глоссария.
 - **Обратные ссылки `lexicon → subject_index`** — в карточке каждого термина `lexicon` появился блок «В предметном указателе» со ссылками на соответствующие рубрики `subject_index` (`.subject-crosslinks`, `getSubjectByLexiconIndex()`).
 - **Новый таб визуализаций `scholar/viz`** — добавлен роутинг по модулям (`#v4/scholar/viz/module/<id>`) и короткий алиас `#viz`.
-- **Общий препроцессор `__vizCache`** — вынесен в `scripts/viz/build-viz-cache.js`, с прогревом через `scripts/viz/build-viz-cache-worker.js` при открытии вкладки визуализаций.
-- **Реализованы модули VIZ-01…VIZ-07** в `scripts/viz/*`: timeline, heatmap, cooccurrence graph, bump chart, chord, map timeline, narrative sankey.
-- **`chapters.century` добавлен в `app_data.json`** для поддержки сценариев визуализаций по векам.
-- **`codex_instruction_v2.md` синхронизирован с `main`** — статусы всех задач спринта v4.3 обновлены, line-based ссылки заменены именами функций, DoD приведён к актуальному состоянию (closes #70, #71).
+- **Общий препроцессор `__vizCache`** — вынесен в [scripts/viz/build-viz-cache.js](scripts/viz/build-viz-cache.js), с прогревом через [scripts/viz/build-viz-cache-worker.js](scripts/viz/build-viz-cache-worker.js) при открытии вкладки визуализаций.
+- **Реализованы модули VIZ-01…VIZ-07** в [scripts/viz/](scripts/viz/): timeline, heatmap, cooccurrence graph, bump chart, chord, map timeline, narrative sankey.
+- **`chapters.century` добавлен в [app_data.json](app_data.json)** для поддержки сценариев визуализаций по векам.
+- **[codex_instruction_v2.md](codex_instruction_v2.md) синхронизирован с `main`** — статусы всех задач спринта v4.3 обновлены, line-based ссылки заменены именами функций, DoD приведён к актуальному состоянию (closes #70, #71).
 
 ### v4.2.1 (2026-04-19)
 
@@ -94,8 +94,8 @@
 - `lexicon_reverse/list`: полноширинный layout, сортировка по правому краю слова, до 6 колонок на широких экранах.
 - `list-view`: числовой фильтр частотности заменён на toggle `наиболее частотные сверху`.
 - Рефакторинг KWIC: вынесена общая нормализация диапазонов страниц, оптимизирован сбор контекстов.
-- Усилен `scripts/issue_quality_guard.py`: детект mojibake (UTF-8/CP1251 и UTF-8/Latin-1).
-- Добавлен регламент работы: `CODEX_WORKFLOW_RU.md`.
+- Усилен [scripts/issue_quality_guard.py](scripts/issue_quality_guard.py): детект mojibake (UTF-8/CP1251 и UTF-8/Latin-1).
+- Добавлен регламент работы: [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md).
 - Нормализована система labels по шаблону #42: `priority + area + type + phase`.
 
 ### v4.2 и ранее
@@ -112,8 +112,8 @@
 
 ## Быстрый старт
 
-1. Откройте `aaz-index.html` в браузере.
-2. Для локальной разработки используйте `v3_template.html` + `v3_app.js` + `app_data.json`.
+1. Откройте [aaz-index.html](aaz-index.html) в браузере.
+2. Для локальной разработки используйте [v3_template.html](v3_template.html) + [v3_app.js](v3_app.js) + [app_data.json](app_data.json).
 3. Пересборка итогового файла:
 
 ```bash
@@ -137,7 +137,7 @@ python runtime_test.py
 npx playwright test
 ```
 
-Если `node` не в `PATH`, для `runtime_test.py` можно явно указать бинарник:
+Если `node` не в `PATH`, для [runtime_test.py](runtime_test.py) можно явно указать бинарник:
 
 ```powershell
 $env:NODE_BINARY = 'C:\path\to\node.exe'
@@ -146,8 +146,8 @@ python runtime_test.py
 
 Ожидается:
 
-- `validate_content.py`: `0 errors` (допустимы известные warning по дублям данных).
-- `runtime_test.py`: `21/21`.
+- [scripts/validate_content.py](scripts/validate_content.py): `0 errors` (допустимы известные warning по дублям данных).
+- [runtime_test.py](runtime_test.py): `21/21`.
 - `playwright test`: все тесты pass.
 
 ## Контент-аудит (метрики)
@@ -163,30 +163,30 @@ python scripts/content_report.py --format json
 
 | Файл / директория | Назначение |
 |---|---|
-| `aaz-index.html` | Готовый standalone-артефакт (сборка) |
-| `v3_template.html` | HTML-шаблон (`__APP_SCRIPT__`) |
-| `v3_app.js` | Основной runtime/UX |
-| `app_data.json` | База контента (только чтение) |
-| `runtime_test.py` | Runtime smoke и статические guard'ы |
-| `scripts/build_aaz_index.py` | Сборка `aaz-index.html` |
-| `scripts/validate_content.py` | Структурная валидация данных |
-| `scripts/content_report.py` | Отчёты по покрытию контента |
-| `scripts/check_encoding.py` | UTF-8/mojibake guard |
-| `tests/e2e/smoke.spec.new.js` | E2E smoke (Playwright) |
-| `codex_instruction_v2.md` | Инструкция для Codex (актуальна для `main`) |
-| `CODEX_WORKFLOW_RU.md` | Регламент оформления и публикации |
-| `KIDS_GUIDE_RU.md` | Детская инструкция по использованию |
-| `deep-research-report.md` | Аудит-отчёт репозитория |
-| `vendor/` | Локальные копии библиотек (d3 и др.) |
+| [aaz-index.html](aaz-index.html) | Готовый standalone-артефакт (сборка) |
+| [v3_template.html](v3_template.html) | HTML-шаблон (`__APP_SCRIPT__`) |
+| [v3_app.js](v3_app.js) | Основной runtime/UX |
+| [app_data.json](app_data.json) | База контента (только чтение) |
+| [runtime_test.py](runtime_test.py) | Runtime smoke и статические guard'ы |
+| [scripts/build_aaz_index.py](scripts/build_aaz_index.py) | Сборка `aaz-index.html` |
+| [scripts/validate_content.py](scripts/validate_content.py) | Структурная валидация данных |
+| [scripts/content_report.py](scripts/content_report.py) | Отчёты по покрытию контента |
+| [scripts/check_encoding.py](scripts/check_encoding.py) | UTF-8/mojibake guard |
+| [tests/e2e/smoke.spec.new.js](tests/e2e/smoke.spec.new.js) | E2E smoke (Playwright) |
+| [codex_instruction_v2.md](codex_instruction_v2.md) | Инструкция для Codex (актуальна для `main`) |
+| [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md) | Регламент оформления и публикации |
+| [KIDS_GUIDE_RU.md](KIDS_GUIDE_RU.md) | Детская инструкция по использованию |
+| [deep-research-report.md](deep-research-report.md) | Аудит-отчёт репозитория |
+| [vendor/](vendor/) | Локальные копии библиотек (d3 и др.) |
 
 ## CI
 
 GitHub Actions workflow `CI` запускается на `push` и `pull_request` в `main` и выполняет:
 
 - синтаксическую проверку JS;
-- `check_encoding.py`;
-- `validate_content.py`;
-- `runtime_test.py`;
-- сборку `aaz-index.html`;
-- проверку синхронизации `aaz-index.html` с исходниками (`git diff --exit-code -- aaz-index.html`);
+- [scripts/check_encoding.py](scripts/check_encoding.py);
+- [scripts/validate_content.py](scripts/validate_content.py);
+- [runtime_test.py](runtime_test.py);
+- сборку [aaz-index.html](aaz-index.html);
+- проверку синхронизации [aaz-index.html](aaz-index.html) с исходниками (`git diff --exit-code -- aaz-index.html`);
 - Playwright smoke.
