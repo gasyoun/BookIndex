@@ -27,6 +27,8 @@ function parseAppData() {
   }
   resetGlobalSearchFuseState();
   APP_DATA = JSON.parse(APP_DATA_STRING);
+  if (typeof window !== 'undefined') window.APP_DATA = APP_DATA;
+  else if (typeof globalThis !== 'undefined') globalThis.APP_DATA = APP_DATA;
   migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
   COLORS = APP_DATA.colors;
@@ -262,7 +264,7 @@ function initEntityTypes() {
   scholar: {
     title: 'Профессиональный аппарат',
     items: [],
-    tabs: ['scholar','chronology','page_trends'],
+    tabs: ['scholar','chronology','page_trends','viz'],
   },
   all: {
     title: 'Сводный указатель',
@@ -320,6 +322,7 @@ function initEntityTypes() {
 }
 
 const TAB_LABELS = {
+  viz: 'Визуализации',
   list: 'Список',
   cards: 'Карточки',
   histogram: 'По лекциям',
@@ -553,6 +556,7 @@ let pendingGlossaryQuery = '';
 let currentGlossaryTerm = '';
 let pendingScholarAnchor = '';
 let currentScholarAnchor = '';
+let currentVizModule = 'viz03';
 let currentKwicSource = 'lexicon';
 let currentKwicQuery = '';
 let currentKwicSort = 'left';
@@ -604,6 +608,8 @@ let contextEntityLinkEntriesCache = null;
 let subjectCrosslinksLookupCache = null;
 let reverseEdgesCache = null;
 let SUBJECT_BY_LEXICON_INDEX = null;
+let vizCacheWarmPromise = null;
+const VIZ_CACHE_WORKER_PATH = './scripts/viz/build-viz-cache-worker.js';
 const CYRILLIC_TO_LATIN_MAP = Object.freeze({
   '\u0430': 'a',    // а
   '\u0431': 'b',    // б
@@ -1833,6 +1839,9 @@ function buildHashFromState() {
     const end = clampPageInBook(trendsRangeEnd);
     parts.push('range', String(Math.min(start, end)), String(Math.max(start, end)));
   }
+  if (currentEntity === 'scholar' && currentTab === 'viz' && currentVizModule) {
+    parts.push('module', String(currentVizModule));
+  }
   if (currentTab === 'list' && searchQuery && !selectedItem) {
     parts.push('q', searchQuery);
   }
@@ -1927,13 +1936,16 @@ function applyHash(hash) {
   }
   const parts = decodedParts[0] === HASH_ROUTE_PREFIX ? decodedParts.slice(1) : decodedParts;
   if (!parts.length || parts.length > MAX_HASH_PARTS) return false;
+  const routedParts = (parts.length === 1 && parts[0] === 'viz')
+    ? ['scholar', 'viz']
+    : parts;
 
-  const entity = parts[0];
+  const entity = routedParts[0];
   if (!ENTITY_TYPES[entity]) return false;
-  const tabCandidate = parts[1] || ENTITY_TYPES[entity].tabs[0];
+  const tabCandidate = routedParts[1] || ENTITY_TYPES[entity].tabs[0];
   const tab = ENTITY_TYPES[entity].tabs.includes(tabCandidate) ? tabCandidate : ENTITY_TYPES[entity].tabs[0];
-  const queryPos = parts.indexOf('q');
-  const itemPos = parts.indexOf('item');
+  const queryPos = routedParts.indexOf('q');
+  const itemPos = routedParts.indexOf('item');
 
   const state = {
     currentEntity: entity,
@@ -1952,26 +1964,26 @@ function applyHash(hash) {
   pendingScholarAnchor = '';
   currentScholarAnchor = '';
 
-  if (entity === 'materials' && tab === 'lecture_pages' && /^\d+$/.test(parts[2] || '')) {
-    state.currentLecture = parseInt(parts[2], 10);
+  if (entity === 'materials' && tab === 'lecture_pages' && /^\d+$/.test(routedParts[2] || '')) {
+    state.currentLecture = parseInt(routedParts[2], 10);
   }
   if (entity === 'materials' && tab === 'lectures') {
-    const readingPos = parts.indexOf('reading');
-    if (readingPos >= 0 && /^\d+$/.test(parts[readingPos + 1] || '')) {
-      saveReadingPage(clampPageInBook(parseInt(parts[readingPos + 1], 10)));
+    const readingPos = routedParts.indexOf('reading');
+    if (readingPos >= 0 && /^\d+$/.test(routedParts[readingPos + 1] || '')) {
+      saveReadingPage(clampPageInBook(parseInt(routedParts[readingPos + 1], 10)));
     }
   }
   if (entity === 'materials' && tab === 'glossary') {
-    const termPos = parts.indexOf('term');
-    if (termPos >= 0 && parts[termPos + 1]) {
-      pendingGlossaryQuery = clampUiInput(parts[termPos + 1], MAX_LIST_QUERY_LENGTH).toLowerCase();
+    const termPos = routedParts.indexOf('term');
+    if (termPos >= 0 && routedParts[termPos + 1]) {
+      pendingGlossaryQuery = clampUiInput(routedParts[termPos + 1], MAX_LIST_QUERY_LENGTH).toLowerCase();
       currentGlossaryTerm = pendingGlossaryQuery;
     }
   }
   if (entity === 'scholar' && tab === 'scholar') {
-    const anchorPos = parts.indexOf('anchor');
-    if (anchorPos >= 0 && parts[anchorPos + 1]) {
-      const rawAnchor = String(parts[anchorPos + 1] || '');
+    const anchorPos = routedParts.indexOf('anchor');
+    if (anchorPos >= 0 && routedParts[anchorPos + 1]) {
+      const rawAnchor = String(routedParts[anchorPos + 1] || '');
       const safeAnchor = rawAnchor.replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
       if (safeAnchor) {
         pendingScholarAnchor = safeAnchor;
@@ -1979,27 +1991,33 @@ function applyHash(hash) {
       }
     }
   }
+  if (entity === 'scholar' && tab === 'viz') {
+    const modulePos = routedParts.indexOf('module');
+    if (modulePos >= 0 && routedParts[modulePos + 1]) {
+      currentVizModule = String(routedParts[modulePos + 1] || '').trim() || currentVizModule;
+    }
+  }
   if (entity === 'scholar' && tab === 'page_trends') {
-    const rangePos = parts.indexOf('range');
-    if (rangePos >= 0 && /^\d+$/.test(parts[rangePos + 1] || '') && /^\d+$/.test(parts[rangePos + 2] || '')) {
-      state.trendsRangeStart = clampPageInBook(parseInt(parts[rangePos + 1], 10));
-      state.trendsRangeEnd = clampPageInBook(parseInt(parts[rangePos + 2], 10));
+    const rangePos = routedParts.indexOf('range');
+    if (rangePos >= 0 && /^\d+$/.test(routedParts[rangePos + 1] || '') && /^\d+$/.test(routedParts[rangePos + 2] || '')) {
+      state.trendsRangeStart = clampPageInBook(parseInt(routedParts[rangePos + 1], 10));
+      state.trendsRangeEnd = clampPageInBook(parseInt(routedParts[rangePos + 2], 10));
       if (state.trendsRangeStart > state.trendsRangeEnd) {
         [state.trendsRangeStart, state.trendsRangeEnd] = [state.trendsRangeEnd, state.trendsRangeStart];
       }
     }
   }
-  if (tab === 'list' && queryPos >= 0 && parts[queryPos + 1]) {
-    state.searchQuery = clampUiInput(parts[queryPos + 1], MAX_LIST_QUERY_LENGTH);
+  if (tab === 'list' && queryPos >= 0 && routedParts[queryPos + 1]) {
+    state.searchQuery = clampUiInput(routedParts[queryPos + 1], MAX_LIST_QUERY_LENGTH);
   }
 
-  if (itemPos >= 0 && parts[itemPos + 1] && parts[itemPos + 2]) {
-    const itemType = ENTITY_TYPES[parts[itemPos + 1]] ? parts[itemPos + 1] : state.currentEntity;
-    const resolvedHead = resolveItemHeadFromHash(itemType, parts[itemPos + 2]);
+  if (itemPos >= 0 && routedParts[itemPos + 1] && routedParts[itemPos + 2]) {
+    const itemType = ENTITY_TYPES[routedParts[itemPos + 1]] ? routedParts[itemPos + 1] : state.currentEntity;
+    const resolvedHead = resolveItemHeadFromHash(itemType, routedParts[itemPos + 2]);
     state.currentEntity = itemType;
     state.currentTab = 'list';
     state.selectedItemType = itemType;
-    state.selectedItem = resolvedHead || clampUiInput(parts[itemPos + 2], MAX_HASH_PART_LENGTH);
+    state.selectedItem = resolvedHead || clampUiInput(routedParts[itemPos + 2], MAX_HASH_PART_LENGTH);
     state.rightPaneMode = 'card';
   }
 
@@ -2161,6 +2179,29 @@ function openGlossaryTerm(term) {
   syncNavigationState();
 }
 
+function navigateTo(entity, view, payload) {
+  const targetEntity = ENTITY_TYPES[entity] ? entity : currentEntity;
+  const mode = String(view || '').toLowerCase();
+  if (mode === 'card') {
+    navigateToItem(targetEntity, payload || '');
+    return;
+  }
+  closeGlobalSearchResults();
+  currentEntity = targetEntity;
+  currentTab = 'list';
+  selectedItem = null;
+  selectedItemType = null;
+  currentGlossaryTerm = '';
+  currentScholarAnchor = '';
+  pendingScholarAnchor = '';
+  rightPaneMode = 'histogram';
+  searchQuery = clampUiInput(payload || '', MAX_LIST_QUERY_LENGTH);
+  renderEntitySwitcher();
+  renderTabs();
+  renderContent();
+  syncNavigationState();
+}
+
 function openKwicTerm(term) {
   closeGlobalSearchResults();
   const q = clampUiInput(term, MAX_LIST_QUERY_LENGTH);
@@ -2181,6 +2222,74 @@ function openKwicTerm(term) {
   renderTabs();
   renderContent();
   syncNavigationState();
+}
+
+function buildVizHash(moduleId) {
+  const moduleKey = String(moduleId || currentVizModule || 'viz03').trim();
+  return buildCanonicalHash(['scholar', 'viz', 'module', moduleKey]);
+}
+
+function warmupVizCacheInWorker() {
+  if (typeof buildVizCache !== 'function') return Promise.resolve(null);
+  const globalObj = (typeof window !== 'undefined') ? window : globalThis;
+  globalObj.__vizCache = globalObj.__vizCache || {};
+  if (globalObj.__vizCache._built) return Promise.resolve(globalObj.__vizCache);
+  if (vizCacheWarmPromise) return vizCacheWarmPromise;
+
+  const runFallback = () => {
+    try {
+      const cache = buildVizCache(APP_DATA || {});
+      return Promise.resolve(cache);
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  };
+
+  if (typeof Worker === 'undefined') {
+    vizCacheWarmPromise = runFallback();
+    return vizCacheWarmPromise;
+  }
+
+  vizCacheWarmPromise = new Promise((resolve) => {
+    let worker = null;
+    let settled = false;
+    const finish = (cacheValue) => {
+      if (settled) return;
+      settled = true;
+      if (worker) {
+        try { worker.terminate(); } catch (e) {}
+      }
+      resolve(cacheValue || globalObj.__vizCache || null);
+    };
+    const timer = setTimeout(() => {
+      runFallback().then((cache) => finish(cache));
+    }, 3000);
+    try {
+      worker = new Worker(VIZ_CACHE_WORKER_PATH);
+      worker.onmessage = (event) => {
+        clearTimeout(timer);
+        const payload = event && event.data ? event.data : {};
+        if (payload.ok && payload.cache && typeof payload.cache === 'object') {
+          globalObj.__vizCache = payload.cache;
+          globalObj.__vizCache._built = true;
+          globalObj.__vizCache._worker = true;
+          finish(globalObj.__vizCache);
+          return;
+        }
+        runFallback().then((cache) => finish(cache));
+      };
+      worker.onerror = () => {
+        clearTimeout(timer);
+        runFallback().then((cache) => finish(cache));
+      };
+      worker.postMessage({ type: 'build', appData: APP_DATA || {} });
+    } catch (e) {
+      clearTimeout(timer);
+      runFallback().then((cache) => finish(cache));
+    }
+  });
+
+  return vizCacheWarmPromise;
 }
 
 function buildGlossaryTermHash(term) {
@@ -2427,6 +2536,7 @@ function buildGlobalSearchRouteRecords() {
     'scholar/scholar': ['профессиональный аппарат', 'аппарат для специалистов'],
     'scholar/chronology': ['хронология открытий', 'лингвистические открытия'],
     'scholar/page_trends': ['динамика по страницам', 'тренды по страницам'],
+    'scholar/viz': ['визуализации', 'аналитические графики', '#viz'],
   };
 
   const pushRoute = ({ head, routeHash, meta = 'раздел интерфейса', snippet = '', aliases = [], kind = 'раздел' }) => {
@@ -3648,6 +3758,9 @@ function switchTab(tab) {
   }
   renderTabs();
   renderContent();
+  if (currentEntity === 'scholar' && currentTab === 'viz') {
+    warmupVizCacheInWorker();
+  }
   syncNavigationState();
 }
 
@@ -3672,6 +3785,7 @@ function renderContent() {
     scholar: renderScholarPanel,
     chronology: renderScholarChronologyPanel,
     page_trends: renderPageTrendsPanel,
+    viz: renderVizPanel,
     list: renderListPanel,
     cards: renderCardsPanel,
     histogram: renderHistogramPanel,
@@ -8195,6 +8309,72 @@ function countMentionsInRange(pageList, start, end) {
     if (typeof p === 'number' && p >= start && p <= end) count++;
   }
   return count;
+}
+
+function getVizModuleCatalog() {
+  const registry = (typeof window !== 'undefined' && window.VIZ_MODULES) ? window.VIZ_MODULES : {};
+  return [
+    { id: 'viz03', title: 'VIZ-03 · Лента открытий', render: registry.renderDiscoveryTimeline },
+    { id: 'viz04', title: 'VIZ-04 · Тепловая матрица', render: registry.renderHeatmapMatrix },
+    { id: 'viz02', title: 'VIZ-02 · Граф сосуществования', render: registry.renderCooccurrenceGraph },
+    { id: 'viz07', title: 'VIZ-07 · Bump-chart рангов', render: registry.renderTermBumpChart },
+    { id: 'viz06', title: 'VIZ-06 · Хорда языков', render: registry.renderLangChord },
+    { id: 'viz01', title: 'VIZ-01 · Карта по векам', render: registry.renderMapTimeline },
+    { id: 'viz05', title: 'VIZ-05 · Sankey «Слово»', render: registry.renderNarrativeSankey },
+  ];
+}
+
+function renderVizPanel(container) {
+  const catalog = getVizModuleCatalog();
+  const validModuleIds = new Set(catalog.map((m) => m.id));
+  if (!validModuleIds.has(currentVizModule)) currentVizModule = 'viz03';
+
+  container.innerHTML = `<div class="panel active viz-shell">
+    <div class="viz-header-row">
+      <h2 class="viz-title">Визуализации</h2>
+      <a class="related-link" href="${escapeHtml(buildVizHash(currentVizModule))}" style="font-size:11px;">канонический hash</a>
+    </div>
+    <div class="viz-module-tabs" id="viz-module-tabs"></div>
+    <div id="viz-module-host" class="viz-module-host"><div class="viz-loading">Подготовка кэша…</div></div>
+  </div>`;
+
+  const tabs = container.querySelector('#viz-module-tabs');
+  const host = container.querySelector('#viz-module-host');
+  if (!tabs || !host) return;
+
+  const mountModule = () => {
+    const moduleDef = catalog.find((m) => m.id === currentVizModule) || catalog[0];
+    if (!moduleDef) return;
+    if (typeof moduleDef.render !== 'function') {
+      host.innerHTML = '<div class="viz-card">Модуль не подключён. Проверьте scripts/viz/*.js.</div>';
+      return;
+    }
+    try {
+      moduleDef.render(host);
+    } catch (e) {
+      host.innerHTML = `<div class="viz-card">Ошибка рендера: ${escapeHtml(String(e && e.message ? e.message : e))}</div>`;
+    }
+  };
+
+  for (const item of catalog) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'viz-module-btn' + (item.id === currentVizModule ? ' active' : '');
+    btn.dataset.module = item.id;
+    btn.textContent = item.title;
+    bindActionWithKeyboard(btn, () => {
+      currentVizModule = item.id;
+      renderVizPanel(container);
+      syncNavigationHashOnly();
+    });
+    tabs.appendChild(btn);
+  }
+
+  warmupVizCacheInWorker()
+    .catch(() => null)
+    .then(() => {
+      mountModule();
+    });
 }
 
 function renderScholarChronologyPanel(container) {
