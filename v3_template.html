@@ -779,6 +779,17 @@
   .ctx-link:hover {
     text-decoration: underline solid;
   }
+  .ctx-link[data-type="glossary"] {
+    border-bottom: 1px dotted var(--title);
+    text-decoration: none;
+  }
+  .ctx-link[data-type="glossary"]:hover {
+    text-decoration: underline;
+  }
+  .glossary-entry.glossary-pending-highlight {
+    outline: 2px solid var(--title);
+    outline-offset: 2px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;

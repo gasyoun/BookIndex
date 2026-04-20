@@ -603,6 +603,7 @@ let workersLifecycleWired = false;
 let contextEntityLinkEntriesCache = null;
 let subjectCrosslinksLookupCache = null;
 let reverseEdgesCache = null;
+let SUBJECT_BY_LEXICON_INDEX = null;
 const CYRILLIC_TO_LATIN_MAP = Object.freeze({
   '\u0430': 'a',    // а
   '\u0431': 'b',    // б
@@ -963,6 +964,24 @@ function getContextEntityLinkEntries() {
       }
     }
   }
+  const glossary = Array.isArray(APP_DATA && APP_DATA.glossary) ? APP_DATA.glossary : [];
+  for (const g of glossary) {
+    const head = String(g && (g.term || g.head) ? (g.term || g.head) : '').trim();
+    if (!head) continue;
+    const norm = normalizeHeadForMatch(head);
+    if (!norm) continue;
+    const uniq = `glossary::${norm}`;
+    if (seen.has(uniq)) continue;
+    seen.add(uniq);
+    out.push({
+      type: 'glossary',
+      head,
+      matchText: head,
+      norm,
+      length: head.length,
+      href: buildGlossaryTermHash(head),
+    });
+  }
   out.sort((a, b) => (b.length - a.length) || compareHeadsRu(a.head, b.head));
   contextEntityLinkEntriesCache = out;
   return out;
@@ -1020,7 +1039,9 @@ function autoLinkEntitiesPlain(rawText) {
   let cursor = 0;
   for (const hit of matches) {
     if (hit.start > cursor) html += renderAccentSafe(text.slice(cursor, hit.start));
-    const href = buildItemHash(hit.entry.type, hit.entry.head);
+    const href = hit.entry.href || (hit.entry.type === 'glossary'
+      ? buildGlossaryTermHash(hit.entry.head)
+      : buildItemHash(hit.entry.type, hit.entry.head));
     html += `<a href="${escapeHtml(href)}" class="ctx-link" data-type="${escapeHtml(hit.entry.type)}" data-head="${escapeHtml(hit.entry.head)}">${renderAccentSafe(hit.value)}</a>`;
     cursor = hit.end;
   }
@@ -2127,6 +2148,7 @@ function openGlossaryTerm(term) {
   if (!q) return;
   pendingGlossaryQuery = q;
   currentGlossaryTerm = q;
+  if (typeof window !== 'undefined') window._pendingGlossaryTerm = q;
   currentScholarAnchor = '';
   pendingScholarAnchor = '';
   currentEntity = 'materials';
@@ -4014,6 +4036,33 @@ function buildSubjectCrosslinks(head) {
   return Array.isArray(links) ? links : [];
 }
 
+function getSubjectByLexiconIndex() {
+  if (SUBJECT_BY_LEXICON_INDEX) return SUBJECT_BY_LEXICON_INDEX;
+  const idx = {};
+  const byPage = new Map();
+  const subjects = Array.isArray(APP_DATA && APP_DATA.subject_index) ? APP_DATA.subject_index : [];
+  for (const s of subjects) {
+    const head = String(s && s.head ? s.head : '').trim();
+    if (!head) continue;
+    const key = normalizeHeadForMatch(head);
+    if (!key) continue;
+    if (!idx[key]) idx[key] = [];
+    idx[key].push(head);
+    const pages = sortUniquePages(s.page_list || []);
+    for (const rawPage of pages) {
+      const page = parseInt(rawPage, 10);
+      if (!Number.isFinite(page)) continue;
+      if (!byPage.has(page)) byPage.set(page, []);
+      byPage.get(page).push(head);
+    }
+  }
+  for (const key of Object.keys(idx)) {
+    idx[key].sort(compareHeadsRu);
+  }
+  SUBJECT_BY_LEXICON_INDEX = { exact: idx, byPage };
+  return SUBJECT_BY_LEXICON_INDEX;
+}
+
 function buildListItemInnerHtml(it, showTypeLabel) {
   let dot = '';
   if (currentEntity === 'names' && it.subcategory) {
@@ -4739,6 +4788,24 @@ function renderCardInRight() {
       html += '</div>';
     }
   }
+  if (eType === 'lexicon') {
+    const subjectIdx = getSubjectByLexiconIndex();
+    let subjLinks = (subjectIdx && subjectIdx.exact && subjectIdx.exact[normalizeHeadForMatch(it.head)]) || [];
+    if (!subjLinks.length) {
+      const fallbackHead = pickBestCrosslinkByPageOverlap(sortUniquePages(it.page_list || []), subjectIdx && subjectIdx.byPage);
+      if (fallbackHead) subjLinks = [fallbackHead];
+    }
+    if (subjLinks.length) {
+      const linksHtml = subjLinks.map((h) => `<a href="${escapeHtml(buildItemHash('subject', h))}"
+        class="crosslink-badge"
+        data-type="subject"
+        data-head="${escapeHtml(h)}">${escapeHtml(h)}</a>`).join('');
+      html += `<div class="subject-crosslinks">
+        <span class="crosslinks-label">В предметном указателе:</span>
+        ${linksHtml}
+      </div>`;
+    }
+  }
 
   if (eType === 'names') {
     const relationLinks = collectNameRelationLinks(it.head);
@@ -4851,6 +4918,14 @@ function renderCardInRight() {
   });
   bindNavigateLinks(right, '.xlink[data-head]', 'names');
   bindNavigateLinks(right, '.relation-chip[data-head]', 'names');
+  right.querySelectorAll('.ctx-link[data-type="glossary"][data-head]').forEach((el) => {
+    bindActionWithKeyboard(el, () => {
+      const term = clampUiInput((el.dataset && el.dataset.head) || '', MAX_LIST_QUERY_LENGTH);
+      if (!term) return;
+      if (typeof window !== 'undefined') window._pendingGlossaryTerm = term.toLowerCase();
+      openGlossaryTerm(term);
+    });
+  });
   right.querySelectorAll('.glossary-backlink[data-term]').forEach(el => {
     el.onclick = (e) => {
       if (e && typeof e.preventDefault === 'function') e.preventDefault();
@@ -7901,6 +7976,21 @@ function renderGlossaryPanel(container) {
       el.style.display = (!q || t.includes(q)) ? 'block' : 'none';
     });
   };
+  const focusGlossaryEntry = (term) => {
+    const q = String(term || '').trim().toLowerCase();
+    if (!q) return;
+    const entries = Array.from(container.querySelectorAll('.glossary-entry'));
+    if (!entries.length) return;
+    let target = entries.find((el) => String((el.dataset && el.dataset.term) || '') === q);
+    if (!target) target = entries.find((el) => String((el.dataset && el.dataset.term) || '').includes(q));
+    if (!target) return;
+    entries.forEach((el) => el.classList.remove('glossary-pending-highlight'));
+    target.classList.add('glossary-pending-highlight');
+    if (typeof target.scrollIntoView === 'function') target.scrollIntoView({ block: 'center' });
+    setTimeout(() => {
+      target.classList.remove('glossary-pending-highlight');
+    }, 1800);
+  };
   const input = document.getElementById('glossary-search');
   input.oninput = (e) => {
     const q = e.target.value.trim().toLowerCase();
@@ -7916,11 +8006,19 @@ function renderGlossaryPanel(container) {
       syncNavigationState();
     }
   };
-  if (pendingGlossaryQuery) {
-    input.value = pendingGlossaryQuery;
-    currentGlossaryTerm = pendingGlossaryQuery;
-    applyGlossaryFilter(pendingGlossaryQuery);
+  const queuedGlossaryTerm = (() => {
+    const localPending = clampUiInput(pendingGlossaryQuery || '', MAX_LIST_QUERY_LENGTH).toLowerCase();
+    if (localPending) return localPending;
+    if (typeof window === 'undefined') return '';
+    return clampUiInput(window._pendingGlossaryTerm || '', MAX_LIST_QUERY_LENGTH).toLowerCase();
+  })();
+  if (queuedGlossaryTerm) {
+    input.value = queuedGlossaryTerm;
+    currentGlossaryTerm = queuedGlossaryTerm;
+    applyGlossaryFilter(queuedGlossaryTerm);
     pendingGlossaryQuery = '';
+    if (typeof window !== 'undefined') window._pendingGlossaryTerm = '';
+    focusGlossaryEntry(queuedGlossaryTerm);
   } else {
     currentGlossaryTerm = String(input.value || '').trim().toLowerCase();
   }

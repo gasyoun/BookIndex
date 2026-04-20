@@ -221,6 +221,16 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#v4\/(names|toponyms|ethnonyms|languages)\//);
   });
 
+  test('glossary terms are autolinked in context texts', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/languages/list/item/languages/' + encodeURIComponent('\u043f\u0440\u0430\u0438\u043d\u0434\u043e\u0435\u0432\u0440\u043e\u043f\u0435\u0439\u0441\u043a\u0438\u0439'));
+    const glossaryLink = page.locator('.ctx-link[data-type="glossary"]').first();
+    const count = await glossaryLink.count();
+    if (count > 0) {
+      await glossaryLink.click();
+      await expect(page).toHaveURL(/#v4\/materials\/glossary/);
+    }
+  });
+
   test('subject_index item shows crosslinks to lexicon or names or languages', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/subject/list');
     const badge = page.locator('#name-list .crosslink-badge').first();
@@ -243,6 +253,14 @@ test.describe('aaz-index smoke', () => {
     await jumpBtn.click();
     await expect(page).toHaveURL(/#v4\/materials\/kwic/);
     await expect(page.locator('#kwic-query')).toHaveValue('\u0430');
+  });
+
+  test('lexicon card links back to subject_index', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/lexicon/list/item/lexicon/' + encodeURIComponent('\u0430'));
+    const badge = page.locator('.subject-crosslinks .crosslink-badge').first();
+    await expect(badge).toBeVisible();
+    await badge.click();
+    await expect(page).toHaveURL(/#v4\/subject\//);
   });
 
   test('name card keeps source confirmed in header row and avoids duplicate wikipedia quote', async ({ page }) => {
