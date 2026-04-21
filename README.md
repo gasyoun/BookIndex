@@ -210,6 +210,7 @@ python scripts/content_report.py --format json
 | [scripts/app_data_modules.py](scripts/app_data_modules.py) | Общая логика split/assemble модульных данных |
 | [types/app-data.d.ts](types/app-data.d.ts) | Централизованные TS-типы структуры `APP_DATA` |
 | [tsconfig.typecheck.json](tsconfig.typecheck.json) | Конфигурация type-check для JS/JSDoc (`tsc --checkJs`) |
+| [experimental/svelte-pilot/](experimental/svelte-pilot/) | Изолированный пилот декларативного UI на Svelte |
 | [vite.config.mjs](vite.config.mjs) | Vite-конфигурация альтернативной single-file сборки |
 | [scripts/vite/postbuild-copy.mjs](scripts/vite/postbuild-copy.mjs) | Копирование `dist-vite/index.html` в `aaz-index.html` |
 | [scripts/viz/](scripts/viz/) | VIZ-модули и препроцессор кэша (`build-viz-cache.js`, `build-viz-cache-worker.js`) |
