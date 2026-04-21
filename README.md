@@ -144,6 +144,12 @@ python scripts/split_app_data.py app_data.json --out-dir data/modules
 python scripts/assemble_app_data.py --modules-dir data/modules --out app_data.json
 ```
 
+Одноразовый экспорт монолитного `app_data.json` в плоский каталог Markdown-файлов `src/content/`:
+
+```bash
+node scripts/export_app_data_to_markdown.mjs --input app_data.json --out src/content --clean
+```
+
 ## Локальные проверки перед релизом
 
 Минимальный набор:
@@ -208,7 +214,9 @@ python scripts/content_report.py --format json
 | [scripts/build_aaz_index.py](scripts/build_aaz_index.py) | Сборка `aaz-index.html` |
 | [scripts/split_app_data.py](scripts/split_app_data.py) | Разбиение `app_data.json` на модульные JSON |
 | [scripts/assemble_app_data.py](scripts/assemble_app_data.py) | Склейка модульных JSON обратно в `app_data.json` |
+| [scripts/export_app_data_to_markdown.mjs](scripts/export_app_data_to_markdown.mjs) | Одноразовый экспорт `app_data.json` в Markdown (`src/content/*.md`, плоская структура) |
 | [scripts/app_data_modules.py](scripts/app_data_modules.py) | Общая логика split/assemble модульных данных |
+| [src/content/](src/content/) | Сгенерированный плоский каталог Markdown-контента (без подпапок) |
 | [types/app-data.d.ts](types/app-data.d.ts) | Централизованные TS-типы структуры `APP_DATA` |
 | [tsconfig.typecheck.json](tsconfig.typecheck.json) | Конфигурация type-check для JS/JSDoc (`tsc --checkJs`) |
 | [experimental/svelte-pilot/](experimental/svelte-pilot/) | Изолированный пилот декларативного UI на Svelte |
