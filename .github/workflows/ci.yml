@@ -26,13 +26,13 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Node dependencies
+      - name: Install Python dependencies
         run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
+          python -m pip install --upgrade pip
+          python -m pip install jsonschema
+
+      - name: Install Node dependencies
+        run: npm install
 
       - name: JS syntax check
         run: node --check v3_app.js

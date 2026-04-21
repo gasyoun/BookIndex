@@ -8,218 +8,227 @@
     return Array.isArray(value) ? value : [];
   }
 
-  function safeColor(color, fallback) {
-    const raw = String(color || '').trim();
-    return raw || fallback;
-  }
-
-  function openNameCard(head) {
+  function openEntityCard(type, head) {
     if (!head) return;
+    const safeType = String(type || '') === 'languages' ? 'languages' : 'names';
     if (typeof root.navigateTo === 'function') {
-      root.navigateTo('names', 'card', head);
+      root.navigateTo(safeType, 'card', head);
       return;
     }
-    if (typeof root.navigateToItem === 'function') {
-      root.navigateToItem('names', head);
-    }
+    if (typeof root.navigateToItem === 'function') root.navigateToItem(safeType, head);
   }
 
   function renderCooccurrenceGraph(container, minWeight) {
     if (!container) return;
     const d3 = root.d3;
-    if (!d3) {
-      container.innerHTML = '<div class="viz-card">Graph unavailable: missing d3.</div>';
+    if (!d3 || typeof root.buildVizCache !== 'function') {
+      container.innerHTML = '<div class="viz-card">Graph unavailable: missing d3/buildVizCache.</div>';
       return;
     }
 
-    const names = asArray(root.APP_DATA && root.APP_DATA.names);
-    const edgesAll = asArray(root.APP_DATA && root.APP_DATA.edges);
-    const colors = (root.APP_DATA && root.APP_DATA.colors) || {};
-    const categoryByName = new Map();
-    for (let i = 0; i < names.length; i += 1) {
-      const n = names[i] || {};
-      categoryByName.set(String(n.head || ''), String(n.subcategory || 'other'));
-    }
-
-    let currentMinWeight = Number.isFinite(Number(minWeight)) ? Number(minWeight) : 10;
+    const cache = root.buildVizCache(root.APP_DATA || {});
+    const lectureMeta = asArray(cache.coGraphLectureMeta);
+    const nodeTypeById = cache.coGraphNodeTypeById || {};
+    let currentMinWeight = Number.isFinite(Number(minWeight)) ? Number(minWeight) : 2;
     if (currentMinWeight < 1) currentMinWeight = 1;
+    let currentLectureId = 'all';
+    let simulation = null;
 
     container.innerHTML = [
       '<div class="viz-card viz-cograph">',
       '  <div class="viz-toolbar">',
-      '    <label>min weight:',
-      '      <input id="viz-cograph-weight" type="range" min="1" max="100" step="1" value="' + String(currentMinWeight) + '">',
-      '      <span id="viz-cograph-weight-label">' + String(currentMinWeight) + '</span>',
+      '    <label>Лекция:',
+      '      <select id="viz-cograph-lecture"></select>',
       '    </label>',
+      '    <label>min weight:',
+      `      <input id="viz-cograph-weight" type="range" min="1" max="25" step="1" value="${String(currentMinWeight)}">`,
+      `      <span id="viz-cograph-weight-label">${String(currentMinWeight)}</span>`,
+      '    </label>',
+      '    <span id="viz-cograph-summary" class="viz-note"></span>',
       '  </div>',
       '  <div id="viz-cograph-legend" class="viz-legend"></div>',
-      '  <svg id="viz-cograph-svg" width="100%" height="580" viewBox="0 0 980 580" preserveAspectRatio="xMidYMid meet"></svg>',
+      '  <svg id="viz-cograph-svg" width="100%" height="620" viewBox="0 0 1180 620" preserveAspectRatio="xMidYMid meet"></svg>',
       '</div>',
     ].join('');
 
     const svg = d3.select(container).select('#viz-cograph-svg');
+    const lectureSelect = container.querySelector('#viz-cograph-lecture');
     const slider = container.querySelector('#viz-cograph-weight');
     const label = container.querySelector('#viz-cograph-weight-label');
     const legend = container.querySelector('#viz-cograph-legend');
-    const width = 980;
-    const height = 580;
+    const summary = container.querySelector('#viz-cograph-summary');
+    const width = 1180;
+    const height = 620;
+    const colorByType = {
+      names: 'var(--color-primary)',
+      languages: 'var(--color-gold)',
+    };
 
-    function buildGraph(threshold) {
-      const links = edgesAll
-        .map(function (e) {
-          return {
-            source: String(e && e.source ? e.source : ''),
-            target: String(e && e.target ? e.target : ''),
-            weight: Number(e && e.weight ? e.weight : 0) || 0,
-          };
-        })
-        .filter(function (e) {
-          return e.source && e.target && e.weight >= threshold;
-        });
+    if (lectureSelect) {
+      lectureSelect.innerHTML = [
+        '<option value="all">Все лекции</option>',
+        ...lectureMeta.map((l) => `<option value="${String(l.id)}">${String(l.name || `Лекция ${Number(l.index) + 1}`)}</option>`),
+      ].join('');
+      lectureSelect.value = 'all';
+    }
 
-      const nodesMap = new Map();
+    if (legend) {
+      legend.innerHTML = [
+        '<span class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--color-primary);"></span>имена</span>',
+        '<span class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--color-gold);"></span>языки</span>',
+      ].join('');
+    }
+
+    function getRawEdges() {
+      if (currentLectureId === 'all') return asArray(cache.coGraph);
+      return asArray(cache.coGraphByLecture && cache.coGraphByLecture[currentLectureId]);
+    }
+
+    function buildGraph() {
+      const raw = getRawEdges();
+      const links = [];
+      for (let i = 0; i < raw.length; i += 1) {
+        const edge = raw[i] || {};
+        const source = String(edge.source || '').trim();
+        const target = String(edge.target || '').trim();
+        const weight = Number(edge.weight || 0);
+        if (!source || !target || !Number.isFinite(weight) || weight < currentMinWeight) continue;
+        const sourceType = String(edge.sourceType || nodeTypeById[source] || 'names');
+        const targetType = String(edge.targetType || nodeTypeById[target] || 'names');
+        links.push({ source, target, weight, sourceType, targetType });
+      }
+      const nodesById = new Map();
       for (let i = 0; i < links.length; i += 1) {
-        const l = links[i];
-        if (!nodesMap.has(l.source)) {
-          nodesMap.set(l.source, {
-            id: l.source,
-            subcategory: categoryByName.get(l.source) || 'other',
-          });
-        }
-        if (!nodesMap.has(l.target)) {
-          nodesMap.set(l.target, {
-            id: l.target,
-            subcategory: categoryByName.get(l.target) || 'other',
-          });
-        }
+        const link = links[i];
+        if (!nodesById.has(link.source)) nodesById.set(link.source, { id: link.source, type: link.sourceType });
+        if (!nodesById.has(link.target)) nodesById.set(link.target, { id: link.target, type: link.targetType });
       }
       return {
-        nodes: Array.from(nodesMap.values()),
-        links: links,
+        nodes: Array.from(nodesById.values()),
+        links,
       };
     }
 
-    function renderLegend(nodes) {
-      if (!legend) return;
-      const seen = new Set();
-      const rows = [];
-      for (let i = 0; i < nodes.length; i += 1) {
-        const key = String(nodes[i].subcategory || 'other');
-        if (seen.has(key)) continue;
-        seen.add(key);
-        rows.push(
-          '<span class="viz-legend-item"><span class="viz-legend-dot" style="background:' +
-          safeColor(colors[key], '#3a6ea5') +
-          ';"></span>' +
-          key +
-          '</span>'
-        );
-      }
-      legend.innerHTML = rows.join('');
+    function stopSimulation() {
+      if (!simulation) return;
+      try { simulation.stop(); } catch (e) {}
+      simulation = null;
     }
 
-    function redraw(threshold) {
-      const graph = buildGraph(threshold);
-      renderLegend(graph.nodes);
+    function redraw() {
+      stopSimulation();
+      const graph = buildGraph();
       svg.selectAll('*').remove();
+
+      if (summary) summary.textContent = `Узлов: ${graph.nodes.length} · Рёбер: ${graph.links.length}`;
 
       if (!graph.nodes.length || !graph.links.length) {
         svg.append('text')
           .attr('x', width / 2)
           .attr('y', height / 2)
           .attr('text-anchor', 'middle')
-          .attr('fill', '#888')
+          .attr('fill', 'var(--muted)')
           .attr('font-size', 14)
-          .text('Нет рёбер при текущем пороге');
+          .text('Нет рёбер под текущие фильтры');
         return;
       }
 
-      const linkWidth = d3.scaleLinear()
-        .domain([1, 100])
-        .range([1, 8])
-        .clamp(true);
-
-      const simulation = d3.forceSimulation(graph.nodes)
-        .force('link', d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(90).strength(0.24))
-        .force('charge', d3.forceManyBody().strength(-260))
+      const linkWidth = d3.scaleLinear().domain([1, 40]).range([1, 8]).clamp(true);
+      simulation = d3.forceSimulation(graph.nodes)
+        .force('link', d3.forceLink(graph.links).id((d) => d.id).distance(88).strength(0.26))
+        .force('charge', d3.forceManyBody().strength(-230))
         .force('center', d3.forceCenter(width / 2, height / 2))
-        .force('collision', d3.forceCollide().radius(14));
+        .force('collision', d3.forceCollide().radius(13));
 
       const links = svg.append('g')
-        .attr('stroke', '#9c8a6f')
-        .attr('stroke-opacity', 0.55)
+        .attr('stroke', 'var(--line-strong)')
+        .attr('stroke-opacity', 0.5)
         .selectAll('line')
         .data(graph.links)
         .join('line')
-        .attr('stroke-width', function (d) { return linkWidth(d.weight); });
+        .attr('stroke-width', (d) => linkWidth(d.weight));
 
       const nodes = svg.append('g')
         .selectAll('circle')
         .data(graph.nodes)
         .join('circle')
         .attr('r', 8)
-        .attr('fill', function (d) {
-          return safeColor(colors[d.subcategory], '#3a6ea5');
-        })
+        .attr('fill', (d) => colorByType[d.type] || 'var(--color-primary)')
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 1.2)
         .style('cursor', 'pointer')
-        .on('dblclick', function (_, d) { openNameCard(d.id); });
+        .on('dblclick', (_, d) => openEntityCard(d.type, d.id));
 
-      nodes.append('title').text(function (d) { return d.id; });
+      nodes.append('title').text((d) => d.id);
 
       const labels = svg.append('g')
         .selectAll('text')
         .data(graph.nodes)
         .join('text')
-        .text(function (d) { return d.id; })
+        .text((d) => d.id)
         .attr('font-size', 10)
-        .attr('fill', '#4a3a2d')
+        .attr('fill', 'var(--text)')
         .attr('pointer-events', 'none');
 
       nodes.call(
         d3.drag()
-          .on('start', function (event, d) {
-            if (!event.active) simulation.alphaTarget(0.25).restart();
+          .on('start', (event, d) => {
+            if (!event.active && simulation) simulation.alphaTarget(0.2).restart();
             d.fx = d.x;
             d.fy = d.y;
           })
-          .on('drag', function (event, d) {
+          .on('drag', (event, d) => {
             d.fx = event.x;
             d.fy = event.y;
           })
-          .on('end', function (event, d) {
-            if (!event.active) simulation.alphaTarget(0);
+          .on('end', (event, d) => {
+            if (!event.active && simulation) simulation.alphaTarget(0);
             d.fx = null;
             d.fy = null;
           })
       );
 
-      simulation.on('tick', function () {
+      simulation.on('tick', () => {
         links
-          .attr('x1', function (d) { return d.source.x; })
-          .attr('y1', function (d) { return d.source.y; })
-          .attr('x2', function (d) { return d.target.x; })
-          .attr('y2', function (d) { return d.target.y; });
+          .attr('x1', (d) => d.source.x)
+          .attr('y1', (d) => d.source.y)
+          .attr('x2', (d) => d.target.x)
+          .attr('y2', (d) => d.target.y);
         nodes
-          .attr('cx', function (d) { return d.x; })
-          .attr('cy', function (d) { return d.y; });
+          .attr('cx', (d) => d.x)
+          .attr('cy', (d) => d.y);
         labels
-          .attr('x', function (d) { return d.x + 10; })
-          .attr('y', function (d) { return d.y + 4; });
+          .attr('x', (d) => d.x + 10)
+          .attr('y', (d) => d.y + 4);
       });
-
-      setTimeout(function () {
-        try { simulation.stop(); } catch (_) {}
-      }, 1800);
     }
 
-    if (slider) {
-      slider.oninput = function () {
-        currentMinWeight = Number(slider.value || 10);
-        if (label) label.textContent = String(currentMinWeight);
-        redraw(currentMinWeight);
+    if (lectureSelect) {
+      lectureSelect.onchange = () => {
+        currentLectureId = String(lectureSelect.value || 'all');
+        redraw();
       };
     }
-    redraw(currentMinWeight);
+    if (slider) {
+      slider.oninput = () => {
+        currentMinWeight = Number(slider.value || 2);
+        if (!Number.isFinite(currentMinWeight)) currentMinWeight = 2;
+        if (label) label.textContent = String(currentMinWeight);
+        redraw();
+      };
+    }
+
+    const onVisibility = () => {
+      if (!document.hidden) return;
+      stopSimulation();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    container.__vizCleanup = () => {
+      stopSimulation();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+
+    redraw();
   }
 
   root.VIZ_MODULES.renderCooccurrenceGraph = renderCooccurrenceGraph;

@@ -18,18 +18,26 @@ def compute_build_id(data_str: str, js: str, tpl: str) -> str:
     return digest.hexdigest()[:12]
 
 
+def escape_json_for_html_script(json_text: str) -> str:
+    """Escape JSON for safe embedding inside <script type="application/json">."""
+    return (
+        json_text
+        .replace("</script", "<\\/script")
+        .replace("<!--", "<\\!--")
+    )
+
+
 def build(data_path: Path, js_path: Path, template_path: Path, out_path: Path, build_id: str | None = None) -> str:
     data_str = data_path.read_text(encoding="utf-8")
     js = js_path.read_text(encoding="utf-8")
     tpl = template_path.read_text(encoding="utf-8")
     resolved_build_id = (build_id or "").strip() or compute_build_id(data_str, js, tpl)
     js = js.replace("__APP_BUILD_ID__", resolved_build_id)
-    escaped = (
-        data_str.replace("\\", "\\\\")
-        .replace("`", "\\`")
-        .replace("${", "\\${")
+    html = (
+        tpl
+        .replace("__APP_DATA_JSON__", escape_json_for_html_script(data_str))
+        .replace("__APP_SCRIPT__", js)
     )
-    html = tpl.replace("__APP_SCRIPT__", js.replace("__APP_DATA_STRING__", "`" + escaped + "`"))
     out_path.write_text(html, encoding="utf-8-sig")
     return resolved_build_id
 

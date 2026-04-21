@@ -233,9 +233,9 @@ def build_full_js():
     with open('v3_app.js', 'r', encoding='utf-8') as f:
         js = f.read()
 
-    # Экранируем для backtick-строки в JS
-    escaped = data_str.replace('\\', '\\\\').replace('`', '\\`').replace('${', '\\${')
-    return js.replace('__APP_DATA_STRING__', '`' + escaped + '`')
+    # Fallback для runtime-теста: приложение читает данные из globalThis.__APP_DATA_STRING__
+    fallback = f"globalThis.__APP_DATA_STRING__ = {json.dumps(data_str, ensure_ascii=False)};\n"
+    return fallback + js
 
 
 def check_syntax(js_code, label, node_bin):

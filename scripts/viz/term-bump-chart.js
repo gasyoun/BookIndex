@@ -8,14 +8,19 @@
     return Array.isArray(value) ? value : [];
   }
 
-  function openSubjectWithFilter(term) {
-    if (!term) return;
-    if (typeof root.navigateTo === 'function') {
-      root.navigateTo('subject', 'list', term);
+  function normalizeNeedle(value) {
+    return String(value || '').trim().toLowerCase();
+  }
+
+  function openReadingPage(page) {
+    const p = Number(page);
+    if (!Number.isFinite(p)) return;
+    if (typeof root.openReadingNowPage === 'function') {
+      root.openReadingNowPage(p);
       return;
     }
-    if (typeof root.navigateToItem === 'function') {
-      root.navigateToItem('subject', term);
+    if (typeof root.buildReadingNowHash === 'function') {
+      root.location.hash = root.buildReadingNowHash(p);
     }
   }
 
@@ -26,35 +31,43 @@
       container.innerHTML = '<div class="viz-card">Bump chart unavailable: missing d3/buildVizCache.</div>';
       return;
     }
+
     const cache = root.buildVizCache(root.APP_DATA || {});
     const chapters = asArray(root.APP_DATA && root.APP_DATA.chapters);
     let currentTop = Number.isFinite(Number(topTerms)) ? Number(topTerms) : 15;
     if (currentTop < 5) currentTop = 5;
     if (currentTop > 30) currentTop = 30;
+    let searchNeedle = '';
 
     container.innerHTML = [
       '<div class="viz-card viz-bump">',
       '  <div class="viz-toolbar">',
       '    <label>top terms:',
-      '      <input id="viz-bump-top" type="range" min="5" max="30" step="1" value="' + String(currentTop) + '">',
-      '      <span id="viz-bump-top-label">' + String(currentTop) + '</span>',
+      `      <input id="viz-bump-top" type="range" min="5" max="30" step="1" value="${String(currentTop)}">`,
+      `      <span id="viz-bump-top-label">${String(currentTop)}</span>`,
+      '    </label>',
+      '    <label>Поиск термина:',
+      '      <input id="viz-bump-search" type="text" placeholder="например: энклитика">',
       '    </label>',
       '  </div>',
-      '  <svg id="viz-bump-svg" width="100%" height="560" viewBox="0 0 980 560" preserveAspectRatio="xMidYMid meet"></svg>',
+      '  <svg id="viz-bump-svg" width="100%" height="560" viewBox="0 0 1180 560" preserveAspectRatio="xMidYMid meet"></svg>',
+      '  <div id="viz-bump-detail" class="viz-detail" style="margin-top:10px;"></div>',
       '</div>',
     ].join('');
 
     const svg = d3.select(container).select('#viz-bump-svg');
     const topInput = container.querySelector('#viz-bump-top');
     const topLabel = container.querySelector('#viz-bump-top-label');
-    const width = 980;
+    const searchInput = container.querySelector('#viz-bump-search');
+    const detail = container.querySelector('#viz-bump-detail');
+    const width = 1180;
     const height = 560;
-    const margin = { top: 20, right: 40, bottom: 80, left: 60 };
+    const margin = { top: 20, right: 170, bottom: 80, left: 70 };
     const innerW = width - margin.left - margin.right;
     const innerH = height - margin.top - margin.bottom;
-    const g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
 
-    function totalFreq(term) {
+    function termTotalFreq(term) {
       let sum = 0;
       for (let i = 0; i < chapters.length; i += 1) {
         const row = cache.termFreq[i] || {};
@@ -63,128 +76,177 @@
       return sum;
     }
 
-    function buildSeries(limit) {
+    function getVisibleTerms(limit, needle) {
       const rankByTerm = cache.termRankByLecture || {};
-      const terms = Object.keys(rankByTerm)
-        .sort(function (a, b) { return totalFreq(b) - totalFreq(a); })
-        .slice(0, limit);
-      const allRanks = [];
-      const series = terms.map(function (term) {
-        const ranks = asArray(rankByTerm[term]);
-        const values = [];
-        for (let i = 0; i < chapters.length; i += 1) {
-          const rank = Number(ranks[i]);
-          if (!Number.isFinite(rank)) continue;
-          values.push({
-            term: term,
-            chapterIndex: i,
-            rank: rank,
-          });
-          allRanks.push(rank);
-        }
-        return { term: term, values: values };
-      }).filter(function (s) { return s.values.length > 1; });
-      return {
-        series: series,
-        maxRank: allRanks.length ? d3.max(allRanks) : 1,
-      };
+      const terms = Object.keys(rankByTerm).sort((a, b) => termTotalFreq(b) - termTotalFreq(a));
+      const head = terms.slice(0, limit);
+      if (!needle) return head;
+      const bonus = terms.filter((term) => normalizeNeedle(term).includes(needle));
+      const merged = head.slice();
+      for (let i = 0; i < bonus.length; i += 1) {
+        if (merged.indexOf(bonus[i]) >= 0) continue;
+        merged.push(bonus[i]);
+      }
+      return merged;
+    }
+
+    function renderDetail(term, chapterIndex) {
+      if (!detail) return;
+      const byTerm = cache.termPagesByLecture && cache.termPagesByLecture[term];
+      const pages = byTerm && Array.isArray(byTerm[chapterIndex]) ? byTerm[chapterIndex] : [];
+      const chapterName = String((chapters[chapterIndex] && chapters[chapterIndex].name) || `Лекция ${chapterIndex + 1}`);
+      if (!pages.length) {
+        detail.innerHTML = [
+          `<h4>${term}</h4>`,
+          `<p>${chapterName}</p>`,
+          '<p>В этой лекции нет зафиксированных страниц для выбранного термина.</p>',
+        ].join('');
+        return;
+      }
+      const links = pages.map((p) => `<a href="#" class="related-link bump-page-link" data-page="${String(p)}">стр. ${String(p)}</a>`).join(' · ');
+      detail.innerHTML = [
+        `<h4>${term}</h4>`,
+        `<p>${chapterName}</p>`,
+        `<p>Страницы в этой лекции: ${links}</p>`,
+      ].join('');
+      const pageLinks = Array.from(detail.querySelectorAll('.bump-page-link'));
+      for (let i = 0; i < pageLinks.length; i += 1) {
+        pageLinks[i].onclick = (e) => {
+          if (e) e.preventDefault();
+          openReadingPage(pageLinks[i].dataset.page);
+        };
+      }
     }
 
     function redraw(limit) {
       g.selectAll('*').remove();
-      const built = buildSeries(limit);
-      const x = d3.scalePoint()
-        .domain(d3.range(chapters.length))
-        .range([0, innerW]);
-      const y = d3.scaleLinear()
-        .domain([1, Math.max(2, built.maxRank)])
-        .range([0, innerH]);
-      const color = d3.scaleOrdinal(d3.schemeTableau10);
+      const rankByTerm = cache.termRankByLecture || {};
+      const selectedTerms = getVisibleTerms(limit, searchNeedle);
+      const series = [];
+      let maxRank = 1;
+      for (let i = 0; i < selectedTerms.length; i += 1) {
+        const term = selectedTerms[i];
+        const ranks = asArray(rankByTerm[term]);
+        const values = [];
+        for (let ci = 0; ci < chapters.length; ci += 1) {
+          const rank = Number(ranks[ci]);
+          if (!Number.isFinite(rank)) continue;
+          if (rank > maxRank) maxRank = rank;
+          values.push({ term, chapterIndex: ci, rank });
+        }
+        if (values.length > 1) series.push({ term, values });
+      }
+      if (!series.length) {
+        g.append('text')
+          .attr('x', innerW / 2)
+          .attr('y', innerH / 2)
+          .attr('text-anchor', 'middle')
+          .attr('fill', 'var(--muted)')
+          .text('Нет данных для отображения');
+        detail.innerHTML = '<p>Выберите другой top-N или очистите поиск.</p>';
+        return;
+      }
+
+      const x = d3.scalePoint().domain(d3.range(chapters.length)).range([0, innerW]);
+      const y = d3.scaleLinear().domain([1, Math.max(2, maxRank)]).range([0, innerH]);
+      const color = d3.scaleOrdinal(d3.schemeTableau10.concat(d3.schemeSet3 || []));
 
       g.append('g')
-        .attr('transform', 'translate(0,' + innerH + ')')
-        .call(d3.axisBottom(x).tickFormat(function (i) { return String(Number(i) + 1); }));
+        .attr('transform', `translate(0,${innerH})`)
+        .call(d3.axisBottom(x).tickFormat((i) => String(Number(i) + 1)));
       g.append('g')
-        .call(d3.axisLeft(y).ticks(Math.min(12, Math.max(2, built.maxRank))));
+        .call(d3.axisLeft(y).ticks(Math.min(12, Math.max(2, maxRank))));
 
       const line = d3.line()
-        .x(function (d) { return x(d.chapterIndex); })
-        .y(function (d) { return y(d.rank); });
+        .x((d) => x(d.chapterIndex))
+        .y((d) => y(d.rank));
 
-      const seriesG = g.append('g').attr('class', 'bump-series');
-      const lineSel = seriesG.selectAll('.bump-line')
-        .data(built.series)
+      const linesG = g.append('g').attr('class', 'bump-lines');
+      const lineSel = linesG.selectAll('path')
+        .data(series)
         .join('path')
-        .attr('class', 'bump-line')
         .attr('fill', 'none')
-        .attr('stroke', function (_, i) { return color(i); })
+        .attr('stroke', (_, i) => color(i))
         .attr('stroke-width', 2.1)
-        .attr('d', function (d) { return line(d.values); })
+        .attr('d', (d) => line(d.values))
         .style('cursor', 'pointer');
 
-      const pointsG = g.append('g').attr('class', 'bump-points');
-      const pointsData = [];
-      for (let i = 0; i < built.series.length; i += 1) {
-        const s = built.series[i];
-        for (let j = 0; j < s.values.length; j += 1) {
-          pointsData.push({
-            term: s.term,
-            chapterIndex: s.values[j].chapterIndex,
-            rank: s.values[j].rank,
+      const pointData = [];
+      for (let i = 0; i < series.length; i += 1) {
+        for (let j = 0; j < series[i].values.length; j += 1) {
+          pointData.push({
+            term: series[i].term,
+            chapterIndex: series[i].values[j].chapterIndex,
+            rank: series[i].values[j].rank,
             color: color(i),
           });
         }
       }
-
-      const pointSel = pointsG.selectAll('circle')
-        .data(pointsData)
+      const pointsSel = g.append('g').selectAll('circle')
+        .data(pointData)
         .join('circle')
-        .attr('cx', function (d) { return x(d.chapterIndex); })
-        .attr('cy', function (d) { return y(d.rank); })
+        .attr('cx', (d) => x(d.chapterIndex))
+        .attr('cy', (d) => y(d.rank))
         .attr('r', 4)
-        .attr('fill', function (d) { return d.color; })
+        .attr('fill', (d) => d.color)
         .style('cursor', 'pointer')
-        .on('click', function (_, d) { openSubjectWithFilter(d.term); });
+        .on('click', (_, d) => renderDetail(d.term, d.chapterIndex));
 
       const labels = g.append('g').selectAll('text')
-        .data(built.series)
+        .data(series)
         .join('text')
         .attr('x', innerW + 6)
-        .attr('y', function (d) {
-          const last = d.values[d.values.length - 1];
-          return y(last.rank) + 4;
-        })
-        .attr('fill', function (_, i) { return color(i); })
+        .attr('y', (d) => y(d.values[d.values.length - 1].rank) + 4)
+        .attr('fill', (_, i) => color(i))
         .attr('font-size', 11)
-        .text(function (d) { return d.term; });
+        .text((d) => d.term);
 
       function highlight(term) {
-        lineSel.style('opacity', function (d) { return d.term === term ? 1 : 0.1; });
-        pointSel.style('opacity', function (d) { return d.term === term ? 1 : 0.1; });
-        labels.style('opacity', function (d) { return d.term === term ? 1 : 0.15; });
+        lineSel.style('opacity', (d) => d.term === term ? 1 : 0.1);
+        pointsSel.style('opacity', (d) => d.term === term ? 1 : 0.1);
+        labels.style('opacity', (d) => d.term === term ? 1 : 0.15);
       }
       function clearHighlight() {
-        lineSel.style('opacity', 0.85);
-        pointSel.style('opacity', 0.9);
+        lineSel.style('opacity', 0.88);
+        pointsSel.style('opacity', 0.9);
         labels.style('opacity', 1);
       }
-
       lineSel
-        .on('mouseenter', function (_, d) { highlight(d.term); })
+        .on('mouseenter', (_, d) => highlight(d.term))
         .on('mouseleave', clearHighlight);
-      pointSel
-        .on('mouseenter', function (_, d) { highlight(d.term); })
+      pointsSel
+        .on('mouseenter', (_, d) => highlight(d.term))
         .on('mouseleave', clearHighlight);
       clearHighlight();
+
+      renderDetail(series[0].term, series[0].values[0].chapterIndex);
     }
 
     if (topInput) {
-      topInput.oninput = function () {
+      topInput.oninput = () => {
         currentTop = Number(topInput.value || 15);
+        if (!Number.isFinite(currentTop)) currentTop = 15;
         if (topLabel) topLabel.textContent = String(currentTop);
         redraw(currentTop);
       };
     }
+    if (searchInput) {
+      searchInput.oninput = () => {
+        searchNeedle = normalizeNeedle(searchInput.value);
+        redraw(currentTop);
+      };
+    }
+
+    const onVisibility = () => {
+      if (!document.hidden) return;
+      svg.selectAll('*').interrupt();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    container.__vizCleanup = () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      svg.selectAll('*').interrupt();
+    };
+
     redraw(currentTop);
   }
 

@@ -31,6 +31,12 @@
     --surface-soft: #fff8e8;
     --surface-soft-2: #f0e8d8;
     --panel: #fbf5ea;
+    --color-primary: #5a3818;
+    --color-gold: #b8860b;
+    --color-orange: #cf7a2f;
+    --color-success: #2e8b57;
+    --color-text-muted: #888;
+    --primary: var(--color-primary);
   }
   body.theme-dark {
     --bg: #1c1b18;
@@ -44,6 +50,12 @@
     --surface-soft: #332a22;
     --surface-soft-2: #3a2f26;
     --panel: #211e1a;
+    --color-primary: #f0d1a8;
+    --color-gold: #e0b454;
+    --color-orange: #e59a57;
+    --color-success: #7bcf9c;
+    --color-text-muted: #b5a690;
+    --primary: var(--color-primary);
   }
   * { box-sizing: border-box; }
   html, body {
@@ -422,6 +434,18 @@
     color: var(--muted);
     font-size: 11px;
   }
+  .viz-empty-state {
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    background: var(--surface-soft);
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .viz-note {
+    font-size: 12px;
+    color: var(--muted);
+  }
   .tl-wrap {
     position: relative;
     padding-left: 14px;
@@ -454,6 +478,10 @@
   }
   .tl-item.clickable:hover {
     background: var(--surface-soft-2);
+  }
+  .tl-item.tl-focus {
+    outline: 2px solid var(--line-strong);
+    outline-offset: 1px;
   }
   .tl-year {
     font-size: 12px;
@@ -492,6 +520,13 @@
   .viz-detail p {
     margin: 0 0 8px 0;
     line-height: 1.5;
+  }
+  .viz-legend-item.toggleable {
+    cursor: pointer;
+  }
+  .viz-legend-item.inactive {
+    opacity: 0.4;
+    text-decoration: line-through;
   }
 
   @media (max-width: 900px) {
@@ -1644,15 +1679,9 @@
 
 <div class="content" id="content"></div>
 
-<script src="./scripts/viz/build-viz-cache.js"></script>
-<script src="./scripts/viz/discovery-timeline.js"></script>
-<script src="./scripts/viz/heatmap-matrix.js"></script>
-<script src="./scripts/viz/cooccurrence-graph.js"></script>
-<script src="./scripts/viz/term-bump-chart.js"></script>
-<script src="./scripts/viz/lang-chord.js"></script>
-<script src="./scripts/viz/map-timeline.js"></script>
-<script src="./scripts/viz/narrative-sankey.js"></script>
-
+<script id="app-data-json" type="application/json">
+__APP_DATA_JSON__
+</script>
 <script>
 __APP_SCRIPT__
 </script>

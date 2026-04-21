@@ -1,4 +1,6 @@
 node_modules/
 playwright-report/
 test-results/
-
+__pycache__/
+scripts/__pycache__/
+dist-vite/

@@ -12,6 +12,9 @@
 - Детская инструкция: [KIDS_GUIDE_RU.md](KIDS_GUIDE_RU.md).
 - Регламент оформления и публикации: [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md).
 - Инструкция для Codex: [codex_instruction_v2.md](codex_instruction_v2.md).
+- Регламент визуализаций: [CODEX_VISUALIZATIONS_RU.md](CODEX_VISUALIZATIONS_RU.md).
+- Инструкция реализации VIZ-модулей: [CODEX_VIZ_INSTRUCTIONS_RU.md](CODEX_VIZ_INSTRUCTIONS_RU.md).
+- Чеклист публикации issues: [ISSUE_PUBLISH_CHECKLIST_RU.md](ISSUE_PUBLISH_CHECKLIST_RU.md).
 
 ## Функционал
 
@@ -70,7 +73,7 @@
 
 - Экспорт всего сайта в Markdown с [домашней панели](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/home/home): обзор, маршруты, лекции, `further_reading`, глоссарий, `scholar` и все индексные карточки.
 - Экспорт BibTeX: [scholar bibliography](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/scholar/anchor/sch-biblio), [further reading](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/materials/further_reading), [источники из карточек](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/names/list/item/names/%D0%98%D1%82%D0%BA%D0%B8%D0%BD%20%D0%98.%20%D0%91.).
-- PWA-база: [`manifest.webmanifest`](https://gasyoun.github.io/BookIndex/manifest.webmanifest), [`sw.js`](https://gasyoun.github.io/BookIndex/sw.js) (shell cache + offline fallback), [иконки](https://gasyoun.github.io/BookIndex/icon-512.svg).
+- PWA-база: [`manifest.webmanifest`](https://gasyoun.github.io/BookIndex/manifest.webmanifest), [`sw.js`](https://gasyoun.github.io/BookIndex/sw.js) (shell cache + runtime cache + tile/media cache + offline fallback), [иконки](https://gasyoun.github.io/BookIndex/icon-512.svg).
 
 ---
 
@@ -120,6 +123,13 @@
 python scripts/build_aaz_index.py
 ```
 
+Альтернативная сборка через Vite single-file (экспериментальный pipeline):
+
+```bash
+npm install
+npm run build:vite
+```
+
 ## Локальные проверки перед релизом
 
 Минимальный набор:
@@ -142,6 +152,12 @@ npx playwright test
 ```powershell
 $env:NODE_BINARY = 'C:\path\to\node.exe'
 python runtime_test.py
+```
+
+Опционально для JSON Schema-проверки в [scripts/validate_content.py](scripts/validate_content.py):
+
+```bash
+python -m pip install jsonschema
 ```
 
 Ожидается:
@@ -169,7 +185,11 @@ python scripts/content_report.py --format json
 | [app_data.json](app_data.json) | База контента (только чтение) |
 | [runtime_test.py](runtime_test.py) | Runtime smoke и статические guard'ы |
 | [scripts/build_aaz_index.py](scripts/build_aaz_index.py) | Сборка `aaz-index.html` |
+| [vite.config.mjs](vite.config.mjs) | Vite-конфигурация альтернативной single-file сборки |
+| [scripts/vite/postbuild-copy.mjs](scripts/vite/postbuild-copy.mjs) | Копирование `dist-vite/index.html` в `aaz-index.html` |
+| [scripts/viz/](scripts/viz/) | VIZ-модули и препроцессор кэша (`build-viz-cache.js`, `build-viz-cache-worker.js`) |
 | [scripts/validate_content.py](scripts/validate_content.py) | Структурная валидация данных |
+| [schemas/app_data.schema.json](schemas/app_data.schema.json) | JSON Schema для структуры `app_data.json` |
 | [scripts/content_report.py](scripts/content_report.py) | Отчёты по покрытию контента |
 | [scripts/check_encoding.py](scripts/check_encoding.py) | UTF-8/mojibake guard |
 | [tests/e2e/smoke.spec.new.js](tests/e2e/smoke.spec.new.js) | E2E smoke (Playwright) |
@@ -177,6 +197,16 @@ python scripts/content_report.py --format json
 | [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md) | Регламент оформления и публикации |
 | [KIDS_GUIDE_RU.md](KIDS_GUIDE_RU.md) | Детская инструкция по использованию |
 | [deep-research-report.md](deep-research-report.md) | Аудит-отчёт репозитория |
+| [CODEX_VISUALIZATIONS_RU.md](CODEX_VISUALIZATIONS_RU.md) | Спецификация модулей визуализаций (VIZ-01…VIZ-07) |
+| [CODEX_VIZ_INSTRUCTIONS_RU.md](CODEX_VIZ_INSTRUCTIONS_RU.md) | Инструкция по реализации визуализаций для Codex |
+| [ISSUE_PUBLISH_CHECKLIST_RU.md](ISSUE_PUBLISH_CHECKLIST_RU.md) | Чеклист оформления и публикации issue |
+| [LINKING_AUDIT_2026-04-19.md](LINKING_AUDIT_2026-04-19.md) | Аудит перелинковки от 2026-04-19 |
+| [SPRINT_v4.1_2026-04-20.md](SPRINT_v4.1_2026-04-20.md) | План спринта v4.1 (2026-04-20) |
+| [RELEASE_NOTES_2026-04-14.md](RELEASE_NOTES_2026-04-14.md) | Релиз-заметки 2026-04-14 |
+| [RELEASE_NOTES_2026-04-15.md](RELEASE_NOTES_2026-04-15.md) | Релиз-заметки 2026-04-15 |
+| [RELEASE_NOTES_2026-04-17.md](RELEASE_NOTES_2026-04-17.md) | Релиз-заметки 2026-04-17 |
+| [RELEASE_NOTES_2026-04-18.md](RELEASE_NOTES_2026-04-18.md) | Релиз-заметки 2026-04-18 |
+| [icon-192.svg](icon-192.svg) | PWA-иконка 192×192 |
 | [vendor/](vendor/) | Локальные копии библиотек (d3 и др.) |
 
 ## CI

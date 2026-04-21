@@ -8,27 +8,21 @@
     return Array.isArray(value) ? value : [];
   }
 
-  function openNameCard(head) {
-    if (!head) return;
-    if (typeof root.navigateTo === 'function') {
-      root.navigateTo('names', 'card', head);
-      return;
-    }
-    if (typeof root.navigateToItem === 'function') {
-      root.navigateToItem('names', head);
-    }
+  function finiteNumber(value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : null;
   }
 
-  function fallbackCenturyMap(entities) {
-    let min = -15;
-    let max = 21;
-    for (let i = 0; i < entities.length; i += 1) {
-      const c = Number(entities[i] && entities[i].century);
-      if (!Number.isFinite(c)) continue;
-      if (c < min) min = c;
-      if (c > max) max = c;
+  function openEntityCard(type, head) {
+    if (!head) return;
+    const safeType = ['names', 'languages', 'toponyms', 'ethnonyms'].indexOf(String(type || '')) >= 0
+      ? String(type)
+      : 'names';
+    if (typeof root.navigateTo === 'function') {
+      root.navigateTo(safeType, 'card', head);
+      return;
     }
-    return { min: min, max: max };
+    if (typeof root.navigateToItem === 'function') root.navigateToItem(safeType, head);
   }
 
   function renderMapTimeline(container) {
@@ -37,84 +31,128 @@
       container.innerHTML = '<div class="viz-card">Map timeline unavailable: missing Leaflet/buildVizCache.</div>';
       return;
     }
-    const cache = root.buildVizCache(root.APP_DATA || {});
-    const entities = asArray(cache.geoEntities).filter(function (e) {
-      return Number.isFinite(Number(e && e.lat)) && Number.isFinite(Number(e && e.lon));
-    });
 
-    const bounds = fallbackCenturyMap(entities);
-    const sliderMin = -15;
-    const sliderMax = 21;
-    let currentCentury = Math.max(sliderMin, Math.min(sliderMax, Number(bounds.max)));
-    const mapId = 'viz-century-map-' + String(Date.now()) + '-' + String(Math.floor(Math.random() * 1e6));
+    const cache = root.buildVizCache(root.APP_DATA || {});
+    const entities = asArray(cache.geoEntities).filter((e) => {
+      const century = finiteNumber(e && e.century);
+      const lat = finiteNumber(e && e.lat);
+      const lon = finiteNumber(e && e.lon);
+      if (!Number.isFinite(century) || !Number.isFinite(lat) || !Number.isFinite(lon)) return false;
+      return century >= 8 && century <= 21;
+    });
+    const mapId = `viz-century-map-${Date.now()}-${Math.floor(Math.random() * 1e5)}`;
+
+    let currentCentury = 21;
+    if (entities.length) {
+      const sorted = entities.slice().sort((a, b) => Number(b.century) - Number(a.century));
+      const picked = finiteNumber(sorted[0] && sorted[0].century);
+      if (Number.isFinite(picked)) currentCentury = Math.max(8, Math.min(21, picked));
+    }
 
     container.innerHTML = [
       '<div class="viz-card viz-map-timeline">',
       '  <div class="viz-toolbar">',
       '    <label>Век:',
-      '      <input id="viz-century-range" type="range" min="' + String(sliderMin) + '" max="' + String(sliderMax) + '" step="1" value="' + String(currentCentury) + '">',
-      '      <span id="viz-century-label">' + String(currentCentury) + '</span>',
+      `      <input id="viz-century-range" type="range" min="8" max="21" step="1" value="${String(currentCentury)}">`,
+      `      <span id="viz-century-label">${String(currentCentury)}</span>`,
       '    </label>',
       '    <span id="viz-century-count" class="viz-muted"></span>',
       '  </div>',
-      '  <div class="viz-map-canvas"><div id="' + mapId + '" style="height:520px;border:1px solid #d4c8b0;border-radius:8px;overflow:hidden;"></div></div>',
+      `  <div class="viz-map-canvas" style="position:relative;"><div id="${mapId}" style="height:540px;border:1px solid var(--line);border-radius:8px;overflow:hidden;"></div></div>`,
       '</div>',
     ].join('');
 
     const slider = container.querySelector('#viz-century-range');
     const label = container.querySelector('#viz-century-label');
     const countEl = container.querySelector('#viz-century-count');
-    const map = root.L.map(mapId, { preferCanvas: true }).setView([40, 30], 3);
-    const markersLayer = root.L.layerGroup().addTo(map);
+    const canvas = container.querySelector('.viz-map-canvas');
+    const map = root.L.map(mapId, { preferCanvas: true }).setView([46, 28], 3);
+    const layer = root.L.layerGroup().addTo(map);
+    const fallback = document.createElement('div');
+    fallback.className = 'viz-empty-state';
+    fallback.style.position = 'absolute';
+    fallback.style.right = '10px';
+    fallback.style.top = '10px';
+    fallback.style.maxWidth = '280px';
+    fallback.style.display = 'none';
+    fallback.innerHTML = '<strong>Офлайн-режим карты</strong><br>Тайлы недоступны, но маркеры и навигация работают.';
+    if (canvas) canvas.appendChild(fallback);
 
-    root.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const tileLayer = root.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
-      maxZoom: 9,
+      maxZoom: 10,
       minZoom: 2,
-    }).addTo(map);
+    });
+    let tileLoaded = false;
+    let tileErrors = 0;
+    tileLayer.on('load', () => {
+      tileLoaded = true;
+      tileErrors = 0;
+      fallback.style.display = 'none';
+    });
+    tileLayer.on('tileerror', () => {
+      tileErrors += 1;
+      if (!tileLoaded && tileErrors >= 6) fallback.style.display = '';
+    });
+    tileLayer.addTo(map);
+
+    function markerColor(entityType) {
+      if (entityType === 'languages') return 'var(--color-gold)';
+      if (entityType === 'toponyms') return 'var(--color-orange)';
+      if (entityType === 'ethnonyms') return 'var(--color-success)';
+      return 'var(--color-primary)';
+    }
 
     function redraw(century) {
-      markersLayer.clearLayers();
+      layer.clearLayers();
       const shown = [];
       for (let i = 0; i < entities.length; i += 1) {
         const e = entities[i];
-        const c = Number(e.century);
-        if (!Number.isFinite(c)) continue;
-        if (c !== century) continue;
+        if (Number(e.century) !== Number(century)) continue;
         shown.push(e);
       }
-      if (countEl) countEl.textContent = 'Маркеров: ' + String(shown.length);
+      if (countEl) countEl.textContent = `Маркеров: ${shown.length}`;
       for (let i = 0; i < shown.length; i += 1) {
         const e = shown[i];
         const marker = root.L.circleMarker([Number(e.lat), Number(e.lon)], {
           radius: 6,
-          color: '#5a3818',
-          weight: 1.3,
-          fillColor: '#f0b97c',
+          color: '#fff',
+          weight: 1.2,
+          fillColor: markerColor(String(e.entityType || 'names')),
           fillOpacity: 0.9,
-        }).addTo(markersLayer);
+        }).addTo(layer);
         marker.bindTooltip(
-          '<strong>' + String(e.name) + '</strong><br>век: ' + String(e.century) + '<br>эпоха: ' + String(e.epoch),
+          `<strong>${String(e.name)}</strong><br>век: ${String(e.century)}<br>тип: ${String(e.entityType || 'names')}`,
           { sticky: true }
         );
-        marker.on('click', function () {
-          openNameCard(e.id || e.name);
-        });
+        marker.on('click', () => openEntityCard(e.entityType, e.id || e.name));
       }
     }
 
     if (slider) {
-      slider.oninput = function () {
+      slider.oninput = () => {
         currentCentury = Number(slider.value || currentCentury);
-        if (!Number.isFinite(currentCentury)) currentCentury = sliderMax;
+        if (!Number.isFinite(currentCentury)) currentCentury = 21;
+        currentCentury = Math.max(8, Math.min(21, currentCentury));
         if (label) label.textContent = String(currentCentury);
         redraw(currentCentury);
       };
     }
+
     redraw(currentCentury);
-    setTimeout(function () {
-      try { map.invalidateSize(); } catch (_) {}
+    setTimeout(() => {
+      try { map.invalidateSize(); } catch (e) {}
     }, 0);
+
+    const onVisibility = () => {
+      if (document.hidden) return;
+      try { map.invalidateSize(); } catch (e) {}
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    container.__vizCleanup = () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      try { map.remove(); } catch (e) {}
+    };
   }
 
   root.VIZ_MODULES.renderMapTimeline = renderMapTimeline;

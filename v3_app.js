@@ -1,5 +1,44 @@
-// Данные хранятся как строка и парсятся асинхронно после первого отображения интерфейса
-const APP_DATA_STRING = __APP_DATA_STRING__;
+// Данные парсятся из <script type="application/json"> (с fallback для тестов/legacy-сборки)
+const APP_DATA_SCRIPT_TAG_ID = 'app-data-json';
+const APP_DATA_GLOBAL_FALLBACK_KEY = '__APP_DATA_STRING__';
+/**
+ * @typedef {Object} EntityRecord
+ * @property {string} [head]
+ * @property {number[]} [page_list]
+ * @property {Record<string, string[]>} [contexts]
+ * @property {Record<string, unknown>} [editorial_flags]
+ * @property {Array<Record<string, unknown>>} [sources]
+ * @property {string} [subcategory]
+ */
+/**
+ * @typedef {Object} ChapterRecord
+ * @property {string} [name]
+ * @property {number} [start]
+ * @property {number} [end]
+ * @property {number} [century]
+ */
+/**
+ * @typedef {Object} AppDataShape
+ * @property {number} [schema_version]
+ * @property {string[]} [schema_migrations]
+ * @property {Record<string, string>} [labels]
+ * @property {Record<string, string>} [colors]
+ * @property {Record<string, string>} [epoch_labels]
+ * @property {Record<string, string>} [epoch_colors]
+ * @property {Record<string, string>} [family_colors]
+ * @property {EntityRecord[]} [names]
+ * @property {EntityRecord[]} [toponyms]
+ * @property {EntityRecord[]} [ethnonyms]
+ * @property {EntityRecord[]} [languages]
+ * @property {EntityRecord[]} [lexicon]
+ * @property {EntityRecord[]} [lexicon_reverse]
+ * @property {EntityRecord[]} [lexicon_tech]
+ * @property {EntityRecord[]} [subject_index]
+ * @property {EntityRecord[]} [glossary]
+ * @property {ChapterRecord[]} [chapters]
+ * @property {Record<string, unknown>} [cross_links]
+ */
+/** @type {AppDataShape | null} */
 let APP_DATA = null;
 let LABELS = null, COLORS = null, EPOCH_LABELS = null, EPOCH_COLORS = null, FAMILY_COLORS = null;
 const APP_DATA_SCHEMA_CURRENT = 2;
@@ -21,20 +60,50 @@ const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
 const LECTURE_WHY_READ_BROTHER_BRAT =
   'Чтобы понять, почему «brother» и «брат» — родственники, а не дети «санскрита», и как это узнают ученые.';
 
+function getEmbeddedAppDataText() {
+  if (typeof document !== 'undefined' && typeof document.getElementById === 'function') {
+    const node = document.getElementById(APP_DATA_SCRIPT_TAG_ID);
+    if (node && typeof node.textContent === 'string') {
+      const raw = node.textContent.trim();
+      if (raw) return raw;
+    }
+  }
+  const fallback = (typeof globalThis !== 'undefined' && typeof globalThis[APP_DATA_GLOBAL_FALLBACK_KEY] === 'string')
+    ? globalThis[APP_DATA_GLOBAL_FALLBACK_KEY]
+    : '';
+  return String(fallback || '').trim();
+}
+
+/**
+ * Parse embedded APP_DATA payload and hydrate global references.
+ * @returns {AppDataShape}
+ */
 function parseAppData() {
   if (globalSearchCache && typeof globalSearchCache.clear === 'function') {
     globalSearchCache.clear();
   }
   resetGlobalSearchFuseState();
-  APP_DATA = JSON.parse(APP_DATA_STRING);
-  if (typeof window !== 'undefined') window.APP_DATA = APP_DATA;
-  else if (typeof globalThis !== 'undefined') globalThis.APP_DATA = APP_DATA;
+  const payload = getEmbeddedAppDataText();
+  if (!payload) throw new Error('Embedded app data not found');
+  APP_DATA = /** @type {AppDataShape} */ (JSON.parse(payload));
+  if (typeof window !== 'undefined') {
+    window.APP_DATA = APP_DATA;
+    window.__vizCache = {};
+    window.VIZ_MODULES = window.VIZ_MODULES || {};
+  } else if (typeof globalThis !== 'undefined') {
+    globalThis.APP_DATA = APP_DATA;
+    globalThis.__vizCache = {};
+  }
+  vizCacheWarmPromise = null;
+  vizScriptLoadPromises = new Map();
+  cleanupActiveVizModule();
   migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
   COLORS = APP_DATA.colors;
   EPOCH_LABELS = APP_DATA.epoch_labels;
   EPOCH_COLORS = APP_DATA.epoch_colors;
   FAMILY_COLORS = APP_DATA.family_colors;
+  return APP_DATA;
 }
 
 function migrateAppDataSchema(data) {
@@ -609,7 +678,27 @@ let subjectCrosslinksLookupCache = null;
 let reverseEdgesCache = null;
 let SUBJECT_BY_LEXICON_INDEX = null;
 let vizCacheWarmPromise = null;
+let currentVizCleanup = null;
+let vizScriptLoadPromises = new Map();
 const VIZ_CACHE_WORKER_PATH = './scripts/viz/build-viz-cache-worker.js';
+const VIZ_SCRIPT_BY_MODULE = Object.freeze({
+  viz01: './scripts/viz/map-timeline.js',
+  viz02: './scripts/viz/cooccurrence-graph.js',
+  viz03: './scripts/viz/discovery-timeline.js',
+  viz04: './scripts/viz/heatmap-matrix.js',
+  viz05: './scripts/viz/narrative-sankey.js',
+  viz06: './scripts/viz/lang-chord.js',
+  viz07: './scripts/viz/term-bump-chart.js',
+});
+const VIZ_RENDERER_BY_MODULE = Object.freeze({
+  viz01: 'renderMapTimeline',
+  viz02: 'renderCooccurrenceGraph',
+  viz03: 'renderDiscoveryTimeline',
+  viz04: 'renderHeatmapMatrix',
+  viz05: 'renderNarrativeSankey',
+  viz06: 'renderLangChord',
+  viz07: 'renderTermBumpChart',
+});
 const CYRILLIC_TO_LATIN_MAP = Object.freeze({
   '\u0430': 'a',    // а
   '\u0431': 'b',    // б
@@ -2224,72 +2313,145 @@ function openKwicTerm(term) {
   syncNavigationState();
 }
 
+function getVizRegistry() {
+  if (typeof window === 'undefined') return {};
+  window.VIZ_MODULES = window.VIZ_MODULES || {};
+  return window.VIZ_MODULES;
+}
+
+function cleanupActiveVizModule() {
+  if (typeof currentVizCleanup !== 'function') return;
+  try {
+    currentVizCleanup();
+  } catch (e) {}
+  currentVizCleanup = null;
+}
+
+function loadVizScriptOnce(src) {
+  const path = String(src || '').trim();
+  if (!path) return Promise.resolve();
+  if (vizScriptLoadPromises.has(path)) return vizScriptLoadPromises.get(path);
+  if (typeof document === 'undefined') {
+    const done = Promise.resolve();
+    vizScriptLoadPromises.set(path, done);
+    return done;
+  }
+
+  const existing = Array.from(document.querySelectorAll('script[src]')).find((node) => {
+    try {
+      const resolved = new URL(node.getAttribute('src') || '', window.location.href).pathname;
+      const wanted = new URL(path, window.location.href).pathname;
+      return resolved === wanted;
+    } catch (e) {
+      return false;
+    }
+  });
+  if (existing) {
+    const done = Promise.resolve();
+    vizScriptLoadPromises.set(path, done);
+    return done;
+  }
+
+  const promise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = path;
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Failed to load ${path}`));
+    document.head.appendChild(script);
+  }).catch((err) => {
+    vizScriptLoadPromises.delete(path);
+    throw err;
+  });
+  vizScriptLoadPromises.set(path, promise);
+  return promise;
+}
+
+function ensureVizCoreLoaded() {
+  if (typeof buildVizCache === 'function') return Promise.resolve();
+  return loadVizScriptOnce('./scripts/viz/build-viz-cache.js');
+}
+
+function ensureVizModuleLoaded(moduleId) {
+  const moduleKey = String(moduleId || '').trim();
+  const rendererName = VIZ_RENDERER_BY_MODULE[moduleKey];
+  const registry = getVizRegistry();
+  if (rendererName && typeof registry[rendererName] === 'function') return Promise.resolve();
+  const scriptPath = VIZ_SCRIPT_BY_MODULE[moduleKey];
+  if (!scriptPath) return Promise.resolve();
+  return loadVizScriptOnce(scriptPath);
+}
+
 function buildVizHash(moduleId) {
   const moduleKey = String(moduleId || currentVizModule || 'viz03').trim();
   return buildCanonicalHash(['scholar', 'viz', 'module', moduleKey]);
 }
 
 function warmupVizCacheInWorker() {
-  if (typeof buildVizCache !== 'function') return Promise.resolve(null);
-  const globalObj = (typeof window !== 'undefined') ? window : globalThis;
-  globalObj.__vizCache = globalObj.__vizCache || {};
-  if (globalObj.__vizCache._built) return Promise.resolve(globalObj.__vizCache);
-  if (vizCacheWarmPromise) return vizCacheWarmPromise;
+  return ensureVizCoreLoaded()
+    .catch(() => null)
+    .then(() => {
+      if (typeof buildVizCache !== 'function') return null;
+      const globalObj = (typeof window !== 'undefined') ? window : globalThis;
+      globalObj.__vizCache = globalObj.__vizCache || {};
+      if (globalObj.__vizCache._built) return globalObj.__vizCache;
+      if (vizCacheWarmPromise) return vizCacheWarmPromise;
 
-  const runFallback = () => {
-    try {
-      const cache = buildVizCache(APP_DATA || {});
-      return Promise.resolve(cache);
-    } catch (e) {
-      return Promise.resolve(null);
-    }
-  };
-
-  if (typeof Worker === 'undefined') {
-    vizCacheWarmPromise = runFallback();
-    return vizCacheWarmPromise;
-  }
-
-  vizCacheWarmPromise = new Promise((resolve) => {
-    let worker = null;
-    let settled = false;
-    const finish = (cacheValue) => {
-      if (settled) return;
-      settled = true;
-      if (worker) {
-        try { worker.terminate(); } catch (e) {}
-      }
-      resolve(cacheValue || globalObj.__vizCache || null);
-    };
-    const timer = setTimeout(() => {
-      runFallback().then((cache) => finish(cache));
-    }, 3000);
-    try {
-      worker = new Worker(VIZ_CACHE_WORKER_PATH);
-      worker.onmessage = (event) => {
-        clearTimeout(timer);
-        const payload = event && event.data ? event.data : {};
-        if (payload.ok && payload.cache && typeof payload.cache === 'object') {
-          globalObj.__vizCache = payload.cache;
-          globalObj.__vizCache._built = true;
-          globalObj.__vizCache._worker = true;
-          finish(globalObj.__vizCache);
-          return;
+      const runFallback = () => {
+        try {
+          const cache = buildVizCache(APP_DATA || {});
+          return Promise.resolve(cache);
+        } catch (e) {
+          return Promise.resolve(null);
         }
-        runFallback().then((cache) => finish(cache));
       };
-      worker.onerror = () => {
-        clearTimeout(timer);
-        runFallback().then((cache) => finish(cache));
-      };
-      worker.postMessage({ type: 'build', appData: APP_DATA || {} });
-    } catch (e) {
-      clearTimeout(timer);
-      runFallback().then((cache) => finish(cache));
-    }
-  });
 
-  return vizCacheWarmPromise;
+      if (typeof Worker === 'undefined') {
+        vizCacheWarmPromise = runFallback();
+        return vizCacheWarmPromise;
+      }
+
+      vizCacheWarmPromise = new Promise((resolve) => {
+        let worker = null;
+        let settled = false;
+        const finish = (cacheValue) => {
+          if (settled) return;
+          settled = true;
+          if (worker) {
+            try { worker.terminate(); } catch (e) {}
+          }
+          resolve(cacheValue || globalObj.__vizCache || null);
+        };
+        const timer = setTimeout(() => {
+          runFallback().then((cache) => finish(cache));
+        }, 3000);
+        try {
+          worker = new Worker(VIZ_CACHE_WORKER_PATH);
+          worker.onmessage = (event) => {
+            clearTimeout(timer);
+            const payload = event && event.data ? event.data : {};
+            if (payload.ok && payload.cache && typeof payload.cache === 'object') {
+              globalObj.__vizCache = payload.cache;
+              globalObj.__vizCache._built = true;
+              globalObj.__vizCache._worker = true;
+              finish(globalObj.__vizCache);
+              return;
+            }
+            runFallback().then((cache) => finish(cache));
+          };
+          worker.onerror = () => {
+            clearTimeout(timer);
+            runFallback().then((cache) => finish(cache));
+          };
+          worker.postMessage({ type: 'build', appData: APP_DATA || {} });
+        } catch (e) {
+          clearTimeout(timer);
+          runFallback().then((cache) => finish(cache));
+        }
+      });
+
+      return vizCacheWarmPromise;
+    });
 }
 
 function buildGlossaryTermHash(term) {
@@ -3766,6 +3928,7 @@ function switchTab(tab) {
 
 function renderContent() {
   const container = document.getElementById('content');
+  if (!(currentEntity === 'scholar' && currentTab === 'viz')) cleanupActiveVizModule();
   container.innerHTML = '';
   if (currentTab !== 'list') setMobileSheetOpen(false);
   if (currentTab !== 'graph') nameGraphRenderToken += 1;
@@ -8312,19 +8475,20 @@ function countMentionsInRange(pageList, start, end) {
 }
 
 function getVizModuleCatalog() {
-  const registry = (typeof window !== 'undefined' && window.VIZ_MODULES) ? window.VIZ_MODULES : {};
+  const registry = getVizRegistry();
   return [
-    { id: 'viz03', title: 'VIZ-03 · Лента открытий', render: registry.renderDiscoveryTimeline },
-    { id: 'viz04', title: 'VIZ-04 · Тепловая матрица', render: registry.renderHeatmapMatrix },
-    { id: 'viz02', title: 'VIZ-02 · Граф сосуществования', render: registry.renderCooccurrenceGraph },
-    { id: 'viz07', title: 'VIZ-07 · Bump-chart рангов', render: registry.renderTermBumpChart },
-    { id: 'viz06', title: 'VIZ-06 · Хорда языков', render: registry.renderLangChord },
-    { id: 'viz01', title: 'VIZ-01 · Карта по векам', render: registry.renderMapTimeline },
-    { id: 'viz05', title: 'VIZ-05 · Sankey «Слово»', render: registry.renderNarrativeSankey },
+    { id: 'viz03', title: 'VIZ-03 · Лента открытий', renderKey: 'renderDiscoveryTimeline', render: registry.renderDiscoveryTimeline },
+    { id: 'viz04', title: 'VIZ-04 · Тепловая матрица', renderKey: 'renderHeatmapMatrix', render: registry.renderHeatmapMatrix },
+    { id: 'viz02', title: 'VIZ-02 · Граф сосуществования', renderKey: 'renderCooccurrenceGraph', render: registry.renderCooccurrenceGraph },
+    { id: 'viz07', title: 'VIZ-07 · Bump-chart рангов', renderKey: 'renderTermBumpChart', render: registry.renderTermBumpChart },
+    { id: 'viz06', title: 'VIZ-06 · Хорда языков', renderKey: 'renderLangChord', render: registry.renderLangChord },
+    { id: 'viz01', title: 'VIZ-01 · Карта по векам', renderKey: 'renderMapTimeline', render: registry.renderMapTimeline },
+    { id: 'viz05', title: 'VIZ-05 · Sankey «Слово»', renderKey: 'renderNarrativeSankey', render: registry.renderNarrativeSankey },
   ];
 }
 
 function renderVizPanel(container) {
+  cleanupActiveVizModule();
   const catalog = getVizModuleCatalog();
   const validModuleIds = new Set(catalog.map((m) => m.id));
   if (!validModuleIds.has(currentVizModule)) currentVizModule = 'viz03';
@@ -8345,15 +8509,27 @@ function renderVizPanel(container) {
   const mountModule = () => {
     const moduleDef = catalog.find((m) => m.id === currentVizModule) || catalog[0];
     if (!moduleDef) return;
-    if (typeof moduleDef.render !== 'function') {
-      host.innerHTML = '<div class="viz-card">Модуль не подключён. Проверьте scripts/viz/*.js.</div>';
-      return;
-    }
-    try {
-      moduleDef.render(host);
-    } catch (e) {
-      host.innerHTML = `<div class="viz-card">Ошибка рендера: ${escapeHtml(String(e && e.message ? e.message : e))}</div>`;
-    }
+    host.innerHTML = '<div class="viz-loading">Загрузка модуля…</div>';
+    ensureVizModuleLoaded(moduleDef.id)
+      .catch(() => null)
+      .then(() => warmupVizCacheInWorker().catch(() => null))
+      .then(() => {
+        const registry = getVizRegistry();
+        const renderFn = registry[moduleDef.renderKey] || moduleDef.render;
+        if (typeof renderFn !== 'function') {
+          host.innerHTML = '<div class="viz-card">Модуль не подключён. Проверьте scripts/viz/*.js.</div>';
+          return;
+        }
+        try {
+          renderFn(host);
+          currentVizCleanup = typeof host.__vizCleanup === 'function' ? host.__vizCleanup : null;
+        } catch (e) {
+          host.innerHTML = `<div class="viz-card">Ошибка рендера: ${escapeHtml(String(e && e.message ? e.message : e))}</div>`;
+        }
+      })
+      .catch((e) => {
+        host.innerHTML = `<div class="viz-card">Ошибка загрузки модуля: ${escapeHtml(String(e && e.message ? e.message : e))}</div>`;
+      });
   };
 
   for (const item of catalog) {
@@ -8370,11 +8546,7 @@ function renderVizPanel(container) {
     tabs.appendChild(btn);
   }
 
-  warmupVizCacheInWorker()
-    .catch(() => null)
-    .then(() => {
-      mountModule();
-    });
+  mountModule();
 }
 
 function renderScholarChronologyPanel(container) {

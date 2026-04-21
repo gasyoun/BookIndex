@@ -21,6 +21,7 @@ ENTITY_KEYS = (
     "subject_index",
 )
 SCHEMA_CURRENT = 2
+SCHEMA_FILE_DEFAULT = Path(__file__).resolve().parents[1] / "schemas" / "app_data.schema.json"
 
 
 def fail(msg: str, errors: list[str]) -> None:
@@ -73,6 +74,53 @@ def validate_schema(data: dict[str, Any], errors: list[str], warnings: list[str]
     migrations = data.get("schema_migrations")
     if migrations is not None and not isinstance(migrations, list):
         fail("[schema] schema_migrations must be list when present", errors)
+
+
+def validate_against_json_schema(
+    data: dict[str, Any],
+    errors: list[str],
+    warnings: list[str],
+    schema_path: Path = SCHEMA_FILE_DEFAULT,
+) -> None:
+    if not schema_path.exists():
+        warn(f"[json-schema] schema file not found: {schema_path}", warnings)
+        return
+
+    try:
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        fail(f"[json-schema] failed to read {schema_path}: {exc}", errors)
+        return
+
+    try:
+        import jsonschema  # type: ignore
+    except Exception:
+        warn(
+            "[json-schema] python package 'jsonschema' is not installed; schema validation skipped",
+            warnings,
+        )
+        return
+
+    validator_cls = getattr(jsonschema, "Draft202012Validator", None)
+    if validator_cls is None:
+        try:
+            jsonschema.validate(instance=data, schema=schema)
+        except Exception as exc:
+            fail(f"[json-schema] validation error: {exc}", errors)
+        return
+
+    schema_errors = sorted(
+        validator_cls(schema).iter_errors(data),
+        key=lambda err: (list(err.path), err.message),
+    )
+    if not schema_errors:
+        return
+
+    for err in schema_errors[:50]:
+        location = "/".join(str(p) for p in err.path) or "<root>"
+        fail(f"[json-schema] {location}: {err.message}", errors)
+    if len(schema_errors) > 50:
+        warn(f"[json-schema] {len(schema_errors) - 50} additional schema errors omitted", warnings)
 
 
 def validate_editorial_flags(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
@@ -293,6 +341,7 @@ def main() -> int:
     entity_index = build_entity_index(data)
 
     validate_schema(data, errors, warnings)
+    validate_against_json_schema(data, errors, warnings)
     validate_duplicates(data, errors, warnings)
     validate_editorial_flags(data, errors, warnings)
     validate_sources(data, errors)

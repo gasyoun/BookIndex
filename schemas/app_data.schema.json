@@ -1,0 +1,312 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gasyoun.github.io/BookIndex/schemas/app_data.schema.json",
+  "title": "BookIndex app_data",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "names",
+    "toponyms",
+    "ethnonyms",
+    "languages",
+    "lexicon",
+    "lexicon_reverse",
+    "lexicon_tech",
+    "subject_index",
+    "chapters"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "schema_migrations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "colors": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "epoch_labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "epoch_colors": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "family_colors": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "names": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entityItem"
+      }
+    },
+    "toponyms": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entityItem"
+      }
+    },
+    "ethnonyms": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entityItem"
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entityItem"
+      }
+    },
+    "lexicon": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entityItem"
+      }
+    },
+    "lexicon_reverse": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entityItem"
+      }
+    },
+    "lexicon_tech": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entityItem"
+      }
+    },
+    "subject_index": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entityItem"
+      }
+    },
+    "glossary": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/glossaryItem"
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/chapterItem"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edgeItem"
+      }
+    },
+    "language_edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edgeItem"
+      }
+    },
+    "cross_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/crossLinkItem"
+            }
+          }
+        }
+      }
+    },
+    "book_stats": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "scholar": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "sourceItem": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        },
+        "page": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "contextMap": {
+      "type": "object",
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "entityItem": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "type": "string"
+        },
+        "page_list": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "contexts": {
+          "$ref": "#/$defs/contextMap"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceItem"
+          }
+        },
+        "editorial_flags": {
+          "type": "object",
+          "properties": {
+            "verified": {
+              "type": "boolean"
+            },
+            "suspect": {
+              "type": "boolean"
+            },
+            "source_confirmed": {
+              "type": "boolean"
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "glossaryItem": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "type": "string"
+        },
+        "term": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "chapterItem": {
+      "type": "object",
+      "required": [
+        "name",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "century": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": true
+    },
+    "edgeItem": {
+      "type": "object",
+      "required": [
+        "source",
+        "target"
+      ],
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": true
+    },
+    "crossLinkItem": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
