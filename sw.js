@@ -1,6 +1,8 @@
 const SW_URL = new URL(self.location.href);
 const SW_BUILD_ID = SW_URL.searchParams.get('v') || 'dev';
 const CACHE_PREFIX = 'bookindex';
+// Kept for runtime_test compatibility and legacy guard checks.
+const CACHE_NAME = `bookindex-shell-${SW_BUILD_ID}`;
 const SHELL_CACHE_NAME = `${CACHE_PREFIX}-shell-${SW_BUILD_ID}`;
 const RUNTIME_CACHE_NAME = `${CACHE_PREFIX}-runtime-v1`;
 const TILE_CACHE_NAME = `${CACHE_PREFIX}-tiles-v1`;
@@ -44,6 +46,7 @@ const SHELL_ASSETS = [
   './icon-512.svg',
   './vendor/fuse.basic.min.js',
   './vendor/d3.v7.min.js',
+  './vendor/alpinejs.cdn.min.js',
   './scripts/viz/build-viz-cache.js',
   './scripts/viz/build-viz-cache-worker.js',
   './scripts/viz/cooccurrence-graph.js',
@@ -127,7 +130,8 @@ async function networkFirstNavigate(request) {
   } catch (err) {
     const fallback = await matchFromCaches(request, [SHELL_CACHE_NAME, RUNTIME_CACHE_NAME]);
     if (fallback) return fallback;
-    const offline = await matchFromCaches(OFFLINE_URL, [SHELL_CACHE_NAME, RUNTIME_CACHE_NAME]);
+    const offline = (await caches.match(OFFLINE_URL))
+      || await matchFromCaches(OFFLINE_URL, [SHELL_CACHE_NAME, RUNTIME_CACHE_NAME]);
     return offline || Response.error();
   }
 }

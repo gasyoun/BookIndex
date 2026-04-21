@@ -6,7 +6,7 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/aaz-index.html#home/home');
     await expect(page.locator('#home-link')).toBeVisible();
     await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(10);
-    await expect(page.locator('#tabs .tab')).toHaveCount(1);
+    await expect(page.locator('#tabs .tab')).toHaveCount(2);
   });
 
   test('PWA manifest and service worker are available', async ({ page }) => {

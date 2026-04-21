@@ -18,6 +18,7 @@
         crossorigin=""></script>
 <script src="./vendor/fuse.basic.min.js"></script>
 <script src="./vendor/d3.v7.min.js"></script>
+<script src="./vendor/alpinejs.cdn.min.js"></script>
 <style>
   :root {
     --bg: #faf8f3;
@@ -73597,7 +73598,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'e6507677e26c';
+const APP_BUILD_ID = '0b48296f0016';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -73611,6 +73612,7 @@ const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
 ]);
 const LECTURE_WHY_READ_BROTHER_BRAT =
   'Чтобы понять, почему «brother» и «брат» — родственники, а не дети «санскрита», и как это узнают ученые.';
+const HOME_DECL_FACTORY_KEY = '__bookindexHomeDeclarativeFactory';
 
 function getEmbeddedAppDataText() {
   if (typeof document !== 'undefined' && typeof document.getElementById === 'function') {
@@ -73875,7 +73877,7 @@ function initEntityTypes() {
   home: {
     title: 'Главная',
     items: [],
-    tabs: ['home'],
+    tabs: ['home', 'home_decl'],
   },
   materials: {
     title: 'Материалы',
@@ -73955,6 +73957,7 @@ const TAB_LABELS = {
   families: 'Граф языков',
   tree: 'Древо языков',
   home: 'Главная',
+  home_decl: 'Декларативная',
   lectures: 'Лекции',
   lecture_compare: 'Сравнение лекций',
   lecture_pages: 'Страница лекции',
@@ -76837,7 +76840,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'e6507677e26c' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '0b48296f0016' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -77487,6 +77490,7 @@ function renderContent() {
   if (currentTab !== 'families') familiesGraphRenderToken += 1;
   const renderers = {
     home: renderHomePanel,
+    home_decl: renderHomePanelDeclarative,
     lectures: renderLecturesPanel,
     lecture_compare: renderLectureComparePanel,
     lecture_pages: renderLecturePagePanel,
@@ -80317,6 +80321,276 @@ function buildHomeHowToGuideHtml() {
       </div>
     </div>
   </details>`;
+}
+
+function buildHomeDeclarativeViewModel() {
+  const stats = APP_DATA.book_stats || {};
+  const routes = Array.isArray(APP_DATA.routes) ? APP_DATA.routes : [];
+  const featured = APP_DATA.featured_quote || { text: '', page: '', lecture: '' };
+  const recentRaw = loadRecentItems().slice(0, 10);
+  const vw = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 0;
+  const vh = (typeof window !== 'undefined' && typeof window.innerHeight === 'number') ? window.innerHeight : 0;
+  const isDesktop = vw >= 980;
+  const compactHome = isDesktop && vh > 0 && vh <= 840;
+
+  const routeGridStyle = compactHome
+    ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px;'
+    : isDesktop
+      ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px;'
+      : 'display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px;';
+  const homeInnerPadding = compactHome ? '10px 14px' : '14px 20px';
+  const statsGridColumns = vw > 0 && vw < 900 ? 'repeat(2,minmax(0,1fr))' : 'repeat(4,minmax(0,1fr))';
+  let factPairColumns = compactHome
+    ? 'minmax(0,1.35fr) minmax(0,0.95fr)'
+    : 'minmax(0,1.2fr) minmax(0,1fr)';
+  if (vw > 0 && vw < 900) factPairColumns = '1fr';
+  const quoteTextClamp = compactHome
+    ? 'display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;'
+    : '';
+
+  const topFamilyName = Array.isArray(stats.top_family) ? String(stats.top_family[0] || '') : '';
+  const topFamilyCount = Array.isArray(stats.top_family) ? Number(stats.top_family[1] || 0) : 0;
+  const earliestEpochRaw = Number(stats?.earliest_person?.epoch);
+  const earliestEpoch = Number.isFinite(earliestEpochRaw) ? earliestEpochRaw : 0;
+  const earliestEpochLabel = earliestEpoch < 0 ? `${Math.abs(earliestEpoch)} до н. э.` : `${earliestEpoch} г.`;
+
+  const statsCards = [
+    { key: 'pages', num: String(stats.total_pages || 404), label: 'страницы' },
+    {
+      key: 'lectures',
+      num: stats.has_preface ? '10 + 1' : String(stats.lectures || 10),
+      label: stats.has_preface ? 'лекций + предисловие' : 'лекций',
+    },
+    { key: 'names', num: String(stats.names || 0), label: 'имён' },
+    { key: 'languages', num: String(stats.languages || 0), label: 'языков' },
+    { key: 'toponyms', num: String(stats.toponyms || 0), label: 'топонимов' },
+    { key: 'ethnonyms', num: String(stats.ethnonyms || 0), label: 'этнонимов' },
+    {
+      key: 'lexicon',
+      num: Number(stats.lexicon || 0).toLocaleString('ru'),
+      label: 'лексем',
+    },
+    { key: 'subject', num: String(stats.subject_index || 0), label: 'понятий' },
+  ];
+
+  const facts = [
+    `Самая длинная лекция — «${String(stats?.longest_lecture?.name || '')}» (${String(stats?.longest_lecture?.pages || 0)} страниц)`,
+    `Самый часто упоминаемый язык — ${String(stats?.top_lang?.head || '')} (${String(stats?.top_lang?.count || 0)} упоминаний)`,
+    `Самое часто упоминаемое место — ${String(stats?.top_topo?.head || '')} (${String(stats?.top_topo?.count || 0)} упоминаний)`,
+    `Самый часто упоминаемый человек — ${String(stats?.top_name?.head || '')} (${String(stats?.top_name?.count || 0)} упоминаний)`,
+    `Самое часто обсуждаемое слово — «${String(stats?.top_lex?.head || '')}» (${String(stats?.top_lex?.count || 0)} упоминаний)`,
+    `Самый ранний из упомянутых — ${String(stats?.earliest_person?.head || '')} (${earliestEpochLabel})`,
+    `Самая представленная семья — ${topFamilyName} (${topFamilyCount} языков)`,
+  ];
+
+  const normalizeRouteIcon = (value) => {
+    const raw = String(value == null ? '' : value).trim();
+    if (!raw) return '•';
+    return raw.replace(/[<>]/g, '').slice(0, 8) || '•';
+  };
+
+  const routeCards = routes.map((r, idx) => ({
+    id: String(r?.id || `route-${idx}`),
+    title: String(r?.title || ''),
+    desc: String(r?.desc || ''),
+    icon: normalizeRouteIcon(r?.icon),
+    pages: String(r?.pages || ''),
+    entities: Array.isArray(r?.entities)
+      ? r.entities
+        .map((e, eIdx) => ({
+          key: `${idx}-${eIdx}-${String(e?.type || '')}-${String(e?.head || '')}`,
+          type: String(e?.type || ''),
+          head: String(e?.head || ''),
+        }))
+        .filter((e) => e.type && e.head)
+      : [],
+  }));
+
+  const recentItems = recentRaw
+    .map((r, idx) => {
+      const conf = ENTITY_TYPES[r.type];
+      return {
+        key: `${idx}-${String(r.type || '')}-${String(r.head || '')}`,
+        type: String(r.type || ''),
+        head: String(r.head || ''),
+        label: conf ? conf.title : String(r.type || ''),
+      };
+    })
+    .filter((r) => r.type && r.head);
+
+  return {
+    compactHome,
+    routeGridStyle,
+    homeInnerPadding,
+    statsGridColumns,
+    factPairColumns,
+    quoteTextClamp,
+    statsCards,
+    facts,
+    routes: routeCards,
+    recentItems,
+    featuredText: String(featured.text || ''),
+    featuredPage: String(featured.page || ''),
+    featuredLecture: String(featured.lecture || ''),
+    guideHtml: buildHomeHowToGuideHtml(),
+    longestLectureName: String(stats?.longest_lecture?.name || ''),
+    topLangHead: String(stats?.top_lang?.head || ''),
+    topTopoHead: String(stats?.top_topo?.head || ''),
+    topNameHead: String(stats?.top_name?.head || ''),
+    topLexHead: String(stats?.top_lex?.head || ''),
+    earliestNameHead: String(stats?.earliest_person?.head || ''),
+  };
+}
+
+function createHomeDeclarativeState(viewModel) {
+  const vm = viewModel || buildHomeDeclarativeViewModel();
+  return {
+    ...vm,
+    exportMarkdown() {
+      exportWholeSiteMarkdown();
+    },
+    openFact(index) {
+      const idx = Number(index);
+      if (idx === 0) {
+        const lectureIndex = findLectureIndexByName(vm.longestLectureName);
+        openLecturePage(lectureIndex >= 0 ? lectureIndex : 1);
+        return;
+      }
+      if (idx === 1) {
+        navigateToItem('languages', vm.topLangHead);
+        return;
+      }
+      if (idx === 2) {
+        navigateToItem('toponyms', vm.topTopoHead);
+        return;
+      }
+      if (idx === 3) {
+        navigateToItem('names', vm.topNameHead);
+        return;
+      }
+      if (idx === 4) {
+        navigateToItem('lexicon', vm.topLexHead);
+        return;
+      }
+      if (idx === 5) {
+        navigateToItem('names', vm.earliestNameHead);
+        return;
+      }
+      if (idx === 6) {
+        currentEntity = 'languages';
+        currentTab = 'families';
+        selectedItem = null;
+        selectedItemType = null;
+        rightPaneMode = 'histogram';
+        renderEntitySwitcher();
+        renderTabs();
+        renderContent();
+        syncNavigationState();
+      }
+    },
+    openRoute(type, head) {
+      if (!type || !head) return;
+      navigateToItem(type, head);
+    },
+    openRecent(type, head) {
+      if (!type || !head) return;
+      navigateToItem(type, head);
+    },
+  };
+}
+
+function renderHomePanelDeclarative(container) {
+  const alpine = (typeof window !== 'undefined' && window.Alpine) ? window.Alpine : null;
+  if (!alpine || typeof alpine.initTree !== 'function') {
+    renderHomePanel(container);
+    return;
+  }
+
+  const viewModel = buildHomeDeclarativeViewModel();
+  const state = createHomeDeclarativeState(viewModel);
+  if (typeof globalThis !== 'undefined') {
+    globalThis[HOME_DECL_FACTORY_KEY] = () => state;
+  }
+
+  container.innerHTML = `<div class="panel active home-panel home-panel-declarative" style="overflow-y:auto;height:100%;">
+    <div id="home-declarative-root" x-data="${HOME_DECL_FACTORY_KEY}()" style="padding:${viewModel.homeInnerPadding};max-width:1200px;margin:0 auto;">
+      <div style="background:linear-gradient(135deg,#5a3818,#8a7050);color:#fff8e8;padding:16px 20px;border-radius:6px;margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+          <h2 style="margin:0 0 4px 0;font-size:22px;font-weight:normal;">Книга в цифрах (декларативный режим)</h2>
+          <button type="button" @click="exportMarkdown" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;white-space:nowrap;">Экспорт всего BookIndex в Markdown</button>
+        </div>
+        <div style="font-size:13px;opacity:0.85;font-style:italic;margin-bottom:14px;">Экспериментальный таб: рендер KPI и маршрутов через Alpine.js</div>
+
+        <div id="home-stats-grid-decl" style="display:grid;grid-template-columns:${viewModel.statsGridColumns};gap:10px;">
+          <template x-for="cell in statsCards" :key="cell.key">
+            <div style="background:rgba(255,248,232,0.15);padding:10px 12px;border-radius:4px;border-left:3px solid #fff8e8;">
+              <div style="font-size:24px;font-weight:bold;line-height:1;" x-text="cell.num"></div>
+              <div style="font-size:11px;opacity:0.85;margin-top:4px;" x-text="cell.label"></div>
+            </div>
+          </template>
+        </div>
+
+        <div style="margin-top:${viewModel.compactHome ? 10 : 14}px;padding-top:${viewModel.compactHome ? 10 : 14}px;border-top:1px solid rgba(255,248,232,0.25);font-size:12px;line-height:${viewModel.compactHome ? 1.55 : 1.7};">
+          <div id="home-fact-pair-decl" style="display:grid;grid-template-columns:${viewModel.factPairColumns};gap:${viewModel.compactHome ? 8 : 12}px;align-items:start;">
+            <div style="display:grid;gap:4px;">
+              <template x-for="(fact, idx) in facts" :key="idx">
+                <button type="button" @click="openFact(idx)" style="background:transparent;border:none;padding:0;text-align:left;color:#fff8e8;font:inherit;cursor:pointer;text-decoration:underline dotted;">
+                  <span x-text="fact"></span>
+                </button>
+              </template>
+            </div>
+            <div id="home-featured-quote-decl" style="padding-left:${viewModel.compactHome ? 8 : 10}px;border-left:2px solid rgba(255,248,232,0.45);font-style:italic;align-self:start;font-size:${viewModel.compactHome ? '14px' : '15px'};line-height:${viewModel.compactHome ? '1.55' : '1.65'};">
+              <div style="${viewModel.quoteTextClamp}" x-text="'«' + featuredText + '»'"></div>
+              <div style="margin-top:6px;font-style:normal;opacity:0.85;" x-text="'стр. ' + featuredPage + ', лекция «' + featuredLecture + '»'"></div>
+              <div style="margin-top:8px;font-style:italic;opacity:0.9;font-size:12px;">Выберите путь по книге и перейдите к карточкам напрямую.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:14px 0 4px 0;">Выберите свой путь по книге</h2>
+      <div style="${viewModel.routeGridStyle}">
+        <template x-for="route in routes" :key="route.id">
+          <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;border-top:3px solid #8a7050;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:4px;">
+              <div style="font-size:16px;font-weight:bold;color:#5a3818;" x-text="route.title"></div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:96px;">
+                <div style="font-size:11px;color:#888;white-space:nowrap;" x-text="'📑 страницы ' + route.pages"></div>
+                <div style="font-size:20px;line-height:1;min-width:20px;text-align:right;" x-text="route.icon"></div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:#444;line-height:1.45;margin-bottom:6px;" x-text="route.desc"></div>
+            <div style="font-size:11px;">
+              <template x-for="entity in route.entities" :key="entity.key">
+                <button type="button" @click="openRoute(entity.type, entity.head)" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border:1px solid transparent;border-radius:10px;margin:2px 2px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;font:inherit;">
+                  <span x-text="entity.head"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:14px;">
+        <div style="font-size:14px;color:#5a3818;font-weight:normal;margin-bottom:6px;">Недавно открывали</div>
+        <div id="home-recent-items-decl" style="font-size:12px;line-height:1.6;">
+          <template x-if="recentItems.length === 0">
+            <span style="color:#888;">Пока пусто — откройте любую карточку.</span>
+          </template>
+          <template x-for="item in recentItems" :key="item.key">
+            <button type="button" @click="openRecent(item.type, item.head)" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border:1px solid transparent;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;font:inherit;">
+              <span x-text="item.head"></span>
+              <span style="color:#777;" x-text="' · ' + item.label"></span>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <div x-html="guideHtml"></div>
+    </div>
+  </div>`;
+
+  alpine.initTree(container);
 }
 
 // =========================================================
