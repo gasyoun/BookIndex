@@ -1,0 +1,117 @@
+{
+  "schema_version": 2,
+  "schema_migrations": [
+    "1->2: editorial_flags_and_sources"
+  ],
+  "labels": {
+    "linguist": "Лингвист",
+    "literator": "Носитель языка",
+    "historical": "Историческое лицо",
+    "schoolchild": "Участник лекции",
+    "lecture_host": "Участник лекции",
+    "edition_staff": "Сотрудник издания",
+    "participant": "Участник лекции"
+  },
+  "colors": {
+    "linguist": "#3a6ea5",
+    "literator": "#9b59b6",
+    "historical": "#c0392b",
+    "schoolchild": "#16a085",
+    "lecture_host": "#2c3e50",
+    "edition_staff": "#7f8c8d",
+    "participant": "#16a085"
+  },
+  "epoch_labels": {
+    "ancient": "Античность (до 500 г.)",
+    "medieval": "Средневековье (500–1500)",
+    "modern": "Новое время (1500–1900)",
+    "contemporary": "Новейшее (1900+)",
+    "unknown": "Не определено"
+  },
+  "epoch_colors": {
+    "ancient": "#8b6f47",
+    "medieval": "#5a3818",
+    "modern": "#3a6ea5",
+    "contemporary": "#c0392b",
+    "unknown": "#888"
+  },
+  "family_colors": {
+    "Индоевропейская": "#3a6ea5",
+    "Афразийская": "#c0392b",
+    "Тюркская": "#16a085",
+    "Уральская": "#9b59b6",
+    "Картвельская": "#e67e22",
+    "Сино-тибетская": "#f39c12",
+    "Дравидийская": "#8e44ad",
+    "Австронезийская": "#27ae60",
+    "Папуасские": "#d35400",
+    "Австралийские": "#7f8c8d",
+    "Чукотско-камчатская": "#34495e",
+    "Изолят": "#95a5a6",
+    "Изолят / тирренская": "#95a5a6",
+    "Макросемья": "#2c3e50",
+    "Искусственные": "#bdc3c7",
+    "Не классифицировано": "#bdc3c7"
+  },
+  "book_stats": {
+    "total_pages": 404,
+    "names": 96,
+    "toponyms": 93,
+    "ethnonyms": 62,
+    "languages": 130,
+    "lexicon": 1364,
+    "lexicon_reverse": 1404,
+    "subject_index": 88,
+    "lectures": 10,
+    "top_name": {
+      "head": "Иткин А. И.",
+      "count": 9
+    },
+    "top_topo": {
+      "head": "Индия",
+      "count": 26
+    },
+    "top_lang": {
+      "head": "русский",
+      "count": 180
+    },
+    "top_lex": {
+      "head": "же",
+      "count": 10
+    },
+    "longest_lecture": {
+      "name": "Берестяные грамоты",
+      "pages": 50
+    },
+    "earliest_person": {
+      "head": "Бхарата",
+      "epoch": -1500
+    },
+    "latest_person": {
+      "head": "Алексеевская О. А.",
+      "epoch": 2020
+    },
+    "top_family": [
+      "Индоевропейская",
+      93
+    ],
+    "discussed_names": 32,
+    "has_preface": true
+  },
+  "non_content_pages": [
+    1,
+    2,
+    3,
+    98,
+    99,
+    156,
+    205,
+    274,
+    307,
+    354,
+    355,
+    392,
+    402,
+    405
+  ]
+}

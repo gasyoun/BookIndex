@@ -123,11 +123,24 @@
 python scripts/build_aaz_index.py
 ```
 
+Сборка из модульных данных (`data/modules/*.json`) вместо монолита:
+
+```bash
+python scripts/build_aaz_index.py --modules-dir data/modules
+```
+
 Альтернативная сборка через Vite single-file (экспериментальный pipeline):
 
 ```bash
 npm install
 npm run build:vite
+```
+
+Разделение/склейка `app_data.json`:
+
+```bash
+python scripts/split_app_data.py app_data.json --out-dir data/modules
+python scripts/assemble_app_data.py --modules-dir data/modules --out app_data.json
 ```
 
 ## Локальные проверки перед релизом
@@ -183,8 +196,12 @@ python scripts/content_report.py --format json
 | [v3_template.html](v3_template.html) | HTML-шаблон (`__APP_SCRIPT__`) |
 | [v3_app.js](v3_app.js) | Основной runtime/UX |
 | [app_data.json](app_data.json) | База контента (только чтение) |
+| [data/modules/](data/modules/) | Логически разделённые модули данных (`manifest.json` + тематические JSON) |
 | [runtime_test.py](runtime_test.py) | Runtime smoke и статические guard'ы |
 | [scripts/build_aaz_index.py](scripts/build_aaz_index.py) | Сборка `aaz-index.html` |
+| [scripts/split_app_data.py](scripts/split_app_data.py) | Разбиение `app_data.json` на модульные JSON |
+| [scripts/assemble_app_data.py](scripts/assemble_app_data.py) | Склейка модульных JSON обратно в `app_data.json` |
+| [scripts/app_data_modules.py](scripts/app_data_modules.py) | Общая логика split/assemble модульных данных |
 | [vite.config.mjs](vite.config.mjs) | Vite-конфигурация альтернативной single-file сборки |
 | [scripts/vite/postbuild-copy.mjs](scripts/vite/postbuild-copy.mjs) | Копирование `dist-vite/index.html` в `aaz-index.html` |
 | [scripts/viz/](scripts/viz/) | VIZ-модули и препроцессор кэша (`build-viz-cache.js`, `build-viz-cache-worker.js`) |

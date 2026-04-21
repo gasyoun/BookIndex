@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "module_layout": [
+    "00-metadata.json",
+    "10-names.json",
+    "11-toponyms.json",
+    "12-ethnonyms.json",
+    "13-languages.json",
+    "14-lexicon.json",
+    "20-lectures.json",
+    "21-materials.json",
+    "30-scholar.json"
+  ],
+  "modules": [
+    {
+      "file": "00-metadata.json",
+      "keys": [
+        "schema_version",
+        "schema_migrations",
+        "labels",
+        "colors",
+        "epoch_labels",
+        "epoch_colors",
+        "family_colors",
+        "book_stats",
+        "non_content_pages"
+      ]
+    },
+    {
+      "file": "10-names.json",
+      "keys": [
+        "names",
+        "edges"
+      ]
+    },
+    {
+      "file": "11-toponyms.json",
+      "keys": [
+        "toponyms"
+      ]
+    },
+    {
+      "file": "12-ethnonyms.json",
+      "keys": [
+        "ethnonyms"
+      ]
+    },
+    {
+      "file": "13-languages.json",
+      "keys": [
+        "languages",
+        "language_edges",
+        "language_tree"
+      ]
+    },
+    {
+      "file": "14-lexicon.json",
+      "keys": [
+        "lexicon",
+        "lexicon_tech",
+        "lexicon_reverse",
+        "subject_index",
+        "cross_links"
+      ]
+    },
+    {
+      "file": "20-lectures.json",
+      "keys": [
+        "chapters",
+        "lectures",
+        "lecture_summaries",
+        "routes",
+        "tasks"
+      ]
+    },
+    {
+      "file": "21-materials.json",
+      "keys": [
+        "glossary",
+        "quotes",
+        "russian_evolution",
+        "phonetic_laws",
+        "featured_quote",
+        "further_reading"
+      ]
+    },
+    {
+      "file": "30-scholar.json",
+      "keys": [
+        "scholar"
+      ]
+    }
+  ],
+  "key_order": [
+    "schema_version",
+    "schema_migrations",
+    "names",
+    "edges",
+    "chapters",
+    "toponyms",
+    "ethnonyms",
+    "languages",
+    "lexicon",
+    "lexicon_tech",
+    "lexicon_reverse",
+    "language_edges",
+    "labels",
+    "colors",
+    "epoch_labels",
+    "epoch_colors",
+    "family_colors",
+    "non_content_pages",
+    "language_tree",
+    "subject_index",
+    "book_stats",
+    "routes",
+    "tasks",
+    "lecture_summaries",
+    "glossary",
+    "quotes",
+    "lectures",
+    "russian_evolution",
+    "phonetic_laws",
+    "scholar",
+    "cross_links",
+    "featured_quote",
+    "further_reading"
+  ]
+}

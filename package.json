@@ -4,6 +4,8 @@
   "private": true,
   "description": "E2E smoke checks for aaz-index standalone app",
   "scripts": {
+    "data:split": "python scripts/split_app_data.py app_data.json --out-dir data/modules",
+    "data:assemble": "python scripts/assemble_app_data.py --modules-dir data/modules --out app_data.json",
     "dev:vite": "vite",
     "build:vite": "vite build && node scripts/vite/postbuild-copy.mjs",
     "preview:vite": "vite preview --outDir dist-vite",

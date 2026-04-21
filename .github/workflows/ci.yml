@@ -43,6 +43,13 @@ jobs:
       - name: Validate content data
         run: python scripts/validate_content.py app_data.json
 
+      - name: Ensure split modules are in sync
+        run: |
+          python scripts/split_app_data.py app_data.json --out-dir data/modules
+          git diff --exit-code -- data/modules
+          python scripts/assemble_app_data.py --modules-dir data/modules --out app_data.json
+          git diff --exit-code -- app_data.json
+
       - name: Runtime smoke test (21/21)
         run: python runtime_test.py
 
