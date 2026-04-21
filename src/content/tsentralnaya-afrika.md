@@ -2,7 +2,7 @@
 id: "Центральная Африка"
 title: "Центральная Африка"
 source_key: "toponyms"
-source_index: 86
+source_index: 87
 tags: ["toponyms"]
 ---
 

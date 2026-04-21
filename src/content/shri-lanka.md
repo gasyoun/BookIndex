@@ -2,7 +2,7 @@
 id: "Шри-Ланка"
 title: "Шри-Ланка"
 source_key: "toponyms"
-source_index: 91
+source_index: 92
 tags: ["toponyms"]
 ---
 

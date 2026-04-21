@@ -2,7 +2,7 @@
 id: "Суздаль"
 title: "Суздаль"
 source_key: "toponyms"
-source_index: 78
+source_index: 79
 tags: ["toponyms"]
 ---
 

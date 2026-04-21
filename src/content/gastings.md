@@ -2,7 +2,7 @@
 id: "Гастингс"
 title: "Гастингс"
 source_key: "toponyms"
-source_index: 23
+source_index: 24
 tags: ["toponyms"]
 ---
 

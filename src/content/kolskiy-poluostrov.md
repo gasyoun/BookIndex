@@ -2,7 +2,7 @@
 id: "Кольский полуостров"
 title: "Кольский полуостров"
 source_key: "toponyms"
-source_index: 44
+source_index: 45
 tags: ["toponyms"]
 ---
 

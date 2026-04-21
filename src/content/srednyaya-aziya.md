@@ -2,7 +2,7 @@
 id: "Средняя Азия"
 title: "Средняя Азия"
 source_key: "toponyms"
-source_index: 77
+source_index: 78
 tags: ["toponyms"]
 ---
 

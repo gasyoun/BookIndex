@@ -2,7 +2,7 @@
 id: "Малая Азия"
 title: "Малая Азия"
 source_key: "toponyms"
-source_index: 50
+source_index: 51
 tags: ["toponyms"]
 ---
 

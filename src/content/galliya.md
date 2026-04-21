@@ -2,7 +2,7 @@
 id: "Галлия"
 title: "Галлия"
 source_key: "toponyms"
-source_index: 22
+source_index: 23
 tags: ["toponyms"]
 ---
 

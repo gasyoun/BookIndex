@@ -2,7 +2,7 @@
 id: "Южный Переславль"
 title: "Южный Переславль"
 source_key: "toponyms"
-source_index: 92
+source_index: 93
 tags: ["toponyms"]
 ---
 

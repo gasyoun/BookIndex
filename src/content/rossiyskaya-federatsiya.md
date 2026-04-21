@@ -2,7 +2,7 @@
 id: "Российская Федерация"
 title: "Российская Федерация"
 source_key: "toponyms"
-source_index: 66
+source_index: 67
 tags: ["toponyms"]
 ---
 

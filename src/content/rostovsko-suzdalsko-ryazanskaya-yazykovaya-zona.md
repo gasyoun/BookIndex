@@ -2,7 +2,7 @@
 id: "ростовско-суздальско- рязанская языковая зона"
 title: "ростовско-суздальско- рязанская языковая зона"
 source_key: "toponyms"
-source_index: 70
+source_index: 71
 tags: ["toponyms"]
 ---
 

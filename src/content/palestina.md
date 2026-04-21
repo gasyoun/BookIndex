@@ -2,7 +2,7 @@
 id: "Палестина"
 title: "Палестина"
 source_key: "toponyms"
-source_index: 55
+source_index: 56
 tags: ["toponyms"]
 ---
 

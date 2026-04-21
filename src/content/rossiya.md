@@ -2,7 +2,7 @@
 id: "Россия"
 title: "Россия"
 source_key: "toponyms"
-source_index: 67
+source_index: 68
 tags: ["toponyms"]
 ---
 

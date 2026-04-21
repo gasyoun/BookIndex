@@ -2,7 +2,7 @@
 id: "Чернигов"
 title: "Чернигов"
 source_key: "toponyms"
-source_index: 88
+source_index: 89
 tags: ["toponyms"]
 ---
 

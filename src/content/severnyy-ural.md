@@ -2,7 +2,7 @@
 id: "Северный Урал"
 title: "Северный Урал"
 source_key: "toponyms"
-source_index: 74
+source_index: 75
 tags: ["toponyms"]
 ---
 

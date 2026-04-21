@@ -2,7 +2,7 @@
 id: "ГДР"
 title: "ГДР"
 source_key: "toponyms"
-source_index: 24
+source_index: 25
 tags: ["toponyms"]
 ---
 

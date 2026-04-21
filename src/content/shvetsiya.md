@@ -2,7 +2,7 @@
 id: "Швеция"
 title: "Швеция"
 source_key: "toponyms"
-source_index: 89
+source_index: 90
 tags: ["toponyms"]
 ---
 

@@ -1,6 +1,6 @@
 ---
-id: "Вятская область"
-title: "Вятская область"
+id: "Вятская губерния"
+title: "Вятская губерния"
 source_key: "toponyms"
 source_index: 20
 tags: ["toponyms"]
@@ -12,7 +12,7 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "Вятская область",
+  "head": "Вятская губерния",
   "head_pages": "199",
   "subs": [],
   "discussed": false,

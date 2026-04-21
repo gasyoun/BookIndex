@@ -2,7 +2,7 @@
 id: "Пакистан"
 title: "Пакистан"
 source_key: "toponyms"
-source_index: 54
+source_index: 55
 tags: ["toponyms"]
 ---
 

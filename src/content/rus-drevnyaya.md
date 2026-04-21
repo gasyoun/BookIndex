@@ -2,7 +2,7 @@
 id: "Русь [древняя]"
 title: "Русь [древняя]"
 source_key: "toponyms"
-source_index: 72
+source_index: 73
 tags: ["toponyms"]
 ---
 

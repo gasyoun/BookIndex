@@ -2,7 +2,7 @@
 id: "Центральная часть [Руси]"
 title: "Центральная часть [Руси]"
 source_key: "toponyms"
-source_index: 87
+source_index: 88
 tags: ["toponyms"]
 ---
 

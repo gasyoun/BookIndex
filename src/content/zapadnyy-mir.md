@@ -2,7 +2,7 @@
 id: "западный мир"
 title: "западный мир"
 source_key: "toponyms"
-source_index: 30
+source_index: 31
 tags: ["toponyms"]
 ---
 

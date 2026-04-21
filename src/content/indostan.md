@@ -2,7 +2,7 @@
 id: "Индостан"
 title: "Индостан"
 source_key: "toponyms"
-source_index: 32
+source_index: 33
 tags: ["toponyms"]
 ---
 

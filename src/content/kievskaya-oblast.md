@@ -2,7 +2,7 @@
 id: "Киевская область"
 title: "Киевская область"
 source_key: "toponyms"
-source_index: 41
+source_index: 42
 tags: ["toponyms"]
 ---
 

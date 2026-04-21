@@ -2,7 +2,7 @@
 id: "Галич"
 title: "Галич"
 source_key: "toponyms"
-source_index: 21
+source_index: 22
 tags: ["toponyms"]
 ---
 
