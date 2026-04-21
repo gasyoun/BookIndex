@@ -1,43 +1,7 @@
 // Данные парсятся из <script type="application/json"> (с fallback для тестов/legacy-сборки)
 const APP_DATA_SCRIPT_TAG_ID = 'app-data-json';
 const APP_DATA_GLOBAL_FALLBACK_KEY = '__APP_DATA_STRING__';
-/**
- * @typedef {Object} EntityRecord
- * @property {string} [head]
- * @property {number[]} [page_list]
- * @property {Record<string, string[]>} [contexts]
- * @property {Record<string, unknown>} [editorial_flags]
- * @property {Array<Record<string, unknown>>} [sources]
- * @property {string} [subcategory]
- */
-/**
- * @typedef {Object} ChapterRecord
- * @property {string} [name]
- * @property {number} [start]
- * @property {number} [end]
- * @property {number} [century]
- */
-/**
- * @typedef {Object} AppDataShape
- * @property {number} [schema_version]
- * @property {string[]} [schema_migrations]
- * @property {Record<string, string>} [labels]
- * @property {Record<string, string>} [colors]
- * @property {Record<string, string>} [epoch_labels]
- * @property {Record<string, string>} [epoch_colors]
- * @property {Record<string, string>} [family_colors]
- * @property {EntityRecord[]} [names]
- * @property {EntityRecord[]} [toponyms]
- * @property {EntityRecord[]} [ethnonyms]
- * @property {EntityRecord[]} [languages]
- * @property {EntityRecord[]} [lexicon]
- * @property {EntityRecord[]} [lexicon_reverse]
- * @property {EntityRecord[]} [lexicon_tech]
- * @property {EntityRecord[]} [subject_index]
- * @property {EntityRecord[]} [glossary]
- * @property {ChapterRecord[]} [chapters]
- * @property {Record<string, unknown>} [cross_links]
- */
+/** @typedef {import('./types/app-data').AppData} AppDataShape */
 /** @type {AppDataShape | null} */
 let APP_DATA = null;
 let LABELS = null, COLORS = null, EPOCH_LABELS = null, EPOCH_COLORS = null, FAMILY_COLORS = null;

@@ -1,6 +1,8 @@
 (function (global) {
   'use strict';
 
+  /** @typedef {import('../../types/app-data').AppData} AppData */
+
   const root = global || (typeof window !== 'undefined' ? window : globalThis);
   root.__vizCache = root.__vizCache || {};
 
@@ -309,6 +311,11 @@
     return map;
   }
 
+  /**
+   * Build visualization cache from already loaded APP_DATA.
+   * @param {AppData} appData
+   * @returns {Record<string, unknown>}
+   */
   function buildVizCache(appData) {
     root.__vizCache = root.__vizCache || {};
     const cache = root.__vizCache;

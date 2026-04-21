@@ -73589,43 +73589,7 @@
 // Данные парсятся из <script type="application/json"> (с fallback для тестов/legacy-сборки)
 const APP_DATA_SCRIPT_TAG_ID = 'app-data-json';
 const APP_DATA_GLOBAL_FALLBACK_KEY = '__APP_DATA_STRING__';
-/**
- * @typedef {Object} EntityRecord
- * @property {string} [head]
- * @property {number[]} [page_list]
- * @property {Record<string, string[]>} [contexts]
- * @property {Record<string, unknown>} [editorial_flags]
- * @property {Array<Record<string, unknown>>} [sources]
- * @property {string} [subcategory]
- */
-/**
- * @typedef {Object} ChapterRecord
- * @property {string} [name]
- * @property {number} [start]
- * @property {number} [end]
- * @property {number} [century]
- */
-/**
- * @typedef {Object} AppDataShape
- * @property {number} [schema_version]
- * @property {string[]} [schema_migrations]
- * @property {Record<string, string>} [labels]
- * @property {Record<string, string>} [colors]
- * @property {Record<string, string>} [epoch_labels]
- * @property {Record<string, string>} [epoch_colors]
- * @property {Record<string, string>} [family_colors]
- * @property {EntityRecord[]} [names]
- * @property {EntityRecord[]} [toponyms]
- * @property {EntityRecord[]} [ethnonyms]
- * @property {EntityRecord[]} [languages]
- * @property {EntityRecord[]} [lexicon]
- * @property {EntityRecord[]} [lexicon_reverse]
- * @property {EntityRecord[]} [lexicon_tech]
- * @property {EntityRecord[]} [subject_index]
- * @property {EntityRecord[]} [glossary]
- * @property {ChapterRecord[]} [chapters]
- * @property {Record<string, unknown>} [cross_links]
- */
+/** @typedef {import('./types/app-data').AppData} AppDataShape */
 /** @type {AppDataShape | null} */
 let APP_DATA = null;
 let LABELS = null, COLORS = null, EPOCH_LABELS = null, EPOCH_COLORS = null, FAMILY_COLORS = null;
@@ -73633,7 +73597,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '674e84793c73';
+const APP_BUILD_ID = 'e6507677e26c';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -76873,7 +76837,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '674e84793c73' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'e6507677e26c' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;

@@ -154,6 +154,12 @@ python scripts/content_report.py
 python runtime_test.py
 ```
 
+Опционально: JS type-check по JSDoc-типам:
+
+```bash
+npm run typecheck
+```
+
 Полный smoke/e2e:
 
 ```bash
@@ -202,6 +208,8 @@ python scripts/content_report.py --format json
 | [scripts/split_app_data.py](scripts/split_app_data.py) | Разбиение `app_data.json` на модульные JSON |
 | [scripts/assemble_app_data.py](scripts/assemble_app_data.py) | Склейка модульных JSON обратно в `app_data.json` |
 | [scripts/app_data_modules.py](scripts/app_data_modules.py) | Общая логика split/assemble модульных данных |
+| [types/app-data.d.ts](types/app-data.d.ts) | Централизованные TS-типы структуры `APP_DATA` |
+| [tsconfig.typecheck.json](tsconfig.typecheck.json) | Конфигурация type-check для JS/JSDoc (`tsc --checkJs`) |
 | [vite.config.mjs](vite.config.mjs) | Vite-конфигурация альтернативной single-file сборки |
 | [scripts/vite/postbuild-copy.mjs](scripts/vite/postbuild-copy.mjs) | Копирование `dist-vite/index.html` в `aaz-index.html` |
 | [scripts/viz/](scripts/viz/) | VIZ-модули и препроцессор кэша (`build-viz-cache.js`, `build-viz-cache-worker.js`) |
