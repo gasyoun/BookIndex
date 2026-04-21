@@ -1,0 +1,22 @@
+---
+id: "рубль"
+title: "рубль"
+source_key: "lexicon_reverse"
+source_index: 859
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "рубль",
+  "page_list": [
+    390
+  ],
+  "pages": "390",
+  "discussed": false
+}
+```

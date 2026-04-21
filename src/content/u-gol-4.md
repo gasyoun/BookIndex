@@ -1,0 +1,22 @@
+---
+id: "у́голь"
+title: "у́голь"
+source_key: "lexicon_reverse"
+source_index: 868
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "у́голь",
+  "page_list": [
+    380
+  ],
+  "pages": "380",
+  "discussed": false
+}
+```

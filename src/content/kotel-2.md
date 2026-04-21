@@ -1,0 +1,22 @@
+---
+id: "котёл"
+title: "котёл"
+source_key: "lexicon_reverse"
+source_index: 458
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "котёл",
+  "page_list": [
+    186
+  ],
+  "pages": "186",
+  "discussed": false
+}
+```

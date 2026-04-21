@@ -1,0 +1,25 @@
+---
+id: "Изра́иля"
+title: "Изра́иля"
+source_key: "lexicon"
+source_index: 470
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "Изра́иля",
+  "pages": "373",
+  "page_list": [
+    373
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

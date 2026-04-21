@@ -1,0 +1,25 @@
+---
+id: "ка́бы"
+title: "ка́бы"
+source_key: "lexicon"
+source_index: 500
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "ка́бы",
+  "pages": "386",
+  "page_list": [
+    386
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

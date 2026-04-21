@@ -1,0 +1,25 @@
+---
+id: "у́гълу"
+title: "у́гълу"
+source_key: "lexicon"
+source_index: 1004
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "у́гълу",
+  "pages": "381",
+  "page_list": [
+    381
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

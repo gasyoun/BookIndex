@@ -1,0 +1,26 @@
+---
+id: "d"
+title: "d"
+source_key: "lexicon"
+source_index: 1132
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "d",
+  "pages": "70, 72",
+  "page_list": [
+    70,
+    72
+  ],
+  "discussed": true,
+  "category": "lat",
+  "needs_review": false,
+  "contexts": {}
+}
+```

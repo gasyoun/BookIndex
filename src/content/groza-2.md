@@ -1,0 +1,24 @@
+---
+id: "гроза"
+title: "гроза"
+source_key: "lexicon_reverse"
+source_index: 28
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "гроза",
+  "page_list": [
+    263,
+    264,
+    265
+  ],
+  "pages": "263, 264, 265",
+  "discussed": true
+}
+```

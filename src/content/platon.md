@@ -1,0 +1,25 @@
+---
+id: "Платон"
+title: "Платон"
+source_key: "lexicon"
+source_index: 742
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "Платон",
+  "pages": "213",
+  "page_list": [
+    213
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

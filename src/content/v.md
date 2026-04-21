@@ -1,0 +1,25 @@
+---
+id: "в"
+title: "в"
+source_key: "lexicon"
+source_index: 74
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "в",
+  "pages": "349",
+  "page_list": [
+    349
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

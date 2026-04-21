@@ -1,0 +1,22 @@
+---
+id: "vestis"
+title: "vestis"
+source_key: "lexicon_reverse"
+source_index: 1335
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "vestis",
+  "page_list": [
+    158
+  ],
+  "pages": "158",
+  "discussed": false
+}
+```

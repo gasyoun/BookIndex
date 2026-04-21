@@ -1,0 +1,19 @@
+---
+id: "language_edges_567"
+title: "language_edges_567"
+source_key: "language_edges"
+source_index: 566
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "кыпчакский",
+  "target": "татарский",
+  "weight": 2.98
+}
+```

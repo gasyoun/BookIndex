@@ -1,0 +1,25 @@
+---
+id: "ло́вишь"
+title: "ло́вишь"
+source_key: "lexicon"
+source_index: 577
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "ло́вишь",
+  "pages": "266",
+  "page_list": [
+    266
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

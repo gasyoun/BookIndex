@@ -1,0 +1,31 @@
+---
+id: "Милославский Е."
+title: "Милославский Е."
+source_key: "names"
+source_index: 56
+tags: ["names"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "Милославский Е.",
+  "pages": "76",
+  "category": "VI",
+  "discussed": false,
+  "letter": "М",
+  "letter_change": false,
+  "subcategory": "participant",
+  "contexts": {},
+  "page_list": [
+    76
+  ],
+  "epoch": null,
+  "chapters": [
+    "Историческая лингвистика"
+  ]
+}
+```

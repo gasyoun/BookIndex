@@ -1,0 +1,19 @@
+---
+id: "language_edges_1763"
+title: "language_edges_1763"
+source_key: "language_edges"
+source_index: 1762
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "английский",
+  "target": "старорусский",
+  "weight": 0.53
+}
+```

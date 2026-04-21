@@ -1,0 +1,25 @@
+---
+id: "что́бы"
+title: "что́бы"
+source_key: "lexicon"
+source_index: 1074
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "что́бы",
+  "pages": "385",
+  "page_list": [
+    385
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

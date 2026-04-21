@@ -1,0 +1,25 @@
+---
+id: "вѣра"
+title: "вѣра"
+source_key: "lexicon"
+source_index: 198
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "вѣра",
+  "pages": "301",
+  "page_list": [
+    301
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

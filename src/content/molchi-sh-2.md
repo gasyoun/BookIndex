@@ -1,0 +1,22 @@
+---
+id: "молчи́шь"
+title: "молчи́шь"
+source_key: "lexicon_reverse"
+source_index: 1034
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "молчи́шь",
+  "page_list": [
+    266
+  ],
+  "pages": "266",
+  "discussed": false
+}
+```

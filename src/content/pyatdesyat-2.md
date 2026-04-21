@@ -1,0 +1,23 @@
+---
+id: "пятьдесят"
+title: "пятьдесят"
+source_key: "lexicon_reverse"
+source_index: 704
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "пятьдесят",
+  "page_list": [
+    256,
+    257
+  ],
+  "pages": "256, 257",
+  "discussed": true
+}
+```

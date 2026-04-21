@@ -1,0 +1,22 @@
+---
+id: "журнал"
+title: "журнал"
+source_key: "lexicon_reverse"
+source_index: 404
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "журнал",
+  "page_list": [
+    191
+  ],
+  "pages": "191",
+  "discussed": false
+}
+```

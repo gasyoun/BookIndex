@@ -1,0 +1,25 @@
+---
+id: "обуза"
+title: "обуза"
+source_key: "lexicon"
+source_index: 685
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "обуза",
+  "pages": "209",
+  "page_list": [
+    209
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

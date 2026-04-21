@@ -1,0 +1,25 @@
+---
+id: "граждани́н"
+title: "граждани́н"
+source_key: "lexicon"
+source_index: 248
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "граждани́н",
+  "pages": "373",
+  "page_list": [
+    373
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

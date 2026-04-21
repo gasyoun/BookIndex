@@ -1,0 +1,22 @@
+---
+id: "ло́вишь"
+title: "ло́вишь"
+source_key: "lexicon_reverse"
+source_index: 1000
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "ло́вишь",
+  "page_list": [
+    266
+  ],
+  "pages": "266",
+  "discussed": false
+}
+```

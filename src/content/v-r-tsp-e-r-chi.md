@@ -1,0 +1,25 @@
+---
+id: "вѣрѣцп/еѣрѣчи"
+title: "вѣрѣцп/еѣрѣчи"
+source_key: "lexicon"
+source_index: 204
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "вѣрѣцп/еѣрѣчи",
+  "pages": "297",
+  "page_list": [
+    297
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

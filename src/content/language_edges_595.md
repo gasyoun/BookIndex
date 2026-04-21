@@ -1,0 +1,19 @@
+---
+id: "language_edges_595"
+title: "language_edges_595"
+source_key: "language_edges"
+source_index: 594
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "древнегерманские",
+  "target": "турецкий",
+  "weight": 2.82
+}
+```

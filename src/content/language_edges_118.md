@@ -1,0 +1,19 @@
+---
+id: "language_edges_118"
+title: "language_edges_118"
+source_key: "language_edges"
+source_index: 117
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "праиндоевропейский",
+  "target": "санскрит",
+  "weight": 14.18
+}
+```

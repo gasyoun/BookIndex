@@ -1,0 +1,25 @@
+---
+id: "̲*LJ"
+title: "̲*LJ"
+source_key: "lexicon_tech"
+source_index: 5
+tags: ["lexicon_tech"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "̲*LJ",
+  "pages": "280",
+  "page_list": [
+    280
+  ],
+  "discussed": false,
+  "category": "tech",
+  "needs_review": true,
+  "contexts": {}
+}
+```

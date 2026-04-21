@@ -1,0 +1,22 @@
+---
+id: "factum"
+title: "factum"
+source_key: "lexicon_reverse"
+source_index: 1282
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "factum",
+  "page_list": [
+    152
+  ],
+  "pages": "152",
+  "discussed": false
+}
+```

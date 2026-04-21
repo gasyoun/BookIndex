@@ -1,0 +1,25 @@
+---
+id: "исти́на"
+title: "исти́на"
+source_key: "lexicon"
+source_index: 492
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "исти́на",
+  "pages": "382",
+  "page_list": [
+    382
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

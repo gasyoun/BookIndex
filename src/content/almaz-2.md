@@ -1,0 +1,22 @@
+---
+id: "алмаз"
+title: "алмаз"
+source_key: "lexicon_reverse"
+source_index: 244
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "алмаз",
+  "page_list": [
+    242
+  ],
+  "pages": "242",
+  "discussed": false
+}
+```

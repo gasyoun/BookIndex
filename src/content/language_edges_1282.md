@@ -1,0 +1,19 @@
+---
+id: "language_edges_1282"
+title: "language_edges_1282"
+source_key: "language_edges"
+source_index: 1281
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "германские",
+  "target": "латышский",
+  "weight": 1.11
+}
+```

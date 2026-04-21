@@ -1,0 +1,22 @@
+---
+id: "моря́"
+title: "моря́"
+source_key: "lexicon_reverse"
+source_index: 613
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "моря́",
+  "page_list": [
+    265
+  ],
+  "pages": "265",
+  "discussed": false
+}
+```

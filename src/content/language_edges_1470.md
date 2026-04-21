@@ -1,0 +1,19 @@
+---
+id: "language_edges_1470"
+title: "language_edges_1470"
+source_key: "language_edges"
+source_index: 1469
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "западноевропейские",
+  "target": "словенский",
+  "weight": 0.96
+}
+```

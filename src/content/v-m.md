@@ -1,0 +1,25 @@
+---
+id: "въ̂ъмъ"
+title: "въ̂ъмъ"
+source_key: "lexicon"
+source_index: 178
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "въ̂ъмъ",
+  "pages": "310",
+  "page_list": [
+    310
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

@@ -1,0 +1,22 @@
+---
+id: "zens"
+title: "zens"
+source_key: "lexicon_reverse"
+source_index: 1340
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "zens",
+  "page_list": [
+    67
+  ],
+  "pages": "67",
+  "discussed": false
+}
+```

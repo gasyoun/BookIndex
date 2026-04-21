@@ -1,0 +1,25 @@
+---
+id: "забытъ"
+title: "забытъ"
+source_key: "lexicon"
+source_index: 375
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "забытъ",
+  "pages": "359",
+  "page_list": [
+    359
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

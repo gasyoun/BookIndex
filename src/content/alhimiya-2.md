@@ -1,0 +1,22 @@
+---
+id: "алхимия"
+title: "алхимия"
+source_key: "lexicon_reverse"
+source_index: 1063
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "алхимия",
+  "page_list": [
+    221
+  ],
+  "pages": "221",
+  "discussed": false
+}
+```

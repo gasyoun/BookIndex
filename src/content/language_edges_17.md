@@ -1,0 +1,19 @@
+---
+id: "language_edges_17"
+title: "language_edges_17"
+source_key: "language_edges"
+source_index: 16
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "арабский",
+  "target": "европейские",
+  "weight": 67.52
+}
+```

@@ -1,0 +1,23 @@
+---
+id: "у́горь_(I.)"
+title: "у́горь_(I.)"
+source_key: "lexicon_reverse"
+source_index: 1267
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "у́горь_(I.)",
+  "page_list": [
+    378,
+    380
+  ],
+  "pages": "378, 380",
+  "discussed": true
+}
+```

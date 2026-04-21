@@ -1,0 +1,25 @@
+---
+id: "?Це"
+title: "?Це"
+source_key: "lexicon_tech"
+source_index: 27
+tags: ["lexicon_tech"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "?Це",
+  "pages": "310",
+  "page_list": [
+    310
+  ],
+  "discussed": false,
+  "category": "tech",
+  "needs_review": true,
+  "contexts": {}
+}
+```

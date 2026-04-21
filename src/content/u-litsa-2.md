@@ -1,0 +1,22 @@
+---
+id: "у́лица"
+title: "у́лица"
+source_key: "lexicon_reverse"
+source_index: 119
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "у́лица",
+  "page_list": [
+    382
+  ],
+  "pages": "382",
+  "discussed": false
+}
+```

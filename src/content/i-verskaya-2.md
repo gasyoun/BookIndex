@@ -1,0 +1,22 @@
+---
+id: "И́верская"
+title: "И́верская"
+source_key: "lexicon_reverse"
+source_index: 1056
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "И́верская",
+  "page_list": [
+    382
+  ],
+  "pages": "382",
+  "discussed": false
+}
+```

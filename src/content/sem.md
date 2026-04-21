@@ -1,0 +1,26 @@
+---
+id: "семъ"
+title: "семъ"
+source_key: "lexicon"
+source_index: 895
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "семъ",
+  "pages": "253, 257",
+  "page_list": [
+    253,
+    257
+  ],
+  "discussed": true,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

@@ -1,0 +1,26 @@
+---
+id: "?Иванов"
+title: "?Иванов"
+source_key: "names"
+source_index: 92
+tags: ["names"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "?Иванов",
+  "page_list": [
+    259
+  ],
+  "pages": "259",
+  "discussed": false,
+  "category": "VI",
+  "subcategory": "linguist",
+  "needs_review": true,
+  "note": "Вяч. Вс. Иванов или однофамилец — проверить контекст"
+}
+```

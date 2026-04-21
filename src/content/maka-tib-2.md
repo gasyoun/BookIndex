@@ -1,0 +1,22 @@
+---
+id: "makätib"
+title: "makätib"
+source_key: "lexicon_reverse"
+source_index: 1183
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "makätib",
+  "page_list": [
+    219
+  ],
+  "pages": "219",
+  "discussed": false
+}
+```

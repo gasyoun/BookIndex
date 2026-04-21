@@ -1,0 +1,22 @@
+---
+id: "muhammid"
+title: "muhammid"
+source_key: "lexicon_reverse"
+source_index: 1203
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "muhammid",
+  "page_list": [
+    225
+  ],
+  "pages": "225",
+  "discussed": false
+}
+```

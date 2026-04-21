@@ -1,0 +1,25 @@
+---
+id: "заумь"
+title: "заумь"
+source_key: "lexicon"
+source_index: 424
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "заумь",
+  "pages": "376",
+  "page_list": [
+    376
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

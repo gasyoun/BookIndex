@@ -1,0 +1,25 @@
+---
+id: "ösem"
+title: "ösem"
+source_key: "lexicon"
+source_index: 1361
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "ösem",
+  "pages": "255",
+  "page_list": [
+    255
+  ],
+  "discussed": false,
+  "category": "tech",
+  "needs_review": true,
+  "contexts": {}
+}
+```

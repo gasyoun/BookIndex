@@ -1,0 +1,19 @@
+---
+id: "language_edges_1575"
+title: "language_edges_1575"
+source_key: "language_edges"
+source_index: 1574
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "новгородский",
+  "target": "церковнославянский",
+  "weight": 0.86
+}
+```

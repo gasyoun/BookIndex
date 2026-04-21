@@ -1,0 +1,19 @@
+---
+id: "language_edges_481"
+title: "language_edges_481"
+source_key: "language_edges"
+source_index: 480
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "болгарский",
+  "target": "итальянский",
+  "weight": 3.59
+}
+```

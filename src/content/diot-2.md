@@ -1,0 +1,23 @@
+---
+id: "diot"
+title: "diot"
+source_key: "lexicon_reverse"
+source_index: 1368
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "diot",
+  "page_list": [
+    60,
+    75
+  ],
+  "pages": "60, 75",
+  "discussed": true
+}
+```

@@ -1,0 +1,25 @@
+---
+id: "prosty"
+title: "prosty"
+source_key: "lexicon"
+source_index: 1251
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "prosty",
+  "pages": "346",
+  "page_list": [
+    346
+  ],
+  "discussed": false,
+  "category": "lat",
+  "needs_review": false,
+  "contexts": {}
+}
+```

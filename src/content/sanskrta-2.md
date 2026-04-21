@@ -1,0 +1,22 @@
+---
+id: "санскрта"
+title: "санскрта"
+source_key: "lexicon_reverse"
+source_index: 116
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "санскрта",
+  "page_list": [
+    146
+  ],
+  "pages": "146",
+  "discussed": false
+}
+```

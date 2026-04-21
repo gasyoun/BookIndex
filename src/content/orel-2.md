@@ -1,0 +1,23 @@
+---
+id: "орёл"
+title: "орёл"
+source_key: "lexicon_reverse"
+source_index: 456
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "орёл",
+  "page_list": [
+    378,
+    379
+  ],
+  "pages": "378, 379",
+  "discussed": true
+}
+```

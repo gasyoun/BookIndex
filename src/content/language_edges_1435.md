@@ -1,0 +1,19 @@
+---
+id: "language_edges_1435"
+title: "language_edges_1435"
+source_key: "language_edges"
+source_index: 1434
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "древнепрусский",
+  "target": "французский",
+  "weight": 1
+}
+```

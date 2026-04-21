@@ -1,0 +1,22 @@
+---
+id: "Ше́кспир"
+title: "Ше́кспир"
+source_key: "lexicon_reverse"
+source_index: 641
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "Ше́кспир",
+  "page_list": [
+    243
+  ],
+  "pages": "243",
+  "discussed": false
+}
+```

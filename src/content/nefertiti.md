@@ -1,0 +1,25 @@
+---
+id: "Нефертити"
+title: "Нефертити"
+source_key: "lexicon"
+source_index: 672
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "Нефертити",
+  "pages": "86",
+  "page_list": [
+    86
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

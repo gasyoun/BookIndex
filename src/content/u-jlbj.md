@@ -1,0 +1,25 @@
+---
+id: "u-JLbj"
+title: "u-JLbj"
+source_key: "lexicon"
+source_index: 1322
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "u-JLbj",
+  "pages": "229",
+  "page_list": [
+    229
+  ],
+  "discussed": false,
+  "category": "lat",
+  "needs_review": false,
+  "contexts": {}
+}
+```

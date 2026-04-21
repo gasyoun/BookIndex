@@ -1,0 +1,22 @@
+---
+id: "зау́треня"
+title: "зау́треня"
+source_key: "lexicon_reverse"
+source_index: 1077
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "зау́треня",
+  "page_list": [
+    374
+  ],
+  "pages": "374",
+  "discussed": false
+}
+```

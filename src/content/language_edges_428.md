@@ -1,0 +1,19 @@
+---
+id: "language_edges_428"
+title: "language_edges_428"
+source_key: "language_edges"
+source_index: 427
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "галльско-романские",
+  "target": "старофранцузский",
+  "weight": 4.03
+}
+```

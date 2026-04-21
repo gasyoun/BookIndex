@@ -1,0 +1,22 @@
+---
+id: "̂lld"
+title: "̂lld"
+source_key: "lexicon_reverse"
+source_index: 1204
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "̂lld",
+  "page_list": [
+    156
+  ],
+  "pages": "156",
+  "discussed": false
+}
+```

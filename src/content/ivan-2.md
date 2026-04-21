@@ -1,0 +1,22 @@
+---
+id: "иванъ"
+title: "иванъ"
+source_key: "lexicon_reverse"
+source_index: 768
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "иванъ",
+  "page_list": [
+    278
+  ],
+  "pages": "278",
+  "discussed": false
+}
+```

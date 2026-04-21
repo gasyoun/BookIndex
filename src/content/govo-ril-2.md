@@ -1,0 +1,22 @@
+---
+id: "гово́рил"
+title: "гово́рил"
+source_key: "lexicon_reverse"
+source_index: 436
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "гово́рил",
+  "page_list": [
+    259
+  ],
+  "pages": "259",
+  "discussed": false
+}
+```

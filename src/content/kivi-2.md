@@ -1,0 +1,22 @@
+---
+id: "киви"
+title: "киви"
+source_key: "lexicon_reverse"
+source_index: 251
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "киви",
+  "page_list": [
+    185
+  ],
+  "pages": "185",
+  "discussed": false
+}
+```

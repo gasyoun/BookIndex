@@ -1,0 +1,24 @@
+---
+id: "dĳtu"
+title: "dĳtu"
+source_key: "lexicon_reverse"
+source_index: 1387
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "dĳtu",
+  "page_list": [
+    69,
+    71,
+    75
+  ],
+  "pages": "69, 71, 75",
+  "discussed": true
+}
+```

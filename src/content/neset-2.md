@@ -1,0 +1,25 @@
+---
+id: "несеть"
+title: "несеть"
+source_key: "lexicon"
+source_index: 668
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "несеть",
+  "pages": "159",
+  "page_list": [
+    159
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

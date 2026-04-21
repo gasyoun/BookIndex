@@ -1,0 +1,19 @@
+---
+id: "language_edges_1727"
+title: "language_edges_1727"
+source_key: "language_edges"
+source_index: 1726
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "библейский",
+  "target": "папуасский",
+  "weight": 0.62
+}
+```

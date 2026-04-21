@@ -1,0 +1,19 @@
+---
+id: "language_edges_645"
+title: "language_edges_645"
+source_key: "language_edges"
+source_index: 644
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "восточнославянские",
+  "target": "датский",
+  "weight": 2.51
+}
+```

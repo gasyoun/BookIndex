@@ -1,0 +1,22 @@
+---
+id: "Париж"
+title: "Париж"
+source_key: "lexicon_reverse"
+source_index: 239
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "Париж",
+  "page_list": [
+    248
+  ],
+  "pages": "248",
+  "discussed": false
+}
+```

@@ -1,0 +1,22 @@
+---
+id: "вои́на"
+title: "вои́на"
+source_key: "lexicon_reverse"
+source_index: 89
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "вои́на",
+  "page_list": [
+    373
+  ],
+  "pages": "373",
+  "discussed": false
+}
+```

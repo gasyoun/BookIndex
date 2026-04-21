@@ -1,0 +1,19 @@
+---
+id: "language_edges_447"
+title: "language_edges_447"
+source_key: "language_edges"
+source_index: 446
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "индийские",
+  "target": "среднеиндийские",
+  "weight": 3.81
+}
+```

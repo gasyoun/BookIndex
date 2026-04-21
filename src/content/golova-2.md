@@ -1,0 +1,23 @@
+---
+id: "голова"
+title: "голова"
+source_key: "lexicon_reverse"
+source_index: 14
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "голова",
+  "page_list": [
+    193,
+    239
+  ],
+  "pages": "193, 239",
+  "discussed": true
+}
+```

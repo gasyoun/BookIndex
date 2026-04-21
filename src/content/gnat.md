@@ -1,0 +1,25 @@
+---
+id: "гнать"
+title: "гнать"
+source_key: "lexicon"
+source_index: 223
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "гнать",
+  "pages": "357",
+  "page_list": [
+    357
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

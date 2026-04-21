@@ -1,0 +1,25 @@
+---
+id: "па́фка"
+title: "па́фка"
+source_key: "lexicon"
+source_index: 722
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "па́фка",
+  "pages": "376",
+  "page_list": [
+    376
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

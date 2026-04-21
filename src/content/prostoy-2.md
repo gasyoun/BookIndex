@@ -1,0 +1,22 @@
+---
+id: "простой"
+title: "простой"
+source_key: "lexicon_reverse"
+source_index: 333
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "простой",
+  "page_list": [
+    345
+  ],
+  "pages": "345",
+  "discussed": false
+}
+```

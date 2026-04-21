@@ -1,0 +1,19 @@
+---
+id: "language_edges_1101"
+title: "language_edges_1101"
+source_key: "language_edges"
+source_index: 1100
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "дравидские",
+  "target": "санскрит",
+  "weight": 1.19
+}
+```

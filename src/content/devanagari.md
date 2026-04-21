@@ -1,0 +1,25 @@
+---
+id: "деванагари"
+title: "деванагари"
+source_key: "lexicon"
+source_index: 280
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "деванагари",
+  "pages": "142",
+  "page_list": [
+    142
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

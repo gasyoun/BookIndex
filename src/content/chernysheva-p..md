@@ -1,0 +1,31 @@
+---
+id: "Чернышева П."
+title: "Чернышева П."
+source_key: "names"
+source_index: 86
+tags: ["names"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "Чернышева П.",
+  "pages": "127",
+  "category": "VI",
+  "discussed": false,
+  "letter": "Ч",
+  "letter_change": false,
+  "subcategory": "participant",
+  "contexts": {},
+  "page_list": [
+    127
+  ],
+  "epoch": null,
+  "chapters": [
+    "Историческая лингвистика (продолж.)"
+  ]
+}
+```

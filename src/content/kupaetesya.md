@@ -1,0 +1,25 @@
+---
+id: "купаетеся"
+title: "купаетеся"
+source_key: "lexicon"
+source_index: 549
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "купаетеся",
+  "pages": "67",
+  "page_list": [
+    67
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

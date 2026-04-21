@@ -1,0 +1,25 @@
+---
+id: "ва́ришь"
+title: "ва́ришь"
+source_key: "lexicon"
+source_index: 77
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "ва́ришь",
+  "pages": "266",
+  "page_list": [
+    266
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

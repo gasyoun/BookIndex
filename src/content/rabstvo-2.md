@@ -1,0 +1,22 @@
+---
+id: "рабство"
+title: "рабство"
+source_key: "lexicon_reverse"
+source_index: 526
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "рабство",
+  "page_list": [
+    335
+  ],
+  "pages": "335",
+  "discussed": false
+}
+```

@@ -1,0 +1,19 @@
+---
+id: "language_edges_1876"
+title: "language_edges_1876"
+source_key: "language_edges"
+source_index: 1875
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "древнеиндийские",
+  "target": "украинский",
+  "weight": 0.15
+}
+```

@@ -1,0 +1,25 @@
+---
+id: "исто́вый"
+title: "исто́вый"
+source_key: "lexicon"
+source_index: 494
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "исто́вый",
+  "pages": "382",
+  "page_list": [
+    382
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

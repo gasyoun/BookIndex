@@ -1,0 +1,25 @@
+---
+id: "во́ин"
+title: "во́ин"
+source_key: "lexicon"
+source_index: 142
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "во́ин",
+  "pages": "373",
+  "page_list": [
+    373
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

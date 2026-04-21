@@ -1,0 +1,22 @@
+---
+id: "̂Ьновѣі"
+title: "̂Ьновѣі"
+source_key: "lexicon_reverse"
+source_index: 1402
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "̂Ьновѣі",
+  "page_list": [
+    295
+  ],
+  "pages": "295",
+  "discussed": false
+}
+```

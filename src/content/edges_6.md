@@ -1,0 +1,19 @@
+---
+id: "edges_6"
+title: "edges_6"
+source_key: "edges"
+source_index: 5
+tags: ["edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "Иван III",
+  "target": "Иван IV (//Грозный)",
+  "weight": 4.74
+}
+```

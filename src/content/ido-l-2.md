@@ -1,0 +1,22 @@
+---
+id: "идо́л"
+title: "идо́л"
+source_key: "lexicon_reverse"
+source_index: 452
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "идо́л",
+  "page_list": [
+    382
+  ],
+  "pages": "382",
+  "discussed": false
+}
+```

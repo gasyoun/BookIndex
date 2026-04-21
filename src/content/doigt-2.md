@@ -1,0 +1,24 @@
+---
+id: "doigt"
+title: "doigt"
+source_key: "lexicon_reverse"
+source_index: 1360
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "doigt",
+  "page_list": [
+    70,
+    75,
+    85
+  ],
+  "pages": "70, 75, 85",
+  "discussed": true
+}
+```

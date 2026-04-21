@@ -1,0 +1,22 @@
+---
+id: "rawada"
+title: "rawada"
+source_key: "lexicon_reverse"
+source_index: 1151
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "rawada",
+  "page_list": [
+    232
+  ],
+  "pages": "232",
+  "discussed": false
+}
+```

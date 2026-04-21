@@ -1,0 +1,23 @@
+---
+id: "Tf"
+title: "Tf"
+source_key: "lexicon_reverse"
+source_index: 1230
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "Tf",
+  "page_list": [
+    162,
+    293
+  ],
+  "pages": "162, 293",
+  "discussed": true
+}
+```

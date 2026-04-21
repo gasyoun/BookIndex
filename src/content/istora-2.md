@@ -1,0 +1,22 @@
+---
+id: "истора"
+title: "истора"
+source_key: "lexicon_reverse"
+source_index: 102
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "истора",
+  "page_list": [
+    332
+  ],
+  "pages": "332",
+  "discussed": false
+}
+```

@@ -1,0 +1,19 @@
+---
+id: "language_edges_453"
+title: "language_edges_453"
+source_key: "language_edges"
+source_index: 452
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "латынь",
+  "target": "украинский",
+  "weight": 3.76
+}
+```

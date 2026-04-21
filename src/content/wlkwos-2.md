@@ -1,0 +1,22 @@
+---
+id: "wlkwos"
+title: "wlkwos"
+source_key: "lexicon_reverse"
+source_index: 1343
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "wlkwos",
+  "page_list": [
+    112
+  ],
+  "pages": "112",
+  "discussed": false
+}
+```

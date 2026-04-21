@@ -1,0 +1,22 @@
+---
+id: "te"
+title: "te"
+source_key: "lexicon_reverse"
+source_index: 1222
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "te",
+  "page_list": [
+    37
+  ],
+  "pages": "37",
+  "discussed": false
+}
+```

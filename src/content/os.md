@@ -1,0 +1,25 @@
+---
+id: "-ос"
+title: "-ос"
+source_key: "lexicon_tech"
+source_index: 11
+tags: ["lexicon_tech"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "-ос",
+  "pages": "113",
+  "page_list": [
+    113
+  ],
+  "discussed": false,
+  "category": "tech",
+  "needs_review": true,
+  "contexts": {}
+}
+```

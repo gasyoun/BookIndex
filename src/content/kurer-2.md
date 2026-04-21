@@ -1,0 +1,22 @@
+---
+id: "курьер"
+title: "курьер"
+source_key: "lexicon_reverse"
+source_index: 633
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "курьер",
+  "page_list": [
+    191
+  ],
+  "pages": "191",
+  "discussed": false
+}
+```

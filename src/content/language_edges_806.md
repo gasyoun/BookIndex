@@ -1,0 +1,19 @@
+---
+id: "language_edges_806"
+title: "language_edges_806"
+source_key: "language_edges"
+source_index: 805
+tags: ["language_edges"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "source": "латинский",
+  "target": "румынский",
+  "weight": 2.07
+}
+```

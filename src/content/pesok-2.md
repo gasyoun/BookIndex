@@ -1,0 +1,23 @@
+---
+id: "песок"
+title: "песок"
+source_key: "lexicon_reverse"
+source_index: 385
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "песок",
+  "page_list": [
+    103,
+    108
+  ],
+  "pages": "103, 108",
+  "discussed": true
+}
+```

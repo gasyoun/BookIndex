@@ -1,0 +1,25 @@
+---
+id: "народ"
+title: "народ"
+source_key: "lexicon"
+source_index: 648
+tags: ["lexicon"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "народ",
+  "pages": "167",
+  "page_list": [
+    167
+  ],
+  "discussed": false,
+  "category": "rus",
+  "needs_review": false,
+  "contexts": {}
+}
+```

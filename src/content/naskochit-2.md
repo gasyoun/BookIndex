@@ -1,0 +1,22 @@
+---
+id: "наскочить"
+title: "наскочить"
+source_key: "lexicon_reverse"
+source_index: 968
+tags: ["lexicon_reverse"]
+---
+
+_Основное текстовое поле не найдено; см. JSON ниже._
+
+## Source JSON
+
+```json
+{
+  "head": "наскочить",
+  "page_list": [
+    351
+  ],
+  "pages": "351",
+  "discussed": false
+}
+```
