@@ -74588,7 +74588,7 @@ function renderAccentSafeInHtmlTextNodes(html) {
 }
 
 function escapeRegexLiteral(s) {
-  return String(s || '').replace(/[.*+?^${}()|[\]\\]/g, '\\__APP_SCRIPT__');
+  return String(s || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function buildContextLinkMatchTerms(head) {
@@ -74804,7 +74804,7 @@ function highlightInContext(text, head) {
   const surname = parts[0];
   if (!surname || surname.length < 3) return renderAccentSafe(text);
   const stem = surname.length > 5 ? surname.slice(0, -2) : surname;
-  const escStem = stem.replace(/[.*+?^${}()|[\]\\]/g, '\\__APP_SCRIPT__');
+  const escStem = stem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   try {
     const re = new RegExp(escStem + '[А-Яа-яёЁA-Za-z]{0,5}', 'gi');
     const highlighted = escapeHtml(text).replace(re, m => '<mark>' + m + '</mark>');
@@ -76200,7 +76200,7 @@ function highlightSearchMatch(text, query) {
   const source = String(text || '');
   const q = String(query || '').trim();
   if (!q) return escapeHtml(source);
-  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\__APP_SCRIPT__');
+  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   let re;
   try {
     re = new RegExp(esc, 'ig');
@@ -76977,7 +76977,7 @@ function normalizeBibtexText(value) {
 function escapeBibtexValue(value) {
   return normalizeBibtexText(value)
     .replace(/\\/g, '\\\\')
-    .replace(/[{}]/g, '\\__APP_SCRIPT__');
+    .replace(/[{}]/g, '\\$&');
 }
 
 function buildBibtexKey(seed, year, index = 0) {
@@ -81758,7 +81758,7 @@ function findSnippetMatch(snippet, query) {
   const text = String(snippet || '');
   const q = String(query || '').trim();
   if (!text || !q) return null;
-  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\__APP_SCRIPT__');
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   try {
     const re = new RegExp(escaped, 'i');
     const m = re.exec(text);

@@ -55,8 +55,8 @@ let jsText = readFileSync(args.js, 'utf8');
 const buildId = args.buildId.trim() || computeBuildId(dataText, jsText, templateText);
 jsText = jsText.replaceAll('__APP_BUILD_ID__', buildId);
 const html = templateText
-  .replace('__APP_DATA_JSON__', escapeJsonForHtmlScript(dataText))
-  .replace('__APP_SCRIPT__', jsText);
+  .split('__APP_DATA_JSON__').join(escapeJsonForHtmlScript(dataText))
+  .split('__APP_SCRIPT__').join(jsText);
 
 writeFileSync(args.out, `\uFEFF${html}`, 'utf8');
 console.log(`OK: built ${join(process.cwd(), args.out)} (build_id=${buildId})`);
