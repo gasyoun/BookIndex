@@ -49,6 +49,7 @@ const SHELL_ASSETS = [
   './vendor/alpinejs.cdn.min.js',
   './scripts/viz/build-viz-cache.js',
   './scripts/viz/build-viz-cache-worker.js',
+  './scripts/viz/viz-state.js',
   './scripts/viz/cooccurrence-graph.js',
   './scripts/viz/discovery-timeline.js',
   './scripts/viz/heatmap-matrix.js',

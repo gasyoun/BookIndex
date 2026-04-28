@@ -42,12 +42,15 @@
     });
     const mapId = `viz-century-map-${Date.now()}-${Math.floor(Math.random() * 1e5)}`;
 
-    let currentCentury = 21;
-    if (entities.length) {
+    const params = typeof root.readVizParams === 'function' ? root.readVizParams() : new URLSearchParams();
+    let currentCentury = Number(params.get('century') || 21);
+    if (!Number.isFinite(currentCentury) && entities.length) {
       const sorted = entities.slice().sort((a, b) => Number(b.century) - Number(a.century));
       const picked = finiteNumber(sorted[0] && sorted[0].century);
       if (Number.isFinite(picked)) currentCentury = Math.max(8, Math.min(21, picked));
     }
+    if (!Number.isFinite(currentCentury)) currentCentury = 21;
+    currentCentury = Math.max(8, Math.min(21, currentCentury));
 
     container.innerHTML = [
       '<div class="viz-card viz-map-timeline">',
@@ -56,24 +59,23 @@
       `      <input id="viz-century-range" type="range" min="8" max="21" step="1" value="${String(currentCentury)}">`,
       `      <span id="viz-century-label">${String(currentCentury)}</span>`,
       '    </label>',
+      '    <button type="button" id="viz-century-play" class="related-link related-link-btn" aria-pressed="false">Play</button>',
       '    <span id="viz-century-count" class="viz-muted"></span>',
       '  </div>',
-      `  <div class="viz-map-canvas" style="position:relative;"><div id="${mapId}" style="height:540px;border:1px solid var(--line);border-radius:8px;overflow:hidden;"></div></div>`,
+      `  <div class="viz-map-canvas"><div id="${mapId}" class="viz-map-leaflet"></div></div>`,
       '</div>',
     ].join('');
 
     const slider = container.querySelector('#viz-century-range');
     const label = container.querySelector('#viz-century-label');
+    const playBtn = container.querySelector('#viz-century-play');
     const countEl = container.querySelector('#viz-century-count');
     const canvas = container.querySelector('.viz-map-canvas');
     const map = root.L.map(mapId, { preferCanvas: true }).setView([46, 28], 3);
     const layer = root.L.layerGroup().addTo(map);
     const fallback = document.createElement('div');
     fallback.className = 'viz-empty-state';
-    fallback.style.position = 'absolute';
-    fallback.style.right = '10px';
-    fallback.style.top = '10px';
-    fallback.style.maxWidth = '280px';
+    fallback.classList.add('viz-map-fallback');
     fallback.style.display = 'none';
     fallback.innerHTML = '<strong>Офлайн-режим карты</strong><br>Тайлы недоступны, но маркеры и навигация работают.';
     if (canvas) canvas.appendChild(fallback);
@@ -129,28 +131,82 @@
       }
     }
 
+    let autoplayTimer = null;
+    function writeCenturyParams(autoplay) {
+      if (typeof root.writeVizParams !== 'function') return;
+      root.writeVizParams({
+        century: currentCentury,
+        autoplay: autoplay ? 1 : null,
+      });
+    }
+
+    function stopAutoplay(writeState) {
+      if (autoplayTimer) clearInterval(autoplayTimer);
+      autoplayTimer = null;
+      if (playBtn) {
+        playBtn.textContent = 'Play';
+        playBtn.setAttribute('aria-pressed', 'false');
+      }
+      if (writeState) writeCenturyParams(false);
+    }
+
+    function startAutoplay() {
+      if (autoplayTimer) return;
+      if (playBtn) {
+        playBtn.textContent = 'Pause';
+        playBtn.setAttribute('aria-pressed', 'true');
+      }
+      writeCenturyParams(true);
+      autoplayTimer = setInterval(() => {
+        const max = slider ? Number(slider.max || 21) : 21;
+        if (currentCentury >= max) {
+          stopAutoplay(true);
+          return;
+        }
+        currentCentury += 1;
+        if (slider) slider.value = String(currentCentury);
+        if (label) label.textContent = String(currentCentury);
+        redraw(currentCentury);
+        writeCenturyParams(true);
+      }, 800);
+    }
+
     if (slider) {
       slider.oninput = () => {
+        stopAutoplay(false);
         currentCentury = Number(slider.value || currentCentury);
         if (!Number.isFinite(currentCentury)) currentCentury = 21;
         currentCentury = Math.max(8, Math.min(21, currentCentury));
         if (label) label.textContent = String(currentCentury);
         redraw(currentCentury);
+        writeCenturyParams(false);
+      };
+    }
+    if (playBtn) {
+      playBtn.onclick = () => {
+        if (autoplayTimer) stopAutoplay(true);
+        else startAutoplay();
       };
     }
 
     redraw(currentCentury);
+    writeCenturyParams(params.get('autoplay') === '1');
+    if (params.get('autoplay') === '1') startAutoplay();
     setTimeout(() => {
       try { map.invalidateSize(); } catch (e) {}
     }, 0);
 
     const onVisibility = () => {
-      if (document.hidden) return;
+      if (document.hidden) {
+        stopAutoplay(true);
+        return;
+      }
       try { map.invalidateSize(); } catch (e) {}
     };
     document.addEventListener('visibilitychange', onVisibility);
     container.__vizCleanup = () => {
       document.removeEventListener('visibilitychange', onVisibility);
+      stopAutoplay(false);
       try { map.remove(); } catch (e) {}
     };
   }

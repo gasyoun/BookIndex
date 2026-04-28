@@ -34,7 +34,8 @@
 
     const cache = root.buildVizCache(root.APP_DATA || {});
     const chapters = asArray(root.APP_DATA && root.APP_DATA.chapters);
-    let currentTop = Number.isFinite(Number(topTerms)) ? Number(topTerms) : 15;
+    const params = typeof root.readVizParams === 'function' ? root.readVizParams() : new URLSearchParams();
+    let currentTop = Number.isFinite(Number(topTerms)) ? Number(topTerms) : Number(params.get('top') || 15);
     if (currentTop < 5) currentTop = 5;
     if (currentTop > 30) currentTop = 30;
     let searchNeedle = '';
@@ -51,7 +52,7 @@
       '    </label>',
       '  </div>',
       '  <svg id="viz-bump-svg" width="100%" height="560" viewBox="0 0 1180 560" preserveAspectRatio="xMidYMid meet"></svg>',
-      '  <div id="viz-bump-detail" class="viz-detail" style="margin-top:10px;"></div>',
+      '  <div id="viz-bump-detail" class="viz-detail viz-detail-spaced"></div>',
       '</div>',
     ].join('');
 
@@ -192,13 +193,35 @@
         .style('cursor', 'pointer')
         .on('click', (_, d) => renderDetail(d.term, d.chapterIndex));
 
+      const labelRows = series
+        .map((d, i) => ({
+          term: d.term,
+          rawY: y(d.values[d.values.length - 1].rank) + 4,
+          color: color(i),
+        }))
+        .sort((a, b) => a.rawY - b.rawY);
+      const labelGap = 13;
+      for (let i = 1; i < labelRows.length; i += 1) {
+        if (labelRows[i].rawY < labelRows[i - 1].rawY + labelGap) {
+          labelRows[i].rawY = labelRows[i - 1].rawY + labelGap;
+        }
+      }
+      for (let i = labelRows.length - 1; i >= 0; i -= 1) {
+        if (labelRows[i].rawY > innerH) labelRows[i].rawY = innerH;
+        if (i > 0 && labelRows[i - 1].rawY > labelRows[i].rawY - labelGap) {
+          labelRows[i - 1].rawY = labelRows[i].rawY - labelGap;
+        }
+      }
+      const labelYByTerm = new Map(labelRows.map((row) => [row.term, Math.max(8, Math.min(innerH, row.rawY))]));
+
       const labels = g.append('g').selectAll('text')
         .data(series)
         .join('text')
         .attr('x', innerW + 6)
-        .attr('y', (d) => y(d.values[d.values.length - 1].rank) + 4)
+        .attr('y', (d) => labelYByTerm.get(d.term) || 12)
         .attr('fill', (_, i) => color(i))
         .attr('font-size', 11)
+        .attr('dominant-baseline', 'middle')
         .text((d) => d.term);
 
       function highlight(term) {
@@ -227,12 +250,14 @@
         currentTop = Number(topInput.value || 15);
         if (!Number.isFinite(currentTop)) currentTop = 15;
         if (topLabel) topLabel.textContent = String(currentTop);
+        if (typeof root.writeVizParams === 'function') root.writeVizParams({ top: currentTop });
         redraw(currentTop);
       };
     }
     if (searchInput) {
       searchInput.oninput = () => {
         searchNeedle = normalizeNeedle(searchInput.value);
+        if (typeof root.writeVizParams === 'function') root.writeVizParams({ filter: searchNeedle || null, top: currentTop });
         redraw(currentTop);
       };
     }

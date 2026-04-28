@@ -1391,6 +1391,40 @@
     font-variant-numeric: tabular-nums;
   }
 
+  .viz-detail-spaced {
+    margin-top: 10px;
+  }
+  .viz-map-canvas {
+    position: relative;
+  }
+  .viz-map-leaflet {
+    height: 540px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .viz-map-fallback {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    max-width: 280px;
+    z-index: 400;
+  }
+  .tl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px 14px;
+    align-items: stretch;
+    padding-left: 0;
+  }
+  .tl-grid .tl-item {
+    margin: 0;
+    height: 100%;
+  }
+  .tl-grid .tl-item::before {
+    display: none;
+  }
+
   .footer-meta {
     flex-shrink: 0;
     padding-top: 3px;

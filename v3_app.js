@@ -288,7 +288,7 @@ function initEntityTypes() {
   home: {
     title: 'Главная',
     items: [],
-    tabs: ['home', 'home_decl'],
+    tabs: ['home'],
   },
   materials: {
     title: 'Материалы',
@@ -592,6 +592,7 @@ let currentGlossaryTerm = '';
 let pendingScholarAnchor = '';
 let currentScholarAnchor = '';
 let currentVizModule = 'viz03';
+let currentVizQueryString = '';
 let currentKwicSource = 'lexicon';
 let currentKwicQuery = '';
 let currentKwicSort = 'left';
@@ -647,6 +648,7 @@ let vizCacheWarmPromise = null;
 let currentVizCleanup = null;
 let vizScriptLoadPromises = new Map();
 const VIZ_CACHE_WORKER_PATH = './scripts/viz/build-viz-cache-worker.js';
+const VIZ_STATE_SCRIPT_PATH = './scripts/viz/viz-state.js';
 const VIZ_SCRIPT_BY_MODULE = Object.freeze({
   viz01: './scripts/viz/map-timeline.js',
   viz02: './scripts/viz/cooccurrence-graph.js',
@@ -1905,7 +1907,11 @@ function buildHashFromState() {
     const itemHashHead = encodeItemHeadForHash(itemType, selectedItem);
     parts.push('item', itemType, itemHashHead);
   }
-  return buildCanonicalHash(parts);
+  const hash = buildCanonicalHash(parts);
+  if (currentEntity === 'scholar' && currentTab === 'viz' && currentVizQueryString) {
+    return `${hash}?${currentVizQueryString}`;
+  }
+  return hash;
 }
 
 function pushHistoryState() {
@@ -1978,7 +1984,11 @@ function syncNavigationHashOnly() {
 function applyHash(hash) {
   closeGlobalSearchResults();
   if (!hash || hash === '#') return false;
-  const rawParts = hash.replace(/^#/, '').split('/').filter(Boolean);
+  const cleanHash = String(hash || '');
+  const queryStart = cleanHash.indexOf('?');
+  const hashPath = queryStart >= 0 ? cleanHash.slice(0, queryStart) : cleanHash;
+  const hashQuery = queryStart >= 0 ? cleanHash.slice(queryStart + 1) : '';
+  const rawParts = hashPath.replace(/^#/, '').split('/').filter(Boolean);
   if (rawParts.length > MAX_HASH_PARTS + 1) return false;
   if (!rawParts.length) return false;
   const decodedParts = [];
@@ -2047,10 +2057,13 @@ function applyHash(hash) {
     }
   }
   if (entity === 'scholar' && tab === 'viz') {
+    currentVizQueryString = hashQuery.slice(0, 240);
     const modulePos = routedParts.indexOf('module');
     if (modulePos >= 0 && routedParts[modulePos + 1]) {
       currentVizModule = String(routedParts[modulePos + 1] || '').trim() || currentVizModule;
     }
+  } else {
+    currentVizQueryString = '';
   }
   if (entity === 'scholar' && tab === 'page_trends') {
     const rangePos = routedParts.indexOf('range');
@@ -2285,6 +2298,14 @@ function getVizRegistry() {
   return window.VIZ_MODULES;
 }
 
+function setVizQueryString(query) {
+  currentVizQueryString = String(query || '').slice(0, 240);
+}
+
+if (typeof window !== 'undefined') {
+  window.setVizQueryString = setVizQueryString;
+}
+
 function cleanupActiveVizModule() {
   if (typeof currentVizCleanup !== 'function') return;
   try {
@@ -2338,6 +2359,13 @@ function ensureVizCoreLoaded() {
   return loadVizScriptOnce('./scripts/viz/build-viz-cache.js');
 }
 
+function ensureVizStateLoaded() {
+  if (typeof window !== 'undefined' && typeof window.readVizParams === 'function' && typeof window.writeVizParams === 'function') {
+    return Promise.resolve();
+  }
+  return loadVizScriptOnce(VIZ_STATE_SCRIPT_PATH);
+}
+
 function ensureVizModuleLoaded(moduleId) {
   const moduleKey = String(moduleId || '').trim();
   const rendererName = VIZ_RENDERER_BY_MODULE[moduleKey];
@@ -2350,7 +2378,9 @@ function ensureVizModuleLoaded(moduleId) {
 
 function buildVizHash(moduleId) {
   const moduleKey = String(moduleId || currentVizModule || 'viz03').trim();
-  return buildCanonicalHash(['scholar', 'viz', 'module', moduleKey]);
+  const hash = buildCanonicalHash(['scholar', 'viz', 'module', moduleKey]);
+  if (moduleKey === currentVizModule && currentVizQueryString) return `${hash}?${currentVizQueryString}`;
+  return hash;
 }
 
 function warmupVizCacheInWorker() {
@@ -8747,7 +8777,8 @@ function renderVizPanel(container) {
     const moduleDef = catalog.find((m) => m.id === currentVizModule) || catalog[0];
     if (!moduleDef) return;
     host.innerHTML = '<div class="viz-loading">Загрузка модуля…</div>';
-    ensureVizModuleLoaded(moduleDef.id)
+    ensureVizStateLoaded()
+      .then(() => ensureVizModuleLoaded(moduleDef.id))
       .catch(() => null)
       .then(() => warmupVizCacheInWorker().catch(() => null))
       .then(() => {
@@ -8777,6 +8808,7 @@ function renderVizPanel(container) {
     btn.textContent = item.title;
     bindActionWithKeyboard(btn, () => {
       currentVizModule = item.id;
+      currentVizQueryString = '';
       renderVizPanel(container);
       syncNavigationHashOnly();
     });

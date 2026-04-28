@@ -60,20 +60,25 @@
       });
     }
 
-    items.sort((a, b) => b.year - a.year);
+    const params = typeof root.readVizParams === 'function' ? root.readVizParams() : new URLSearchParams();
+    const filterParam = String(params.get('filter') || '').trim();
+    const activeFilters = filterParam
+      ? new Set(filterParam.split(',').map((x) => x.trim()).filter(Boolean))
+      : new Set(['discovery', 'linguist', 'historical']);
+
+    items.sort((a, b) => a.year - b.year);
 
     container.innerHTML = [
       '<div class="viz-card viz-timeline">',
       '  <div class="viz-toolbar">',
-      '    <label><input type="checkbox" data-type="discovery" checked> discovery</label>',
-      '    <label><input type="checkbox" data-type="linguist" checked> linguist</label>',
-      '    <label><input type="checkbox" data-type="historical" checked> historical</label>',
+      `    <label><input type="checkbox" data-type="discovery"${activeFilters.has('discovery') ? ' checked' : ''}> discovery</label>`,
+      `    <label><input type="checkbox" data-type="linguist"${activeFilters.has('linguist') ? ' checked' : ''}> linguist</label>`,
+      `    <label><input type="checkbox" data-type="historical"${activeFilters.has('historical') ? ' checked' : ''}> historical</label>`,
       '  </div>',
       '  <div class="viz-empty-state" style="display:none;">',
       '    <strong>Ничего не выбрано.</strong><br>Включите хотя бы один фильтр (discovery, linguist, historical).',
       '  </div>',
-      '  <div class="tl-wrap">',
-      '    <div class="tl-line"></div>',
+      '  <div class="tl-wrap tl-grid">',
       '  </div>',
       '</div>',
     ].join('');
@@ -145,10 +150,14 @@
         const card = cards[i];
         const type = String(card.dataset.type || '');
         const visible = !!enabled[type];
-        card.style.display = visible ? '' : 'none';
+        card.hidden = !visible;
         if (visible) visibleCount += 1;
       }
       if (empty) empty.style.display = visibleCount ? 'none' : '';
+      if (typeof root.writeVizParams === 'function') {
+        const filter = Object.keys(enabled).filter((type) => enabled[type]).join(',');
+        root.writeVizParams({ filter });
+      }
     };
     for (let i = 0; i < checkboxes.length; i += 1) {
       checkboxes[i].onchange = applyFilter;

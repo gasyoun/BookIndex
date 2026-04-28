@@ -19,10 +19,9 @@ module.exports = defineConfig({
     viewport: { width: 1366, height: 900 },
   },
   webServer: {
-    command: 'python -m http.server 4173',
+    command: 'node scripts/dev/static-server.mjs 4173',
     port: 4173,
     timeout: 120000,
     reuseExistingServer: !process.env.CI,
   },
 });
-

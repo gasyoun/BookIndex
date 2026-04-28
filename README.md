@@ -5,7 +5,7 @@
 
 ## Актуальный статус
 
-- Текущая версия: `v4.3` (обновлено `2026-04-20`).
+- Текущая версия: `v4.4` (обновлено `2026-04-28`).
 - Базовый артефакт: [aaz-index.html](aaz-index.html) (single-file SPA).
 - Демо (GitHub Pages): [aaz-index.html](https://gasyoun.github.io/BookIndex/aaz-index.html)
 - Формат данных: [app_data.json](app_data.json) (`schema_version = 2`).
@@ -79,6 +79,15 @@
 
 ## Что нового
 
+### v4.4 (2026-04-28)
+
+- **Стабилизирован локальный DX-слой**: добавлены единые npm-команды `check`, `check:js`, `check:e2e`, `build`, `build:legacy`; lockfile синхронизирован с Vite/TypeScript-зависимостями из `package.json`.
+- **Python-окружение зафиксировано** в [requirements.txt](requirements.txt): для полной JSON Schema-проверки нужен `jsonschema`.
+- **Экспериментальный `home/home_decl` скрыт из основной навигации**; классический `home/home` остаётся публичным стартовым экраном.
+- **VIZ hardening**: добавлен helper [scripts/viz/viz-state.js](scripts/viz/viz-state.js) для query-state в hash, VIZ-01 получил `Play/Pause`, VIZ-03 переведён в компактную сетку, VIZ-07 защищает подписи справа от наложений.
+- **Документация очищена**: восстановлен битый раздел 1 в [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md), убраны служебные `[cite:*]` из [CODEX_VISUALIZATIONS_RU.md](CODEX_VISUALIZATIONS_RU.md).
+- **LICENSE не выбран автоматически**: это отдельное governance-решение владельца проекта.
+
 ### v4.3 (2026-04-20)
 
 - **Автолинки `glossary` в контекстах** — термины глоссария теперь автоматически становятся ссылками в текстах контекстов всех сущностей (`.ctx-link[data-type="glossary"]`); клик открывает соответствующую статью глоссария.
@@ -121,7 +130,7 @@
 3. Пересборка итогового файла:
 
 ```bash
-python scripts/build_aaz_index.py
+npm run build
 ```
 
 Сборка из модульных данных (`data/modules/*.json`) вместо монолита:
@@ -130,11 +139,19 @@ python scripts/build_aaz_index.py
 python scripts/build_aaz_index.py --modules-dir data/modules
 ```
 
+Python-сборщик оставлен как legacy-вариант; основной npm build использует Node-эквивалент [scripts/build_aaz_index.mjs](scripts/build_aaz_index.mjs), чтобы standalone-артефакт можно было пересобрать после `npm ci` без отдельного Python runtime.
+
 Альтернативная сборка через Vite single-file (экспериментальный pipeline):
 
 ```bash
-npm install
+npm ci
 npm run build:vite
+```
+
+Основная сборка legacy-артефакта через npm-обёртку:
+
+```bash
+npm run build:legacy
 ```
 
 Разделение/склейка `app_data.json`:
@@ -155,22 +172,24 @@ node scripts/export_app_data_to_markdown.mjs --input app_data.json --out src/con
 Минимальный набор:
 
 ```bash
+npm ci
+npm run typecheck
 python scripts/check_encoding.py
 python scripts/validate_content.py app_data.json
 python scripts/content_report.py
 python runtime_test.py
 ```
 
-Опционально: JS type-check по JSDoc-типам:
+Единая JS/e2e-проверка:
 
 ```bash
-npm run typecheck
+npm run check
 ```
 
 Полный smoke/e2e:
 
 ```bash
-npx playwright test
+npm run e2e
 ```
 
 Если `node` не в `PATH`, для [runtime_test.py](runtime_test.py) можно явно указать бинарник:
@@ -183,7 +202,7 @@ python runtime_test.py
 Опционально для JSON Schema-проверки в [scripts/validate_content.py](scripts/validate_content.py):
 
 ```bash
-python -m pip install jsonschema
+python -m pip install -r requirements.txt
 ```
 
 Ожидается:
@@ -211,7 +230,7 @@ python scripts/content_report.py --format json
 | [app_data.json](app_data.json) | База контента (только чтение) |
 | [data/modules/](data/modules/) | Логически разделённые модули данных (`manifest.json` + тематические JSON) |
 | [runtime_test.py](runtime_test.py) | Runtime smoke и статические guard'ы |
-| [scripts/build_aaz_index.py](scripts/build_aaz_index.py) | Сборка `aaz-index.html` |
+| [scripts/build_aaz_index.mjs](scripts/build_aaz_index.mjs) / [scripts/build_aaz_index.py](scripts/build_aaz_index.py) | Основная Node-сборка и legacy Python-сборка `aaz-index.html` |
 | [scripts/split_app_data.py](scripts/split_app_data.py) | Разбиение `app_data.json` на модульные JSON |
 | [scripts/assemble_app_data.py](scripts/assemble_app_data.py) | Склейка модульных JSON обратно в `app_data.json` |
 | [scripts/export_app_data_to_markdown.mjs](scripts/export_app_data_to_markdown.mjs) | Одноразовый экспорт `app_data.json` в Markdown (`src/content/*.md`, плоская структура) |
@@ -222,11 +241,12 @@ python scripts/content_report.py --format json
 | [experimental/svelte-pilot/](experimental/svelte-pilot/) | Изолированный пилот декларативного UI на Svelte |
 | [vite.config.mjs](vite.config.mjs) | Vite-конфигурация альтернативной single-file сборки |
 | [scripts/vite/postbuild-copy.mjs](scripts/vite/postbuild-copy.mjs) | Копирование `dist-vite/index.html` в `aaz-index.html` |
-| [scripts/viz/](scripts/viz/) | VIZ-модули и препроцессор кэша (`build-viz-cache.js`, `build-viz-cache-worker.js`) |
+| [scripts/viz/](scripts/viz/) | VIZ-модули, query-state helper и препроцессор кэша (`viz-state.js`, `build-viz-cache.js`, `build-viz-cache-worker.js`) |
 | [scripts/validate_content.py](scripts/validate_content.py) | Структурная валидация данных |
 | [schemas/app_data.schema.json](schemas/app_data.schema.json) | JSON Schema для структуры `app_data.json` |
 | [scripts/content_report.py](scripts/content_report.py) | Отчёты по покрытию контента |
 | [scripts/check_encoding.py](scripts/check_encoding.py) | UTF-8/mojibake guard |
+| [requirements.txt](requirements.txt) | Python-зависимости для локальных проверок |
 | [tests/e2e/smoke.spec.new.js](tests/e2e/smoke.spec.new.js) | E2E smoke (Playwright) |
 | [codex_instruction_v2.md](codex_instruction_v2.md) | Инструкция для Codex (актуальна для `main`) |
 | [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md) | Регламент оформления и публикации |
@@ -255,3 +275,5 @@ GitHub Actions workflow `CI` запускается на `push` и `pull_request
 - сборку [aaz-index.html](aaz-index.html);
 - проверку синхронизации [aaz-index.html](aaz-index.html) с исходниками (`git diff --exit-code -- aaz-index.html`);
 - Playwright smoke.
+
+Локально тот же JS/e2e-слой можно запустить командой `npm run check`; Python-проверки требуют установленного Python и зависимостей из [requirements.txt](requirements.txt).

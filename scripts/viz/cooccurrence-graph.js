@@ -29,9 +29,10 @@
     const cache = root.buildVizCache(root.APP_DATA || {});
     const lectureMeta = asArray(cache.coGraphLectureMeta);
     const nodeTypeById = cache.coGraphNodeTypeById || {};
-    let currentMinWeight = Number.isFinite(Number(minWeight)) ? Number(minWeight) : 2;
+    const params = typeof root.readVizParams === 'function' ? root.readVizParams() : new URLSearchParams();
+    let currentMinWeight = Number.isFinite(Number(minWeight)) ? Number(minWeight) : Number(params.get('min') || 1);
     if (currentMinWeight < 1) currentMinWeight = 1;
-    let currentLectureId = 'all';
+    let currentLectureId = String(params.get('lecture') || 'all');
     let simulation = null;
 
     container.innerHTML = [
@@ -39,10 +40,6 @@
       '  <div class="viz-toolbar">',
       '    <label>Лекция:',
       '      <select id="viz-cograph-lecture"></select>',
-      '    </label>',
-      '    <label>min weight:',
-      `      <input id="viz-cograph-weight" type="range" min="1" max="25" step="1" value="${String(currentMinWeight)}">`,
-      `      <span id="viz-cograph-weight-label">${String(currentMinWeight)}</span>`,
       '    </label>',
       '    <span id="viz-cograph-summary" class="viz-note"></span>',
       '  </div>',
@@ -53,8 +50,6 @@
 
     const svg = d3.select(container).select('#viz-cograph-svg');
     const lectureSelect = container.querySelector('#viz-cograph-lecture');
-    const slider = container.querySelector('#viz-cograph-weight');
-    const label = container.querySelector('#viz-cograph-weight-label');
     const legend = container.querySelector('#viz-cograph-legend');
     const summary = container.querySelector('#viz-cograph-summary');
     const width = 1180;
@@ -69,7 +64,8 @@
         '<option value="all">Все лекции</option>',
         ...lectureMeta.map((l) => `<option value="${String(l.id)}">${String(l.name || `Лекция ${Number(l.index) + 1}`)}</option>`),
       ].join('');
-      lectureSelect.value = 'all';
+      if (!lectureMeta.some((l) => String(l.id) === currentLectureId)) currentLectureId = 'all';
+      lectureSelect.value = currentLectureId;
     }
 
     if (legend) {
@@ -206,14 +202,9 @@
     if (lectureSelect) {
       lectureSelect.onchange = () => {
         currentLectureId = String(lectureSelect.value || 'all');
-        redraw();
-      };
-    }
-    if (slider) {
-      slider.oninput = () => {
-        currentMinWeight = Number(slider.value || 2);
-        if (!Number.isFinite(currentMinWeight)) currentMinWeight = 2;
-        if (label) label.textContent = String(currentMinWeight);
+        if (typeof root.writeVizParams === 'function') {
+          root.writeVizParams({ lecture: currentLectureId === 'all' ? null : currentLectureId });
+        }
         redraw();
       };
     }
