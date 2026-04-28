@@ -32,12 +32,13 @@ function canonicalJsonText(dataPath) {
 }
 
 function computeBuildId(dataText, jsText, templateText) {
+  const normalizeLineEndings = (value) => String(value || '').replace(/\r\n?/g, '\n');
   return createHash('sha1')
-    .update(dataText, 'utf8')
+    .update(normalizeLineEndings(dataText), 'utf8')
     .update('\0', 'utf8')
-    .update(jsText, 'utf8')
+    .update(normalizeLineEndings(jsText), 'utf8')
     .update('\0', 'utf8')
-    .update(templateText, 'utf8')
+    .update(normalizeLineEndings(templateText), 'utf8')
     .digest('hex')
     .slice(0, 12);
 }
