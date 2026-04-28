@@ -268,12 +268,15 @@ python scripts/content_report.py --format json
 
 GitHub Actions workflow `CI` запускается на `push` и `pull_request` в `main` и выполняет:
 
-- синтаксическую проверку JS;
+- `npm ci`;
+- `npm run build`;
+- `npm run typecheck`;
+- `npm run check:js`;
 - [scripts/check_encoding.py](scripts/check_encoding.py);
 - [scripts/validate_content.py](scripts/validate_content.py);
 - [runtime_test.py](runtime_test.py);
-- сборку [aaz-index.html](aaz-index.html);
 - проверку синхронизации [aaz-index.html](aaz-index.html) с исходниками (`git diff --exit-code -- aaz-index.html`);
-- Playwright smoke.
+- `npm run build:vite` smoke с возвратом canonical [aaz-index.html](aaz-index.html) через `npm run build`;
+- `npm run e2e` Playwright smoke.
 
 Локально тот же JS/e2e-слой можно запустить командой `npm run check`; Python-проверки требуют установленного Python и зависимостей из [requirements.txt](requirements.txt).
