@@ -3890,9 +3890,13 @@ function renderTabs() {
   }
 }
 
+function invalidateVisibleItemsCache() {
+  visibleItemsCache = null;
+}
+
 function switchEntity(key) {
   closeGlobalSearchResults();
-  visibleItemsCache = null;
+  invalidateVisibleItemsCache();
   currentEntity = key;
   currentGlossaryTerm = '';
   currentScholarAnchor = '';
@@ -3915,7 +3919,7 @@ function switchEntity(key) {
 
 function switchTab(tab) {
   closeGlobalSearchResults();
-  visibleItemsCache = null;
+  invalidateVisibleItemsCache();
   currentTab = tab;
   if (!(currentEntity === 'materials' && tab === 'glossary')) currentGlossaryTerm = '';
   if (!(currentEntity === 'scholar' && tab === 'scholar')) {
@@ -4048,7 +4052,7 @@ function renderListPanel(container) {
     const delay = val.length < 3 ? 250 : 120;
     searchTimeout = setTimeout(() => {
       searchQuery = val;
-      visibleItemsCache = null;
+      invalidateVisibleItemsCache();
       renderList();
       persistViewState();
     }, delay);
@@ -4103,7 +4107,7 @@ function renderListPanel(container) {
   document.getElementById('only-discussed-btn').onclick = (e) => {
     onlyDiscussed = !onlyDiscussed;
     e.target.classList.toggle('active', onlyDiscussed);
-    visibleItemsCache = null;
+    invalidateVisibleItemsCache();
     renderList();
     persistViewState();
   };
@@ -4112,7 +4116,7 @@ function renderListPanel(container) {
     onlyQuestionBtn.onclick = (e) => {
       onlyQuestionCandidates = !onlyQuestionCandidates;
       e.target.classList.toggle('active', onlyQuestionCandidates);
-      visibleItemsCache = null;
+      invalidateVisibleItemsCache();
       renderList();
       persistViewState();
     };
@@ -4122,7 +4126,7 @@ function renderListPanel(container) {
     sortMostFrequentBtn.onclick = (e) => {
       sortMostFrequentFirst = !sortMostFrequentFirst;
       e.target.classList.toggle('active', sortMostFrequentFirst);
-      visibleItemsCache = null;
+      invalidateVisibleItemsCache();
       renderList();
       persistViewState();
     };
@@ -4139,7 +4143,7 @@ function renderListPanel(container) {
       if (activeFilters.has(sub)) activeFilters.delete(sub);
       else activeFilters.add(sub);
       chip.classList.toggle('active');
-      visibleItemsCache = null;
+      invalidateVisibleItemsCache();
       renderList();
       persistViewState();
     };
