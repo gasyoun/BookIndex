@@ -1748,19 +1748,8 @@ function openMaterialsLectures() {
 }
 
 function decodeBreadcrumbRouteParts(routeHash) {
-  const hash = String(routeHash || '').trim();
-  if (!hash || hash === '#') return [];
-  const rawParts = hash.replace(/^#/, '').split('/').filter(Boolean);
-  if (!rawParts.length) return [];
-  const decoded = [];
-  for (const part of rawParts) {
-    try {
-      decoded.push(decodeURIComponent(part));
-    } catch (e) {
-      decoded.push(part);
-    }
-  }
-  return decoded[0] === HASH_ROUTE_PREFIX ? decoded.slice(1) : decoded;
+  const parsed = parseHashRoute(routeHash);
+  return parsed ? parsed.parts : [];
 }
 
 function getEntityBreadcrumbLabel(entity) {
@@ -1874,6 +1863,35 @@ function buildCanonicalHash(parts) {
   return '#' + safeParts.map(encodeHashPart).join('/');
 }
 
+function parseHashRoute(hash) {
+  const cleanHash = String(hash || '').trim();
+  if (!cleanHash || cleanHash === '#') return null;
+  const queryStart = cleanHash.indexOf('?');
+  const hashPath = queryStart >= 0 ? cleanHash.slice(0, queryStart) : cleanHash;
+  const query = queryStart >= 0 ? cleanHash.slice(queryStart + 1) : '';
+  const rawParts = hashPath.replace(/^#/, '').split('/').filter(Boolean);
+  if (!rawParts.length || rawParts.length > MAX_HASH_PARTS + 1) return null;
+
+  const decodedParts = [];
+  for (const part of rawParts) {
+    let decoded = '';
+    try { decoded = decodeURIComponent(part); } catch (e) { decoded = part; }
+    decoded = String(decoded || '');
+    if (decoded.length > MAX_HASH_PART_LENGTH) return null;
+    decodedParts.push(decoded);
+  }
+
+  const parts = decodedParts[0] === HASH_ROUTE_PREFIX ? decodedParts.slice(1) : decodedParts;
+  if (!parts.length || parts.length > MAX_HASH_PARTS) return null;
+  return { parts, query: query.slice(0, 240) };
+}
+
+function routeVizAlias(parts) {
+  return (Array.isArray(parts) && parts.length === 1 && parts[0] === 'viz')
+    ? ['scholar', 'viz']
+    : parts;
+}
+
 function buildHashFromState() {
   const parts = [currentEntity, currentTab];
   if (currentEntity === 'materials' && currentTab === 'lectures') {
@@ -1983,27 +2001,9 @@ function syncNavigationHashOnly() {
 
 function applyHash(hash) {
   closeGlobalSearchResults();
-  if (!hash || hash === '#') return false;
-  const cleanHash = String(hash || '');
-  const queryStart = cleanHash.indexOf('?');
-  const hashPath = queryStart >= 0 ? cleanHash.slice(0, queryStart) : cleanHash;
-  const hashQuery = queryStart >= 0 ? cleanHash.slice(queryStart + 1) : '';
-  const rawParts = hashPath.replace(/^#/, '').split('/').filter(Boolean);
-  if (rawParts.length > MAX_HASH_PARTS + 1) return false;
-  if (!rawParts.length) return false;
-  const decodedParts = [];
-  for (const p of rawParts) {
-    let decoded = '';
-    try { decoded = decodeURIComponent(p); } catch (e) { decoded = p; }
-    decoded = String(decoded || '');
-    if (decoded.length > MAX_HASH_PART_LENGTH) return false;
-    decodedParts.push(decoded);
-  }
-  const parts = decodedParts[0] === HASH_ROUTE_PREFIX ? decodedParts.slice(1) : decodedParts;
-  if (!parts.length || parts.length > MAX_HASH_PARTS) return false;
-  const routedParts = (parts.length === 1 && parts[0] === 'viz')
-    ? ['scholar', 'viz']
-    : parts;
+  const parsedRoute = parseHashRoute(hash);
+  if (!parsedRoute) return false;
+  const routedParts = routeVizAlias(parsedRoute.parts);
 
   const entity = routedParts[0];
   if (!ENTITY_TYPES[entity]) return false;
@@ -2057,7 +2057,7 @@ function applyHash(hash) {
     }
   }
   if (entity === 'scholar' && tab === 'viz') {
-    currentVizQueryString = hashQuery.slice(0, 240);
+    currentVizQueryString = parsedRoute.query;
     const modulePos = routedParts.indexOf('module');
     if (modulePos >= 0 && routedParts[modulePos + 1]) {
       currentVizModule = String(routedParts[modulePos + 1] || '').trim() || currentVizModule;
