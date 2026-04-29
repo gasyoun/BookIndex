@@ -1165,4 +1165,64 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/module\/viz04/);
     await expect(page.locator('#viz-heatmap-svg')).toBeVisible();
   });
+
+  test('viz map restores century and toggles autoplay query params', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/scholar/viz/module/viz01?century=12&autoplay=1');
+    await expect(page.locator('#viz-century-range')).toHaveValue('12');
+    await expect(page.locator('#viz-century-play')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page).toHaveURL(/module\/viz01\?century=12&autoplay=1/);
+
+    await page.locator('#viz-century-play').click();
+    await expect(page.locator('#viz-century-play')).toHaveAttribute('aria-pressed', 'false');
+    await expect(page).toHaveURL(/module\/viz01\?century=12(?!.*autoplay=1)/);
+
+    await page.locator('#viz-century-range').evaluate((el) => {
+      el.value = '13';
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    await expect(page.locator('#viz-century-label')).toHaveText('13');
+    await expect(page).toHaveURL(/module\/viz01\?century=13/);
+  });
+
+  test('viz discovery timeline restores and writes filter query param', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/scholar/viz/module/viz03?filter=discovery');
+    await expect(page.locator('.tl-wrap.tl-grid')).toBeVisible();
+    await expect(page.locator('input[data-type="discovery"]')).toBeChecked();
+    await expect(page.locator('input[data-type="linguist"]')).not.toBeChecked();
+    await expect(page.locator('input[data-type="historical"]')).not.toBeChecked();
+
+    await page.locator('input[data-type="linguist"]').check();
+    await expect(page).toHaveURL(/module\/viz03\?filter=discovery%2Clinguist/);
+  });
+
+  test('viz cooccurrence graph restores and writes lecture query param', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/scholar/viz/module/viz02?lecture=missing');
+    const lectureSelect = page.locator('#viz-cograph-lecture');
+    await expect(lectureSelect).toHaveValue('all');
+
+    const lectureValue = await lectureSelect.evaluate((select) => {
+      const options = Array.from(select.options);
+      return options.find((option) => option.value && option.value !== 'all')?.value || 'all';
+    });
+    test.skip(lectureValue === 'all', 'No lecture-specific cooccurrence options in fixture data');
+
+    await lectureSelect.selectOption(lectureValue);
+    await expect(page).toHaveURL(new RegExp(`module/viz02\\?lecture=${lectureValue}`));
+  });
+
+  test('viz bump chart restores and writes top/filter query params', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/scholar/viz/module/viz07?top=12');
+    await expect(page.locator('#viz-bump-top')).toHaveValue('12');
+    await expect(page.locator('#viz-bump-top-label')).toHaveText('12');
+
+    await page.locator('#viz-bump-top').evaluate((el) => {
+      el.value = '18';
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    await expect(page.locator('#viz-bump-top-label')).toHaveText('18');
+    await expect(page).toHaveURL(/module\/viz07\?top=18/);
+
+    await page.locator('#viz-bump-search').fill('глагол');
+    await expect(page).toHaveURL(/module\/viz07\?top=18&filter=/);
+  });
 });
