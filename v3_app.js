@@ -44,10 +44,7 @@ function getEmbeddedAppDataText() {
  * @returns {AppDataShape}
  */
 function parseAppData() {
-  if (globalSearchCache && typeof globalSearchCache.clear === 'function') {
-    globalSearchCache.clear();
-  }
-  resetGlobalSearchFuseState();
+  clearGlobalSearchCaches();
   const payload = getEmbeddedAppDataText();
   if (!payload) throw new Error('Embedded app data not found');
   APP_DATA = /** @type {AppDataShape} */ (JSON.parse(payload));
@@ -2106,6 +2103,21 @@ function goBackInApp() {
   isNavigatingHistory = false;
 }
 
+function rememberBoundedCacheValue(cache, key, value, maxSize, options = {}) {
+  if (!cache || typeof cache.set !== 'function') return value;
+  const limit = Number(maxSize || 0);
+  if (limit > 0 && cache.size >= limit) {
+    if (options && options.clearWhenFull && typeof cache.clear === 'function') {
+      cache.clear();
+    } else if (typeof cache.keys === 'function' && typeof cache.delete === 'function') {
+      const firstKey = cache.keys().next();
+      if (!firstKey.done) cache.delete(firstKey.value);
+    }
+  }
+  cache.set(key, value);
+  return value;
+}
+
 function normalizeHeadForMatch(value) {
   if (value === null || value === undefined) return '';
   const raw = String(value);
@@ -2115,8 +2127,7 @@ function normalizeHeadForMatch(value) {
   if (typeof s.normalize === 'function') s = s.normalize('NFD');
   s = s.replace(/[\u0300-\u036f]/g, '').replace(/ё/g, 'е');
   s = s.replace(/^[?]+/, '').replace(/[^a-zа-я0-9]+/gi, ' ').trim();
-  if (normalizeHeadCache.size >= NORMALIZE_CACHE_LIMIT) normalizeHeadCache.clear();
-  normalizeHeadCache.set(raw, s);
+  rememberBoundedCacheValue(normalizeHeadCache, raw, s, NORMALIZE_CACHE_LIMIT, { clearWhenFull: true });
   return s;
 }
 
@@ -2642,18 +2653,20 @@ function getGlobalSearchMatchesLegacy(query) {
 
   out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
   const sliced = out.slice(0, 40);
-  globalSearchCache.set(searchKey, sliced);
-  if (globalSearchCache.size > GLOBAL_SEARCH_CACHE_MAX) {
-    const firstKey = globalSearchCache.keys().next();
-    if (!firstKey.done) globalSearchCache.delete(firstKey.value);
-  }
-  return sliced;
+  return rememberBoundedCacheValue(globalSearchCache, searchKey, sliced, GLOBAL_SEARCH_CACHE_MAX);
 }
 
 function resetGlobalSearchFuseState() {
   globalSearchFuse = null;
   globalSearchFuseSignature = '';
   globalSearchFuseDisabled = false;
+}
+
+function clearGlobalSearchCaches() {
+  if (globalSearchCache && typeof globalSearchCache.clear === 'function') {
+    globalSearchCache.clear();
+  }
+  resetGlobalSearchFuseState();
 }
 
 function normalizeSearchText(value) {
@@ -2937,12 +2950,7 @@ function getGlobalSearchMatches(query) {
     matches = getGlobalSearchMatchesLegacy(qRaw);
   }
   const sliced = Array.isArray(matches) ? matches.slice(0, 40) : [];
-  globalSearchCache.set(searchKey, sliced);
-  if (globalSearchCache.size > GLOBAL_SEARCH_CACHE_MAX) {
-    const firstKey = globalSearchCache.keys().next();
-    if (!firstKey.done) globalSearchCache.delete(firstKey.value);
-  }
-  return sliced;
+  return rememberBoundedCacheValue(globalSearchCache, searchKey, sliced, GLOBAL_SEARCH_CACHE_MAX);
 }
 
 function closeGlobalSearchResults() {
