@@ -8766,6 +8766,39 @@ function getVizModuleCatalog() {
   ];
 }
 
+function setVizHostStatus(host, message, className = 'viz-loading') {
+  if (!host) return;
+  host.innerHTML = `<div class="${escapeHtml(className)}">${escapeHtml(message)}</div>`;
+}
+
+function mountVizModule(host, moduleDef) {
+  if (!host || !moduleDef) return;
+  setVizHostStatus(host, 'Загрузка модуля…');
+  ensureVizStateLoaded()
+    .then(() => ensureVizModuleLoaded(moduleDef.id))
+    .catch(() => null)
+    .then(() => warmupVizCacheInWorker().catch(() => null))
+    .then(() => {
+      const registry = getVizRegistry();
+      const renderFn = registry[moduleDef.renderKey] || moduleDef.render;
+      if (typeof renderFn !== 'function') {
+        setVizHostStatus(host, 'Модуль не подключён. Проверьте scripts/viz/*.js.', 'viz-card');
+        return;
+      }
+      try {
+        renderFn(host);
+        currentVizCleanup = typeof host.__vizCleanup === 'function' ? host.__vizCleanup : null;
+      } catch (e) {
+        const msg = String(e && e.message ? e.message : e);
+        setVizHostStatus(host, `Ошибка рендера: ${msg}`, 'viz-card');
+      }
+    })
+    .catch((e) => {
+      const msg = String(e && e.message ? e.message : e);
+      setVizHostStatus(host, `Ошибка загрузки модуля: ${msg}`, 'viz-card');
+    });
+}
+
 function renderVizPanel(container) {
   cleanupActiveVizModule();
   const catalog = getVizModuleCatalog();
@@ -8785,33 +8818,6 @@ function renderVizPanel(container) {
   const host = container.querySelector('#viz-module-host');
   if (!tabs || !host) return;
 
-  const mountModule = () => {
-    const moduleDef = catalog.find((m) => m.id === currentVizModule) || catalog[0];
-    if (!moduleDef) return;
-    host.innerHTML = '<div class="viz-loading">Загрузка модуля…</div>';
-    ensureVizStateLoaded()
-      .then(() => ensureVizModuleLoaded(moduleDef.id))
-      .catch(() => null)
-      .then(() => warmupVizCacheInWorker().catch(() => null))
-      .then(() => {
-        const registry = getVizRegistry();
-        const renderFn = registry[moduleDef.renderKey] || moduleDef.render;
-        if (typeof renderFn !== 'function') {
-          host.innerHTML = '<div class="viz-card">Модуль не подключён. Проверьте scripts/viz/*.js.</div>';
-          return;
-        }
-        try {
-          renderFn(host);
-          currentVizCleanup = typeof host.__vizCleanup === 'function' ? host.__vizCleanup : null;
-        } catch (e) {
-          host.innerHTML = `<div class="viz-card">Ошибка рендера: ${escapeHtml(String(e && e.message ? e.message : e))}</div>`;
-        }
-      })
-      .catch((e) => {
-        host.innerHTML = `<div class="viz-card">Ошибка загрузки модуля: ${escapeHtml(String(e && e.message ? e.message : e))}</div>`;
-      });
-  };
-
   for (const item of catalog) {
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -8827,7 +8833,7 @@ function renderVizPanel(container) {
     tabs.appendChild(btn);
   }
 
-  mountModule();
+  mountVizModule(host, catalog.find((m) => m.id === currentVizModule) || catalog[0]);
 }
 
 function renderScholarChronologyPanel(container) {
