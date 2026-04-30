@@ -7630,8 +7630,8 @@ function renderLecturesPanel(container) {
   const stats = APP_DATA.book_stats || {};
   const maxPage = Number(stats.total_pages) || 404;
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Все лекции книги — за пять минут</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
+  html += '<h2 class="lectures-title">Все лекции книги — за пять минут</h2>';
+  html += '<div class="lectures-intro">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
   html += `<div class="reading-now-box">
     <div class="reading-now-title">Режим «Читаю сейчас»</div>
     <div class="reading-now-desc">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
@@ -7644,7 +7644,7 @@ function renderLecturesPanel(container) {
     </div>
     <div id="reading-now-results" class="reading-now-results"></div>
   </div>`;
-  html += '<div id="lectures-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;">';
+  html += '<div id="lectures-grid" class="lectures-grid">';
   for (let i = 0; i < lectures.length; i++) {
     const l = lectures[i];
     const title = i === 0 ? 'Предисловие' : `Лекция ${i}`;

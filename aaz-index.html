@@ -1299,6 +1299,23 @@
     margin-bottom: 14px;
     padding: 12px 14px;
   }
+  .lectures-title {
+    color: #5a3818;
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 4px 0;
+  }
+  .lectures-intro {
+    color: #888;
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .lectures-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -73935,7 +73952,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '037e5d7263b4';
+const APP_BUILD_ID = '5d7c2c561cb6';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77215,7 +77232,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '037e5d7263b4' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '5d7c2c561cb6' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81556,8 +81573,8 @@ function renderLecturesPanel(container) {
   const stats = APP_DATA.book_stats || {};
   const maxPage = Number(stats.total_pages) || 404;
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Все лекции книги — за пять минут</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
+  html += '<h2 class="lectures-title">Все лекции книги — за пять минут</h2>';
+  html += '<div class="lectures-intro">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
   html += `<div class="reading-now-box">
     <div class="reading-now-title">Режим «Читаю сейчас»</div>
     <div class="reading-now-desc">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
@@ -81570,7 +81587,7 @@ function renderLecturesPanel(container) {
     </div>
     <div id="reading-now-results" class="reading-now-results"></div>
   </div>`;
-  html += '<div id="lectures-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;">';
+  html += '<div id="lectures-grid" class="lectures-grid">';
   for (let i = 0; i < lectures.length; i++) {
     const l = lectures[i];
     const title = i === 0 ? 'Предисловие' : `Лекция ${i}`;
