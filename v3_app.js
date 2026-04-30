@@ -6685,10 +6685,10 @@ function buildHomeHowToGuideHtml() {
   const globalLekciiHash = buildListSearchHash('all', 'лекция');
   const linkStyle = 'color:#5a3818;text-decoration:underline dotted;';
 
-  return `<details id="home-howto-details" open style="margin-top:10px;margin-bottom:14px;border:1px solid #d4c8b0;border-radius:6px;background:#fff;padding:10px 12px;">
-    <summary style="cursor:pointer;color:#5a3818;font-size:18px;font-weight:normal;">Как пользоваться «Зализнякиадой»</summary>
-    <div style="margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;font-size:13px;line-height:1.6;color:#333;align-items:start;">
-      <div style="display:grid;gap:10px;min-width:0;">
+  return `<details id="home-howto-details" class="home-howto" open>
+    <summary class="home-howto-summary">Как пользоваться «Зализнякиадой»</summary>
+    <div class="home-howto-grid">
+      <div class="home-howto-column">
       <p><strong>BookIndex</strong> — интерактивный указатель к книге А. А. Зализняка «Из жизни слов и языков». Он собран в один файл <code>aaz-index.html</code> и работает как навигационная надстройка над книгой: помогает быстрее находить темы, имена, термины и географию книги. Демо: <a href="${escapeHtml(demoHref)}" style="${linkStyle}">${escapeHtml(demoHref)}</a>.</p>
 
       <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">Что это дает читателю</h3>
@@ -6723,7 +6723,7 @@ function buildHomeHowToGuideHtml() {
       <p style="margin:0;"><a href="${escapeHtml(subjectListHash)}" style="${linkStyle}">«Предметный»</a> отвечает на вопрос не «где встречается слово», а «где в книге разбирается явление»: <a href="${escapeHtml(akanyeSubjectHash)}" style="${linkStyle}">аканье</a>, <a href="${escapeHtml(birchSubjectHash)}" style="${linkStyle}">берестяные грамоты</a>, <a href="${escapeHtml(articleSubjectHash)}" style="${linkStyle}">артикль</a>, <a href="${escapeHtml(udarenieSubjectHash)}" style="${linkStyle}">ударение</a>.</p>
 
       </div>
-      <div style="display:grid;gap:10px;min-width:0;">
+      <div class="home-howto-column">
       <h3 style="margin:2px 0 0 0;color:#5a3818;font-size:16px;font-weight:normal;">Как это помогает читать книгу</h3>
       <ul style="margin:0;padding-left:18px;">
         <li>Если вы ищете конкретное имя, BookIndex ведет прямо к страницам и контексту: <a href="${escapeHtml(avanesovHash)}" style="${linkStyle}">Аванесов Р. И.</a> или <a href="${escapeHtml(avvakumHash)}" style="${linkStyle}">Аввакум</a>.</li>
