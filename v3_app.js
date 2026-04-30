@@ -8525,7 +8525,7 @@ function renderGlossaryPanel(container) {
       }
       relatedHtml += '</div>';
     }
-    html += `<div class="glossary-entry" data-term="${escapeHtml(g.term.toLowerCase())}" style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;margin-bottom:8px;border-left:3px solid #8a7050;">
+    html += `<div class="glossary-entry" data-term="${escapeHtml(g.term.toLowerCase())}">
       <div class="glossary-entry-head">
         <span>${escapeHtml(g.term)}</span>
         <a class="glossary-les-link" href="${escapeHtml(safeUrl(termUrl))}" target="_blank" rel="noopener noreferrer">LES-1990 ↗</a>

@@ -1116,6 +1116,14 @@
     outline: 2px solid var(--title);
     outline-offset: 2px;
   }
+  .glossary-entry {
+    background: #fff;
+    border: 1px solid #d4c8b0;
+    border-left: 3px solid #8a7050;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    padding: 10px 14px;
+  }
   .glossary-related-links {
     display: flex;
     flex-wrap: wrap;
@@ -73796,7 +73804,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '9dbb275939a2';
+const APP_BUILD_ID = 'bed3cfdaf434';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77076,7 +77084,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '9dbb275939a2' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'bed3cfdaf434' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -82312,7 +82320,7 @@ function renderGlossaryPanel(container) {
       }
       relatedHtml += '</div>';
     }
-    html += `<div class="glossary-entry" data-term="${escapeHtml(g.term.toLowerCase())}" style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;margin-bottom:8px;border-left:3px solid #8a7050;">
+    html += `<div class="glossary-entry" data-term="${escapeHtml(g.term.toLowerCase())}">
       <div class="glossary-entry-head">
         <span>${escapeHtml(g.term)}</span>
         <a class="glossary-les-link" href="${escapeHtml(safeUrl(termUrl))}" target="_blank" rel="noopener noreferrer">LES-1990 ↗</a>
