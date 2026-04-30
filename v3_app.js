@@ -7448,8 +7448,8 @@ function renderTasksPanel(container, options = {}) {
   const tasksShuffled = shuffleArray(tasksPrepared);
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:980px;margin:0 auto;">';
   html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">\u041f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0441\u0435\u0431\u044f</h2>';
-  html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">';
-  html += `<div style="font-size:12px;color:#888;font-style:italic;">${baseTasks.length} \u0431\u0430\u0437\u043e\u0432\u044b\u0445 + ${dynamicTasks.length} \u0434\u0438\u043d\u0430\u043c\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0432\u043e\u043f\u0440\u043e\u0441\u043e\u0432. \u041a\u043b\u0438\u043a\u043d\u0438\u0442\u0435 \u043d\u0430 \u043e\u0442\u0432\u0435\u0442, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0440\u0438\u0442\u044c.</div>`;
+  html += '<div class="tasks-toolbar">';
+  html += `<div class="tasks-toolbar-note">${baseTasks.length} \u0431\u0430\u0437\u043e\u0432\u044b\u0445 + ${dynamicTasks.length} \u0434\u0438\u043d\u0430\u043c\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0432\u043e\u043f\u0440\u043e\u0441\u043e\u0432. \u041a\u043b\u0438\u043a\u043d\u0438\u0442\u0435 \u043d\u0430 \u043e\u0442\u0432\u0435\u0442, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0440\u0438\u0442\u044c.</div>`;
   html += '<div class="tasks-toolbar-actions">';
   html += '<button id="tasks-reset-progress" class="tasks-toolbar-btn danger">\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0443</button>';
   html += '<button id="tasks-regen" class="tasks-toolbar-btn">\u041d\u043e\u0432\u0430\u044f \u043f\u043e\u0434\u0431\u043e\u0440\u043a\u0430</button>';
