@@ -7446,7 +7446,7 @@ function renderTasksPanel(container, options = {}) {
     _storageId: getTaskStorageId(task, idx),
   }));
   const tasksShuffled = shuffleArray(tasksPrepared);
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:980px;margin:0 auto;">';
+  let html = '<div class="panel active tasks-panel"><div class="tasks-panel-inner">';
   html += '<h2 class="tasks-title">\u041f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0441\u0435\u0431\u044f</h2>';
   html += '<div class="tasks-toolbar">';
   html += `<div class="tasks-toolbar-note">${baseTasks.length} \u0431\u0430\u0437\u043e\u0432\u044b\u0445 + ${dynamicTasks.length} \u0434\u0438\u043d\u0430\u043c\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0432\u043e\u043f\u0440\u043e\u0441\u043e\u0432. \u041a\u043b\u0438\u043a\u043d\u0438\u0442\u0435 \u043d\u0430 \u043e\u0442\u0432\u0435\u0442, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0440\u0438\u0442\u044c.</div>`;

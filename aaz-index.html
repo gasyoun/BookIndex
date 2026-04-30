@@ -1227,6 +1227,15 @@
     font-weight: normal;
     margin: 0 0 4px 0;
   }
+  .tasks-panel {
+    overflow-y: auto;
+    height: 100%;
+  }
+  .tasks-panel-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 16px 22px;
+  }
   .tasks-toolbar-btn {
     padding: 6px 10px;
     border: 1px solid #c4b890;
@@ -73878,7 +73887,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '2a6131b4eb44';
+const APP_BUILD_ID = '738958a03dcd';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77158,7 +77167,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '2a6131b4eb44' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '738958a03dcd' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81315,7 +81324,7 @@ function renderTasksPanel(container, options = {}) {
     _storageId: getTaskStorageId(task, idx),
   }));
   const tasksShuffled = shuffleArray(tasksPrepared);
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:980px;margin:0 auto;">';
+  let html = '<div class="panel active tasks-panel"><div class="tasks-panel-inner">';
   html += '<h2 class="tasks-title">\u041f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0441\u0435\u0431\u044f</h2>';
   html += '<div class="tasks-toolbar">';
   html += `<div class="tasks-toolbar-note">${baseTasks.length} \u0431\u0430\u0437\u043e\u0432\u044b\u0445 + ${dynamicTasks.length} \u0434\u0438\u043d\u0430\u043c\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0432\u043e\u043f\u0440\u043e\u0441\u043e\u0432. \u041a\u043b\u0438\u043a\u043d\u0438\u0442\u0435 \u043d\u0430 \u043e\u0442\u0432\u0435\u0442, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0440\u0438\u0442\u044c.</div>`;
