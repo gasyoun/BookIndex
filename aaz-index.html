@@ -1810,6 +1810,14 @@
     margin: 0;
     padding-left: 18px;
   }
+  .graph-status {
+    color: #7b5b38;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  .graph-filter-row {
+    margin-bottom: 8px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -74446,7 +74454,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '0ccd1b89a69b';
+const APP_BUILD_ID = 'fb8203a0f2fb';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77726,7 +77734,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '0ccd1b89a69b' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'fb8203a0f2fb' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -80244,7 +80252,7 @@ function renderGraphPanel(container) {
       </label>
       <span class="graph-metric" id="graph-summary"></span>
     </div>
-    <div id="graph-status" style="font-size:12px;color:#7b5b38;margin-bottom:8px;">Calculating graph layout...</div>
+    <div id="graph-status" class="graph-status">Calculating graph layout...</div>
     <div id="graph-stage" aria-label="Person graph"></div>
     <div id="graph-legend" class="graph-legend"></div>
     <div id="graph-tooltip" class="graph-tooltip" hidden></div>
@@ -80800,8 +80808,8 @@ function renderFamiliesPanel(container) {
   const t0 = nowMs();
   container.innerHTML = `<div class="panel active"><div class="graph-container">
     <p class="chart-intro">Граф языков: соединены языки, упоминаемые в книге близко друг к другу в тексте. Алгоритм позиционного взвешивания учитывает место упоминания на странице, а не только её номер — разрыв страницы между близкими упоминаниями не наказывается. Цвет узла — языковая семья. По умолчанию показаны только сильные связи (вес ≥ 10).</p>
-    <div style="margin-bottom:8px;"><button class="filter-chip ${graphStrongOnly ? 'active' : ''}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
-    <div id="families-status" style="font-size:12px;color:#7b5b38;margin-bottom:8px;">Рассчитываю расположение узлов…</div>
+    <div class="graph-filter-row"><button class="filter-chip ${graphStrongOnly ? 'active' : ''}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
+    <div id="families-status" class="graph-status">Рассчитываю расположение узлов…</div>
     <canvas id="graph-canvas" width="1300" height="650"></canvas>
     <div class="legend" id="families-legend"></div></div></div>`;
 

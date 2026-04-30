@@ -5807,7 +5807,7 @@ function renderGraphPanel(container) {
       </label>
       <span class="graph-metric" id="graph-summary"></span>
     </div>
-    <div id="graph-status" style="font-size:12px;color:#7b5b38;margin-bottom:8px;">Calculating graph layout...</div>
+    <div id="graph-status" class="graph-status">Calculating graph layout...</div>
     <div id="graph-stage" aria-label="Person graph"></div>
     <div id="graph-legend" class="graph-legend"></div>
     <div id="graph-tooltip" class="graph-tooltip" hidden></div>
@@ -6363,8 +6363,8 @@ function renderFamiliesPanel(container) {
   const t0 = nowMs();
   container.innerHTML = `<div class="panel active"><div class="graph-container">
     <p class="chart-intro">Граф языков: соединены языки, упоминаемые в книге близко друг к другу в тексте. Алгоритм позиционного взвешивания учитывает место упоминания на странице, а не только её номер — разрыв страницы между близкими упоминаниями не наказывается. Цвет узла — языковая семья. По умолчанию показаны только сильные связи (вес ≥ 10).</p>
-    <div style="margin-bottom:8px;"><button class="filter-chip ${graphStrongOnly ? 'active' : ''}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
-    <div id="families-status" style="font-size:12px;color:#7b5b38;margin-bottom:8px;">Рассчитываю расположение узлов…</div>
+    <div class="graph-filter-row"><button class="filter-chip ${graphStrongOnly ? 'active' : ''}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
+    <div id="families-status" class="graph-status">Рассчитываю расположение узлов…</div>
     <canvas id="graph-canvas" width="1300" height="650"></canvas>
     <div class="legend" id="families-legend"></div></div></div>`;
 
