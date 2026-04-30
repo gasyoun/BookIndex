@@ -4834,7 +4834,7 @@ function renderChapterHistogramRows(host, entityKey, focusedItem = null) {
     const pct = c / max * 100;
     html += `
       <div class="bar-row">
-        <div class="bar-label">${escapeHtml(ch.name)}<br><small style="color:#999">стр. ${ch.start}–${ch.end}</small></div>
+        <div class="bar-label">${escapeHtml(ch.name)}<br><small>стр. ${ch.start}–${ch.end}</small></div>
         <div class="bar-bg"><div class="bar-fill" data-chapter="${escapeHtml(ch.name)}" style="width:${pct}%"></div></div>
         <div class="bar-count">${c}</div>
       </div>`;
@@ -4916,7 +4916,7 @@ function renderCardInRight() {
   if (!right) return;
   const it = findItemByHeadAndType(selectedItem, selectedItemType);
   if (!it) {
-    right.innerHTML = '<div class="card"><div style="color:#999; font-style:italic; text-align:center; padding:40px 0;">Элемент не найден</div></div>';
+    right.innerHTML = '<div class="card"><div class="card-missing-message">Элемент не найден</div></div>';
     return;
   }
 
