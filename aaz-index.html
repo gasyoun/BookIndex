@@ -1168,6 +1168,30 @@
     font-size: 13px;
     line-height: 1.6;
   }
+  .tasks-history-box {
+    background: #fff;
+    border: 1px solid #d4c8b0;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+  }
+  .tasks-history-summary {
+    color: #6a5040;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    outline: none;
+    text-transform: uppercase;
+    user-select: none;
+  }
+  .tasks-history-body {
+    margin-top: 8px;
+  }
+  .tasks-history-list {
+    display: grid;
+    gap: 6px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -73804,7 +73828,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'bed3cfdaf434';
+const APP_BUILD_ID = '058bfed1f8f8';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77084,7 +77108,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'bed3cfdaf434' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '058bfed1f8f8' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81251,10 +81275,10 @@ function renderTasksPanel(container, options = {}) {
   html += '</div>';
   html += '</div>';
   html += '<div id="tasks-summary" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:12px;"></div>';
-  html += `<details id="tasks-history-box" style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:8px 12px;margin-bottom:14px;"${collapseHistory ? '' : ' open'}>`;
-  html += '<summary id="tasks-history-summary" style="font-size:12px;color:#6a5040;font-weight:bold;letter-spacing:0.3px;text-transform:uppercase;cursor:pointer;user-select:none;outline:none;">\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u043e\u0442\u0432\u0435\u0442\u043e\u0432</summary>';
-  html += '<div style="margin-top:8px;">';
-  html += '<div id="tasks-history-list" style="display:grid;gap:6px;"></div>';
+  html += `<details id="tasks-history-box" class="tasks-history-box"${collapseHistory ? '' : ' open'}>`;
+  html += '<summary id="tasks-history-summary" class="tasks-history-summary">\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u043e\u0442\u0432\u0435\u0442\u043e\u0432</summary>';
+  html += '<div class="tasks-history-body">';
+  html += '<div id="tasks-history-list" class="tasks-history-list"></div>';
   html += '</div></details>';
   html += '<div id="tasks-container"></div></div></div>';
   container.innerHTML = html;
