@@ -7301,23 +7301,23 @@ function wireReadingNowWidget(root, totalPages = 404) {
     const chapterIdx = chapters.findIndex(ch => currentPage >= ch.start && currentPage <= ch.end);
     const chapter = chapterIdx >= 0 ? chapters[chapterIdx] : null;
     const groups = collectReadingNow(currentPage, 7);
-    let htmlOut = `<div style="margin-bottom:6px;color:#6a5040;"><strong>Страница ${currentPage}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ''}</div>`;
-    htmlOut += `<div style="margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap;">`;
-    htmlOut += `<button class="reading-now-open-trends" data-page="${currentPage}" style="padding:3px 8px;border:1px solid #c4b890;background:#fff8e8;border-radius:10px;cursor:pointer;font-family:inherit;font-size:11px;color:#5a3818;">Динамика этой страницы</button>`;
+    let htmlOut = `<div class="reading-now-page-title"><strong>Страница ${currentPage}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ''}</div>`;
+    htmlOut += `<div class="reading-now-action-row">`;
+    htmlOut += `<button class="reading-now-open-trends reading-now-pill-btn" data-page="${currentPage}">Динамика этой страницы</button>`;
     if (chapter) {
-      htmlOut += `<button class="reading-now-open-lecture" data-idx="${chapterIdx}" style="padding:3px 8px;border:1px solid #c4b890;background:#fff8e8;border-radius:10px;cursor:pointer;font-family:inherit;font-size:11px;color:#5a3818;">Открыть лекцию</button>`;
+      htmlOut += `<button class="reading-now-open-lecture reading-now-pill-btn" data-idx="${chapterIdx}">Открыть лекцию</button>`;
     }
     htmlOut += `</div>`;
     if (!groups.length) {
-      htmlOut += '<div style="color:#888;">На этой странице в базе не найдено размеченных сущностей.</div>';
+      htmlOut += '<div class="reading-now-empty">На этой странице в базе не найдено размеченных сущностей.</div>';
       readingResults.innerHTML = htmlOut;
     } else {
       for (const g of groups) {
-        htmlOut += `<div style="margin-bottom:6px;"><strong>${escapeHtml(g.label)}:</strong> `;
+        htmlOut += `<div class="reading-now-group"><strong>${escapeHtml(g.label)}:</strong> `;
         for (const it of g.items) {
-          htmlOut += `<a class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(g.type, it.head))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(it.head)}</a>`;
+          htmlOut += `<a class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(g.type, it.head))}">${escapeHtml(it.head)}</a>`;
         }
-        if (g.total > g.items.length) htmlOut += `<span style="color:#888;">и ещё ${g.total - g.items.length}</span>`;
+        if (g.total > g.items.length) htmlOut += `<span class="reading-now-more">и ещё ${g.total - g.items.length}</span>`;
         htmlOut += `</div>`;
       }
       readingResults.innerHTML = htmlOut;
