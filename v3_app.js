@@ -7123,11 +7123,11 @@ function renderHomePanel(container) {
 
   // === БЛОК 2: МАРШРУТЫ ===
   if (compactHome) {
-    html += `<details id="home-routes-details" style="margin-top:8px;border:1px solid #d4c8b0;border-radius:6px;background:#fff;padding:8px 10px;">
-      <summary style="cursor:pointer;color:#5a3818;font-size:15px;">Выберите свой путь по книге (${routes.length})</summary>
-      <div style="margin-top:8px;${routeGridStyle}">`;
+    html += `<details id="home-routes-details" class="home-routes-details">
+      <summary class="home-routes-summary">Выберите свой путь по книге (${routes.length})</summary>
+      <div class="home-routes-grid" style="${routeGridStyle}">`;
   } else {
-    html += `<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:14px 0 4px 0;">Выберите свой путь по книге</h2>
+    html += `<h2 class="home-routes-title">Выберите свой путь по книге</h2>
       <div style="${routeGridStyle}">`;
   }
   for (const r of routes) {

@@ -1599,6 +1599,27 @@
     border-top: 3px solid #8a7050;
     padding: 10px 12px;
   }
+  .home-routes-details {
+    background: #fff;
+    border: 1px solid #d4c8b0;
+    border-radius: 6px;
+    margin-top: 8px;
+    padding: 8px 10px;
+  }
+  .home-routes-summary {
+    color: #5a3818;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  .home-routes-grid {
+    margin-top: 8px;
+  }
+  .home-routes-title {
+    color: #5a3818;
+    font-size: 20px;
+    font-weight: normal;
+    margin: 14px 0 4px 0;
+  }
   .home-route-head {
     align-items: flex-start;
     display: flex;
@@ -74332,7 +74353,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'b0fe67dc8d7f';
+const APP_BUILD_ID = '937ac72da62a';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77612,7 +77633,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'b0fe67dc8d7f' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '937ac72da62a' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81446,11 +81467,11 @@ function renderHomePanel(container) {
 
   // === БЛОК 2: МАРШРУТЫ ===
   if (compactHome) {
-    html += `<details id="home-routes-details" style="margin-top:8px;border:1px solid #d4c8b0;border-radius:6px;background:#fff;padding:8px 10px;">
-      <summary style="cursor:pointer;color:#5a3818;font-size:15px;">Выберите свой путь по книге (${routes.length})</summary>
-      <div style="margin-top:8px;${routeGridStyle}">`;
+    html += `<details id="home-routes-details" class="home-routes-details">
+      <summary class="home-routes-summary">Выберите свой путь по книге (${routes.length})</summary>
+      <div class="home-routes-grid" style="${routeGridStyle}">`;
   } else {
-    html += `<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:14px 0 4px 0;">Выберите свой путь по книге</h2>
+    html += `<h2 class="home-routes-title">Выберите свой путь по книге</h2>
       <div style="${routeGridStyle}">`;
   }
   for (const r of routes) {
