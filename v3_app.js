@@ -3033,8 +3033,8 @@ function renderGlobalSearchResults(matches, query = '') {
     `<div class="header-search-item" data-idx="${idx}" role="option" aria-selected="false">
       <span>${highlightSearchMatch(m.head, q)}</span>
       <span class="kind">${escapeHtml(m.kind)}</span>
-      ${m.meta ? `<div style="color:#888;font-size:10px;margin-top:2px;">${escapeHtml(m.meta)}</div>` : ''}
-      ${m.snippet ? `<div style="color:#6c5640;font-size:10px;line-height:1.25;margin-top:2px;">${highlightSearchMatch(m.snippet, q)}</div>` : ''}
+      ${m.meta ? `<div class="search-meta">${escapeHtml(m.meta)}</div>` : ''}
+      ${m.snippet ? `<div class="search-snippet">${highlightSearchMatch(m.snippet, q)}</div>` : ''}
     </div>`
   ).join('');
   box._matches = matches;
