@@ -4962,7 +4962,7 @@ function renderCardInRight() {
       const link = src.url
         ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
         : `<span>${label}</span>`;
-      return `<span class="card-source-pill">${link}<button type="button" class="related-link related-link-btn source-export-bib" data-source-idx="${sourceIdx}" style="font-size:10px;">BibTeX</button></span>`;
+      return `<span class="card-source-pill">${link}<button type="button" class="related-link related-link-btn source-export-bib card-source-bib" data-source-idx="${sourceIdx}">BibTeX</button></span>`;
     }).join('');
     if (sourcePills) {
       headerSourcesHtml = `<div class="card-sources-inline"><span class="card-sources-label">Sources</span>${sourcePills}</div>`;
@@ -5044,7 +5044,7 @@ function renderCardInRight() {
       html += `<div style="padding:6px 0;border-bottom:1px dashed #ddd;">
         ${link}
         <span style="color:#888;font-size:11px;">${pageHint}</span>
-        <button type="button" class="related-link related-link-btn source-export-bib" data-source-idx="${sourceIdx}" style="font-size:11px;margin-left:8px;padding:1px 8px;">BibTeX</button>
+        <button type="button" class="related-link related-link-btn source-export-bib card-source-row-bib" data-source-idx="${sourceIdx}">BibTeX</button>
         ${quote}
       </div>`;
     }

@@ -908,6 +908,14 @@
   .card .card-source-pill a:hover {
     text-decoration: underline solid;
   }
+  .card-source-bib {
+    font-size: 10px;
+  }
+  .card-source-row-bib {
+    font-size: 11px;
+    margin-left: 8px;
+    padding: 1px 8px;
+  }
   .card .wiki-link {
     display: inline-block;
     margin-top: 4px;
@@ -73658,7 +73666,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '624f3351a1c7';
+const APP_BUILD_ID = '8e9edda6adcf';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -76938,7 +76946,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '624f3351a1c7' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '8e9edda6adcf' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -78611,7 +78619,7 @@ function renderCardInRight() {
       const link = src.url
         ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
         : `<span>${label}</span>`;
-      return `<span class="card-source-pill">${link}<button type="button" class="related-link related-link-btn source-export-bib" data-source-idx="${sourceIdx}" style="font-size:10px;">BibTeX</button></span>`;
+      return `<span class="card-source-pill">${link}<button type="button" class="related-link related-link-btn source-export-bib card-source-bib" data-source-idx="${sourceIdx}">BibTeX</button></span>`;
     }).join('');
     if (sourcePills) {
       headerSourcesHtml = `<div class="card-sources-inline"><span class="card-sources-label">Sources</span>${sourcePills}</div>`;
@@ -78693,7 +78701,7 @@ function renderCardInRight() {
       html += `<div style="padding:6px 0;border-bottom:1px dashed #ddd;">
         ${link}
         <span style="color:#888;font-size:11px;">${pageHint}</span>
-        <button type="button" class="related-link related-link-btn source-export-bib" data-source-idx="${sourceIdx}" style="font-size:11px;margin-left:8px;padding:1px 8px;">BibTeX</button>
+        <button type="button" class="related-link related-link-btn source-export-bib card-source-row-bib" data-source-idx="${sourceIdx}">BibTeX</button>
         ${quote}
       </div>`;
     }
