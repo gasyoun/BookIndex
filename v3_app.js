@@ -7635,12 +7635,12 @@ function renderLecturesPanel(container) {
   html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:14px;">
     <div style="font-size:16px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Режим «Читаю сейчас»</div>
     <div style="font-size:12px;color:#777;margin-bottom:8px;">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-      <button id="reading-page-prev" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">←</button>
-      <input id="reading-page-input" type="number" min="1" max="${escapeHtml(maxPage)}" step="1" style="width:120px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:13px;" />
-      <button id="reading-page-next" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">→</button>
-      <button id="reading-page-go" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Показать</button>
-      <button id="reading-page-trends" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Динамика страницы</button>
+    <div class="reading-now-controls">
+      <button id="reading-page-prev" class="reading-now-btn">←</button>
+      <input id="reading-page-input" class="reading-now-input" type="number" min="1" max="${escapeHtml(maxPage)}" step="1" />
+      <button id="reading-page-next" class="reading-now-btn">→</button>
+      <button id="reading-page-go" class="reading-now-btn">Показать</button>
+      <button id="reading-page-trends" class="reading-now-btn">Динамика страницы</button>
     </div>
     <div id="reading-now-results" style="margin-top:10px;font-size:12px;line-height:1.6;color:#444;"></div>
   </div>`;

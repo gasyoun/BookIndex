@@ -1251,6 +1251,30 @@
     background: #fff;
     color: #8a3f1c;
   }
+  .reading-now-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .reading-now-btn {
+    padding: 6px 10px;
+    border: 1px solid #c4b890;
+    border-radius: 4px;
+    background: #fff8e8;
+    color: #5a3818;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+  }
+  .reading-now-input {
+    width: 120px;
+    padding: 6px 8px;
+    border: 1px solid #c4b890;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 13px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -73887,7 +73911,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '738958a03dcd';
+const APP_BUILD_ID = '22d7c668bf2e';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77167,7 +77191,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '738958a03dcd' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '22d7c668bf2e' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81513,12 +81537,12 @@ function renderLecturesPanel(container) {
   html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:14px;">
     <div style="font-size:16px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Режим «Читаю сейчас»</div>
     <div style="font-size:12px;color:#777;margin-bottom:8px;">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-      <button id="reading-page-prev" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">←</button>
-      <input id="reading-page-input" type="number" min="1" max="${escapeHtml(maxPage)}" step="1" style="width:120px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:13px;" />
-      <button id="reading-page-next" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">→</button>
-      <button id="reading-page-go" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Показать</button>
-      <button id="reading-page-trends" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Динамика страницы</button>
+    <div class="reading-now-controls">
+      <button id="reading-page-prev" class="reading-now-btn">←</button>
+      <input id="reading-page-input" class="reading-now-input" type="number" min="1" max="${escapeHtml(maxPage)}" step="1" />
+      <button id="reading-page-next" class="reading-now-btn">→</button>
+      <button id="reading-page-go" class="reading-now-btn">Показать</button>
+      <button id="reading-page-trends" class="reading-now-btn">Динамика страницы</button>
     </div>
     <div id="reading-now-results" style="margin-top:10px;font-size:12px;line-height:1.6;color:#444;"></div>
   </div>`;
