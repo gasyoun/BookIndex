@@ -8518,17 +8518,17 @@ function renderGlossaryPanel(container) {
     const related = findRelatedLexiconItems(g.term, g.definition || '', 4);
     let relatedHtml = '';
     if (related.length) {
-      relatedHtml += '<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:4px;align-items:center;">';
-      relatedHtml += '<span style="font-size:10px;color:#7a6350;">Связанные лексемы:</span>';
+      relatedHtml += '<div class="glossary-related-links">';
+      relatedHtml += '<span class="glossary-related-label">Связанные лексемы:</span>';
       for (const r of related) {
-        relatedHtml += `<a class="glossary-xlink" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" title="${escapeHtml(r.hint || '')}" style="display:inline-block;padding:2px 7px;border:1px solid #cdbb9a;border-radius:10px;background:#fff8e8;color:#5a3818;font-size:10px;cursor:pointer;text-decoration:underline dotted;">${escapeHtml(r.head)}</a>`;
+        relatedHtml += `<a class="glossary-xlink" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" title="${escapeHtml(r.hint || '')}">${escapeHtml(r.head)}</a>`;
       }
       relatedHtml += '</div>';
     }
     html += `<div class="glossary-entry" data-term="${escapeHtml(g.term.toLowerCase())}" style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;margin-bottom:8px;border-left:3px solid #8a7050;">
       <div style="font-size:14px;font-weight:bold;color:#5a3818;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:8px;">
         <span>${escapeHtml(g.term)}</span>
-        <a class="glossary-les-link" href="${escapeHtml(safeUrl(termUrl))}" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:normal;color:#5a3818;text-decoration:underline dotted;white-space:nowrap;">LES-1990 ↗</a>
+        <a class="glossary-les-link" href="${escapeHtml(safeUrl(termUrl))}" target="_blank" rel="noopener noreferrer">LES-1990 ↗</a>
       </div>
       <div style="font-size:13px;color:#444;line-height:1.6;">${escapeHtml(g.definition)}</div>
       ${relatedHtml}
