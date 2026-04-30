@@ -7455,7 +7455,7 @@ function renderTasksPanel(container, options = {}) {
   html += '<button id="tasks-regen" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">\u041d\u043e\u0432\u0430\u044f \u043f\u043e\u0434\u0431\u043e\u0440\u043a\u0430</button>';
   html += '</div>';
   html += '</div>';
-  html += '<div id="tasks-summary" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:12px;"></div>';
+  html += '<div id="tasks-summary" class="tasks-summary-grid"></div>';
   html += `<details id="tasks-history-box" class="tasks-history-box"${collapseHistory ? '' : ' open'}>`;
   html += '<summary id="tasks-history-summary" class="tasks-history-summary">\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u043e\u0442\u0432\u0435\u0442\u043e\u0432</summary>';
   html += '<div class="tasks-history-body">';
