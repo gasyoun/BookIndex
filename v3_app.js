@@ -1265,7 +1265,7 @@ function buildLecturePageBreakdownHtml(pages) {
     const chapterName = grp.chapter ? String(grp.chapter.name || '').trim() : '';
     const lectureIdx = chapterName ? findLectureIndexByName(chapterName) : -1;
     const lectureLabel = lectureIdx >= 0
-      ? `<a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}" style="text-decoration:underline dotted;">${escapeHtml(chapterName)}</a>`
+      ? `<a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}">${escapeHtml(chapterName)}</a>`
       : `<span>${escapeHtml(chapterName || 'Вне диапазонов лекций')}</span>`;
     const pageLinks = buildCardPageLinksHtml(grp.pages, 18);
     rows += `<div class="pages-by-lecture-row"><span class="pages-by-lecture-lecture">${lectureLabel}</span><span class="pages-by-lecture-sep">:</span><span class="pages-by-lecture-pages">${pageLinks}</span></div>`;
@@ -5072,7 +5072,7 @@ function renderCardInRight() {
     for (const ch of it.chapters) {
       const lectureIdx = findLectureIndexByName(ch);
       if (lectureIdx >= 0) {
-        html += `<li><a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}" style="text-decoration:underline dotted;">${escapeHtml(ch)}</a></li>`;
+        html += `<li><a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}">${escapeHtml(ch)}</a></li>`;
       } else {
         html += `<li>${escapeHtml(ch)}</li>`;
       }

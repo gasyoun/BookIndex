@@ -73728,7 +73728,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'e5f663dee511';
+const APP_BUILD_ID = 'b555d424b940';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -74984,7 +74984,7 @@ function buildLecturePageBreakdownHtml(pages) {
     const chapterName = grp.chapter ? String(grp.chapter.name || '').trim() : '';
     const lectureIdx = chapterName ? findLectureIndexByName(chapterName) : -1;
     const lectureLabel = lectureIdx >= 0
-      ? `<a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}" style="text-decoration:underline dotted;">${escapeHtml(chapterName)}</a>`
+      ? `<a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}">${escapeHtml(chapterName)}</a>`
       : `<span>${escapeHtml(chapterName || 'Вне диапазонов лекций')}</span>`;
     const pageLinks = buildCardPageLinksHtml(grp.pages, 18);
     rows += `<div class="pages-by-lecture-row"><span class="pages-by-lecture-lecture">${lectureLabel}</span><span class="pages-by-lecture-sep">:</span><span class="pages-by-lecture-pages">${pageLinks}</span></div>`;
@@ -77008,7 +77008,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'e5f663dee511' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'b555d424b940' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -78791,7 +78791,7 @@ function renderCardInRight() {
     for (const ch of it.chapters) {
       const lectureIdx = findLectureIndexByName(ch);
       if (lectureIdx >= 0) {
-        html += `<li><a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}" style="text-decoration:underline dotted;">${escapeHtml(ch)}</a></li>`;
+        html += `<li><a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}">${escapeHtml(ch)}</a></li>`;
       } else {
         html += `<li>${escapeHtml(ch)}</li>`;
       }
