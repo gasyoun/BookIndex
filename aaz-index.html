@@ -1292,6 +1292,13 @@
     line-height: 1.6;
     margin-top: 10px;
   }
+  .reading-now-box {
+    background: #fff;
+    border: 1px solid #d4c8b0;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    padding: 12px 14px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -73928,7 +73935,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'd2d3a8a56ecf';
+const APP_BUILD_ID = '037e5d7263b4';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77208,7 +77215,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'd2d3a8a56ecf' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '037e5d7263b4' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81551,7 +81558,7 @@ function renderLecturesPanel(container) {
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
   html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Все лекции книги — за пять минут</h2>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
-  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:14px;">
+  html += `<div class="reading-now-box">
     <div class="reading-now-title">Режим «Читаю сейчас»</div>
     <div class="reading-now-desc">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
     <div class="reading-now-controls">

@@ -7632,7 +7632,7 @@ function renderLecturesPanel(container) {
   let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
   html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Все лекции книги — за пять минут</h2>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
-  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:14px;">
+  html += `<div class="reading-now-box">
     <div class="reading-now-title">Режим «Читаю сейчас»</div>
     <div class="reading-now-desc">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
     <div class="reading-now-controls">
