@@ -1805,6 +1805,11 @@
   .epoch-link.discussed {
     font-weight: bold;
   }
+  .card-lecture-list {
+    font-size: 12px;
+    margin: 0;
+    padding-left: 18px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -74441,7 +74446,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '2b83b69443da';
+const APP_BUILD_ID = '0ccd1b89a69b';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77721,7 +77726,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '2b83b69443da' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '0ccd1b89a69b' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -79500,7 +79505,7 @@ function renderCardInRight() {
 
   // Главы
   if (it.chapters && it.chapters.length > 0) {
-    html += '<h3>Лекции</h3><ul style="margin:0; padding-left:18px; font-size:12px;">';
+    html += '<h3>Лекции</h3><ul class="card-lecture-list">';
     for (const ch of it.chapters) {
       const lectureIdx = findLectureIndexByName(ch);
       if (lectureIdx >= 0) {

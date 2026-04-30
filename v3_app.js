@@ -5068,7 +5068,7 @@ function renderCardInRight() {
 
   // Главы
   if (it.chapters && it.chapters.length > 0) {
-    html += '<h3>Лекции</h3><ul style="margin:0; padding-left:18px; font-size:12px;">';
+    html += '<h3>Лекции</h3><ul class="card-lecture-list">';
     for (const ch of it.chapters) {
       const lectureIdx = findLectureIndexByName(ch);
       if (lectureIdx >= 0) {
