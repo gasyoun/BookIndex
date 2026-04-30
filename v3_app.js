@@ -5011,18 +5011,18 @@ function renderCardInRight() {
     </div>`;
   }
   const flagBadges = [];
-  if (editorial.verified) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#e7f7ed;border:1px solid #b5e2c4;color:#2e6d44;font-size:11px;">verified</span>');
-  if (editorial.suspect) flagBadges.push('<span style="padding:2px 6px;border-radius:999px;background:#fff6e8;border:1px solid #f0d1a6;color:#8b5a2b;font-size:11px;">suspect</span>');
+  if (editorial.verified) flagBadges.push('<span class="card-editorial-flag verified">verified</span>');
+  if (editorial.suspect) flagBadges.push('<span class="card-editorial-flag suspect">suspect</span>');
   if (flagBadges.length) {
-    html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">${flagBadges.join('')}</div>`;
+    html += `<div class="card-editorial-flags">${flagBadges.join('')}</div>`;
   }
   if (editorial.note) {
-    html += `<div style="margin-top:8px;padding:8px 10px;background:#fffdf5;border-left:3px solid #d9c28a;border-radius:4px;font-size:12px;color:#6a5a3c;">
+    html += `<div class="card-editorial-note">
       <strong>Editor note:</strong> ${escapeHtml(editorial.note)}
     </div>`;
   }
   if (it.is_moderator && it.moderator_note) {
-    html += `<div style="margin-top:10px;padding:8px 10px;background:#fff8e8;border-left:3px solid #8a7050;border-radius:4px;font-size:12px;color:#6a5040;">
+    html += `<div class="card-moderator-note">
       <strong>Примечание о подсчёте:</strong> ${escapeHtml(it.moderator_note)}
     </div>`;
   }
