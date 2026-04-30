@@ -4671,13 +4671,13 @@ function renderList() {
 
   if (truncated) {
     const more = document.createElement('div');
-    more.style.cssText = 'padding:12px; color:#888; text-align:center; font-size:11px;';
+    more.className = 'list-truncated-message';
     if (listColumns > 1) more.style.columnSpan = 'all';
     more.textContent = `Показано первые ${MAX_RESULTS} результатов. Уточните запрос для сужения.`;
     list.appendChild(more);
   }
   if (filtered.length === 0) {
-    list.innerHTML = '<div style="padding:24px; color:#999; text-align:center;">Ничего не найдено</div>';
+    list.innerHTML = '<div class="list-empty-message">Ничего не найдено</div>';
   }
 }
 
@@ -4820,7 +4820,7 @@ function renderChapterListFilter(entityKey, chapterName) {
   const list = document.getElementById('name-list');
   if (!chapter || !list) return;
   const filtered = getItemsForChapter(entityKey, chapter);
-  list.innerHTML = `<div style="padding:6px 12px; background:#fff8e8; border-bottom:1px solid #d4c8b0; font-size:11px;"><strong>Лекция:</strong> ${escapeHtml(chapter.name)} <span style="color:#888">(${filtered.length})</span></div>`;
+  list.innerHTML = `<div class="chapter-filter-banner"><strong>Лекция:</strong> ${escapeHtml(chapter.name)} <span class="chapter-filter-count">(${filtered.length})</span></div>`;
   appendItemsWithLetters(list, filtered, entityKey);
 }
 

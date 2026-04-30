@@ -1739,6 +1739,26 @@
     color: #5a3818;
     text-decoration: underline dotted;
   }
+  .list-truncated-message {
+    color: #888;
+    font-size: 11px;
+    padding: 12px;
+    text-align: center;
+  }
+  .list-empty-message {
+    color: #999;
+    padding: 24px;
+    text-align: center;
+  }
+  .chapter-filter-banner {
+    background: #fff8e8;
+    border-bottom: 1px solid #d4c8b0;
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+  .chapter-filter-count {
+    color: #888;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -74375,7 +74395,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'df7f6eef7e58';
+const APP_BUILD_ID = '8d56cb78f024';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77655,7 +77675,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'df7f6eef7e58' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '8d56cb78f024' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -79037,13 +79057,13 @@ function renderList() {
 
   if (truncated) {
     const more = document.createElement('div');
-    more.style.cssText = 'padding:12px; color:#888; text-align:center; font-size:11px;';
+    more.className = 'list-truncated-message';
     if (listColumns > 1) more.style.columnSpan = 'all';
     more.textContent = `Показано первые ${MAX_RESULTS} результатов. Уточните запрос для сужения.`;
     list.appendChild(more);
   }
   if (filtered.length === 0) {
-    list.innerHTML = '<div style="padding:24px; color:#999; text-align:center;">Ничего не найдено</div>';
+    list.innerHTML = '<div class="list-empty-message">Ничего не найдено</div>';
   }
 }
 
@@ -79186,7 +79206,7 @@ function renderChapterListFilter(entityKey, chapterName) {
   const list = document.getElementById('name-list');
   if (!chapter || !list) return;
   const filtered = getItemsForChapter(entityKey, chapter);
-  list.innerHTML = `<div style="padding:6px 12px; background:#fff8e8; border-bottom:1px solid #d4c8b0; font-size:11px;"><strong>Лекция:</strong> ${escapeHtml(chapter.name)} <span style="color:#888">(${filtered.length})</span></div>`;
+  list.innerHTML = `<div class="chapter-filter-banner"><strong>Лекция:</strong> ${escapeHtml(chapter.name)} <span class="chapter-filter-count">(${filtered.length})</span></div>`;
   appendItemsWithLetters(list, filtered, entityKey);
 }
 

@@ -617,6 +617,9 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#(?:v4\/)?all\/list\/q\//);
     await expect(page.locator('#search-input')).toHaveValue('\u0436\u0435');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
+
+    await page.goto('/aaz-index.html#all/list/q/bookindex-no-match');
+    await expect(page.locator('#name-list .list-empty-message')).toBeVisible();
   });
 
   test('list toolbar keeps search and discussed filter on one row, export stays above right pane content', async ({ page }) => {
