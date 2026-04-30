@@ -726,8 +726,9 @@ test.describe('aaz-index smoke', () => {
     await expect(cards).toHaveCount(11);
     await expect(cards.first()).toContainText('\u041f\u0440\u0435\u0434\u0438\u0441\u043b\u043e\u0432\u0438\u0435');
     await expect(cards.nth(1)).toContainText('\u041b\u0435\u043a\u0446\u0438\u044f 1');
-    const firstStyle = await cards.first().getAttribute('style');
-    expect(String(firstStyle || '')).toContain('grid-column:1 / -1');
+    await expect(cards.first()).toHaveClass(/preface/);
+    await expect(cards.first()).toHaveCSS('grid-column-start', '1');
+    await expect(cards.first()).toHaveCSS('grid-column-end', '-1');
 
     const brotherCard = page.locator('#lectures-grid .lecture-card', { hasText: 'brother' }).first();
     await expect(brotherCard).toBeVisible();

@@ -7648,8 +7648,8 @@ function renderLecturesPanel(container) {
   for (let i = 0; i < lectures.length; i++) {
     const l = lectures[i];
     const title = i === 0 ? 'Предисловие' : `Лекция ${i}`;
-    const cardSpan = i === 0 ? 'grid-column:1 / -1;' : '';
-    html += `<div class="lecture-card" data-idx="${i}" style="${cardSpan}background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:14px 18px;border-top:3px solid #8a7050;cursor:pointer;">
+    const cardClass = i === 0 ? 'lecture-card preface' : 'lecture-card';
+    html += `<div class="${cardClass}" data-idx="${i}">
       <div style="font-size:11px;color:#888;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;">${title} · стр. ${escapeHtml(l.pages)}</div>
       <div style="font-size:17px;font-weight:bold;color:#5a3818;margin:4px 0 8px 0;">${escapeHtml(l.name)}</div>
       <div style="font-size:13px;color:#333;line-height:1.5;margin-bottom:10px;">${escapeHtml(l.main_idea)}</div>
