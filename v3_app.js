@@ -5040,10 +5040,10 @@ function renderCardInRight() {
       const link = src.url
         ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
         : `<span>${label}</span>`;
-      const quote = (!isWikiSource && src.quote) ? `<div style="font-size:12px;color:#444;line-height:1.45;margin:4px 0 2px 0;">“${escapeHtml(src.quote)}”</div>` : '';
-      html += `<div style="padding:6px 0;border-bottom:1px dashed #ddd;">
+      const quote = (!isWikiSource && src.quote) ? `<div class="card-source-quote">“${escapeHtml(src.quote)}”</div>` : '';
+      html += `<div class="card-source-row">
         ${link}
-        <span style="color:#888;font-size:11px;">${pageHint}</span>
+        <span class="card-source-page">${pageHint}</span>
         <button type="button" class="related-link related-link-btn source-export-bib card-source-row-bib" data-source-idx="${sourceIdx}">BibTeX</button>
         ${quote}
       </div>`;

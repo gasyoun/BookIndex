@@ -916,6 +916,20 @@
     margin-left: 8px;
     padding: 1px 8px;
   }
+  .card-source-row {
+    padding: 6px 0;
+    border-bottom: 1px dashed #ddd;
+  }
+  .card-source-page {
+    color: #888;
+    font-size: 11px;
+  }
+  .card-source-quote {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.45;
+    margin: 4px 0 2px 0;
+  }
   .card-editorial-flags {
     display: flex;
     flex-wrap: wrap;
@@ -73705,7 +73719,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '9fcf2841239e';
+const APP_BUILD_ID = '9bc01ea6e4ae';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -76985,7 +76999,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '9fcf2841239e' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '9bc01ea6e4ae' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -78736,10 +78750,10 @@ function renderCardInRight() {
       const link = src.url
         ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
         : `<span>${label}</span>`;
-      const quote = (!isWikiSource && src.quote) ? `<div style="font-size:12px;color:#444;line-height:1.45;margin:4px 0 2px 0;">“${escapeHtml(src.quote)}”</div>` : '';
-      html += `<div style="padding:6px 0;border-bottom:1px dashed #ddd;">
+      const quote = (!isWikiSource && src.quote) ? `<div class="card-source-quote">“${escapeHtml(src.quote)}”</div>` : '';
+      html += `<div class="card-source-row">
         ${link}
-        <span style="color:#888;font-size:11px;">${pageHint}</span>
+        <span class="card-source-page">${pageHint}</span>
         <button type="button" class="related-link related-link-btn source-export-bib card-source-row-bib" data-source-idx="${sourceIdx}">BibTeX</button>
         ${quote}
       </div>`;
