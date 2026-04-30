@@ -7100,7 +7100,7 @@ function renderHomePanel(container) {
   html += '</div>';
 
   // Изюминки
-  html += `<div style="margin-top:${compactHome ? 10 : 14}px;padding-top:${compactHome ? 10 : 14}px;border-top:1px solid rgba(255,248,232,0.25);font-size:12px;line-height:${compactHome ? 1.55 : 1.7};">
+  html += `<div class="home-facts" style="--home-facts-space:${compactHome ? 10 : 14}px;--home-facts-line-height:${compactHome ? 1.55 : 1.7};">
     <div id="home-fact-pair" style="${factPairStyle}">
       <div>
         <div>📖 Самая длинная лекция — <strong>«${escapeHtml(stats.longest_lecture.name)}»</strong> (${stats.longest_lecture.pages} страниц)</div>
@@ -7111,10 +7111,10 @@ function renderHomePanel(container) {
         <div>⏳ Самый ранний из упомянутых — <strong>${escapeHtml(stats.earliest_person.head)}</strong> (${Math.abs(stats.earliest_person.epoch)} ${stats.earliest_person.epoch < 0 ? 'до н.&nbsp;э.' : 'г.'})</div>
         <div>🌐 Самая представленная семья — <strong>${escapeHtml(stats.top_family[0])}</strong> (${stats.top_family[1]} языков)</div>
       </div>
-      <div id="home-featured-quote" style="padding-left:${compactHome ? 8 : 10}px;border-left:2px solid rgba(255,248,232,0.45);font-style:italic;align-self:start;">
+      <div id="home-featured-quote" class="home-featured-quote" style="--home-featured-padding:${compactHome ? 8 : 10}px;">
         <div id="home-featured-quote-text" style="${quoteTextClamp}">«${escapeHtml(featured.text)}»</div>
-        <div style="margin-top:6px;font-style:normal;opacity:0.85;">— ${renderTextWithPageLinks(`стр. ${featured.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#fff8e8;', rangeTarget: 'trends' })}, лекция «${escapeHtml(featured.lecture)}»</div>
-        <div style="margin-top:8px;font-style:normal;opacity:0.9;font-size:11px;">Выберите свой путь по книге — если не знаете, с чего начать, выберите тему, которая вас интересует.</div>
+        <div class="home-featured-meta">— ${renderTextWithPageLinks(`стр. ${featured.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#fff8e8;', rangeTarget: 'trends' })}, лекция «${escapeHtml(featured.lecture)}»</div>
+        <div class="home-featured-hint">Выберите свой путь по книге — если не знаете, с чего начать, выберите тему, которая вас интересует.</div>
       </div>
     </div>
   </div></div>`;
