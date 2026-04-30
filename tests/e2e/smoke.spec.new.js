@@ -998,8 +998,8 @@ test.describe('aaz-index smoke', () => {
       const panelEl = document.querySelector('.home-panel');
       if (!panelEl) return null;
       const routesHost = panelEl.querySelector('#home-routes-details')
-        || panelEl.querySelector('.route-link')?.closest('div[style*="border-top:3px solid #8a7050"]');
-      const recentsHost = panelEl.querySelector('#home-recent-items')?.closest('div[style*="margin-bottom:14px"]');
+        || panelEl.querySelector('.home-route-card');
+      const recentsHost = panelEl.querySelector('.home-recent-card');
       const before = panelEl.scrollTop;
       panelEl.scrollTop = panelEl.scrollHeight;
       const after = panelEl.scrollTop;
