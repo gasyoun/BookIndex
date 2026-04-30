@@ -5442,17 +5442,19 @@ function renderEpochsPanel(container) {
     grouped[ep.key].sort(compareItemsByHead);
   }
 
-  let html = '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px;">';
+  let html = '<div class="epochs-grid">';
   for (const ep of epochs) {
     const list = grouped[ep.key];
-    html += `<div style="border:1px solid #d4c8b0; border-radius:4px; padding:10px; background:#fff;">
-      <div style="border-bottom:2px solid ${safeColor(EPOCH_COLORS[ep.key], '#8a7050')}; padding-bottom:6px; margin-bottom:8px;">
-        <div style="font-weight:bold; font-size:14px; color:${safeColor(EPOCH_COLORS[ep.key], '#8a7050')};">${ep.label}</div>
-        <div style="font-size:11px; color:#888;">${ep.sub} · ${list.length}</div>
+    const epochColor = safeColor(EPOCH_COLORS[ep.key], '#8a7050');
+    html += `<div class="epoch-card">
+      <div class="epoch-card-head" style="--epoch-color:${epochColor};">
+        <div class="epoch-card-title">${ep.label}</div>
+        <div class="epoch-card-meta">${ep.sub} · ${list.length}</div>
       </div>
-      <div style="font-size:12px;">`;
+      <div class="epoch-link-list">`;
     for (const t of list) {
-      html += `<a class="related-link" data-head="${escapeHtml(t.head)}" href="${escapeHtml(buildItemHash('toponyms', t.head))}" style="display:block;padding:2px 0; ${t.discussed?'font-weight:bold;':''}color:#5a3818;text-decoration:underline dotted;">${escapeHtml(t.head)}</a>`;
+      const discussedClass = t.discussed ? ' discussed' : '';
+      html += `<a class="related-link epoch-link${discussedClass}" data-head="${escapeHtml(t.head)}" href="${escapeHtml(buildItemHash('toponyms', t.head))}">${escapeHtml(t.head)}</a>`;
     }
     html += '</div></div>';
   }

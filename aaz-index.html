@@ -1768,6 +1768,43 @@
     padding: 40px 0;
     text-align: center;
   }
+  .epochs-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .epoch-card {
+    background: #fff;
+    border: 1px solid #d4c8b0;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  .epoch-card-head {
+    border-bottom: 2px solid var(--epoch-color, #8a7050);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+  }
+  .epoch-card-title {
+    color: var(--epoch-color, #8a7050);
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .epoch-card-meta {
+    color: #888;
+    font-size: 11px;
+  }
+  .epoch-link-list {
+    font-size: 12px;
+  }
+  .epoch-link {
+    color: #5a3818;
+    display: block;
+    padding: 2px 0;
+    text-decoration: underline dotted;
+  }
+  .epoch-link.discussed {
+    font-weight: bold;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -74404,7 +74441,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '2869a3d44282';
+const APP_BUILD_ID = '2b83b69443da';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77684,7 +77721,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '2869a3d44282' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '2b83b69443da' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -79837,17 +79874,19 @@ function renderEpochsPanel(container) {
     grouped[ep.key].sort(compareItemsByHead);
   }
 
-  let html = '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px;">';
+  let html = '<div class="epochs-grid">';
   for (const ep of epochs) {
     const list = grouped[ep.key];
-    html += `<div style="border:1px solid #d4c8b0; border-radius:4px; padding:10px; background:#fff;">
-      <div style="border-bottom:2px solid ${safeColor(EPOCH_COLORS[ep.key], '#8a7050')}; padding-bottom:6px; margin-bottom:8px;">
-        <div style="font-weight:bold; font-size:14px; color:${safeColor(EPOCH_COLORS[ep.key], '#8a7050')};">${ep.label}</div>
-        <div style="font-size:11px; color:#888;">${ep.sub} · ${list.length}</div>
+    const epochColor = safeColor(EPOCH_COLORS[ep.key], '#8a7050');
+    html += `<div class="epoch-card">
+      <div class="epoch-card-head" style="--epoch-color:${epochColor};">
+        <div class="epoch-card-title">${ep.label}</div>
+        <div class="epoch-card-meta">${ep.sub} · ${list.length}</div>
       </div>
-      <div style="font-size:12px;">`;
+      <div class="epoch-link-list">`;
     for (const t of list) {
-      html += `<a class="related-link" data-head="${escapeHtml(t.head)}" href="${escapeHtml(buildItemHash('toponyms', t.head))}" style="display:block;padding:2px 0; ${t.discussed?'font-weight:bold;':''}color:#5a3818;text-decoration:underline dotted;">${escapeHtml(t.head)}</a>`;
+      const discussedClass = t.discussed ? ' discussed' : '';
+      html += `<a class="related-link epoch-link${discussedClass}" data-head="${escapeHtml(t.head)}" href="${escapeHtml(buildItemHash('toponyms', t.head))}">${escapeHtml(t.head)}</a>`;
     }
     html += '</div></div>';
   }

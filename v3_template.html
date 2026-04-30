@@ -1768,6 +1768,43 @@
     padding: 40px 0;
     text-align: center;
   }
+  .epochs-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .epoch-card {
+    background: #fff;
+    border: 1px solid #d4c8b0;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  .epoch-card-head {
+    border-bottom: 2px solid var(--epoch-color, #8a7050);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+  }
+  .epoch-card-title {
+    color: var(--epoch-color, #8a7050);
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .epoch-card-meta {
+    color: #888;
+    font-size: 11px;
+  }
+  .epoch-link-list {
+    font-size: 12px;
+  }
+  .epoch-link {
+    color: #5a3818;
+    display: block;
+    padding: 2px 0;
+    text-decoration: underline dotted;
+  }
+  .epoch-link.discussed {
+    font-weight: bold;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
