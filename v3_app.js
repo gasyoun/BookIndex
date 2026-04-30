@@ -7882,25 +7882,25 @@ function renderLecturePagePanel(container) {
   const l = lectures[currentLecture];
   const title = currentLecture === 0 ? 'Предисловие' : `Лекция ${currentLecture}`;
 
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:900px;margin:0 auto;">';
-  html += `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
-    <button id="lecture-prev" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;">← Предыдущая</button>
-    <button id="lecture-all" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;">Ко всем лекциям</button>
-    <button id="lecture-next" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;">Следующая →</button>
+  let html = '<div class="panel active lecture-page"><div class="lecture-page-inner">';
+  html += `<div class="lecture-page-nav">
+    <button id="lecture-prev" class="lecture-page-nav-btn">← Предыдущая</button>
+    <button id="lecture-all" class="lecture-page-nav-btn">Ко всем лекциям</button>
+    <button id="lecture-next" class="lecture-page-nav-btn">Следующая →</button>
   </div>`;
-  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:8px;padding:18px 20px;border-top:4px solid #8a7050;">
-    <div style="font-size:12px;color:#888;font-weight:bold;letter-spacing:0.4px;text-transform:uppercase;">${title} · стр. ${escapeHtml(l.pages || '')}</div>
-    <h2 style="font-size:24px;color:#5a3818;margin:6px 0 10px 0;font-weight:normal;">${escapeHtml(l.name || '')}</h2>
-    <div style="font-size:14px;line-height:1.6;color:#333;margin-bottom:12px;">${escapeHtml(l.main_idea || '')}</div>
-    <h3 style="font-size:12px;color:#6a5040;margin:14px 0 6px;">Ключевые факты</h3>
-    <ul style="margin:0 0 10px 0;padding-left:18px;font-size:13px;line-height:1.6;color:#333;">`;
+  html += `<div class="lecture-page-card">
+    <div class="lecture-page-meta">${title} · стр. ${escapeHtml(l.pages || '')}</div>
+    <h2 class="lecture-page-title">${escapeHtml(l.name || '')}</h2>
+    <div class="lecture-page-idea">${escapeHtml(l.main_idea || '')}</div>
+    <h3 class="lecture-page-section">Ключевые факты</h3>
+    <ul class="lecture-page-facts">`;
   for (const fact of (l.key_facts || [])) html += `<li>${escapeHtml(fact)}</li>`;
   html += `</ul>
-    <h3 style="font-size:12px;color:#6a5040;margin:14px 0 6px;">Термины</h3>
-    <div style="font-size:12px;line-height:1.7;display:flex;flex-wrap:wrap;gap:4px;">`;
-  for (const t of (l.terms || [])) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(t)}</a>`;
+    <h3 class="lecture-page-section">Термины</h3>
+    <div class="lecture-page-terms">`;
+  for (const t of (l.terms || [])) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}">${escapeHtml(t)}</a>`;
   html += `</div>
-    <div style="margin-top:12px;padding-top:12px;border-top:1px solid #efe3cb;font-size:13px;color:#5a3818;font-style:italic;">${escapeHtml(l.why_read || '')}</div>
+    <div class="lecture-page-why">${escapeHtml(l.why_read || '')}</div>
   </div>`;
   if (currentLecture === 0 && Array.isArray(APP_DATA.further_reading) && APP_DATA.further_reading.length) {
     html += `<div style="margin-top:14px;background:#fff;border:1px solid #d4c8b0;border-radius:8px;padding:14px 16px;">

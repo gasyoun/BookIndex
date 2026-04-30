@@ -734,6 +734,12 @@ test.describe('aaz-index smoke', () => {
     await expect(brotherCard).toBeVisible();
     await expect(brotherCard).toContainText('\u0430 \u043d\u0435 \u0434\u0435\u0442\u0438 \xab\u0441\u0430\u043d\u0441\u043a\u0440\u0438\u0442\u0430\xbb');
     await expect(brotherCard).not.toContainText('\u0443\u0447\u0451\u043d\u044b\u0435');
+
+    await brotherCard.click();
+    await expect(page).toHaveURL(/#(?:v4\/)?materials\/lecture_pages\/\d+/);
+    await expect(page.locator('.lecture-page-card')).toBeVisible();
+    await expect(page.locator('#lecture-all')).toBeVisible();
+    await expect(page.locator('.lecture-page-card .lecture-term-chip').first()).toHaveCSS('background-color', 'rgb(240, 232, 216)');
   });
 
   test('toponym epochs links navigate via hash item links', async ({ page }) => {
