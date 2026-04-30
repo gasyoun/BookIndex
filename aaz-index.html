@@ -1145,6 +1145,21 @@
     text-decoration: underline dotted;
     white-space: nowrap;
   }
+  .glossary-entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    color: #5a3818;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  .glossary-definition {
+    color: #444;
+    font-size: 13px;
+    line-height: 1.6;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -73781,7 +73796,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '7a56d8ffac06';
+const APP_BUILD_ID = '9dbb275939a2';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77061,7 +77076,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '7a56d8ffac06' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '9dbb275939a2' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -82298,11 +82313,11 @@ function renderGlossaryPanel(container) {
       relatedHtml += '</div>';
     }
     html += `<div class="glossary-entry" data-term="${escapeHtml(g.term.toLowerCase())}" style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;margin-bottom:8px;border-left:3px solid #8a7050;">
-      <div style="font-size:14px;font-weight:bold;color:#5a3818;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <div class="glossary-entry-head">
         <span>${escapeHtml(g.term)}</span>
         <a class="glossary-les-link" href="${escapeHtml(safeUrl(termUrl))}" target="_blank" rel="noopener noreferrer">LES-1990 ↗</a>
       </div>
-      <div style="font-size:13px;color:#444;line-height:1.6;">${escapeHtml(g.definition)}</div>
+      <div class="glossary-definition">${escapeHtml(g.definition)}</div>
       ${relatedHtml}
     </div>`;
   }
