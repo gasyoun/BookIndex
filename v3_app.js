@@ -7633,8 +7633,8 @@ function renderLecturesPanel(container) {
   html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Все лекции книги — за пять минут</h2>';
   html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
   html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:14px;">
-    <div style="font-size:16px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Режим «Читаю сейчас»</div>
-    <div style="font-size:12px;color:#777;margin-bottom:8px;">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
+    <div class="reading-now-title">Режим «Читаю сейчас»</div>
+    <div class="reading-now-desc">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
     <div class="reading-now-controls">
       <button id="reading-page-prev" class="reading-now-btn">←</button>
       <input id="reading-page-input" class="reading-now-input" type="number" min="1" max="${escapeHtml(maxPage)}" step="1" />
@@ -7642,7 +7642,7 @@ function renderLecturesPanel(container) {
       <button id="reading-page-go" class="reading-now-btn">Показать</button>
       <button id="reading-page-trends" class="reading-now-btn">Динамика страницы</button>
     </div>
-    <div id="reading-now-results" style="margin-top:10px;font-size:12px;line-height:1.6;color:#444;"></div>
+    <div id="reading-now-results" class="reading-now-results"></div>
   </div>`;
   html += '<div id="lectures-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;">';
   for (let i = 0; i < lectures.length; i++) {
