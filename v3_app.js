@@ -4989,12 +4989,12 @@ function renderCardInRight() {
           </div>
           ${wikiLink}
           <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;">
-            <button type="button" class="related-link related-link-btn" id="card-prev" aria-label="Предыдущая карточка" style="font-size:11px;">◀</button>
-            <button type="button" class="related-link related-link-btn" id="card-next" aria-label="Следующая карточка" style="font-size:11px;">▶</button>
-            <button type="button" class="related-link related-link-btn" id="back-to-histo" style="font-size:11px;">← вернуться к гистограмме</button>
-            ${canOpenMapForCard ? '<button type="button" class="related-link related-link-btn" id="open-on-map" style="font-size:11px;">📍 показать на карте</button>' : ''}
-            <button type="button" class="related-link related-link-btn" id="export-card-md" style="font-size:11px;">экспорт карточки .md</button>
-            <button type="button" class="related-link related-link-btn" id="copy-card-link" style="font-size:11px;">скопировать ссылку</button>
+            <button type="button" class="related-link related-link-btn card-action-link" id="card-prev" aria-label="Предыдущая карточка">◀</button>
+            <button type="button" class="related-link related-link-btn card-action-link" id="card-next" aria-label="Следующая карточка">▶</button>
+            <button type="button" class="related-link related-link-btn card-action-link" id="back-to-histo">← вернуться к гистограмме</button>
+            ${canOpenMapForCard ? '<button type="button" class="related-link related-link-btn card-action-link" id="open-on-map">📍 показать на карте</button>' : ''}
+            <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
+            <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
           </div>
         </div>
       </div>
