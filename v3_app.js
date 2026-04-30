@@ -7903,16 +7903,16 @@ function renderLecturePagePanel(container) {
     <div class="lecture-page-why">${escapeHtml(l.why_read || '')}</div>
   </div>`;
   if (currentLecture === 0 && Array.isArray(APP_DATA.further_reading) && APP_DATA.further_reading.length) {
-    html += `<div style="margin-top:14px;background:#fff;border:1px solid #d4c8b0;border-radius:8px;padding:14px 16px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-        <h3 style="margin:0;font-size:16px;color:#5a3818;font-weight:normal;">Что почитать ещё</h3>
-        <button id="go-further-reading" style="padding:5px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Открыть весь раздел</button>
+    html += `<div class="lecture-page-further">
+      <div class="lecture-page-further-head">
+        <h3 class="lecture-page-further-title">Что почитать ещё</h3>
+        <button id="go-further-reading" class="lecture-page-further-btn">Открыть весь раздел</button>
       </div>`;
     for (const sec of APP_DATA.further_reading) {
-      html += `<div style="margin-bottom:10px;">
-        <div style="font-size:13px;font-weight:bold;color:#5a3818;margin-bottom:4px;">${escapeHtml(sec.topic || '')}</div>`;
+      html += `<div class="lecture-page-further-section">
+        <div class="lecture-page-further-topic">${escapeHtml(sec.topic || '')}</div>`;
       for (const b of (sec.books || [])) {
-        html += `<div style="font-size:12px;color:#444;line-height:1.45;margin-bottom:3px;">• <strong>${escapeHtml(b.title || '')}</strong>: ${escapeHtml(b.why || '')}</div>`;
+        html += `<div class="lecture-page-further-book">• <strong>${escapeHtml(b.title || '')}</strong>: ${escapeHtml(b.why || '')}</div>`;
       }
       html += '</div>';
     }

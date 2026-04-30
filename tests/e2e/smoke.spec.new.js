@@ -740,6 +740,10 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('.lecture-page-card')).toBeVisible();
     await expect(page.locator('#lecture-all')).toBeVisible();
     await expect(page.locator('.lecture-page-card .lecture-term-chip').first()).toHaveCSS('background-color', 'rgb(240, 232, 216)');
+
+    await page.goto('/aaz-index.html#materials/lecture_pages/0');
+    await expect(page.locator('.lecture-page-further')).toBeVisible();
+    await expect(page.locator('#go-further-reading')).toBeVisible();
   });
 
   test('toponym epochs links navigate via hash item links', async ({ page }) => {

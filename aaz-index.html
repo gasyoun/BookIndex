@@ -1457,6 +1457,52 @@
     margin-top: 12px;
     padding-top: 12px;
   }
+  .lecture-page-further {
+    background: #fff;
+    border: 1px solid #d4c8b0;
+    border-radius: 8px;
+    margin-top: 14px;
+    padding: 14px 16px;
+  }
+  .lecture-page-further-head {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .lecture-page-further-title {
+    color: #5a3818;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0;
+  }
+  .lecture-page-further-btn {
+    background: #fff8e8;
+    border: 1px solid #c4b890;
+    border-radius: 4px;
+    color: #5a3818;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  .lecture-page-further-section {
+    margin-bottom: 10px;
+  }
+  .lecture-page-further-topic {
+    color: #5a3818;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  .lecture-page-further-book {
+    color: #444;
+    font-size: 12px;
+    line-height: 1.45;
+    margin-bottom: 3px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -74093,7 +74139,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '36d262de99af';
+const APP_BUILD_ID = 'd00439c60e63';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77373,7 +77419,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '36d262de99af' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'd00439c60e63' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81987,16 +82033,16 @@ function renderLecturePagePanel(container) {
     <div class="lecture-page-why">${escapeHtml(l.why_read || '')}</div>
   </div>`;
   if (currentLecture === 0 && Array.isArray(APP_DATA.further_reading) && APP_DATA.further_reading.length) {
-    html += `<div style="margin-top:14px;background:#fff;border:1px solid #d4c8b0;border-radius:8px;padding:14px 16px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-        <h3 style="margin:0;font-size:16px;color:#5a3818;font-weight:normal;">Что почитать ещё</h3>
-        <button id="go-further-reading" style="padding:5px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Открыть весь раздел</button>
+    html += `<div class="lecture-page-further">
+      <div class="lecture-page-further-head">
+        <h3 class="lecture-page-further-title">Что почитать ещё</h3>
+        <button id="go-further-reading" class="lecture-page-further-btn">Открыть весь раздел</button>
       </div>`;
     for (const sec of APP_DATA.further_reading) {
-      html += `<div style="margin-bottom:10px;">
-        <div style="font-size:13px;font-weight:bold;color:#5a3818;margin-bottom:4px;">${escapeHtml(sec.topic || '')}</div>`;
+      html += `<div class="lecture-page-further-section">
+        <div class="lecture-page-further-topic">${escapeHtml(sec.topic || '')}</div>`;
       for (const b of (sec.books || [])) {
-        html += `<div style="font-size:12px;color:#444;line-height:1.45;margin-bottom:3px;">• <strong>${escapeHtml(b.title || '')}</strong>: ${escapeHtml(b.why || '')}</div>`;
+        html += `<div class="lecture-page-further-book">• <strong>${escapeHtml(b.title || '')}</strong>: ${escapeHtml(b.why || '')}</div>`;
       }
       html += '</div>';
     }
