@@ -972,6 +972,12 @@
   .card-kwic-action {
     margin-top: 8px;
   }
+  .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+  }
   .card .wiki-link {
     display: inline-block;
     margin-top: 4px;
@@ -73722,7 +73728,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'eac16473a465';
+const APP_BUILD_ID = 'e5f663dee511';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77002,7 +77008,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'eac16473a465' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'e5f663dee511' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -78701,7 +78707,7 @@ function renderCardInRight() {
             </div>
           </div>
           ${wikiLink}
-          <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;">
+          <div class="card-actions">
             <button type="button" class="related-link related-link-btn card-action-link" id="card-prev" aria-label="Предыдущая карточка">◀</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="card-next" aria-label="Следующая карточка">▶</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="back-to-histo">← вернуться к гистограмме</button>

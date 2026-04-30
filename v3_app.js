@@ -4988,7 +4988,7 @@ function renderCardInRight() {
             </div>
           </div>
           ${wikiLink}
-          <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;">
+          <div class="card-actions">
             <button type="button" class="related-link related-link-btn card-action-link" id="card-prev" aria-label="Предыдущая карточка">◀</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="card-next" aria-label="Следующая карточка">▶</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="back-to-histo">← вернуться к гистограмме</button>
