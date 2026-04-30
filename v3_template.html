@@ -1503,6 +1503,71 @@
     line-height: 1.45;
     margin-bottom: 3px;
   }
+  .home-panel {
+    height: 100%;
+    overflow-y: auto;
+  }
+  .home-panel-inner {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: var(--home-inner-padding, 16px 22px);
+  }
+  .home-stats-hero {
+    background: linear-gradient(135deg, #5a3818, #8a7050);
+    border-radius: 6px;
+    color: #fff8e8;
+    margin-bottom: 14px;
+    padding: 16px 20px;
+  }
+  .home-stats-head {
+    align-items: flex-start;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  .home-stats-title {
+    font-size: 22px;
+    font-weight: normal;
+    margin: 0 0 4px 0;
+  }
+  .home-export-btn {
+    background: #fff8e8;
+    border: 1px solid #c4b890;
+    border-radius: 4px;
+    color: #5a3818;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    padding: 6px 10px;
+    white-space: nowrap;
+  }
+  .home-stats-subtitle {
+    font-size: 13px;
+    font-style: italic;
+    margin-bottom: 14px;
+    opacity: 0.85;
+  }
+  .home-stats-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .home-stat-cell {
+    background: rgba(255, 248, 232, 0.15);
+    border-left: 3px solid #fff8e8;
+    border-radius: 4px;
+    padding: 10px 12px;
+  }
+  .home-stat-num {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+  }
+  .home-stat-label {
+    font-size: 11px;
+    margin-top: 4px;
+    opacity: 0.85;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;

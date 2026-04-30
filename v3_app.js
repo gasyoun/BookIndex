@@ -7070,16 +7070,16 @@ function renderHomePanel(container) {
     ? 'display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;'
     : '';
 
-  let html = `<div class="panel active home-panel" style="overflow-y:auto;height:100%;"><div style="padding:${homeInnerPadding};max-width:1200px;margin:0 auto;">`;
+  let html = `<div class="panel active home-panel"><div class="home-panel-inner" style="--home-inner-padding:${homeInnerPadding};">`;
 
   // === БЛОК 1: КНИГА В ЦИФРАХ ===
-  html += `<div style="background:linear-gradient(135deg,#5a3818,#8a7050);color:#fff8e8;padding:16px 20px;border-radius:6px;margin-bottom:14px;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
-      <h2 style="margin:0 0 4px 0;font-size:22px;font-weight:normal;">Книга в цифрах</h2>
-      <button id="export-site-md" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;white-space:nowrap;">Экспорт всего BookIndex в Markdown</button>
+  html += `<div class="home-stats-hero">
+    <div class="home-stats-head">
+      <h2 class="home-stats-title">Книга в цифрах</h2>
+      <button id="export-site-md" class="home-export-btn">Экспорт всего BookIndex в Markdown</button>
     </div>
-    <div style="font-size:13px;opacity:0.85;font-style:italic;margin-bottom:14px;">Что внутри 404 страниц лекций А. А. Зализняка</div>
-    <div id="home-stats-grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;">`;
+    <div class="home-stats-subtitle">Что внутри 404 страниц лекций А. А. Зализняка</div>
+    <div id="home-stats-grid" class="home-stats-grid">`;
 
   const cells = [
     ['404', 'страницы'],
@@ -7092,9 +7092,9 @@ function renderHomePanel(container) {
     [stats.subject_index, 'понятий'],
   ];
   for (const [num, label] of cells) {
-    html += `<div style="background:rgba(255,248,232,0.15);padding:10px 12px;border-radius:4px;border-left:3px solid #fff8e8;">
-      <div style="font-size:24px;font-weight:bold;line-height:1;">${num}</div>
-      <div style="font-size:11px;opacity:0.85;margin-top:4px;">${label}</div>
+    html += `<div class="home-stat-cell">
+      <div class="home-stat-num">${num}</div>
+      <div class="home-stat-label">${label}</div>
     </div>`;
   }
   html += '</div>';

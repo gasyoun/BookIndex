@@ -8,6 +8,8 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(10);
     await expect(page.locator('#tabs .tab')).toHaveCount(1);
     await expect(page.locator('#tabs .tab')).toHaveText(/Главная|Home/);
+    await expect(page.locator('.home-stats-hero')).toBeVisible();
+    await expect(page.locator('#home-stats-grid .home-stat-cell')).toHaveCount(8);
   });
 
   test('PWA manifest and service worker are available', async ({ page }) => {
