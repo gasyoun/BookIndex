@@ -334,6 +334,10 @@
     color: var(--title);
     font-weight: normal;
   }
+  .viz-canonical-link {
+    font-size: 11px;
+    padding: 0;
+  }
   .viz-module-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -73651,7 +73655,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '8b30764094a1';
+const APP_BUILD_ID = 'ebce544ffa5c';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -76931,7 +76935,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '8b30764094a1' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'ebce544ffa5c' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -82450,7 +82454,7 @@ function renderVizPanel(container) {
   container.innerHTML = `<div class="panel active viz-shell">
     <div class="viz-header-row">
       <h2 class="viz-title">Визуализации</h2>
-      <a class="related-link" href="${escapeHtml(buildVizHash(currentVizModule))}" style="font-size:11px;">канонический hash</a>
+      <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический hash</a>
     </div>
     <div class="viz-module-tabs" id="viz-module-tabs"></div>
     <div id="viz-module-host" class="viz-module-host"><div class="viz-loading">Подготовка кэша…</div></div>

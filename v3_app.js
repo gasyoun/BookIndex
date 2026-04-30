@@ -8808,7 +8808,7 @@ function renderVizPanel(container) {
   container.innerHTML = `<div class="panel active viz-shell">
     <div class="viz-header-row">
       <h2 class="viz-title">Визуализации</h2>
-      <a class="related-link" href="${escapeHtml(buildVizHash(currentVizModule))}" style="font-size:11px;">канонический hash</a>
+      <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический hash</a>
     </div>
     <div class="viz-module-tabs" id="viz-module-tabs"></div>
     <div id="viz-module-host" class="viz-module-host"><div class="viz-loading">Подготовка кэша…</div></div>
