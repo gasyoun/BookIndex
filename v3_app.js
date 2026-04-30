@@ -5087,7 +5087,7 @@ function renderCardInRight() {
       html += '<h3>Связанные термины глоссария</h3><div class="related">';
       for (const g of relatedGlossary) {
         const shortDef = g.definition.length > 92 ? (g.definition.slice(0, 89) + '…') : g.definition;
-        html += `<a class="glossary-backlink" data-term="${escapeHtml(g.term)}" href="${escapeHtml(buildGlossaryTermHash(g.term))}" style="display:flex;justify-content:space-between;gap:8px;cursor:pointer;padding:2px 0;color:inherit;text-decoration:none;">
+        html += `<a class="glossary-backlink card-inline-row-link" data-term="${escapeHtml(g.term)}" href="${escapeHtml(buildGlossaryTermHash(g.term))}">
           <span>${escapeHtml(g.term)}</span>
           <span style="color:#888;font-size:10px;">${escapeHtml(shortDef)}</span>
         </a>`;
@@ -5136,7 +5136,7 @@ function renderCardInRight() {
     if (!links || links.length === 0) continue;
     html += `<h3>${crossLabels[tgtType] || tgtType}</h3><div class="related">`;
     for (const lnk of links.slice(0, 8)) {
-    html += `<a class="xlink" data-type="${escapeHtml(tgtType)}" data-head="${escapeHtml(lnk.head)}" href="${escapeHtml(buildItemHash(tgtType, lnk.head))}" style="display:flex;justify-content:space-between;gap:8px;cursor:pointer;padding:2px 0;color:inherit;text-decoration:none;">
+    html += `<a class="xlink card-inline-row-link" data-type="${escapeHtml(tgtType)}" data-head="${escapeHtml(lnk.head)}" href="${escapeHtml(buildItemHash(tgtType, lnk.head))}">
         <span>${escapeHtml(lnk.head)}</span>
         ${lnk.weight > 1 ? `<span style="color:#888;font-size:10px;">· ${escapeHtml(lnk.weight)}</span>` : '<span></span>'}
       </a>`;
