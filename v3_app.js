@@ -5089,7 +5089,7 @@ function renderCardInRight() {
         const shortDef = g.definition.length > 92 ? (g.definition.slice(0, 89) + '…') : g.definition;
         html += `<a class="glossary-backlink card-inline-row-link" data-term="${escapeHtml(g.term)}" href="${escapeHtml(buildGlossaryTermHash(g.term))}">
           <span>${escapeHtml(g.term)}</span>
-          <span style="color:#888;font-size:10px;">${escapeHtml(shortDef)}</span>
+          <span class="card-inline-row-meta">${escapeHtml(shortDef)}</span>
         </a>`;
       }
       html += '</div>';
@@ -5138,7 +5138,7 @@ function renderCardInRight() {
     for (const lnk of links.slice(0, 8)) {
     html += `<a class="xlink card-inline-row-link" data-type="${escapeHtml(tgtType)}" data-head="${escapeHtml(lnk.head)}" href="${escapeHtml(buildItemHash(tgtType, lnk.head))}">
         <span>${escapeHtml(lnk.head)}</span>
-        ${lnk.weight > 1 ? `<span style="color:#888;font-size:10px;">· ${escapeHtml(lnk.weight)}</span>` : '<span></span>'}
+        ${lnk.weight > 1 ? `<span class="card-inline-row-meta">· ${escapeHtml(lnk.weight)}</span>` : '<span></span>'}
       </a>`;
     }
     html += '</div>';

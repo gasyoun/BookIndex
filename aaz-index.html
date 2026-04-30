@@ -987,6 +987,10 @@
     color: inherit;
     text-decoration: none;
   }
+  .card-inline-row-meta {
+    color: #888;
+    font-size: 10px;
+  }
   .card .wiki-link {
     display: inline-block;
     margin-top: 4px;
@@ -73737,7 +73741,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '51081c3e7a0d';
+const APP_BUILD_ID = 'b7ccfb057a46';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77017,7 +77021,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '51081c3e7a0d' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'b7ccfb057a46' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -78817,7 +78821,7 @@ function renderCardInRight() {
         const shortDef = g.definition.length > 92 ? (g.definition.slice(0, 89) + '…') : g.definition;
         html += `<a class="glossary-backlink card-inline-row-link" data-term="${escapeHtml(g.term)}" href="${escapeHtml(buildGlossaryTermHash(g.term))}">
           <span>${escapeHtml(g.term)}</span>
-          <span style="color:#888;font-size:10px;">${escapeHtml(shortDef)}</span>
+          <span class="card-inline-row-meta">${escapeHtml(shortDef)}</span>
         </a>`;
       }
       html += '</div>';
@@ -78866,7 +78870,7 @@ function renderCardInRight() {
     for (const lnk of links.slice(0, 8)) {
     html += `<a class="xlink card-inline-row-link" data-type="${escapeHtml(tgtType)}" data-head="${escapeHtml(lnk.head)}" href="${escapeHtml(buildItemHash(tgtType, lnk.head))}">
         <span>${escapeHtml(lnk.head)}</span>
-        ${lnk.weight > 1 ? `<span style="color:#888;font-size:10px;">· ${escapeHtml(lnk.weight)}</span>` : '<span></span>'}
+        ${lnk.weight > 1 ? `<span class="card-inline-row-meta">· ${escapeHtml(lnk.weight)}</span>` : '<span></span>'}
       </a>`;
     }
     html += '</div>';
