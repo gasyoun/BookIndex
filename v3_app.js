@@ -5006,7 +5006,7 @@ function renderCardInRight() {
       ${lectureBreakdownHtml}
   `;
   if (eType === 'lexicon' || eType === 'lexicon_tech') {
-    html += `<div style="margin-top:8px;">
+    html += `<div class="card-kwic-action">
       <button type="button" class="related-link related-link-btn kwic-jump-btn" data-term="${escapeHtml(it.head)}">\u041d\u0430\u0439\u0442\u0438 \u0432 KWIC</button>
     </div>`;
   }
