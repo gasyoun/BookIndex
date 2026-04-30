@@ -7650,18 +7650,18 @@ function renderLecturesPanel(container) {
     const title = i === 0 ? 'Предисловие' : `Лекция ${i}`;
     const cardClass = i === 0 ? 'lecture-card preface' : 'lecture-card';
     html += `<div class="${cardClass}" data-idx="${i}">
-      <div style="font-size:11px;color:#888;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;">${title} · стр. ${escapeHtml(l.pages)}</div>
-      <div style="font-size:17px;font-weight:bold;color:#5a3818;margin:4px 0 8px 0;">${escapeHtml(l.name)}</div>
-      <div style="font-size:13px;color:#333;line-height:1.5;margin-bottom:10px;">${escapeHtml(l.main_idea)}</div>
-      <div style="font-size:11px;color:#6a5040;font-weight:bold;margin-bottom:4px;">КЛЮЧЕВЫЕ ФАКТЫ</div>
-      <ul style="margin:0 0 10px 0;padding-left:18px;font-size:12px;line-height:1.5;color:#444;">`;
+      <div class="lecture-card-meta">${title} · стр. ${escapeHtml(l.pages)}</div>
+      <div class="lecture-card-title">${escapeHtml(l.name)}</div>
+      <div class="lecture-card-idea">${escapeHtml(l.main_idea)}</div>
+      <div class="lecture-card-section">КЛЮЧЕВЫЕ ФАКТЫ</div>
+      <ul class="lecture-card-facts">`;
     for (const f of l.key_facts) html += `<li>${escapeHtml(f)}</li>`;
     html += `</ul>
-      <div style="font-size:11px;color:#6a5040;font-weight:bold;margin-bottom:4px;">ТЕРМИНЫ</div>
-      <div style="font-size:11px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:4px;">`;
-    for (const t of l.terms) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(t)}</a>`;
+      <div class="lecture-card-section">ТЕРМИНЫ</div>
+      <div class="lecture-term-list">`;
+    for (const t of l.terms) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}">${escapeHtml(t)}</a>`;
     html += `</div>
-      <div style="font-size:12px;color:#5a3818;font-style:italic;border-top:1px solid #f0e8d8;padding-top:8px;">${escapeHtml(l.why_read)}</div>
+      <div class="lecture-card-why">${escapeHtml(l.why_read)}</div>
     </div>`;
   }
   html += '</div></div></div>';
