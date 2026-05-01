@@ -2242,6 +2242,56 @@
     display: grid;
     gap: 8px;
   }
+  .kwic-empty {
+    background: var(--surface);
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    color: var(--muted);
+    padding: 10px 12px;
+  }
+  .kwic-row {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  .kwic-row-head {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .kwic-pill {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--title);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+  .kwic-page-link {
+    color: var(--muted);
+    font-size: 11px;
+    text-decoration: underline dotted;
+  }
+  .kwic-context {
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.55;
+    word-break: break-word;
+  }
+  .kwic-context mark {
+    background: #ffe2a8;
+    border-radius: 2px;
+    color: #4a2e12;
+    padding: 0 2px;
+  }
+  .kwic-muted {
+    color: var(--muted);
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;

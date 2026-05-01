@@ -8421,7 +8421,7 @@ function renderKwicPanel(container) {
     const qNorm = normalizeHeadForMatch(currentKwicQuery);
     if (qNorm.length < 2) {
       metaEl.textContent = 'Введите минимум 2 символа для KWIC-поиска.';
-      resultsEl.innerHTML = '<div style="padding:10px 12px;border:1px dashed var(--line);border-radius:6px;background:var(--surface);color:var(--muted);">Например: «энклитика», «санскрит», «закон».</div>';
+      resultsEl.innerHTML = '<div class="kwic-empty">Например: «энклитика», «санскрит», «закон».</div>';
       persistViewState();
       return;
     }
@@ -8434,7 +8434,7 @@ function renderKwicPanel(container) {
 
     if (!rows.length) {
       metaEl.textContent = `Совпадений не найдено: ${currentKwicSource === 'glossary' ? 'глоссарий' : 'лексика'}, стр. ${currentKwicPageStart}-${currentKwicPageEnd}.`;
-      resultsEl.innerHTML = '<div style="padding:10px 12px;border:1px dashed var(--line);border-radius:6px;background:var(--surface);color:var(--muted);">Попробуйте расширить диапазон страниц или изменить запрос.</div>';
+      resultsEl.innerHTML = '<div class="kwic-empty">Попробуйте расширить диапазон страниц или изменить запрос.</div>';
       persistViewState();
       return;
     }
@@ -8443,14 +8443,14 @@ function renderKwicPanel(container) {
     const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : '';
     metaEl.textContent = `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${currentKwicSource === 'glossary' ? 'глоссарий' : 'лексика'}.${truncText}`;
     resultsEl.innerHTML = rows.map(r => `
-      <div class="kwic-row" style="background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;">
-        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px;">
-          <button type="button" class="kwic-open-card" data-type="${escapeHtml(r.itemType)}" data-head="${escapeHtml(r.itemHead)}" style="padding:2px 8px;border:1px solid var(--line);background:var(--surface-soft);border-radius:999px;cursor:pointer;color:var(--title);font-size:11px;font-family:inherit;">${escapeHtml(r.itemHead)}</button>
-          ${r.source === 'glossary' ? `<button type="button" class="kwic-open-glossary" data-term="${escapeHtml(r.term)}" style="padding:2px 8px;border:1px solid var(--line);background:var(--surface-soft);border-radius:999px;cursor:pointer;color:var(--title);font-size:11px;font-family:inherit;">термин: ${escapeHtml(r.term)}</button>` : ''}
-          <a class="kwic-page-link card-page-link related-link" data-page="${escapeHtml(String(r.page))}" href="${escapeHtml(buildReadingNowHash(r.page))}" style="font-size:11px;color:var(--muted);text-decoration:underline dotted;">стр. ${r.page}</a>
+      <div class="kwic-row">
+        <div class="kwic-row-head">
+          <button type="button" class="kwic-open-card kwic-pill" data-type="${escapeHtml(r.itemType)}" data-head="${escapeHtml(r.itemHead)}">${escapeHtml(r.itemHead)}</button>
+          ${r.source === 'glossary' ? `<button type="button" class="kwic-open-glossary kwic-pill" data-term="${escapeHtml(r.term)}">термин: ${escapeHtml(r.term)}</button>` : ''}
+          <a class="kwic-page-link card-page-link related-link" data-page="${escapeHtml(String(r.page))}" href="${escapeHtml(buildReadingNowHash(r.page))}">стр. ${r.page}</a>
         </div>
-        <div style="font-size:13px;line-height:1.55;color:var(--text);word-break:break-word;">
-          <span style="color:var(--muted);">${escapeHtml(r.leftPrefix + r.leftText)}</span><mark style="background:#ffe2a8;color:#4a2e12;padding:0 2px;border-radius:2px;">${escapeHtml(r.keyText)}</mark><span>${escapeHtml(r.rightText + r.rightSuffix)}</span>
+        <div class="kwic-context">
+          <span class="kwic-muted">${escapeHtml(r.leftPrefix + r.leftText)}</span><mark>${escapeHtml(r.keyText)}</mark><span>${escapeHtml(r.rightText + r.rightSuffix)}</span>
         </div>
       </div>
     `).join('');
