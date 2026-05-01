@@ -4,7 +4,7 @@
 
 ## 0. Текущее подтверждение, 2026-05-01
 
-- GitHub: открытых PR нет; открытая issue одна — [#82](https://github.com/gasyoun/BookIndex/issues/82) по LICENSE.
+- GitHub: открытых PR нет; issue [#82](https://github.com/gasyoun/BookIndex/issues/82) по LICENSE получила owner decision — Apache License 2.0.
 - PR [#81](https://github.com/gasyoun/BookIndex/pull/81) остаётся последним крупным merge-scope: VIZ-00..VIZ-07 уже реализованы, в v4.4 по ним актуальны только стабилизация, smoke и polish.
 - Локальная текущая волна UI hardening расширена: кроме gallery / Russian evolution / phonetic laws / tasks / lectures / page trends, вынесены в CSS повторяющиеся scholar intro, bibliography, controversy, original forms, birch filters/tables, chronology, isoglosses, slovo, accent paradigms, correspondence table и reconstruction styles.
 - После текущей волны source-level ` style="..."` в `v3_app.js` снижен с 172 до 11 и закреплён allowlist guard-командой `npm run check:ui`; production `home/home` и скрытый experimental `home/home_decl` переведены на общие CSS-классы/media-query, фиксированные category dots / moderator mark / timeline empty state / SVG cursor/root styles вынесены в CSS. Оставшиеся случаи — осознанные динамические custom properties, data-driven widths/colors и SVG text styling.
@@ -15,7 +15,7 @@
 - `origin/main` содержит v4.4-слой стабилизации; локальный `main` синхронизирован с `origin/main`.
 - PR [#81](https://github.com/gasyoun/BookIndex/pull/81) смержен 2026-04-20: VIZ-00..VIZ-07 уже реализованы, это больше не будущий feature-scope.
 - Issues [#73](https://github.com/gasyoun/BookIndex/issues/73)..[#80](https://github.com/gasyoun/BookIndex/issues/80) по VIZ закрыты как completed.
-- Единственная открытая GitHub-задача сейчас: [#82](https://github.com/gasyoun/BookIndex/issues/82) — owner decision по LICENSE.
+- Единственная GitHub-задача вне стабилизационного PR: [#82](https://github.com/gasyoun/BookIndex/issues/82) — внедрить Apache License 2.0 и закрыть issue через PR.
 - Локально в текущей волне подготовлены UI-правки в `v3_app.js` и `v3_template.html`: широкий вынос повторяющихся inline styles в CSS для home, карточек/списков, learning-панелей, scholar/VIZ-поверхностей и SVG-root/cursor классов.
 
 ## 2. Что уже закрыто и не должно оставаться как open work
@@ -35,14 +35,14 @@
 - До merge/PR остаётся только финальная human review диффа и упаковка изменений; новых feature-scope задач в этот цикл не добавлять.
 - После любых дополнительных runtime/template правок по-прежнему пересобирать `aaz-index.html` и запускать полный gate.
 - Не переписывать крупные static/container templates без отдельного будущего scope: оставшиеся `innerHTML` места в основном являются panel-shell/table templates, а не быстрыми data-bearing row builders.
-- LICENSE не выбирать в коде или README до явного решения владельца по issue #82.
+- LICENSE теперь выбран владельцем: Apache License 2.0. Открытая техническая часть — добавить файл лицензии, обновить README и закрыть #82 через PR.
 
 ## 4. Что было обновлено в плане
 
 - Формулировка "синхронизировать `package-lock.json` с `package.json`" убрана как открытая задача. Новая формулировка: "периодически проверять `npm ci` на supported Node".
 - Локальные инструкции уточнены: системный `npm` может отсутствовать в PATH; bundled Node 20.17 дает engine warning для Vite 8, поэтому для локальных smoke лучше использовать Node 24 или Node >=20.19.
 - VIZ-00..VIZ-07 перенесены из раздела "реализовать" в раздел "стабилизировать, smoke-test, polish".
-- "Создать отдельную задачу по LICENSE" заменено на "держать открытой #82 до owner decision".
+- "Держать открытой #82 до owner decision" заменено на "внедрить Apache License 2.0 и закрыть #82 через PR".
 - Обязательный шаг текущей UI-волны зафиксирован: после выноса CSS из `v3_app.js`/`v3_template.html` пересобрать `aaz-index.html`, затем прогнать проверки.
 
 ## 5. Обновленный порядок работ

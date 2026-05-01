@@ -86,7 +86,7 @@
 - **Экспериментальный `home/home_decl` скрыт из основной навигации**; классический `home/home` остаётся публичным стартовым экраном.
 - **VIZ hardening**: добавлен helper [scripts/viz/viz-state.js](scripts/viz/viz-state.js) для query-state в hash, VIZ-01 получил `Play/Pause`, VIZ-03 переведён в компактную сетку, VIZ-07 защищает подписи справа от наложений.
 - **Документация очищена**: восстановлен битый раздел 1 в [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md), убраны служебные `[cite:*]` из [CODEX_VISUALIZATIONS_RU.md](CODEX_VISUALIZATIONS_RU.md).
-- **LICENSE не выбран автоматически**: это отдельное governance-решение владельца проекта.
+- **Лицензия определена**: проект распространяется под Apache License 2.0.
 
 ### v4.3 (2026-04-20)
 
@@ -215,6 +215,10 @@ $env:Path = 'D:\Codex 2026\tools\node-v24.14.1-win-x64;' + $env:Path
 python -m pip install -r requirements.txt
 ```
 
+## Лицензия
+
+BookIndex распространяется под [Apache License 2.0](LICENSE). Это относится к коду, документации, данным и собираемому standalone-артефакту [aaz-index.html](aaz-index.html), если в отдельных файлах явно не указано иное.
+
 Ожидается:
 
 - [scripts/validate_content.py](scripts/validate_content.py): `0 errors` (допустимы известные warning по дублям данных).
@@ -240,6 +244,7 @@ python scripts/content_report.py --format json
 | [app_data.json](app_data.json) | База контента (только чтение) |
 | [data/modules/](data/modules/) | Логически разделённые модули данных (`manifest.json` + тематические JSON) |
 | [runtime_test.py](runtime_test.py) | Runtime smoke и статические guard'ы |
+| [LICENSE](LICENSE) | Apache License 2.0 для проекта |
 | [scripts/build_aaz_index.mjs](scripts/build_aaz_index.mjs) / [scripts/build_aaz_index.py](scripts/build_aaz_index.py) | Основная Node-сборка и legacy Python-сборка `aaz-index.html` |
 | [scripts/split_app_data.py](scripts/split_app_data.py) | Разбиение `app_data.json` на модульные JSON |
 | [scripts/assemble_app_data.py](scripts/assemble_app_data.py) | Склейка модульных JSON обратно в `app_data.json` |
