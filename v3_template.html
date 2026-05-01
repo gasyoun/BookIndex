@@ -2175,6 +2175,73 @@
     font-size: 12px;
     line-height: 1.5;
   }
+  .kwic-panel {
+    height: 100%;
+    overflow-y: auto;
+  }
+  .kwic-inner {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 16px 22px;
+  }
+  .kwic-title {
+    color: var(--title);
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 4px 0;
+  }
+  .kwic-intro {
+    color: var(--muted);
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .kwic-controls {
+    align-items: end;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 190px 190px 150px 140px 140px;
+    margin-bottom: 10px;
+  }
+  .kwic-field {
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+    gap: 4px;
+  }
+  .kwic-input {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: inherit;
+    padding: 7px 9px;
+  }
+  .kwic-run-btn {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--title);
+    cursor: pointer;
+    font-family: inherit;
+    height: 34px;
+    padding: 0 12px;
+  }
+  .kwic-source-hint {
+    color: var(--muted);
+    font-size: 11px;
+    margin: 0 0 8px 0;
+  }
+  .kwic-meta {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 6px 0 10px 0;
+  }
+  .kwic-results {
+    display: grid;
+    gap: 8px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;

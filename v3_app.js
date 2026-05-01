@@ -8344,45 +8344,45 @@ function renderKwicPanel(container) {
     if (typeof window !== 'undefined') window._pendingKwicTerm = '';
   }
 
-  container.innerHTML = `<div class="panel active" style="overflow-y:auto;height:100%;">
-    <div style="padding:16px 22px;max-width:1200px;margin:0 auto;">
-      <h2 style="font-size:20px;color:var(--title);font-weight:normal;margin:0 0 4px 0;">KWIC-конкорданс</h2>
-      <div style="font-size:12px;color:var(--muted);font-style:italic;margin-bottom:12px;">
+  container.innerHTML = `<div class="panel active kwic-panel">
+    <div class="kwic-inner">
+      <h2 class="kwic-title">KWIC-конкорданс</h2>
+      <div class="kwic-intro">
         Key Word In Context: показывает ключевое слово в его ближайшем окружении.
       </div>
-      <div style="display:grid;grid-template-columns:1fr 190px 190px 150px 140px 140px;gap:8px;align-items:end;margin-bottom:10px;">
-        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+      <div class="kwic-controls">
+        <label class="kwic-field">
           Запрос
-          <input id="kwic-query" type="text" value="${escapeHtml(currentKwicQuery)}" placeholder="например: энклитика" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+          <input id="kwic-query" type="text" value="${escapeHtml(currentKwicQuery)}" placeholder="например: энклитика" class="kwic-input">
         </label>
-        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+        <label class="kwic-field">
           Источник
-          <select id="kwic-source" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+          <select id="kwic-source" class="kwic-input">
             <option value="lexicon"${currentKwicSource === 'lexicon' ? ' selected' : ''}>Лексика (статьи)</option>
             <option value="glossary"${currentKwicSource === 'glossary' ? ' selected' : ''}>Глоссарий (термины)</option>
           </select>
         </label>
-        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+        <label class="kwic-field">
           Сортировка
-          <select id="kwic-sort" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+          <select id="kwic-sort" class="kwic-input">
             <option value="left"${currentKwicSort === 'left' ? ' selected' : ''}>по левому контексту</option>
             <option value="right"${currentKwicSort === 'right' ? ' selected' : ''}>по правому контексту</option>
             <option value="page"${currentKwicSort === 'page' ? ' selected' : ''}>по странице</option>
           </select>
         </label>
-        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+        <label class="kwic-field">
           Стр. от
-          <input id="kwic-page-start" type="number" min="1" max="${totalPages}" value="${currentKwicPageStart}" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+          <input id="kwic-page-start" type="number" min="1" max="${totalPages}" value="${currentKwicPageStart}" class="kwic-input">
         </label>
-        <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+        <label class="kwic-field">
           Стр. до
-          <input id="kwic-page-end" type="number" min="1" max="${totalPages}" value="${currentKwicPageEnd}" style="padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;">
+          <input id="kwic-page-end" type="number" min="1" max="${totalPages}" value="${currentKwicPageEnd}" class="kwic-input">
         </label>
-        <button id="kwic-run" type="button" style="height:34px;padding:0 12px;border:1px solid var(--line);border-radius:4px;background:var(--surface-soft);color:var(--title);cursor:pointer;font-family:inherit;">Показать</button>
+        <button id="kwic-run" type="button" class="kwic-run-btn">Показать</button>
       </div>
-      <div id="kwic-source-hint" style="font-size:11px;color:var(--muted);margin:0 0 8px 0;"></div>
-      <div id="kwic-meta" style="font-size:12px;color:var(--muted);margin:6px 0 10px 0;"></div>
-      <div id="kwic-results" style="display:grid;gap:8px;"></div>
+      <div id="kwic-source-hint" class="kwic-source-hint"></div>
+      <div id="kwic-meta" class="kwic-meta"></div>
+      <div id="kwic-results" class="kwic-results"></div>
     </div>
   </div>`;
 
