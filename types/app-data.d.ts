@@ -41,9 +41,41 @@ export interface GraphEdge {
   [key: string]: unknown;
 }
 
+export interface CorpusBook {
+  book_id: string;
+  title?: string;
+  author?: string;
+  year?: number;
+  edition?: string;
+  status?: string;
+  source_type?: string;
+  pages_total?: number;
+  default_route?: string;
+  content_modules?: string[];
+  [key: string]: unknown;
+}
+
+export interface CorpusSourceType {
+  type: string;
+  title?: string;
+  status?: string;
+  planned_count?: number;
+  supports?: string[];
+  [key: string]: unknown;
+}
+
+export interface CorpusRegistry {
+  schema_version?: number;
+  active_book_id?: string;
+  books?: CorpusBook[];
+  source_types?: CorpusSourceType[];
+  [key: string]: unknown;
+}
+
 export interface AppData {
   schema_version?: number;
   schema_migrations?: string[];
+  corpus?: CorpusRegistry;
   labels?: Record<string, string>;
   colors?: Record<string, string>;
   epoch_labels?: Record<string, string>;

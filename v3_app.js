@@ -85,11 +85,69 @@ function migrateAppDataSchema(data) {
   }
 }
 
+function buildDefaultCorpusRegistry() {
+  const stats = APP_DATA && APP_DATA.book_stats && typeof APP_DATA.book_stats === 'object'
+    ? APP_DATA.book_stats
+    : {};
+  const pages = Number.isFinite(Number(stats.pages_total)) ? Number(stats.pages_total) : 404;
+  return {
+    schema_version: 1,
+    active_book_id: 'zaliznyak-aaz-index',
+    books: [
+      {
+        book_id: 'zaliznyak-aaz-index',
+        title: 'Из жизни слов и языков',
+        author: 'А. А. Зализняк',
+        year: 2026,
+        edition: 'Альпина нон-фикшн',
+        status: 'active',
+        source_type: 'book',
+        pages_total: pages,
+        default_route: '#v4/home/home',
+        content_modules: ['app_data.json'],
+      },
+    ],
+    source_types: [
+      {
+        type: 'book',
+        title: 'Книги',
+        status: 'active',
+      },
+      {
+        type: 'video_catalog',
+        title: 'Видеокаталог',
+        status: 'planned',
+        planned_count: 200,
+        supports: ['timecodes', 'transcripts'],
+      },
+    ],
+  };
+}
+
+function normalizeCorpusRegistry() {
+  if (!APP_DATA || typeof APP_DATA !== 'object') return;
+  const defaults = buildDefaultCorpusRegistry();
+  const raw = APP_DATA.corpus && typeof APP_DATA.corpus === 'object' ? APP_DATA.corpus : {};
+  const books = Array.isArray(raw.books) && raw.books.length ? raw.books : defaults.books;
+  const sourceTypes = Array.isArray(raw.source_types) && raw.source_types.length ? raw.source_types : defaults.source_types;
+  APP_DATA.corpus = {
+    ...defaults,
+    ...raw,
+    books,
+    source_types: sourceTypes,
+  };
+  const activeId = typeof APP_DATA.corpus.active_book_id === 'string' ? APP_DATA.corpus.active_book_id : '';
+  if (!books.some(book => book && book.book_id === activeId)) {
+    APP_DATA.corpus.active_book_id = defaults.active_book_id;
+  }
+}
+
 function normalizeAppData() {
   if (!APP_DATA) return;
 
   APP_DATA.labels = APP_DATA.labels || {};
   APP_DATA.colors = APP_DATA.colors || {};
+  normalizeCorpusRegistry();
 
   // Legacy compatibility: older datasets may still use schoolchild/lecture_host.
   APP_DATA.labels.literator = 'Носитель языка';
@@ -638,6 +696,30 @@ let familiesGraphRenderToken = 0;
 let familiesGraphLayoutPromiseCache = new Map();
 let workersLifecycleWired = false;
 let contextEntityLinkEntriesCache = null;
+
+function getCorpusRegistry() {
+  if (!APP_DATA || !APP_DATA.corpus || typeof APP_DATA.corpus !== 'object') {
+    return buildDefaultCorpusRegistry();
+  }
+  return APP_DATA.corpus;
+}
+
+function getCorpusBooks() {
+  const books = getCorpusRegistry().books;
+  return Array.isArray(books) ? books.filter(book => book && typeof book.book_id === 'string') : [];
+}
+
+function getActiveBook() {
+  const registry = getCorpusRegistry();
+  const books = getCorpusBooks();
+  return books.find(book => book.book_id === registry.active_book_id) || books[0] || buildDefaultCorpusRegistry().books[0];
+}
+
+function getPlannedVideoCatalogSource() {
+  const sourceTypes = getCorpusRegistry().source_types;
+  if (!Array.isArray(sourceTypes)) return null;
+  return sourceTypes.find(source => source && source.type === 'video_catalog') || null;
+}
 let subjectCrosslinksLookupCache = null;
 let reverseEdgesCache = null;
 let SUBJECT_BY_LEXICON_INDEX = null;
@@ -1878,7 +1960,13 @@ function parseHashRoute(hash) {
     decodedParts.push(decoded);
   }
 
-  const parts = decodedParts[0] === HASH_ROUTE_PREFIX ? decodedParts.slice(1) : decodedParts;
+  let parts = decodedParts[0] === HASH_ROUTE_PREFIX ? decodedParts.slice(1) : decodedParts;
+  if (parts[0] === 'books' && parts[1]) {
+    const bookId = parts[1];
+    const knownBook = getCorpusBooks().some(book => book.book_id === bookId);
+    if (!knownBook) return null;
+    parts = parts.slice(2);
+  }
   if (!parts.length || parts.length > MAX_HASH_PARTS) return null;
   return { parts, query: query.slice(0, 240) };
 }
@@ -1954,6 +2042,36 @@ function updateBackButton() {
   btn.style.display = historyStack.length > 1 ? 'inline-flex' : 'none';
 }
 
+function renderCorpusStatus() {
+  const host = document.getElementById('corpus-status');
+  if (!host) return;
+  host.innerHTML = '';
+  const activeBook = getActiveBook();
+  const books = getCorpusBooks();
+  const videoCatalog = getPlannedVideoCatalogSource();
+
+  const bookChip = document.createElement('span');
+  bookChip.className = 'corpus-chip active';
+  bookChip.textContent = `${activeBook.title || 'Текущая книга'} · ${activeBook.author || 'А. А. Зализняк'}`;
+  safeSetAttr(bookChip, 'title', `Текущий источник: ${activeBook.title || activeBook.book_id}`);
+  host.appendChild(bookChip);
+
+  const scopeChip = document.createElement('span');
+  scopeChip.className = 'corpus-chip';
+  scopeChip.textContent = books.length > 1 ? `Корпус: ${books.length} книг` : 'Корпус: 1 книга';
+  safeSetAttr(scopeChip, 'title', 'Будущая точка переключения между книгой и всем корпусом');
+  host.appendChild(scopeChip);
+
+  if (videoCatalog) {
+    const videoChip = document.createElement('span');
+    videoChip.className = 'corpus-chip planned';
+    const count = Number.isFinite(Number(videoCatalog.planned_count)) ? Number(videoCatalog.planned_count) : 200;
+    videoChip.textContent = `Видео: ${count} с тайм-кодами и стенограммами`;
+    safeSetAttr(videoChip, 'title', 'Запланированный тип источника: видеокаталог с тайм-кодами и стенограммами');
+    host.appendChild(videoChip);
+  }
+}
+
 async function copyCurrentUrl() {
   const canonicalHash = buildHashFromState();
   const canonicalUrl = (() => {
@@ -1988,6 +2106,7 @@ async function copyCurrentUrl() {
 function syncNavigationState() {
   if (!isNavigatingHistory) pushHistoryState();
   updateBackButton();
+  renderCorpusStatus();
   renderBreadcrumbs(buildHashFromState());
   persistViewState();
   if (suppressHashSync) return;

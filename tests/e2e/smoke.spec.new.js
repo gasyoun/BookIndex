@@ -12,6 +12,22 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#home-stats-grid .home-stat-cell')).toHaveCount(8);
   });
 
+  test('corpus shell registers current book and accepts book route aliases', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/books/zaliznyak-aaz-index/home/home');
+    await expect(page.locator('.home-panel')).toBeVisible();
+    await expect(page.locator('#corpus-status .corpus-chip.active')).toContainText('Из жизни слов и языков');
+    await expect(page.locator('#corpus-status')).toContainText('Видео: 200');
+
+    const corpus = await page.evaluate(() => window.APP_DATA && window.APP_DATA.corpus);
+    expect(corpus.active_book_id).toBe('zaliznyak-aaz-index');
+    expect(corpus.books[0].source_type).toBe('book');
+    expect(corpus.source_types.some((source) => source.type === 'video_catalog' && source.planned_count === 200)).toBe(true);
+
+    await page.goto('/aaz-index.html#v4/books/zaliznyak-aaz-index/names/list');
+    await expect(page.locator('#name-list .name-item').first()).toBeVisible();
+    await expect(page).toHaveURL(/#v4\/names\/list$/);
+  });
+
   test('PWA manifest and service worker are available', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const manifestLink = page.locator('link[rel="manifest"]');
