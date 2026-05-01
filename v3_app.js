@@ -7944,20 +7944,20 @@ function renderLecturePagePanel(container) {
 
 function renderFurtherReadingPanel(container) {
   const sections = APP_DATA.further_reading || [];
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1000px;margin:0 auto;">';
-  html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0;">Что почитать ещё</h2>';
-  html += '<button id="export-further-bib" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Экспорт BibTeX (.bib)</button>';
+  let html = '<div class="panel active further-reading-panel"><div class="further-reading-inner">';
+  html += '<div class="further-reading-head">';
+  html += '<h2 class="further-reading-title">Что почитать ещё</h2>';
+  html += '<button id="export-further-bib" class="further-reading-export-btn">Экспорт BibTeX (.bib)</button>';
   html += '</div>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Небольшой школьный навигатор по научно-популярным и базовым лингвистическим книгам.</div>';
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">';
+  html += '<div class="further-reading-intro">Небольшой школьный навигатор по научно-популярным и базовым лингвистическим книгам.</div>';
+  html += '<div class="further-reading-grid">';
   for (const sec of sections) {
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:14px 16px;border-top:3px solid #8a7050;">
-      <div style="font-size:15px;color:#5a3818;font-weight:bold;margin-bottom:8px;">${escapeHtml(sec.topic || '')}</div>`;
+    html += `<div class="further-reading-card">
+      <div class="further-reading-topic">${escapeHtml(sec.topic || '')}</div>`;
     for (const b of (sec.books || [])) {
-      html += `<div style="margin-bottom:10px;">
-        <div style="font-size:13px;color:#333;font-weight:bold;">${escapeHtml(b.title || '')}</div>
-        <div style="font-size:12px;color:#666;line-height:1.5;">${escapeHtml(b.why || '')}</div>
+      html += `<div class="further-reading-book">
+        <div class="further-reading-book-title">${escapeHtml(b.title || '')}</div>
+        <div class="further-reading-book-why">${escapeHtml(b.why || '')}</div>
       </div>`;
     }
     html += '</div>';
