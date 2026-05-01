@@ -7792,16 +7792,16 @@ function renderLectureComparePanel(container) {
     </label>
   </div>`;
   if (recommendedPairs.length) {
-    html += '<div style="margin:0 0 12px 0;padding:10px 12px;background:#fff8e8;border:1px solid #e2d6bf;border-radius:8px;">';
-    html += '<div style="font-size:12px;color:#6a5040;font-weight:bold;margin-bottom:6px;">Осмысленные пары для сравнения</div>';
-    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+    html += '<div class="lecture-compare-suggestions">';
+    html += '<div class="lecture-compare-suggestions-title">Осмысленные пары для сравнения</div>';
+    html += '<div class="lecture-compare-pair-list">';
     for (const rec of recommendedPairs) {
       const selected =
         (rec.a === lectureCompareA && rec.b === lectureCompareB) ||
         (rec.a === lectureCompareB && rec.b === lectureCompareA);
-      html += `<button type="button" class="lecture-compare-pair ${selected ? 'active' : ''}" data-a="${rec.a}" data-b="${rec.b}" style="padding:4px 10px;border:1px solid ${selected ? '#5a3818' : '#c4b890'};border-radius:999px;background:${selected ? '#5a3818' : '#fff'};color:${selected ? '#fff' : '#5a3818'};cursor:pointer;font-size:11px;">
+      html += `<button type="button" class="lecture-compare-pair ${selected ? 'active' : ''}" data-a="${rec.a}" data-b="${rec.b}">
         ${escapeHtml(chapterLabel(rec.a, chapters[rec.a]))} ↔ ${escapeHtml(chapterLabel(rec.b, chapters[rec.b]))}
-        <span style="opacity:0.8;">(${escapeHtml(rec.reason)})</span>
+        <span>(${escapeHtml(rec.reason)})</span>
       </button>`;
     }
     html += '</div></div>';
@@ -7816,14 +7816,14 @@ function renderLectureComparePanel(container) {
     const inter = asSorted([...setA].filter(h => setB.has(h)));
     const onlyA = asSorted([...setA].filter(h => !setB.has(h)));
     const onlyB = asSorted([...setB].filter(h => !setA.has(h)));
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:8px;padding:12px 14px;border-top:3px solid #8a7050;">
-      <div style="font-size:15px;color:#5a3818;font-weight:bold;margin-bottom:6px;">${t.label}</div>
-      <div style="font-size:11px;color:#666;margin-bottom:8px;">Общие: <strong>${inter.length}</strong> · Только A: <strong>${onlyA.length}</strong> · Только B: <strong>${onlyB.length}</strong></div>
-      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Пересечение</div>
-      <div style="margin-bottom:7px;">${renderHeadLinks(t.key, inter, 10)}</div>
-      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Только A</div>
-      <div style="margin-bottom:7px;">${renderHeadLinks(t.key, onlyA, 8)}</div>
-      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Только B</div>
+    html += `<div class="lecture-compare-card">
+      <div class="lecture-compare-card-title">${t.label}</div>
+      <div class="lecture-compare-card-meta">Общие: <strong>${inter.length}</strong> · Только A: <strong>${onlyA.length}</strong> · Только B: <strong>${onlyB.length}</strong></div>
+      <div class="lecture-compare-subhead">Пересечение</div>
+      <div class="lecture-compare-link-row">${renderHeadLinks(t.key, inter, 10)}</div>
+      <div class="lecture-compare-subhead">Только A</div>
+      <div class="lecture-compare-link-row">${renderHeadLinks(t.key, onlyA, 8)}</div>
+      <div class="lecture-compare-subhead">Только B</div>
       <div>${renderHeadLinks(t.key, onlyB, 8)}</div>
     </div>`;
   }

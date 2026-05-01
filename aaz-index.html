@@ -2025,6 +2025,67 @@
     gap: 12px;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   }
+  .lecture-compare-suggestions {
+    background: #fff8e8;
+    border: 1px solid #e2d6bf;
+    border-radius: 8px;
+    margin: 0 0 12px 0;
+    padding: 10px 12px;
+  }
+  .lecture-compare-suggestions-title {
+    color: #6a5040;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .lecture-compare-pair-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .lecture-compare-pair {
+    background: #fff;
+    border: 1px solid #c4b890;
+    border-radius: 999px;
+    color: #5a3818;
+    cursor: pointer;
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+  .lecture-compare-pair.active {
+    background: #5a3818;
+    border-color: #5a3818;
+    color: #fff;
+  }
+  .lecture-compare-pair span {
+    opacity: 0.8;
+  }
+  .lecture-compare-card {
+    background: #fff;
+    border: 1px solid #d4c8b0;
+    border-radius: 8px;
+    border-top: 3px solid #8a7050;
+    padding: 12px 14px;
+  }
+  .lecture-compare-card-title {
+    color: #5a3818;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .lecture-compare-card-meta {
+    color: #666;
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+  .lecture-compare-subhead {
+    color: #6a5040;
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+  .lecture-compare-link-row {
+    margin-bottom: 7px;
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -74661,7 +74722,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'd0af4579d99b';
+const APP_BUILD_ID = '482a55c93294';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77941,7 +78002,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'd0af4579d99b' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '482a55c93294' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -82444,16 +82505,16 @@ function renderLectureComparePanel(container) {
     </label>
   </div>`;
   if (recommendedPairs.length) {
-    html += '<div style="margin:0 0 12px 0;padding:10px 12px;background:#fff8e8;border:1px solid #e2d6bf;border-radius:8px;">';
-    html += '<div style="font-size:12px;color:#6a5040;font-weight:bold;margin-bottom:6px;">Осмысленные пары для сравнения</div>';
-    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+    html += '<div class="lecture-compare-suggestions">';
+    html += '<div class="lecture-compare-suggestions-title">Осмысленные пары для сравнения</div>';
+    html += '<div class="lecture-compare-pair-list">';
     for (const rec of recommendedPairs) {
       const selected =
         (rec.a === lectureCompareA && rec.b === lectureCompareB) ||
         (rec.a === lectureCompareB && rec.b === lectureCompareA);
-      html += `<button type="button" class="lecture-compare-pair ${selected ? 'active' : ''}" data-a="${rec.a}" data-b="${rec.b}" style="padding:4px 10px;border:1px solid ${selected ? '#5a3818' : '#c4b890'};border-radius:999px;background:${selected ? '#5a3818' : '#fff'};color:${selected ? '#fff' : '#5a3818'};cursor:pointer;font-size:11px;">
+      html += `<button type="button" class="lecture-compare-pair ${selected ? 'active' : ''}" data-a="${rec.a}" data-b="${rec.b}">
         ${escapeHtml(chapterLabel(rec.a, chapters[rec.a]))} ↔ ${escapeHtml(chapterLabel(rec.b, chapters[rec.b]))}
-        <span style="opacity:0.8;">(${escapeHtml(rec.reason)})</span>
+        <span>(${escapeHtml(rec.reason)})</span>
       </button>`;
     }
     html += '</div></div>';
@@ -82468,14 +82529,14 @@ function renderLectureComparePanel(container) {
     const inter = asSorted([...setA].filter(h => setB.has(h)));
     const onlyA = asSorted([...setA].filter(h => !setB.has(h)));
     const onlyB = asSorted([...setB].filter(h => !setA.has(h)));
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:8px;padding:12px 14px;border-top:3px solid #8a7050;">
-      <div style="font-size:15px;color:#5a3818;font-weight:bold;margin-bottom:6px;">${t.label}</div>
-      <div style="font-size:11px;color:#666;margin-bottom:8px;">Общие: <strong>${inter.length}</strong> · Только A: <strong>${onlyA.length}</strong> · Только B: <strong>${onlyB.length}</strong></div>
-      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Пересечение</div>
-      <div style="margin-bottom:7px;">${renderHeadLinks(t.key, inter, 10)}</div>
-      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Только A</div>
-      <div style="margin-bottom:7px;">${renderHeadLinks(t.key, onlyA, 8)}</div>
-      <div style="font-size:11px;color:#6a5040;margin-bottom:2px;">Только B</div>
+    html += `<div class="lecture-compare-card">
+      <div class="lecture-compare-card-title">${t.label}</div>
+      <div class="lecture-compare-card-meta">Общие: <strong>${inter.length}</strong> · Только A: <strong>${onlyA.length}</strong> · Только B: <strong>${onlyB.length}</strong></div>
+      <div class="lecture-compare-subhead">Пересечение</div>
+      <div class="lecture-compare-link-row">${renderHeadLinks(t.key, inter, 10)}</div>
+      <div class="lecture-compare-subhead">Только A</div>
+      <div class="lecture-compare-link-row">${renderHeadLinks(t.key, onlyA, 8)}</div>
+      <div class="lecture-compare-subhead">Только B</div>
       <div>${renderHeadLinks(t.key, onlyB, 8)}</div>
     </div>`;
   }
