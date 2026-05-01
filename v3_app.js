@@ -7519,16 +7519,16 @@ function renderTasksPanel(container, options = {}) {
     if (historyListEl) {
       const rows = progress.history.slice(0, 12);
       if (!rows.length) {
-        historyListEl.innerHTML = '<div style="font-size:12px;color:#888;font-style:italic;">\u041f\u043e\u043a\u0430 \u043d\u0435\u0442 \u043e\u0442\u0432\u0435\u0442\u043e\u0432. \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0430\u0440\u0438\u0430\u043d\u0442 \u0432 \u043b\u044e\u0431\u043e\u043c \u0432\u043e\u043f\u0440\u043e\u0441\u0435, \u0447\u0442\u043e\u0431\u044b \u043d\u0430\u0447\u0430\u0442\u044c \u0438\u0441\u0442\u043e\u0440\u0438\u044e.</div>';
+        historyListEl.innerHTML = '<div class="task-history-empty">\u041f\u043e\u043a\u0430 \u043d\u0435\u0442 \u043e\u0442\u0432\u0435\u0442\u043e\u0432. \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0430\u0440\u0438\u0430\u043d\u0442 \u0432 \u043b\u044e\u0431\u043e\u043c \u0432\u043e\u043f\u0440\u043e\u0441\u0435, \u0447\u0442\u043e\u0431\u044b \u043d\u0430\u0447\u0430\u0442\u044c \u0438\u0441\u0442\u043e\u0440\u0438\u044e.</div>';
       } else {
         historyListEl.innerHTML = rows.map((row) => `
-          <div class="task-history-row" style="padding:7px 8px;border:1px solid #ece1cf;border-radius:4px;background:${row.isCorrect ? '#eef8ef' : '#fff7ef'};">
-            <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
-              <strong style="font-size:12px;color:${row.isCorrect ? '#1f6c3a' : '#8a4c25'};">${row.isCorrect ? '\u0412\u0435\u0440\u043d\u043e' : '\u041e\u0448\u0438\u0431\u043a\u0430'}</strong>
-              <span style="font-size:11px;color:#7a6a58;">${escapeHtml(formatHistoryDate(row.at))}</span>
+          <div class="task-history-row ${row.isCorrect ? 'correct' : 'incorrect'}">
+            <div class="task-history-row-head">
+              <strong class="task-history-status">${row.isCorrect ? '\u0412\u0435\u0440\u043d\u043e' : '\u041e\u0448\u0438\u0431\u043a\u0430'}</strong>
+              <span class="task-history-date">${escapeHtml(formatHistoryDate(row.at))}</span>
             </div>
-            <div style="font-size:12px;color:#5a3818;line-height:1.4;margin-top:4px;">${escapeHtml(row.question)}</div>
-            <div style="font-size:11px;color:#6a5040;margin-top:4px;">\u0412\u0430\u0448 \u043e\u0442\u0432\u0435\u0442: <strong>${escapeHtml(row.selected || '\u2014')}</strong>${row.correctAnswer ? ` \u00b7 \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e: <strong>${escapeHtml(row.correctAnswer)}</strong>` : ''}</div>
+            <div class="task-history-question">${escapeHtml(row.question)}</div>
+            <div class="task-history-answer">\u0412\u0430\u0448 \u043e\u0442\u0432\u0435\u0442: <strong>${escapeHtml(row.selected || '\u2014')}</strong>${row.correctAnswer ? ` \u00b7 \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e: <strong>${escapeHtml(row.correctAnswer)}</strong>` : ''}</div>
           </div>
         `).join('');
       }
@@ -7538,11 +7538,11 @@ function renderTasksPanel(container, options = {}) {
   for (let ti = 0; ti < tasksShuffled.length; ti++) {
     const t = tasksShuffled[ti];
     const taskDiv = document.createElement('div');
-    taskDiv.style.cssText = 'background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:14px 18px;margin-bottom:12px;';
+    taskDiv.className = 'task-card';
     taskDiv.innerHTML = `
-      <div style="font-size:14px;color:#5a3818;font-weight:bold;margin-bottom:10px;">\u0412\u043e\u043f\u0440\u043e\u0441 ${ti+1}. ${escapeHtml(t.question)}</div>
+      <div class="task-card-question">\u0412\u043e\u043f\u0440\u043e\u0441 ${ti+1}. ${escapeHtml(t.question)}</div>
       <div class="task-options" id="task-tab-${t._storageId}-opts"></div>
-      <div class="task-result" id="task-tab-${t._storageId}-res" style="display:none;margin-top:10px;padding:10px 12px;border-radius:4px;font-size:12px;line-height:1.5;"></div>
+      <div class="task-result" id="task-tab-${t._storageId}-res"></div>
     `;
     tc.appendChild(taskDiv);
     const optsDiv = document.getElementById(`task-tab-${t._storageId}-opts`);
