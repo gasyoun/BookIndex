@@ -6,8 +6,9 @@
   "scripts": {
     "data:split": "python scripts/split_app_data.py app_data.json --out-dir data/modules",
     "data:assemble": "python scripts/assemble_app_data.py --modules-dir data/modules --out app_data.json",
-    "check": "npm run typecheck && npm run check:js && npm run check:e2e",
+    "check": "npm run typecheck && npm run check:js && npm run check:ui && npm run check:e2e",
     "check:js": "node --check v3_app.js && node --check scripts/build_aaz_index.mjs && node --check scripts/dev/static-server.mjs && node --check scripts/viz/build-viz-cache.js && node --check scripts/viz/viz-state.js",
+    "check:ui": "node scripts/check_inline_styles.mjs",
     "check:e2e": "playwright test",
     "build": "node scripts/build_aaz_index.mjs",
     "build:legacy": "python scripts/build_aaz_index.py",

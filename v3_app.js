@@ -761,11 +761,7 @@ function getCachedAggregate(kind, key, computeFn) {
   const t0 = nowMs();
   const value = computeFn();
   const dt = nowMs() - t0;
-  aggregateCache.set(fullKey, value);
-  if (aggregateCache.size > AGGREGATE_CACHE_MAX) {
-    const oldest = aggregateCache.keys().next();
-    if (!oldest.done) aggregateCache.delete(oldest.value);
-  }
+  rememberBoundedCacheValue(aggregateCache, fullKey, value, AGGREGATE_CACHE_MAX);
   perfDebug(`${kind} cache`, dt, 'miss');
   return value;
 }
@@ -849,6 +845,13 @@ function safeColor(value, fallback = '#888') {
   if (/^hsla?\(\s*[-]?\d{1,3}\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%\s*(,\s*(0|1|0?\.\d+)\s*)?\)$/i.test(raw)) return raw;
   if (/^[a-z]{3,20}$/i.test(raw)) return raw;
   return fallback;
+}
+
+function getCategoryColorClass(subcategory) {
+  const key = String(subcategory || 'other').replace(/_/g, '-');
+  return ['linguist', 'literator', 'historical', 'participant', 'schoolchild', 'lecture-host', 'edition-staff'].includes(key)
+    ? `cat-color-${key}`
+    : 'cat-color-other';
 }
 
 function safeIcon(icon, fallback = '•') {
@@ -1229,7 +1232,7 @@ function buildCardPageLinksHtml(pages, maxLinks = 28) {
     return `<a class="card-page-link related-link page-ref-link" data-page="${page}" href="${escapeHtml(buildReadingNowHash(page))}">стр. ${page}</a>`;
   }).join(', ');
   const hiddenCount = list.length - shown.length;
-  if (hiddenCount > 0) html += ` <span style="color:#888;">и ещё ${hiddenCount}</span>`;
+  if (hiddenCount > 0) html += ` <span class="scholar-muted-meta">и ещё ${hiddenCount}</span>`;
   return html;
 }
 
@@ -1278,9 +1281,6 @@ function renderTextWithPageLinks(text, options = {}) {
   if (!raw) return '';
   const classNameRaw = String(options.className || 'card-page-link related-link');
   const className = /\bpage-ref-link\b/.test(classNameRaw) ? classNameRaw : `${classNameRaw} page-ref-link`;
-  const style = (typeof options.style === 'string')
-    ? options.style
-    : 'text-decoration:underline dotted;color:#5a3818;';
   const rangeTarget = String(options.rangeTarget || 'trends');
   const matcher = /\b\u0441\u0442\u0440\.?\s*(\d{1,4})(?:\s*[\u2013\u2014-]\s*(\d{1,4}))?/giu;
   let out = '';
@@ -1300,7 +1300,7 @@ function renderTextWithPageLinks(text, options = {}) {
     const href = (hasRange && rangeTarget === 'trends')
       ? buildCanonicalHash(['scholar', 'page_trends', 'range', String(lo), String(hi)])
       : buildReadingNowHash(lo);
-    out += `<a class="${escapeHtml(className)}" data-page="${lo}"${hasRange ? ` data-page-end="${hi}"` : ''} href="${escapeHtml(href)}"${style ? ` style="${escapeHtml(style)}"` : ''}>${escapeHtml(hit)}</a>`;
+    out += `<a class="${escapeHtml(className)}" data-page="${lo}"${hasRange ? ` data-page-end="${hi}"` : ''} href="${escapeHtml(href)}">${escapeHtml(hit)}</a>`;
     cursor = idx + hit.length;
   }
   if (cursor < raw.length) out += escapeHtml(raw.slice(cursor));
@@ -1889,6 +1889,16 @@ function routeVizAlias(parts) {
     : parts;
 }
 
+function routeValueAfter(parts, marker) {
+  const pos = Array.isArray(parts) ? parts.indexOf(marker) : -1;
+  return pos >= 0 ? parts[pos + 1] : '';
+}
+
+function parsePositiveRouteNumber(value) {
+  const raw = String(value || '');
+  return /^\d+$/.test(raw) ? parseInt(raw, 10) : null;
+}
+
 function buildHashFromState() {
   const parts = [currentEntity, currentTab];
   if (currentEntity === 'materials' && currentTab === 'lectures') {
@@ -2006,7 +2016,6 @@ function applyHash(hash) {
   if (!ENTITY_TYPES[entity]) return false;
   const tabCandidate = routedParts[1] || ENTITY_TYPES[entity].tabs[0];
   const tab = ENTITY_TYPES[entity].tabs.includes(tabCandidate) ? tabCandidate : ENTITY_TYPES[entity].tabs[0];
-  const queryPos = routedParts.indexOf('q');
   const itemPos = routedParts.indexOf('item');
 
   const state = {
@@ -2026,26 +2035,27 @@ function applyHash(hash) {
   pendingScholarAnchor = '';
   currentScholarAnchor = '';
 
-  if (entity === 'materials' && tab === 'lecture_pages' && /^\d+$/.test(routedParts[2] || '')) {
-    state.currentLecture = parseInt(routedParts[2], 10);
+  const lecturePageIndex = parsePositiveRouteNumber(routedParts[2]);
+  if (entity === 'materials' && tab === 'lecture_pages' && lecturePageIndex !== null) {
+    state.currentLecture = lecturePageIndex;
   }
   if (entity === 'materials' && tab === 'lectures') {
-    const readingPos = routedParts.indexOf('reading');
-    if (readingPos >= 0 && /^\d+$/.test(routedParts[readingPos + 1] || '')) {
-      saveReadingPage(clampPageInBook(parseInt(routedParts[readingPos + 1], 10)));
+    const readingPage = parsePositiveRouteNumber(routeValueAfter(routedParts, 'reading'));
+    if (readingPage !== null) {
+      saveReadingPage(clampPageInBook(readingPage));
     }
   }
   if (entity === 'materials' && tab === 'glossary') {
-    const termPos = routedParts.indexOf('term');
-    if (termPos >= 0 && routedParts[termPos + 1]) {
-      pendingGlossaryQuery = clampUiInput(routedParts[termPos + 1], MAX_LIST_QUERY_LENGTH).toLowerCase();
+    const termValue = routeValueAfter(routedParts, 'term');
+    if (termValue) {
+      pendingGlossaryQuery = clampUiInput(termValue, MAX_LIST_QUERY_LENGTH).toLowerCase();
       currentGlossaryTerm = pendingGlossaryQuery;
     }
   }
   if (entity === 'scholar' && tab === 'scholar') {
-    const anchorPos = routedParts.indexOf('anchor');
-    if (anchorPos >= 0 && routedParts[anchorPos + 1]) {
-      const rawAnchor = String(routedParts[anchorPos + 1] || '');
+    const anchorValue = routeValueAfter(routedParts, 'anchor');
+    if (anchorValue) {
+      const rawAnchor = String(anchorValue || '');
       const safeAnchor = rawAnchor.replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
       if (safeAnchor) {
         pendingScholarAnchor = safeAnchor;
@@ -2055,25 +2065,28 @@ function applyHash(hash) {
   }
   if (entity === 'scholar' && tab === 'viz') {
     currentVizQueryString = parsedRoute.query;
-    const modulePos = routedParts.indexOf('module');
-    if (modulePos >= 0 && routedParts[modulePos + 1]) {
-      currentVizModule = String(routedParts[modulePos + 1] || '').trim() || currentVizModule;
+    const moduleValue = routeValueAfter(routedParts, 'module');
+    if (moduleValue) {
+      currentVizModule = String(moduleValue || '').trim() || currentVizModule;
     }
   } else {
     currentVizQueryString = '';
   }
   if (entity === 'scholar' && tab === 'page_trends') {
     const rangePos = routedParts.indexOf('range');
-    if (rangePos >= 0 && /^\d+$/.test(routedParts[rangePos + 1] || '') && /^\d+$/.test(routedParts[rangePos + 2] || '')) {
-      state.trendsRangeStart = clampPageInBook(parseInt(routedParts[rangePos + 1], 10));
-      state.trendsRangeEnd = clampPageInBook(parseInt(routedParts[rangePos + 2], 10));
+    const rangeStart = parsePositiveRouteNumber(routedParts[rangePos + 1]);
+    const rangeEnd = parsePositiveRouteNumber(routedParts[rangePos + 2]);
+    if (rangePos >= 0 && rangeStart !== null && rangeEnd !== null) {
+      state.trendsRangeStart = clampPageInBook(rangeStart);
+      state.trendsRangeEnd = clampPageInBook(rangeEnd);
       if (state.trendsRangeStart > state.trendsRangeEnd) {
         [state.trendsRangeStart, state.trendsRangeEnd] = [state.trendsRangeEnd, state.trendsRangeStart];
       }
     }
   }
-  if (tab === 'list' && queryPos >= 0 && routedParts[queryPos + 1]) {
-    state.searchQuery = clampUiInput(routedParts[queryPos + 1], MAX_LIST_QUERY_LENGTH);
+  const queryValue = routeValueAfter(routedParts, 'q');
+  if (tab === 'list' && queryValue) {
+    state.searchQuery = clampUiInput(queryValue, MAX_LIST_QUERY_LENGTH);
   }
 
   if (itemPos >= 0 && routedParts[itemPos + 1] && routedParts[itemPos + 2]) {
@@ -3019,6 +3032,38 @@ function openGlobalSearchMatch(match) {
   closeGlobalSearchResults();
 }
 
+function appendGlobalSearchResult(box, match, idx, query) {
+  if (!box || !match) return;
+  const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
+  const row = document.createElement('div');
+  row.className = 'header-search-item';
+  row.dataset.idx = String(idx);
+  safeSetAttr(row, 'role', 'option');
+  safeSetAttr(row, 'aria-selected', 'false');
+
+  const head = document.createElement('span');
+  head.innerHTML = highlightSearchMatch(match.head, q);
+  const kind = document.createElement('span');
+  kind.className = 'kind';
+  kind.textContent = String(match.kind || '');
+  row.appendChild(head);
+  row.appendChild(kind);
+
+  if (match.meta) {
+    const meta = document.createElement('div');
+    meta.className = 'search-meta';
+    meta.textContent = String(match.meta || '');
+    row.appendChild(meta);
+  }
+  if (match.snippet) {
+    const snippet = document.createElement('div');
+    snippet.className = 'search-snippet';
+    snippet.innerHTML = highlightSearchMatch(match.snippet, q);
+    row.appendChild(snippet);
+  }
+  box.appendChild(row);
+}
+
 function renderGlobalSearchResults(matches, query = '') {
   const box = document.getElementById('global-search-results');
   const input = document.getElementById('global-search');
@@ -3029,14 +3074,8 @@ function renderGlobalSearchResults(matches, query = '') {
   }
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
   safeSetAttr(box, 'role', 'listbox');
-  box.innerHTML = matches.map((m, idx) =>
-    `<div class="header-search-item" data-idx="${idx}" role="option" aria-selected="false">
-      <span>${highlightSearchMatch(m.head, q)}</span>
-      <span class="kind">${escapeHtml(m.kind)}</span>
-      ${m.meta ? `<div class="search-meta">${escapeHtml(m.meta)}</div>` : ''}
-      ${m.snippet ? `<div class="search-snippet">${highlightSearchMatch(m.snippet, q)}</div>` : ''}
-    </div>`
-  ).join('');
+  box.textContent = '';
+  matches.forEach((m, idx) => appendGlobalSearchResult(box, m, idx, q));
   box._matches = matches;
   globalSearchActiveIndex = -1;
   box.classList.add('open');
@@ -3934,42 +3973,44 @@ function switchTab(tab) {
   syncNavigationState();
 }
 
+const CONTENT_RENDERERS = Object.freeze({
+  home: renderHomePanel,
+  home_decl: renderHomePanelDeclarative,
+  lectures: renderLecturesPanel,
+  lecture_compare: renderLectureComparePanel,
+  lecture_pages: renderLecturePagePanel,
+  tasks: renderTasksPanel,
+  further_reading: renderFurtherReadingPanel,
+  glossary: renderGlossaryPanel,
+  kwic: renderKwicPanel,
+  gallery: renderGalleryPanel,
+  russian_evolution: renderRussianEvolutionPanel,
+  phonetic_laws: renderPhoneticLawsPanel,
+  scholar: renderScholarPanel,
+  chronology: renderScholarChronologyPanel,
+  page_trends: renderPageTrendsPanel,
+  viz: renderVizPanel,
+  list: renderListPanel,
+  cards: renderCardsPanel,
+  histogram: renderHistogramPanel,
+  timeline: renderTimelinePanel,
+  heatmap: renderHeatmapPanel,
+  graph: renderGraphPanel,
+  map: renderMapPanel,
+  epochs: renderEpochsPanel,
+  families: renderFamiliesPanel,
+  tree: renderTreePanel,
+});
+
 function renderContent() {
   const container = document.getElementById('content');
+  if (!container) return;
   if (!(currentEntity === 'scholar' && currentTab === 'viz')) cleanupActiveVizModule();
   container.innerHTML = '';
   if (currentTab !== 'list') setMobileSheetOpen(false);
   if (currentTab !== 'graph') nameGraphRenderToken += 1;
   if (currentTab !== 'families') familiesGraphRenderToken += 1;
-  const renderers = {
-    home: renderHomePanel,
-    home_decl: renderHomePanelDeclarative,
-    lectures: renderLecturesPanel,
-    lecture_compare: renderLectureComparePanel,
-    lecture_pages: renderLecturePagePanel,
-    tasks: renderTasksPanel,
-    further_reading: renderFurtherReadingPanel,
-    glossary: renderGlossaryPanel,
-    kwic: renderKwicPanel,
-    gallery: renderGalleryPanel,
-    russian_evolution: renderRussianEvolutionPanel,
-    phonetic_laws: renderPhoneticLawsPanel,
-    scholar: renderScholarPanel,
-    chronology: renderScholarChronologyPanel,
-    page_trends: renderPageTrendsPanel,
-    viz: renderVizPanel,
-    list: renderListPanel,
-    cards: renderCardsPanel,
-    histogram: renderHistogramPanel,
-    timeline: renderTimelinePanel,
-    heatmap: renderHeatmapPanel,
-    graph: renderGraphPanel,
-    map: renderMapPanel,
-    epochs: renderEpochsPanel,
-    families: renderFamiliesPanel,
-    tree: renderTreePanel,
-  };
-  const render = renderers[currentTab];
+  const render = CONTENT_RENDERERS[currentTab];
   if (render) render(container);
 }
 
@@ -3992,7 +4033,7 @@ function renderListPanel(container) {
     for (const sub of order) {
       if (!cats[sub]) continue;
       catChips += `<button class="filter-chip ${activeFilters.has(sub)?'active':''}" data-subcat="${sub}">
-        <span class="dot" style="background:${safeColor(COLORS[sub], '#888')}"></span>${LABELS[sub]} (${cats[sub]})
+        <span class="dot ${getCategoryColorClass(sub)}"></span>${LABELS[sub]} (${cats[sub]})
       </button>`;
     }
     catChips += '</div>';
@@ -4370,32 +4411,62 @@ function getSubjectByLexiconIndex() {
   return SUBJECT_BY_LEXICON_INDEX;
 }
 
-function buildListItemInnerHtml(it, showTypeLabel) {
-  let dot = '';
-  if (currentEntity === 'names' && it.subcategory) {
-    dot = `<span class="cat-dot" style="background:${safeColor(COLORS[it.subcategory], '#888')}"></span>`;
-  } else if (currentEntity === 'all' && it._entityType === 'names' && it.subcategory) {
-    dot = `<span class="cat-dot" style="background:${safeColor(COLORS[it.subcategory], '#888')}"></span>`;
+function appendListItemContent(item, it, itemType, showTypeLabel) {
+  if (!item || !it) return;
+  const isNameItem = itemType === 'names' || (currentEntity === 'all' && itemType === 'names');
+  if (isNameItem && it.subcategory) {
+    const dot = document.createElement('span');
+    dot.className = `cat-dot ${getCategoryColorClass(it.subcategory)}`;
+    item.appendChild(dot);
   }
-  const typeLabel = showTypeLabel ? ` <span class="entity-type-tag">${it._entityLabel}</span>` : '';
-  const moderatorMark = it.is_moderator ? ' <span style="color:#999;font-size:10px;">· мод.</span>' : '';
-  const itemType = it && it._entityType ? it._entityType : currentEntity;
-  let crosslinksHtml = '';
+
+  const head = document.createElement('span');
+  head.className = `head ${it.discussed ? 'discussed' : ''}${itemType === 'lexicon_reverse' ? ' reverse-head' : ''}`;
+  head.innerHTML = renderAccentSafe(it.head);
+
+  const typeLabel = document.createElement('span');
+  typeLabel.className = 'entity-type-tag';
+  typeLabel.textContent = it._entityLabel || '';
+
+  const moderatorMark = document.createElement('span');
+  moderatorMark.className = 'moderator-mark';
+  moderatorMark.textContent = '· мод.';
+
+  const pagesCount = document.createElement('span');
+  pagesCount.className = `pages-count${itemType === 'lexicon_reverse' ? ' reverse-pages-count' : ''}`;
+  pagesCount.textContent = String((it.page_list || []).length);
+
+  if (itemType === 'lexicon_reverse') {
+    item.appendChild(pagesCount);
+    item.appendChild(head);
+  } else {
+    item.appendChild(head);
+  }
+  if (showTypeLabel && typeLabel.textContent) item.appendChild(typeLabel);
+  if (it.is_moderator) item.appendChild(moderatorMark);
+  if (itemType !== 'lexicon_reverse') item.appendChild(pagesCount);
+
   if (itemType === 'subject') {
     const links = buildSubjectCrosslinks(it.head);
     if (links.length) {
-      crosslinksHtml = `<div class="subject-crosslinks">
-        <span class="crosslinks-label">Смотрите также:</span>
-        ${links.map((lnk) => `<a href="${escapeHtml(buildItemHash(lnk.type, lnk.head))}" class="crosslink-badge" data-type="${escapeHtml(lnk.type)}" data-head="${escapeHtml(lnk.head)}">${escapeHtml(lnk.label)}: ${escapeHtml(lnk.head)}</a>`).join('')}
-      </div>`;
+      const crosslinks = document.createElement('div');
+      crosslinks.className = 'subject-crosslinks';
+      const label = document.createElement('span');
+      label.className = 'crosslinks-label';
+      label.textContent = 'Смотрите также:';
+      crosslinks.appendChild(label);
+      for (const lnk of links) {
+        const link = document.createElement('a');
+        link.className = 'crosslink-badge';
+        link.href = buildItemHash(lnk.type, lnk.head);
+        link.dataset.type = String(lnk.type || '');
+        link.dataset.head = String(lnk.head || '');
+        link.textContent = `${lnk.label || ''}: ${lnk.head || ''}`;
+        crosslinks.appendChild(link);
+      }
+      item.appendChild(crosslinks);
     }
   }
-  const headClass = `head ${it.discussed ? 'discussed' : ''}${itemType === 'lexicon_reverse' ? ' reverse-head' : ''}`;
-  const pagesCountHtml = `<span class="pages-count${itemType === 'lexicon_reverse' ? ' reverse-pages-count' : ''}">${(it.page_list || []).length}</span>`;
-  if (itemType === 'lexicon_reverse') {
-    return `${dot}${pagesCountHtml}<span class="${headClass}">${renderAccentSafe(it.head)}</span>${typeLabel}${moderatorMark}${crosslinksHtml}`;
-  }
-  return `${dot}<span class="${headClass}">${renderAccentSafe(it.head)}</span>${typeLabel}${moderatorMark}${pagesCountHtml}${crosslinksHtml}`;
 }
 
 function selectListItem(it, fallbackType) {
@@ -4458,7 +4529,7 @@ function appendListRow(list, row, fallbackType, reverseColumns) {
   safeSetAttr(item, 'aria-label', `${it.head || ''} (${(it.page_list || []).length})`);
   item.dataset.head = it.head || '';
   item.dataset.type = itemType;
-  item.innerHTML = buildListItemInnerHtml(it, currentEntity === 'all');
+  appendListItemContent(item, it, itemType, currentEntity === 'all');
   if (reverseColumns > 1) {
     item.style.breakInside = 'avoid-column';
     item.style.webkitColumnBreakInside = 'avoid';
@@ -5270,11 +5341,24 @@ function renderCardsPanel(container) {
     else if (currentEntity === 'ethnonyms') cat = 'Этноним';
     else if (currentEntity === 'languages') cat = it.family || 'Язык';
     const pages = it.pages || it.head_pages || '';
-    card.innerHTML = `
-      <div class="mc-head">${escapeHtml(it.head)}${it.discussed ? '<span class="mc-discussed">обсуждается</span>' : ''}</div>
-      <div class="mc-cat">${escapeHtml(cat)}</div>
-      <div class="mc-pages">стр. ${escapeHtml(pages)}</div>
-    `;
+    const head = document.createElement('div');
+    head.className = 'mc-head';
+    head.textContent = String(it.head || '');
+    if (it.discussed) {
+      const discussed = document.createElement('span');
+      discussed.className = 'mc-discussed';
+      discussed.textContent = 'обсуждается';
+      head.appendChild(discussed);
+    }
+    const catEl = document.createElement('div');
+    catEl.className = 'mc-cat';
+    catEl.textContent = String(cat || '');
+    const pagesEl = document.createElement('div');
+    pagesEl.className = 'mc-pages';
+    pagesEl.textContent = `стр. ${String(pages || '')}`;
+    card.appendChild(head);
+    card.appendChild(catEl);
+    card.appendChild(pagesEl);
     card.onclick = () => {
       selectedItem = it.head;
       selectedItemType = currentEntity;
@@ -5319,7 +5403,7 @@ function renderTimelinePanel(container) {
   const tl = document.getElementById('timeline');
   const items = ENTITY_TYPES[currentEntity].items;
   const withEpoch = items.filter(n => n.epoch !== null && n.epoch !== undefined);
-  if (withEpoch.length === 0) { tl.innerHTML = '<p style="color:#888;">Нет данных.</p>'; return; }
+  if (withEpoch.length === 0) { tl.innerHTML = '<p class="panel-muted-message">Нет данных.</p>'; return; }
   withEpoch.sort((a, b) => a.epoch - b.epoch);
 
   const isNarrow = window.innerWidth < 1000;
@@ -5340,7 +5424,7 @@ function renderTimelinePanel(container) {
       const color = safeColor(COLORS[n.subcategory], '#888');
       const epochLabel = n.epoch < 0 ? (-n.epoch) + ' до н.э.' : String(n.epoch);
       svg += `<text x="${padL - 8}" y="${y + 4}" fill="#888" font-size="10" text-anchor="end">${epochLabel}</text>`;
-      svg += `<g style="cursor:pointer" data-name="${escapeHtml(n.head)}">
+      svg += `<g class="timeline-point" data-name="${escapeHtml(n.head)}">
         <circle cx="${padL}" cy="${y}" r="5" fill="${color}" stroke="white" stroke-width="1.5"></circle>
         <text x="${padL + 10}" y="${y + 4}" fill="#1a1a1a" font-size="12">${escapeHtml(n.head)}</text>
       </g>`;
@@ -5389,7 +5473,7 @@ function renderTimelinePanel(container) {
       const cy = axisY + 18 + p.level * rowH;
       const color = safeColor(COLORS[p.name.subcategory], '#888');
       svg += `<line x1="${p.x}" y1="${axisY}" x2="${p.x}" y2="${cy - 5}" stroke="#d4c8b0" stroke-width="1"/>`;
-      svg += `<g style="cursor:pointer" data-name="${escapeHtml(p.name.head)}">
+      svg += `<g class="timeline-point" data-name="${escapeHtml(p.name.head)}">
         <circle cx="${p.x}" cy="${cy}" r="5" fill="${color}" stroke="white" stroke-width="1.5"></circle>
         <text x="${p.x + 7}" y="${cy + 4}" fill="#1a1a1a" font-size="11">${escapeHtml(p.name.head)}</text>
       </g>`;
@@ -5413,7 +5497,7 @@ function renderTimelinePanel(container) {
     if (!subsPresent.has(sub)) continue;
     const div = document.createElement('div');
     div.className = 'legend-item';
-    div.innerHTML = `<span class="legend-dot" style="background:${safeColor(COLORS[sub], '#888')}"></span>${LABELS[sub]}`;
+    div.innerHTML = `<span class="legend-dot ${getCategoryColorClass(sub)}"></span>${LABELS[sub]}`;
     lg.appendChild(div);
   }
 }
@@ -5773,11 +5857,7 @@ function getNameGraphLayoutAsync(minEdgeWeight, W, H) {
     });
   }
   const promise = job.then((layout) => {
-    aggregateCache.set(cacheKey, layout);
-    if (aggregateCache.size > AGGREGATE_CACHE_MAX) {
-      const oldest = aggregateCache.keys().next();
-      if (!oldest.done) aggregateCache.delete(oldest.value);
-    }
+    rememberBoundedCacheValue(aggregateCache, cacheKey, layout, AGGREGATE_CACHE_MAX);
     nameGraphLayoutPromiseCache.delete(cacheKey);
     perfDebug('graph-names-worker', nowMs() - t0, 'miss');
     return layout;
@@ -5851,7 +5931,7 @@ function renderGraphPanel(container) {
   function hideTooltip() {
     if (!tooltip) return;
     tooltip.hidden = true;
-    tooltip.innerHTML = '';
+    tooltip.textContent = '';
   }
 
   function showTooltip(event, item) {
@@ -5862,21 +5942,25 @@ function renderGraphPanel(container) {
     tooltip.hidden = false;
     tooltip.style.left = `${Math.max(0, px)}px`;
     tooltip.style.top = `${Math.max(0, py)}px`;
-    tooltip.innerHTML = `<strong>${escapeHtml(item.name || '')}</strong>${escapeHtml(item.subcat || 'uncategorized')} - mentions: ${Number(item.weight || 0)}`;
+    tooltip.textContent = '';
+    const title = document.createElement('strong');
+    title.textContent = String(item.name || '');
+    tooltip.appendChild(title);
+    tooltip.appendChild(document.createTextNode(`${item.subcat || 'uncategorized'} - mentions: ${Number(item.weight || 0)}`));
   }
 
   function renderLegend(rows) {
     if (!legend) return;
-    if (!rows.length) {
-      legend.innerHTML = '';
-      return;
+    legend.textContent = '';
+    for (const row of rows) {
+      const item = document.createElement('span');
+      item.className = 'graph-legend-item';
+      const swatch = document.createElement('span');
+      swatch.className = `graph-legend-swatch ${getCategoryColorClass(row.label)}`;
+      item.appendChild(swatch);
+      item.appendChild(document.createTextNode(`${row.label} (${row.count})`));
+      legend.appendChild(item);
     }
-    legend.innerHTML = rows.map((row) => `
-      <span class="graph-legend-item">
-        <span class="graph-legend-swatch" style="background:${escapeHtml(row.color)};"></span>
-        ${escapeHtml(row.label)} (${row.count})
-      </span>
-    `).join('');
   }
 
   getNameGraphLayoutAsync(nameGraphMinEdgeWeight, W, H)
@@ -5918,7 +6002,7 @@ function renderGraphPanel(container) {
       }
       const legendRows = [...legendMap.entries()]
         .sort((a, b) => b[1] - a[1] || compareHeadsRu(a[0], b[0]))
-        .map(([label, count]) => ({ label, count, color: safeColor(COLORS[label], '#666') }));
+        .map(([label, count]) => ({ label, count }));
       renderLegend(legendRows);
 
       const svg = d3.select(stage)
@@ -6331,11 +6415,7 @@ function getFamiliesGraphLayoutAsync(strongOnly, W, H) {
     });
   }
   const promise = job.then((layout) => {
-    aggregateCache.set(cacheKey, layout);
-    if (aggregateCache.size > AGGREGATE_CACHE_MAX) {
-      const oldest = aggregateCache.keys().next();
-      if (!oldest.done) aggregateCache.delete(oldest.value);
-    }
+    rememberBoundedCacheValue(aggregateCache, cacheKey, layout, AGGREGATE_CACHE_MAX);
     familiesGraphLayoutPromiseCache.delete(cacheKey);
     perfDebug('graph-families-worker', nowMs() - t0, 'miss');
     return layout;
@@ -6786,20 +6866,11 @@ function buildHomeDeclarativeViewModel() {
   const isDesktop = vw >= 980;
   const compactHome = isDesktop && vh > 0 && vh <= 840;
 
-  const routeGridStyle = compactHome
-    ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px;'
-    : isDesktop
-      ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px;'
-      : 'display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px;';
   const homeInnerPadding = compactHome ? '10px 14px' : '14px 20px';
-  const statsGridColumns = vw > 0 && vw < 900 ? 'repeat(2,minmax(0,1fr))' : 'repeat(4,minmax(0,1fr))';
-  let factPairColumns = compactHome
-    ? 'minmax(0,1.35fr) minmax(0,0.95fr)'
-    : 'minmax(0,1.2fr) minmax(0,1fr)';
-  if (vw > 0 && vw < 900) factPairColumns = '1fr';
-  const quoteTextClamp = compactHome
-    ? 'display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;'
-    : '';
+  const factPairClass = compactHome ? 'home-fact-pair home-fact-pair-compact' : 'home-fact-pair';
+  const quoteClass = compactHome ? 'home-featured-quote home-featured-quote-compact' : 'home-featured-quote home-featured-quote-full';
+  const quoteTextClass = compactHome ? 'home-featured-quote-clamp' : '';
+  const routeGridClass = (compactHome || isDesktop) ? 'home-routes-grid home-routes-grid-compact' : 'home-routes-grid';
 
   const topFamilyName = Array.isArray(stats.top_family) ? String(stats.top_family[0] || '') : '';
   const topFamilyCount = Array.isArray(stats.top_family) ? Number(stats.top_family[1] || 0) : 0;
@@ -6873,11 +6944,11 @@ function buildHomeDeclarativeViewModel() {
 
   return {
     compactHome,
-    routeGridStyle,
+    routeGridClass,
     homeInnerPadding,
-    statsGridColumns,
-    factPairColumns,
-    quoteTextClamp,
+    factPairClass,
+    quoteClass,
+    quoteTextClass,
     statsCards,
     facts,
     routes: routeCards,
@@ -6965,57 +7036,57 @@ function renderHomePanelDeclarative(container) {
     globalThis[HOME_DECL_FACTORY_KEY] = () => state;
   }
 
-  container.innerHTML = `<div class="panel active home-panel home-panel-declarative" style="overflow-y:auto;height:100%;">
-    <div id="home-declarative-root" x-data="${HOME_DECL_FACTORY_KEY}()" style="padding:${viewModel.homeInnerPadding};max-width:1200px;margin:0 auto;">
-      <div style="background:linear-gradient(135deg,#5a3818,#8a7050);color:#fff8e8;padding:16px 20px;border-radius:6px;margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
-          <h2 style="margin:0 0 4px 0;font-size:22px;font-weight:normal;">Книга в цифрах (декларативный режим)</h2>
-          <button type="button" @click="exportMarkdown" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;white-space:nowrap;">Экспорт всего BookIndex в Markdown</button>
+  container.innerHTML = `<div class="panel active home-panel home-panel-declarative">
+    <div id="home-declarative-root" class="home-declarative-root" x-data="${HOME_DECL_FACTORY_KEY}()" style="--home-decl-padding:${viewModel.homeInnerPadding};">
+      <div class="home-stats-hero">
+        <div class="home-stats-head">
+          <h2 class="home-stats-title">Book stats (declarative mode)</h2>
+          <button type="button" @click="exportMarkdown" class="home-export-btn">Export BookIndex to Markdown</button>
         </div>
-        <div style="font-size:13px;opacity:0.85;font-style:italic;margin-bottom:14px;">Экспериментальный таб: рендер KPI и маршрутов через Alpine.js</div>
+        <div class="home-stats-subtitle">Experimental tab: KPI and route rendering via Alpine.js</div>
 
-        <div id="home-stats-grid-decl" style="display:grid;grid-template-columns:${viewModel.statsGridColumns};gap:10px;">
+        <div id="home-stats-grid-decl" class="home-stats-grid">
           <template x-for="cell in statsCards" :key="cell.key">
-            <div style="background:rgba(255,248,232,0.15);padding:10px 12px;border-radius:4px;border-left:3px solid #fff8e8;">
-              <div style="font-size:24px;font-weight:bold;line-height:1;" x-text="cell.num"></div>
-              <div style="font-size:11px;opacity:0.85;margin-top:4px;" x-text="cell.label"></div>
+            <div class="home-stat-cell">
+              <div class="home-stat-num" x-text="cell.num"></div>
+              <div class="home-stat-label" x-text="cell.label"></div>
             </div>
           </template>
         </div>
 
-        <div style="margin-top:${viewModel.compactHome ? 10 : 14}px;padding-top:${viewModel.compactHome ? 10 : 14}px;border-top:1px solid rgba(255,248,232,0.25);font-size:12px;line-height:${viewModel.compactHome ? 1.55 : 1.7};">
-          <div id="home-fact-pair-decl" style="display:grid;grid-template-columns:${viewModel.factPairColumns};gap:${viewModel.compactHome ? 8 : 12}px;align-items:start;">
-            <div style="display:grid;gap:4px;">
+        <div class="home-facts" style="--home-facts-space:${viewModel.compactHome ? 10 : 14}px;--home-facts-line-height:${viewModel.compactHome ? 1.55 : 1.7};">
+          <div id="home-fact-pair-decl" class="${viewModel.factPairClass}">
+            <div>
               <template x-for="(fact, idx) in facts" :key="idx">
-                <button type="button" @click="openFact(idx)" style="background:transparent;border:none;padding:0;text-align:left;color:#fff8e8;font:inherit;cursor:pointer;text-decoration:underline dotted;">
+                <button type="button" @click="openFact(idx)" class="home-decl-fact-button">
                   <span x-text="fact"></span>
                 </button>
               </template>
             </div>
-            <div id="home-featured-quote-decl" style="padding-left:${viewModel.compactHome ? 8 : 10}px;border-left:2px solid rgba(255,248,232,0.45);font-style:italic;align-self:start;font-size:${viewModel.compactHome ? '14px' : '15px'};line-height:${viewModel.compactHome ? '1.55' : '1.65'};">
-              <div style="${viewModel.quoteTextClamp}" x-text="'«' + featuredText + '»'"></div>
-              <div style="margin-top:6px;font-style:normal;opacity:0.85;" x-text="'стр. ' + featuredPage + ', лекция «' + featuredLecture + '»'"></div>
-              <div style="margin-top:8px;font-style:italic;opacity:0.9;font-size:12px;">Выберите путь по книге и перейдите к карточкам напрямую.</div>
+            <div id="home-featured-quote-decl" class="${viewModel.quoteClass}" style="--home-featured-padding:${viewModel.compactHome ? 8 : 10}px;">
+              <div class="${viewModel.quoteTextClass}" x-text="'&quot;' + featuredText + '&quot;'"></div>
+              <div class="home-featured-meta" x-text="'page ' + featuredPage + ', lecture &quot;' + featuredLecture + '&quot;'"></div>
+              <div class="home-featured-hint">Choose a path through the book and jump directly to cards.</div>
             </div>
           </div>
         </div>
       </div>
 
-      <h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:14px 0 4px 0;">Выберите свой путь по книге</h2>
-      <div style="${viewModel.routeGridStyle}">
+      <h2 class="home-routes-title">Choose a path through the book</h2>
+      <div class="${viewModel.routeGridClass}">
         <template x-for="route in routes" :key="route.id">
-          <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;border-top:3px solid #8a7050;">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:4px;">
-              <div style="font-size:16px;font-weight:bold;color:#5a3818;" x-text="route.title"></div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:96px;">
-                <div style="font-size:11px;color:#888;white-space:nowrap;" x-text="'📑 страницы ' + route.pages"></div>
-                <div style="font-size:20px;line-height:1;min-width:20px;text-align:right;" x-text="route.icon"></div>
+          <div class="home-route-card">
+            <div class="home-route-head">
+              <div class="home-route-title" x-text="route.title"></div>
+              <div class="home-route-meta">
+                <div class="home-route-pages" x-text="'pages ' + route.pages"></div>
+                <div class="home-route-icon" x-text="route.icon"></div>
               </div>
             </div>
-            <div style="font-size:11px;color:#444;line-height:1.45;margin-bottom:6px;" x-text="route.desc"></div>
-            <div style="font-size:11px;">
+            <div class="home-route-desc" x-text="route.desc"></div>
+            <div class="home-route-links">
               <template x-for="entity in route.entities" :key="entity.key">
-                <button type="button" @click="openRoute(entity.type, entity.head)" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border:1px solid transparent;border-radius:10px;margin:2px 2px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;font:inherit;">
+                <button type="button" @click="openRoute(entity.type, entity.head)" class="home-route-link home-decl-route-button">
                   <span x-text="entity.head"></span>
                 </button>
               </template>
@@ -7024,16 +7095,16 @@ function renderHomePanelDeclarative(container) {
         </template>
       </div>
 
-      <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;margin-bottom:14px;">
-        <div style="font-size:14px;color:#5a3818;font-weight:normal;margin-bottom:6px;">Недавно открывали</div>
-        <div id="home-recent-items-decl" style="font-size:12px;line-height:1.6;">
+      <div class="home-recent-card">
+        <div class="home-recent-title">Recently opened</div>
+        <div id="home-recent-items-decl" class="home-recent-items">
           <template x-if="recentItems.length === 0">
-            <span style="color:#888;">Пока пусто — откройте любую карточку.</span>
+            <span class="home-recent-empty">Nothing yet - open any card.</span>
           </template>
           <template x-for="item in recentItems" :key="item.key">
-            <button type="button" @click="openRecent(item.type, item.head)" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border:1px solid transparent;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;font:inherit;">
+            <button type="button" @click="openRecent(item.type, item.head)" class="home-recent-link home-decl-recent-button">
               <span x-text="item.head"></span>
-              <span style="color:#777;" x-text="' · ' + item.label"></span>
+              <span class="home-recent-label" x-text="' - ' + item.label"></span>
             </button>
           </template>
         </div>
@@ -7046,9 +7117,6 @@ function renderHomePanelDeclarative(container) {
   alpine.initTree(container);
 }
 
-// =========================================================
-// ГЛАВНАЯ: статистика, маршруты, задачи
-// =========================================================
 function renderHomePanel(container) {
   const stats = APP_DATA.book_stats;
   const routes = APP_DATA.routes || [];
@@ -7057,18 +7125,11 @@ function renderHomePanel(container) {
   const vh = (typeof window !== 'undefined' && typeof window.innerHeight === 'number') ? window.innerHeight : 0;
   const isDesktop = vw >= 980;
   const compactHome = isDesktop && vh > 0 && vh <= 840;
-  const routeGridStyle = compactHome
-    ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px;'
-    : isDesktop
-      ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px;'
-      : 'display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px;';
   const homeInnerPadding = compactHome ? '10px 14px' : '14px 20px';
-  const factPairStyle = compactHome
-    ? 'display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,0.95fr);gap:8px;align-items:start;'
-    : 'display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px;align-items:start;';
-  const quoteTextClamp = compactHome
-    ? 'display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;'
-    : '';
+  const factPairClass = compactHome ? 'home-fact-pair home-fact-pair-compact' : 'home-fact-pair';
+  const quoteClass = compactHome ? 'home-featured-quote home-featured-quote-compact' : 'home-featured-quote home-featured-quote-full';
+  const quoteTextClass = compactHome ? 'home-featured-quote-clamp' : '';
+  const routeGridClass = (compactHome || isDesktop) ? 'home-routes-grid home-routes-grid-compact' : 'home-routes-grid';
 
   let html = `<div class="panel active home-panel"><div class="home-panel-inner" style="--home-inner-padding:${homeInnerPadding};">`;
 
@@ -7101,19 +7162,19 @@ function renderHomePanel(container) {
 
   // Изюминки
   html += `<div class="home-facts" style="--home-facts-space:${compactHome ? 10 : 14}px;--home-facts-line-height:${compactHome ? 1.55 : 1.7};">
-    <div id="home-fact-pair" style="${factPairStyle}">
+    <div id="home-fact-pair" class="${factPairClass}">
       <div>
-        <div>📖 Самая длинная лекция — <strong>«${escapeHtml(stats.longest_lecture.name)}»</strong> (${stats.longest_lecture.pages} страниц)</div>
-        <div>🗣 Самый часто упоминаемый язык — <strong>${escapeHtml(stats.top_lang.head)}</strong> (${stats.top_lang.count} упоминаний)</div>
-        <div>🌍 Самое часто упоминаемое место — <strong>${escapeHtml(stats.top_topo.head)}</strong> (${stats.top_topo.count} упоминаний)</div>
-        <div>👤 Самый часто упоминаемый человек — <strong>${escapeHtml(stats.top_name.head)}</strong> (${stats.top_name.count} упоминаний)</div>
-        <div>📜 Самое часто обсуждаемое слово — <strong>«${escapeHtml(stats.top_lex.head)}»</strong> (${stats.top_lex.count} упоминаний)</div>
-        <div>⏳ Самый ранний из упомянутых — <strong>${escapeHtml(stats.earliest_person.head)}</strong> (${Math.abs(stats.earliest_person.epoch)} ${stats.earliest_person.epoch < 0 ? 'до н.&nbsp;э.' : 'г.'})</div>
-        <div>🌐 Самая представленная семья — <strong>${escapeHtml(stats.top_family[0])}</strong> (${stats.top_family[1]} языков)</div>
+        <div class="home-fact-row">📖 Самая длинная лекция — <strong>«${escapeHtml(stats.longest_lecture.name)}»</strong> (${stats.longest_lecture.pages} страниц)</div>
+        <div class="home-fact-row">🗣 Самый часто упоминаемый язык — <strong>${escapeHtml(stats.top_lang.head)}</strong> (${stats.top_lang.count} упоминаний)</div>
+        <div class="home-fact-row">🌍 Самое часто упоминаемое место — <strong>${escapeHtml(stats.top_topo.head)}</strong> (${stats.top_topo.count} упоминаний)</div>
+        <div class="home-fact-row">👤 Самый часто упоминаемый человек — <strong>${escapeHtml(stats.top_name.head)}</strong> (${stats.top_name.count} упоминаний)</div>
+        <div class="home-fact-row">📜 Самое часто обсуждаемое слово — <strong>«${escapeHtml(stats.top_lex.head)}»</strong> (${stats.top_lex.count} упоминаний)</div>
+        <div class="home-fact-row">⏳ Самый ранний из упомянутых — <strong>${escapeHtml(stats.earliest_person.head)}</strong> (${Math.abs(stats.earliest_person.epoch)} ${stats.earliest_person.epoch < 0 ? 'до н.&nbsp;э.' : 'г.'})</div>
+        <div class="home-fact-row">🌐 Самая представленная семья — <strong>${escapeHtml(stats.top_family[0])}</strong> (${stats.top_family[1]} языков)</div>
       </div>
-      <div id="home-featured-quote" class="home-featured-quote" style="--home-featured-padding:${compactHome ? 8 : 10}px;">
-        <div id="home-featured-quote-text" style="${quoteTextClamp}">«${escapeHtml(featured.text)}»</div>
-        <div class="home-featured-meta">— ${renderTextWithPageLinks(`стр. ${featured.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#fff8e8;', rangeTarget: 'trends' })}, лекция «${escapeHtml(featured.lecture)}»</div>
+      <div id="home-featured-quote" class="${quoteClass}" style="--home-featured-padding:${compactHome ? 8 : 10}px;">
+        <div id="home-featured-quote-text" class="${quoteTextClass}">«${escapeHtml(featured.text)}»</div>
+        <div class="home-featured-meta">— ${renderTextWithPageLinks(`стр. ${featured.page}`, { className: 'material-page-link card-page-link related-link home-featured-page-link', rangeTarget: 'trends' })}, лекция «${escapeHtml(featured.lecture)}»</div>
         <div class="home-featured-hint">Выберите свой путь по книге — если не знаете, с чего начать, выберите тему, которая вас интересует.</div>
       </div>
     </div>
@@ -7125,10 +7186,10 @@ function renderHomePanel(container) {
   if (compactHome) {
     html += `<details id="home-routes-details" class="home-routes-details">
       <summary class="home-routes-summary">Выберите свой путь по книге (${routes.length})</summary>
-      <div class="home-routes-grid" style="${routeGridStyle}">`;
+      <div class="${routeGridClass}">`;
   } else {
     html += `<h2 class="home-routes-title">Выберите свой путь по книге</h2>
-      <div style="${routeGridStyle}">`;
+      <div class="${routeGridClass}">`;
   }
   for (const r of routes) {
     html += `<div class="home-route-card">
@@ -7157,15 +7218,10 @@ function renderHomePanel(container) {
   html += '</div></div>';
 
   container.innerHTML = html;
-  const homeGrid = document.getElementById('home-stats-grid');
-  if (homeGrid && typeof window !== 'undefined' && typeof window.innerWidth === 'number' && window.innerWidth < 900) {
-    homeGrid.style.gridTemplateColumns = 'repeat(2,minmax(0,1fr))';
-  }
   const homeFactPair = document.getElementById('home-fact-pair');
   if (homeFactPair) {
     const pairChildren = homeFactPair.children || [];
     const factCol = pairChildren[0] || null;
-    const quoteCol = pairChildren[1] || null;
     const factRows = factCol && factCol.children ? Array.from(factCol.children) : [];
     const openTopFamily = () => {
       currentEntity = 'languages';
@@ -7192,21 +7248,8 @@ function renderHomePanel(container) {
     ];
     for (let i = 0; i < factRows.length && i < factActions.length; i++) {
       const row = factRows[i];
-      row.style.textDecoration = 'underline dotted';
       bindActionWithKeyboard(row, factActions[i]);
     }
-    if (quoteCol) {
-      quoteCol.style.fontSize = compactHome ? '14px' : '15px';
-      quoteCol.style.lineHeight = compactHome ? '1.55' : '1.65';
-      const hint = typeof quoteCol.querySelector === 'function' ? quoteCol.querySelector('div') : null;
-      if (hint) {
-        hint.style.fontStyle = 'italic';
-        hint.style.fontSize = '12px';
-      }
-    }
-  }
-  if (homeFactPair && typeof window !== 'undefined' && typeof window.innerWidth === 'number' && window.innerWidth < 900) {
-    homeFactPair.style.gridTemplateColumns = '1fr';
   }
 
   const recentBox = document.getElementById('home-recent-items');
@@ -7215,7 +7258,7 @@ function renderHomePanel(container) {
     for (const r of recentItems) {
       const conf = ENTITY_TYPES[r.type];
       const label = conf ? conf.title : r.type;
-      recentHtml += `<a class="home-recent-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" style="display:inline-block;padding:2px 8px;background:#f0e8d8;border-radius:10px;margin:2px 4px 2px 0;cursor:pointer;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(r.head)} <span style="color:#777;">· ${escapeHtml(label)}</span></a>`;
+      recentHtml += `<a class="home-recent-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}">${escapeHtml(r.head)} <span class="home-recent-label">· ${escapeHtml(label)}</span></a>`;
     }
     recentBox.innerHTML = recentHtml;
     bindNavigateLinks(recentBox, '.home-recent-link', 'all');
@@ -7501,13 +7544,13 @@ function renderTasksPanel(container, options = {}) {
 
     if (summaryEl) {
       summaryEl.innerHTML = `
-        <div style="font-size:13px;color:#5a3818;line-height:1.5;">
+        <div class="tasks-summary-card">
           <strong>\u0412\u0441\u0435 \u043f\u043e\u043f\u044b\u0442\u043a\u0438</strong><br>
           \u041e\u0442\u0432\u0435\u0442\u043e\u0432: <strong>${totalAnswered}</strong> \u00b7
           \u0432\u0435\u0440\u043d\u044b\u0445: <strong>${totalCorrect}</strong> \u00b7
           \u0442\u043e\u0447\u043d\u043e\u0441\u0442\u044c: <strong>${totalAccuracy}%</strong>
         </div>
-        <div style="font-size:13px;color:#5a3818;line-height:1.5;">
+        <div class="tasks-summary-card">
           <strong>\u0422\u0435\u043a\u0443\u0449\u0430\u044f \u043f\u043e\u0434\u0431\u043e\u0440\u043a\u0430</strong><br>
           \u041e\u0442\u0432\u0435\u0442\u043e\u0432: <strong>${packAnswered}</strong> \u00b7
           \u0432\u0435\u0440\u043d\u044b\u0445: <strong>${packCorrect}</strong> \u00b7
@@ -7521,16 +7564,43 @@ function renderTasksPanel(container, options = {}) {
       if (!rows.length) {
         historyListEl.innerHTML = '<div class="task-history-empty">\u041f\u043e\u043a\u0430 \u043d\u0435\u0442 \u043e\u0442\u0432\u0435\u0442\u043e\u0432. \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0430\u0440\u0438\u0430\u043d\u0442 \u0432 \u043b\u044e\u0431\u043e\u043c \u0432\u043e\u043f\u0440\u043e\u0441\u0435, \u0447\u0442\u043e\u0431\u044b \u043d\u0430\u0447\u0430\u0442\u044c \u0438\u0441\u0442\u043e\u0440\u0438\u044e.</div>';
       } else {
-        historyListEl.innerHTML = rows.map((row) => `
-          <div class="task-history-row ${row.isCorrect ? 'correct' : 'incorrect'}">
-            <div class="task-history-row-head">
-              <strong class="task-history-status">${row.isCorrect ? '\u0412\u0435\u0440\u043d\u043e' : '\u041e\u0448\u0438\u0431\u043a\u0430'}</strong>
-              <span class="task-history-date">${escapeHtml(formatHistoryDate(row.at))}</span>
-            </div>
-            <div class="task-history-question">${escapeHtml(row.question)}</div>
-            <div class="task-history-answer">\u0412\u0430\u0448 \u043e\u0442\u0432\u0435\u0442: <strong>${escapeHtml(row.selected || '\u2014')}</strong>${row.correctAnswer ? ` \u00b7 \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e: <strong>${escapeHtml(row.correctAnswer)}</strong>` : ''}</div>
-          </div>
-        `).join('');
+        historyListEl.textContent = '';
+        for (const row of rows) {
+          const item = document.createElement('div');
+          item.className = `task-history-row ${row.isCorrect ? 'correct' : 'incorrect'}`;
+          const head = document.createElement('div');
+          head.className = 'task-history-row-head';
+          const status = document.createElement('strong');
+          status.className = 'task-history-status';
+          status.textContent = row.isCorrect ? '\u0412\u0435\u0440\u043d\u043e' : '\u041e\u0448\u0438\u0431\u043a\u0430';
+          const date = document.createElement('span');
+          date.className = 'task-history-date';
+          date.textContent = formatHistoryDate(row.at);
+          head.appendChild(status);
+          head.appendChild(date);
+
+          const question = document.createElement('div');
+          question.className = 'task-history-question';
+          question.textContent = String(row.question || '');
+
+          const answer = document.createElement('div');
+          answer.className = 'task-history-answer';
+          answer.appendChild(document.createTextNode('\u0412\u0430\u0448 \u043e\u0442\u0432\u0435\u0442: '));
+          const selected = document.createElement('strong');
+          selected.textContent = String(row.selected || '\u2014');
+          answer.appendChild(selected);
+          if (row.correctAnswer) {
+            answer.appendChild(document.createTextNode(' \u00b7 \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e: '));
+            const correct = document.createElement('strong');
+            correct.textContent = String(row.correctAnswer);
+            answer.appendChild(correct);
+          }
+
+          item.appendChild(head);
+          item.appendChild(question);
+          item.appendChild(answer);
+          historyListEl.appendChild(item);
+        }
       }
     }
   };
@@ -7580,7 +7650,6 @@ function renderTasksPanel(container, options = {}) {
         res.innerHTML = (isCorrect ? '<strong>\u0412\u0435\u0440\u043d\u043e!</strong> ' : '<strong>\u041d\u0435 \u0443\u0433\u0430\u0434\u0430\u043b\u0438.</strong> ')
           + renderTextWithPageLinks(t.hint, {
             className: 'task-page-link card-page-link related-link',
-            style: 'text-decoration:underline dotted;color:#5a3818;',
             rangeTarget: 'trends',
           })
           + linkBtn;
@@ -7619,7 +7688,7 @@ function renderLecturesPanel(container) {
   const lectures = APP_DATA.lectures || [];
   const stats = APP_DATA.book_stats || {};
   const maxPage = Number(stats.total_pages) || 404;
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
+  let html = '<div class="panel active lectures-panel"><div class="lectures-inner">';
   html += '<h2 class="lectures-title">Все лекции книги — за пять минут</h2>';
   html += '<div class="lectures-intro">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
   html += `<div class="reading-now-box">
@@ -7657,10 +7726,6 @@ function renderLecturesPanel(container) {
   html += '</div></div></div>';
   container.innerHTML = html;
   wireReadingNowWidget(container, maxPage);
-  const lecturesGrid = document.getElementById('lectures-grid');
-  if (lecturesGrid && typeof window !== 'undefined' && typeof window.innerWidth === 'number' && window.innerWidth < 900) {
-    lecturesGrid.style.gridTemplateColumns = '1fr';
-  }
   container.querySelectorAll('.lecture-card').forEach(card => {
     card.onclick = () => {
       openLecturePage(parseInt(card.dataset.idx || '0', 10) || 0);
@@ -7680,7 +7745,7 @@ function renderLecturesPanel(container) {
 function renderLectureComparePanel(container) {
   const chapters = APP_DATA.chapters || [];
   if (chapters.length < 2) {
-    container.innerHTML = '<div class="panel active"><div style="padding:20px;color:#777;">Недостаточно лекций для сравнения.</div></div>';
+    container.innerHTML = '<div class="panel active"><div class="panel-empty-state">Недостаточно лекций для сравнения.</div></div>';
     return;
   }
 
@@ -7864,7 +7929,7 @@ function renderLectureComparePanel(container) {
 function renderLecturePagePanel(container) {
   const lectures = APP_DATA.lectures || [];
   if (!lectures.length) {
-    container.innerHTML = '<div class="panel active"><div style="padding:20px;color:#777;">Нет данных о лекциях.</div></div>';
+    container.innerHTML = '<div class="panel active"><div class="panel-empty-state">Нет данных о лекциях.</div></div>';
     return;
   }
   if (currentLecture < 0) currentLecture = 0;
@@ -8442,18 +8507,54 @@ function renderKwicPanel(container) {
     const terms = new Set(rows.map(r => r.term));
     const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : '';
     metaEl.textContent = `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${currentKwicSource === 'glossary' ? 'глоссарий' : 'лексика'}.${truncText}`;
-    resultsEl.innerHTML = rows.map(r => `
-      <div class="kwic-row">
-        <div class="kwic-row-head">
-          <button type="button" class="kwic-open-card kwic-pill" data-type="${escapeHtml(r.itemType)}" data-head="${escapeHtml(r.itemHead)}">${escapeHtml(r.itemHead)}</button>
-          ${r.source === 'glossary' ? `<button type="button" class="kwic-open-glossary kwic-pill" data-term="${escapeHtml(r.term)}">термин: ${escapeHtml(r.term)}</button>` : ''}
-          <a class="kwic-page-link card-page-link related-link" data-page="${escapeHtml(String(r.page))}" href="${escapeHtml(buildReadingNowHash(r.page))}">стр. ${r.page}</a>
-        </div>
-        <div class="kwic-context">
-          <span class="kwic-muted">${escapeHtml(r.leftPrefix + r.leftText)}</span><mark>${escapeHtml(r.keyText)}</mark><span>${escapeHtml(r.rightText + r.rightSuffix)}</span>
-        </div>
-      </div>
-    `).join('');
+    resultsEl.textContent = '';
+    for (const r of rows) {
+      const row = document.createElement('div');
+      row.className = 'kwic-row';
+      const head = document.createElement('div');
+      head.className = 'kwic-row-head';
+
+      const cardBtn = document.createElement('button');
+      cardBtn.type = 'button';
+      cardBtn.className = 'kwic-open-card kwic-pill';
+      cardBtn.dataset.type = String(r.itemType || '');
+      cardBtn.dataset.head = String(r.itemHead || '');
+      cardBtn.textContent = String(r.itemHead || '');
+      head.appendChild(cardBtn);
+
+      if (r.source === 'glossary') {
+        const glossaryBtn = document.createElement('button');
+        glossaryBtn.type = 'button';
+        glossaryBtn.className = 'kwic-open-glossary kwic-pill';
+        glossaryBtn.dataset.term = String(r.term || '');
+        glossaryBtn.textContent = `термин: ${String(r.term || '')}`;
+        head.appendChild(glossaryBtn);
+      }
+
+      const pageLink = document.createElement('a');
+      pageLink.className = 'kwic-page-link card-page-link related-link';
+      pageLink.dataset.page = String(r.page);
+      pageLink.href = buildReadingNowHash(r.page);
+      pageLink.textContent = `стр. ${r.page}`;
+      head.appendChild(pageLink);
+
+      const context = document.createElement('div');
+      context.className = 'kwic-context';
+      const left = document.createElement('span');
+      left.className = 'kwic-muted';
+      left.textContent = String(r.leftPrefix || '') + String(r.leftText || '');
+      const mark = document.createElement('mark');
+      mark.textContent = String(r.keyText || '');
+      const right = document.createElement('span');
+      right.textContent = String(r.rightText || '') + String(r.rightSuffix || '');
+      context.appendChild(left);
+      context.appendChild(mark);
+      context.appendChild(right);
+
+      row.appendChild(head);
+      row.appendChild(context);
+      resultsEl.appendChild(row);
+    }
 
     resultsEl.querySelectorAll('.kwic-open-card').forEach(btn => {
       bindActionWithKeyboard(btn, () => {
@@ -8599,16 +8700,16 @@ function renderGalleryPanel(container) {
     if (b.epoch) return 1;
     return compareHeadsRu(a.head, b.head);
   });
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Галерея лингвистов</h2>';
-  html += `<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">${names.length} лингвистов и литераторов, упомянутых в книге, с фотографиями. Расположены примерно в хронологическом порядке. Кликните по портрету, чтобы открыть карточку.</div>`;
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;">';
+  let html = '<div class="panel active gallery-panel"><div class="gallery-inner">';
+  html += '<h2 class="gallery-title">Галерея лингвистов</h2>';
+  html += `<div class="gallery-intro">${names.length} лингвистов и литераторов, упомянутых в книге, с фотографиями. Расположены примерно в хронологическом порядке. Кликните по портрету, чтобы открыть карточку.</div>`;
+  html += '<div class="gallery-grid">';
   for (const n of names) {
     const epochLabel = n.epoch ? (n.epoch < 0 ? Math.abs(n.epoch) + ' до н.э.' : n.epoch + ' г.') : '';
-    html += `<a class="gallery-card" data-head="${escapeHtml(n.head)}" href="${escapeHtml(buildItemHash('names', n.head))}" style="display:block;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px;cursor:pointer;text-align:center;transition:all 0.15s;color:inherit;text-decoration:none;">
-      <img src="${escapeHtml(safeImageUrl(n.img))}" alt="" style="width:100%;height:130px;object-fit:cover;border-radius:3px;background:#f7f0e0;">
-      <div style="font-size:12px;font-weight:bold;color:#5a3818;margin-top:6px;line-height:1.3;">${escapeHtml(n.head)}</div>
-      <div style="font-size:10px;color:#888;margin-top:2px;">${epochLabel}</div>
+    html += `<a class="gallery-card" data-head="${escapeHtml(n.head)}" href="${escapeHtml(buildItemHash('names', n.head))}">
+      <img class="gallery-card-img" src="${escapeHtml(safeImageUrl(n.img))}" alt="">
+      <div class="gallery-card-title">${escapeHtml(n.head)}</div>
+      <div class="gallery-card-meta">${epochLabel}</div>
     </a>`;
   }
   html += '</div></div></div>';
@@ -8629,9 +8730,9 @@ function renderGalleryPanel(container) {
 // =========================================================
 function renderRussianEvolutionPanel(container) {
   const samples = APP_DATA.russian_evolution || [];
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1000px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Русский язык во времени</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:20px;">Семь срезов истории русского языка, от XI до XXI века. Видно, как менялся алфавит, лексика и грамматика.</div>';
+  let html = '<div class="panel active russian-evolution-panel"><div class="russian-evolution-inner">';
+  html += '<h2 class="russian-evolution-title">Русский язык во времени</h2>';
+  html += '<div class="russian-evolution-intro">Семь срезов истории русского языка, от XI до XXI века. Видно, как менялся алфавит, лексика и грамматика.</div>';
   for (let i = 0; i < samples.length; i++) {
     const s = samples[i];
     const isLast = i === samples.length - 1;
@@ -8639,17 +8740,17 @@ function renderRussianEvolutionPanel(container) {
     const pageNum = clampPageInBook(Number.isFinite(pageRaw) ? pageRaw : 1);
     const pageLabel = escapeHtml(String(s.page || pageNum));
     const pageMetaHtml = s.page
-      ? `<a class="russian-evolution-page-link card-page-link related-link" data-page="${pageNum}" href="${escapeHtml(buildReadingNowHash(pageNum))}" style="text-decoration:underline dotted;color:#5a3818;">стр. ${pageLabel}</a>`
+      ? `<a class="russian-evolution-page-link card-page-link related-link" data-page="${pageNum}" href="${escapeHtml(buildReadingNowHash(pageNum))}">стр. ${pageLabel}</a>`
       : '';
-    html += `<div style="display:grid;grid-template-columns:120px 1fr;gap:18px;margin-bottom:${isLast?'0':'24px'};position:relative;">
-      <div style="text-align:right;border-right:3px solid #8a7050;padding-right:14px;padding-top:6px;">
-        <div style="font-size:18px;font-weight:bold;color:#5a3818;">${escapeHtml(s.epoch)}</div>
-        <div style="font-size:11px;color:#888;">≈ ${s.year} г.</div>
+    html += `<div class="russian-evolution-row${isLast ? ' russian-evolution-row-last' : ''}">
+      <div class="russian-evolution-time">
+        <div class="russian-evolution-epoch">${escapeHtml(s.epoch)}</div>
+        <div class="russian-evolution-year">≈ ${s.year} г.</div>
       </div>
-      <div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:14px 18px;">
-        <div style="font-size:15px;font-style:italic;color:#5a3818;line-height:1.6;margin-bottom:8px;">«${escapeHtml(s.sample)}»</div>
-        <div style="font-size:12px;color:#666;margin-bottom:8px;">${escapeHtml(s.translation)}</div>
-        <div style="font-size:11px;color:#888;border-top:1px solid #f0e8d8;padding-top:6px;">${escapeHtml(s.note)}${pageMetaHtml ? ` · ${pageMetaHtml}` : ''}</div>
+      <div class="russian-evolution-card">
+        <div class="russian-evolution-sample">«${escapeHtml(s.sample)}»</div>
+        <div class="russian-evolution-translation">${escapeHtml(s.translation)}</div>
+        <div class="russian-evolution-note">${escapeHtml(s.note)}${pageMetaHtml ? ` · ${pageMetaHtml}` : ''}</div>
       </div>
     </div>`;
   }
@@ -8693,36 +8794,36 @@ function formatPhoneticCommentText(text) {
 
 function renderPhoneticLawsPanel(container) {
   const laws = APP_DATA.phonetic_laws || [];
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1100px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Фонетические законы из лекций Зализняка</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:16px;">Восемь ключевых фонетических законов, обсуждаемых в книге, с примерами из текста. Для каждого закона показан переход «было → стало» и пояснение.</div>';
+  let html = '<div class="panel active phonetic-panel"><div class="phonetic-inner">';
+  html += '<h2 class="phonetic-title">Фонетические законы из лекций Зализняка</h2>';
+  html += '<div class="phonetic-intro">Восемь ключевых фонетических законов, обсуждаемых в книге, с примерами из текста. Для каждого закона показан переход «было → стало» и пояснение.</div>';
   for (const law of laws) {
     const lawMetaText = law.page
       ? `${law.discoverer} · ${law.year} · стр. ${law.page}`
       : `${law.discoverer} · ${law.year}`;
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:14px 20px;margin-bottom:14px;border-top:3px solid #8a7050;">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;">
-        <div style="font-size:17px;font-weight:bold;color:#5a3818;">${escapeHtml(law.name)}</div>
-        <div style="font-size:11px;color:#888;">${renderTextWithPageLinks(lawMetaText, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })}</div>
+    html += `<div class="phonetic-card">
+      <div class="phonetic-card-head">
+        <div class="phonetic-card-title">${escapeHtml(law.name)}</div>
+        <div class="phonetic-card-meta">${renderTextWithPageLinks(lawMetaText, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })}</div>
       </div>
-      <div style="font-size:13px;color:#444;line-height:1.55;margin:8px 0 12px 0;">${escapeHtml(law.description)}</div>
-      <div style="background:#fbf6e8;padding:10px 14px;border-radius:4px;border-left:3px solid #8a7050;">
-        <div style="font-size:11px;color:#6a5040;font-weight:bold;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">Примеры</div>
-        <table style="width:100%;font-size:13px;border-collapse:collapse;">
-          <thead><tr style="font-size:11px;color:#888;text-align:left;">
-            <th style="padding:4px 8px 4px 0;width:40%;">было</th>
-            <th style="padding:4px 8px;width:40%;">стало</th>
-            <th style="padding:4px 0 4px 8px;">комментарий</th>
+      <div class="phonetic-desc">${escapeHtml(law.description)}</div>
+      <div class="phonetic-examples">
+        <div class="phonetic-examples-title">Примеры</div>
+        <table class="phonetic-table">
+          <thead><tr>
+            <th class="phonetic-col-before">было</th>
+            <th class="phonetic-col-after">стало</th>
+            <th class="phonetic-col-comment">комментарий</th>
           </tr></thead>
           <tbody>`;
     for (const ex of law.examples) {
       const fromHtml = escapeHtml(String(ex.from || '')).replace(/\s+/g, '&nbsp;');
       const toHtml = escapeHtml(String(ex.to || '')).replace(/\s+/g, '&nbsp;');
       const commentHtml = formatPhoneticCommentText(ex.comment || '');
-      html += `<tr style="border-top:1px solid #f0e8d8;">
-        <td style="padding:6px 8px 6px 0;font-style:italic;color:#5a3818;">${fromHtml}</td>
-        <td style="padding:6px 8px;color:#1a1a1a;"><strong class="phonetic-arrow">\u2192</strong> <span class="phonetic-transition">${toHtml}</span></td>
-        <td style="padding:6px 0 6px 8px;color:#666;font-size:12px;">${commentHtml}</td>
+      html += `<tr>
+        <td class="phonetic-before">${fromHtml}</td>
+        <td class="phonetic-after"><strong class="phonetic-arrow">\u2192</strong> <span class="phonetic-transition">${toHtml}</span></td>
+        <td class="phonetic-comment">${commentHtml}</td>
       </tr>`;
     }
     html += '</tbody></table></div></div>';
@@ -8758,7 +8859,11 @@ function getVizModuleCatalog() {
 
 function setVizHostStatus(host, message, className = 'viz-loading') {
   if (!host) return;
-  host.innerHTML = `<div class="${escapeHtml(className)}">${escapeHtml(message)}</div>`;
+  host.textContent = '';
+  const status = document.createElement('div');
+  status.className = String(className || 'viz-loading');
+  status.textContent = String(message || '');
+  host.appendChild(status);
 }
 
 function mountVizModule(host, moduleDef) {
@@ -8950,18 +9055,18 @@ function renderScholarChronologyPanel(container) {
   const maxYear = events.length ? Math.max(...events.map(e => e._to)) : 0;
   const state = { type: 'all', start: minYear, end: maxYear };
 
-  container.innerHTML = `<div class="panel active" style="overflow-y:auto;height:100%;">
-    <div style="padding:16px 22px;max-width:1200px;margin:0 auto;">
-      <h2 style="font-size:22px;color:#5a3818;font-weight:normal;margin:0 0 6px 0;">Хронология лингвистических открытий</h2>
-      <div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Отдельный интерактивный таб: фильтры по типам событий, диапазон лет (включая диапазоны/века), переходы к карточкам и экспорт в Markdown.</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;margin-bottom:10px;">
-        <label style="font-size:11px;color:#6a5040;">Тип события
-          <select id="chronology-type" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+  container.innerHTML = `<div class="panel active chronology-panel">
+    <div class="chronology-inner">
+      <h2 class="chronology-title">Хронология лингвистических открытий</h2>
+      <div class="chronology-intro">Отдельный интерактивный таб: фильтры по типам событий, диапазон лет (включая диапазоны/века), переходы к карточкам и экспорт в Markdown.</div>
+      <div class="chronology-controls">
+        <label class="chronology-label">Тип события
+          <select id="chronology-type" class="chronology-select">
             ${Object.keys(typeLabels).map(k => `<option value="${escapeHtml(k)}">${escapeHtml(typeLabels[k])}</option>`).join('')}
           </select>
         </label>
-        <label style="font-size:11px;color:#6a5040;">Zoom
-          <select id="chronology-zoom" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+        <label class="chronology-label">Zoom
+          <select id="chronology-zoom" class="chronology-select">
             <option value="all">Весь диапазон</option>
             <option value="xix">XIX век</option>
             <option value="xx">XX век</option>
@@ -8969,16 +9074,16 @@ function renderScholarChronologyPanel(container) {
             <option value="custom">Пользовательский</option>
           </select>
         </label>
-        <label style="font-size:11px;color:#6a5040;">От
-          <input id="chronology-start" type="number" value="${escapeHtml(String(minYear))}" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;max-width:120px;">
+        <label class="chronology-label">От
+          <input id="chronology-start" class="chronology-number" type="number" value="${escapeHtml(String(minYear))}">
         </label>
-        <label style="font-size:11px;color:#6a5040;">До
-          <input id="chronology-end" type="number" value="${escapeHtml(String(maxYear))}" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;max-width:120px;">
+        <label class="chronology-label">До
+          <input id="chronology-end" class="chronology-number" type="number" value="${escapeHtml(String(maxYear))}">
         </label>
         <button id="chronology-export-md" type="button" class="related-link related-link-btn">Экспорт диапазона в Markdown</button>
       </div>
-      <div id="chronology-stats" style="font-size:12px;color:#6a5040;margin-bottom:8px;"></div>
-      <div id="chronology-list" style="display:grid;gap:8px;"></div>
+      <div id="chronology-stats" class="chronology-stats"></div>
+      <div id="chronology-list" class="chronology-list"></div>
     </div>
   </div>`;
 
@@ -9034,23 +9139,49 @@ function renderScholarChronologyPanel(container) {
     if (statsEl) statsEl.textContent = `Показано: ${rows.length} из ${events.length} · диапазон ${start}—${end} · тип: ${typeLabels[state.type] || typeLabels.all}`;
     if (!listEl) return;
     if (!rows.length) {
-      listEl.innerHTML = '<div style="padding:10px 12px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;color:#888;font-style:italic;">Нет событий в текущем фильтре.</div>';
+      listEl.textContent = '';
+      const empty = document.createElement('div');
+      empty.className = 'chronology-empty';
+      empty.textContent = 'Нет событий в текущем фильтре.';
+      listEl.appendChild(empty);
       return;
     }
-    listEl.innerHTML = rows.map((ev) => {
+    listEl.textContent = '';
+    for (const ev of rows) {
       const target = ev._target || {};
-      const page = ev.page ? `<span style="font-size:11px;color:#888;">стр. ${escapeHtml(String(ev.page))}</span>` : '';
-      return `<a class="chronology-event-link" href="${escapeHtml(target.href || buildCanonicalHash(['scholar', 'chronology']))}" data-mode="${escapeHtml(target.mode || '')}" data-type="${escapeHtml(target.type || '')}" data-head="${escapeHtml(target.head || '')}" data-query="${escapeHtml(target.query || '')}" style="display:grid;grid-template-columns:120px 1fr;gap:12px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;color:inherit;text-decoration:none;">
-        <div style="font-weight:bold;color:#5a3818;border-right:2px solid #8a7050;padding-right:10px;text-align:right;">${escapeHtml(String(ev._yearLabel || '—'))}</div>
-        <div>
-          <div style="font-size:13px;color:#333;line-height:1.45;">${escapeHtml(String(ev.event || ''))}</div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;font-size:11px;color:#6a5040;">
-            <span>${escapeHtml(typeLabels[ev._type] || ev._type || '')}</span>
-            ${page}
-          </div>
-        </div>
-      </a>`;
-    }).join('');
+      const link = document.createElement('a');
+      link.className = 'chronology-event-link';
+      link.href = target.href || buildCanonicalHash(['scholar', 'chronology']);
+      link.dataset.mode = String(target.mode || '');
+      link.dataset.type = String(target.type || '');
+      link.dataset.head = String(target.head || '');
+      link.dataset.query = String(target.query || '');
+
+      const year = document.createElement('div');
+      year.className = 'chronology-event-year';
+      year.textContent = String(ev._yearLabel || '—');
+
+      const body = document.createElement('div');
+      const text = document.createElement('div');
+      text.className = 'chronology-event-text';
+      text.textContent = String(ev.event || '');
+      const meta = document.createElement('div');
+      meta.className = 'chronology-event-meta';
+      const type = document.createElement('span');
+      type.textContent = String(typeLabels[ev._type] || ev._type || '');
+      meta.appendChild(type);
+      if (ev.page) {
+        const page = document.createElement('span');
+        page.className = 'chronology-event-page';
+        page.textContent = `стр. ${String(ev.page)}`;
+        meta.appendChild(page);
+      }
+      body.appendChild(text);
+      body.appendChild(meta);
+      link.appendChild(year);
+      link.appendChild(body);
+      listEl.appendChild(link);
+    }
     bindActionWithKeyboardList(listEl);
   };
   const bindActionWithKeyboardList = (root) => {
@@ -9175,65 +9306,65 @@ function renderPageTrendsPanel(container) {
   const trendDown = globalTrend.filter(x => x.delta < 0).sort((a, b) => (a.delta - b.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
 
   let html = '<div class="panel active page-trends-panel"><div class="page-trends-shell">';
-  html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;">';
-  html += '<div><h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Динамика по страницам</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:12px;">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div></div>';
-  html += '<div style="display:flex;gap:6px;align-items:center;">';
-  html += '<button id="trend-export-csv" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Экспорт CSV</button>';
-  html += '<button id="trend-export-md" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Экспорт Markdown</button>';
-  html += '<button id="trend-copy-link" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;color:#5a3818;">Скопировать ссылку</button>';
+  html += '<div class="page-trends-head">';
+  html += '<div><h2 class="page-trends-title">Динамика по страницам</h2>';
+  html += '<div class="page-trends-intro">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div></div>';
+  html += '<div class="page-trends-actions">';
+  html += '<button id="trend-export-csv" class="page-trends-btn">Экспорт CSV</button>';
+  html += '<button id="trend-export-md" class="page-trends-btn">Экспорт Markdown</button>';
+  html += '<button id="trend-copy-link" class="page-trends-btn">Скопировать ссылку</button>';
   html += '</div></div>';
 
   const chapterOptions = chapters.map((ch, idx) => `<option value="${idx}">${escapeHtml(ch.name)} (${ch.start}-${ch.end})</option>`).join('');
-  html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:12px 14px;margin-bottom:12px;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end;">
-      <label style="font-size:11px;color:#6a5040;">
+  html += `<div class="page-trends-controls">
+    <div class="page-trends-range-grid">
+      <label class="page-trends-label">
         Начальная страница
-        <input id="trend-start-range" type="range" min="1" max="${totalPages}" value="${start}" style="width:100%;margin-top:4px;">
-        <input id="trend-start-input" type="number" min="1" max="${totalPages}" value="${start}" style="width:100%;margin-top:4px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;">
+        <input id="trend-start-range" class="page-trends-range" type="range" min="1" max="${totalPages}" value="${start}">
+        <input id="trend-start-input" class="page-trends-number" type="number" min="1" max="${totalPages}" value="${start}">
       </label>
-      <label style="font-size:11px;color:#6a5040;">
+      <label class="page-trends-label">
         Конечная страница
-        <input id="trend-end-range" type="range" min="1" max="${totalPages}" value="${end}" style="width:100%;margin-top:4px;">
-        <input id="trend-end-input" type="number" min="1" max="${totalPages}" value="${end}" style="width:100%;margin-top:4px;padding:6px 8px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;">
+        <input id="trend-end-range" class="page-trends-range" type="range" min="1" max="${totalPages}" value="${end}">
+        <input id="trend-end-input" class="page-trends-number" type="number" min="1" max="${totalPages}" value="${end}">
       </label>
     </div>
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;">
-      <label style="font-size:11px;color:#6a5040;">Быстрый выбор главы:
-        <select id="trend-chapter-select" style="margin-left:6px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+    <div class="page-trends-quick-row">
+      <label class="page-trends-label">Быстрый выбор главы:
+        <select id="trend-chapter-select" class="page-trends-select">
           <option value="">—</option>${chapterOptions}
         </select>
       </label>
-      <span style="font-size:11px;color:#888;">Диапазон: ${start}-${end} · ширина ${end - start + 1} стр.</span>
+      <span class="page-trends-range-note">Диапазон: ${start}-${end} · ширина ${end - start + 1} стр.</span>
     </div>
   </div>`;
 
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-bottom:12px;">';
+  html += '<div class="page-trends-summary-grid">';
   for (const s of stats) {
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
-      <div style="font-size:14px;color:#5a3818;font-weight:bold;margin-bottom:2px;">${s.label}</div>
-      <div style="font-size:11px;color:#666;margin-bottom:7px;">Сущностей: <strong>${s.activeCount}</strong> · упоминаний: <strong>${s.mentionTotal}</strong></div>
-      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Топ в выбранном окне</div>
-      <div>${s.top.length ? s.top.map(it => `<a class="trend-link page-trend-chip" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(it.type, it.head))}" style="display:inline-block;padding:2px 7px;margin:2px 6px 2px 0;background:#f0e8d8;border-radius:10px;color:#5a3818;cursor:pointer;font-size:11px;text-decoration:none;">${escapeHtml(it.head)} · ${it.count}</a>`).join('') : '<span style="color:#999;font-size:12px;">—</span>'}</div>
+    html += `<div class="page-trends-summary-card">
+      <div class="page-trends-summary-title">${s.label}</div>
+      <div class="page-trends-summary-meta">Сущностей: <strong>${s.activeCount}</strong> · упоминаний: <strong>${s.mentionTotal}</strong></div>
+      <div class="page-trends-summary-subtitle">Топ в выбранном окне</div>
+      <div>${s.top.length ? s.top.map(it => `<a class="trend-link page-trend-chip" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(it.type, it.head))}">${escapeHtml(it.head)} · ${it.count}</a>`).join('') : '<span class="page-trends-empty-mark">—</span>'}</div>
     </div>`;
   }
   html += '</div>';
 
-  const trendLinks = (rows, color) => rows.length
+  const trendLinks = (rows, tone) => rows.length
     ? rows.map(r => `<a class="trend-link page-trend-row" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}">
         <span class="page-trend-head">${escapeHtml(r.head)}</span>
-        <span class="page-trend-metrics" style="color:${color};">${r.delta > 0 ? '+' : ''}${r.delta} (${r.leftCount}→${r.rightCount})</span>
+        <span class="page-trend-metrics ${tone === 'up' ? 'trend-up' : 'trend-down'}">${r.delta > 0 ? '+' : ''}${r.delta} (${r.leftCount}→${r.rightCount})</span>
       </a>`).join('')
-    : '<div style="color:#999;font-size:12px;">—</div>';
+    : '<div class="page-trends-empty-mark">—</div>';
 
   html += `<div class="page-trends-delta-grid">
-    <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
-      <div style="font-size:13px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Растут во второй половине диапазона</div>
-      ${trendLinks(trendUp, '#1f7a3e')}
+    <div class="page-trends-delta-card">
+      <div class="page-trends-delta-title">Растут во второй половине диапазона</div>
+      ${trendLinks(trendUp, 'up')}
     </div>
-    <div style="background:#fff;border:1px solid #d4c8b0;border-radius:6px;padding:10px 12px;">
-      <div style="font-size:13px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Слабеют во второй половине диапазона</div>
-      ${trendLinks(trendDown, '#8b3a2a')}
+    <div class="page-trends-delta-card">
+      <div class="page-trends-delta-title">Слабеют во второй половине диапазона</div>
+      ${trendLinks(trendDown, 'down')}
     </div>
   </div>`;
 
@@ -9314,9 +9445,9 @@ function renderScholarPanel(container) {
   const s = APP_DATA.scholar || {};
   const scholarViewportWidth = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 1280;
   const reconstructionColumns = scholarViewportWidth >= 1280 ? 4 : (scholarViewportWidth >= 980 ? 3 : (scholarViewportWidth >= 680 ? 2 : 1));
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
-  html += '<h2 style="font-size:22px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Профессиональный аппарат</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:20px;">Дополнительные материалы для взрослого читателя, студента-лингвиста, преподавателя и специалиста-русиста.</div>';
+  let html = '<div class="panel active scholar-panel"><div class="scholar-inner">';
+  html += '<h2 class="scholar-title">Профессиональный аппарат</h2>';
+  html += '<div class="scholar-intro">Дополнительные материалы для взрослого читателя, студента-лингвиста, преподавателя и специалиста-русиста.</div>';
 
   // Якорное оглавление
   const sections = [
@@ -9332,65 +9463,65 @@ function renderScholarPanel(container) {
     ['correspondences', '10. Сравнительная таблица фонетических соответствий'],
     ['reconstructions', '11. Реконструкции'],
   ];
-  html += '<div style="background:#f0e8d8;padding:10px 14px;border-radius:4px;margin-bottom:18px;font-size:12px;">';
+  html += '<div class="scholar-toc">';
   for (const [id, title] of sections) {
-    html += `<a href="#sch-${id}" style="display:inline-block;margin:3px 10px 3px 0;color:#5a3818;text-decoration:underline dotted;">${escapeHtml(title)}</a>`;
+    html += `<a class="scholar-toc-link" href="#sch-${id}">${escapeHtml(title)}</a>`;
   }
   html += '</div>';
 
   // 1. Библиография
-  html += '<h3 id="sch-biblio" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;">1. Библиография работ Зализняка по темам лекций</h3>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Каждая лекция в книге — выжимка из академических работ Зализняка. Здесь — ключевые публикации, где темы изложены подробнее. PDF-подборка: <a href="https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;">страница ИСл РАН ↗</a>.</div>';
-  html += '<div style="display:flex;justify-content:flex-end;margin:-4px 0 10px 0;"><button id="export-scholar-biblio-bib" style="padding:6px 10px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;color:#5a3818;">Экспорт BibTeX (.bib)</button></div>';
+  html += '<h3 id="sch-biblio" class="scholar-section-title">1. Библиография работ Зализняка по темам лекций</h3>';
+  html += '<div class="scholar-section-intro">Каждая лекция в книге — выжимка из академических работ Зализняка. Здесь — ключевые публикации, где темы изложены подробнее. PDF-подборка: <a class="related-link" href="https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017" target="_blank" rel="noopener noreferrer">страница ИСл РАН ↗</a>.</div>';
+  html += '<div class="scholar-action-row"><button id="export-scholar-biblio-bib" class="scholar-action-button">Экспорт BibTeX (.bib)</button></div>';
   for (const lec of (s.bibliography || [])) {
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;margin-bottom:8px;">
-      <div style="font-weight:bold;color:#5a3818;font-size:13px;margin-bottom:6px;">Лекция «${escapeHtml(lec.lecture)}»</div>`;
+    html += `<div class="scholar-card">
+      <div class="scholar-card-title">Лекция «${escapeHtml(lec.lecture)}»</div>`;
     for (const w of lec.works) {
-      html += `<div style="font-size:12px;margin-bottom:4px;padding-left:12px;border-left:2px solid #d4c8b0;">
-        <strong>${escapeHtml(w.title)}</strong> (${escapeHtml(String(w.year))})${w.url ? ` <a href="${escapeHtml(safeUrl(w.url))}" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;">PDF/страница ↗</a>` : ''}<br>
-        <span style="color:#666;font-style:italic;">${escapeHtml(w.note)}</span>
+      html += `<div class="scholar-work">
+        <strong>${escapeHtml(w.title)}</strong> (${escapeHtml(String(w.year))})${w.url ? ` <a class="related-link" href="${escapeHtml(safeUrl(w.url))}" target="_blank" rel="noopener noreferrer">PDF/страница ↗</a>` : ''}<br>
+        <span class="scholar-note">${escapeHtml(w.note)}</span>
       </div>`;
     }
     html += '</div>';
   }
 
   // 2. Расширенные сведения — отсылка к карточкам имён
-  html += '<h3 id="sch-extended_cards" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">2. Расширенные сведения о ключевых лингвистах</h3>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Подробные карточки лингвистов с биографией, библиографией и научно-исторической информацией доступны в разделе «Имена». Кликните по любому имени, чтобы открыть карточку.</div>';
+  html += '<h3 id="sch-extended_cards" class="scholar-section-title scholar-section-title-spaced">2. Расширенные сведения о ключевых лингвистах</h3>';
+  html += '<div class="scholar-section-intro">Подробные карточки лингвистов с биографией, библиографией и научно-исторической информацией доступны в разделе «Имена». Кликните по любому имени, чтобы открыть карточку.</div>';
   html += '<div>';
   const keyLinguists = ['Вакернагель Я.','Гримм Я.','Вернер К.','Раск Р. К.','Бопп Фр.','Мейе А.','Шампольон Ф.','Вентрис М.','Янин В. Л.','Гиппиус А. А.','Аванесов Р. И.','Дыбо В. А.','Иллич-Свитыч В. М.','Падучева Е. В.'];
   for (const name of keyLinguists) {
-    html += `<a class="scholar-link" data-type="names" data-head="${escapeHtml(name)}" href="${escapeHtml(buildItemHash('names', name))}" style="display:inline-block;padding:4px 10px;background:#f0e8d8;border-radius:12px;margin:3px;cursor:pointer;color:#5a3818;text-decoration:underline dotted;font-size:12px;">${escapeHtml(name)}</a>`;
+    html += `<a class="scholar-link scholar-chip-link" data-type="names" data-head="${escapeHtml(name)}" href="${escapeHtml(buildItemHash('names', name))}">${escapeHtml(name)}</a>`;
   }
   html += '</div>';
 
   // 3. Спорные вопросы
-  html += '<h3 id="sch-controversies" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">3. Спорные вопросы и дискуссионные места</h3>';
+  html += '<h3 id="sch-controversies" class="scholar-section-title scholar-section-title-spaced">3. Спорные вопросы и дискуссионные места</h3>';
   for (const c of (s.controversies || [])) {
     const controversyPageMeta = c.page
-      ? renderTextWithPageLinks(`стр. ${c.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })
+      ? renderTextWithPageLinks(`стр. ${c.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })
       : '';
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:12px 16px;margin-bottom:10px;border-left:4px solid #c0392b;">
-      <div style="font-weight:bold;color:#5a3818;font-size:14px;margin-bottom:4px;">${escapeHtml(c.topic)}${controversyPageMeta ? ` <span style="font-size:11px;color:#888;font-weight:normal;">· ${controversyPageMeta}</span>` : ''}</div>
-      <div style="font-size:13px;color:#444;line-height:1.5;margin-bottom:6px;">${escapeHtml(c.description)}</div>
-      <div style="font-size:12px;color:#6a5040;"><strong>Стороны:</strong> ${escapeHtml(c.sides)}</div>
+    html += `<div class="scholar-card scholar-controversy-card">
+      <div class="scholar-controversy-title">${escapeHtml(c.topic)}${controversyPageMeta ? ` <span class="scholar-muted-meta">· ${controversyPageMeta}</span>` : ''}</div>
+      <div class="scholar-controversy-desc">${escapeHtml(c.description)}</div>
+      <div class="scholar-controversy-sides"><strong>Стороны:</strong> ${escapeHtml(c.sides)}</div>
     </div>`;
   }
 
   // 4. Оригинальные формы по языкам
-  html += '<h3 id="sch-original" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">4. Оригинальные формы по языкам</h3>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Слова из лекций в авторских системах транслитерации и оригинальном письме.</div>';
+  html += '<h3 id="sch-original" class="scholar-section-title scholar-section-title-spaced">4. Оригинальные формы по языкам</h3>';
+  html += '<div class="scholar-section-intro">Слова из лекций в авторских системах транслитерации и оригинальном письме.</div>';
   const langLabels = {sanskrit:'Санскрит',greek:'Древнегреческий',latin:'Латинский',arabic:'Арабский',old_russian:'Древнерусский'};
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;">';
+  html += '<div class="scholar-grid">';
   for (const [key, label] of Object.entries(langLabels)) {
     const forms = (s.original_forms || {})[key] || [];
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;">
-      <div style="font-weight:bold;color:#5a3818;font-size:13px;margin-bottom:6px;">${label}</div>`;
+    html += `<div class="scholar-card">
+      <div class="scholar-card-title">${label}</div>`;
     for (const f of forms) {
       const formPageMeta = f.page
-        ? renderTextWithPageLinks(`стр. ${f.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })
+        ? renderTextWithPageLinks(`стр. ${f.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })
         : '';
-      html += `<div style="font-size:12px;margin-bottom:3px;"><span style="font-style:italic;color:#5a3818;font-family:'Noto Serif','DejaVu Serif',Georgia,serif;">${renderAccentSafe(f.form)}</span> — ${escapeHtml(f.translation)}${formPageMeta ? ` <span style="color:#888;">(${formPageMeta})</span>` : ''}</div>`;
+      html += `<div class="scholar-original-form"><span class="scholar-original-word">${renderAccentSafe(f.form)}</span> — ${escapeHtml(f.translation)}${formPageMeta ? ` <span class="scholar-muted-meta">(${formPageMeta})</span>` : ''}</div>`;
     }
     html += '</div>';
   }
@@ -9408,157 +9539,157 @@ function renderScholarPanel(container) {
   });
   const birchCities = Array.from(new Set(birchRows.map(r => r.city))).sort(compareHeadsRu);
   const birchCenturies = Array.from(new Set(birchRows.map(r => r.century))).sort(compareHeadsRu);
-  html += '<h3 id="sch-birch" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">5. Конкорданс берестяных грамот</h3>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Берестяные грамоты, упоминаемые в лекции, по номерам. Полная база: <a href="https://gramoty.ru/birchbark" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;">gramoty.ru/birchbark ↗</a>.</div>';
-  html += `<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:8px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;">
-    <label style="font-size:11px;color:#6a5040;">Город
-      <select id="birch-city-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+  html += '<h3 id="sch-birch" class="scholar-section-title scholar-section-title-spaced">5. Конкорданс берестяных грамот</h3>';
+  html += '<div class="scholar-section-intro">Берестяные грамоты, упоминаемые в лекции, по номерам. Полная база: <a class="related-link" href="https://gramoty.ru/birchbark" target="_blank" rel="noopener noreferrer">gramoty.ru/birchbark ↗</a>.</div>';
+  html += `<div class="scholar-filter-bar">
+    <label class="scholar-filter-label">Город
+      <select id="birch-city-filter" class="scholar-filter-control">
         <option value="">Все</option>
         ${birchCities.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
       </select>
     </label>
-    <label style="font-size:11px;color:#6a5040;">Век
-      <select id="birch-century-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+    <label class="scholar-filter-label">Век
+      <select id="birch-century-filter" class="scholar-filter-control">
         <option value="">Все</option>
         ${birchCenturies.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
       </select>
     </label>
-    <label style="font-size:11px;color:#6a5040;">Номер грамоты
-      <input id="birch-number-filter" type="text" inputmode="numeric" placeholder="например, 776" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;min-width:140px;">
+    <label class="scholar-filter-label">Номер грамоты
+      <input id="birch-number-filter" class="scholar-filter-control scholar-filter-input" type="text" inputmode="numeric" placeholder="например, 776">
     </label>
   </div>`;
-  html += '<table style="width:100%;font-size:13px;border-collapse:collapse;background:#fff;border:1px solid #d4c8b0;border-radius:4px;overflow:hidden;">';
-  html += '<thead><tr style="background:#f0e8d8;"><th style="padding:8px 12px;text-align:left;">№</th><th style="padding:8px 12px;text-align:left;">Город</th><th style="padding:8px 12px;text-align:left;">Дата</th><th style="padding:8px 12px;text-align:left;">Содержание</th><th style="padding:8px 12px;text-align:left;">Стр.</th></tr></thead><tbody id="birch-concordance-body">';
+  html += '<table class="scholar-table">';
+  html += '<thead><tr class="scholar-table-head-row"><th>№</th><th>Город</th><th>Дата</th><th>Содержание</th><th>Стр.</th></tr></thead><tbody id="birch-concordance-body">';
   for (const g of birchRows) {
-    const birchLink = g.url ? `<a href="${escapeHtml(safeUrl(g.url))}" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;">№${escapeHtml(g.num)} ↗</a>` : `№${escapeHtml(g.num)}`;
-    html += `<tr class="birch-row" data-city="${escapeHtml(g.city)}" data-century="${escapeHtml(g.century)}" data-num="${escapeHtml(String(g.num || ''))}" style="border-top:1px solid #f0e8d8;">
-      <td style="padding:6px 12px;font-weight:bold;color:#5a3818;">${birchLink}</td>
-      <td style="padding:6px 12px;color:#666;">${escapeHtml(g.city)}</td>
-      <td style="padding:6px 12px;color:#666;">${escapeHtml(g.year)}</td>
-      <td style="padding:6px 12px;">${escapeHtml(g.content)}</td>
-      <td style="padding:6px 12px;color:#888;">${g.page ? renderTextWithPageLinks(`стр. ${g.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' }) : ''}</td>
+    const birchLink = g.url ? `<a class="related-link" href="${escapeHtml(safeUrl(g.url))}" target="_blank" rel="noopener noreferrer">№${escapeHtml(g.num)} ↗</a>` : `№${escapeHtml(g.num)}`;
+    html += `<tr class="birch-row scholar-table-row" data-city="${escapeHtml(g.city)}" data-century="${escapeHtml(g.century)}" data-num="${escapeHtml(String(g.num || ''))}">
+      <td class="scholar-table-key">${birchLink}</td>
+      <td class="scholar-table-muted">${escapeHtml(g.city)}</td>
+      <td class="scholar-table-muted">${escapeHtml(g.year)}</td>
+      <td>${escapeHtml(g.content)}</td>
+      <td class="scholar-table-page">${g.page ? renderTextWithPageLinks(`стр. ${g.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' }) : ''}</td>
     </tr>`;
   }
   html += '</tbody></table>';
 
   // 6. Хронология
-  html += '<h3 id="sch-chronology" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">6. Хронология лингвистических открытий</h3>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">События истории лингвистики, связанные с темами книги.</div>';
+  html += '<h3 id="sch-chronology" class="scholar-section-title scholar-section-title-spaced">6. Хронология лингвистических открытий</h3>';
+  html += '<div class="scholar-section-intro">События истории лингвистики, связанные с темами книги.</div>';
   for (const ev of (s.chronology || [])) {
     const chronologyPageMeta = ev.page
-      ? renderTextWithPageLinks(`стр. ${ev.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })
+      ? renderTextWithPageLinks(`стр. ${ev.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })
       : '';
-    html += `<div style="display:grid;grid-template-columns:80px 1fr;gap:12px;padding:6px 0;border-bottom:1px solid #f0e8d8;">
-      <div style="font-weight:bold;color:#5a3818;text-align:right;border-right:2px solid #8a7050;padding-right:10px;">${escapeHtml(ev.year)}</div>
-      <div style="font-size:13px;">${escapeHtml(ev.event)}${chronologyPageMeta ? `<span style="color:#888;font-size:11px;"> · ${chronologyPageMeta}</span>` : ''}</div>
+    html += `<div class="scholar-chronology-row">
+      <div class="scholar-chronology-year">${escapeHtml(ev.year)}</div>
+      <div class="scholar-chronology-event">${escapeHtml(ev.event)}${chronologyPageMeta ? `<span class="scholar-muted-meta"> · ${chronologyPageMeta}</span>` : ''}</div>
     </div>`;
   }
   // 7. Изоглоссы
-  html += '<h3 id="sch-isoglosses" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">7. Изоглоссы русских диалектов</h3>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Линии, разделяющие диалекты по конкретным фонетическим, морфологическим и лексическим признакам, обсуждаемым в книге.</div>';
+  html += '<h3 id="sch-isoglosses" class="scholar-section-title scholar-section-title-spaced">7. Изоглоссы русских диалектов</h3>';
+  html += '<div class="scholar-section-intro">Линии, разделяющие диалекты по конкретным фонетическим, морфологическим и лексическим признакам, обсуждаемым в книге.</div>';
   for (const i of (s.isoglosses || [])) {
     const isoglossPageMeta = i.page
-      ? renderTextWithPageLinks(`стр. ${i.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })
+      ? renderTextWithPageLinks(`стр. ${i.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })
       : '';
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 14px;margin-bottom:8px;border-left:3px solid #16a085;">
-      <div style="font-weight:bold;color:#5a3818;font-size:13px;margin-bottom:4px;">${escapeHtml(i.name)}${isoglossPageMeta ? ` <span style="font-weight:normal;font-size:11px;color:#888;">· ${isoglossPageMeta}</span>` : ''}</div>
-      <div style="font-size:12px;color:#444;line-height:1.5;">${escapeHtml(i.description)}</div>
+    html += `<div class="scholar-card scholar-isogloss-card">
+      <div class="scholar-card-title">${escapeHtml(i.name)}${isoglossPageMeta ? ` <span class="scholar-muted-meta">· ${isoglossPageMeta}</span>` : ''}</div>
+      <div class="scholar-body-text">${escapeHtml(i.description)}</div>
     </div>`;
   }
 
   // 8. Слово о полку Игореве
-  html += '<h3 id="sch-slovo" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">8. Аргументация Зализняка о подлинности «Слова о полку Игореве»</h3>';
+  html += '<h3 id="sch-slovo" class="scholar-section-title scholar-section-title-spaced">8. Аргументация Зализняка о подлинности «Слова о полку Игореве»</h3>';
   if (s.slovo) {
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:14px 18px;margin-bottom:8px;">
-      <div style="font-size:12px;color:#444;line-height:1.6;margin-bottom:10px;font-style:italic;">${escapeHtml(s.slovo.thesis)}</div>
-      ${s.slovo.context ? `<div style="font-size:12px;color:#444;line-height:1.5;background:#fbf6e8;padding:8px 10px;border-radius:4px;">${escapeHtml(s.slovo.context)}</div>` : ''}`;
-    html += `<div style="font-size:12px;margin-top:10px;color:#666;"><strong>Оппоненты:</strong> ${escapeHtml(s.slovo.opponents)}</div>
-      <div style="font-size:12px;margin-top:4px;color:#5a3818;font-weight:bold;">${escapeHtml(s.slovo.verdict)}</div>
+    html += `<div class="scholar-slovo-card">
+      <div class="scholar-slovo-thesis">${escapeHtml(s.slovo.thesis)}</div>
+      ${s.slovo.context ? `<div class="scholar-slovo-context">${escapeHtml(s.slovo.context)}</div>` : ''}`;
+    html += `<div class="scholar-slovo-opponents"><strong>Оппоненты:</strong> ${escapeHtml(s.slovo.opponents)}</div>
+      <div class="scholar-slovo-verdict">${escapeHtml(s.slovo.verdict)}</div>
     </div>`;
   }
   if (Array.isArray(s.slovo_links) && s.slovo_links.length) {
-    html += '<div style="font-size:12px;margin-top:6px;">';
+    html += '<div class="scholar-inline-links">';
     for (const link of s.slovo_links) {
-      html += `<a href="${escapeHtml(safeUrl(link.url))}" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;margin-right:12px;">${escapeHtml(link.title)} ↗</a>`;
+      html += `<a class="related-link scholar-inline-source-link" href="${escapeHtml(safeUrl(link.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.title)} ↗</a>`;
     }
     html += '</div>';
   }
   if (s.slovo) {
     const slovoArgs = Array.isArray(s.slovo.arguments) ? s.slovo.arguments : [];
     const slovoCounters = Array.isArray(s.slovo.counterarguments) ? s.slovo.counterarguments : [];
-    html += '<div style="margin-top:8px;background:#fff8e8;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">';
-    html += '<div style="font-size:12px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Тезисы / контраргументы / контекст</div>';
+    html += '<div class="scholar-soft-panel">';
+    html += '<div class="scholar-soft-title">Тезисы / контраргументы / контекст</div>';
     if (s.slovo.context) {
-      html += `<div style="font-size:12px;color:#444;line-height:1.5;margin-bottom:8px;">${escapeHtml(s.slovo.context)}</div>`;
+      html += `<div class="scholar-body-text scholar-body-text-spaced">${escapeHtml(s.slovo.context)}</div>`;
     }
     for (let i = 0; i < slovoArgs.length; i++) {
       const a = slovoArgs[i];
       const anchorId = `sch-slovo-arg-${i + 1}`;
       const pageMeta = a.page
-        ? `<span style="font-size:11px;color:#888;">${renderTextWithPageLinks(`стр. ${a.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })}</span>`
+        ? `<span class="scholar-muted-meta">${renderTextWithPageLinks(`стр. ${a.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })}</span>`
         : '';
-      const sourceMeta = a.url ? `<a href="${escapeHtml(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:#5a3818;text-decoration:underline dotted;">источник ↗</a>` : '';
-      html += `<div id="${anchorId}" style="background:#fff;padding:8px 10px;border:1px solid #e3d6c0;border-radius:4px;margin-bottom:6px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
-          <div style="font-weight:bold;color:#5a3818;font-size:12px;">${escapeHtml(a.name)}</div>
-          <a class="scholar-slovo-anchor" data-anchor="${anchorId}" href="${escapeHtml(buildScholarAnchorHash(anchorId))}" style="font-size:11px;color:#7a6048;text-decoration:underline dotted;">якорь #${i + 1}</a>
+      const sourceMeta = a.url ? `<a class="related-link scholar-meta-link" href="${escapeHtml(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer">источник ↗</a>` : '';
+      html += `<div id="${anchorId}" class="scholar-slovo-item">
+        <div class="scholar-slovo-item-head">
+          <div class="scholar-slovo-item-title">${escapeHtml(a.name)}</div>
+          <a class="scholar-slovo-anchor" data-anchor="${anchorId}" href="${escapeHtml(buildScholarAnchorHash(anchorId))}">якорь #${i + 1}</a>
         </div>
-        <div style="font-size:12px;color:#444;line-height:1.5;margin-top:3px;">${escapeHtml(a.detail)}</div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">${pageMeta}${sourceMeta}</div>
+        <div class="scholar-slovo-detail">${escapeHtml(a.detail)}</div>
+        <div class="scholar-slovo-meta-row">${pageMeta}${sourceMeta}</div>
       </div>`;
     }
     if (slovoCounters.length) {
-      html += '<div style="font-size:11px;color:#6a5040;font-weight:bold;text-transform:uppercase;letter-spacing:0.5px;margin:8px 0 6px;">Контраргументы:</div>';
+      html += '<div class="scholar-subsection-label">Контраргументы:</div>';
       for (const c of slovoCounters) {
         const pageMeta = c.page
-          ? `<span style="font-size:11px;color:#888;">${renderTextWithPageLinks(`стр. ${c.page}`, { className: 'material-page-link card-page-link related-link', style: 'text-decoration:underline dotted;color:#5a3818;', rangeTarget: 'trends' })}</span>`
+          ? `<span class="scholar-muted-meta">${renderTextWithPageLinks(`стр. ${c.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })}</span>`
           : '';
-        const sourceMeta = c.url ? `<a href="${escapeHtml(safeUrl(c.url))}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:#5a3818;text-decoration:underline dotted;">источник ↗</a>` : '';
-        html += `<div style="background:#fff;padding:8px 10px;border:1px solid #e9d9c9;border-radius:4px;margin-bottom:6px;">
-          <div style="font-weight:bold;color:#6b3d31;font-size:12px;margin-bottom:3px;">${escapeHtml(c.name)}</div>
-          <div style="font-size:12px;color:#444;line-height:1.5;">${escapeHtml(c.detail)}</div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">${pageMeta}${sourceMeta}</div>
+        const sourceMeta = c.url ? `<a class="related-link scholar-meta-link" href="${escapeHtml(safeUrl(c.url))}" target="_blank" rel="noopener noreferrer">источник ↗</a>` : '';
+        html += `<div class="scholar-slovo-item scholar-slovo-counter">
+          <div class="scholar-slovo-item-title">${escapeHtml(c.name)}</div>
+          <div class="scholar-body-text">${escapeHtml(c.detail)}</div>
+          <div class="scholar-slovo-meta-row">${pageMeta}${sourceMeta}</div>
         </div>`;
       }
     }
     html += '</div>';
   }
   if (Array.isArray(s.slovo_reading) && s.slovo_reading.length) {
-    html += '<div style="margin-top:8px;background:#fff8e8;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">';
-    html += '<div style="font-size:12px;color:#5a3818;font-weight:bold;margin-bottom:6px;">Что читать дальше</div>';
+    html += '<div class="scholar-soft-panel">';
+    html += '<div class="scholar-soft-title">Что читать дальше</div>';
     for (const item of s.slovo_reading) {
-      html += `<div style="margin-bottom:6px;font-size:12px;line-height:1.45;">
-        <a href="${escapeHtml(safeUrl(item.url))}" target="_blank" rel="noopener noreferrer" style="color:#5a3818;text-decoration:underline dotted;">${escapeHtml(item.title)} ↗</a>
-        ${item.note ? `<div style="color:#666;font-size:11px;margin-top:2px;">${escapeHtml(item.note)}</div>` : ''}
+      html += `<div class="scholar-reading-item">
+        <a class="related-link" href="${escapeHtml(safeUrl(item.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title)} ↗</a>
+        ${item.note ? `<div class="scholar-reading-note">${escapeHtml(item.note)}</div>` : ''}
       </div>`;
     }
     html += '</div>';
   }
 
   // 9. Акцентологические парадигмы
-  html += '<h3 id="sch-accents" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">9. Акцентологические парадигмы Зализняка</h3>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Базовые и расширенные типы русского ударения по классификации Зализняка («Грамматический словарь русского языка», 1977) с историко-диалектными комментариями.</div>';
+  html += '<h3 id="sch-accents" class="scholar-section-title scholar-section-title-spaced">9. Акцентологические парадигмы Зализняка</h3>';
+  html += '<div class="scholar-section-intro">Базовые и расширенные типы русского ударения по классификации Зализняка («Грамматический словарь русского языка», 1977) с историко-диалектными комментариями.</div>';
   for (const ap of (s.accent_paradigms || [])) {
-    html += `<div style="background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:12px 16px;margin-bottom:10px;">
-      <div style="font-weight:bold;color:#5a3818;font-size:14px;margin-bottom:4px;">Тип ${escapeHtml(ap.type)}</div>
-      <div style="font-size:12px;color:#444;line-height:1.5;margin-bottom:8px;">${escapeHtml(ap.description)}</div>`;
+    html += `<div class="scholar-card scholar-accent-card">
+      <div class="scholar-accent-card-title">Тип ${escapeHtml(ap.type)}</div>
+      <div class="scholar-body-text scholar-body-text-spaced">${escapeHtml(ap.description)}</div>`;
     for (const ex of ap.examples) {
-      html += `<div style="background:#fbf6e8;padding:6px 10px;margin-bottom:4px;border-radius:3px;font-size:12px;"><strong>${renderAccentSafe(ex.word)}</strong> — <span style="color:#666;font-style:italic;">${renderAccentSafe(ex.forms)}</span></div>`;
+      html += `<div class="scholar-accent-example"><strong>${renderAccentSafe(ex.word)}</strong> — <span class="scholar-note">${renderAccentSafe(ex.forms)}</span></div>`;
     }
     html += '</div>';
   }
   const accentOptions = (s.accent_paradigms || []).map((ap, idx) => `<option value="${idx}">${escapeHtml(ap.type)}</option>`).join('');
-  html += `<div style="background:#fff8e8;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;margin-bottom:12px;">
-    <div style="font-size:12px;color:#5a3818;font-weight:bold;margin-bottom:8px;">Сравнение 2–3 парадигм</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:8px;">
-      <label style="font-size:11px;color:#6a5040;">Парадигма A
-        <select id="accent-compare-a" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">${accentOptions}</select>
+  html += `<div class="scholar-soft-panel scholar-compare-panel">
+    <div class="scholar-soft-title">Сравнение 2–3 парадигм</div>
+    <div class="scholar-compare-controls">
+      <label class="scholar-filter-label">Парадигма A
+        <select id="accent-compare-a" class="scholar-filter-control">${accentOptions}</select>
       </label>
-      <label style="font-size:11px;color:#6a5040;">Парадигма B
-        <select id="accent-compare-b" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">${accentOptions}</select>
+      <label class="scholar-filter-label">Парадигма B
+        <select id="accent-compare-b" class="scholar-filter-control">${accentOptions}</select>
       </label>
-      <label style="font-size:11px;color:#6a5040;">Парадигма C (опц.)
-        <select id="accent-compare-c" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+      <label class="scholar-filter-label">Парадигма C (опц.)
+        <select id="accent-compare-c" class="scholar-filter-control">
           <option value="-1">—</option>
           ${accentOptions}
         </select>
@@ -9569,8 +9700,8 @@ function renderScholarPanel(container) {
   </div>`;
 
   // 10. Сравнительная таблица
-  html += '<h3 id="sch-correspondences" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">10. Сравнительная таблица фонетических соответствий</h3>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Расширенный набор соответствий (ПИЕ → славянские, греческие, индоиранские и западноевропейские формы), который можно дальше наращивать на материале работ Зализняка.</div>';
+  html += '<h3 id="sch-correspondences" class="scholar-section-title scholar-section-title-spaced">10. Сравнительная таблица фонетических соответствий</h3>';
+  html += '<div class="scholar-section-intro">Расширенный набор соответствий (ПИЕ → славянские, греческие, индоиранские и западноевропейские формы), который можно дальше наращивать на материале работ Зализняка.</div>';
   const corrRows = (s.sound_correspondences || []).map((r) => {
     const focusLangRaw = String(r.focus_language || 'санскрит');
     const focusLang = resolveExistingHead('languages', focusLangRaw);
@@ -9589,15 +9720,15 @@ function renderScholarPanel(container) {
   });
   const corrFamilies = Array.from(new Set(corrRows.map((r) => r._family))).sort(compareHeadsRu);
   const corrLaws = Array.from(new Set(corrRows.map((r) => r._law))).sort(compareHeadsRu);
-  html += `<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:8px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:8px 10px;">
-    <label style="font-size:11px;color:#6a5040;">Семья
-      <select id="corr-family-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+  html += `<div class="scholar-filter-bar">
+    <label class="scholar-filter-label">Семья
+      <select id="corr-family-filter" class="scholar-filter-control">
         <option value="">Все</option>
         ${corrFamilies.map((f) => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('')}
       </select>
     </label>
-    <label style="font-size:11px;color:#6a5040;">Язык в строке
-      <select id="corr-lang-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;">
+    <label class="scholar-filter-label">Язык в строке
+      <select id="corr-lang-filter" class="scholar-filter-control">
         <option value="">Любой</option>
         <option value="rus">Русский</option>
         <option value="lat">Латинский</option>
@@ -9607,34 +9738,34 @@ function renderScholarPanel(container) {
         <option value="ger">Немецкий</option>
       </select>
     </label>
-    <label style="font-size:11px;color:#6a5040;">Фонетический закон
-      <select id="corr-law-filter" style="display:block;margin-top:4px;padding:5px 8px;border:1px solid #c4b890;border-radius:4px;background:#fff;min-width:220px;">
+    <label class="scholar-filter-label">Фонетический закон
+      <select id="corr-law-filter" class="scholar-filter-control scholar-filter-wide">
         <option value="">Все</option>
         ${corrLaws.map((l) => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join('')}
       </select>
     </label>
   </div>`;
-  html += '<div style="overflow-x:auto;"><table style="width:100%;font-size:12px;border-collapse:collapse;background:#fff;border:1px solid #d4c8b0;border-radius:4px;">';
-  html += '<thead><tr style="background:#f0e8d8;"><th style="padding:6px 8px;text-align:left;">ПИЕ</th><th style="padding:6px 8px;text-align:left;">Русск.</th><th style="padding:6px 8px;text-align:left;">Лат.</th><th style="padding:6px 8px;text-align:left;">Греч.</th><th style="padding:6px 8px;text-align:left;">Санскр.</th><th style="padding:6px 8px;text-align:left;">Англ.</th><th style="padding:6px 8px;text-align:left;">Нем.</th><th style="padding:6px 8px;text-align:left;">Значение</th><th style="padding:6px 8px;text-align:left;">Закон/семья</th><th style="padding:6px 8px;text-align:left;">Источник</th><th style="padding:6px 8px;text-align:left;">Связи</th></tr></thead><tbody id="corr-table-body">';
+  html += '<div class="scholar-table-scroll"><table class="scholar-compact-table">';
+  html += '<thead><tr class="scholar-table-head-row"><th>ПИЕ</th><th>Русск.</th><th>Лат.</th><th>Греч.</th><th>Санскр.</th><th>Англ.</th><th>Нем.</th><th>Значение</th><th>Закон/семья</th><th>Источник</th><th>Связи</th></tr></thead><tbody id="corr-table-body">';
   for (const r of corrRows) {
     const langHash = buildItemHash('languages', r._focusLang || 'санскрит');
-    html += `<tr class="corr-row" role="button" tabindex="0" data-family="${escapeHtml(r._family)}" data-law="${escapeHtml(r._law)}" data-langs="${escapeHtml(r._langs)}" data-focus-lang="${escapeHtml(r._focusLang)}" style="border-top:1px solid #f0e8d8;cursor:pointer;">
-      <td style="padding:6px 8px;font-style:italic;color:#5a3818;">${renderAccentSafe(r.pie)}</td>
-      <td style="padding:6px 8px;font-weight:bold;">${renderAccentSafe(r.rus)}</td>
-      <td style="padding:6px 8px;">${renderAccentSafe(r.lat)}</td>
-      <td style="padding:6px 8px;font-family:'Noto Serif','DejaVu Serif',Georgia,serif;">${renderAccentSafe(r.gre)}</td>
-      <td style="padding:6px 8px;font-family:'Noto Serif','DejaVu Serif',Georgia,serif;">${renderAccentSafe(r.san)}</td>
-      <td style="padding:6px 8px;">${renderAccentSafe(r.eng)}</td>
-      <td style="padding:6px 8px;">${renderAccentSafe(r.ger)}</td>
-      <td style="padding:6px 8px;color:#888;font-style:italic;">${escapeHtml(r.meaning)}</td>
-      <td style="padding:6px 8px;">
-        <div style="font-size:11px;color:#5a3818;">${escapeHtml(r._law)}</div>
-        <div style="font-size:11px;color:#888;">${escapeHtml(r._family)}</div>
+    html += `<tr class="corr-row" role="button" tabindex="0" data-family="${escapeHtml(r._family)}" data-law="${escapeHtml(r._law)}" data-langs="${escapeHtml(r._langs)}" data-focus-lang="${escapeHtml(r._focusLang)}">
+      <td class="corr-pie-cell">${renderAccentSafe(r.pie)}</td>
+      <td class="corr-rus-cell">${renderAccentSafe(r.rus)}</td>
+      <td>${renderAccentSafe(r.lat)}</td>
+      <td class="corr-script-cell">${renderAccentSafe(r.gre)}</td>
+      <td class="corr-script-cell">${renderAccentSafe(r.san)}</td>
+      <td>${renderAccentSafe(r.eng)}</td>
+      <td>${renderAccentSafe(r.ger)}</td>
+      <td class="corr-meaning-cell">${escapeHtml(r.meaning)}</td>
+      <td>
+        <div class="corr-meta-main">${escapeHtml(r._law)}</div>
+        <div class="corr-meta-sub">${escapeHtml(r._family)}</div>
       </td>
-      <td style="padding:6px 8px;font-size:11px;color:#666;">${escapeHtml(r._source)}</td>
-      <td style="padding:6px 8px;font-size:11px;">
-        <a class="corr-lang-link" data-type="languages" data-head="${escapeHtml(r._focusLang)}" href="${escapeHtml(langHash)}" style="color:#5a3818;text-decoration:underline dotted;">язык ↗</a><br>
-        <a class="corr-law-link" href="${escapeHtml(buildCanonicalHash(['materials', 'phonetic_laws']))}" style="color:#5a3818;text-decoration:underline dotted;">закон ↗</a>
+      <td class="corr-source-cell">${escapeHtml(r._source)}</td>
+      <td class="corr-links-cell">
+        <a class="corr-lang-link" data-type="languages" data-head="${escapeHtml(r._focusLang)}" href="${escapeHtml(langHash)}">язык ↗</a><br>
+        <a class="corr-law-link" href="${escapeHtml(buildCanonicalHash(['materials', 'phonetic_laws']))}">закон ↗</a>
       </td>
     </tr>`;
   }
@@ -9642,13 +9773,13 @@ function renderScholarPanel(container) {
 
   // 11. Реконструкции
   const recon = APP_DATA.lexicon_tech || [];
-  html += '<h3 id="sch-reconstructions" style="color:#5a3818;border-bottom:2px solid #8a7050;padding-bottom:4px;margin-top:20px;">11. Реконструкции</h3>';
-  html += `<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">${recon.length} реконструированных и иноязычных форм, вынесенных в подраздел профессионального аппарата.</div>`;
-  html += `<div style="display:grid;grid-template-columns:repeat(${reconstructionColumns},minmax(0,1fr));gap:10px;background:#fff;border:1px solid #d4c8b0;border-radius:4px;padding:10px 12px;">`;
+  html += '<h3 id="sch-reconstructions" class="scholar-section-title scholar-section-title-spaced">11. Реконструкции</h3>';
+  html += `<div class="scholar-section-intro">${recon.length} реконструированных и иноязычных форм, вынесенных в подраздел профессионального аппарата.</div>`;
+  html += `<div class="scholar-recon-grid" style="--scholar-recon-columns:${reconstructionColumns};">`;
   for (const item of recon) {
-    html += `<a class="scholar-link" data-type="lexicon_tech" data-head="${escapeHtml(item.head)}" href="${escapeHtml(buildItemHash('lexicon_tech', item.head))}" style="display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-width:0;padding:8px 10px;border:1px solid #eadfca;border-radius:4px;background:#fffaf0;cursor:pointer;color:inherit;text-decoration:none;">
-      <span style="color:#5a3818;text-decoration:underline dotted;line-height:1.35;word-break:break-word;">${escapeHtml(item.head)}</span>
-      <span style="font-size:11px;color:#888;">${escapeHtml((item.page_list || []).length)} стр.</span>
+    html += `<a class="scholar-link scholar-recon-link" data-type="lexicon_tech" data-head="${escapeHtml(item.head)}" href="${escapeHtml(buildItemHash('lexicon_tech', item.head))}">
+      <span class="scholar-recon-head">${escapeHtml(item.head)}</span>
+      <span class="scholar-muted-meta">${escapeHtml((item.page_list || []).length)} стр.</span>
     </a>`;
   }
   html += '</div>';
@@ -9724,7 +9855,7 @@ function renderScholarPanel(container) {
       if (idxB === idxA) idxB = paradigms.length > 1 ? ((idxA + 1) % paradigms.length) : idxA;
       const selected = [idxA, idxB, idxC].filter((idx, pos, arr) => idx >= 0 && arr.indexOf(idx) === pos);
       if (selected.length < 2) {
-        accentCompareBox.innerHTML = '<div style="font-size:12px;color:#888;">Выберите минимум две разные парадигмы.</div>';
+        accentCompareBox.innerHTML = '<div class="scholar-compare-empty">Выберите минимум две разные парадигмы.</div>';
         lastMd = '';
         return;
       }
@@ -9747,13 +9878,13 @@ function renderScholarPanel(container) {
         const same = norms.length > 1 && norms.every((n) => n === norms[0]);
         const cellHtml = cells.map((cell) => {
           const bg = !same && cell ? 'background:#fff3e4;' : '';
-          return `<td style="padding:6px 8px;border-top:1px solid #f0e8d8;${bg}">${cell ? renderAccentSafe(cell) : '<span style="color:#bbb;">—</span>'}</td>`;
+          return `<td class="scholar-compare-cell" style="${bg}">${cell ? renderAccentSafe(cell) : '<span class="scholar-compare-missing">—</span>'}</td>`;
         }).join('');
-        htmlRows.push(`<tr><td style="padding:6px 8px;border-top:1px solid #f0e8d8;color:#888;font-size:11px;">${i + 1}</td>${cellHtml}</tr>`);
+        htmlRows.push(`<tr><td class="scholar-compare-row-index">${i + 1}</td>${cellHtml}</tr>`);
         mdRows.push(`| ${i + 1} | ${cells.map(mdEscapeCell).join(' | ')} |`);
       }
-      accentCompareBox.innerHTML = `<div style="overflow-x:auto;"><table style="width:100%;font-size:12px;border-collapse:collapse;background:#fff;border:1px solid #d4c8b0;border-radius:4px;">
-        <thead><tr style="background:#f0e8d8;"><th style="padding:6px 8px;text-align:left;">№</th>${labels.map((l) => `<th style="padding:6px 8px;text-align:left;">${escapeHtml(l)}</th>`).join('')}</tr></thead>
+      accentCompareBox.innerHTML = `<div class="scholar-table-scroll"><table class="scholar-compact-table">
+        <thead><tr class="scholar-table-head-row"><th>№</th>${labels.map((l) => `<th>${escapeHtml(l)}</th>`).join('')}</tr></thead>
         <tbody>${htmlRows.join('')}</tbody>
       </table></div>`;
       const mdHeader = `| № | ${labels.join(' | ')} |`;
@@ -9817,7 +9948,7 @@ function renderScholarPanel(container) {
     if (!shown) {
       const tr = document.createElement('tr');
       tr.className = 'corr-empty-row';
-      tr.innerHTML = '<td colspan="11" style="padding:10px 12px;color:#888;font-style:italic;">Нет строк под текущие фильтры.</td>';
+      tr.innerHTML = '<td class="scholar-table-empty" colspan="11">Нет строк под текущие фильтры.</td>';
       corrBody.appendChild(tr);
     }
   };
@@ -9878,7 +10009,7 @@ function renderScholarPanel(container) {
     if (!shown) {
       const tr = document.createElement('tr');
       tr.className = 'birch-empty-row';
-      tr.innerHTML = '<td colspan="5" style="padding:10px 12px;color:#888;font-style:italic;">Ничего не найдено: попробуйте ослабить фильтры.</td>';
+      tr.innerHTML = '<td class="scholar-table-empty" colspan="5">Ничего не найдено: попробуйте ослабить фильтры.</td>';
       birchBody.appendChild(tr);
     }
   };
@@ -9932,7 +10063,7 @@ function renderTreePanel(container) {
   }
   const H = y + 30;
 
-  let svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="font-family:Georgia,serif;">`;
+  let svg = `<svg class="language-tree-svg" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">`;
   for (const fam of tree) {
     const famColor = safeColor(FAMILY_COLORS[fam.name], '#888');
     svg += `<text x="${col1}" y="${fam.midY + 4}" fill="${famColor}" font-size="13" font-weight="bold">${escapeHtml(fam.name)}</text>`;
@@ -9943,7 +10074,7 @@ function renderTreePanel(container) {
         const p = positioned.find(p => p.famName===fam.name && p.grpName===grp.name && p.langName===lang.name);
         if (!p) continue;
         svg += `<path d="M ${col2 + 240} ${grp.midY} C ${col3 - 20} ${grp.midY}, ${col3 - 20} ${p.y}, ${col3} ${p.y}" fill="none" stroke="${famColor}" stroke-width="1" opacity="0.4"/>`;
-        svg += `<g style="cursor:pointer" data-lang="${escapeHtml(lang.name)}">
+        svg += `<g class="language-tree-node" data-lang="${escapeHtml(lang.name)}">
           <circle cx="${col3 - 6}" cy="${p.y}" r="3" fill="${famColor}"/>
           <text x="${col3}" y="${p.y + 4}" fill="#1a1a1a" font-size="12"${lang.discussed?' font-weight="bold"':''}>${escapeHtml(lang.name)}</text>
         </g>`;
@@ -9990,7 +10121,7 @@ function renderMapPanel(container) {
 
   container.innerHTML = `<div class="panel active"><div class="map-container">
     <p class="chart-intro">${note}</p>
-    <div id="leaflet-map" style="flex:1; min-height:0;"></div></div></div>`;
+      <div id="leaflet-map" class="leaflet-map-host"></div></div></div>`;
 
   // Fallback при отсутствии Leaflet / интернета
   if (typeof L === 'undefined') {
@@ -10128,7 +10259,7 @@ function renderOfflineMap(type, items, colorFn, radiusFn) {
     const y = ((85 - lat) / 145) * H;
     return [x, y];
   }
-  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;background:#dde6ee;">`;
+  let svg = `<svg class="offline-map-svg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
   svg += `<rect x="0" y="0" width="${W}" height="${H}" fill="#e8edf3"/>`;
   // Координатная сетка
   for (let lon = -180; lon <= 180; lon += 30) {
@@ -10150,7 +10281,7 @@ function renderOfflineMap(type, items, colorFn, radiusFn) {
     const color = colorFn(it);
     const strokeColor = isFocused ? '#1f2933' : 'white';
     const strokeWidth = isFocused ? 2 : 1;
-    svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" fill-opacity="0.75" stroke="${strokeColor}" stroke-width="${strokeWidth}" data-head="${escapeHtml(it.head)}" data-type="${escapeHtml(type)}" style="cursor:pointer"><title>${escapeHtml(it.head)} · стр. ${escapeHtml(it.pages || it.head_pages || '')}</title></circle>`;
+    svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" fill-opacity="0.75" stroke="${strokeColor}" stroke-width="${strokeWidth}" data-head="${escapeHtml(it.head)}" data-type="${escapeHtml(type)}" class="offline-map-point"><title>${escapeHtml(it.head)} · стр. ${escapeHtml(it.pages || it.head_pages || '')}</title></circle>`;
   }
   // Заглушка-текст
   svg += `<text x="${W/2}" y="24" fill="#6a5040" font-size="13" text-anchor="middle" font-style="italic">Офлайн-режим: тайлы карты недоступны, показаны только точки</text>`;
@@ -10173,7 +10304,7 @@ function renderOfflineMap(type, items, colorFn, radiusFn) {
 // =========================================================
 // ЗАПУСК (асинхронный: сначала отрисовать каркас, потом парсить данные)
 // =========================================================
-document.getElementById('content').innerHTML = '<div style="padding:40px; text-align:center; color:#888; font-style:italic;">Загрузка указателей…</div>';
+document.getElementById('content').innerHTML = '<div class="panel-empty-state">Загрузка указателей…</div>';
 
 registerAppServiceWorker();
 

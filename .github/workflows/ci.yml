@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "npm"
 
       - name: Setup Python
@@ -43,6 +43,9 @@ jobs:
 
       - name: JS syntax checks
         run: npm run check:js
+
+      - name: UI inline style guard
+        run: npm run check:ui
 
       - name: Encoding / mojibake check
         run: python scripts/check_encoding.py
