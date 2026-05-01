@@ -5,7 +5,7 @@
 
 ## Актуальный статус
 
-- Текущая версия: `v4.4` (обновлено `2026-04-28`).
+- Текущая версия: `v4.4` (обновлено `2026-05-01`).
 - Базовый артефакт: [aaz-index.html](aaz-index.html) (single-file SPA).
 - Демо (GitHub Pages): [aaz-index.html](https://gasyoun.github.io/BookIndex/aaz-index.html)
 - Формат данных: [app_data.json](app_data.json) (`schema_version = 2`).
@@ -79,9 +79,9 @@
 
 ## Что нового
 
-### v4.4 (2026-04-28)
+### v4.4 (2026-05-01)
 
-- **Стабилизирован локальный DX-слой**: добавлены единые npm-команды `check`, `check:js`, `check:e2e`, `build`, `build:legacy`; lockfile синхронизирован с Vite/TypeScript-зависимостями из `package.json`.
+- **Стабилизирован локальный DX-слой**: добавлены единые npm-команды `check`, `check:js`, `check:ui`, `check:e2e`, `build`, `build:legacy`; lockfile синхронизирован с Vite/TypeScript-зависимостями из `package.json`.
 - **Python-окружение зафиксировано** в [requirements.txt](requirements.txt): для полной JSON Schema-проверки нужен `jsonschema`.
 - **Экспериментальный `home/home_decl` скрыт из основной навигации**; классический `home/home` остаётся публичным стартовым экраном.
 - **VIZ hardening**: добавлен helper [scripts/viz/viz-state.js](scripts/viz/viz-state.js) для query-state в hash, VIZ-01 получил `Play/Pause`, VIZ-03 переведён в компактную сетку, VIZ-07 защищает подписи справа от наложений.
@@ -174,6 +174,7 @@ node scripts/export_app_data_to_markdown.mjs --input app_data.json --out src/con
 ```bash
 npm ci
 npm run typecheck
+npm run check:ui
 python scripts/check_encoding.py
 python scripts/validate_content.py app_data.json
 python scripts/content_report.py
@@ -197,6 +198,15 @@ npm run e2e
 ```powershell
 $env:NODE_BINARY = 'C:\path\to\node.exe'
 python runtime_test.py
+```
+
+Для npm/Vite-проверок нужен Node.js, совместимый с Vite 8: `>=20.19` или `>=22.12`.
+На Windows можно временно добавить bundled Node в `PATH`:
+
+```powershell
+$env:Path = 'D:\Codex 2026\tools\node-v24.14.1-win-x64;' + $env:Path
+.\tools\node-v24.14.1-win-x64\npm.cmd ci
+.\tools\node-v24.14.1-win-x64\npm.cmd run check
 ```
 
 Опционально для JSON Schema-проверки в [scripts/validate_content.py](scripts/validate_content.py):
@@ -272,6 +282,7 @@ GitHub Actions workflow `CI` запускается на `push` и `pull_request
 - `npm run build`;
 - `npm run typecheck`;
 - `npm run check:js`;
+- `npm run check:ui`;
 - [scripts/check_encoding.py](scripts/check_encoding.py);
 - [scripts/validate_content.py](scripts/validate_content.py);
 - [runtime_test.py](runtime_test.py);

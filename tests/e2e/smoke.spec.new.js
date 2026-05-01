@@ -58,6 +58,39 @@ test.describe('aaz-index smoke', () => {
     expect(spread).toBeLessThan(16);
   });
 
+  test('compact viewport smoke has no page-level horizontal overflow', async ({ page }) => {
+    const assertNoPageOverflow = async () => {
+      const metrics = await page.evaluate(() => {
+        const root = document.scrollingElement || document.documentElement;
+        return {
+          clientWidth: root.clientWidth,
+          scrollWidth: root.scrollWidth,
+        };
+      });
+      expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.clientWidth + 8);
+    };
+
+    for (const viewport of [
+      { width: 900, height: 900 },
+      { width: 390, height: 844 },
+    ]) {
+      await page.setViewportSize(viewport);
+
+      await page.goto('/aaz-index.html#v4/home/home');
+      await expect(page.locator('.home-panel')).toBeVisible();
+      await assertNoPageOverflow();
+
+      await page.goto('/aaz-index.html#v4/names/list');
+      await page.locator('#name-list .name-item').first().click();
+      await expect(page.locator('.card')).toBeVisible();
+      await assertNoPageOverflow();
+
+      await page.goto('/aaz-index.html#v4/scholar/viz/module/viz03');
+      await expect(page.locator('.viz-shell')).toBeVisible();
+      await assertNoPageOverflow();
+    }
+  });
+
   test('theme toggle persists after reload', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const themeButton = page.locator('#theme-btn');

@@ -82,7 +82,7 @@ def check_static_guards():
         'const MAX_URL_LENGTH = 2048;',
         'if (raw.length > MAX_URL_LENGTH) return fallback;',
         '<div class="category">${escapeHtml(category)}</div>',
-        '<div class="mc-cat">${escapeHtml(cat)}</div>',
+        "catEl.className = 'mc-cat';",
         'id="copy-card-link"',
         'id="export-card-md"',
         'class="glossary-les-link"',
