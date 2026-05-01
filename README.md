@@ -87,6 +87,7 @@
 - **VIZ hardening**: добавлен helper [scripts/viz/viz-state.js](scripts/viz/viz-state.js) для query-state в hash, VIZ-01 получил `Play/Pause`, VIZ-03 переведён в компактную сетку, VIZ-07 защищает подписи справа от наложений.
 - **Документация очищена**: восстановлен битый раздел 1 в [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md), убраны служебные `[cite:*]` из [CODEX_VISUALIZATIONS_RU.md](CODEX_VISUALIZATIONS_RU.md).
 - **Лицензия определена**: проект распространяется под Apache License 2.0.
+- **Заложена корпусная оболочка UI**: runtime создаёт `APP_DATA.corpus` с текущей книгой как первым источником, принимает aliases вида `#v4/books/<book_id>/...` и резервирует тип `video_catalog` для будущих 200 видео с тайм-кодами и стенограммами.
 
 ### v4.3 (2026-04-20)
 
@@ -218,6 +219,12 @@ python -m pip install -r requirements.txt
 ## Лицензия
 
 BookIndex распространяется под [Apache License 2.0](LICENSE). Это относится к коду, документации, данным и собираемому standalone-артефакту [aaz-index.html](aaz-index.html), если в отдельных файлах явно не указано иное.
+
+## Корпусная оболочка
+
+Текущий интерфейс остаётся совместимым с `#v4/...`, но runtime уже нормализует лёгкий metadata-слой `APP_DATA.corpus`. Первый источник — текущая книга `zaliznyak-aaz-index`; будущие маршруты могут использовать aliases вида `#v4/books/<book_id>/names/list`, которые канонизируются обратно в существующий route state.
+
+В `APP_DATA.corpus.source_types` зарезервирован тип `video_catalog`: он предназначен для каталога примерно 200 видео Зализняка с тайм-кодами и стенограммами. Это пока metadata-задел, без миграции `schema_version` и без изменения структуры основных сущностей.
 
 Ожидается:
 

@@ -176,6 +176,31 @@
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   }
   .header-search-results.open { display: block; }
+  .corpus-status {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 4px;
+  }
+  .corpus-chip {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--muted);
+    display: inline-flex;
+    font-size: 10px;
+    line-height: 1.25;
+    max-width: 100%;
+    padding: 2px 6px;
+  }
+  .corpus-chip.active {
+    color: var(--title);
+    font-weight: 600;
+  }
+  .corpus-chip.planned {
+    border-style: dashed;
+  }
   .header-search-item {
     padding: 7px 10px;
     border-bottom: 1px solid #f0e8d8;
@@ -4081,6 +4106,7 @@
       <div class="header-search-results" id="global-search-results"></div>
     </div>
   </h1>
+  <div class="corpus-status" id="corpus-status" aria-label="Корпус и текущий источник"></div>
   <div class="entity-switcher" id="entity-switcher"></div>
   <div class="tabs" id="tabs"></div>
   <nav class="breadcrumb" id="breadcrumb-nav" aria-label="Навигация"></nav>
