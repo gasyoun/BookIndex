@@ -1318,6 +1318,52 @@
     margin-top: 10px;
     padding: 10px 12px;
   }
+  .task-result.visible {
+    display: block;
+  }
+  .task-result.correct {
+    background: #e8f5e9;
+    border-left: 3px solid #5cb85c;
+  }
+  .task-result.incorrect {
+    background: #fff8e8;
+    border-left: 3px solid #8a7050;
+  }
+  .task-option-btn {
+    background: #fff8e8;
+    border: 1px solid #c4b890;
+    border-radius: 4px;
+    color: #444;
+    cursor: pointer;
+    display: block;
+    font-family: inherit;
+    font-size: 13px;
+    margin-bottom: 6px;
+    padding: 8px 12px;
+    text-align: left;
+    transition: all 0.1s;
+    width: 100%;
+  }
+  .task-option-btn.locked {
+    cursor: default;
+  }
+  .task-option-btn.correct {
+    background: #d4edda;
+    border-color: #5cb85c;
+    color: #155724;
+    font-weight: bold;
+  }
+  .task-option-btn.incorrect {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+  }
+  .task-card-link {
+    color: #5a3818;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline dotted;
+  }
   .reading-now-controls {
     display: flex;
     flex-wrap: wrap;

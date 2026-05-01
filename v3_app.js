@@ -7550,42 +7550,32 @@ function renderTasksPanel(container, options = {}) {
     for (let oi = 0; oi < optionsShuffled.length; oi++) {
       const opt = optionsShuffled[oi];
       const btn = document.createElement('button');
-      btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;margin-bottom:6px;border:1px solid #c4b890;background:#fff8e8;border-radius:4px;cursor:pointer;font-family:inherit;font-size:13px;color:#444;transition:all 0.1s;';
+      btn.className = 'task-option-btn';
       btn.dataset.sourceIndex = String(opt.idx);
       btn.textContent = String.fromCharCode(65 + oi) + '. ' + opt.text;
       btn.onclick = () => {
         if (optsDiv.dataset.locked === '1') return;
         optsDiv.dataset.locked = '1';
         const isCorrect = opt.idx === t.correct;
-        optsDiv.querySelectorAll('button').forEach(b => { b.disabled = true; b.style.cursor = 'default'; });
+        optsDiv.querySelectorAll('button').forEach(b => { b.disabled = true; b.classList.add('locked'); });
         if (isCorrect) {
-          btn.style.background = '#d4edda';
-          btn.style.borderColor = '#5cb85c';
-          btn.style.color = '#155724';
-          btn.style.fontWeight = 'bold';
+          btn.classList.add('correct');
         } else {
-          btn.style.background = '#f8d7da';
-          btn.style.borderColor = '#dc3545';
-          btn.style.color = '#721c24';
+          btn.classList.add('incorrect');
           const correctBtn = optsDiv.querySelector(`button[data-source-index="${String(t.correct)}"]`);
           if (correctBtn) {
-            correctBtn.style.background = '#d4edda';
-            correctBtn.style.borderColor = '#5cb85c';
-            correctBtn.style.color = '#155724';
-            correctBtn.style.fontWeight = 'bold';
+            correctBtn.classList.add('correct');
           }
         }
         const res = document.getElementById(`task-tab-${t._storageId}-res`);
-        res.style.display = 'block';
-        res.style.background = isCorrect ? '#e8f5e9' : '#fff8e8';
-        res.style.borderLeft = '3px solid ' + (isCorrect ? '#5cb85c' : '#8a7050');
+        res.classList.add('visible', isCorrect ? 'correct' : 'incorrect');
         const linkHref = t.entity
           ? ((t.entity.type || '') === 'lecture'
             ? buildLecturePageHash(t.entity.index)
             : buildItemHash(t.entity.type || 'all', t.entity.head || ''))
           : '';
         const linkBtn = t.entity
-          ? ` <a class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" href="${escapeHtml(linkHref)}" style="cursor:pointer;text-decoration:underline dotted;color:#5a3818;font-weight:bold;">\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0443 \u2192</a>`
+          ? ` <a class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" href="${escapeHtml(linkHref)}">\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0443 \u2192</a>`
           : '';
         res.innerHTML = (isCorrect ? '<strong>\u0412\u0435\u0440\u043d\u043e!</strong> ' : '<strong>\u041d\u0435 \u0443\u0433\u0430\u0434\u0430\u043b\u0438.</strong> ')
           + renderTextWithPageLinks(t.hint, {
