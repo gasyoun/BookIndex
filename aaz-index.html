@@ -2292,6 +2292,42 @@
   .kwic-muted {
     color: var(--muted);
   }
+  .glossary-panel {
+    height: 100%;
+    overflow-y: auto;
+  }
+  .glossary-inner {
+    margin: 0 auto;
+    max-width: 1100px;
+    padding: 16px 22px;
+  }
+  .glossary-title {
+    color: #5a3818;
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 4px 0;
+  }
+  .glossary-intro {
+    color: #888;
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  .glossary-search {
+    background: #fff;
+    border: 1px solid #c4b890;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    width: 100%;
+  }
+  .glossary-list {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -74928,7 +74964,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '614c2d5ca561';
+const APP_BUILD_ID = '9e510c4ba350';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -78208,7 +78244,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '614c2d5ca561' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '9e510c4ba350' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -83416,12 +83452,12 @@ function renderKwicPanel(container) {
 
 function renderGlossaryPanel(container) {
   const glossary = APP_DATA.glossary || [];
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1100px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Глоссарий простыми словами</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Лингвистические термины из книги, объяснённые так, чтобы понял школьник. У каждого термина — отдельная внешняя ссылка.</div>';
+  let html = '<div class="panel active glossary-panel"><div class="glossary-inner">';
+  html += '<h2 class="glossary-title">Глоссарий простыми словами</h2>';
+  html += '<div class="glossary-intro">Лингвистические термины из книги, объяснённые так, чтобы понял школьник. У каждого термина — отдельная внешняя ссылка.</div>';
   // Простое поле поиска
-  html += '<input type="text" id="glossary-search" placeholder="Поиск термина…" style="width:100%;padding:8px 12px;font-family:inherit;font-size:14px;border:1px solid #c4b890;border-radius:3px;background:white;margin-bottom:14px;" />';
-  html += '<div id="glossary-list" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">';
+  html += '<input type="text" id="glossary-search" class="glossary-search" placeholder="Поиск термина…" />';
+  html += '<div id="glossary-list" class="glossary-list">';
   for (const g of glossary) {
     const termUrl = g.url || ('https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=' + encodeURIComponent(String(g.term || '')));
     const related = findRelatedLexiconItems(g.term, g.definition || '', 4);

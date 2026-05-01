@@ -8497,12 +8497,12 @@ function renderKwicPanel(container) {
 
 function renderGlossaryPanel(container) {
   const glossary = APP_DATA.glossary || [];
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1100px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Глоссарий простыми словами</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:10px;">Лингвистические термины из книги, объяснённые так, чтобы понял школьник. У каждого термина — отдельная внешняя ссылка.</div>';
+  let html = '<div class="panel active glossary-panel"><div class="glossary-inner">';
+  html += '<h2 class="glossary-title">Глоссарий простыми словами</h2>';
+  html += '<div class="glossary-intro">Лингвистические термины из книги, объяснённые так, чтобы понял школьник. У каждого термина — отдельная внешняя ссылка.</div>';
   // Простое поле поиска
-  html += '<input type="text" id="glossary-search" placeholder="Поиск термина…" style="width:100%;padding:8px 12px;font-family:inherit;font-size:14px;border:1px solid #c4b890;border-radius:3px;background:white;margin-bottom:14px;" />';
-  html += '<div id="glossary-list" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">';
+  html += '<input type="text" id="glossary-search" class="glossary-search" placeholder="Поиск термина…" />';
+  html += '<div id="glossary-list" class="glossary-list">';
   for (const g of glossary) {
     const termUrl = g.url || ('https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=' + encodeURIComponent(String(g.term || '')));
     const related = findRelatedLexiconItems(g.term, g.definition || '', 4);
