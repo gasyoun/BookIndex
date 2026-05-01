@@ -7774,19 +7774,19 @@ function renderLectureComparePanel(container) {
   };
   const recommendedPairs = buildRecommendedLecturePairs(10);
 
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Сравнение двух лекций</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:14px;">Показываем пересечения и уникальные сущности по типам. Нажмите на элемент, чтобы открыть карточку.</div>';
-  html += `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px;">
-    <label style="display:block;">
-      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Лекция A</div>
-      <select id="lecture-compare-a" style="width:100%;padding:7px 9px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:12px;background:#fff;">
+  let html = '<div class="panel active lecture-compare-panel"><div class="lecture-compare-inner">';
+  html += '<h2 class="lecture-compare-title">Сравнение двух лекций</h2>';
+  html += '<div class="lecture-compare-intro">Показываем пересечения и уникальные сущности по типам. Нажмите на элемент, чтобы открыть карточку.</div>';
+  html += `<div class="lecture-compare-controls">
+    <label class="lecture-compare-field">
+      <div class="lecture-compare-label">Лекция A</div>
+      <select id="lecture-compare-a" class="lecture-compare-select">
         ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareA ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
       </select>
     </label>
-    <label style="display:block;">
-      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Лекция B</div>
-      <select id="lecture-compare-b" style="width:100%;padding:7px 9px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:12px;background:#fff;">
+    <label class="lecture-compare-field">
+      <div class="lecture-compare-label">Лекция B</div>
+      <select id="lecture-compare-b" class="lecture-compare-select">
         ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareB ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
       </select>
     </label>
@@ -7807,8 +7807,8 @@ function renderLectureComparePanel(container) {
     html += '</div></div>';
   }
 
-  html += `<div style="font-size:12px;color:#5a3818;margin-bottom:10px;"><strong>A:</strong> ${escapeHtml(chapterA.name)} <span style="color:#888;">(стр. ${chapterA.start}-${chapterA.end})</span><br><strong>B:</strong> ${escapeHtml(chapterB.name)} <span style="color:#888;">(стр. ${chapterB.start}-${chapterB.end})</span></div>`;
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;">';
+  html += `<div class="lecture-compare-current"><strong>A:</strong> ${escapeHtml(chapterA.name)} <span>(стр. ${chapterA.start}-${chapterA.end})</span><br><strong>B:</strong> ${escapeHtml(chapterB.name)} <span>(стр. ${chapterB.start}-${chapterB.end})</span></div>`;
+  html += '<div class="lecture-compare-grid">';
 
   for (const t of types) {
     const setA = headsFor(t.key, chapterA);

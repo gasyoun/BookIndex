@@ -1968,6 +1968,63 @@
     padding: 2px 8px;
     text-decoration: underline dotted;
   }
+  .lecture-compare-panel {
+    height: 100%;
+    overflow-y: auto;
+  }
+  .lecture-compare-inner {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 16px 22px;
+  }
+  .lecture-compare-title {
+    color: #5a3818;
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 4px 0;
+  }
+  .lecture-compare-intro {
+    color: #888;
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+  .lecture-compare-controls {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 14px;
+  }
+  .lecture-compare-field {
+    display: block;
+  }
+  .lecture-compare-label {
+    color: #6a5040;
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  .lecture-compare-select {
+    background: #fff;
+    border: 1px solid #c4b890;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 12px;
+    padding: 7px 9px;
+    width: 100%;
+  }
+  .lecture-compare-current {
+    color: #5a3818;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .lecture-compare-current span {
+    color: #888;
+  }
+  .lecture-compare-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  }
   .context-text mark {
     background: #ffe680;
     font-style: normal;
@@ -74604,7 +74661,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '96776483fb39';
+const APP_BUILD_ID = 'd0af4579d99b';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77884,7 +77941,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '96776483fb39' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'd0af4579d99b' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -82369,19 +82426,19 @@ function renderLectureComparePanel(container) {
   };
   const recommendedPairs = buildRecommendedLecturePairs(10);
 
-  let html = '<div class="panel active" style="overflow-y:auto;height:100%;"><div style="padding:16px 22px;max-width:1200px;margin:0 auto;">';
-  html += '<h2 style="font-size:20px;color:#5a3818;font-weight:normal;margin:0 0 4px 0;">Сравнение двух лекций</h2>';
-  html += '<div style="font-size:12px;color:#888;font-style:italic;margin-bottom:14px;">Показываем пересечения и уникальные сущности по типам. Нажмите на элемент, чтобы открыть карточку.</div>';
-  html += `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px;">
-    <label style="display:block;">
-      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Лекция A</div>
-      <select id="lecture-compare-a" style="width:100%;padding:7px 9px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:12px;background:#fff;">
+  let html = '<div class="panel active lecture-compare-panel"><div class="lecture-compare-inner">';
+  html += '<h2 class="lecture-compare-title">Сравнение двух лекций</h2>';
+  html += '<div class="lecture-compare-intro">Показываем пересечения и уникальные сущности по типам. Нажмите на элемент, чтобы открыть карточку.</div>';
+  html += `<div class="lecture-compare-controls">
+    <label class="lecture-compare-field">
+      <div class="lecture-compare-label">Лекция A</div>
+      <select id="lecture-compare-a" class="lecture-compare-select">
         ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareA ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
       </select>
     </label>
-    <label style="display:block;">
-      <div style="font-size:11px;color:#6a5040;margin-bottom:4px;">Лекция B</div>
-      <select id="lecture-compare-b" style="width:100%;padding:7px 9px;border:1px solid #c4b890;border-radius:4px;font-family:inherit;font-size:12px;background:#fff;">
+    <label class="lecture-compare-field">
+      <div class="lecture-compare-label">Лекция B</div>
+      <select id="lecture-compare-b" class="lecture-compare-select">
         ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareB ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
       </select>
     </label>
@@ -82402,8 +82459,8 @@ function renderLectureComparePanel(container) {
     html += '</div></div>';
   }
 
-  html += `<div style="font-size:12px;color:#5a3818;margin-bottom:10px;"><strong>A:</strong> ${escapeHtml(chapterA.name)} <span style="color:#888;">(стр. ${chapterA.start}-${chapterA.end})</span><br><strong>B:</strong> ${escapeHtml(chapterB.name)} <span style="color:#888;">(стр. ${chapterB.start}-${chapterB.end})</span></div>`;
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;">';
+  html += `<div class="lecture-compare-current"><strong>A:</strong> ${escapeHtml(chapterA.name)} <span>(стр. ${chapterA.start}-${chapterA.end})</span><br><strong>B:</strong> ${escapeHtml(chapterB.name)} <span>(стр. ${chapterB.start}-${chapterB.end})</span></div>`;
+  html += '<div class="lecture-compare-grid">';
 
   for (const t of types) {
     const setA = headsFor(t.key, chapterA);
