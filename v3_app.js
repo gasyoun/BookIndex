@@ -7709,12 +7709,12 @@ function renderLectureComparePanel(container) {
   };
   const asSorted = (arr) => arr.sort(compareHeadsRu);
   const renderHeadLinks = (type, heads, max = 10) => {
-    if (!heads.length) return '<span style="color:#999;font-size:12px;">—</span>';
+    if (!heads.length) return '<span class="lecture-compare-empty">—</span>';
     let out = '';
     for (const head of heads.slice(0, max)) {
-      out += `<a class="lecture-compare-link" data-type="${escapeHtml(type)}" data-head="${escapeHtml(head)}" href="${escapeHtml(buildItemHash(type, head))}" style="display:inline-block;margin:2px 6px 2px 0;padding:2px 7px;border-radius:10px;background:#f0e8d8;color:#5a3818;cursor:pointer;font-size:11px;text-decoration:none;">${escapeHtml(head)}</a>`;
+      out += `<a class="lecture-compare-link" data-type="${escapeHtml(type)}" data-head="${escapeHtml(head)}" href="${escapeHtml(buildItemHash(type, head))}">${escapeHtml(head)}</a>`;
     }
-    if (heads.length > max) out += `<span style="color:#888;font-size:11px;">+${heads.length - max}</span>`;
+    if (heads.length > max) out += `<span class="lecture-compare-more">+${heads.length - max}</span>`;
     return out;
   };
   const chapterLabel = (idx, ch) => (idx === 0 ? 'Предисловие' : `Лекция ${idx}`) + ` · ${ch.name}`;
