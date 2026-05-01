@@ -56,6 +56,9 @@
         "type": "string"
       }
     },
+    "corpus": {
+      "$ref": "#/$defs/corpusRegistry"
+    },
     "names": {
       "type": "array",
       "items": {
@@ -154,6 +157,127 @@
   },
   "additionalProperties": true,
   "$defs": {
+    "corpusRegistry": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "active_book_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "books": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/corpusBook"
+          }
+        },
+        "source_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/corpusSourceType"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "corpusBook": {
+      "type": "object",
+      "required": [
+        "book_id"
+      ],
+      "properties": {
+        "book_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "year": {
+          "type": "integer"
+        },
+        "edition": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "active",
+            "validated",
+            "published",
+            "planned",
+            "archived"
+          ]
+        },
+        "source_type": {
+          "type": "string"
+        },
+        "pages_total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "default_route": {
+          "type": "string"
+        },
+        "content_modules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "corpusSourceType": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "planned",
+            "deprecated"
+          ]
+        },
+        "planned_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "supports": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "pages",
+              "timecodes",
+              "transcripts",
+              "citations",
+              "media"
+            ]
+          }
+        }
+      },
+      "additionalProperties": true
+    },
     "sourceItem": {
       "type": "object",
       "properties": {
