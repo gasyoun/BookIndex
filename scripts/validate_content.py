@@ -108,6 +108,8 @@ def validate_corpus(data: dict[str, Any], errors: list[str], warnings: list[str]
         modules = book.get("content_modules")
         if modules is not None and not isinstance(modules, list):
             fail(f"[corpus] books[{i}].content_modules must be list", errors)
+        elif isinstance(modules, list) and not all(isinstance(item, str) for item in modules):
+            fail(f"[corpus] books[{i}].content_modules items must be strings", errors)
 
     duplicate_ids = [book_id for book_id, count in Counter(book_ids).items() if count > 1]
     if duplicate_ids:
@@ -143,6 +145,8 @@ def validate_corpus(data: dict[str, Any], errors: list[str], warnings: list[str]
         supports = source_type.get("supports")
         if supports is not None and not isinstance(supports, list):
             fail(f"[corpus] source_types[{i}].supports must be list", errors)
+        elif isinstance(supports, list) and not all(isinstance(item, str) for item in supports):
+            fail(f"[corpus] source_types[{i}].supports items must be strings", errors)
 
     duplicate_types = [type_id for type_id, count in Counter(type_ids).items() if count > 1]
     if duplicate_types:
