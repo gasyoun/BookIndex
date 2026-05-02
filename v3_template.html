@@ -152,7 +152,14 @@
     max-width: 360px;
     min-width: 260px;
   }
+  .header-search-controls {
+    align-items: stretch;
+    display: flex;
+    gap: 5px;
+  }
   .header-search input {
+    flex: 1 1 auto;
+    min-width: 0;
     width: 100%;
     padding: 6px 10px;
     border: 1px solid #c4b890;
@@ -160,6 +167,17 @@
     font-family: inherit;
     font-size: 12px;
     background: white;
+  }
+  .header-search-scope {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--title);
+    flex: 0 0 auto;
+    font-family: inherit;
+    font-size: 11px;
+    min-height: 28px;
+    padding: 4px 7px;
   }
   .header-search-results {
     display: none;
@@ -3873,7 +3891,8 @@
   body.density-compact .name-item .pages-count { font-size: 10px; }
   body.density-compact .card { padding: 10px; }
   body.density-compact .context-text { font-size: 11px; line-height: 1.5; }
-  body.density-compact .header-search input { padding: 5px 8px; font-size: 11px; }
+  body.density-compact .header-search input,
+  body.density-compact .header-search-scope { padding: 5px 8px; font-size: 11px; }
 
   body.density-reader .entity-btn,
   body.density-reader .tab,
@@ -3887,7 +3906,8 @@
   body.density-reader .card { padding: 15px; }
   body.density-reader .card h2 { font-size: 24px; }
   body.density-reader .context-text { font-size: 13px; line-height: 1.65; }
-  body.density-reader .header-search input { padding: 7px 10px; font-size: 13px; }
+  body.density-reader .header-search input,
+  body.density-reader .header-search-scope { padding: 7px 10px; font-size: 13px; }
 
   body.density-research .entity-btn,
   body.density-research .tab,
@@ -3921,8 +3941,8 @@
   header h1, .home-link { color: var(--title); }
   header h1 .meta-inline, .header-search-item .kind, .footer-meta { color: var(--muted); }
   .home-link:hover { border-bottom-color: var(--line-strong); }
-  .entity-btn, .tab, .back-btn, .header-search input, .filter-chip { border-color: var(--line); }
-  .entity-btn, .tab, .back-btn, .filter-chip { background: var(--surface-soft); color: var(--title); }
+  .entity-btn, .tab, .back-btn, .header-search input, .header-search-scope, .filter-chip { border-color: var(--line); }
+  .entity-btn, .tab, .back-btn, .header-search-scope, .filter-chip { background: var(--surface-soft); color: var(--title); }
   .entity-btn:hover, .tab:hover, .filter-chip:hover { background: var(--surface-soft-2); }
   .breadcrumb { color: var(--muted); }
   .breadcrumb-link { color: var(--title); }
@@ -4102,7 +4122,13 @@
       </select>
     </span>
     <div class="header-search header-search-inline">
-      <input id="global-search" type="text" placeholder="Глобальный поиск: имя, язык, топоним, термин, лекция…" />
+      <div class="header-search-controls">
+        <input id="global-search" type="text" placeholder="Глобальный поиск: имя, язык, топоним, термин, лекция…" />
+        <select class="header-search-scope" id="global-search-scope" aria-label="Область поиска" title="Область поиска">
+          <option value="current">книга</option>
+          <option value="corpus">корпус</option>
+        </select>
+      </div>
       <div class="header-search-results" id="global-search-results"></div>
     </div>
   </h1>
