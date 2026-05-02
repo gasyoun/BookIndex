@@ -165,6 +165,59 @@ def collect_corpus_metrics(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def collect_markdown_export_metrics(source: str) -> dict[str, Any]:
+    source_path = Path(source)
+    base_dir = source_path.parent if source_path.parent != Path("") else Path(".")
+    content_dir = base_dir / "src" / "content"
+    if not content_dir.is_dir():
+        return {
+            "present": False,
+            "path": str(content_dir),
+            "files_total": 0,
+            "files_with_source": 0,
+            "files_with_book_id": 0,
+            "files_with_corpus_metadata": 0,
+            "coverage_pct": {"source": 0.0, "book_id": 0.0, "corpus_metadata": 0.0},
+            "missing_corpus_metadata_sample": [],
+        }
+
+    markdown_files = sorted(content_dir.glob("*.md"))
+    files_with_source = 0
+    files_with_book_id = 0
+    files_with_corpus_metadata = 0
+    missing_sample: list[str] = []
+
+    for path in markdown_files:
+        head = "".join(path.read_text(encoding="utf-8").splitlines(keepends=True)[:16])
+        has_frontmatter = head.startswith("---\n")
+        has_source = "\nsource: " in head
+        has_book_id = "\nbook_id: " in head
+        if has_source:
+            files_with_source += 1
+        if has_book_id:
+            files_with_book_id += 1
+        if has_frontmatter and has_source and has_book_id:
+            files_with_corpus_metadata += 1
+        elif len(missing_sample) < 10:
+            missing_sample.append(str(path))
+
+    total = len(markdown_files)
+    return {
+        "present": True,
+        "path": str(content_dir),
+        "files_total": total,
+        "files_with_source": files_with_source,
+        "files_with_book_id": files_with_book_id,
+        "files_with_corpus_metadata": files_with_corpus_metadata,
+        "coverage_pct": {
+            "source": pct(files_with_source, total),
+            "book_id": pct(files_with_book_id, total),
+            "corpus_metadata": pct(files_with_corpus_metadata, total),
+        },
+        "missing_corpus_metadata_sample": missing_sample,
+    }
+
+
 def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
     book_stats = data.get("book_stats", {})
     total_pages = book_stats.get("total_pages")
@@ -211,6 +264,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "schema_version": data.get("schema_version"),
         "book_total_pages": total_pages,
         "corpus": collect_corpus_metrics(data),
+        "markdown_exports": collect_markdown_export_metrics(source),
         "entities": entities,
         "totals": totals,
     }
@@ -225,6 +279,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Schema: `{report.get('schema_version')}`",
         f"- Book pages: `{report.get('book_total_pages')}`",
         f"- Corpus registry: `{report.get('corpus', {}).get('mode', 'runtime_default')}`",
+        f"- Markdown exports: `{report.get('markdown_exports', {}).get('files_total', 0)}`",
         "",
         "## Totals",
         "",
@@ -249,11 +304,37 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Source types: {report.get('corpus', {}).get('source_types_total', 0)}",
         f"- Planned videos: {report.get('corpus', {}).get('planned_video_count', 0)}",
         "",
+        "## Markdown Exports",
+        "",
+        f"- Path: `{report.get('markdown_exports', {}).get('path', 'src/content')}`",
+        f"- Files: {report.get('markdown_exports', {}).get('files_total', 0)}",
+        (
+            f"- With source: {report.get('markdown_exports', {}).get('files_with_source', 0)} "
+            f"({report.get('markdown_exports', {}).get('coverage_pct', {}).get('source', 0.0)}%)"
+        ),
+        (
+            f"- With book_id: {report.get('markdown_exports', {}).get('files_with_book_id', 0)} "
+            f"({report.get('markdown_exports', {}).get('coverage_pct', {}).get('book_id', 0.0)}%)"
+        ),
+        (
+            f"- With corpus metadata: {report.get('markdown_exports', {}).get('files_with_corpus_metadata', 0)} "
+            f"({report.get('markdown_exports', {}).get('coverage_pct', {}).get('corpus_metadata', 0.0)}%)"
+        ),
+        "",
+    ]
+
+    missing_markdown = report.get("markdown_exports", {}).get("missing_corpus_metadata_sample", [])
+    if missing_markdown:
+        lines.append("Missing corpus metadata sample:")
+        lines.extend(f"- `{path}`" for path in missing_markdown)
+        lines.append("")
+
+    lines.extend([
         "## Entities",
         "",
         "| Entity | Items | Pages % | Contexts % | Sources % | Duplicates |",
         "|---|---:|---:|---:|---:|---:|",
-    ]
+    ])
 
     for key, metrics in report["entities"].items():
         lines.append(

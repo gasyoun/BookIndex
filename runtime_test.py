@@ -204,6 +204,8 @@ def check_static_guards():
         '"mode": "runtime_default"',
         '"mode": "explicit"',
         '"active_book_title"',
+        '"markdown_exports"',
+        'collect_markdown_export_metrics(source)',
     ]
     for needle in content_report_required:
         if needle not in content_report:

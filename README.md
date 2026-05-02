@@ -249,7 +249,7 @@ python scripts/content_report.py
 python scripts/content_report.py --format json
 ```
 
-Отчёт включает: количество элементов по сущностям, долю элементов с `page_list`/`contexts`/`sources`, количество дубликатов `head`, corpus registry summary и агрегированные totals.
+Отчёт включает: количество элементов по сущностям, долю элементов с `page_list`/`contexts`/`sources`, количество дубликатов `head`, corpus registry summary, покрытие `source`/`book_id` в `src/content/*.md` и агрегированные totals.
 
 ## Структура проекта
 
