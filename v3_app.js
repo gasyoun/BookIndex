@@ -3268,12 +3268,38 @@ function appendGlobalSearchSourceGroup(box, label) {
   box.appendChild(group);
 }
 
+function renderGlobalSearchEmpty(box, query) {
+  if (!box) return false;
+  const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
+  if (normalizeSearchText(q).length < 2) {
+    closeGlobalSearchResults();
+    return false;
+  }
+  const input = document.getElementById('global-search');
+  const scope = normalizeGlobalSearchScope(globalSearchScope);
+  const empty = document.createElement('div');
+  empty.className = 'header-search-empty';
+  empty.textContent = scope === 'corpus'
+    ? '\u0412 \u043a\u043e\u0440\u043f\u0443\u0441\u0435 \u043d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e.'
+    : '\u0412 \u0442\u0435\u043a\u0443\u0449\u0435\u0439 \u043a\u043d\u0438\u0433\u0435 \u043d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e.';
+  box.textContent = '';
+  box.appendChild(empty);
+  box._matches = [];
+  globalSearchActiveIndex = -1;
+  box.classList.add('open');
+  if (input) {
+    safeSetAttr(input, 'aria-expanded', 'true');
+    safeSetAttr(input, 'aria-activedescendant', '');
+  }
+  return true;
+}
+
 function renderGlobalSearchResults(matches, query = '') {
   const box = document.getElementById('global-search-results');
   const input = document.getElementById('global-search');
   if (!box) return;
   if (!matches.length) {
-    closeGlobalSearchResults();
+    renderGlobalSearchEmpty(box, query);
     return;
   }
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);

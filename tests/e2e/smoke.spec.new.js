@@ -512,6 +512,18 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#content .panel.active')).toBeVisible();
   });
 
+  test('global search shows scope-aware empty state', async ({ page }) => {
+    await page.goto('/aaz-index.html#home/home');
+    const input = page.locator('#global-search');
+    const scope = page.locator('#global-search-scope');
+
+    await input.fill('bookindex-no-such-term');
+    await expect(page.locator('#global-search-results.open .header-search-empty')).toContainText('текущей книге');
+
+    await scope.selectOption('corpus');
+    await expect(page.locator('#global-search-results.open .header-search-empty')).toContainText('корпусе');
+  });
+
   test('global search fuzzy-matches typo query', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
