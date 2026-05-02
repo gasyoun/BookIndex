@@ -31,6 +31,11 @@ test.describe('aaz-index smoke', () => {
     expect(corpus.books[0].source_type).toBe('book');
     expect(corpus.source_types.some((source) => source.type === 'video_catalog' && source.planned_count === 200)).toBe(true);
 
+    await page.goto('/aaz-index.html#v4/scholar/page_trends?books=zaliznyak-aaz-index');
+    await expect(page.locator('.page-trends-source-chip')).toContainText('Из жизни слов и языков');
+    const queryBookId = await page.evaluate(() => window.APP_DATA.corpus.active_book_id);
+    expect(queryBookId).toBe('zaliznyak-aaz-index');
+
     await page.goto('/aaz-index.html#v4/books/zaliznyak-aaz-index/names/list');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
     await expect(page).toHaveURL(/#v4\/names\/list$/);

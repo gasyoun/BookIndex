@@ -76324,7 +76324,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'cfcf7b44b2d7';
+const APP_BUILD_ID = 'e5acd5096bcd';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -77035,6 +77035,17 @@ function getActiveBook() {
   const registry = getCorpusRegistry();
   const books = getCorpusBooks();
   return books.find(book => book.book_id === registry.active_book_id) || books[0] || buildDefaultCorpusRegistry().books[0];
+}
+
+function applyActiveBookFromQuery(query) {
+  const rawQuery = String(query || '').trim();
+  if (!rawQuery) return;
+  const params = new URLSearchParams(rawQuery);
+  const bookId = String(params.get('books') || params.get('book') || '').trim();
+  if (!bookId) return;
+  const registry = getCorpusRegistry();
+  if (!getCorpusBooks().some(book => book.book_id === bookId)) return;
+  registry.active_book_id = bookId;
 }
 
 function getPlannedVideoCatalogSource() {
@@ -78503,6 +78514,7 @@ function applyHash(hash) {
   closeGlobalSearchResults();
   const parsedRoute = parseHashRoute(hash);
   if (!parsedRoute) return false;
+  applyActiveBookFromQuery(parsedRoute.query);
   const routedParts = routeVizAlias(parsedRoute.parts);
 
   const entity = routedParts[0];
@@ -79908,7 +79920,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'cfcf7b44b2d7' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'e5acd5096bcd' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;

@@ -722,6 +722,17 @@ function getActiveBook() {
   return books.find(book => book.book_id === registry.active_book_id) || books[0] || buildDefaultCorpusRegistry().books[0];
 }
 
+function applyActiveBookFromQuery(query) {
+  const rawQuery = String(query || '').trim();
+  if (!rawQuery) return;
+  const params = new URLSearchParams(rawQuery);
+  const bookId = String(params.get('books') || params.get('book') || '').trim();
+  if (!bookId) return;
+  const registry = getCorpusRegistry();
+  if (!getCorpusBooks().some(book => book.book_id === bookId)) return;
+  registry.active_book_id = bookId;
+}
+
 function getPlannedVideoCatalogSource() {
   const sourceTypes = getCorpusRegistry().source_types;
   if (!Array.isArray(sourceTypes)) return null;
@@ -2188,6 +2199,7 @@ function applyHash(hash) {
   closeGlobalSearchResults();
   const parsedRoute = parseHashRoute(hash);
   if (!parsedRoute) return false;
+  applyActiveBookFromQuery(parsedRoute.query);
   const routedParts = routeVizAlias(parsedRoute.parts);
 
   const entity = routedParts[0];
