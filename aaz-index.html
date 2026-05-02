@@ -76324,7 +76324,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'e632f3f9f671';
+const APP_BUILD_ID = 'cfcf7b44b2d7';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -78438,12 +78438,22 @@ function renderCorpusStatus() {
 
 async function copyCurrentUrl() {
   const canonicalHash = buildHashFromState();
+  const activeBookId = getActiveBook().book_id || '';
+  const shareHash = activeBookId
+    ? (() => {
+      const [path, query = ''] = canonicalHash.split('?');
+      const params = new URLSearchParams(query);
+      params.set('books', activeBookId);
+      const qs = params.toString();
+      return qs ? `${path}?${qs}` : path;
+    })()
+    : canonicalHash;
   const canonicalUrl = (() => {
-    if (typeof window === 'undefined' || !window.location) return canonicalHash;
+    if (typeof window === 'undefined' || !window.location) return shareHash;
     const href = String(window.location.href || '');
     const hashPos = href.indexOf('#');
     const base = hashPos >= 0 ? href.slice(0, hashPos) : href;
-    return base + canonicalHash;
+    return base + shareHash;
   })();
   if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
     try {
@@ -79898,7 +79908,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'e632f3f9f671' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'cfcf7b44b2d7' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;

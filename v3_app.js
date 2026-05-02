@@ -2123,12 +2123,22 @@ function renderCorpusStatus() {
 
 async function copyCurrentUrl() {
   const canonicalHash = buildHashFromState();
+  const activeBookId = getActiveBook().book_id || '';
+  const shareHash = activeBookId
+    ? (() => {
+      const [path, query = ''] = canonicalHash.split('?');
+      const params = new URLSearchParams(query);
+      params.set('books', activeBookId);
+      const qs = params.toString();
+      return qs ? `${path}?${qs}` : path;
+    })()
+    : canonicalHash;
   const canonicalUrl = (() => {
-    if (typeof window === 'undefined' || !window.location) return canonicalHash;
+    if (typeof window === 'undefined' || !window.location) return shareHash;
     const href = String(window.location.href || '');
     const hashPos = href.indexOf('#');
     const base = hashPos >= 0 ? href.slice(0, hashPos) : href;
-    return base + canonicalHash;
+    return base + shareHash;
   })();
   if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
     try {

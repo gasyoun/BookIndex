@@ -954,6 +954,19 @@ test.describe('aaz-index smoke', () => {
     });
 
     await expect(page).toHaveURL(/#v4\/scholar\/page_trends\/range\/120\/140$/);
+    await page.evaluate(() => {
+      window.__copiedShareUrl = '';
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: {
+          writeText: async (value) => {
+            window.__copiedShareUrl = String(value || '');
+          },
+        },
+      });
+    });
+    await copyBtn.click();
+    await expect.poll(() => page.evaluate(() => window.__copiedShareUrl || '')).toContain('books=zaliznyak-aaz-index');
     await page.goto('/aaz-index.html#v4/scholar/page_trends/range/120/140');
     await expect(page.locator('#trend-start-range')).toHaveValue('120');
     await expect(page.locator('#trend-end-range')).toHaveValue('140');
