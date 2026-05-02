@@ -919,6 +919,19 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('.page-trends-source-chip')).toContainText('Из жизни слов и языков');
     await expect(page.locator('#trend-export-csv')).toBeVisible();
     await expect(page.locator('#trend-export-md')).toBeVisible();
+    const csvDownloadPromise = page.waitForEvent('download');
+    await page.locator('#trend-export-csv').click();
+    const csvDownload = await csvDownloadPromise;
+    const csvPath = await csvDownload.path();
+    const csvText = csvPath ? await fs.readFile(csvPath, 'utf8') : '';
+    expect(csvText.split('\n')[0]).toContain('book_id');
+    expect(csvText).toContain('zaliznyak-aaz-index');
+    const mdDownloadPromise = page.waitForEvent('download');
+    await page.locator('#trend-export-md').click();
+    const mdDownload = await mdDownloadPromise;
+    const mdPath = await mdDownload.path();
+    const mdText = mdPath ? await fs.readFile(mdPath, 'utf8') : '';
+    expect(mdText).toContain('book_id: zaliznyak-aaz-index');
   });
 
   test('scholar page trends keeps selected range in hash route', async ({ page }) => {

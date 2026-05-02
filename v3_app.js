@@ -9836,7 +9836,8 @@ function renderPageTrendsPanel(container) {
 
   const trendUp = globalTrend.filter(x => x.delta > 0).sort((a, b) => (b.delta - a.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
   const trendDown = globalTrend.filter(x => x.delta < 0).sort((a, b) => (a.delta - b.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
-  const activeBookLabel = getBookLabelForSearch(getActiveBook().book_id);
+  const activeBookId = getActiveBook().book_id;
+  const activeBookLabel = getBookLabelForSearch(activeBookId);
 
   let html = '<div class="panel active page-trends-panel"><div class="page-trends-shell">';
   html += '<div class="page-trends-head">';
@@ -9922,19 +9923,20 @@ function renderPageTrendsPanel(container) {
     const s = String(v == null ? '' : v);
     return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
-  const csvRows = [['source', 'range_start', 'range_end', 'section', 'type', 'head', 'value', 'delta', 'left_half', 'right_half']];
+  const csvRows = [['source', 'book_id', 'range_start', 'range_end', 'section', 'type', 'head', 'value', 'delta', 'left_half', 'right_half']];
   for (const s of stats) {
-    csvRows.push([activeBookLabel, start, end, 'summary', s.key, '', s.mentionTotal, '', '', '']);
-    for (const top of s.top) csvRows.push([activeBookLabel, start, end, 'top', s.key, top.head, top.count, '', '', '']);
+    csvRows.push([activeBookLabel, activeBookId, start, end, 'summary', s.key, '', s.mentionTotal, '', '', '']);
+    for (const top of s.top) csvRows.push([activeBookLabel, activeBookId, start, end, 'top', s.key, top.head, top.count, '', '', '']);
   }
-  for (const row of trendUp) csvRows.push([activeBookLabel, start, end, 'trend_up', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
-  for (const row of trendDown) csvRows.push([activeBookLabel, start, end, 'trend_down', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  for (const row of trendUp) csvRows.push([activeBookLabel, activeBookId, start, end, 'trend_up', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  for (const row of trendDown) csvRows.push([activeBookLabel, activeBookId, start, end, 'trend_down', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
   const csvText = csvRows.map(r => r.map(csvEscape).join(',')).join('\n');
 
   const mdLines = [];
   mdLines.push(`# Динамика по страницам: ${start}-${end}`);
   mdLines.push('');
   mdLines.push(`Источник: **${activeBookLabel}**`);
+  mdLines.push(`book_id: ${activeBookId}`);
   mdLines.push('');
   mdLines.push(`Окно: **${start}-${end}** (ширина ${end - start + 1} стр.)`);
   mdLines.push('');
