@@ -1085,6 +1085,18 @@
     flex-wrap: wrap;
     margin-bottom: 4px;
   }
+  .card .card-book-chip {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--muted);
+    display: inline-flex;
+    font-size: 10px;
+    line-height: 1.25;
+    max-width: 240px;
+    overflow-wrap: anywhere;
+    padding: 2px 6px;
+  }
   .card .card-meta-row .category {
     margin-bottom: 0;
   }
@@ -1095,6 +1107,13 @@
     align-items: flex-end;
     gap: 4px;
     min-width: fit-content;
+  }
+  .card .card-meta-chips {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-end;
   }
   .card .card-status-inline {
     display: inline-block;
@@ -76249,7 +76268,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'a7e278038f84';
+const APP_BUILD_ID = '0ead365bf27e';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79797,7 +79816,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'a7e278038f84' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '0ead365bf27e' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81690,9 +81709,17 @@ function renderCardInRight() {
   const canOpenMapForCard = ['toponyms', 'ethnonyms', 'languages'].includes(eType) && hasMapCoords;
   const useTwoColumnCardLayout = eType === 'toponyms';
   const itemSources = Array.isArray(it.sources) ? it.sources.slice(0, 5) : [];
+  const itemBookId = String(it.book_id || it.bookId || getActiveBook().book_id || '');
+  const itemBookLabel = getBookLabelForSearch(itemBookId);
   const renderSourcesInHeader = eType === 'names' && itemSources.length > 0;
   const sourceConfirmedInline = editorial.source_confirmed
     ? '<span class="card-status-inline">source confirmed</span>'
+    : '';
+  const cardBookChipHtml = itemBookLabel
+    ? `<span class="card-book-chip">${escapeHtml(itemBookLabel)}</span>`
+    : '';
+  const metaChipsHtml = (cardBookChipHtml || sourceConfirmedInline)
+    ? `<div class="card-meta-chips">${cardBookChipHtml}${sourceConfirmedInline}</div>`
     : '';
   let headerSourcesHtml = '';
   if (renderSourcesInHeader) {
@@ -81722,7 +81749,7 @@ function renderCardInRight() {
           <div class="card-meta-row">
             <div class="category">${escapeHtml(category)}</div>
             <div class="card-meta-right">
-              ${sourceConfirmedInline}
+              ${metaChipsHtml}
               ${headerSourcesHtml}
             </div>
           </div>

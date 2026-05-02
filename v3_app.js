@@ -5450,9 +5450,17 @@ function renderCardInRight() {
   const canOpenMapForCard = ['toponyms', 'ethnonyms', 'languages'].includes(eType) && hasMapCoords;
   const useTwoColumnCardLayout = eType === 'toponyms';
   const itemSources = Array.isArray(it.sources) ? it.sources.slice(0, 5) : [];
+  const itemBookId = String(it.book_id || it.bookId || getActiveBook().book_id || '');
+  const itemBookLabel = getBookLabelForSearch(itemBookId);
   const renderSourcesInHeader = eType === 'names' && itemSources.length > 0;
   const sourceConfirmedInline = editorial.source_confirmed
     ? '<span class="card-status-inline">source confirmed</span>'
+    : '';
+  const cardBookChipHtml = itemBookLabel
+    ? `<span class="card-book-chip">${escapeHtml(itemBookLabel)}</span>`
+    : '';
+  const metaChipsHtml = (cardBookChipHtml || sourceConfirmedInline)
+    ? `<div class="card-meta-chips">${cardBookChipHtml}${sourceConfirmedInline}</div>`
     : '';
   let headerSourcesHtml = '';
   if (renderSourcesInHeader) {
@@ -5482,7 +5490,7 @@ function renderCardInRight() {
           <div class="card-meta-row">
             <div class="category">${escapeHtml(category)}</div>
             <div class="card-meta-right">
-              ${sourceConfirmedInline}
+              ${metaChipsHtml}
               ${headerSourcesHtml}
             </div>
           </div>
