@@ -1270,6 +1270,32 @@
   .card .pages-links {
     display: inline;
   }
+  .card .card-occurrence-strip {
+    display: grid;
+    gap: 6px;
+    grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+    margin: -2px 0 10px;
+  }
+  .card .card-occurrence-strip span {
+    background: var(--surface-soft-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+    padding: 5px 7px;
+  }
+  .card .card-occurrence-strip strong {
+    color: var(--title);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+  .card .card-occurrence-strip em {
+    color: var(--muted);
+    font-size: 9px;
+    font-style: normal;
+    text-transform: uppercase;
+  }
   .card .pages-by-lecture {
     margin: -4px 0 10px 0;
     padding: 6px 10px;

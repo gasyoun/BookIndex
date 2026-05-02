@@ -375,6 +375,8 @@ test.describe('aaz-index smoke', () => {
     await expect(metaRow).toBeVisible();
     await expect(metaRow.locator('.card-book-chip')).toContainText('Из жизни слов и языков');
     await expect(sourceConfirmed).toHaveText(/source confirmed/i);
+    await expect(page.locator('#right-content .card .card-occurrence-strip')).toContainText('contexts');
+    await expect(page.locator('#right-content .card .card-occurrence-strip')).toContainText('refs');
 
     const rowTopSpread = await page.evaluate(() => {
       const row = document.querySelector('#right-content .card .card-meta-row');

@@ -5391,6 +5391,17 @@ function findItemByHeadAndType(head, type) {
   return getIndexedItem(targetType, head);
 }
 
+function countItemContexts(item) {
+  const contexts = item && item.contexts && typeof item.contexts === 'object' && !Array.isArray(item.contexts)
+    ? item.contexts
+    : {};
+  let total = 0;
+  for (const snippets of Object.values(contexts)) {
+    if (Array.isArray(snippets)) total += snippets.filter(Boolean).length;
+  }
+  return total;
+}
+
 function getReverseEdgesIndex() {
   if (reverseEdgesCache) return reverseEdgesCache;
   const index = {};
@@ -5504,6 +5515,14 @@ function renderCardInRight() {
   const allPages = sortUniquePages(it.page_list || []);
   let pagesText = it.pages || it.head_pages || '';
   const pageLinksHtml = buildCardPageLinksHtml(allPages);
+  const contextCount = countItemContexts(it);
+  const sourceCount = itemSources.length;
+  const occurrenceStripHtml = `<div class="card-occurrence-strip">
+    <span><strong>${escapeHtml(itemBookLabel || '\u0422\u0435\u043a\u0443\u0449\u0430\u044f \u043a\u043d\u0438\u0433\u0430')}</strong><em>source</em></span>
+    <span><strong>${allPages.length}</strong><em>pages</em></span>
+    <span><strong>${contextCount}</strong><em>contexts</em></span>
+    <span><strong>${sourceCount}</strong><em>refs</em></span>
+  </div>`;
   const showLectureBreakdown = ['lexicon', 'lexicon_tech', 'lexicon_reverse'].includes(eType);
   const lectureBreakdownHtml = showLectureBreakdown ? buildLecturePageBreakdownHtml(allPages) : '';
 
@@ -5536,6 +5555,7 @@ function renderCardInRight() {
         <span class="pages-links">${pageLinksHtml || escapeHtml(pagesText)}</span>
         ${it.discussed ? ' · <em>обсуждается</em>' : ' · однократное упоминание'}
       </div>
+      ${occurrenceStripHtml}
       ${lectureBreakdownHtml}
   `;
   if (eType === 'lexicon' || eType === 'lexicon_tech') {

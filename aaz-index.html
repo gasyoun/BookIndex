@@ -1270,6 +1270,32 @@
   .card .pages-links {
     display: inline;
   }
+  .card .card-occurrence-strip {
+    display: grid;
+    gap: 6px;
+    grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+    margin: -2px 0 10px;
+  }
+  .card .card-occurrence-strip span {
+    background: var(--surface-soft-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+    padding: 5px 7px;
+  }
+  .card .card-occurrence-strip strong {
+    color: var(--title);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+  .card .card-occurrence-strip em {
+    color: var(--muted);
+    font-size: 9px;
+    font-style: normal;
+    text-transform: uppercase;
+  }
   .card .pages-by-lecture {
     margin: -4px 0 10px 0;
     padding: 6px 10px;
@@ -76274,7 +76300,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'f0d81cf141f3';
+const APP_BUILD_ID = '3f33e409b7ff';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79848,7 +79874,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'f0d81cf141f3' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '3f33e409b7ff' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81656,6 +81682,17 @@ function findItemByHeadAndType(head, type) {
   return getIndexedItem(targetType, head);
 }
 
+function countItemContexts(item) {
+  const contexts = item && item.contexts && typeof item.contexts === 'object' && !Array.isArray(item.contexts)
+    ? item.contexts
+    : {};
+  let total = 0;
+  for (const snippets of Object.values(contexts)) {
+    if (Array.isArray(snippets)) total += snippets.filter(Boolean).length;
+  }
+  return total;
+}
+
 function getReverseEdgesIndex() {
   if (reverseEdgesCache) return reverseEdgesCache;
   const index = {};
@@ -81769,6 +81806,14 @@ function renderCardInRight() {
   const allPages = sortUniquePages(it.page_list || []);
   let pagesText = it.pages || it.head_pages || '';
   const pageLinksHtml = buildCardPageLinksHtml(allPages);
+  const contextCount = countItemContexts(it);
+  const sourceCount = itemSources.length;
+  const occurrenceStripHtml = `<div class="card-occurrence-strip">
+    <span><strong>${escapeHtml(itemBookLabel || '\u0422\u0435\u043a\u0443\u0449\u0430\u044f \u043a\u043d\u0438\u0433\u0430')}</strong><em>source</em></span>
+    <span><strong>${allPages.length}</strong><em>pages</em></span>
+    <span><strong>${contextCount}</strong><em>contexts</em></span>
+    <span><strong>${sourceCount}</strong><em>refs</em></span>
+  </div>`;
   const showLectureBreakdown = ['lexicon', 'lexicon_tech', 'lexicon_reverse'].includes(eType);
   const lectureBreakdownHtml = showLectureBreakdown ? buildLecturePageBreakdownHtml(allPages) : '';
 
@@ -81801,6 +81846,7 @@ function renderCardInRight() {
         <span class="pages-links">${pageLinksHtml || escapeHtml(pagesText)}</span>
         ${it.discussed ? ' · <em>обсуждается</em>' : ' · однократное упоминание'}
       </div>
+      ${occurrenceStripHtml}
       ${lectureBreakdownHtml}
   `;
   if (eType === 'lexicon' || eType === 'lexicon_tech') {
