@@ -4083,9 +4083,17 @@ function appendScholarMarkdown(parts) {
 function exportWholeSiteMarkdown() {
   const stats = APP_DATA.book_stats || {};
   const featured = APP_DATA.featured_quote || {};
+  const activeBook = getActiveBook();
+  const activeBookId = activeBook.book_id || '';
+  const activeBookLabel = getBookLabelForSearch(activeBookId);
   const parts = [];
   parts.push('# Зализнякиада');
   parts.push('');
+  if (activeBookLabel) {
+    parts.push(`Источник: **${activeBookLabel}**`);
+    parts.push(`book_id: ${activeBookId}`);
+    parts.push('');
+  }
   parts.push('## Обзор');
   parts.push('');
   const overviewBits = [

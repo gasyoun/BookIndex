@@ -10,6 +10,13 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#tabs .tab')).toHaveText(/Главная|Home/);
     await expect(page.locator('.home-stats-hero')).toBeVisible();
     await expect(page.locator('#home-stats-grid .home-stat-cell')).toHaveCount(8);
+    const siteDownloadPromise = page.waitForEvent('download');
+    await page.locator('#export-site-md').click();
+    const siteDownload = await siteDownloadPromise;
+    const sitePath = await siteDownload.path();
+    const siteMarkdown = sitePath ? await fs.readFile(sitePath, 'utf8') : '';
+    expect(siteMarkdown).toContain('Источник: **Из жизни слов и языков**');
+    expect(siteMarkdown).toContain('book_id: zaliznyak-aaz-index');
   });
 
   test('corpus shell registers current book and accepts book route aliases', async ({ page }) => {
