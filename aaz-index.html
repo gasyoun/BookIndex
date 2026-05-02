@@ -76324,7 +76324,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '07407b00444a';
+const APP_BUILD_ID = 'f35bcd7f834d';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79898,7 +79898,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '07407b00444a' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'f35bcd7f834d' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -86204,13 +86204,13 @@ function renderPageTrendsPanel(container) {
     const s = String(v == null ? '' : v);
     return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
-  const csvRows = [['range_start', 'range_end', 'section', 'type', 'head', 'value', 'delta', 'left_half', 'right_half']];
+  const csvRows = [['source', 'range_start', 'range_end', 'section', 'type', 'head', 'value', 'delta', 'left_half', 'right_half']];
   for (const s of stats) {
-    csvRows.push([start, end, 'summary', s.key, '', s.mentionTotal, '', '', '']);
-    for (const top of s.top) csvRows.push([start, end, 'top', s.key, top.head, top.count, '', '', '']);
+    csvRows.push([activeBookLabel, start, end, 'summary', s.key, '', s.mentionTotal, '', '', '']);
+    for (const top of s.top) csvRows.push([activeBookLabel, start, end, 'top', s.key, top.head, top.count, '', '', '']);
   }
-  for (const row of trendUp) csvRows.push([start, end, 'trend_up', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
-  for (const row of trendDown) csvRows.push([start, end, 'trend_down', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  for (const row of trendUp) csvRows.push([activeBookLabel, start, end, 'trend_up', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  for (const row of trendDown) csvRows.push([activeBookLabel, start, end, 'trend_down', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
   const csvText = csvRows.map(r => r.map(csvEscape).join(',')).join('\n');
 
   const mdLines = [];

@@ -9889,13 +9889,13 @@ function renderPageTrendsPanel(container) {
     const s = String(v == null ? '' : v);
     return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
-  const csvRows = [['range_start', 'range_end', 'section', 'type', 'head', 'value', 'delta', 'left_half', 'right_half']];
+  const csvRows = [['source', 'range_start', 'range_end', 'section', 'type', 'head', 'value', 'delta', 'left_half', 'right_half']];
   for (const s of stats) {
-    csvRows.push([start, end, 'summary', s.key, '', s.mentionTotal, '', '', '']);
-    for (const top of s.top) csvRows.push([start, end, 'top', s.key, top.head, top.count, '', '', '']);
+    csvRows.push([activeBookLabel, start, end, 'summary', s.key, '', s.mentionTotal, '', '', '']);
+    for (const top of s.top) csvRows.push([activeBookLabel, start, end, 'top', s.key, top.head, top.count, '', '', '']);
   }
-  for (const row of trendUp) csvRows.push([start, end, 'trend_up', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
-  for (const row of trendDown) csvRows.push([start, end, 'trend_down', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  for (const row of trendUp) csvRows.push([activeBookLabel, start, end, 'trend_up', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
+  for (const row of trendDown) csvRows.push([activeBookLabel, start, end, 'trend_down', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
   const csvText = csvRows.map(r => r.map(csvEscape).join(',')).join('\n');
 
   const mdLines = [];
