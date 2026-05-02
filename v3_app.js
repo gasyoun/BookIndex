@@ -2020,9 +2020,10 @@ function parseHashRoute(hash) {
 }
 
 function routeVizAlias(parts) {
-  return (Array.isArray(parts) && parts.length === 1 && parts[0] === 'viz')
-    ? ['scholar', 'viz']
-    : parts;
+  if (!Array.isArray(parts)) return parts;
+  if (parts.length === 1 && parts[0] === 'viz') return ['scholar', 'viz'];
+  if (parts[0] === 'corpus' && parts[1] === 'viz') return ['scholar', 'viz', ...parts.slice(2)];
+  return parts;
 }
 
 function routeValueAfter(parts, marker) {
@@ -2572,6 +2573,16 @@ function buildVizHash(moduleId) {
   const hash = buildCanonicalHash(['scholar', 'viz', 'module', moduleKey]);
   if (moduleKey === currentVizModule && currentVizQueryString) return `${hash}?${currentVizQueryString}`;
   return hash;
+}
+
+function buildCorpusVizHash(moduleId) {
+  const moduleKey = String(moduleId || currentVizModule || 'viz03').trim();
+  const activeBook = getActiveBook();
+  const params = new URLSearchParams(currentVizQueryString || '');
+  if (activeBook && activeBook.book_id) params.set('books', activeBook.book_id);
+  const query = params.toString();
+  const hash = buildCanonicalHash(['corpus', 'viz', 'module', moduleKey]);
+  return query ? `${hash}?${query}` : hash;
 }
 
 function warmupVizCacheInWorker() {
@@ -9316,11 +9327,17 @@ function renderVizPanel(container) {
   const catalog = getVizModuleCatalog();
   const validModuleIds = new Set(catalog.map((m) => m.id));
   if (!validModuleIds.has(currentVizModule)) currentVizModule = 'viz03';
+  const activeBook = getActiveBook();
+  const activeBookLabel = activeBook.short_title || activeBook.title || activeBook.book_id || '\u0442\u0435\u043a\u0443\u0449\u0430\u044f \u043a\u043d\u0438\u0433\u0430';
 
   container.innerHTML = `<div class="panel active viz-shell">
     <div class="viz-header-row">
       <h2 class="viz-title">Визуализации</h2>
-      <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический hash</a>
+      <div class="viz-header-actions">
+        <span class="viz-source-chip">${escapeHtml(activeBookLabel)}</span>
+        <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический hash</a>
+        <a class="related-link viz-corpus-link" href="${escapeHtml(buildCorpusVizHash(currentVizModule))}">corpus hash</a>
+      </div>
     </div>
     <div class="viz-module-tabs" id="viz-module-tabs"></div>
     <div id="viz-module-host" class="viz-module-host"><div class="viz-loading">Подготовка кэша…</div></div>

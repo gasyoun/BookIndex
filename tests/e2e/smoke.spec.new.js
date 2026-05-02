@@ -1257,6 +1257,14 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('.viz-module-btn')).toHaveCount(7);
   });
 
+  test('corpus viz hash opens current-book visualization shell', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/corpus/viz/module/viz03?books=zaliznyak-aaz-index');
+    await expect(page).toHaveURL(/#v4\/scholar\/viz\/module\/viz03\?books=zaliznyak-aaz-index/);
+    await expect(page.locator('.viz-shell')).toBeVisible();
+    await expect(page.locator('.viz-source-chip')).toContainText('Из жизни слов и языков');
+    await expect(page.locator('.viz-corpus-link')).toHaveAttribute('href', /#v4\/corpus\/viz\/module\/viz03\?books=zaliznyak-aaz-index/);
+  });
+
   test('viz modules switch and render timeline + heatmap', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/scholar/viz/module/viz03');
     await expect(page.locator('.tl-wrap')).toBeVisible();
