@@ -210,6 +210,31 @@ def check_static_guards():
             print(f"[static] FAIL: required content report fragment missing: {needle}")
             return False
 
+    content_dir = os.path.join('src', 'content')
+    if not os.path.isdir(content_dir):
+        print('[static] FAIL: src/content is missing')
+        return False
+    markdown_files = [
+        os.path.join(content_dir, name)
+        for name in os.listdir(content_dir)
+        if name.endswith('.md')
+    ]
+    if not markdown_files:
+        print('[static] FAIL: src/content has no markdown files')
+        return False
+    missing_corpus_metadata = []
+    for path in markdown_files:
+        with open(path, 'r', encoding='utf-8') as f:
+            head = ''.join(f.readline() for _ in range(16))
+        if not head.startswith('---\n') or '\nsource: ' not in head or '\nbook_id: ' not in head:
+            missing_corpus_metadata.append(path)
+            if len(missing_corpus_metadata) >= 5:
+                break
+    if missing_corpus_metadata:
+        sample = ', '.join(missing_corpus_metadata)
+        print(f"[static] FAIL: markdown corpus metadata missing in {sample}")
+        return False
+
     print("[static] OK: guards passed")
     return True
 
