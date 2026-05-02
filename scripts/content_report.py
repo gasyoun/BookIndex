@@ -22,6 +22,10 @@ ENTITY_KEYS = (
     "subject_index",
 )
 
+DEFAULT_CORPUS_BOOK_ID = "zaliznyak-aaz-index"
+DEFAULT_CORPUS_BOOK_TITLE = "Из жизни слов и языков"
+DEFAULT_VIDEO_CATALOG_COUNT = 200
+
 
 def pct(part: int, total: int) -> float:
     if total <= 0:
@@ -123,10 +127,12 @@ def collect_corpus_metrics(data: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(corpus, dict):
         return {
             "present": False,
-            "active_book_id": None,
-            "books_total": 0,
-            "source_types_total": 0,
-            "planned_video_count": 0,
+            "mode": "runtime_default",
+            "active_book_id": DEFAULT_CORPUS_BOOK_ID,
+            "active_book_title": DEFAULT_CORPUS_BOOK_TITLE,
+            "books_total": 1,
+            "source_types_total": 2,
+            "planned_video_count": DEFAULT_VIDEO_CATALOG_COUNT,
         }
 
     books = corpus.get("books")
@@ -142,7 +148,17 @@ def collect_corpus_metrics(data: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "present": True,
+        "mode": "explicit",
         "active_book_id": corpus.get("active_book_id") if isinstance(corpus.get("active_book_id"), str) else None,
+        "active_book_title": next(
+            (
+                str(book.get("title"))
+                for book in book_items
+                if isinstance(book.get("title"), str)
+                and book.get("book_id") == corpus.get("active_book_id")
+            ),
+            None,
+        ),
         "books_total": len(book_items),
         "source_types_total": len(source_type_items),
         "planned_video_count": planned_video,
@@ -208,7 +224,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Source: `{report['source']}`",
         f"- Schema: `{report.get('schema_version')}`",
         f"- Book pages: `{report.get('book_total_pages')}`",
-        f"- Corpus registry: `{'present' if report.get('corpus', {}).get('present') else 'runtime default'}`",
+        f"- Corpus registry: `{report.get('corpus', {}).get('mode', 'runtime_default')}`",
         "",
         "## Totals",
         "",
@@ -228,6 +244,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "## Corpus",
         "",
         f"- Active book: `{report.get('corpus', {}).get('active_book_id') or 'runtime default'}`",
+        f"- Active title: `{report.get('corpus', {}).get('active_book_title') or 'runtime default'}`",
         f"- Books: {report.get('corpus', {}).get('books_total', 0)}",
         f"- Source types: {report.get('corpus', {}).get('source_types_total', 0)}",
         f"- Planned videos: {report.get('corpus', {}).get('planned_video_count', 0)}",
