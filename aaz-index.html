@@ -76324,7 +76324,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'f35bcd7f834d';
+const APP_BUILD_ID = '7a601a7dacc4';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79898,7 +79898,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'f35bcd7f834d' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '7a601a7dacc4' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -80096,10 +80096,14 @@ function getItemByTypeAndHead(type, head) {
 
 function itemToMarkdown(it, type) {
   const pages = (it.page_list || []);
+  const bookId = String(it.book_id || it.bookId || getActiveBook().book_id || '');
+  const bookLabel = getBookLabelForSearch(bookId);
   const yaml = [
     '---',
     `title: "${String(it.head || '').replace(/"/g, '\\"')}"`,
     `type: "${type}"`,
+    `source: "${String(bookLabel || '').replace(/"/g, '\\"')}"`,
+    `book_id: "${String(bookId || '').replace(/"/g, '\\"')}"`,
     `discussed: ${it.discussed ? 'true' : 'false'}`,
     `pages_count: ${pages.length}`,
     '---',
@@ -80110,6 +80114,10 @@ function itemToMarkdown(it, type) {
   lines.push('');
   lines.push(`Тип: **${type}**`);
   lines.push('');
+  if (bookLabel) {
+    lines.push(`Источник: **${bookLabel}**`);
+    lines.push('');
+  }
   lines.push(`Страницы: ${it.pages || it.head_pages || pages.join(', ') || '—'}`);
   lines.push('');
   if (it.is_moderator && it.moderator_note) {

@@ -3781,10 +3781,14 @@ function getItemByTypeAndHead(type, head) {
 
 function itemToMarkdown(it, type) {
   const pages = (it.page_list || []);
+  const bookId = String(it.book_id || it.bookId || getActiveBook().book_id || '');
+  const bookLabel = getBookLabelForSearch(bookId);
   const yaml = [
     '---',
     `title: "${String(it.head || '').replace(/"/g, '\\"')}"`,
     `type: "${type}"`,
+    `source: "${String(bookLabel || '').replace(/"/g, '\\"')}"`,
+    `book_id: "${String(bookId || '').replace(/"/g, '\\"')}"`,
     `discussed: ${it.discussed ? 'true' : 'false'}`,
     `pages_count: ${pages.length}`,
     '---',
@@ -3795,6 +3799,10 @@ function itemToMarkdown(it, type) {
   lines.push('');
   lines.push(`Тип: **${type}**`);
   lines.push('');
+  if (bookLabel) {
+    lines.push(`Источник: **${bookLabel}**`);
+    lines.push('');
+  }
   lines.push(`Страницы: ${it.pages || it.head_pages || pages.join(', ') || '—'}`);
   lines.push('');
   if (it.is_moderator && it.moderator_note) {

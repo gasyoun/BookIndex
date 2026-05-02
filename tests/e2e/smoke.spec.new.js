@@ -275,6 +275,13 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#right-content .card h2')).toBeVisible();
     await expect(page.locator('#right-content button#copy-card-link')).toBeVisible();
     await expect(page.locator('#right-content button#export-card-md')).toBeVisible();
+    const cardDownloadPromise = page.waitForEvent('download');
+    await page.locator('#right-content button#export-card-md').click();
+    const cardDownload = await cardDownloadPromise;
+    const cardPath = await cardDownload.path();
+    const cardMarkdown = cardPath ? await fs.readFile(cardPath, 'utf8') : '';
+    expect(cardMarkdown).toContain('source: "Из жизни слов и языков"');
+    expect(cardMarkdown).toContain('book_id: "zaliznyak-aaz-index"');
     await page.locator('#right-content button#copy-card-link').click();
     await expect(page.locator('#ui-live-status')).toHaveCount(1);
     await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
