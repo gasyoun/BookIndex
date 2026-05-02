@@ -8657,6 +8657,7 @@ function buildKwicContextRow(opts) {
   const rightText = snippet.slice(idx + len, rightEnd);
   return {
     source: String(opts.source || 'lexicon'),
+    bookId: String(opts.bookId || getActiveBook().book_id || ''),
     term: String(opts.term || ''),
     itemType: String(opts.itemType || 'lexicon'),
     itemHead: String(opts.itemHead || ''),
@@ -8965,6 +8966,11 @@ function renderKwicPanel(container) {
       pageLink.href = buildReadingNowHash(r.page);
       pageLink.textContent = `стр. ${r.page}`;
       head.appendChild(pageLink);
+
+      const sourceChip = document.createElement('span');
+      sourceChip.className = 'kwic-source-chip';
+      sourceChip.textContent = getBookLabelForSearch(r.bookId);
+      head.appendChild(sourceChip);
 
       const context = document.createElement('div');
       context.className = 'kwic-context';

@@ -2592,6 +2592,17 @@
     font-size: 11px;
     text-decoration: underline dotted;
   }
+  .kwic-source-chip {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.25;
+    max-width: 220px;
+    overflow-wrap: anywhere;
+    padding: 2px 6px;
+  }
   .kwic-context {
     color: var(--text);
     font-size: 13px;
@@ -76238,7 +76249,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '90db15520761';
+const APP_BUILD_ID = 'a7e278038f84';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79786,7 +79797,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '90db15520761' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'a7e278038f84' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -84886,6 +84897,7 @@ function buildKwicContextRow(opts) {
   const rightText = snippet.slice(idx + len, rightEnd);
   return {
     source: String(opts.source || 'lexicon'),
+    bookId: String(opts.bookId || getActiveBook().book_id || ''),
     term: String(opts.term || ''),
     itemType: String(opts.itemType || 'lexicon'),
     itemHead: String(opts.itemHead || ''),
@@ -85194,6 +85206,11 @@ function renderKwicPanel(container) {
       pageLink.href = buildReadingNowHash(r.page);
       pageLink.textContent = `стр. ${r.page}`;
       head.appendChild(pageLink);
+
+      const sourceChip = document.createElement('span');
+      sourceChip.className = 'kwic-source-chip';
+      sourceChip.textContent = getBookLabelForSearch(r.bookId);
+      head.appendChild(sourceChip);
 
       const context = document.createElement('div');
       context.className = 'kwic-context';

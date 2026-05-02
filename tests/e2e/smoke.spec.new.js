@@ -654,6 +654,7 @@ test.describe('aaz-index smoke', () => {
 
     const firstLexRow = page.locator('#kwic-results .kwic-row').first();
     await expect(firstLexRow).toBeVisible();
+    await expect(firstLexRow.locator('.kwic-source-chip')).toContainText('Из жизни слов и языков');
     await firstLexRow.locator('.kwic-page-link').first().click();
     await expect(page).toHaveURL(/#(?:v4\/)?materials\/lectures\/reading\/\d+/);
 
