@@ -41,6 +41,8 @@ def check_static_guards():
         js = f.read()
     with open('v3_template.html', 'r', encoding='utf-8') as f:
         tpl = f.read()
+    with open(os.path.join('scripts', 'export_app_data_to_markdown.mjs'), 'r', encoding='utf-8') as f:
+        flat_exporter = f.read()
     if not os.path.exists('sw.js'):
         print('[static] FAIL: sw.js is missing')
         return False
@@ -118,6 +120,12 @@ def check_static_guards():
         'const kwicTruncated = rows && rows._truncated === true;',
         'function prefersReducedMotion() {',
         "window.matchMedia('(prefers-reduced-motion: reduce)'",
+        'function buildDefaultCorpusRegistry() {',
+        "active_book_id: 'zaliznyak-aaz-index'",
+        'function applyActiveBookFromQuery(query) {',
+        "params.get('books') || params.get('book')",
+        "params.set('books', activeBookId);",
+        'function renderCorpusQualityPanel(panel) {',
     ]
 
     for needle in banned:
@@ -174,6 +182,18 @@ def check_static_guards():
     for needle in manifest_required:
         if needle not in manifest:
             print(f"[static] FAIL: required manifest fragment missing: {needle}")
+            return False
+
+    flat_exporter_required = [
+        "const DEFAULT_CORPUS_BOOK = {",
+        "book_id: 'zaliznyak-aaz-index'",
+        'function getCorpusBookMeta(data, entity) {',
+        'if (meta.source) lines.push(`source: ${JSON.stringify(meta.source)}`);',
+        'if (meta.bookId) lines.push(`book_id: ${JSON.stringify(meta.bookId)}`);',
+    ]
+    for needle in flat_exporter_required:
+        if needle not in flat_exporter:
+            print(f"[static] FAIL: required flat exporter fragment missing: {needle}")
             return False
 
     print("[static] OK: guards passed")
