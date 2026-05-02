@@ -118,6 +118,37 @@ def collect_entity_metrics(items: list[Any]) -> dict[str, Any]:
     }
 
 
+def collect_corpus_metrics(data: dict[str, Any]) -> dict[str, Any]:
+    corpus = data.get("corpus")
+    if not isinstance(corpus, dict):
+        return {
+            "present": False,
+            "active_book_id": None,
+            "books_total": 0,
+            "source_types_total": 0,
+            "planned_video_count": 0,
+        }
+
+    books = corpus.get("books")
+    source_types = corpus.get("source_types")
+    book_items = [book for book in books if isinstance(book, dict)] if isinstance(books, list) else []
+    source_type_items = [item for item in source_types if isinstance(item, dict)] if isinstance(source_types, list) else []
+    planned_video = 0
+    for item in source_type_items:
+        if item.get("type") == "video_catalog":
+            count = item.get("planned_count")
+            planned_video = count if isinstance(count, int) and count >= 0 else 0
+            break
+
+    return {
+        "present": True,
+        "active_book_id": corpus.get("active_book_id") if isinstance(corpus.get("active_book_id"), str) else None,
+        "books_total": len(book_items),
+        "source_types_total": len(source_type_items),
+        "planned_video_count": planned_video,
+    }
+
+
 def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
     book_stats = data.get("book_stats", {})
     total_pages = book_stats.get("total_pages")
@@ -163,6 +194,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "source": source,
         "schema_version": data.get("schema_version"),
         "book_total_pages": total_pages,
+        "corpus": collect_corpus_metrics(data),
         "entities": entities,
         "totals": totals,
     }
@@ -176,6 +208,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Source: `{report['source']}`",
         f"- Schema: `{report.get('schema_version')}`",
         f"- Book pages: `{report.get('book_total_pages')}`",
+        f"- Corpus registry: `{'present' if report.get('corpus', {}).get('present') else 'runtime default'}`",
         "",
         "## Totals",
         "",
@@ -191,6 +224,13 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- `suspect=true`: {totals['items_suspect_true']}",
         f"- Context snippets: {totals['context_snippets_total']}",
         f"- Duplicate heads groups: {totals['duplicate_heads_count']}",
+        "",
+        "## Corpus",
+        "",
+        f"- Active book: `{report.get('corpus', {}).get('active_book_id') or 'runtime default'}`",
+        f"- Books: {report.get('corpus', {}).get('books_total', 0)}",
+        f"- Source types: {report.get('corpus', {}).get('source_types_total', 0)}",
+        f"- Planned videos: {report.get('corpus', {}).get('planned_video_count', 0)}",
         "",
         "## Entities",
         "",
