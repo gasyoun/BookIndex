@@ -43,6 +43,7 @@ test.describe('aaz-index smoke', () => {
     await scope.selectOption('corpus');
     await expect(scope).toHaveValue('corpus');
     await expect(firstResult).toBeVisible();
+    await expect(page.locator('#global-search-results.open .header-search-group').first()).toContainText('\u0418\u0437 \u0436\u0438\u0437\u043d\u0438 \u0441\u043b\u043e\u0432 \u0438 \u044f\u0437\u044b\u043a\u043e\u0432');
 
     const savedScope = await page.evaluate(() => {
       const raw = localStorage.getItem('zaliznyakiada.ui.v1');

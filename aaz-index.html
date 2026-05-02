@@ -194,6 +194,20 @@
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   }
   .header-search-results.open { display: block; }
+  .header-search-group {
+    background: var(--surface-soft);
+    border-bottom: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0;
+    padding: 6px 10px 5px;
+    text-transform: uppercase;
+  }
+  .header-search-group:first-child {
+    border-top: 0;
+  }
   .corpus-status {
     align-items: center;
     display: flex;
@@ -76191,7 +76205,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '98eab3f132b2';
+const APP_BUILD_ID = '00bfecfb9cb4';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79430,6 +79444,15 @@ function appendGlobalSearchResult(box, match, idx, query) {
   box.appendChild(row);
 }
 
+function appendGlobalSearchSourceGroup(box, label) {
+  if (!box || !label) return;
+  const group = document.createElement('div');
+  group.className = 'header-search-group';
+  safeSetAttr(group, 'role', 'presentation');
+  group.textContent = label;
+  box.appendChild(group);
+}
+
 function renderGlobalSearchResults(matches, query = '') {
   const box = document.getElementById('global-search-results');
   const input = document.getElementById('global-search');
@@ -79441,7 +79464,18 @@ function renderGlobalSearchResults(matches, query = '') {
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
   safeSetAttr(box, 'role', 'listbox');
   box.textContent = '';
-  matches.forEach((m, idx) => appendGlobalSearchResult(box, m, idx, q));
+  const groupedBySource = normalizeGlobalSearchScope(globalSearchScope) === 'corpus';
+  let lastBookId = '';
+  matches.forEach((m, idx) => {
+    if (groupedBySource) {
+      const bookId = m && m.bookId ? String(m.bookId) : '';
+      if (bookId !== lastBookId) {
+        appendGlobalSearchSourceGroup(box, getBookLabelForSearch(bookId) || 'Corpus source');
+        lastBookId = bookId;
+      }
+    }
+    appendGlobalSearchResult(box, m, idx, q);
+  });
   box._matches = matches;
   globalSearchActiveIndex = -1;
   box.classList.add('open');
@@ -79708,7 +79742,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '98eab3f132b2' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '00bfecfb9cb4' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;

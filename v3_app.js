@@ -3248,6 +3248,15 @@ function appendGlobalSearchResult(box, match, idx, query) {
   box.appendChild(row);
 }
 
+function appendGlobalSearchSourceGroup(box, label) {
+  if (!box || !label) return;
+  const group = document.createElement('div');
+  group.className = 'header-search-group';
+  safeSetAttr(group, 'role', 'presentation');
+  group.textContent = label;
+  box.appendChild(group);
+}
+
 function renderGlobalSearchResults(matches, query = '') {
   const box = document.getElementById('global-search-results');
   const input = document.getElementById('global-search');
@@ -3259,7 +3268,18 @@ function renderGlobalSearchResults(matches, query = '') {
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
   safeSetAttr(box, 'role', 'listbox');
   box.textContent = '';
-  matches.forEach((m, idx) => appendGlobalSearchResult(box, m, idx, q));
+  const groupedBySource = normalizeGlobalSearchScope(globalSearchScope) === 'corpus';
+  let lastBookId = '';
+  matches.forEach((m, idx) => {
+    if (groupedBySource) {
+      const bookId = m && m.bookId ? String(m.bookId) : '';
+      if (bookId !== lastBookId) {
+        appendGlobalSearchSourceGroup(box, getBookLabelForSearch(bookId) || 'Corpus source');
+        lastBookId = bookId;
+      }
+    }
+    appendGlobalSearchResult(box, m, idx, q);
+  });
   box._matches = matches;
   globalSearchActiveIndex = -1;
   box.classList.add('open');
