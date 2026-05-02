@@ -4520,7 +4520,7 @@ function renderCorpusSourcesPanel(container) {
   sourceTypes.forEach(type => {
     const source = {
       ...type,
-      title: type.title || type.type,
+      title: type.title || type.label || type.type,
       description: type.type === 'video_catalog'
         ? 'Будущий каталог видео Зализняка с тайм-кодами и стенограммами.'
         : '',

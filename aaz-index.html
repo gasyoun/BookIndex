@@ -76374,7 +76374,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '5000d654fd45';
+const APP_BUILD_ID = 'f08997a1e57a';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79970,7 +79970,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '5000d654fd45' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'f08997a1e57a' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -80885,7 +80885,7 @@ function renderCorpusSourcesPanel(container) {
   sourceTypes.forEach(type => {
     const source = {
       ...type,
-      title: type.title || type.type,
+      title: type.title || type.label || type.type,
       description: type.type === 'video_catalog'
         ? 'Будущий каталог видео Зализняка с тайм-кодами и стенограммами.'
         : '',

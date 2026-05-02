@@ -132,6 +132,7 @@ def check_static_guards():
         "params.get('books') || params.get('book')",
         "params.set('books', activeBookId);",
         'function renderCorpusQualityPanel(panel) {',
+        'title: type.title || type.label || type.type',
     ]
 
     for needle in banned:
