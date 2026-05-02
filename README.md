@@ -272,7 +272,7 @@ python scripts/content_report.py --format json
 | [vite.config.mjs](vite.config.mjs) | Vite-конфигурация альтернативной single-file сборки |
 | [scripts/vite/postbuild-copy.mjs](scripts/vite/postbuild-copy.mjs) | Копирование `dist-vite/index.html` в `aaz-index.html` |
 | [scripts/viz/](scripts/viz/) | VIZ-модули, query-state helper и препроцессор кэша (`viz-state.js`, `build-viz-cache.js`, `build-viz-cache-worker.js`) |
-| [scripts/validate_content.py](scripts/validate_content.py) | Структурная валидация данных |
+| [scripts/validate_content.py](scripts/validate_content.py) | Структурная валидация данных и `APP_DATA.corpus` registry |
 | [schemas/app_data.schema.json](schemas/app_data.schema.json) | JSON Schema для структуры `app_data.json` |
 | [scripts/content_report.py](scripts/content_report.py) | Отчёты по покрытию контента |
 | [scripts/check_encoding.py](scripts/check_encoding.py) | UTF-8/mojibake guard |
