@@ -409,6 +409,34 @@ def validate_cross_links(data: dict[str, Any], idx: dict[str, set[str]], errors:
                         )
 
 
+def validate_markdown_exports(data_path: Path, errors: list[str], warnings: list[str]) -> None:
+    content_dir = data_path.parent / "src" / "content"
+    if not content_dir.exists():
+        return
+    if not content_dir.is_dir():
+        fail(f"[markdown_exports] expected directory: {content_dir}", errors)
+        return
+
+    markdown_files = sorted(content_dir.glob("*.md"))
+    if not markdown_files:
+        warn(f"[markdown_exports] no markdown files found in {content_dir}", warnings)
+        return
+
+    missing: list[str] = []
+    for path in markdown_files:
+        head = "".join(path.read_text(encoding="utf-8").splitlines(keepends=True)[:16])
+        if not head.startswith("---\n") or "\nsource: " not in head or "\nbook_id: " not in head:
+            missing.append(str(path))
+            if len(missing) >= 10:
+                break
+    if missing:
+        fail(
+            "[markdown_exports] files missing source/book_id frontmatter: "
+            + ", ".join(missing),
+            errors,
+        )
+
+
 def main() -> int:
     path = Path(sys.argv[1] if len(sys.argv) > 1 else "app_data.json")
     if not path.exists():
@@ -436,6 +464,7 @@ def main() -> int:
     validate_chapters(data, errors)
     validate_edges(data, entity_index, errors)
     validate_cross_links(data, entity_index, errors)
+    validate_markdown_exports(path, errors, warnings)
 
     print("validate_content.py report")
     print(f"- file: {path}")

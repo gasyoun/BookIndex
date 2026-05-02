@@ -45,6 +45,8 @@ def check_static_guards():
         flat_exporter = f.read()
     with open(os.path.join('scripts', 'content_report.py'), 'r', encoding='utf-8') as f:
         content_report = f.read()
+    with open(os.path.join('scripts', 'validate_content.py'), 'r', encoding='utf-8') as f:
+        validate_content = f.read()
     if not os.path.exists('sw.js'):
         print('[static] FAIL: sw.js is missing')
         return False
@@ -210,6 +212,16 @@ def check_static_guards():
     for needle in content_report_required:
         if needle not in content_report:
             print(f"[static] FAIL: required content report fragment missing: {needle}")
+            return False
+
+    validate_content_required = [
+        'def validate_markdown_exports(data_path: Path, errors: list[str], warnings: list[str]) -> None:',
+        '"[markdown_exports] files missing source/book_id frontmatter: "',
+        'validate_markdown_exports(path, errors, warnings)',
+    ]
+    for needle in validate_content_required:
+        if needle not in validate_content:
+            print(f"[static] FAIL: required content validator fragment missing: {needle}")
             return False
 
     content_dir = os.path.join('src', 'content')
