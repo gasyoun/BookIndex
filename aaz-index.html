@@ -76324,7 +76324,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '7a601a7dacc4';
+const APP_BUILD_ID = '94d14539150b';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79898,7 +79898,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '7a601a7dacc4' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '94d14539150b' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -80152,15 +80152,26 @@ function exportCurrentCardMarkdown() {
 function exportCurrentSectionMarkdown() {
   const conf = ENTITY_TYPES[currentEntity];
   if (!conf || !Array.isArray(conf.items)) return;
+  const activeBook = getActiveBook();
+  const activeBookId = activeBook.book_id || '';
+  const activeBookLabel = getBookLabelForSearch(activeBookId);
   const blocks = [];
   blocks.push(`# Раздел: ${conf.title}`);
   blocks.push('');
+  if (activeBookLabel) {
+    blocks.push(`Источник: **${activeBookLabel}**`);
+    blocks.push('');
+  }
   blocks.push(`Всего карточек: ${conf.items.length}`);
   blocks.push('');
   for (const it of conf.items) {
     const refType = it._entityType || currentEntity;
+    const itemBookId = String(it.book_id || it.bookId || activeBookId || '');
+    const itemBookLabel = getBookLabelForSearch(itemBookId);
     blocks.push(`## [[${it.head}]]`);
     blocks.push(`- Тип: ${refType}`);
+    if (itemBookLabel) blocks.push(`- Источник: ${itemBookLabel}`);
+    if (itemBookId) blocks.push(`- book_id: ${itemBookId}`);
     blocks.push(`- Страницы: ${it.pages || it.head_pages || (it.page_list || []).join(', ') || '—'}`);
     blocks.push('');
   }

@@ -755,6 +755,14 @@ test.describe('aaz-index smoke', () => {
       return btn.getBoundingClientRect().bottom <= content.getBoundingClientRect().top + 2;
     });
     expect(exportAboveContent).toBeTruthy();
+
+    const sectionDownloadPromise = page.waitForEvent('download');
+    await exportButton.click();
+    const sectionDownload = await sectionDownloadPromise;
+    const sectionPath = await sectionDownload.path();
+    const sectionMarkdown = sectionPath ? await fs.readFile(sectionPath, 'utf8') : '';
+    expect(sectionMarkdown).toContain('Источник: **Из жизни слов и языков**');
+    expect(sectionMarkdown).toContain('- book_id: zaliznyak-aaz-index');
   });
 
   test('accented heads render as accent-safe spans in list and card', async ({ page }) => {

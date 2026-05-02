@@ -3837,15 +3837,26 @@ function exportCurrentCardMarkdown() {
 function exportCurrentSectionMarkdown() {
   const conf = ENTITY_TYPES[currentEntity];
   if (!conf || !Array.isArray(conf.items)) return;
+  const activeBook = getActiveBook();
+  const activeBookId = activeBook.book_id || '';
+  const activeBookLabel = getBookLabelForSearch(activeBookId);
   const blocks = [];
   blocks.push(`# Раздел: ${conf.title}`);
   blocks.push('');
+  if (activeBookLabel) {
+    blocks.push(`Источник: **${activeBookLabel}**`);
+    blocks.push('');
+  }
   blocks.push(`Всего карточек: ${conf.items.length}`);
   blocks.push('');
   for (const it of conf.items) {
     const refType = it._entityType || currentEntity;
+    const itemBookId = String(it.book_id || it.bookId || activeBookId || '');
+    const itemBookLabel = getBookLabelForSearch(itemBookId);
     blocks.push(`## [[${it.head}]]`);
     blocks.push(`- Тип: ${refType}`);
+    if (itemBookLabel) blocks.push(`- Источник: ${itemBookLabel}`);
+    if (itemBookId) blocks.push(`- book_id: ${itemBookId}`);
     blocks.push(`- Страницы: ${it.pages || it.head_pages || (it.page_list || []).join(', ') || '—'}`);
     blocks.push('');
   }
