@@ -76324,7 +76324,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '692c38a1271b';
+const APP_BUILD_ID = 'b4ef409fba23';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79898,7 +79898,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '692c38a1271b' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'b4ef409fba23' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -86732,7 +86732,11 @@ function renderScholarPanel(container) {
       </table></div>`;
       const mdHeader = `| № | ${labels.join(' | ')} |`;
       const mdSep = `| ${['---', ...labels.map(() => '---')].join(' | ')} |`;
-      lastMd = ['# Сравнение акцентологических парадигм', '', mdHeader, mdSep, ...mdRows, ''].join('\n');
+      const activeBook = getActiveBook();
+      const activeBookId = activeBook.book_id || '';
+      const activeBookLabel = getBookLabelForSearch(activeBookId);
+      const sourceLines = activeBookLabel ? [`Источник: **${activeBookLabel}**`, `book_id: ${activeBookId}`, ''] : [];
+      lastMd = ['# Сравнение акцентологических парадигм', '', ...sourceLines, mdHeader, mdSep, ...mdRows, ''].join('\n');
     };
     if (paradigms.length > 1) {
       accentCompareA.value = '0';

@@ -971,6 +971,13 @@ test.describe('aaz-index smoke', () => {
     await page.selectOption('#accent-compare-c', '4');
     await expect(page.locator('#accent-compare-box table')).toBeVisible();
     await expect(page.locator('#accent-compare-box td').first()).toBeVisible();
+    const accentDownloadPromise = page.waitForEvent('download');
+    await page.locator('#accent-compare-export-md').click();
+    const accentDownload = await accentDownloadPromise;
+    const accentPath = await accentDownload.path();
+    const accentMarkdown = accentPath ? await fs.readFile(accentPath, 'utf8') : '';
+    expect(accentMarkdown).toContain('Источник: **Из жизни слов и языков**');
+    expect(accentMarkdown).toContain('book_id: zaliznyak-aaz-index');
   });
 
   test('phonetic correspondences table supports filters and links', async ({ page }) => {

@@ -10417,7 +10417,11 @@ function renderScholarPanel(container) {
       </table></div>`;
       const mdHeader = `| № | ${labels.join(' | ')} |`;
       const mdSep = `| ${['---', ...labels.map(() => '---')].join(' | ')} |`;
-      lastMd = ['# Сравнение акцентологических парадигм', '', mdHeader, mdSep, ...mdRows, ''].join('\n');
+      const activeBook = getActiveBook();
+      const activeBookId = activeBook.book_id || '';
+      const activeBookLabel = getBookLabelForSearch(activeBookId);
+      const sourceLines = activeBookLabel ? [`Источник: **${activeBookLabel}**`, `book_id: ${activeBookId}`, ''] : [];
+      lastMd = ['# Сравнение акцентологических парадигм', '', ...sourceLines, mdHeader, mdSep, ...mdRows, ''].join('\n');
     };
     if (paradigms.length > 1) {
       accentCompareA.value = '0';
