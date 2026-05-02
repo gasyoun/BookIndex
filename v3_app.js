@@ -9636,6 +9636,9 @@ function renderScholarChronologyPanel(container) {
   const buildMarkdown = (rows) => {
     const start = Math.min(state.start, state.end);
     const end = Math.max(state.start, state.end);
+    const activeBook = getActiveBook();
+    const activeBookId = activeBook.book_id || '';
+    const activeBookLabel = getBookLabelForSearch(activeBookId);
     const lines = [
       '# Хронология лингвистических открытий',
       '',
@@ -9643,6 +9646,9 @@ function renderScholarChronologyPanel(container) {
       `Фильтр по типу: ${typeLabels[state.type] || typeLabels.all}`,
       '',
     ];
+    if (activeBookLabel) {
+      lines.splice(4, 0, `Источник: **${activeBookLabel}**`, `book_id: ${activeBookId}`);
+    }
     for (const ev of rows) {
       const page = ev.page ? ` (стр. ${ev.page})` : '';
       lines.push(`- [${ev._yearLabel}] ${ev.event}${page}`);

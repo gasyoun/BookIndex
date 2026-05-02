@@ -76324,7 +76324,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '94d14539150b';
+const APP_BUILD_ID = '692c38a1271b';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79898,7 +79898,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '94d14539150b' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '692c38a1271b' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -85951,6 +85951,9 @@ function renderScholarChronologyPanel(container) {
   const buildMarkdown = (rows) => {
     const start = Math.min(state.start, state.end);
     const end = Math.max(state.start, state.end);
+    const activeBook = getActiveBook();
+    const activeBookId = activeBook.book_id || '';
+    const activeBookLabel = getBookLabelForSearch(activeBookId);
     const lines = [
       '# Хронология лингвистических открытий',
       '',
@@ -85958,6 +85961,9 @@ function renderScholarChronologyPanel(container) {
       `Фильтр по типу: ${typeLabels[state.type] || typeLabels.all}`,
       '',
     ];
+    if (activeBookLabel) {
+      lines.splice(4, 0, `Источник: **${activeBookLabel}**`, `book_id: ${activeBookId}`);
+    }
     for (const ev of rows) {
       const page = ev.page ? ` (стр. ${ev.page})` : '';
       lines.push(`- [${ev._yearLabel}] ${ev.event}${page}`);

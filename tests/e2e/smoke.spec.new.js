@@ -946,6 +946,13 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#chronology-export-md')).toBeVisible();
     await page.selectOption('#chronology-type', 'publication');
     await page.selectOption('#chronology-zoom', 'xx');
+    const chronologyDownloadPromise = page.waitForEvent('download');
+    await page.locator('#chronology-export-md').click();
+    const chronologyDownload = await chronologyDownloadPromise;
+    const chronologyPath = await chronologyDownload.path();
+    const chronologyMarkdown = chronologyPath ? await fs.readFile(chronologyPath, 'utf8') : '';
+    expect(chronologyMarkdown).toContain('Источник: **Из жизни слов и языков**');
+    expect(chronologyMarkdown).toContain('book_id: zaliznyak-aaz-index');
     const row = page.locator('.chronology-event-link').first();
     await expect(row).toBeVisible();
     const before = page.url();
