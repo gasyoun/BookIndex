@@ -42,7 +42,7 @@ _Текстовое поле верхнего уровня не найдено; 
   "source_types": [
     {
       "type": "book",
-      "label": "Printed book index",
+      "label": "Книга",
       "supports": [
         "pages",
         "citations"
@@ -50,7 +50,7 @@ _Текстовое поле верхнего уровня не найдено; 
     },
     {
       "type": "video_catalog",
-      "label": "Lecture video catalog",
+      "label": "Видеокаталог",
       "status": "planned",
       "planned_count": 200,
       "supports": [
