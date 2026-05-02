@@ -13,6 +13,7 @@ MODULE_LAYOUT: tuple[tuple[str, tuple[str, ...]], ...] = (
         (
             "schema_version",
             "schema_migrations",
+            "corpus",
             "labels",
             "colors",
             "epoch_labels",

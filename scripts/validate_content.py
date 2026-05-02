@@ -76,6 +76,87 @@ def validate_schema(data: dict[str, Any], errors: list[str], warnings: list[str]
         fail("[schema] schema_migrations must be list when present", errors)
 
 
+def validate_corpus(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
+    corpus = data.get("corpus")
+    if corpus is None:
+        return
+    if not isinstance(corpus, dict):
+        fail("[corpus] must be object", errors)
+        return
+
+    books = corpus.get("books", [])
+    if not isinstance(books, list):
+        fail("[corpus] books must be list", errors)
+        books = []
+
+    book_ids: list[str] = []
+    for i, book in enumerate(books):
+        if not isinstance(book, dict):
+            fail(f"[corpus] books[{i}] must be object", errors)
+            continue
+        book_id = book.get("book_id")
+        if not isinstance(book_id, str) or not book_id.strip():
+            fail(f"[corpus] books[{i}].book_id must be non-empty string", errors)
+            continue
+        book_ids.append(book_id.strip())
+        source_type = book.get("source_type")
+        if source_type is not None and not isinstance(source_type, str):
+            fail(f"[corpus] books[{i}].source_type must be string", errors)
+        pages_total = book.get("pages_total")
+        if pages_total is not None and (not isinstance(pages_total, int) or pages_total < 1):
+            fail(f"[corpus] books[{i}].pages_total must be positive integer", errors)
+        modules = book.get("content_modules")
+        if modules is not None and not isinstance(modules, list):
+            fail(f"[corpus] books[{i}].content_modules must be list", errors)
+
+    duplicate_ids = [book_id for book_id, count in Counter(book_ids).items() if count > 1]
+    if duplicate_ids:
+        fail(f"[corpus] duplicate book_id values: {', '.join(sorted(duplicate_ids)[:15])}", errors)
+
+    active_book_id = corpus.get("active_book_id")
+    if active_book_id is not None:
+        if not isinstance(active_book_id, str) or not active_book_id.strip():
+            fail("[corpus] active_book_id must be non-empty string", errors)
+        elif book_ids and active_book_id.strip() not in set(book_ids):
+            fail(f"[corpus] active_book_id {active_book_id!r} is not listed in books", errors)
+
+    source_types = corpus.get("source_types", [])
+    if source_types is None:
+        source_types = []
+    if not isinstance(source_types, list):
+        fail("[corpus] source_types must be list", errors)
+        source_types = []
+
+    type_ids: list[str] = []
+    for i, source_type in enumerate(source_types):
+        if not isinstance(source_type, dict):
+            fail(f"[corpus] source_types[{i}] must be object", errors)
+            continue
+        type_id = source_type.get("type")
+        if not isinstance(type_id, str) or not type_id.strip():
+            fail(f"[corpus] source_types[{i}].type must be non-empty string", errors)
+            continue
+        type_ids.append(type_id.strip())
+        planned_count = source_type.get("planned_count")
+        if planned_count is not None and (not isinstance(planned_count, int) or planned_count < 0):
+            fail(f"[corpus] source_types[{i}].planned_count must be non-negative integer", errors)
+        supports = source_type.get("supports")
+        if supports is not None and not isinstance(supports, list):
+            fail(f"[corpus] source_types[{i}].supports must be list", errors)
+
+    duplicate_types = [type_id for type_id, count in Counter(type_ids).items() if count > 1]
+    if duplicate_types:
+        fail(f"[corpus] duplicate source_types values: {', '.join(sorted(duplicate_types)[:15])}", errors)
+
+    known_types = set(type_ids)
+    for i, book in enumerate(books):
+        if not isinstance(book, dict):
+            continue
+        source_type = book.get("source_type")
+        if isinstance(source_type, str) and known_types and source_type not in known_types:
+            warnings.append(f"[corpus] books[{i}].source_type {source_type!r} is not listed in source_types")
+
+
 def validate_against_json_schema(
     data: dict[str, Any],
     errors: list[str],
@@ -342,6 +423,7 @@ def main() -> int:
 
     validate_schema(data, errors, warnings)
     validate_against_json_schema(data, errors, warnings)
+    validate_corpus(data, errors, warnings)
     validate_duplicates(data, errors, warnings)
     validate_editorial_flags(data, errors, warnings)
     validate_sources(data, errors)
