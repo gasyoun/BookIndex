@@ -4245,6 +4245,69 @@ function createCorpusMetric(label, value) {
   return node;
 }
 
+function formatCoveragePercent(count, total) {
+  if (!total) return '0%';
+  return `${Math.round((count / total) * 100)}%`;
+}
+
+function buildCorpusQualityMetrics() {
+  const totals = {
+    items: 0,
+    withPages: 0,
+    withContexts: 0,
+    withSources: 0,
+    duplicateGroups: 0,
+  };
+  for (const conf of Object.values(ENTITY_TYPES || {})) {
+    const items = Array.isArray(conf && conf.items) ? conf.items : [];
+    if (!items.length) continue;
+    const heads = new Map();
+    for (const item of items) {
+      totals.items += 1;
+      if (Array.isArray(item.page_list) && item.page_list.length) totals.withPages += 1;
+      if (Array.isArray(item.contexts) && item.contexts.length) totals.withContexts += 1;
+      if (Array.isArray(item.sources) && item.sources.length) totals.withSources += 1;
+      const head = normalizeSearchText(item.head || '');
+      if (head) heads.set(head, (heads.get(head) || 0) + 1);
+    }
+    for (const count of heads.values()) {
+      if (count > 1) totals.duplicateGroups += 1;
+    }
+  }
+  return {
+    ...totals,
+    pagesCoverage: formatCoveragePercent(totals.withPages, totals.items),
+    contextsCoverage: formatCoveragePercent(totals.withContexts, totals.items),
+    sourcesCoverage: formatCoveragePercent(totals.withSources, totals.items),
+  };
+}
+
+function renderCorpusQualityPanel(panel) {
+  if (!panel) return;
+  const metrics = buildCorpusQualityMetrics();
+  const section = document.createElement('section');
+  section.className = 'corpus-quality-panel';
+  const title = document.createElement('h3');
+  title.className = 'corpus-section-title';
+  title.textContent = '\u041a\u0430\u0447\u0435\u0441\u0442\u0432\u043e \u0434\u0430\u043d\u043d\u044b\u0445';
+  section.appendChild(title);
+
+  const grid = document.createElement('div');
+  grid.className = 'corpus-metrics-row corpus-quality-metrics';
+  grid.appendChild(createCorpusMetric('\u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432', metrics.items));
+  grid.appendChild(createCorpusMetric('page coverage', metrics.pagesCoverage));
+  grid.appendChild(createCorpusMetric('context coverage', metrics.contextsCoverage));
+  grid.appendChild(createCorpusMetric('source coverage', metrics.sourcesCoverage));
+  grid.appendChild(createCorpusMetric('duplicate head groups', metrics.duplicateGroups));
+  section.appendChild(grid);
+
+  const note = document.createElement('p');
+  note.className = 'corpus-quality-note';
+  note.textContent = '\u0411\u044b\u0441\u0442\u0440\u044b\u0439 runtime-\u0441\u0440\u0435\u0437 \u0434\u043b\u044f import readiness; \u043f\u043e\u0434\u0440\u043e\u0431\u043d\u044b\u0439 \u043e\u0442\u0447\u0451\u0442: scripts/content_report.py.';
+  section.appendChild(note);
+  panel.appendChild(section);
+}
+
 function createCorpusSourceCard(source, options = {}) {
   const card = document.createElement('article');
   card.className = 'corpus-source-card';
@@ -4334,6 +4397,7 @@ function renderCorpusSourcesPanel(container) {
   metrics.appendChild(createCorpusMetric('типов источников', sourceTypes.length));
   metrics.appendChild(createCorpusMetric('план видео', plannedVideo && plannedVideo.planned_count ? plannedVideo.planned_count : 0));
   panel.appendChild(metrics);
+  renderCorpusQualityPanel(panel);
 
   const booksTitle = document.createElement('h3');
   booksTitle.className = 'corpus-section-title';

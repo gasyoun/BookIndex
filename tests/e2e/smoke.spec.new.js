@@ -58,7 +58,9 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('.corpus-panel-header h2')).toContainText('Источники корпуса');
     await expect(page.locator('.corpus-source-card').filter({ hasText: 'Из жизни слов и языков' })).toBeVisible();
     await expect(page.locator('.corpus-source-card').filter({ hasText: 'Видеокаталог' })).toContainText('тайм-кодами');
-    await expect(page.locator('.corpus-metrics-row')).toContainText('200');
+    await expect(page.locator('.corpus-metrics-row').first()).toContainText('200');
+    await expect(page.locator('.corpus-quality-panel')).toContainText('source coverage');
+    await expect(page.locator('.corpus-quality-panel')).toContainText('duplicate head groups');
   });
 
   test('PWA manifest and service worker are available', async ({ page }) => {
