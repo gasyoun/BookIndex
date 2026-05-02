@@ -37,6 +37,8 @@ import tempfile
 
 def check_static_guards():
     """Быстрые инварианты по исходному JS, чтобы не терять критичные правки."""
+    with open('app_data.json', 'r', encoding='utf-8') as f:
+        app_data = json.load(f)
     with open('v3_app.js', 'r', encoding='utf-8') as f:
         js = f.read()
     with open('v3_template.html', 'r', encoding='utf-8') as f:
@@ -223,6 +225,47 @@ def check_static_guards():
         if needle not in validate_content:
             print(f"[static] FAIL: required content validator fragment missing: {needle}")
             return False
+
+    corpus = app_data.get('corpus')
+    if not isinstance(corpus, dict):
+        print('[static] FAIL: app_data.json is missing explicit corpus registry')
+        return False
+    if corpus.get('active_book_id') != 'zaliznyak-aaz-index':
+        print('[static] FAIL: corpus.active_book_id must be zaliznyak-aaz-index')
+        return False
+    books = corpus.get('books')
+    if not isinstance(books, list) or not books:
+        print('[static] FAIL: corpus.books must contain the active book')
+        return False
+    active_book = next(
+        (book for book in books if isinstance(book, dict) and book.get('book_id') == 'zaliznyak-aaz-index'),
+        None,
+    )
+    if not active_book:
+        print('[static] FAIL: corpus.books is missing zaliznyak-aaz-index')
+        return False
+    if active_book.get('title') != 'Из жизни слов и языков':
+        print('[static] FAIL: corpus active book title drifted')
+        return False
+    source_types = corpus.get('source_types')
+    if not isinstance(source_types, list):
+        print('[static] FAIL: corpus.source_types must be a list')
+        return False
+    source_type_map = {
+        source_type.get('type'): source_type
+        for source_type in source_types
+        if isinstance(source_type, dict)
+    }
+    if 'book' not in source_type_map or 'video_catalog' not in source_type_map:
+        print('[static] FAIL: corpus source_types must include book and video_catalog')
+        return False
+    if source_type_map['video_catalog'].get('planned_count') != 200:
+        print('[static] FAIL: corpus video_catalog planned_count must be 200')
+        return False
+    video_supports = source_type_map['video_catalog'].get('supports')
+    if not isinstance(video_supports, list) or 'timecodes' not in video_supports:
+        print('[static] FAIL: corpus video_catalog must support timecodes')
+        return False
 
     content_dir = os.path.join('src', 'content')
     if not os.path.isdir(content_dir):
