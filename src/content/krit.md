@@ -2,6 +2,8 @@
 id: "Крит"
 title: "Крит"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 46
 tags: ["toponyms"]
 ---

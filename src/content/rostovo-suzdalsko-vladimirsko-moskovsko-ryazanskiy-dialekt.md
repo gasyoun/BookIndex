@@ -2,6 +2,8 @@
 id: "ростово-суздальско- владимирско-московско-рязанский диалект"
 title: "ростово-суздальско- владимирско-московско-рязанский диалект"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 91
 tags: ["languages"]
 ---

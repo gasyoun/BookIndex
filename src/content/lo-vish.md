@@ -2,6 +2,8 @@
 id: "ло́вишь"
 title: "ло́вишь"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 577
 tags: ["lexicon"]
 ---

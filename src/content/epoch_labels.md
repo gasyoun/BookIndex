@@ -2,6 +2,8 @@
 id: "epoch_labels"
 title: "epoch_labels"
 source_key: "epoch_labels"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 tags: ["epoch_labels"]
 ---
 

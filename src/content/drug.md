@@ -2,6 +2,8 @@
 id: "друг"
 title: "друг"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 331
 tags: ["lexicon"]
 ---

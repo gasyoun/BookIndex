@@ -2,6 +2,8 @@
 id: "затасканное"
 title: "затасканное"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 420
 tags: ["lexicon"]
 ---

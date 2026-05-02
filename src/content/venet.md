@@ -2,6 +2,8 @@
 id: "венет"
 title: "венет"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 104
 tags: ["lexicon"]
 ---

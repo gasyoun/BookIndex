@@ -2,6 +2,8 @@
 id: "учи́шь"
 title: "учи́шь"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1036
 tags: ["lexicon_reverse"]
 ---

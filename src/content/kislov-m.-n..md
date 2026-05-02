@@ -2,6 +2,8 @@
 id: "Кислов М. Н."
 title: "Кислов М. Н."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 45
 tags: ["names"]
 ---

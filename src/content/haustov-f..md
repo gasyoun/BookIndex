@@ -2,6 +2,8 @@
 id: "Хаустов Ф."
 title: "Хаустов Ф."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 82
 tags: ["names"]
 ---

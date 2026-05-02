@@ -2,6 +2,8 @@
 id: "pesak"
 title: "pesak"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1258
 tags: ["lexicon_reverse"]
 ---

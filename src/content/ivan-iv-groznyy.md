@@ -2,6 +2,8 @@
 id: "Иван IV (//Грозный)"
 title: "Иван IV (//Грозный)"
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 38
 tags: ["names"]
 ---

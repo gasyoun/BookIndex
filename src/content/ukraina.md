@@ -2,6 +2,8 @@
 id: "Украина"
 title: "Украина"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 80
 tags: ["toponyms"]
 ---

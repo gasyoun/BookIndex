@@ -2,6 +2,8 @@
 id: "клино"
 title: "клино"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 513
 tags: ["lexicon"]
 ---

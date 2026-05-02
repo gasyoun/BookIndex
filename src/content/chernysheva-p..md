@@ -2,6 +2,8 @@
 id: "Чернышева П."
 title: "Чернышева П."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 86
 tags: ["names"]
 ---

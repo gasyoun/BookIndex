@@ -2,6 +2,8 @@
 id: "русские"
 title: "русские"
 source_key: "ethnonyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 43
 tags: ["ethnonyms"]
 ---

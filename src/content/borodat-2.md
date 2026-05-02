@@ -2,6 +2,8 @@
 id: "бородат"
 title: "бородат"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 679
 tags: ["lexicon_reverse"]
 ---

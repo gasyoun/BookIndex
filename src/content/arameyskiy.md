@@ -2,6 +2,8 @@
 id: "арамейский"
 title: "арамейский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 5
 tags: ["languages"]
 ---

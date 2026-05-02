@@ -2,6 +2,8 @@
 id: "lectures_2"
 title: "Порядок слов"
 source_key: "lectures"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1
 tags: ["lectures"]
 ---

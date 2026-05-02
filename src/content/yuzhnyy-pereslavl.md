@@ -2,6 +2,8 @@
 id: "Южный Переславль"
 title: "Южный Переславль"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 93
 tags: ["toponyms"]
 ---

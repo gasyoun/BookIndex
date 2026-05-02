@@ -2,6 +2,8 @@
 id: "ростово-суздальская земля"
 title: "ростово-суздальская земля"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 70
 tags: ["toponyms"]
 ---

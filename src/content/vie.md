@@ -2,6 +2,8 @@
 id: "vie"
 title: "vie"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1329
 tags: ["lexicon"]
 ---

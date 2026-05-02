@@ -2,6 +2,8 @@
 id: "lecture_summaries_6"
 title: "История русского языка"
 source_key: "lecture_summaries"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 5
 tags: ["lecture_summaries"]
 ---

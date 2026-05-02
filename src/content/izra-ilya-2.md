@@ -2,6 +2,8 @@
 id: "Изра́иля"
 title: "Изра́иля"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1071
 tags: ["lexicon_reverse"]
 ---

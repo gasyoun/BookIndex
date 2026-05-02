@@ -2,6 +2,8 @@
 id: "Шри-Ланка"
 title: "Шри-Ланка"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 92
 tags: ["toponyms"]
 ---

@@ -2,6 +2,8 @@
 id: "glossary_34"
 title: "glossary_34"
 source_key: "glossary"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 33
 tags: ["glossary"]
 ---

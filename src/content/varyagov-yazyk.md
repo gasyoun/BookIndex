@@ -2,6 +2,8 @@
 id: "варягов язык"
 title: "варягов язык"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 15
 tags: ["languages"]
 ---

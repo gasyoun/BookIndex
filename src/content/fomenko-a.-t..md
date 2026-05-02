@@ -2,6 +2,8 @@
 id: "Фоменко А. Т."
 title: "Фоменко А. Т."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 80
 tags: ["names"]
 ---

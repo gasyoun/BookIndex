@@ -2,6 +2,8 @@
 id: "mahärig"
 title: "mahärig"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1212
 tags: ["lexicon"]
 ---

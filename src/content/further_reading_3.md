@@ -2,6 +2,8 @@
 id: "further_reading_3"
 title: "further_reading_3"
 source_key: "further_reading"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 2
 tags: ["further_reading"]
 ---

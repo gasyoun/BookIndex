@@ -2,6 +2,8 @@
 id: "австралийские"
 title: "австралийские"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 0
 tags: ["languages"]
 ---

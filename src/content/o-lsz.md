@@ -2,6 +2,8 @@
 id: "öLsz̲"
 title: "öLsz̲"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1360
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "Мейе А."
 title: "Мейе А."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 55
 tags: ["names"]
 ---

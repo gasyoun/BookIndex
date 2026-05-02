@@ -2,6 +2,8 @@
 id: "римляне"
 title: "римляне"
 source_key: "ethnonyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 42
 tags: ["ethnonyms"]
 ---

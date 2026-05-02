@@ -2,6 +2,8 @@
 id: "Апеннинский полуостров"
 title: "Апеннинский полуостров"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1
 tags: ["toponyms"]
 ---

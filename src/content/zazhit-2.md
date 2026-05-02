@@ -2,6 +2,8 @@
 id: "зажить"
 title: "зажить"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 955
 tags: ["lexicon_reverse"]
 ---

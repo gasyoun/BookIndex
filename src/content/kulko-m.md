@@ -2,6 +2,8 @@
 id: "кулько́м"
 title: "кулько́м"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 546
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "s-t-r"
 title: "s-t-r"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1308
 tags: ["lexicon_reverse"]
 ---

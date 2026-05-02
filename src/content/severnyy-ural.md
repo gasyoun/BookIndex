@@ -2,6 +2,8 @@
 id: "Северный Урал"
 title: "Северный Урал"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 75
 tags: ["toponyms"]
 ---

@@ -2,6 +2,8 @@
 id: "мявкать"
 title: "мявкать"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 904
 tags: ["lexicon_reverse"]
 ---

@@ -2,6 +2,8 @@
 id: "Российская Федерация"
 title: "Российская Федерация"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 67
 tags: ["toponyms"]
 ---

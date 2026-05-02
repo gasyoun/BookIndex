@@ -2,6 +2,8 @@
 id: "lectures_11"
 title: "Или и уже"
 source_key: "lectures"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 10
 tags: ["lectures"]
 ---

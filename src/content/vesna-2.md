@@ -2,6 +2,8 @@
 id: "весна"
 title: "весна"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 92
 tags: ["lexicon_reverse"]
 ---

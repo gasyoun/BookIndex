@@ -2,6 +2,8 @@
 id: "y/sgd"
 title: "y/sgd"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1199
 tags: ["lexicon_reverse"]
 ---

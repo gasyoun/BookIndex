@@ -2,6 +2,8 @@
 id: "готский"
 title: "готский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 22
 tags: ["languages"]
 ---

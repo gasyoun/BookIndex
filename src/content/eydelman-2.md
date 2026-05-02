@@ -2,6 +2,8 @@
 id: "Эйдельман"
 title: "Эйдельман"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 498
 tags: ["lexicon_reverse"]
 ---

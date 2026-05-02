@@ -2,6 +2,8 @@
 id: "language_tree_15"
 title: "Искусственные"
 source_key: "language_tree"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 14
 tags: ["language_tree"]
 ---

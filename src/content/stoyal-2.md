@@ -2,6 +2,8 @@
 id: "стоял"
 title: "стоял"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 471
 tags: ["lexicon_reverse"]
 ---

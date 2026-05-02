@@ -2,6 +2,8 @@
 id: "встал"
 title: "встал"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 409
 tags: ["lexicon_reverse"]
 ---

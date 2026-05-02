@@ -2,6 +2,8 @@
 id: "edges_14"
 title: "edges_14"
 source_key: "edges"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 13
 tags: ["edges"]
 ---

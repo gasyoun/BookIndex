@@ -2,6 +2,8 @@
 id: "birch_bark"
 title: "birch_bark"
 source_key: "tasks"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 5
 tags: ["tasks"]
 ---

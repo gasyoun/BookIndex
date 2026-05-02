@@ -2,6 +2,8 @@
 id: "на Угле́че"
 title: "на Угле́че"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 639
 tags: ["lexicon"]
 ---

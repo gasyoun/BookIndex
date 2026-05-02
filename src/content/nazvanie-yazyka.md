@@ -2,6 +2,8 @@
 id: "название языка"
 title: "название языка"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 31
 tags: ["subject_index"]
 ---

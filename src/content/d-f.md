@@ -2,6 +2,8 @@
 id: "d??f"
 title: "d??f"
 source_key: "lexicon_tech"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 2
 tags: ["lexicon_tech"]
 ---

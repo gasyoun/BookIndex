@@ -2,6 +2,8 @@
 id: "варяги"
 title: "варяги"
 source_key: "ethnonyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 6
 tags: ["ethnonyms"]
 ---

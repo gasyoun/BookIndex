@@ -2,6 +2,8 @@
 id: "?дмъЦе"
 title: "?дмъЦе"
 source_key: "lexicon_tech"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 24
 tags: ["lexicon_tech"]
 ---

@@ -2,6 +2,8 @@
 id: "y/shd"
 title: "y/shd"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1344
 tags: ["lexicon"]
 ---

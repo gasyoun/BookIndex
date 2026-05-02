@@ -2,6 +2,8 @@
 id: "Роулинсон Г."
 title: "Роулинсон Г."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 70
 tags: ["names"]
 ---

@@ -2,6 +2,8 @@
 id: "красотамъ"
 title: "красотамъ"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 535
 tags: ["lexicon"]
 ---

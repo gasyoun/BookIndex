@@ -2,6 +2,8 @@
 id: "продааъ"
 title: "продааъ"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 741
 tags: ["lexicon_reverse"]
 ---

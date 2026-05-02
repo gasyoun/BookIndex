@@ -2,6 +2,8 @@
 id: "schema_version"
 title: "schema_version"
 source_key: "schema_version"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 tags: ["schema_version"]
 ---
 

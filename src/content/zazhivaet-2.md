@@ -2,6 +2,8 @@
 id: "заживает"
 title: "заживает"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 681
 tags: ["lexicon_reverse"]
 ---

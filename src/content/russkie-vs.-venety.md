@@ -2,6 +2,8 @@
 id: "русские vs. венеты"
 title: "русские vs. венеты"
 source_key: "ethnonyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 44
 tags: ["ethnonyms"]
 ---

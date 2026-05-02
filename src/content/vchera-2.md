@@ -2,6 +2,8 @@
 id: "вчера"
 title: "вчера"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 100
 tags: ["lexicon_reverse"]
 ---

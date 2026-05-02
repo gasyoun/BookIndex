@@ -2,6 +2,8 @@
 id: "заимствование, заимствованные слова"
 title: "заимствование, заимствованные слова"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 20
 tags: ["subject_index"]
 ---

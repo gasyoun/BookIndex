@@ -2,6 +2,8 @@
 id: "RgH"
 title: "RgH"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 491
 tags: ["lexicon_reverse"]
 ---

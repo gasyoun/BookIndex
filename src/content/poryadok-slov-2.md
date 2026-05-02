@@ -2,6 +2,8 @@
 id: "порядок слов"
 title: "порядок слов"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 54
 tags: ["subject_index"]
 ---

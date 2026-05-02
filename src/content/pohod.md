@@ -2,6 +2,8 @@
 id: "поход"
 title: "поход"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 772
 tags: ["lexicon"]
 ---

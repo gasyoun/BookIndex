@@ -2,6 +2,8 @@
 id: "держи́шь"
 title: "держи́шь"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 288
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "и́дол"
 title: "и́дол"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 441
 tags: ["lexicon_reverse"]
 ---

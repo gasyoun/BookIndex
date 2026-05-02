@@ -2,6 +2,8 @@
 id: "белый"
 title: "белый"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 348
 tags: ["lexicon_reverse"]
 ---

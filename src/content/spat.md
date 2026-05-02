@@ -2,6 +2,8 @@
 id: "спать"
 title: "спать"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 917
 tags: ["lexicon"]
 ---

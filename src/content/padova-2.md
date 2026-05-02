@@ -2,6 +2,8 @@
 id: "Падова"
 title: "Падова"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 13
 tags: ["lexicon_reverse"]
 ---

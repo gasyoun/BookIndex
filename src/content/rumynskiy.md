@@ -2,6 +2,8 @@
 id: "румынский"
 title: "румынский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 92
 tags: ["languages"]
 ---

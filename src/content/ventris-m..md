@@ -2,6 +2,8 @@
 id: "Вентрис М."
 title: "Вентрис М."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 19
 tags: ["names"]
 ---

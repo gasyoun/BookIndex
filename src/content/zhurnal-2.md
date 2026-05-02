@@ -2,6 +2,8 @@
 id: "журнал"
 title: "журнал"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 404
 tags: ["lexicon_reverse"]
 ---

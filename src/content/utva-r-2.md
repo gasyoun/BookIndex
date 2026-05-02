@@ -2,6 +2,8 @@
 id: "утва́рь"
 title: "утва́рь"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 893
 tags: ["lexicon_reverse"]
 ---

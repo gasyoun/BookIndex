@@ -2,6 +2,8 @@
 id: "Миха́йла"
 title: "Миха́йла"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 602
 tags: ["lexicon"]
 ---

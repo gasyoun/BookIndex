@@ -2,6 +2,8 @@
 id: "до девяти утра́"
 title: "до девяти утра́"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 310
 tags: ["lexicon"]
 ---

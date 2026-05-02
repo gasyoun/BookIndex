@@ -2,6 +2,8 @@
 id: "дѣла"
 title: "дѣла"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 341
 tags: ["lexicon"]
 ---

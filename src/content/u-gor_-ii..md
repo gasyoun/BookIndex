@@ -2,6 +2,8 @@
 id: "у́горь_(II.)"
 title: "у́горь_(II.)"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 998
 tags: ["lexicon"]
 ---

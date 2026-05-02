@@ -2,6 +2,8 @@
 id: "ворчи́шь"
 title: "ворчи́шь"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1035
 tags: ["lexicon_reverse"]
 ---

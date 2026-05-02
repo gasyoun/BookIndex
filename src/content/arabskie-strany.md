@@ -2,6 +2,8 @@
 id: "арабские страны"
 title: "арабские страны"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 2
 tags: ["toponyms"]
 ---

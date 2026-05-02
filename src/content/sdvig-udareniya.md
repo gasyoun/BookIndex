@@ -2,6 +2,8 @@
 id: "сдвиг [ударения]"
 title: "сдвиг [ударения]"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 60
 tags: ["subject_index"]
 ---

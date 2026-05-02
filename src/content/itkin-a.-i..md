@@ -2,6 +2,8 @@
 id: "Иткин А. И."
 title: "Иткин А. И."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 40
 tags: ["names"]
 ---

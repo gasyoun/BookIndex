@@ -2,6 +2,8 @@
 id: "норманны"
 title: "норманны"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 681
 tags: ["lexicon"]
 ---

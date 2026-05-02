@@ -2,6 +2,8 @@
 id: "метод внутренней реконструкции"
 title: "метод внутренней реконструкции"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 27
 tags: ["subject_index"]
 ---

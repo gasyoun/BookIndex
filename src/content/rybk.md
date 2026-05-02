@@ -2,6 +2,8 @@
 id: "рыбк"
 title: "рыбк"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 863
 tags: ["lexicon"]
 ---

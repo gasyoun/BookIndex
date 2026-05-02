@@ -2,6 +2,8 @@
 id: "Толстая М. Н."
 title: "Толстая М. Н."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 76
 tags: ["names"]
 ---

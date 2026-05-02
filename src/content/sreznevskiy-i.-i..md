@@ -2,6 +2,8 @@
 id: "Срезневский И. И."
 title: "Срезневский И. И."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 74
 tags: ["names"]
 ---

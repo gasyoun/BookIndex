@@ -2,6 +2,8 @@
 id: "князь"
 title: "князь"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 516
 tags: ["lexicon"]
 ---

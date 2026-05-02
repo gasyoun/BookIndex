@@ -2,6 +2,8 @@
 id: "Лебедева Е. И."
 title: "Лебедева Е. И."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 51
 tags: ["names"]
 ---

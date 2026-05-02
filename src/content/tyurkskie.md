@@ -2,6 +2,8 @@
 id: "тюркские"
 title: "тюркские"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 113
 tags: ["languages"]
 ---

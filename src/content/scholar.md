@@ -2,6 +2,8 @@
 id: "scholar"
 title: "scholar"
 source_key: "scholar"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 tags: ["scholar"]
 ---
 

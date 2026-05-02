@@ -2,6 +2,8 @@
 id: "Готланд"
 title: "Готланд"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 165
 tags: ["lexicon_reverse"]
 ---

@@ -2,6 +2,8 @@
 id: "норма [языковая]"
 title: "норма [языковая]"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 33
 tags: ["subject_index"]
 ---

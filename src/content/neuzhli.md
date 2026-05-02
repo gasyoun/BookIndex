@@ -2,6 +2,8 @@
 id: "неужли"
 title: "неужли"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 671
 tags: ["lexicon"]
 ---

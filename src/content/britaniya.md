@@ -2,6 +2,8 @@
 id: "Британия"
 title: "Британия"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 11
 tags: ["toponyms"]
 ---

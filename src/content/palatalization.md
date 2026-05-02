@@ -2,6 +2,8 @@
 id: "palatalization"
 title: "Палатализации славянских языков"
 source_key: "phonetic_laws"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 3
 tags: ["phonetic_laws"]
 ---

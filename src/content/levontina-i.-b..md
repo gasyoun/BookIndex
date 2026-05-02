@@ -2,6 +2,8 @@
 id: "Левонтина И. Б."
 title: "Левонтина И. Б."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 52
 tags: ["names"]
 ---

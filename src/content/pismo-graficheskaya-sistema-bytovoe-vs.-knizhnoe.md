@@ -2,6 +2,8 @@
 id: "письмо [= графическая система]: ∼ бытовое vs. книжное"
 title: "письмо [= графическая система]: ∼ бытовое vs. книжное"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 50
 tags: ["subject_index"]
 ---

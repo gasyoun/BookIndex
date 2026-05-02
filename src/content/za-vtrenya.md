@@ -2,6 +2,8 @@
 id: "за́втреня"
 title: "за́втреня"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 379
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "на Ильине ули́це"
 title: "на Ильине ули́це"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 634
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "наступило"
 title: "наступило"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 534
 tags: ["lexicon_reverse"]
 ---

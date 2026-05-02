@@ -2,6 +2,8 @@
 id: "закусать"
 title: "закусать"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 916
 tags: ["lexicon_reverse"]
 ---

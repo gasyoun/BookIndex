@@ -2,6 +2,8 @@
 id: "небосклон"
 title: "небосклон"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 505
 tags: ["lexicon_reverse"]
 ---

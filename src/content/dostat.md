@@ -2,6 +2,8 @@
 id: "достать"
 title: "достать"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 327
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "Гиппиус А. А."
 title: "Гиппиус А. А."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 26
 tags: ["names"]
 ---

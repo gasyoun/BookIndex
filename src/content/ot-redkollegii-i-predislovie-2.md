@@ -2,6 +2,8 @@
 id: "lecture_summaries_1"
 title: "От редколлегии и предисловие"
 source_key: "lecture_summaries"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 0
 tags: ["lecture_summaries"]
 ---

@@ -2,6 +2,8 @@
 id: "на и́ный"
 title: "на и́ный"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 638
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "орёл"
 title: "орёл"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 456
 tags: ["lexicon_reverse"]
 ---

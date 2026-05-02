@@ -2,6 +2,8 @@
 id: "Центральная часть [Руси]"
 title: "Центральная часть [Руси]"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 88
 tags: ["toponyms"]
 ---

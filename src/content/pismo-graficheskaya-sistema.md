@@ -2,6 +2,8 @@
 id: "письмо [= графическая система]"
 title: "письмо [= графическая система]"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 49
 tags: ["subject_index"]
 ---

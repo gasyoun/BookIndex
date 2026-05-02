@@ -2,6 +2,8 @@
 id: "гривны"
 title: "гривны"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 831
 tags: ["lexicon_reverse"]
 ---

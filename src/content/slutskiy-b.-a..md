@@ -2,6 +2,8 @@
 id: "Слуцкий Б. А."
 title: "Слуцкий Б. А."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 73
 tags: ["names"]
 ---

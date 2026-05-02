@@ -2,6 +2,8 @@
 id: "во́инам"
 title: "во́инам"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 145
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "бытовая система письма"
 title: "бытовая система письма"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 13
 tags: ["subject_index"]
 ---

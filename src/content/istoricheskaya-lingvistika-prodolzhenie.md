@@ -2,6 +2,8 @@
 id: "lecture_summaries_4"
 title: "Историческая лингвистика (продолжение)"
 source_key: "lecture_summaries"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 3
 tags: ["lecture_summaries"]
 ---

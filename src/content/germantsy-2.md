@@ -2,6 +2,8 @@
 id: "германцы"
 title: "германцы"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 217
 tags: ["lexicon"]
 ---

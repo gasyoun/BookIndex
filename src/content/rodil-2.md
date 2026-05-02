@@ -2,6 +2,8 @@
 id: "родил"
 title: "родил"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 422
 tags: ["lexicon_reverse"]
 ---

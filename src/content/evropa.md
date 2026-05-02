@@ -2,6 +2,8 @@
 id: "Европа"
 title: "Европа"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 29
 tags: ["toponyms"]
 ---

@@ -2,6 +2,8 @@
 id: "Бопп Фр."
 title: "Бопп Фр."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 13
 tags: ["names"]
 ---

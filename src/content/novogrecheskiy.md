@@ -2,6 +2,8 @@
 id: "новогреческий"
 title: "новогреческий"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 72
 tags: ["languages"]
 ---

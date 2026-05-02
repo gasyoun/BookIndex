@@ -2,6 +2,8 @@
 id: "devl"
 title: "devl"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1273
 tags: ["lexicon_reverse"]
 ---

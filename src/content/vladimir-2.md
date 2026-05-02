@@ -2,6 +2,8 @@
 id: "Владимир"
 title: "Владимир"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 19
 tags: ["toponyms"]
 ---

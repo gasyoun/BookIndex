@@ -2,6 +2,8 @@
 id: "maktab"
 title: "maktab"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1214
 tags: ["lexicon"]
 ---

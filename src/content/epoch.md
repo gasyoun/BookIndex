@@ -2,6 +2,8 @@
 id: "epoch"
 title: "epoch"
 source_key: "tasks"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 0
 tags: ["tasks"]
 ---

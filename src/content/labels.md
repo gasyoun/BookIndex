@@ -2,6 +2,8 @@
 id: "labels"
 title: "labels"
 source_key: "labels"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 tags: ["labels"]
 ---
 

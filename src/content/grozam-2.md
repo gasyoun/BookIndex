@@ -2,6 +2,8 @@
 id: "грозамъ"
 title: "грозамъ"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 261
 tags: ["lexicon"]
 ---

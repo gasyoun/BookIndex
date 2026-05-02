@@ -2,6 +2,8 @@
 id: "позднелатинский"
 title: "позднелатинский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 80
 tags: ["languages"]
 ---

@@ -2,6 +2,8 @@
 id: "grimm"
 title: "Закон Гримма (первое германское передвижение согласных)"
 source_key: "phonetic_laws"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 0
 tags: ["phonetic_laws"]
 ---

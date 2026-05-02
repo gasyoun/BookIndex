@@ -2,6 +2,8 @@
 id: "про́ это"
 title: "про́ это"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 792
 tags: ["lexicon"]
 ---

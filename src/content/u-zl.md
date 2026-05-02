@@ -2,6 +2,8 @@
 id: "у́злъ"
 title: "у́злъ"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1024
 tags: ["lexicon"]
 ---

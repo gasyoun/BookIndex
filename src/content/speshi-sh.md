@@ -2,6 +2,8 @@
 id: "спеши́шь"
 title: "спеши́шь"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 918
 tags: ["lexicon"]
 ---

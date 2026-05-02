@@ -2,6 +2,8 @@
 id: "Исландия"
 title: "Исландия"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 36
 tags: ["toponyms"]
 ---

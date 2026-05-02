@@ -2,6 +2,8 @@
 id: "Пушкин А. С."
 title: "Пушкин А. С."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 68
 tags: ["names"]
 ---

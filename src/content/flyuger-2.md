@@ -2,6 +2,8 @@
 id: "флюгер"
 title: "флюгер"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 627
 tags: ["lexicon_reverse"]
 ---

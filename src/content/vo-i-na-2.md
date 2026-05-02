@@ -2,6 +2,8 @@
 id: "во-и́-на"
 title: "во-и́-на"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 77
 tags: ["lexicon_reverse"]
 ---

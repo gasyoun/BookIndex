@@ -2,6 +2,8 @@
 id: "пошеṗл"
 title: "пошеṗл"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 460
 tags: ["lexicon_reverse"]
 ---

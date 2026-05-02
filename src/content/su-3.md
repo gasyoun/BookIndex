@@ -2,6 +2,8 @@
 id: "su-"
 title: "su-"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1128
 tags: ["lexicon_reverse"]
 ---

@@ -2,6 +2,8 @@
 id: "lectures_10"
 title: "О жизни слов"
 source_key: "lectures"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 9
 tags: ["lectures"]
 ---

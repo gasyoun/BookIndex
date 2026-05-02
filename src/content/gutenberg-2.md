@@ -2,6 +2,8 @@
 id: "Гутенберг"
 title: "Гутенберг"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 149
 tags: ["lexicon_reverse"]
 ---

@@ -2,6 +2,8 @@
 id: "курский говор"
 title: "курский говор"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 60
 tags: ["languages"]
 ---

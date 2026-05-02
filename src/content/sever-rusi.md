@@ -2,6 +2,8 @@
 id: "север [Руси]"
 title: "север [Руси]"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 74
 tags: ["toponyms"]
 ---

@@ -2,6 +2,8 @@
 id: "Брюллов К."
 title: "Брюллов К."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 15
 tags: ["names"]
 ---

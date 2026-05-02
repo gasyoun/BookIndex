@@ -2,6 +2,8 @@
 id: "у́гль"
 title: "у́гль"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 986
 tags: ["lexicon"]
 ---

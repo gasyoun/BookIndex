@@ -2,6 +2,8 @@
 id: "английский"
 title: "английский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 2
 tags: ["languages"]
 ---

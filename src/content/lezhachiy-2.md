@@ -2,6 +2,8 @@
 id: "лежачий"
 title: "лежачий"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 322
 tags: ["lexicon_reverse"]
 ---

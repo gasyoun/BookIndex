@@ -2,6 +2,8 @@
 id: "дубы"
 title: "дубы"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 822
 tags: ["lexicon_reverse"]
 ---

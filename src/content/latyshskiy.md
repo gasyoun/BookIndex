@@ -2,6 +2,8 @@
 id: "латышский"
 title: "латышский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 64
 tags: ["languages"]
 ---

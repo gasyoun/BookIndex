@@ -2,6 +2,8 @@
 id: "до́лбишь"
 title: "до́лбишь"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 999
 tags: ["lexicon_reverse"]
 ---

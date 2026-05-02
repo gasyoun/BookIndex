@@ -2,6 +2,8 @@
 id: "чагатайский"
 title: "чагатайский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 119
 tags: ["languages"]
 ---

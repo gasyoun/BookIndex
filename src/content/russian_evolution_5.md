@@ -2,6 +2,8 @@
 id: "russian_evolution_5"
 title: "russian_evolution_5"
 source_key: "russian_evolution"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 4
 tags: ["russian_evolution"]
 ---

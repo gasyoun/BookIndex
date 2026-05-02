@@ -2,6 +2,8 @@
 id: "германское передвижение согласных"
 title: "германское передвижение согласных"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 17
 tags: ["subject_index"]
 ---

@@ -2,6 +2,8 @@
 id: "и́ного"
 title: "и́ного"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 529
 tags: ["lexicon_reverse"]
 ---

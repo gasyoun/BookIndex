@@ -2,6 +2,8 @@
 id: "Переверзева С. И."
 title: "Переверзева С. И."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 62
 tags: ["names"]
 ---

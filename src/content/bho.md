@@ -2,6 +2,8 @@
 id: "bhö"
 title: "bhö"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1123
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "у́гълом"
 title: "у́гълом"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 481
 tags: ["lexicon_reverse"]
 ---

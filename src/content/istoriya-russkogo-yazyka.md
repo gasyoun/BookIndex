@@ -2,6 +2,8 @@
 id: "chapters_6"
 title: "История русского языка"
 source_key: "chapters"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 5
 tags: ["chapters"]
 ---

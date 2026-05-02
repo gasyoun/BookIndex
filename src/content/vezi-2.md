@@ -2,6 +2,8 @@
 id: "вези"
 title: "вези"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 256
 tags: ["lexicon_reverse"]
 ---

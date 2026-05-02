@@ -2,6 +2,8 @@
 id: "У́стюг"
 title: "У́стюг"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1035
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "оканье"
 title: "оканье"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 36
 tags: ["subject_index"]
 ---

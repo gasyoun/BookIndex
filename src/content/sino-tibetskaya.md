@@ -2,6 +2,8 @@
 id: "language_tree_10"
 title: "Сино-тибетская"
 source_key: "language_tree"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 9
 tags: ["language_tree"]
 ---

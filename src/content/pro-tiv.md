@@ -2,6 +2,8 @@
 id: "про́тив"
 title: "про́тив"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 807
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "артикль"
 title: "артикль"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 4
 tags: ["subject_index"]
 ---

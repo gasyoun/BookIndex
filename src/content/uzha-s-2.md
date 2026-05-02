@@ -2,6 +2,8 @@
 id: "ужа́с"
 title: "ужа́с"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 671
 tags: ["lexicon_reverse"]
 ---

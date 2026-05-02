@@ -2,6 +2,8 @@
 id: "по у́лицам"
 title: "по у́лицам"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 744
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "среднерусский период"
 title: "среднерусский период"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 103
 tags: ["languages"]
 ---

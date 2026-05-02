@@ -2,6 +2,8 @@
 id: "до утра́"
 title: "до утра́"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 581
 tags: ["lexicon_reverse"]
 ---

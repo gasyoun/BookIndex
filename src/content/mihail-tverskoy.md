@@ -2,6 +2,8 @@
 id: "Михаил Тверской"
 title: "Михаил Тверской"
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 57
 tags: ["names"]
 ---

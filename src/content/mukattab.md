@@ -2,6 +2,8 @@
 id: "mukattab"
 title: "mukattab"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1225
 tags: ["lexicon"]
 ---

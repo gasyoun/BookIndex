@@ -2,6 +2,8 @@
 id: "древний язык, древность языка"
 title: "древний язык, древность языка"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 19
 tags: ["subject_index"]
 ---

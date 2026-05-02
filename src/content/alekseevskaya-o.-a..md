@@ -2,6 +2,8 @@
 id: "Алексеевская О. А."
 title: "Алексеевская О. А."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 4
 tags: ["names"]
 ---

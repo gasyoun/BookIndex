@@ -2,6 +2,8 @@
 id: "chapters_4"
 title: "Историческая лингвистика (продолж.)"
 source_key: "chapters"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 3
 tags: ["chapters"]
 ---

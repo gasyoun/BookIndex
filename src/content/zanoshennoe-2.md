@@ -2,6 +2,8 @@
 id: "заношенное"
 title: "заношенное"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 215
 tags: ["lexicon_reverse"]
 ---

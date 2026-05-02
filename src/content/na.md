@@ -2,6 +2,8 @@
 id: "на"
 title: "на"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 633
 tags: ["lexicon"]
 ---

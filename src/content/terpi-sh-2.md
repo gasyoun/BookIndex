@@ -2,6 +2,8 @@
 id: "терпи́шь"
 title: "терпи́шь"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1028
 tags: ["lexicon_reverse"]
 ---

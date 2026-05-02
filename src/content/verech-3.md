@@ -2,6 +2,8 @@
 id: "веречъ"
 title: "веречъ"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 815
 tags: ["lexicon_reverse"]
 ---

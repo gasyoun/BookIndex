@@ -2,6 +2,8 @@
 id: "фестский диск"
 title: "фестский диск"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 74
 tags: ["subject_index"]
 ---

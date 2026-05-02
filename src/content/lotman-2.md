@@ -2,6 +2,8 @@
 id: "Лотман"
 title: "Лотман"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 496
 tags: ["lexicon_reverse"]
 ---

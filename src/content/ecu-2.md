@@ -2,6 +2,8 @@
 id: "ecu"
 title: "ecu"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1380
 tags: ["lexicon_reverse"]
 ---

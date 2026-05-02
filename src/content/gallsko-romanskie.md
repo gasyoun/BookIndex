@@ -2,6 +2,8 @@
 id: "галльско-романские"
 title: "галльско-романские"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 19
 tags: ["languages"]
 ---

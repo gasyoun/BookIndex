@@ -2,6 +2,8 @@
 id: "у́же"
 title: "у́же"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1011
 tags: ["lexicon"]
 ---

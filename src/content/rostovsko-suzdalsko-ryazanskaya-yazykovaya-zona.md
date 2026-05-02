@@ -2,6 +2,8 @@
 id: "ростовско-суздальско- рязанская языковая зона"
 title: "ростовско-суздальско- рязанская языковая зона"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 71
 tags: ["toponyms"]
 ---

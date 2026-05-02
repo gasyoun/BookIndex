@@ -2,6 +2,8 @@
 id: "бу́дишь"
 title: "бу́дишь"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 61
 tags: ["lexicon"]
 ---

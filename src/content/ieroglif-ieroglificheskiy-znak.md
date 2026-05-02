@@ -2,6 +2,8 @@
 id: "иероглиф, иероглифический знак"
 title: "иероглиф, иероглифический знак"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 21
 tags: ["subject_index"]
 ---

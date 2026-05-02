@@ -2,6 +2,8 @@
 id: "ti-ri-po-de"
 title: "ti-ri-po-de"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1210
 tags: ["lexicon_reverse"]
 ---

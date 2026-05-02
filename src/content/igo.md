@@ -2,6 +2,8 @@
 id: "иго́"
 title: "иго́"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 454
 tags: ["lexicon"]
 ---

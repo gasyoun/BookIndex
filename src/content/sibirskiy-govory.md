@@ -2,6 +2,8 @@
 id: "сибирский говоры"
 title: "сибирский говоры"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 98
 tags: ["languages"]
 ---

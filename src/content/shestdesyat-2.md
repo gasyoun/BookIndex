@@ -2,6 +2,8 @@
 id: "шестьдесят"
 title: "шестьдесят"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 703
 tags: ["lexicon_reverse"]
 ---

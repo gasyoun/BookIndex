@@ -2,6 +2,8 @@
 id: "Даль В. И."
 title: "Даль В. И."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 30
 tags: ["names"]
 ---

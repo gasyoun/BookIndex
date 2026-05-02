@@ -2,6 +2,8 @@
 id: "?и6паупі"
 title: "?и6паупі"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1400
 tags: ["lexicon_reverse"]
 ---

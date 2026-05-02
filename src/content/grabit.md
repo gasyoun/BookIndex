@@ -2,6 +2,8 @@
 id: "грабить"
 title: "грабить"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 246
 tags: ["lexicon"]
 ---

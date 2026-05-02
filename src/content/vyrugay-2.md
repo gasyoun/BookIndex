@@ -2,6 +2,8 @@
 id: "выругай"
 title: "выругай"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 316
 tags: ["lexicon_reverse"]
 ---

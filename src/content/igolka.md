@@ -2,6 +2,8 @@
 id: "иголка"
 title: "иголка"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 456
 tags: ["lexicon"]
 ---

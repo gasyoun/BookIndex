@@ -2,6 +2,8 @@
 id: "углу́"
 title: "углу́"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 602
 tags: ["lexicon_reverse"]
 ---

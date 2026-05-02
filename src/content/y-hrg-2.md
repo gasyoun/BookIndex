@@ -2,6 +2,8 @@
 id: "y/hrg"
 title: "y/hrg"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1239
 tags: ["lexicon_reverse"]
 ---

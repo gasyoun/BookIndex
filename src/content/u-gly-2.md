@@ -2,6 +2,8 @@
 id: "у́глы"
 title: "у́глы"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 826
 tags: ["lexicon_reverse"]
 ---

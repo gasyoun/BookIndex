@@ -2,6 +2,8 @@
 id: "баскский*"
 title: "баскский*"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 10
 tags: ["languages"]
 ---

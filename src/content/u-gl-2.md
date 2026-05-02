@@ -2,6 +2,8 @@
 id: "у́гълъ"
 title: "у́гълъ"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1005
 tags: ["lexicon"]
 ---

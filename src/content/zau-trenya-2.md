@@ -2,6 +2,8 @@
 id: "зау́треня"
 title: "зау́треня"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1077
 tags: ["lexicon_reverse"]
 ---

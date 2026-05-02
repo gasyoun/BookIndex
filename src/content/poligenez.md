@@ -2,6 +2,8 @@
 id: "полигенез"
 title: "полигенез"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 51
 tags: ["subject_index"]
 ---

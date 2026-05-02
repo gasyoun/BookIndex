@@ -2,6 +2,8 @@
 id: "гривне"
 title: "гривне"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 205
 tags: ["lexicon_reverse"]
 ---

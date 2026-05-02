@@ -2,6 +2,8 @@
 id: "cross_links"
 title: "cross_links"
 source_key: "cross_links"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 tags: ["cross_links"]
 ---
 

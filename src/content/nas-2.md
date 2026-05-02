@@ -2,6 +2,8 @@
 id: "нас"
 title: "нас"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 654
 tags: ["lexicon_reverse"]
 ---

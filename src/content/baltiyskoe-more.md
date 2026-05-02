@@ -2,6 +2,8 @@
 id: "Балтийское море"
 title: "Балтийское море"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 7
 tags: ["toponyms"]
 ---

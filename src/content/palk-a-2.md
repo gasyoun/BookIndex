@@ -2,6 +2,8 @@
 id: "палък-а"
 title: "палък-а"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1
 tags: ["lexicon_reverse"]
 ---

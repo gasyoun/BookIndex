@@ -2,6 +2,8 @@
 id: "один"
 title: "один"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 500
 tags: ["lexicon_reverse"]
 ---

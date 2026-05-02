@@ -2,6 +2,8 @@
 id: "kutbän"
 title: "kutbän"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1300
 tags: ["lexicon_reverse"]
 ---

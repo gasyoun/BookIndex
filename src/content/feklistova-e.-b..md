@@ -2,6 +2,8 @@
 id: "Феклистова Е. Б."
 title: "Феклистова Е. Б."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 78
 tags: ["names"]
 ---

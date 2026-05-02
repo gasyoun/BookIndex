@@ -2,6 +2,8 @@
 id: "артикль: ∼ постпозитивный"
 title: "артикль: ∼ постпозитивный"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 5
 tags: ["subject_index"]
 ---

@@ -2,6 +2,8 @@
 id: "старославянский"
 title: "старославянский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 108
 tags: ["languages"]
 ---

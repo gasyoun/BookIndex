@@ -2,6 +2,8 @@
 id: "разговорный язык, разговорная речь"
 title: "разговорный язык, разговорная речь"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 56
 tags: ["subject_index"]
 ---

@@ -2,6 +2,8 @@
 id: "испанский"
 title: "испанский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 55
 tags: ["languages"]
 ---

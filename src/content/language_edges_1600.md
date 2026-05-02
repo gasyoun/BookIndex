@@ -2,6 +2,8 @@
 id: "language_edges_1600"
 title: "language_edges_1600"
 source_key: "language_edges"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1599
 tags: ["language_edges"]
 ---

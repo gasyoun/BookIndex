@@ -2,6 +2,8 @@
 id: "кульку́"
 title: "кульку́"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 601
 tags: ["lexicon_reverse"]
 ---

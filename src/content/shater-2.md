@@ -2,6 +2,8 @@
 id: "шатёр"
 title: "шатёр"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 649
 tags: ["lexicon_reverse"]
 ---

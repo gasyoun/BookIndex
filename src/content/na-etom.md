@@ -2,6 +2,8 @@
 id: "на́ этом"
 title: "на́ этом"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 643
 tags: ["lexicon"]
 ---

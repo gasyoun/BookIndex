@@ -2,6 +2,8 @@
 id: "Раск Р. К."
 title: "Раск Р. К."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 69
 tags: ["names"]
 ---

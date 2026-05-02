@@ -2,6 +2,8 @@
 id: "ailleurs"
 title: "ailleurs"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1344
 tags: ["lexicon_reverse"]
 ---

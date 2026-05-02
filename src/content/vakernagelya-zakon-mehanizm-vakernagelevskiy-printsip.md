@@ -2,6 +2,8 @@
 id: "Вакернагеля закон (механизм), вакернагелевский принцип"
 title: "Вакернагеля закон (механизм), вакернагелевский принцип"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 14
 tags: ["subject_index"]
 ---

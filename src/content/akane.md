@@ -2,6 +2,8 @@
 id: "аканье"
 title: "аканье"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 0
 tags: ["subject_index"]
 ---

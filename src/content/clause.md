@@ -2,6 +2,8 @@
 id: "clause"
 title: "clause"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1130
 tags: ["lexicon"]
 ---

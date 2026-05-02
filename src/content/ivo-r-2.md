@@ -2,6 +2,8 @@
 id: "Иво́р"
 title: "Иво́р"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 647
 tags: ["lexicon_reverse"]
 ---

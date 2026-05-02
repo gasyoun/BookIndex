@@ -2,6 +2,8 @@
 id: "Ше́йкспир"
 title: "Ше́йкспир"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 640
 tags: ["lexicon_reverse"]
 ---

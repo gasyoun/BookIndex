@@ -2,6 +2,8 @@
 id: "вологодские говоры"
 title: "вологодские говоры"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 16
 tags: ["languages"]
 ---

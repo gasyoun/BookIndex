@@ -2,6 +2,8 @@
 id: "устоял"
 title: "устоял"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1034
 tags: ["lexicon"]
 ---

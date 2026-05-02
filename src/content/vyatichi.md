@@ -2,6 +2,8 @@
 id: "вятичи"
 title: "вятичи"
 source_key: "ethnonyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 11
 tags: ["ethnonyms"]
 ---

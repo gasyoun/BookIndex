@@ -2,6 +2,8 @@
 id: "беречь"
 title: "беречь"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 37
 tags: ["lexicon"]
 ---

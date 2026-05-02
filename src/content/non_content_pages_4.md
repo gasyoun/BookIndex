@@ -2,6 +2,8 @@
 id: "non_content_pages_4"
 title: "non_content_pages_4"
 source_key: "non_content_pages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 3
 tags: ["non_content_pages"]
 ---

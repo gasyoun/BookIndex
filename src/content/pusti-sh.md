@@ -2,6 +2,8 @@
 id: "пусти́шь"
 title: "пусти́шь"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 817
 tags: ["lexicon"]
 ---

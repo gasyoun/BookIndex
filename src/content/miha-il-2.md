@@ -2,6 +2,8 @@
 id: "Миха́ил"
 title: "Миха́ил"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 429
 tags: ["lexicon_reverse"]
 ---

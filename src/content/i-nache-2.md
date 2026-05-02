@@ -2,6 +2,8 @@
 id: "и́наче"
 title: "и́наче"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 232
 tags: ["lexicon_reverse"]
 ---

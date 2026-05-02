@@ -2,6 +2,8 @@
 id: "стре́лы"
 title: "стре́лы"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 944
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "Плунгян В. А."
 title: "Плунгян В. А."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 66
 tags: ["names"]
 ---

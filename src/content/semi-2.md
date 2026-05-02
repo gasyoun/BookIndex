@@ -2,6 +2,8 @@
 id: "семи́"
 title: "семи́"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 588
 tags: ["lexicon_reverse"]
 ---

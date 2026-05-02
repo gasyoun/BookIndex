@@ -2,6 +2,8 @@
 id: "book_stats"
 title: "book_stats"
 source_key: "book_stats"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 tags: ["book_stats"]
 ---
 

@@ -2,6 +2,8 @@
 id: "при́был"
 title: "при́был"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 468
 tags: ["lexicon_reverse"]
 ---

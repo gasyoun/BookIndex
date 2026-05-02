@@ -2,6 +2,8 @@
 id: "family_colors"
 title: "family_colors"
 source_key: "family_colors"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 tags: ["family_colors"]
 ---
 

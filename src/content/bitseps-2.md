@@ -2,6 +2,8 @@
 id: "бицепс"
 title: "бицепс"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 669
 tags: ["lexicon_reverse"]
 ---

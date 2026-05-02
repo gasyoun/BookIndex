@@ -2,6 +2,8 @@
 id: "па́фка"
 title: "па́фка"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 722
 tags: ["lexicon"]
 ---

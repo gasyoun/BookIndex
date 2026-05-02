@@ -2,6 +2,8 @@
 id: "lecture_summaries_9"
 title: "Берестяные грамоты"
 source_key: "lecture_summaries"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 8
 tags: ["lecture_summaries"]
 ---

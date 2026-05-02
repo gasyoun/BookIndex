@@ -2,6 +2,8 @@
 id: "language_tree_8"
 title: "Картвельская"
 source_key: "language_tree"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 7
 tags: ["language_tree"]
 ---

@@ -2,6 +2,8 @@
 id: "за́умь"
 title: "за́умь"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 879
 tags: ["lexicon_reverse"]
 ---

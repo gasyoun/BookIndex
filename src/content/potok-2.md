@@ -2,6 +2,8 @@
 id: "поток"
 title: "поток"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 389
 tags: ["lexicon_reverse"]
 ---

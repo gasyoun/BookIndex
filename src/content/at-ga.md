@@ -2,6 +2,8 @@
 id: "атігаі*"
 title: "атігаі*"
 source_key: "lexicon_tech"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 31
 tags: ["lexicon_tech"]
 ---

@@ -2,6 +2,8 @@
 id: "lectures_5"
 title: "Древняя Индия"
 source_key: "lectures"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 4
 tags: ["lectures"]
 ---

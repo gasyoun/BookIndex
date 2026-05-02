@@ -2,6 +2,8 @@
 id: "ударение: ∼ восходящее"
 title: "ударение: ∼ восходящее"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 69
 tags: ["subject_index"]
 ---

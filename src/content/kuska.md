@@ -2,6 +2,8 @@
 id: "куска"
 title: "куска"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 553
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "граждани́н"
 title: "граждани́н"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 518
 tags: ["lexicon_reverse"]
 ---

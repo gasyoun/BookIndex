@@ -2,6 +2,8 @@
 id: "у́тварь"
 title: "у́тварь"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1037
 tags: ["lexicon"]
 ---

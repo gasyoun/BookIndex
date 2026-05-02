@@ -2,6 +2,8 @@
 id: "реконструкция [метод исторической лингвистики]"
 title: "реконструкция [метод исторической лингвистики]"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 57
 tags: ["subject_index"]
 ---

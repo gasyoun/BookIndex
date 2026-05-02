@@ -2,6 +2,8 @@
 id: "родословное (генеалогическое) древо [языков]"
 title: "родословное (генеалогическое) древо [языков]"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 59
 tags: ["subject_index"]
 ---

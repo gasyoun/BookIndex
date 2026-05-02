@@ -2,6 +2,8 @@
 id: "албанский"
 title: "албанский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1
 tags: ["languages"]
 ---

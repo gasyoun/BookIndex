@@ -2,6 +2,8 @@
 id: "западнославянские"
 title: "западнославянские"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 47
 tags: ["languages"]
 ---

@@ -2,6 +2,8 @@
 id: "в четыре часа утра́"
 title: "в четыре часа утра́"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 75
 tags: ["lexicon"]
 ---

@@ -2,6 +2,8 @@
 id: "во́ину"
 title: "во́ину"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 146
 tags: ["lexicon"]
 ---

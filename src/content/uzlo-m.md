@@ -2,6 +2,8 @@
 id: "узло́м"
 title: "узло́м"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1019
 tags: ["lexicon"]
 ---

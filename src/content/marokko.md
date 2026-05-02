@@ -2,6 +2,8 @@
 id: "Марокко"
 title: "Марокко"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 52
 tags: ["toponyms"]
 ---

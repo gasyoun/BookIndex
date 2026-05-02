@@ -2,6 +2,8 @@
 id: "литературный язык, литературная форма языка"
 title: "литературный язык, литературная форма языка"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 25
 tags: ["subject_index"]
 ---

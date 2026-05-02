@@ -2,6 +2,8 @@
 id: "lectures_8"
 title: "Из русского ударения"
 source_key: "lectures"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 7
 tags: ["lectures"]
 ---

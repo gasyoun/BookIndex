@@ -2,6 +2,8 @@
 id: "ошибка писца"
 title: "ошибка писца"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 42
 tags: ["subject_index"]
 ---

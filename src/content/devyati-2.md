@@ -2,6 +2,8 @@
 id: "девяти́"
 title: "девяти́"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 593
 tags: ["lexicon_reverse"]
 ---

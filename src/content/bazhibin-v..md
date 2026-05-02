@@ -2,6 +2,8 @@
 id: "Бажибин В."
 title: "Бажибин В."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 6
 tags: ["names"]
 ---

@@ -2,6 +2,8 @@
 id: "Перцов Н. В."
 title: "Перцов Н. В."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 63
 tags: ["names"]
 ---

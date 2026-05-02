@@ -2,6 +2,8 @@
 id: "голова"
 title: "голова"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 232
 tags: ["lexicon"]
 ---

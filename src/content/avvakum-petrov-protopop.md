@@ -2,6 +2,8 @@
 id: "Аввакум [Петров] (протопоп)"
 title: "Аввакум [Петров] (протопоп)"
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1
 tags: ["names"]
 ---

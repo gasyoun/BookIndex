@@ -2,6 +2,8 @@
 id: "у́зел"
 title: "у́зел"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 417
 tags: ["lexicon_reverse"]
 ---

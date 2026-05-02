@@ -2,6 +2,8 @@
 id: "буди́шь"
 title: "буди́шь"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 1020
 tags: ["lexicon_reverse"]
 ---

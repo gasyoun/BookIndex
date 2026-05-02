@@ -2,6 +2,8 @@
 id: "-то"
 title: "-то"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 550
 tags: ["lexicon_reverse"]
 ---

@@ -2,6 +2,8 @@
 id: "восьми́"
 title: "восьми́"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 161
 tags: ["lexicon"]
 ---

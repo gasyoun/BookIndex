@@ -2,6 +2,8 @@
 id: "забить"
 title: "забить"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 945
 tags: ["lexicon_reverse"]
 ---

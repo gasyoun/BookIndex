@@ -2,6 +2,8 @@
 id: "ковра"
 title: "ковра"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 98
 tags: ["lexicon_reverse"]
 ---

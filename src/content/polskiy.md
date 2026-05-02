@@ -2,6 +2,8 @@
 id: "польский"
 title: "польский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 82
 tags: ["languages"]
 ---

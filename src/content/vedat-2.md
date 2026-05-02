@@ -2,6 +2,8 @@
 id: "ведать"
 title: "ведать"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 903
 tags: ["lexicon_reverse"]
 ---

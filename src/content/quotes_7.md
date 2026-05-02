@@ -2,6 +2,8 @@
 id: "quotes_7"
 title: "quotes_7"
 source_key: "quotes"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 6
 tags: ["quotes"]
 ---

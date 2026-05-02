@@ -2,6 +2,8 @@
 id: "по ули́цам"
 title: "по ули́цам"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 476
 tags: ["lexicon_reverse"]
 ---

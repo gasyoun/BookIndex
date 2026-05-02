@@ -2,6 +2,8 @@
 id: "Париж"
 title: "Париж"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 710
 tags: ["lexicon"]
 ---

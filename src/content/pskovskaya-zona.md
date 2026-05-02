@@ -2,6 +2,8 @@
 id: "псковская зона"
 title: "псковская зона"
 source_key: "toponyms"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 63
 tags: ["toponyms"]
 ---

@@ -2,6 +2,8 @@
 id: "княже"
 title: "княже"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 190
 tags: ["lexicon_reverse"]
 ---

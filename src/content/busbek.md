@@ -2,6 +2,8 @@
 id: "Бусбек"
 title: "Бусбек"
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 16
 tags: ["names"]
 ---

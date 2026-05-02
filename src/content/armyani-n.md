@@ -2,6 +2,8 @@
 id: "армяни́н"
 title: "армяни́н"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 26
 tags: ["lexicon"]
 ---

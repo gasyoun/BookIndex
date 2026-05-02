@@ -2,6 +2,8 @@
 id: "на́чал"
 title: "на́чал"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 413
 tags: ["lexicon_reverse"]
 ---

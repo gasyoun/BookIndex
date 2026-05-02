@@ -2,6 +2,8 @@
 id: "риэлтор"
 title: "риэлтор"
 source_key: "lexicon"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 838
 tags: ["lexicon"]
 ---

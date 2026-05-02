@@ -2,6 +2,8 @@
 id: "французский"
 title: "французский"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 116
 tags: ["languages"]
 ---

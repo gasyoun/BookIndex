@@ -2,6 +2,8 @@
 id: "барьер [ритмико-синтаксический]"
 title: "барьер [ритмико-синтаксический]"
 source_key: "subject_index"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 7
 tags: ["subject_index"]
 ---

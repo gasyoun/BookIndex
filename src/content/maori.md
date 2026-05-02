@@ -2,6 +2,8 @@
 id: "маори"
 title: "маори"
 source_key: "languages"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 68
 tags: ["languages"]
 ---

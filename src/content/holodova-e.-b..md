@@ -2,6 +2,8 @@
 id: "Холодова Е. Б."
 title: "Холодова Е. Б."
 source_key: "names"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 84
 tags: ["names"]
 ---

@@ -2,6 +2,8 @@
 id: "танец"
 title: "танец"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 724
 tags: ["lexicon_reverse"]
 ---

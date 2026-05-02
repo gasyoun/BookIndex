@@ -2,6 +2,8 @@
 id: "Иго́рь"
 title: "Иго́рь"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 894
 tags: ["lexicon_reverse"]
 ---

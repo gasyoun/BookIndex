@@ -2,6 +2,8 @@
 id: "узло́м"
 title: "узло́м"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 487
 tags: ["lexicon_reverse"]
 ---

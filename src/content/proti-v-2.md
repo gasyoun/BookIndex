@@ -2,6 +2,8 @@
 id: "проти́в"
 title: "проти́в"
 source_key: "lexicon_reverse"
+source: "Из жизни слов и языков"
+book_id: "zaliznyak-aaz-index"
 source_index: 138
 tags: ["lexicon_reverse"]
 ---
