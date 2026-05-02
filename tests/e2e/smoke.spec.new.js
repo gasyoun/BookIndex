@@ -1044,6 +1044,8 @@ test.describe('aaz-index smoke', () => {
     expect(scholarBib).toContain('author = {');
     expect(scholarBib).toContain('title = {');
     expect(scholarBib).toContain('year = {');
+    expect(scholarBib).toContain('book_id: zaliznyak-aaz-index');
+    expect(scholarBib).toContain('keywords = {bookindex,scholar,bibliography,corpus,zaliznyak-aaz-index}');
 
     await page.goto('/aaz-index.html#materials/further_reading');
     const furtherBtn = page.locator('#export-further-bib');
@@ -1054,7 +1056,8 @@ test.describe('aaz-index smoke', () => {
     expect(furtherDownload.suggestedFilename()).toBe('further-reading.bib');
     const furtherBib = await readBib(furtherDownload);
     expect(furtherBib).toContain('@misc{');
-    expect(furtherBib).toContain('keywords = {bookindex,further_reading}');
+    expect(furtherBib).toContain('book_id: zaliznyak-aaz-index');
+    expect(furtherBib).toContain('keywords = {bookindex,further_reading,corpus,zaliznyak-aaz-index}');
 
     await page.goto('/aaz-index.html#names/list');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
@@ -1067,6 +1070,8 @@ test.describe('aaz-index smoke', () => {
     expect(sourceDownload.suggestedFilename()).toContain('.bib');
     const sourceBib = await readBib(sourceDownload);
     expect(sourceBib).toContain('howpublished = {BookIndex card source}');
+    expect(sourceBib).toContain('book_id: zaliznyak-aaz-index');
+    expect(sourceBib).toContain('corpus,zaliznyak-aaz-index');
   });
   test('reading-now pager and quick trends navigation works', async ({ page }) => {
     await page.goto('/aaz-index.html#materials/lectures');

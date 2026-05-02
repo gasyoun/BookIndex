@@ -3699,8 +3699,13 @@ function guessAuthorAndTitle(rawTitle, fallbackAuthor = 'Unknown') {
 function buildCardSourceBibEntry(item, itemType, src, index = 0) {
   if (!src || typeof src !== 'object') return '';
   const label = normalizeBibtexText(src.label || 'Source');
+  const activeBook = getActiveBook();
+  const activeBookId = activeBook.book_id || '';
+  const activeBookLabel = getBookLabelForSearch(activeBookId);
   const noteParts = [];
   if (item && item.head) noteParts.push(`BookIndex card: ${item.head} (${itemType || 'item'})`);
+  if (activeBookLabel) noteParts.push(`Corpus source: ${activeBookLabel}`);
+  if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
   if (src.page != null && String(src.page).trim()) noteParts.push(`page ${String(src.page).trim()}`);
   if (src.quote) noteParts.push(String(src.quote));
   return buildBibtexEntry({
@@ -3710,7 +3715,7 @@ function buildCardSourceBibEntry(item, itemType, src, index = 0) {
     url: String(src.url || ''),
     note: noteParts.join('. '),
     howpublished: 'BookIndex card source',
-    keywords: `bookindex,${itemType || 'item'},source`,
+    keywords: `bookindex,${itemType || 'item'},source,corpus,${activeBookId}`,
     keySeed: `${item && item.head ? item.head : 'card'}-${label}-${index + 1}`,
   }, index);
 }
@@ -3718,6 +3723,9 @@ function buildCardSourceBibEntry(item, itemType, src, index = 0) {
 function collectScholarBibliographyBibEntries() {
   const s = APP_DATA && APP_DATA.scholar ? APP_DATA.scholar : {};
   const groups = Array.isArray(s.bibliography) ? s.bibliography : [];
+  const activeBook = getActiveBook();
+  const activeBookId = activeBook.book_id || '';
+  const activeBookLabel = getBookLabelForSearch(activeBookId);
   const out = [];
   let idx = 0;
   for (const group of groups) {
@@ -3728,6 +3736,8 @@ function collectScholarBibliographyBibEntries() {
       if (!title) continue;
       const noteParts = [];
       if (lecture) noteParts.push(`Lecture: ${lecture}`);
+      if (activeBookLabel) noteParts.push(`Corpus source: ${activeBookLabel}`);
+      if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
       if (work && work.note) noteParts.push(String(work.note));
       out.push(buildBibtexEntry({
         author: normalizeBibtexText(work && (work.author || work.authors)) || 'A. A. Zaliznyak',
@@ -3736,7 +3746,7 @@ function collectScholarBibliographyBibEntries() {
         url: String(work && work.url ? work.url : ''),
         note: noteParts.join('. '),
         howpublished: 'BookIndex scholar bibliography',
-        keywords: 'bookindex,scholar,bibliography',
+        keywords: `bookindex,scholar,bibliography,corpus,${activeBookId}`,
         keySeed: `${lecture || 'lecture'}-${title}`,
       }, idx));
       idx += 1;
@@ -3747,6 +3757,9 @@ function collectScholarBibliographyBibEntries() {
 
 function collectFurtherReadingBibEntries() {
   const sections = Array.isArray(APP_DATA && APP_DATA.further_reading) ? APP_DATA.further_reading : [];
+  const activeBook = getActiveBook();
+  const activeBookId = activeBook.book_id || '';
+  const activeBookLabel = getBookLabelForSearch(activeBookId);
   const out = [];
   let idx = 0;
   for (const sec of sections) {
@@ -3758,6 +3771,8 @@ function collectFurtherReadingBibEntries() {
       const parsed = guessAuthorAndTitle(rawTitle, normalizeBibtexText(book && (book.author || book.authors)) || 'Unknown');
       const noteParts = [];
       if (topic) noteParts.push(`Topic: ${topic}`);
+      if (activeBookLabel) noteParts.push(`Corpus source: ${activeBookLabel}`);
+      if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
       if (book && book.why) noteParts.push(String(book.why));
       out.push(buildBibtexEntry({
         author: parsed.author,
@@ -3766,7 +3781,7 @@ function collectFurtherReadingBibEntries() {
         url: String(book && book.url ? book.url : ''),
         note: noteParts.join('. '),
         howpublished: 'BookIndex further reading',
-        keywords: 'bookindex,further_reading',
+        keywords: `bookindex,further_reading,corpus,${activeBookId}`,
         keySeed: `${topic || 'topic'}-${parsed.title}`,
       }, idx));
       idx += 1;
