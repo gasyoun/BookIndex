@@ -55,12 +55,15 @@ export interface CorpusBook {
   [key: string]: unknown;
 }
 
+export type CorpusSourceSupport = 'pages' | 'timecodes' | 'transcripts' | 'citations' | 'media';
+
 export interface CorpusSourceType {
   type: string;
   title?: string;
+  label?: string;
   status?: string;
   planned_count?: number;
-  supports?: string[];
+  supports?: CorpusSourceSupport[];
   [key: string]: unknown;
 }
 
