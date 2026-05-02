@@ -9803,11 +9803,13 @@ function renderPageTrendsPanel(container) {
 
   const trendUp = globalTrend.filter(x => x.delta > 0).sort((a, b) => (b.delta - a.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
   const trendDown = globalTrend.filter(x => x.delta < 0).sort((a, b) => (a.delta - b.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
+  const activeBookLabel = getBookLabelForSearch(getActiveBook().book_id);
 
   let html = '<div class="panel active page-trends-panel"><div class="page-trends-shell">';
   html += '<div class="page-trends-head">';
   html += '<div><h2 class="page-trends-title">Динамика по страницам</h2>';
   html += '<div class="page-trends-intro">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div></div>';
+  html += `<div class="page-trends-source-chip">${escapeHtml(activeBookLabel)}</div>`;
   html += '<div class="page-trends-actions">';
   html += '<button id="trend-export-csv" class="page-trends-btn">Экспорт CSV</button>';
   html += '<button id="trend-export-md" class="page-trends-btn">Экспорт Markdown</button>';
@@ -9898,6 +9900,8 @@ function renderPageTrendsPanel(container) {
 
   const mdLines = [];
   mdLines.push(`# Динамика по страницам: ${start}-${end}`);
+  mdLines.push('');
+  mdLines.push(`Источник: **${activeBookLabel}**`);
   mdLines.push('');
   mdLines.push(`Окно: **${start}-${end}** (ширина ${end - start + 1} стр.)`);
   mdLines.push('');

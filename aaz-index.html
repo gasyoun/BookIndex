@@ -3891,6 +3891,17 @@
     font-style: italic;
     margin-bottom: 12px;
   }
+  .page-trends-source-chip {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.25;
+    max-width: 260px;
+    overflow-wrap: anywhere;
+    padding: 3px 7px;
+  }
   .page-trends-actions {
     align-items: center;
     display: flex;
@@ -76313,7 +76324,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'c897dfe90a38';
+const APP_BUILD_ID = '07407b00444a';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79887,7 +79898,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'c897dfe90a38' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '07407b00444a' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -86107,11 +86118,13 @@ function renderPageTrendsPanel(container) {
 
   const trendUp = globalTrend.filter(x => x.delta > 0).sort((a, b) => (b.delta - a.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
   const trendDown = globalTrend.filter(x => x.delta < 0).sort((a, b) => (a.delta - b.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
+  const activeBookLabel = getBookLabelForSearch(getActiveBook().book_id);
 
   let html = '<div class="panel active page-trends-panel"><div class="page-trends-shell">';
   html += '<div class="page-trends-head">';
   html += '<div><h2 class="page-trends-title">Динамика по страницам</h2>';
   html += '<div class="page-trends-intro">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div></div>';
+  html += `<div class="page-trends-source-chip">${escapeHtml(activeBookLabel)}</div>`;
   html += '<div class="page-trends-actions">';
   html += '<button id="trend-export-csv" class="page-trends-btn">Экспорт CSV</button>';
   html += '<button id="trend-export-md" class="page-trends-btn">Экспорт Markdown</button>';
@@ -86202,6 +86215,8 @@ function renderPageTrendsPanel(container) {
 
   const mdLines = [];
   mdLines.push(`# Динамика по страницам: ${start}-${end}`);
+  mdLines.push('');
+  mdLines.push(`Источник: **${activeBookLabel}**`);
   mdLines.push('');
   mdLines.push(`Окно: **${start}-${end}** (ширина ${end - start + 1} стр.)`);
   mdLines.push('');

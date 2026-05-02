@@ -894,6 +894,7 @@ test.describe('aaz-index smoke', () => {
     await page.locator('.tab[data-tab="page_trends"]').click();
     await expect(page.locator('#trend-start-range')).toBeVisible();
     await expect(page.locator('#trend-end-range')).toBeVisible();
+    await expect(page.locator('.page-trends-source-chip')).toContainText('Из жизни слов и языков');
     await expect(page.locator('#trend-export-csv')).toBeVisible();
     await expect(page.locator('#trend-export-md')).toBeVisible();
   });
