@@ -168,6 +168,8 @@ python scripts/assemble_app_data.py --modules-dir data/modules --out app_data.js
 node scripts/export_app_data_to_markdown.mjs --input app_data.json --out src/content --clean
 ```
 
+Frontmatter экспортированных Markdown-файлов включает `source` и `book_id` из `APP_DATA.corpus` или runtime-compatible default для текущей книги.
+
 ## Локальные проверки перед релизом
 
 Минимальный набор:

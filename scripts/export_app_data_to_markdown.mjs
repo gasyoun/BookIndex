@@ -17,6 +17,11 @@ const TEXT_FIELD_PRIORITY = [
   'verdict',
 ];
 
+const DEFAULT_CORPUS_BOOK = {
+  book_id: 'zaliznyak-aaz-index',
+  title: 'Из жизни слов и языков',
+};
+
 function parseArgs(argv) {
   const args = {
     input: './app_data.json',
@@ -127,6 +132,8 @@ function formatFrontmatter(meta) {
   lines.push(`id: ${JSON.stringify(meta.id)}`);
   lines.push(`title: ${JSON.stringify(meta.title)}`);
   lines.push(`source_key: ${JSON.stringify(meta.sourceKey)}`);
+  if (meta.source) lines.push(`source: ${JSON.stringify(meta.source)}`);
+  if (meta.bookId) lines.push(`book_id: ${JSON.stringify(meta.bookId)}`);
   if (Number.isFinite(meta.index)) lines.push(`source_index: ${meta.index}`);
   lines.push(`tags: ${JSON.stringify(meta.tags)}`);
   lines.push('---');
@@ -138,15 +145,34 @@ function normalizeBodyText(text) {
   return String(text).replace(/\r\n/g, '\n').trim();
 }
 
-function buildEntityMarkdown({ sourceKey, entity, index }) {
+function getCorpusBookMeta(data, entity) {
+  const corpus = data && typeof data === 'object' && data.corpus && typeof data.corpus === 'object'
+    ? data.corpus
+    : {};
+  const books = Array.isArray(corpus.books) ? corpus.books.filter((book) => book && typeof book === 'object') : [];
+  const explicitBookId = entity && typeof entity === 'object'
+    ? String(entity.book_id || entity.bookId || '').trim()
+    : '';
+  const activeBookId = String(corpus.active_book_id || '').trim();
+  const wantedBookId = explicitBookId || activeBookId;
+  const book = books.find((item) => item.book_id === wantedBookId) || books[0] || DEFAULT_CORPUS_BOOK;
+  const bookId = String(book.book_id || wantedBookId || DEFAULT_CORPUS_BOOK.book_id);
+  const source = String(book.short_title || book.title || book.book_id || DEFAULT_CORPUS_BOOK.title);
+  return { bookId, source };
+}
+
+function buildEntityMarkdown({ data, sourceKey, entity, index }) {
   const objectEntity = entity && typeof entity === 'object' ? entity : {};
   const id = String(objectEntity.id || objectEntity.head || `${sourceKey}_${index + 1}`);
   const title = String(objectEntity.title || objectEntity.head || objectEntity.name || id);
   const body = normalizeBodyText(firstTextField(objectEntity));
+  const corpusMeta = getCorpusBookMeta(data, objectEntity);
   const frontmatter = formatFrontmatter({
     id,
     title,
     sourceKey,
+    source: corpusMeta.source,
+    bookId: corpusMeta.bookId,
     index,
     tags: [sourceKey],
   });
@@ -156,12 +182,15 @@ function buildEntityMarkdown({ sourceKey, entity, index }) {
   return `${frontmatter}\n\n${bodyText}\n\n## Source JSON\n\n\`\`\`json\n${rawJson}\n\`\`\`\n`;
 }
 
-function buildTopLevelMarkdown({ key, value }) {
+function buildTopLevelMarkdown({ data, key, value }) {
   const body = normalizeBodyText(firstTextField(value));
+  const corpusMeta = getCorpusBookMeta(data, value);
   const frontmatter = formatFrontmatter({
     id: key,
     title: key,
     sourceKey: key,
+    source: corpusMeta.source,
+    bookId: corpusMeta.bookId,
     index: null,
     tags: [key],
   });
@@ -196,10 +225,13 @@ function exportToMarkdown({ inputPath, outDir, clean }) {
     if (Array.isArray(value)) {
       if (!value.length) {
         const fileName = buildUniqueFileName(key, usedFileNames);
+        const corpusMeta = getCorpusBookMeta(data, null);
         const emptyMd = `${formatFrontmatter({
           id: key,
           title: key,
           sourceKey: key,
+          source: corpusMeta.source,
+          bookId: corpusMeta.bookId,
           index: null,
           tags: [key],
         })}\n\n_Раздел пуст._\n`;
@@ -219,7 +251,7 @@ function exportToMarkdown({ inputPath, outDir, clean }) {
           || `${key}_${index + 1}`;
         const fileName = buildUniqueFileName(identity, usedFileNames);
         const filePath = path.join(outDir, fileName);
-        const content = buildEntityMarkdown({ sourceKey: key, entity: objectEntity, index });
+        const content = buildEntityMarkdown({ data, sourceKey: key, entity: objectEntity, index });
         fs.writeFileSync(filePath, content, 'utf-8');
         stats.files += 1;
       });
@@ -228,7 +260,7 @@ function exportToMarkdown({ inputPath, outDir, clean }) {
 
     const fileName = buildUniqueFileName(key, usedFileNames);
     const filePath = path.join(outDir, fileName);
-    const content = buildTopLevelMarkdown({ key, value });
+    const content = buildTopLevelMarkdown({ data, key, value });
     fs.writeFileSync(filePath, content, 'utf-8');
     stats.files += 1;
   }
