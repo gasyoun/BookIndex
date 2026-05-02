@@ -5,7 +5,7 @@ test.describe('aaz-index smoke', () => {
   test('loads home and renders navigation', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await expect(page.locator('#home-link')).toBeVisible();
-    await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(10);
+    await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(11);
     await expect(page.locator('#tabs .tab')).toHaveCount(1);
     await expect(page.locator('#tabs .tab')).toHaveText(/Главная|Home/);
     await expect(page.locator('.home-stats-hero')).toBeVisible();
@@ -49,6 +49,15 @@ test.describe('aaz-index smoke', () => {
       return raw ? JSON.parse(raw).globalSearchScope : '';
     });
     expect(savedScope).toBe('corpus');
+  });
+
+  test('corpus sources panel shows books and planned video catalog', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/corpus/sources');
+    await expect(page.locator('.corpus-panel')).toBeVisible();
+    await expect(page.locator('.corpus-panel-header h2')).toContainText('Источники корпуса');
+    await expect(page.locator('.corpus-source-card').filter({ hasText: 'Из жизни слов и языков' })).toBeVisible();
+    await expect(page.locator('.corpus-source-card').filter({ hasText: 'Видеокаталог' })).toContainText('тайм-кодами');
+    await expect(page.locator('.corpus-metrics-row')).toContainText('200');
   });
 
   test('PWA manifest and service worker are available', async ({ page }) => {

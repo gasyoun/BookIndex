@@ -345,6 +345,11 @@ function initEntityTypes() {
     items: [],
     tabs: ['home'],
   },
+  corpus: {
+    title: 'Корпус',
+    items: [],
+    tabs: ['sources'],
+  },
   materials: {
     title: 'Материалы',
     items: [],
@@ -424,6 +429,7 @@ const TAB_LABELS = {
   tree: 'Древо языков',
   home: 'Главная',
   home_decl: 'Декларативная',
+  sources: 'Источники',
   lectures: 'Лекции',
   lecture_compare: 'Сравнение лекций',
   lecture_pages: 'Страница лекции',
@@ -1885,6 +1891,7 @@ function getEntityBreadcrumbLabel(entity) {
     subject: '\u041f\u0440\u0435\u0434\u043c\u0435\u0442\u043d\u044b\u0439 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c',
     materials: '\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b',
     scholar: '\u041f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b\u044c\u043d\u044b\u0439 \u0430\u043f\u043f\u0430\u0440\u0430\u0442',
+    corpus: '\u041a\u043e\u0440\u043f\u0443\u0441',
     all: '\u0421\u0432\u043e\u0434\u043d\u044b\u0439 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c',
   };
   if (map[entity]) return map[entity];
@@ -4082,7 +4089,7 @@ function renderEntitySwitcher() {
   container.innerHTML = '';
   safeSetAttr(container, 'role', 'toolbar');
   safeSetAttr(container, 'aria-label', 'Entity switcher');
-  const order = ['materials', 'scholar', 'all', 'subject', 'names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse'];
+  const order = ['corpus', 'materials', 'scholar', 'all', 'subject', 'names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse'];
   for (const key of order) {
     const conf = ENTITY_TYPES[key];
     if (!conf) continue;
@@ -4167,6 +4174,7 @@ function switchTab(tab) {
 const CONTENT_RENDERERS = Object.freeze({
   home: renderHomePanel,
   home_decl: renderHomePanelDeclarative,
+  sources: renderCorpusSourcesPanel,
   lectures: renderLecturesPanel,
   lecture_compare: renderLectureComparePanel,
   lecture_pages: renderLecturePagePanel,
@@ -4203,6 +4211,140 @@ function renderContent() {
   if (currentTab !== 'families') familiesGraphRenderToken += 1;
   const render = CONTENT_RENDERERS[currentTab];
   if (render) render(container);
+}
+
+function createCorpusMetric(label, value) {
+  const node = document.createElement('div');
+  node.className = 'corpus-metric';
+  const valueNode = document.createElement('strong');
+  valueNode.textContent = String(value || '0');
+  const labelNode = document.createElement('span');
+  labelNode.textContent = String(label || '');
+  node.appendChild(valueNode);
+  node.appendChild(labelNode);
+  return node;
+}
+
+function createCorpusSourceCard(source, options = {}) {
+  const card = document.createElement('article');
+  card.className = 'corpus-source-card';
+  if (source.status) card.dataset.status = String(source.status);
+
+  const top = document.createElement('div');
+  top.className = 'corpus-source-top';
+  const title = document.createElement('h3');
+  title.textContent = String(source.title || source.book_id || source.type || 'Источник');
+  const badge = document.createElement('span');
+  badge.className = 'corpus-source-badge';
+  badge.textContent = String(source.status || 'active');
+  top.appendChild(title);
+  top.appendChild(badge);
+  card.appendChild(top);
+
+  const meta = document.createElement('div');
+  meta.className = 'corpus-source-meta';
+  const metaParts = [];
+  if (source.author) metaParts.push(source.author);
+  if (source.year) metaParts.push(String(source.year));
+  if (source.edition) metaParts.push(source.edition);
+  if (source.source_type) metaParts.push(source.source_type === 'book' ? 'книга' : source.source_type);
+  if (options.kindLabel) metaParts.push(options.kindLabel);
+  meta.textContent = metaParts.join(' · ') || 'metadata source';
+  card.appendChild(meta);
+
+  if (source.description) {
+    const description = document.createElement('p');
+    description.className = 'corpus-source-description';
+    description.textContent = String(source.description);
+    card.appendChild(description);
+  }
+
+  const facts = document.createElement('div');
+  facts.className = 'corpus-source-facts';
+  if (source.pages_total) facts.appendChild(createCorpusMetric('страниц', source.pages_total));
+  if (source.planned_count) facts.appendChild(createCorpusMetric('единиц', source.planned_count));
+  if (Array.isArray(source.supports) && source.supports.length) {
+    facts.appendChild(createCorpusMetric('поддержка', source.supports.join(', ')));
+  }
+  if (Array.isArray(source.content_modules) && source.content_modules.length) {
+    facts.appendChild(createCorpusMetric('модули', source.content_modules.length));
+  }
+  if (facts.childNodes.length) card.appendChild(facts);
+
+  if (source.default_route) {
+    const actions = document.createElement('div');
+    actions.className = 'corpus-source-actions';
+    const link = document.createElement('a');
+    link.href = String(source.default_route);
+    link.textContent = 'Открыть';
+    link.onclick = (event) => {
+      event.preventDefault();
+      applyHash(link.getAttribute('href') || '#v4/home/home');
+    };
+    actions.appendChild(link);
+    card.appendChild(actions);
+  }
+
+  return card;
+}
+
+function renderCorpusSourcesPanel(container) {
+  const panel = document.createElement('div');
+  panel.className = 'panel corpus-panel active';
+
+  const registry = getCorpusRegistry();
+  const books = getCorpusBooks();
+  const sourceTypes = Array.isArray(registry.source_types) ? registry.source_types : [];
+  const plannedVideo = getPlannedVideoCatalogSource();
+
+  const header = document.createElement('div');
+  header.className = 'corpus-panel-header';
+  const title = document.createElement('h2');
+  title.textContent = 'Источники корпуса';
+  const subtitle = document.createElement('p');
+  subtitle.textContent = 'Текущая книга, будущие книги и видеокаталог используют один корпусный слой навигации, поиска и цитирования.';
+  header.appendChild(title);
+  header.appendChild(subtitle);
+  panel.appendChild(header);
+
+  const metrics = document.createElement('div');
+  metrics.className = 'corpus-metrics-row';
+  metrics.appendChild(createCorpusMetric('книг сейчас', books.length));
+  metrics.appendChild(createCorpusMetric('активный источник', getActiveBook().title || getActiveBook().book_id));
+  metrics.appendChild(createCorpusMetric('типов источников', sourceTypes.length));
+  metrics.appendChild(createCorpusMetric('план видео', plannedVideo && plannedVideo.planned_count ? plannedVideo.planned_count : 0));
+  panel.appendChild(metrics);
+
+  const booksTitle = document.createElement('h3');
+  booksTitle.className = 'corpus-section-title';
+  booksTitle.textContent = 'Книги';
+  panel.appendChild(booksTitle);
+
+  const booksGrid = document.createElement('div');
+  booksGrid.className = 'corpus-sources-grid';
+  books.forEach(book => booksGrid.appendChild(createCorpusSourceCard(book)));
+  panel.appendChild(booksGrid);
+
+  const sourceTypesTitle = document.createElement('h3');
+  sourceTypesTitle.className = 'corpus-section-title';
+  sourceTypesTitle.textContent = 'Типы источников';
+  panel.appendChild(sourceTypesTitle);
+
+  const typesGrid = document.createElement('div');
+  typesGrid.className = 'corpus-sources-grid corpus-source-types-grid';
+  sourceTypes.forEach(type => {
+    const source = {
+      ...type,
+      title: type.title || type.type,
+      description: type.type === 'video_catalog'
+        ? 'Будущий каталог видео Зализняка с тайм-кодами и стенограммами.'
+        : '',
+    };
+    typesGrid.appendChild(createCorpusSourceCard(source, { kindLabel: 'тип источника' }));
+  });
+  panel.appendChild(typesGrid);
+
+  container.appendChild(panel);
 }
 
 // =========================================================
