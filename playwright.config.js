@@ -1,5 +1,7 @@
 const { defineConfig } = require('@playwright/test');
 
+const nodeBinary = JSON.stringify(process.execPath);
+
 module.exports = defineConfig({
   testDir: './tests/e2e',
   timeout: 60000,
@@ -19,7 +21,7 @@ module.exports = defineConfig({
     viewport: { width: 1366, height: 900 },
   },
   webServer: {
-    command: 'node scripts/dev/static-server.mjs 4173',
+    command: `${nodeBinary} scripts/dev/static-server.mjs 4173`,
     port: 4173,
     timeout: 120000,
     reuseExistingServer: !process.env.CI,
