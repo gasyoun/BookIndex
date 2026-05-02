@@ -916,6 +916,19 @@
     color: #888;
     font-size: 11px;
   }
+  .name-item .list-book-chip {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--muted);
+    flex: 0 1 auto;
+    font-size: 10px;
+    line-height: 1.2;
+    max-width: 150px;
+    overflow: hidden;
+    padding: 1px 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .name-item .cat-dot {
     width: 8px; height: 8px;
     border-radius: 50%;
@@ -76300,7 +76313,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '3f33e409b7ff';
+const APP_BUILD_ID = 'c897dfe90a38';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79874,7 +79887,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '3f33e409b7ff' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'c897dfe90a38' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81181,6 +81194,10 @@ function appendListItemContent(item, it, itemType, showTypeLabel) {
   pagesCount.className = `pages-count${itemType === 'lexicon_reverse' ? ' reverse-pages-count' : ''}`;
   pagesCount.textContent = String((it.page_list || []).length);
 
+  const bookChip = document.createElement('span');
+  bookChip.className = 'list-book-chip';
+  bookChip.textContent = getBookLabelForSearch(it.book_id || it.bookId || getActiveBook().book_id);
+
   if (itemType === 'lexicon_reverse') {
     item.appendChild(pagesCount);
     item.appendChild(head);
@@ -81189,6 +81206,7 @@ function appendListItemContent(item, it, itemType, showTypeLabel) {
   }
   if (showTypeLabel && typeLabel.textContent) item.appendChild(typeLabel);
   if (it.is_moderator) item.appendChild(moderatorMark);
+  if (itemType !== 'lexicon_reverse') item.appendChild(bookChip);
   if (itemType !== 'lexicon_reverse') item.appendChild(pagesCount);
 
   if (itemType === 'subject') {

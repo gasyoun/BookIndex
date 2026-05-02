@@ -4890,6 +4890,10 @@ function appendListItemContent(item, it, itemType, showTypeLabel) {
   pagesCount.className = `pages-count${itemType === 'lexicon_reverse' ? ' reverse-pages-count' : ''}`;
   pagesCount.textContent = String((it.page_list || []).length);
 
+  const bookChip = document.createElement('span');
+  bookChip.className = 'list-book-chip';
+  bookChip.textContent = getBookLabelForSearch(it.book_id || it.bookId || getActiveBook().book_id);
+
   if (itemType === 'lexicon_reverse') {
     item.appendChild(pagesCount);
     item.appendChild(head);
@@ -4898,6 +4902,7 @@ function appendListItemContent(item, it, itemType, showTypeLabel) {
   }
   if (showTypeLabel && typeLabel.textContent) item.appendChild(typeLabel);
   if (it.is_moderator) item.appendChild(moderatorMark);
+  if (itemType !== 'lexicon_reverse') item.appendChild(bookChip);
   if (itemType !== 'lexicon_reverse') item.appendChild(pagesCount);
 
   if (itemType === 'subject') {

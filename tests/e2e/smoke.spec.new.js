@@ -246,6 +246,7 @@ test.describe('aaz-index smoke', () => {
 
     await page.goto('/aaz-index.html#names/list');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
+    await expect(page.locator('#name-list .name-item .list-book-chip').first()).toContainText('Из жизни слов и языков');
     await page.locator('#name-list .name-item').first().click();
     await expect(page.locator('#right-content .card h2')).toBeVisible();
     expect(await contrastFor('#name-list .name-item')).toBeGreaterThan(3);
