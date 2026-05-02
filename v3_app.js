@@ -642,6 +642,7 @@ let suppressHashSync = false;
 let expectedHash = null;
 let globalSearchTimer = null;
 let globalSearchActiveIndex = -1;
+let globalSearchScope = 'current';
 let pendingGlossaryQuery = '';
 let currentGlossaryTerm = '';
 let pendingScholarAnchor = '';
@@ -719,6 +720,40 @@ function getPlannedVideoCatalogSource() {
   const sourceTypes = getCorpusRegistry().source_types;
   if (!Array.isArray(sourceTypes)) return null;
   return sourceTypes.find(source => source && source.type === 'video_catalog') || null;
+}
+
+function normalizeGlobalSearchScope(scope) {
+  return scope === 'corpus' ? 'corpus' : 'current';
+}
+
+function getGlobalSearchScopeLabel(scope = globalSearchScope) {
+  return normalizeGlobalSearchScope(scope) === 'corpus' ? 'весь корпус' : 'текущая книга';
+}
+
+function getBookLabelForSearch(bookId) {
+  const id = String(bookId || '').trim();
+  const book = getCorpusBooks().find(item => item.book_id === id) || getActiveBook();
+  return String(book.short_title || book.title || book.book_id || 'текущая книга');
+}
+
+function enrichGlobalSearchRecord(record) {
+  if (!record || typeof record !== 'object') return record;
+  const activeBook = getActiveBook();
+  const bookId = record.bookId || activeBook.book_id;
+  return {
+    sourceType: 'book',
+    ...record,
+    bookId,
+  };
+}
+
+function filterGlobalSearchMatchesForScope(matches, scope = globalSearchScope) {
+  if (!Array.isArray(matches)) return [];
+  if (normalizeGlobalSearchScope(scope) === 'corpus') return matches.map(enrichGlobalSearchRecord);
+  const activeBookId = getActiveBook().book_id;
+  return matches
+    .map(enrichGlobalSearchRecord)
+    .filter(match => !match.bookId || match.bookId === activeBookId);
 }
 let subjectCrosslinksLookupCache = null;
 let reverseEdgesCache = null;
@@ -1416,6 +1451,7 @@ function captureViewState() {
     currentKwicPageEnd,
     activeFilters: Array.from(activeFilters),
     globalSearchQuery: globalSearchInput ? String(globalSearchInput.value || '') : '',
+    globalSearchScope,
   };
 }
 
@@ -1469,6 +1505,7 @@ function restoreViewState() {
     if (!Array.isArray(parsed.activeFilters)) parsed.activeFilters = [];
     parsed.activeFilters = parsed.activeFilters.filter(x => typeof x === 'string');
     if (typeof parsed.globalSearchQuery !== 'string') parsed.globalSearchQuery = '';
+    parsed.globalSearchScope = normalizeGlobalSearchScope(parsed.globalSearchScope);
     return parsed;
   } catch (e) {
     return null;
@@ -1769,6 +1806,9 @@ function applyViewState(state) {
   renderContent();
   const globalSearchInput = document.getElementById('global-search');
   if (globalSearchInput) globalSearchInput.value = typeof state.globalSearchQuery === 'string' ? state.globalSearchQuery : '';
+  globalSearchScope = normalizeGlobalSearchScope(state.globalSearchScope);
+  const globalSearchScopeSelect = document.getElementById('global-search-scope');
+  if (globalSearchScopeSelect && 'value' in globalSearchScopeSelect) globalSearchScopeSelect.value = globalSearchScope;
 }
 
 function sameViewState(a, b) {
@@ -1793,6 +1833,7 @@ function sameViewState(a, b) {
     (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) &&
     (a.currentKwicPageEnd || 404) === (b.currentKwicPageEnd || 404) &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
+    normalizeGlobalSearchScope(a.globalSearchScope) === normalizeGlobalSearchScope(b.globalSearchScope) &&
     !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst &&
     !!a.onlyDiscussed === !!b.onlyDiscussed &&
     !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
@@ -2727,14 +2768,15 @@ function getGlobalSearchMatchesLegacy(query) {
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
   const qNorm = normalizeSearchText(q);
   if (q.length < 2) return [];
-  const searchKey = `${getDataSignature()}::${q}`;
+  const scope = normalizeGlobalSearchScope(globalSearchScope);
+  const searchKey = `${getDataSignature()}::${scope}::${q}`;
   const cached = globalSearchCache.get(searchKey);
   if (cached) return cached;
   const out = [];
   const push = (kind, type, head, meta, lectureIndex, snippet, routeHash = '') => {
     if (!head) return;
     const score = head.toLowerCase().startsWith(q) ? 0 : 1;
-    out.push({ kind, type, head, meta, lectureIndex, snippet, routeHash, score });
+    out.push(enrichGlobalSearchRecord({ kind, type, head, meta, lectureIndex, snippet, routeHash, score }));
   };
 
   const typedSources = [
@@ -2784,7 +2826,7 @@ function getGlobalSearchMatchesLegacy(query) {
   }
 
   out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
-  const sliced = out.slice(0, 40);
+  const sliced = filterGlobalSearchMatchesForScope(out, scope).slice(0, 40);
   return rememberBoundedCacheValue(globalSearchCache, searchKey, sliced, GLOBAL_SEARCH_CACHE_MAX);
 }
 
@@ -2928,6 +2970,8 @@ function buildGlobalSearchRouteRecords() {
 function buildGlobalSearchFuseRecords() {
   if (!APP_DATA) return [];
   const records = [];
+  const activeBook = getActiveBook();
+  const activeBookId = activeBook.book_id || 'zaliznyak-aaz-index';
   const typedSources = [
     { type: 'names', kind: LABELS && LABELS.name ? LABELS.name : 'name', items: APP_DATA.names || [] },
     { type: 'toponyms', kind: LABELS && LABELS.place ? LABELS.place : 'toponym', items: APP_DATA.toponyms || [] },
@@ -2950,6 +2994,8 @@ function buildGlobalSearchFuseRecords() {
         meta: pageCount ? `${pageCount} \u0441\u0442\u0440.` : '',
         lectureIndex: null,
         snippet: getFirstContextQuote(it),
+        bookId: activeBookId,
+        sourceType: 'book',
         searchHead,
         searchSecondary: buildGlobalSearchSecondaryForItem(it),
       });
@@ -2970,6 +3016,8 @@ function buildGlobalSearchFuseRecords() {
       meta: '\u0433\u043b\u043e\u0441\u0441\u0430\u0440\u0438\u0439',
       lectureIndex: null,
       snippet: definition,
+      bookId: activeBookId,
+      sourceType: 'book',
       searchHead,
       searchSecondary: normalizeSearchText(definition),
     });
@@ -2992,12 +3040,14 @@ function buildGlobalSearchFuseRecords() {
       meta: `\u0441\u0442\u0440. ${l.pages || ''}`,
       lectureIndex: i,
       snippet,
+      bookId: activeBookId,
+      sourceType: 'book',
       searchHead,
       searchSecondary: normalizeSearchText([l.main_idea || '', terms, l.why_read || '', facts].join(' ')),
     });
   }
   const routeRecords = buildGlobalSearchRouteRecords();
-  if (routeRecords.length) records.push(...routeRecords);
+  if (routeRecords.length) records.push(...routeRecords.map(enrichGlobalSearchRecord));
   return records;
 }
 
@@ -3043,14 +3093,14 @@ function getGlobalSearchMatchesFuzzy(queryNorm) {
   for (const row of rows) {
     const item = row && row.item ? row.item : null;
     if (!item || !item.head) continue;
-    const key = `${item.type}::${item.head}::${item.lectureIndex === null ? '' : item.lectureIndex}`;
+    const key = `${item.type}::${item.bookId || ''}::${item.head}::${item.lectureIndex === null ? '' : item.lectureIndex}`;
     if (dedupe.has(key)) continue;
     dedupe.add(key);
     let score = Number.isFinite(row.score) ? row.score : 1;
     const headNorm = item.searchHead || '';
     if (headNorm.startsWith(queryNorm)) score -= 0.12;
     else if (headNorm.includes(queryNorm)) score -= 0.06;
-    out.push({
+    out.push(enrichGlobalSearchRecord({
       kind: item.kind,
       type: item.type,
       head: item.head,
@@ -3058,8 +3108,10 @@ function getGlobalSearchMatchesFuzzy(queryNorm) {
       lectureIndex: item.lectureIndex,
       snippet: item.snippet,
       routeHash: item.routeHash || '',
+      bookId: item.bookId || '',
+      sourceType: item.sourceType || 'book',
       score,
-    });
+    }));
   }
   out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
   return out.slice(0, 40);
@@ -3069,7 +3121,8 @@ function getGlobalSearchMatches(query) {
   const qRaw = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
   const qNorm = normalizeSearchText(qRaw);
   if (qNorm.length < 2) return [];
-  const searchKey = `${getDataSignature()}::${qNorm}`;
+  const scope = normalizeGlobalSearchScope(globalSearchScope);
+  const searchKey = `${getDataSignature()}::${scope}::${qNorm}`;
   const cached = globalSearchCache.get(searchKey);
   if (cached) return cached;
   let matches = [];
@@ -3081,7 +3134,8 @@ function getGlobalSearchMatches(query) {
   if (!Array.isArray(matches) || !matches.length) {
     matches = getGlobalSearchMatchesLegacy(qRaw);
   }
-  const sliced = Array.isArray(matches) ? matches.slice(0, 40) : [];
+  const scoped = filterGlobalSearchMatchesForScope(matches, scope);
+  const sliced = Array.isArray(scoped) ? scoped.slice(0, 40) : [];
   return rememberBoundedCacheValue(globalSearchCache, searchKey, sliced, GLOBAL_SEARCH_CACHE_MAX);
 }
 
@@ -3168,10 +3222,14 @@ function appendGlobalSearchResult(box, match, idx, query) {
   row.appendChild(head);
   row.appendChild(kind);
 
-  if (match.meta) {
+  const metaParts = [];
+  const bookLabel = getBookLabelForSearch(match.bookId);
+  if (bookLabel) metaParts.push(bookLabel);
+  if (match.meta) metaParts.push(String(match.meta || ''));
+  if (metaParts.length) {
     const meta = document.createElement('div');
     meta.className = 'search-meta';
-    meta.textContent = String(match.meta || '');
+    meta.textContent = metaParts.join(' · ');
     row.appendChild(meta);
   }
   if (match.snippet) {
@@ -3340,6 +3398,20 @@ function wireGlobalUI() {
 
   const input = document.getElementById('global-search');
   const box = document.getElementById('global-search-results');
+  const scopeSelect = document.getElementById('global-search-scope');
+  if (scopeSelect) {
+    if ('value' in scopeSelect) scopeSelect.value = globalSearchScope;
+    scopeSelect.onchange = (e) => {
+      const target = e && e.target;
+      if (!target || typeof target.value !== 'string') return;
+      globalSearchScope = normalizeGlobalSearchScope(target.value);
+      clearGlobalSearchCaches();
+      const q = input ? clampUiInput(input.value, MAX_GLOBAL_QUERY_LENGTH) : '';
+      if (input && input.value !== q) input.value = q;
+      renderGlobalSearchResults(getGlobalSearchMatches(q), q);
+      persistViewState();
+    };
+  }
   if (input && box) {
     safeSetAttr(input, 'role', 'combobox');
     safeSetAttr(input, 'aria-autocomplete', 'list');

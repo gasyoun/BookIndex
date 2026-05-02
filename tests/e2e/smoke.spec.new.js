@@ -17,6 +17,7 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('.home-panel')).toBeVisible();
     await expect(page.locator('#corpus-status .corpus-chip.active')).toContainText('Из жизни слов и языков');
     await expect(page.locator('#corpus-status')).toContainText('Видео: 200');
+    await expect(page.locator('#global-search-scope')).toHaveValue('current');
 
     const corpus = await page.evaluate(() => window.APP_DATA && window.APP_DATA.corpus);
     expect(corpus.active_book_id).toBe('zaliznyak-aaz-index');
@@ -26,6 +27,28 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/aaz-index.html#v4/books/zaliznyak-aaz-index/names/list');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
     await expect(page).toHaveURL(/#v4\/names\/list$/);
+  });
+
+  test('global search scope can switch between current book and corpus', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/home/home');
+    const input = page.locator('#global-search');
+    const scope = page.locator('#global-search-scope');
+    await expect(scope).toHaveValue('current');
+
+    await input.fill('иткин');
+    const firstResult = page.locator('#global-search-results.open .header-search-item').first();
+    await expect(firstResult).toBeVisible();
+    await expect(firstResult.locator('.search-meta')).toContainText('Из жизни слов и языков');
+
+    await scope.selectOption('corpus');
+    await expect(scope).toHaveValue('corpus');
+    await expect(firstResult).toBeVisible();
+
+    const savedScope = await page.evaluate(() => {
+      const raw = localStorage.getItem('zaliznyakiada.ui.v1');
+      return raw ? JSON.parse(raw).globalSearchScope : '';
+    });
+    expect(savedScope).toBe('corpus');
   });
 
   test('PWA manifest and service worker are available', async ({ page }) => {
