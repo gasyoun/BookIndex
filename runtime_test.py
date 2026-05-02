@@ -43,6 +43,8 @@ def check_static_guards():
         tpl = f.read()
     with open(os.path.join('scripts', 'export_app_data_to_markdown.mjs'), 'r', encoding='utf-8') as f:
         flat_exporter = f.read()
+    with open(os.path.join('scripts', 'content_report.py'), 'r', encoding='utf-8') as f:
+        content_report = f.read()
     if not os.path.exists('sw.js'):
         print('[static] FAIL: sw.js is missing')
         return False
@@ -194,6 +196,18 @@ def check_static_guards():
     for needle in flat_exporter_required:
         if needle not in flat_exporter:
             print(f"[static] FAIL: required flat exporter fragment missing: {needle}")
+            return False
+
+    content_report_required = [
+        'DEFAULT_CORPUS_BOOK_ID = "zaliznyak-aaz-index"',
+        'DEFAULT_VIDEO_CATALOG_COUNT = 200',
+        '"mode": "runtime_default"',
+        '"mode": "explicit"',
+        '"active_book_title"',
+    ]
+    for needle in content_report_required:
+        if needle not in content_report:
+            print(f"[static] FAIL: required content report fragment missing: {needle}")
             return False
 
     print("[static] OK: guards passed")
