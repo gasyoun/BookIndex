@@ -17,6 +17,7 @@
       "keys": [
         "schema_version",
         "schema_migrations",
+        "corpus",
         "labels",
         "colors",
         "epoch_labels",
@@ -94,6 +95,7 @@
   "key_order": [
     "schema_version",
     "schema_migrations",
+    "corpus",
     "names",
     "edges",
     "chapters",
