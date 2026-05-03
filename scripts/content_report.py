@@ -301,6 +301,7 @@ def collect_manual_audit_metrics(source: str, data: dict[str, Any]) -> dict[str,
     lines = text.splitlines()
     terms = sorted(set(term.strip() for term in MANUAL_AUDIT_TERM_RE.findall(text) if term.strip()))
     heads_by_term: dict[str, list[str]] = {}
+    all_heads: list[dict[str, str]] = []
     for key in ENTITY_KEYS:
         items = data.get(key, [])
         if not isinstance(items, list):
@@ -309,9 +310,28 @@ def collect_manual_audit_metrics(source: str, data: dict[str, Any]) -> dict[str,
             if not isinstance(item, dict):
                 continue
             head = item.get("head")
-            if isinstance(head, str) and head in terms:
+            if not isinstance(head, str):
+                continue
+            all_heads.append({"section": key, "head": head})
+            if head in terms:
                 heads_by_term.setdefault(head, []).append(key)
     missing_terms = [term for term in terms if term not in heads_by_term]
+    possible_matches: dict[str, list[dict[str, str]]] = {}
+    for term in missing_terms:
+        normalized_term = sort_key(term)
+        matches = [
+            head
+            for head in all_heads
+            if normalized_term
+            and len(normalized_term) >= 4
+            and len(sort_key(head["head"])) >= 4
+            and (
+                normalized_term in sort_key(head["head"])
+                or sort_key(head["head"]) in normalized_term
+            )
+        ]
+        if matches:
+            possible_matches[term] = matches[:10]
     return {
         "index_errors": {
             "present": True,
@@ -322,6 +342,7 @@ def collect_manual_audit_metrics(source: str, data: dict[str, Any]) -> dict[str,
             "terms_total": len(terms),
             "terms_found": len(heads_by_term),
             "terms_missing": missing_terms[:20],
+            "terms_possible_matches": possible_matches,
             "terms_found_by_section": heads_by_term,
         }
     }
@@ -456,6 +477,16 @@ def render_markdown(report: dict[str, Any]) -> str:
     if missing_manual_terms:
         lines.append("Manual audit terms missing from current heads:")
         lines.extend(f"- `{term}`" for term in missing_manual_terms)
+        lines.append("")
+    possible_manual_matches = index_errors.get("terms_possible_matches", {})
+    if possible_manual_matches:
+        lines.append("Possible matches for missing manual audit terms:")
+        for term, matches in possible_manual_matches.items():
+            formatted = ", ".join(
+                f"`{match['head']}` ({match['section']})"
+                for match in matches[:5]
+            )
+            lines.append(f"- `{term}`: {formatted}")
         lines.append("")
 
     missing_markdown = report.get("markdown_exports", {}).get("missing_corpus_metadata_sample", [])

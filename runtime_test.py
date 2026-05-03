@@ -215,6 +215,7 @@ def check_static_guards():
         'MANUAL_AUDIT_TERM_RE = re.compile',
         'collect_manual_audit_metrics(source, data)',
         '"terms_missing"',
+        '"terms_possible_matches"',
         '## Manual Audits',
         'def collect_sort_order_metrics(items: list[dict[str, Any]], applicable: bool) -> dict[str, Any]:',
         '"sort_inversions_count"',
