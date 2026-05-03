@@ -1,6 +1,6 @@
 ---
-id: "?aktaba"
-title: "?aktaba"
+id: "ʔaktaba"
+title: "ʔaktaba"
 source_key: "lexicon_tech"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
@@ -14,7 +14,7 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "?aktaba",
+  "head": "ʔaktaba",
   "pages": "228",
   "page_list": [
     228

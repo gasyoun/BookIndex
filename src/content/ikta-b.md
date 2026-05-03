@@ -1,6 +1,6 @@
 ---
-id: "?iktäb"
-title: "?iktäb"
+id: "ʔiktäb"
+title: "ʔiktäb"
 source_key: "lexicon_tech"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
@@ -14,7 +14,7 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "?iktäb",
+  "head": "ʔiktäb",
   "pages": "228",
   "page_list": [
     228

@@ -46,7 +46,7 @@
   },
   "totals": {
     "duplicate_heads_count": 0,
-    "suspicious_heads_count": 31,
+    "suspicious_heads_count": 23,
     "sort_inversions_count": 20
   },
   "suspicious_heads": {
@@ -60,19 +60,19 @@
       "?ибп",
       "?Ци...",
       "?дмъ1",
-      "?aktaba"
+      "?U6n"
     ],
     "lexicon_tech": [
       "??||",
-      "?aktaba",
-      "?amira",
-      "?aslama",
-      "?iktäb",
       "?U",
       "?а",
       "?атіг",
       "?д",
-      "?дмъ"
+      "?дмъ",
+      "?дмъЦе",
+      "?и",
+      "?ибп",
+      "?Це"
     ]
   },
   "sort_inversions": {

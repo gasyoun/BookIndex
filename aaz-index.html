@@ -34102,7 +34102,7 @@
       "contexts": {}
     },
     {
-      "head": "kur?än",
+      "head": "kurʔän",
       "pages": "222",
       "page_list": [
         222
@@ -34235,7 +34235,7 @@
       "contexts": {}
     },
     {
-      "head": "?aktaba",
+      "head": "ʔaktaba",
       "pages": "228",
       "page_list": [
         228
@@ -34246,7 +34246,7 @@
       "contexts": {}
     },
     {
-      "head": "?amira",
+      "head": "ʔamira",
       "pages": "221",
       "page_list": [
         221
@@ -34257,7 +34257,7 @@
       "contexts": {}
     },
     {
-      "head": "?aslama",
+      "head": "ʔaslama",
       "pages": "228",
       "page_list": [
         228
@@ -34268,7 +34268,7 @@
       "contexts": {}
     },
     {
-      "head": "?iktäb",
+      "head": "ʔiktäb",
       "pages": "228",
       "page_list": [
         228
@@ -43880,7 +43880,7 @@
       "discussed": true
     },
     {
-      "head": "?aktaba",
+      "head": "ʔaktaba",
       "page_list": [
         228
       ],
@@ -43988,7 +43988,7 @@
       "discussed": false
     },
     {
-      "head": "?aslama",
+      "head": "ʔaslama",
       "page_list": [
         228
       ],
@@ -44044,7 +44044,7 @@
       "discussed": false
     },
     {
-      "head": "?amira",
+      "head": "ʔamira",
       "page_list": [
         221
       ],
@@ -44276,7 +44276,7 @@
       "discussed": false
     },
     {
-      "head": "?iktäb",
+      "head": "ʔiktäb",
       "page_list": [
         228
       ],
@@ -45140,7 +45140,7 @@
       "discussed": false
     },
     {
-      "head": "kur?än",
+      "head": "kurʔän",
       "page_list": [
         222
       ],
@@ -76340,7 +76340,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '6811fc716784';
+const APP_BUILD_ID = 'df320e6a2896';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79936,7 +79936,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '6811fc716784' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'df320e6a2896' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;

@@ -1,6 +1,6 @@
 ---
-id: "?amira"
-title: "?amira"
+id: "ʔamira"
+title: "ʔamira"
 source_key: "lexicon_tech"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
@@ -14,7 +14,7 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "?amira",
+  "head": "ʔamira",
   "pages": "221",
   "page_list": [
     221

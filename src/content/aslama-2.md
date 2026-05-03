@@ -1,6 +1,6 @@
 ---
-id: "?aslama"
-title: "?aslama"
+id: "ʔaslama"
+title: "ʔaslama"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
@@ -14,7 +14,7 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "?aslama",
+  "head": "ʔaslama",
   "page_list": [
     228
   ],
