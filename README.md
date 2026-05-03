@@ -238,7 +238,7 @@ BookIndex распространяется под [Apache License 2.0](LICENSE).
 
 Ожидается:
 
-- [scripts/validate_content.py](scripts/validate_content.py): `0 errors` (допустимы известные warning по дублям данных).
+- [scripts/validate_content.py](scripts/validate_content.py): `0 errors` (допустимы известные warning по дублям данных и suspicious heads до редакторской чистки).
 - [runtime_test.py](runtime_test.py): `21/21`.
 - `playwright test`: все тесты pass.
 

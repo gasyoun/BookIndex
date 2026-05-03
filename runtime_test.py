@@ -223,8 +223,11 @@ def check_static_guards():
             return False
 
     validate_content_required = [
+        'def configure_output_encoding() -> None:',
         'def validate_markdown_exports(data_path: Path, errors: list[str], warnings: list[str]) -> None:',
         '"[markdown_exports] files missing source/book_id frontmatter: "',
+        'def validate_suspicious_heads(data: dict[str, Any], warnings: list[str]) -> None:',
+        'validate_suspicious_heads(data, warnings)',
         'validate_markdown_exports(path, errors, warnings)',
     ]
     for needle in validate_content_required:

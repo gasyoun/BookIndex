@@ -24,6 +24,12 @@ SCHEMA_CURRENT = 2
 SCHEMA_FILE_DEFAULT = Path(__file__).resolve().parents[1] / "schemas" / "app_data.schema.json"
 
 
+def configure_output_encoding() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
+
+
 def fail(msg: str, errors: list[str]) -> None:
     errors.append(msg)
 
@@ -57,6 +63,27 @@ def validate_duplicates(data: dict[str, Any], errors: list[str], warnings: list[
         dup = [h for h, c in Counter(heads).items() if h and c > 1]
         if dup:
             warn(f"[{key}] duplicate heads: {', '.join(sorted(dup)[:15])}", warnings)
+
+
+def validate_suspicious_heads(data: dict[str, Any], warnings: list[str]) -> None:
+    for key in ENTITY_KEYS:
+        arr = data.get(key, [])
+        if not isinstance(arr, list):
+            continue
+        suspicious = []
+        for item in arr:
+            if not isinstance(item, dict):
+                continue
+            head = str(item.get("head", "")).strip()
+            if head.startswith("?") or "\ufffd" in head:
+                suspicious.append(head)
+        if suspicious:
+            warn(
+                f"[{key}] suspicious heads: "
+                + ", ".join(suspicious[:15])
+                + (f" (+{len(suspicious) - 15} more)" if len(suspicious) > 15 else ""),
+                warnings,
+            )
 
 
 def validate_schema(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
@@ -438,6 +465,7 @@ def validate_markdown_exports(data_path: Path, errors: list[str], warnings: list
 
 
 def main() -> int:
+    configure_output_encoding()
     path = Path(sys.argv[1] if len(sys.argv) > 1 else "app_data.json")
     if not path.exists():
         print(f"ERROR: file not found: {path}")
@@ -457,6 +485,7 @@ def main() -> int:
     validate_against_json_schema(data, errors, warnings)
     validate_corpus(data, errors, warnings)
     validate_duplicates(data, errors, warnings)
+    validate_suspicious_heads(data, warnings)
     validate_editorial_flags(data, errors, warnings)
     validate_sources(data, errors)
     validate_pages(data, errors, warnings)
