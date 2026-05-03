@@ -253,6 +253,8 @@ npm run content:audit
 
 Отчёт включает: количество элементов по сущностям, долю элементов с `page_list`/`contexts`/`sources`, количество дубликатов `head`, suspicious heads sample для строк с `?`/replacement character, sort inversions sample для алфавитных проверок, manual audit summary из [tests/index-errors.md](tests/index-errors.md), corpus registry summary, покрытие `source`/`book_id` в `src/content/*.md` и агрегированные totals. Флаг `--write-manual-audit` пишет компактную редакторскую очередь в [tests/index-audit-queue.json](tests/index-audit-queue.json). `validate_content.py` также проверяет `src/content/*.md`, если директория существует рядом с `app_data.json`.
 
+Текущая редакторская очередь: 36 suspicious heads, 23 sort inversions, 3 duplicate-head groups. Из manual audit найдено 7 из 11 терминов; без точного `head` сейчас остаются `выругать`, `суоми`, `счастлив`, `счастье`.
+
 ## Структура проекта
 
 | Файл / директория | Назначение |
