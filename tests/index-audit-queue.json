@@ -1,0 +1,155 @@
+{
+  "source": "app_data.json",
+  "manual_audit": {
+    "present": true,
+    "path": "tests\\index-errors.md",
+    "headings": 3,
+    "table_rows": 3,
+    "bullet_items": 8,
+    "terms_total": 11,
+    "terms_found": 7,
+    "terms_missing": [
+      "выругать",
+      "суоми",
+      "счастлив",
+      "счастье"
+    ],
+    "terms_possible_matches": {},
+    "terms_found_by_section": {
+      "Архангельская область": [
+        "toponyms"
+      ],
+      "вырути": [
+        "lexicon",
+        "lexicon_reverse"
+      ],
+      "десяток": [
+        "lexicon",
+        "lexicon_reverse"
+      ],
+      "десять": [
+        "lexicon",
+        "lexicon_reverse"
+      ],
+      "судить": [
+        "lexicon",
+        "lexicon_reverse"
+      ],
+      "алфавит": [
+        "subject_index"
+      ],
+      "архаизм": [
+        "subject_index"
+      ]
+    }
+  },
+  "totals": {
+    "duplicate_heads_count": 3,
+    "suspicious_heads_count": 36,
+    "sort_inversions_count": 23
+  },
+  "suspicious_heads": {
+    "names": [
+      "?Зализняк А. А.",
+      "?Иванов",
+      "?Владимир",
+      "?Ярослав",
+      "?Блок"
+    ],
+    "lexicon_reverse": [
+      "?а",
+      "?атіг",
+      "?д",
+      "?Це",
+      "?дмъЦе",
+      "?и",
+      "?ибп",
+      "?Ци...",
+      "?дмъ1",
+      "?aktaba"
+    ],
+    "lexicon_tech": [
+      "??||",
+      "?aktaba",
+      "?amira",
+      "?aslama",
+      "?iktäb",
+      "?U",
+      "?а",
+      "?атіг",
+      "?д",
+      "?дмъ"
+    ]
+  },
+  "sort_inversions": {
+    "names": [
+      {
+        "index": 91,
+        "previous": "Янин В. Л.",
+        "current": "?Зализняк А. А."
+      },
+      {
+        "index": 93,
+        "previous": "?Иванов",
+        "current": "?Владимир"
+      },
+      {
+        "index": 95,
+        "previous": "?Ярослав",
+        "current": "?Блок"
+      }
+    ],
+    "lexicon": [
+      {
+        "index": 570,
+        "previous": "лесть",
+        "current": "леṗтчик"
+      },
+      {
+        "index": 602,
+        "previous": "Михаилович",
+        "current": "Миха́йла"
+      },
+      {
+        "index": 928,
+        "previous": "стоишь",
+        "current": "стой"
+      },
+      {
+        "index": 1015,
+        "previous": "у́зел",
+        "current": "узеṗл"
+      },
+      {
+        "index": 1106,
+        "previous": "ѵіе",
+        "current": "admire"
+      },
+      {
+        "index": 1155,
+        "previous": "dwet",
+        "current": "döet"
+      },
+      {
+        "index": 1156,
+        "previous": "döet",
+        "current": "dĳt"
+      },
+      {
+        "index": 1193,
+        "previous": "katuba",
+        "current": "katäb"
+      },
+      {
+        "index": 1203,
+        "previous": "kutiba",
+        "current": "kätib"
+      },
+      {
+        "index": 1212,
+        "previous": "mahzan",
+        "current": "mahärig"
+      }
+    ]
+  }
+}

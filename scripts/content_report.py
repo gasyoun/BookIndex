@@ -560,6 +560,31 @@ def render_markdown(report: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def build_manual_audit_queue(report: dict[str, Any]) -> dict[str, Any]:
+    entities = report.get("entities", {})
+    suspicious = {
+        key: metrics.get("suspicious_heads_sample", [])
+        for key, metrics in entities.items()
+        if metrics.get("suspicious_heads_sample")
+    }
+    sort_inversions = {
+        key: metrics.get("sort_order", {}).get("inversions_sample", [])
+        for key, metrics in entities.items()
+        if metrics.get("sort_order", {}).get("inversions_sample")
+    }
+    return {
+        "source": report.get("source"),
+        "manual_audit": report.get("manual_audits", {}).get("index_errors", {}),
+        "totals": {
+            "duplicate_heads_count": report.get("totals", {}).get("duplicate_heads_count", 0),
+            "suspicious_heads_count": report.get("totals", {}).get("suspicious_heads_count", 0),
+            "sort_inversions_count": report.get("totals", {}).get("sort_inversions_count", 0),
+        },
+        "suspicious_heads": suspicious,
+        "sort_inversions": sort_inversions,
+    }
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate BookIndex content metrics report.")
     parser.add_argument("path", nargs="?", default="app_data.json", help="Path to app_data.json")
@@ -568,6 +593,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         choices=("md", "json"),
         default="md",
         help="Output format: markdown (md) or json",
+    )
+    parser.add_argument(
+        "--write-manual-audit",
+        metavar="PATH",
+        help="Write compact manual audit queue JSON to PATH",
     )
     return parser.parse_args(argv)
 
@@ -587,6 +617,14 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     report = build_report(data, str(path))
+
+    if args.write_manual_audit:
+        audit_path = Path(args.write_manual_audit)
+        audit_path.parent.mkdir(parents=True, exist_ok=True)
+        audit_path.write_text(
+            json.dumps(build_manual_audit_queue(report), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
 
     if args.format == "json":
         print(json.dumps(report, ensure_ascii=False, indent=2))
