@@ -145,6 +145,65 @@ function normalizeBodyText(text) {
   return String(text).replace(/\r\n/g, '\n').trim();
 }
 
+function formatListValue(value) {
+  return Array.isArray(value) && value.length ? value.join(', ') : 'n/a';
+}
+
+function buildCorpusRegistryMarkdown({ data, value }) {
+  const corpus = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+  const corpusMeta = getCorpusBookMeta(data, corpus);
+  const frontmatter = formatFrontmatter({
+    id: 'corpus',
+    title: 'corpus',
+    sourceKey: 'corpus',
+    source: corpusMeta.source,
+    bookId: corpusMeta.bookId,
+    index: null,
+    tags: ['corpus'],
+  });
+  const books = Array.isArray(corpus.books) ? corpus.books.filter((book) => book && typeof book === 'object') : [];
+  const sourceTypes = Array.isArray(corpus.source_types)
+    ? corpus.source_types.filter((sourceType) => sourceType && typeof sourceType === 'object')
+    : [];
+  const lines = [
+    frontmatter,
+    '',
+    `Active book: ${corpusMeta.source} (${corpusMeta.bookId}).`,
+    '',
+    '## Books',
+    '',
+  ];
+
+  if (books.length) {
+    for (const book of books) {
+      const title = String(book.title || book.short_title || book.book_id || 'Untitled');
+      const author = book.author ? `, ${book.author}` : '';
+      const year = book.year ? `, ${book.year}` : '';
+      const pages = Number.isFinite(book.pages_total) ? `, ${book.pages_total} pages` : '';
+      const modules = Array.isArray(book.content_modules) ? `; modules: ${book.content_modules.join(', ')}` : '';
+      lines.push(`- ${title}${author}${year}${pages}${modules}`);
+    }
+  } else {
+    lines.push('- n/a');
+  }
+
+  lines.push('', '## Source types', '');
+  if (sourceTypes.length) {
+    for (const sourceType of sourceTypes) {
+      const label = String(sourceType.label || sourceType.title || sourceType.type || 'Untitled');
+      const status = sourceType.status ? `; status: ${sourceType.status}` : '';
+      const plannedCount = Number.isFinite(sourceType.planned_count) ? `; planned: ${sourceType.planned_count}` : '';
+      lines.push(`- ${label} (${sourceType.type || 'source'}): ${formatListValue(sourceType.supports)}${status}${plannedCount}`);
+    }
+  } else {
+    lines.push('- n/a');
+  }
+
+  const rawJson = JSON.stringify(corpus, null, 2);
+  lines.push('', '## Source JSON', '', '```json', rawJson, '```', '');
+  return lines.join('\n');
+}
+
 function getCorpusBookMeta(data, entity) {
   const corpus = data && typeof data === 'object' && data.corpus && typeof data.corpus === 'object'
     ? data.corpus
@@ -183,6 +242,10 @@ function buildEntityMarkdown({ data, sourceKey, entity, index }) {
 }
 
 function buildTopLevelMarkdown({ data, key, value }) {
+  if (key === 'corpus') {
+    return buildCorpusRegistryMarkdown({ data, value });
+  }
+
   const body = normalizeBodyText(firstTextField(value));
   const corpusMeta = getCorpusBookMeta(data, value);
   const frontmatter = formatFrontmatter({

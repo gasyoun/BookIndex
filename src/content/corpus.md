@@ -7,7 +7,16 @@ book_id: "zaliznyak-aaz-index"
 tags: ["corpus"]
 ---
 
-_Текстовое поле верхнего уровня не найдено; см. JSON ниже._
+Active book: Из жизни слов и языков (zaliznyak-aaz-index).
+
+## Books
+
+- Из жизни слов и языков, А. А. Зализняк, 2026, 404 pages; modules: names, toponyms, ethnonyms, languages, lexicon, lexicon_reverse, lexicon_tech, subject_index, lectures, scholar
+
+## Source types
+
+- Книга (book): pages, citations
+- Видеокаталог (video_catalog): timecodes, transcripts, citations, media; status: planned; planned: 200
 
 ## Source JSON
 

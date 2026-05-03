@@ -292,6 +292,27 @@ def check_static_guards():
         sample = ', '.join(missing_corpus_metadata)
         print(f"[static] FAIL: markdown corpus metadata missing in {sample}")
         return False
+    corpus_markdown_path = os.path.join(content_dir, 'corpus.md')
+    if not os.path.exists(corpus_markdown_path):
+        print('[static] FAIL: src/content/corpus.md is missing')
+        return False
+    with open(corpus_markdown_path, 'r', encoding='utf-8') as f:
+        corpus_markdown = f.read()
+    corpus_markdown_fragments = [
+        'Active book:',
+        '## Books',
+        '## Source types',
+        'video_catalog',
+        'planned: 200',
+    ]
+    missing_fragments = [
+        fragment
+        for fragment in corpus_markdown_fragments
+        if fragment not in corpus_markdown
+    ]
+    if missing_fragments:
+        print(f"[static] FAIL: corpus.md registry summary missing: {', '.join(missing_fragments)}")
+        return False
 
     print("[static] OK: guards passed")
     return True
