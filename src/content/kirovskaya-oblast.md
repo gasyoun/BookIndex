@@ -4,7 +4,7 @@ title: "Кировская область"
 source_key: "toponyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 21
+source_index: 43
 tags: ["toponyms"]
 ---
 

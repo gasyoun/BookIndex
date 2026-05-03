@@ -4,7 +4,7 @@ title: "киевско-черниговская зона"
 source_key: "toponyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 43
+source_index: 42
 tags: ["toponyms"]
 ---
 

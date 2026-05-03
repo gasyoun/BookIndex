@@ -4,7 +4,7 @@ title: "Индостан"
 source_key: "toponyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 33
+source_index: 32
 tags: ["toponyms"]
 ---
 

@@ -4,7 +4,7 @@ title: "Европа"
 source_key: "toponyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 29
+source_index: 28
 tags: ["toponyms"]
 ---
 
