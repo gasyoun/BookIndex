@@ -277,6 +277,34 @@ def collect_markdown_export_metrics(source: str) -> dict[str, Any]:
     }
 
 
+def collect_manual_audit_metrics(source: str) -> dict[str, Any]:
+    source_path = Path(source)
+    base_dir = source_path.parent if source_path.parent != Path("") else Path(".")
+    index_errors_path = base_dir / "tests" / "index-errors.md"
+    if not index_errors_path.is_file():
+        return {
+            "index_errors": {
+                "present": False,
+                "path": str(index_errors_path),
+                "headings": 0,
+                "table_rows": 0,
+                "bullet_items": 0,
+            }
+        }
+
+    text = index_errors_path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    return {
+        "index_errors": {
+            "present": True,
+            "path": str(index_errors_path),
+            "headings": sum(1 for line in lines if line.startswith("#")),
+            "table_rows": sum(1 for line in lines if line.startswith("|") and not line.startswith("| :")),
+            "bullet_items": sum(1 for line in lines if line.lstrip().startswith("* ")),
+        }
+    }
+
+
 def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
     book_stats = data.get("book_stats", {})
     total_pages = book_stats.get("total_pages")
@@ -328,6 +356,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "book_total_pages": total_pages,
         "corpus": collect_corpus_metrics(data),
         "markdown_exports": collect_markdown_export_metrics(source),
+        "manual_audits": collect_manual_audit_metrics(source),
         "entities": entities,
         "totals": totals,
     }
@@ -343,6 +372,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Book pages: `{report.get('book_total_pages')}`",
         f"- Corpus registry: `{report.get('corpus', {}).get('mode', 'runtime_default')}`",
         f"- Markdown exports: `{report.get('markdown_exports', {}).get('files_total', 0)}`",
+        f"- Manual index audit: `{report.get('manual_audits', {}).get('index_errors', {}).get('path', 'tests/index-errors.md')}`",
         "",
         "## Totals",
         "",
@@ -387,6 +417,18 @@ def render_markdown(report: dict[str, Any]) -> str:
         ),
         "",
     ]
+
+    index_errors = report.get("manual_audits", {}).get("index_errors", {})
+    lines.extend([
+        "## Manual Audits",
+        "",
+        f"- Index errors file: `{index_errors.get('path', 'tests/index-errors.md')}`",
+        f"- Present: {index_errors.get('present', False)}",
+        f"- Headings: {index_errors.get('headings', 0)}",
+        f"- Table rows: {index_errors.get('table_rows', 0)}",
+        f"- Bullet items: {index_errors.get('bullet_items', 0)}",
+        "",
+    ])
 
     missing_markdown = report.get("markdown_exports", {}).get("missing_corpus_metadata_sample", [])
     if missing_markdown:
