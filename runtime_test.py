@@ -239,6 +239,8 @@ def check_static_guards():
         'validate_suspicious_heads(data, warnings)',
         'def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: list[str]) -> None:',
         'validate_manual_audit_queue(path, errors, warnings)',
+        'def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:',
+        'validate_readme_audit_summary(path, errors)',
         'validate_markdown_exports(path, errors, warnings)',
     ]
     for needle in validate_content_required:

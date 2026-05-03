@@ -517,6 +517,33 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
         warn("[manual_audit] index-errors.md is not marked present in queue", warnings)
 
 
+def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:
+    readme_path = data_path.parent / "README.md"
+    queue_path = data_path.parent / "tests" / "index-audit-queue.json"
+    if not readme_path.exists() or not queue_path.exists():
+        return
+    readme = readme_path.read_text(encoding="utf-8")
+    queue = json.loads(queue_path.read_text(encoding="utf-8"))
+    totals = queue.get("totals", {})
+    manual_audit = queue.get("manual_audit", {})
+    required_fragments = [
+        f"{totals.get('suspicious_heads_count')} suspicious heads",
+        f"{totals.get('sort_inversions_count')} sort inversions",
+        f"{totals.get('duplicate_heads_count')} duplicate-head groups",
+        f"найдено {manual_audit.get('terms_found')} из {manual_audit.get('terms_total')} терминов",
+    ]
+    missing_terms = manual_audit.get("terms_missing", [])
+    if isinstance(missing_terms, list):
+        required_fragments.extend(str(term) for term in missing_terms)
+    missing_fragments = [fragment for fragment in required_fragments if fragment not in readme]
+    if missing_fragments:
+        fail(
+            "[readme] audit summary is stale or incomplete: "
+            + ", ".join(repr(fragment) for fragment in missing_fragments),
+            errors,
+        )
+
+
 def main() -> int:
     configure_output_encoding()
     path = Path(sys.argv[1] if len(sys.argv) > 1 else "app_data.json")
@@ -548,6 +575,7 @@ def main() -> int:
     validate_cross_links(data, entity_index, errors)
     validate_markdown_exports(path, errors, warnings)
     validate_manual_audit_queue(path, errors, warnings)
+    validate_readme_audit_summary(path, errors)
 
     print("validate_content.py report")
     print(f"- file: {path}")
