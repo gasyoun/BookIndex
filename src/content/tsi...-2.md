@@ -20,6 +20,8 @@ _Основное текстовое поле не найдено; см. JSON н
     291
   ],
   "pages": "287, 291",
-  "discussed": true
+  "discussed": true,
+  "needs_review": true,
+  "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification."
 }
 ```

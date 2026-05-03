@@ -223,6 +223,8 @@ def check_static_guards():
         'def collect_sort_order_metrics(items: list[dict[str, Any]], applicable: bool) -> dict[str, Any]:',
         '"sort_inversions_count"',
         '"suspicious_heads_count"',
+        '"reviewed_suspicious_heads_count"',
+        '"unreviewed_suspicious_heads_count"',
         '## Suspicious Heads (Sample)',
         '## Sort Inversions (Sample)',
     ]
@@ -239,6 +241,7 @@ def check_static_guards():
         'validate_suspicious_heads(data, warnings)',
         'def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: list[str]) -> None:',
         'validate_manual_audit_queue(path, errors, warnings)',
+        '"unreviewed_suspicious_heads_count"',
         'def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:',
         'validate_readme_audit_summary(path, errors)',
         'validate_markdown_exports(path, errors, warnings)',

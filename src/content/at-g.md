@@ -22,6 +22,7 @@ _Основное текстовое поле не найдено; см. JSON н
   "discussed": false,
   "category": "tech",
   "needs_review": true,
-  "contexts": {}
+  "contexts": {},
+  "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification."
 }
 ```

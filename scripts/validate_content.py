@@ -488,12 +488,20 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
     if not isinstance(totals, dict):
         fail("[manual_audit] totals must be object", errors)
         return
-    for field in ("duplicate_heads_count", "suspicious_heads_count", "sort_inversions_count"):
+    for field in (
+        "duplicate_heads_count",
+        "suspicious_heads_count",
+        "reviewed_suspicious_heads_count",
+        "unreviewed_suspicious_heads_count",
+        "sort_inversions_count",
+    ):
         if not isinstance(totals.get(field), int):
             fail(f"[manual_audit] totals.{field} must be integer", errors)
     data = json.loads(data_path.read_text(encoding="utf-8"))
     duplicate_groups = 0
     suspicious_heads = 0
+    reviewed_suspicious_heads = 0
+    unreviewed_suspicious_heads = 0
     for key in ENTITY_KEYS:
         arr = data.get(key, [])
         if not isinstance(arr, list):
@@ -501,6 +509,16 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
         heads = [str(item.get("head", "")).strip() for item in arr if isinstance(item, dict)]
         duplicate_groups += sum(1 for head, count in Counter(heads).items() if head and count > 1)
         suspicious_heads += sum(1 for head in heads if head.startswith("?") or "\ufffd" in head)
+        for item in arr:
+            if not isinstance(item, dict):
+                continue
+            head = str(item.get("head", "")).strip()
+            if not (head.startswith("?") or "\ufffd" in head):
+                continue
+            if item.get("needs_review") is True:
+                reviewed_suspicious_heads += 1
+            else:
+                unreviewed_suspicious_heads += 1
     if totals.get("duplicate_heads_count") != duplicate_groups:
         fail(
             "[manual_audit] stale duplicate_heads_count: "
@@ -511,6 +529,18 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
         fail(
             "[manual_audit] stale suspicious_heads_count: "
             f"{totals.get('suspicious_heads_count')} != {suspicious_heads}",
+            errors,
+        )
+    if totals.get("reviewed_suspicious_heads_count") != reviewed_suspicious_heads:
+        fail(
+            "[manual_audit] stale reviewed_suspicious_heads_count: "
+            f"{totals.get('reviewed_suspicious_heads_count')} != {reviewed_suspicious_heads}",
+            errors,
+        )
+    if totals.get("unreviewed_suspicious_heads_count") != unreviewed_suspicious_heads:
+        fail(
+            "[manual_audit] stale unreviewed_suspicious_heads_count: "
+            f"{totals.get('unreviewed_suspicious_heads_count')} != {unreviewed_suspicious_heads}",
             errors,
         )
     if manual_audit.get("present") is not True:
@@ -528,6 +558,7 @@ def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:
     manual_audit = queue.get("manual_audit", {})
     required_fragments = [
         f"{totals.get('suspicious_heads_count')} suspicious heads",
+        f"{totals.get('unreviewed_suspicious_heads_count')} без triage",
         f"{totals.get('sort_inversions_count')} sort inversions",
         f"{totals.get('duplicate_heads_count')} duplicate-head groups",
         f"найдено {manual_audit.get('terms_found')} из {manual_audit.get('terms_total')} терминов",
