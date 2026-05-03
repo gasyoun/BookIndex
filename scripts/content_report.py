@@ -186,7 +186,9 @@ def collect_entity_metrics(items: list[Any], *, sort_order_applicable: bool) -> 
         "suspicious_heads_count": len(suspicious_heads),
         "reviewed_suspicious_heads_count": len(reviewed_suspicious_heads),
         "unreviewed_suspicious_heads_count": len(unreviewed_suspicious_heads),
+        "suspicious_heads": suspicious_heads,
         "suspicious_heads_sample": suspicious_heads[:10],
+        "unreviewed_suspicious_heads": unreviewed_suspicious_heads,
         "unreviewed_suspicious_heads_sample": unreviewed_suspicious_heads[:10],
         "sort_order": collect_sort_order_metrics(valid_items, sort_order_applicable),
         "coverage_pct": {
@@ -585,9 +587,9 @@ def render_markdown(report: dict[str, Any]) -> str:
 def build_manual_audit_queue(report: dict[str, Any]) -> dict[str, Any]:
     entities = report.get("entities", {})
     suspicious = {
-        key: metrics.get("suspicious_heads_sample", [])
+        key: metrics.get("suspicious_heads", [])
         for key, metrics in entities.items()
-        if metrics.get("suspicious_heads_sample")
+        if metrics.get("suspicious_heads")
     }
     sort_inversions = {
         key: metrics.get("sort_order", {}).get("inversions_sample", [])

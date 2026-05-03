@@ -223,6 +223,7 @@ def check_static_guards():
         'def collect_sort_order_metrics(items: list[dict[str, Any]], applicable: bool) -> dict[str, Any]:',
         '"sort_inversions_count"',
         '"suspicious_heads_count"',
+        '"suspicious_heads": suspicious_heads',
         '"reviewed_suspicious_heads_count"',
         '"unreviewed_suspicious_heads_count"',
         '## Suspicious Heads (Sample)',
