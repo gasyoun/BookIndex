@@ -53,6 +53,11 @@ jobs:
       - name: Validate content data
         run: python scripts/validate_content.py app_data.json
 
+      - name: Ensure manual audit queue is in sync
+        run: |
+          python scripts/content_report.py app_data.json --write-manual-audit tests/index-audit-queue.json
+          git diff --exit-code -- tests/index-audit-queue.json
+
       - name: Ensure split modules are in sync
         run: |
           python scripts/split_app_data.py app_data.json --out-dir data/modules
