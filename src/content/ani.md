@@ -4,7 +4,7 @@ title: "ани"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 17
+source_index: 273
 tags: ["lexicon"]
 ---
 

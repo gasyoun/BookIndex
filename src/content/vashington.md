@@ -4,7 +4,7 @@ title: "Вашингтон"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 82
+source_index: 338
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "куско́м"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 555
+source_index: 811
 tags: ["lexicon"]
 ---
 

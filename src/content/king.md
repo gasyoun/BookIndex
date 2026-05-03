@@ -4,7 +4,7 @@ title: "king"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1195
+source_index: 94
 tags: ["lexicon"]
 ---
 

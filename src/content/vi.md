@@ -4,7 +4,7 @@ title: "vi"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1326
+source_index: 229
 tags: ["lexicon"]
 ---
 

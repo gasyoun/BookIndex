@@ -4,7 +4,7 @@ title: "замъке"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 404
+source_index: 660
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "РЪц"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 861
+source_index: 1117
 tags: ["lexicon"]
 ---
 

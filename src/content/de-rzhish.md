@@ -4,7 +4,7 @@ title: "де́ржишь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 287
+source_index: 543
 tags: ["lexicon"]
 ---
 

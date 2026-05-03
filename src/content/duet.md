@@ -4,7 +4,7 @@ title: "duet"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1151
+source_index: 52
 tags: ["lexicon"]
 ---
 

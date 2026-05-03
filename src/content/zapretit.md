@@ -4,7 +4,7 @@ title: "запретитъ"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 408
+source_index: 664
 tags: ["lexicon"]
 ---
 

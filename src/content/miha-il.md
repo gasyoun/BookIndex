@@ -4,7 +4,7 @@ title: "Миха́ил"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 600
+source_index: 856
 tags: ["lexicon"]
 ---
 

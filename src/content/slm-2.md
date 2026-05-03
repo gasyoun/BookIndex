@@ -1,10 +1,10 @@
 ---
-id: "̂/slm"
-title: "̂/slm"
+id: "slm"
+title: "slm"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1354
+source_index: 191
 tags: ["lexicon"]
 ---
 
@@ -14,14 +14,14 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "̂/slm",
-  "pages": "227",
+  "head": "slm",
+  "pages": "233",
   "page_list": [
-    227
+    233
   ],
   "discussed": false,
-  "category": "tech",
-  "needs_review": true,
+  "category": "lat",
+  "needs_review": false,
   "contexts": {}
 }
 ```

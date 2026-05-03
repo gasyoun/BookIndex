@@ -4,7 +4,7 @@ title: "тангенс"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 952
+source_index: 1208
 tags: ["lexicon"]
 ---
 

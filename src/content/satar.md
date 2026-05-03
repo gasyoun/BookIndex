@@ -4,7 +4,7 @@ title: "satar"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1273
+source_index: 178
 tags: ["lexicon"]
 ---
 

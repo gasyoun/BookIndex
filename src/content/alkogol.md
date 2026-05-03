@@ -4,7 +4,7 @@ title: "алкоголъ"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 6
+source_index: 262
 tags: ["lexicon"]
 ---
 

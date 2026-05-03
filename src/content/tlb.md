@@ -4,7 +4,7 @@ title: "̂/tlb"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1355
+source_index: 3
 tags: ["lexicon"]
 ---
 

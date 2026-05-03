@@ -1,10 +1,10 @@
 ---
-id: "петь"
-title: "петь"
+id: "pet"
+title: "pet"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 738
+source_index: 146
 tags: ["lexicon"]
 ---
 
@@ -14,13 +14,13 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "петь",
-  "pages": "373",
+  "head": "pet",
+  "pages": "255",
   "page_list": [
-    373
+    255
   ],
   "discussed": false,
-  "category": "rus",
+  "category": "lat",
   "needs_review": false,
   "contexts": {}
 }

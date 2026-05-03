@@ -4,7 +4,7 @@ title: "devet"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1138
+source_index: 36
 tags: ["lexicon"]
 ---
 

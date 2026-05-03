@@ -1,10 +1,10 @@
 ---
-id: "за-"
-title: "за-"
+id: "за"
+title: "за"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 364
+source_index: 617
 tags: ["lexicon"]
 ---
 
@@ -14,12 +14,16 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "за-",
-  "pages": "383",
+  "head": "за",
+  "pages": "17, 348, 351, 353, 372",
   "page_list": [
-    383
+    17,
+    348,
+    351,
+    353,
+    372
   ],
-  "discussed": false,
+  "discussed": true,
   "category": "rus",
   "needs_review": false,
   "contexts": {}

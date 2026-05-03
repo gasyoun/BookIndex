@@ -4,7 +4,7 @@ title: "мя"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 625
+source_index: 881
 tags: ["lexicon"]
 ---
 

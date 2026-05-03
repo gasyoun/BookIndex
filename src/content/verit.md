@@ -4,7 +4,7 @@ title: "верить"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 116
+source_index: 372
 tags: ["lexicon"]
 ---
 

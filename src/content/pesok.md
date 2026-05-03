@@ -4,7 +4,7 @@ title: "песок"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 736
+source_index: 992
 tags: ["lexicon"]
 ---
 

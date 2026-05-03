@@ -4,7 +4,7 @@ title: "doet"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1147
+source_index: 47
 tags: ["lexicon"]
 ---
 

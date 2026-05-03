@@ -4,7 +4,7 @@ title: "выкристаллизовавшиеся"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 180
+source_index: 436
 tags: ["lexicon"]
 ---
 

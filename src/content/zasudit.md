@@ -4,7 +4,7 @@ title: "засудить"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 419
+source_index: 675
 tags: ["lexicon"]
 ---
 

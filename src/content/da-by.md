@@ -4,7 +4,7 @@ title: "да́бы"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 271
+source_index: 527
 tags: ["lexicon"]
 ---
 

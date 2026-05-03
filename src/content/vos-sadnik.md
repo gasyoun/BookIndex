@@ -4,7 +4,7 @@ title: "вос-садник"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 153
+source_index: 409
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "digitus"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1144
+source_index: 42
 tags: ["lexicon"]
 ---
 

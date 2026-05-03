@@ -4,7 +4,7 @@ title: "дела́"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 285
+source_index: 541
 tags: ["lexicon"]
 ---
 

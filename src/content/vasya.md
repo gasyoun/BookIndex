@@ -4,7 +4,7 @@ title: "Вася"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 80
+source_index: 336
 tags: ["lexicon"]
 ---
 

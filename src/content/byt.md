@@ -4,7 +4,7 @@ title: "быть"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 70
+source_index: 326
 tags: ["lexicon"]
 ---
 

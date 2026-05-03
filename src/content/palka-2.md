@@ -4,7 +4,7 @@ title: "палъка"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 708
+source_index: 964
 tags: ["lexicon"]
 ---
 

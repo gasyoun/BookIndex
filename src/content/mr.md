@@ -4,7 +4,7 @@ title: "мъръ\\"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 623
+source_index: 879
 tags: ["lexicon"]
 ---
 

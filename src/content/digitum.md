@@ -4,7 +4,7 @@ title: "digitum"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1143
+source_index: 41
 tags: ["lexicon"]
 ---
 

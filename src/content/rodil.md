@@ -4,7 +4,7 @@ title: "родил"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 839
+source_index: 1095
 tags: ["lexicon"]
 ---
 

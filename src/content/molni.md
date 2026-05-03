@@ -4,7 +4,7 @@ title: "молни"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 609
+source_index: 865
 tags: ["lexicon"]
 ---
 

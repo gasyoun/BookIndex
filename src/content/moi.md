@@ -1,10 +1,10 @@
 ---
-id: "мои"
-title: "мои"
+id: "moi"
+title: "moi"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 608
+source_index: 121
 tags: ["lexicon"]
 ---
 
@@ -14,13 +14,13 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "мои",
-  "pages": "202",
+  "head": "moi",
+  "pages": "37",
   "page_list": [
-    202
+    37
   ],
   "discussed": false,
-  "category": "rus",
+  "category": "lat",
   "needs_review": false,
   "contexts": {}
 }

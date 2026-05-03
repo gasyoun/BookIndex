@@ -4,7 +4,7 @@ title: "al-himäru"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1113
+source_index: 11
 tags: ["lexicon"]
 ---
 

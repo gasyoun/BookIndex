@@ -4,7 +4,7 @@ title: "во́ин"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 142
+source_index: 398
 tags: ["lexicon"]
 ---
 

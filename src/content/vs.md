@@ -4,7 +4,7 @@ title: "вс-"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 165
+source_index: 421
 tags: ["lexicon"]
 ---
 

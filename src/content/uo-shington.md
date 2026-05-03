@@ -4,7 +4,7 @@ title: "Уо́шингтон"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1031
+source_index: 1287
 tags: ["lexicon"]
 ---
 

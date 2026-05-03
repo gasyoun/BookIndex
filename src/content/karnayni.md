@@ -4,7 +4,7 @@ title: "karnayni"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1186
+source_index: 84
 tags: ["lexicon"]
 ---
 

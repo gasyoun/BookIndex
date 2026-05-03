@@ -4,7 +4,7 @@ title: "зажить"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 391
+source_index: 647
 tags: ["lexicon"]
 ---
 

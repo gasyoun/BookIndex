@@ -4,7 +4,7 @@ title: "krievs"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1197
+source_index: 97
 tags: ["lexicon"]
 ---
 

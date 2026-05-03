@@ -4,7 +4,7 @@ title: "у́горь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 996
+source_index: 1252
 tags: ["lexicon"]
 ---
 

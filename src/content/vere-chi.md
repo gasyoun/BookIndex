@@ -4,7 +4,7 @@ title: "Вере-чи"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 109
+source_index: 365
 tags: ["lexicon"]
 ---
 

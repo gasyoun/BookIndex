@@ -4,7 +4,7 @@ title: "of"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1238
+source_index: 139
 tags: ["lexicon"]
 ---
 

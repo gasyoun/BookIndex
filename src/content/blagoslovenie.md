@@ -4,7 +4,7 @@ title: "благословение"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 43
+source_index: 299
 tags: ["lexicon"]
 ---
 

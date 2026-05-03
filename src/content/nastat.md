@@ -4,7 +4,7 @@ title: "настать"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 653
+source_index: 909
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "пароход"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 713
+source_index: 969
 tags: ["lexicon"]
 ---
 

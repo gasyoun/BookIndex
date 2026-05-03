@@ -4,7 +4,7 @@ title: "цена"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1067
+source_index: 1323
 tags: ["lexicon"]
 ---
 

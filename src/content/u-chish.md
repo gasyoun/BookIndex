@@ -4,7 +4,7 @@ title: "у́чишь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1046
+source_index: 1302
 tags: ["lexicon"]
 ---
 

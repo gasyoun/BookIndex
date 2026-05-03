@@ -4,7 +4,7 @@ title: "лба"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 565
+source_index: 821
 tags: ["lexicon"]
 ---
 

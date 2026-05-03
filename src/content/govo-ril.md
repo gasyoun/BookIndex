@@ -4,7 +4,7 @@ title: "гово́рил"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 225
+source_index: 481
 tags: ["lexicon"]
 ---
 

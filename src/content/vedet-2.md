@@ -4,7 +4,7 @@ title: "ведетъ"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 90
+source_index: 346
 tags: ["lexicon"]
 ---
 

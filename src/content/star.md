@@ -4,7 +4,7 @@ title: "star"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1293
+source_index: 198
 tags: ["lexicon"]
 ---
 

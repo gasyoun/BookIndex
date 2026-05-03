@@ -1,6 +1,3076 @@
 {
   "lexicon": [
     {
+      "head": "'ada",
+      "pages": "232",
+      "page_list": [
+        232
+      ],
+      "discussed": false,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
+      "head": "̂/öhb.",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
+      "head": "̂/slm",
+      "pages": "227",
+      "page_list": [
+        227
+      ],
+      "discussed": false,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
+      "head": "̂/tlb",
+      "pages": "231",
+      "page_list": [
+        231
+      ],
+      "discussed": false,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
+      "head": "admire",
+      "pages": "220",
+      "page_list": [
+        220
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "admirer",
+      "pages": "220",
+      "page_list": [
+        220
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Ahmad",
+      "pages": "220",
+      "page_list": [
+        220
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "ailleurs",
+      "pages": "332",
+      "page_list": [
+        332
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Al-",
+      "pages": "221",
+      "page_list": [
+        221
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "al-gabr",
+      "pages": "221",
+      "page_list": [
+        221
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "al-himär",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "al-himäru",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "al-wädi",
+      "pages": "221",
+      "page_list": [
+        221
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "alibi",
+      "pages": "332",
+      "page_list": [
+        332
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Allemands",
+      "pages": "60",
+      "page_list": [
+        60
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "am",
+      "pages": "26",
+      "page_list": [
+        26
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "amiral",
+      "pages": "221",
+      "page_list": [
+        221
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "armenians",
+      "pages": "60",
+      "page_list": [
+        60
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "armeniens",
+      "pages": "60",
+      "page_list": [
+        60
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "aspirare",
+      "pages": "231",
+      "page_list": [
+        231
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Bahr",
+      "pages": "221",
+      "page_list": [
+        221
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "bhö",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "blty",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Bratpfanne",
+      "pages": "191",
+      "page_list": [
+        191
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "business",
+      "pages": "80",
+      "page_list": [
+        80
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "chair",
+      "pages": "82",
+      "page_list": [
+        82
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "chaise",
+      "pages": "82",
+      "page_list": [
+        82
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Charles",
+      "pages": "83",
+      "page_list": [
+        83
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "clause",
+      "pages": "20",
+      "page_list": [
+        20
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "concours",
+      "pages": "244",
+      "page_list": [
+        244
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "d",
+      "pages": "70, 72",
+      "page_list": [
+        70,
+        72
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "de",
+      "pages": "118, 123",
+      "page_list": [
+        118,
+        123
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "deit",
+      "pages": "69, 70, 72",
+      "page_list": [
+        69,
+        70,
+        72
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "69": [
+          "…более широкой: dejt. Следующая фаза: вместо еj получается дифтонг ei: deit. Следующая фаза состоит в том, что вместо этого е возникает звук типа…"
+        ],
+        "70": [
+          "…узское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → duét → dwet → dwe → dwa (doigt) А как э…"
+        ],
+        "72": [
+          "…Это значит, что если у вас на каком-нибудь этапе развития, допустим, deit переходит в døit, то и какой-нибудь reig непременно переходит в røig,…"
+        ]
+      }
+    },
+    {
+      "head": "deset",
+      "pages": "255",
+      "page_list": [
+        255
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "deutsch",
+      "pages": "60, 69",
+      "page_list": [
+        60,
+        69
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "60": [
+          "…сейчас как-то себя называют, верно? Как называют себя немцы? Из зала: Deutsch. А. З.: Deutsch, правильно. Совершенно ничего общего со словом Герман…",
+          "…бя называют, верно? Как называют себя немцы? Из зала: Deutsch. А. З.: Deutsch, правильно. Совершенно ничего общего со словом Германия. Это как раз…"
+        ],
+        "69": [
+          "…что вместо этого е возникает звук типа ø: døit. Что-то типа немецкого deutsch. Всё это примерно вторая половина первого тысячелетия нашей эры, каки…"
+        ]
+      }
+    },
+    {
+      "head": "deva",
+      "pages": "342",
+      "page_list": [
+        342
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "devet",
+      "pages": "255",
+      "page_list": [
+        255
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "devl",
+      "pages": "342",
+      "page_list": [
+        342
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "dig",
+      "pages": "68",
+      "page_list": [
+        68
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "digital",
+      "pages": "68",
+      "page_list": [
+        68
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "digitu",
+      "pages": "68, 70",
+      "page_list": [
+        68,
+        70
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "68": [
+          "…поскольку орфография традиционна. Возьмем, например, латинское слово digitum. Ну, поскольку вы такие образованные, то скажите мне, что это значит.…",
+          "…чит. Из зала: Число. А. З.: А, это потому, что есть современное слово digital? Ну да, конечно. Но это очень позднее значение слова. Из зала: Палец.…"
+        ],
+        "70": [
+          "…рили на улице. И это уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet →…",
+          "…ице. И это уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → du…"
+        ]
+      }
+    },
+    {
+      "head": "digitum",
+      "pages": "68, 70, 72, 75, 83",
+      "page_list": [
+        68,
+        70,
+        72,
+        75,
+        83
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "68": [
+          "…поскольку орфография традиционна. Возьмем, например, латинское слово digitum. Ну, поскольку вы такие образованные, то скажите мне, что это значит.…",
+          "…чит. Из зала: Число. А. З.: А, это потому, что есть современное слово digital? Ну да, конечно. Но это очень позднее значение слова. Из зала: Палец.…"
+        ],
+        "70": [
+          "…рили на улице. И это уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet →…",
+          "…ице. И это уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → du…"
+        ],
+        "72": [
+          "…ереход от одного этапа к следующему в разобранной нами эволюции слова digitum, обладают замечательным фундаментальным (и неожиданным для человечест…"
+        ],
+        "75": [
+          "…й — один из быстро развивающихся языков. Видите, как он скомкал слово digitum до doigt. Может быть, кто-нибудь вспомнит, как по-итальянски «палец»,…"
+        ],
+        "83": [
+          "…ршенно другое. Вот смотрите, как французский язык смял исконное слово digitum — в нем почти ничего не осталось. Всё, кроме звука d, новое. А другой…"
+        ]
+      }
+    },
+    {
+      "head": "digitus",
+      "pages": "68",
+      "page_list": [
+        68
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "digtu",
+      "pages": "68–70",
+      "page_list": [
+        68,
+        70
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "68": [
+          "…е позже, уже на территории будущей Франции, мы видим вот такую форму: digtu. В слове digitu ударение на первом слоге. И вот теряется безударная г…",
+          "…яется безударная гласная между двумя согласными. Вместо digitu просто digtu, правда с сохранением некоторой мягкости в этом dig, мягкости такого…"
+        ],
+        "70": [
+          "…о уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → duét → dwe…"
+        ]
+      }
+    },
+    {
+      "head": "dĳt",
+      "pages": "69, 71",
+      "page_list": [
+        69,
+        71
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "dĳtu",
+      "pages": "69, 71, 75",
+      "page_list": [
+        69,
+        71,
+        75
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "diot",
+      "pages": "60, 75",
+      "page_list": [
+        60,
+        75
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "60": [
+          "…Это как раз один из тех самых примеров. Deutsch — от древненемецкого diot «народ, люди». То есть слово deutsch в первоначальном значении — это…"
+        ]
+      }
+    },
+    {
+      "head": "doet",
+      "pages": "70",
+      "page_list": [
+        70
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "döet",
+      "pages": "71",
+      "page_list": [
+        71
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "doigt",
+      "pages": "70, 75, 85",
+      "page_list": [
+        70,
+        75,
+        85
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "70": [
+          "…→ dejt → deit → døit → doit → dóet → doét → duét → dwet → dwe → dwa (doigt) А как это [dwa] записывается, помните? Записывается это, заметьте, т…",
+          "…мните? Записывается это, заметьте, так, как никогда не произносилось: doigt. Больше всего это похоже на хронологический уровень примерно Х века:…"
+        ],
+        "75": [
+          "…быстро развивающихся языков. Видите, как он скомкал слово digitum до doigt. Может быть, кто-нибудь вспомнит, как по-итальянски «палец», раз вы т…"
+        ],
+        "85": [
+          "…твование. Ярослав Пилецкий (10 класс): Во что еще может перейти слово doigt, которое на доске написано? А. З.: Во что еще может перейти? Это вопр…"
+        ]
+      }
+    },
+    {
+      "head": "doit",
+      "pages": "69, 70",
+      "page_list": [
+        69,
+        70
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "69": [
+          "…На следующем этапе ø превращается в нормальное о, то есть получается doit. Здесь мы приближаемся к Х веку, к эпохе «Песни о Роланде». Дальше пр…"
+        ],
+        "70": [
+          "…шение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → duét → dwet → dwe → dwa (doigt) А как это [dwa] запис…",
+          "…. Больше всего это похоже на хронологический уровень примерно Х века: doit. А как вы думаете, откуда взялось здесь g? Это действительно трудно в…"
+        ]
+      }
+    },
+    {
+      "head": "dpit",
+      "pages": "72",
+      "page_list": [
+        72
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "duet",
+      "pages": "70",
+      "page_list": [
+        70
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "dwa",
+      "pages": "70, 82",
+      "page_list": [
+        70,
+        82
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "70": [
+          "…dwe, хотя это уже звучало немножко старомодно. На улицах уже говорили dwa. И точно так же можно было говорить: Vive le [rwе]! «Да здравствует к…",
+          "…dijt → dejt → deit → døit → doit → dóet → doét → duét → dwet → dwe → dwa (doigt) А как это [dwa] записывается, помните? Записывается это, заме…"
+        ],
+        "82": [
+          "…с): Я хотела спросить про слово «палец». Последняя форма этого слова: dwa. А рядом что написано? 5 А. З.: Это орфография, современная французск…"
+        ]
+      }
+    },
+    {
+      "head": "dwe",
+      "pages": "70",
+      "page_list": [
+        70
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "dwet",
+      "pages": "70",
+      "page_list": [
+        70
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "ecu",
+      "pages": "27",
+      "page_list": [
+        27
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Eh oui",
+      "pages": "60",
+      "page_list": [
+        60
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "eit",
+      "pages": "70",
+      "page_list": [
+        70
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "esurio",
+      "pages": "149",
+      "page_list": [
+        149
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "fa.it",
+      "pages": "152",
+      "page_list": [
+        152
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "factum",
+      "pages": "152",
+      "page_list": [
+        152
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "fakir",
+      "pages": "221",
+      "page_list": [
+        221
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "fakura",
+      "pages": "221",
+      "page_list": [
+        221
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "find",
+      "pages": "190",
+      "page_list": [
+        190
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "finna",
+      "pages": "190",
+      "page_list": [
+        190
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "football",
+      "pages": "242",
+      "page_list": [
+        242
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "fort",
+      "pages": "68",
+      "page_list": [
+        68
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Francia",
+      "pages": "56",
+      "page_list": [
+        56
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "frangais",
+      "pages": "56",
+      "page_list": [
+        56
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "friend",
+      "pages": "172, 330",
+      "page_list": [
+        172,
+        330
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "172": [
+          "огромная разница в понимании этих слов (английского friend и русского друг) — разница менталитетов. Хотя одно считается эквивале…"
+        ],
+        "330": [
+          "…имеры из вполне известных языков. Скажем, английское friendship — это friend плюс ship, которое означало «свойство, качество» и т. д. Русское кто-…"
+        ]
+      }
+    },
+    {
+      "head": "friendship",
+      "pages": "330",
+      "page_list": [
+        330
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "gens",
+      "pages": "68",
+      "page_list": [
+        68
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Germania",
+      "pages": "60",
+      "page_list": [
+        60
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "globus",
+      "pages": "245",
+      "page_list": [
+        245
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "grab",
+      "pages": "160",
+      "page_list": [
+        160
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "gwena",
+      "pages": "112",
+      "page_list": [
+        112
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "happiness",
+      "pages": "172",
+      "page_list": [
+        172
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "happy",
+      "pages": "172",
+      "page_list": [
+        172
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "haraga",
+      "pages": "226",
+      "page_list": [
+        226
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "harg",
+      "pages": "226",
+      "page_list": [
+        226
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "horn",
+      "pages": "232",
+      "page_list": [
+        232
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "is",
+      "pages": "27",
+      "page_list": [
+        27
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "k-t-b",
+      "pages": "215, 216",
+      "page_list": [
+        215,
+        216
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "215": [
+          "…написал». Какой корень в kataba тем самым? Из зала: к-т-б. А. З.: Да, k-t-b. Вот с этим корнем и будем играть дальше. Пожалуйста: kutiba — «он бы…",
+          "…ать какой-нибудь условный корень; пусть это будет хотя бы то же самое k-t-b «писать». Тогда kataba — это формула для глагола в перфекте. Условно…"
+        ],
+        "216": [
+          "в которые дальше можно вместо корня k-t-b подставлять любые другие корни, сколько их есть, — тысячи корней 1, ч…",
+          "…использовать. В качестве условного корня, как я уже сказал, я выберу k-t-b. Иногда в арабистике для корней даже используется вот такой знак корн…"
+        ]
+      }
+    },
+    {
+      "head": "karnayni",
+      "pages": "231",
+      "page_list": [
+        231
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "katäb",
+      "pages": "218",
+      "page_list": [
+        218
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "kataba",
+      "pages": "215, 216",
+      "page_list": [
+        215,
+        216
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "215": [
+          "…, то есть не передающее какое-то понятие, а грамматическое. Например, kataba — это «написал». Какой корень в kataba тем самым? Из зала: к-т-б. А.…",
+          "…е, а грамматическое. Например, kataba — это «написал». Какой корень в kataba тем самым? Из зала: к-т-б. А. З.: Да, k-t-b. Вот с этим корнем и буде…"
+        ],
+        "216": [
+          "…ля корней даже используется вот такой знак корня: √. (Пишет на доске: kataba, katiba, katuba.) Это три формулы перфекта. Чем они различаются? Они…",
+          "…. Чем они различаются? Они отражают следующую классификацию глаголов: kataba — это глаголы действия, katiba — это глаголы переменного состояния (н…"
+        ]
+      }
+    },
+    {
+      "head": "katb",
+      "pages": "218, 232",
+      "page_list": [
+        218,
+        232
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "218": [
+          "…шийся». Дальше. Имеются, кроме того, вот такие модели, самые простые: katb, kitb, kutb. Это самая простая модель, обычная для существительных. Е…"
+        ],
+        "232": [
+          "…ḳarn. Как видите, в точности по главной модели имен существительных: katb. А вот значение этого ḳarn замечательное: «рог». И это слово безумно…"
+        ]
+      }
+    },
+    {
+      "head": "kätib",
+      "pages": "217",
+      "page_list": [
+        217
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "katiba",
+      "pages": "216, 227",
+      "page_list": [
+        216,
+        227
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "216": [
+          "…й даже используется вот такой знак корня: √. (Пишет на доске: kataba, katiba, katuba.) Это три формулы перфекта. Чем они различаются? Они отражают…",
+          "…жают следующую классификацию глаголов: kataba — это глаголы действия, katiba — это глаголы переменного состояния (например, «он болен»), katuba —…"
+        ],
+        "227": [
+          "…гол salima «быть благополучным, жить хорошо, мирно». Заметьте: модель katiba — переменность, неустойчивость состояния. Соответственно, salām — «ми…"
+        ]
+      }
+    },
+    {
+      "head": "katlb",
+      "pages": "218",
+      "page_list": [
+        218
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "kattaba",
+      "pages": "217, 227",
+      "page_list": [
+        217,
+        227
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "217": [
+          "…такая за счет этого первого u. Еще одну формулу перфекта вам напишу: kattaba. На этот раз это уже будут элементы словообразования. Здесь то же сам…",
+          "…о, что называется в общетипологической терминологии «каузатив». Итак, kattaba — это интенсив и каузатив. Опять-таки, то же самое будет для любых др…"
+        ],
+        "227": [
+          "…рую я не выписывал: ˀaktaba. Это чистый каузатив. Каузатив может быть kattaba, но может быть другой вариант каузатива — ˀaktaba. Из зала: Я слышала…"
+        ]
+      }
+    },
+    {
+      "head": "katuba",
+      "pages": "216",
+      "page_list": [
+        216
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "kaufen",
+      "pages": "184, 185",
+      "page_list": [
+        184,
+        185
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "184": [
+          "…м немецком соответствующие древнегерманские слова дали Volk ‘народ’ и kaufen ‘покупать’. 184\b ОБ ИСТОРИИ РУССКОГО ЯЗЫКА"
+        ],
+        "185": [
+          "…заимствованием откуда-то еще. Так, германское слово, давшее немецкое kaufen, — это заимствование из латыни. А исконно ли соответствующее слово в…"
+        ]
+      }
+    },
+    {
+      "head": "king",
+      "pages": "184",
+      "page_list": [
+        184
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "kitb",
+      "pages": "218",
+      "page_list": [
+        218
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "König",
+      "pages": "184",
+      "page_list": [
+        184
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "krievs",
+      "pages": "61",
+      "page_list": [
+        61
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "ktub",
+      "pages": "216",
+      "page_list": [
+        216
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "kuningaz",
+      "pages": "184",
+      "page_list": [
+        184
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "kutb",
+      "pages": "218",
+      "page_list": [
+        218
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "kutbän",
+      "pages": "218",
+      "page_list": [
+        218
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "kutiba",
+      "pages": "215, 217",
+      "page_list": [
+        215,
+        217
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "215": [
+          "…. З.: Да, k-t-b. Вот с этим корнем и будем играть дальше. Пожалуйста: kutiba — «он был написан». Действительный залог и страдательный залог выража…",
+          "…о надо как-то его переводить. Итак, kataba переведем как «написал». А kutiba — как «был написан». Соответственно, это послужит формулами, Лекция 1…"
+        ],
+        "217": [
+          "Еще одна формула, которую вы теперь уже знаете, — kutiba. Что она значит? Из зала: «Был написан». А. З.: «Был написан», соверш…"
+        ]
+      }
+    },
+    {
+      "head": "l-himär",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "l-himäru",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "l-kabir",
+      "pages": "221",
+      "page_list": [
+        221
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "list",
+      "pages": "334",
+      "page_list": [
+        334
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "̂lld",
+      "pages": "156",
+      "page_list": [
+        156
+      ],
+      "discussed": false,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
+      "head": "loaf",
+      "pages": "184",
+      "page_list": [
+        184
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "mahärig",
+      "pages": "226",
+      "page_list": [
+        226
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "mahazin",
+      "pages": "223",
+      "page_list": [
+        223
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "mahäzin",
+      "pages": "223",
+      "page_list": [
+        223
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "mahzan",
+      "pages": "223",
+      "page_list": [
+        223
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "makätib",
+      "pages": "219",
+      "page_list": [
+        219
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "maktab",
+      "pages": "218, 219, 223",
+      "page_list": [
+        218,
+        219,
+        223
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "218": [
+          "…дальше вы увидите, как он используется. Дальше. Напишу еще, пожалуй: maktab. Это имя места действия. Например, как вы думаете, что бы это значило…",
+          "…Например, как вы думаете, что бы это значило именно для самого слова maktab? И. Б. Иткин: Скрипторий? А. З.: Могло бы и «скрипторий» значить. Из…"
+        ],
+        "219": [
+          "…модели для некоторых глаголов выступает вариант с другой огласовкой: maktib. Почему я его упоминаю? Потому что одно, по крайней мере, слово такой…",
+          "…го числа от некоторого типа существительных, большей частью от модели maktab (но также и от некоторых других моделей). Этим я ограничусь. Я мог бы…"
+        ],
+        "223": [
+          "…вершенно верно. Это один из вариантов имени места действия — там были maktab и maktib, я вам написал оба варианта. Это слово как раз типа maktib.…",
+          "…верно. Это один из вариантов имени места действия — там были maktab и maktib, я вам написал оба варианта. Это слово как раз типа maktib. А теперь…"
+        ]
+      }
+    },
+    {
+      "head": "maktib",
+      "pages": "219, 223",
+      "page_list": [
+        219,
+        223
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "219": [
+          "…модели для некоторых глаголов выступает вариант с другой огласовкой: maktib. Почему я его упоминаю? Потому что одно, по крайней мере, слово такой…",
+          "…го числа от некоторого типа существительных, большей частью от модели maktab (но также и от некоторых других моделей). Этим я ограничусь. Я мог бы…"
+        ],
+        "223": [
+          "…вершенно верно. Это один из вариантов имени места действия — там были maktab и maktib, я вам написал оба варианта. Это слово как раз типа maktib.…",
+          "…верно. Это один из вариантов имени места действия — там были maktab и maktib, я вам написал оба варианта. Это слово как раз типа maktib. А теперь…"
+        ]
+      }
+    },
+    {
+      "head": "maktüb",
+      "pages": "217",
+      "page_list": [
+        217
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "masgid",
+      "pages": "223",
+      "page_list": [
+        223
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "maslüm",
+      "pages": "233",
+      "page_list": [
+        233
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "maslüma",
+      "pages": "233",
+      "page_list": [
+        233
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "mhzn",
+      "pages": "223",
+      "page_list": [
+        223
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "moi",
+      "pages": "37",
+      "page_list": [
+        37
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "muhammad",
+      "pages": "225",
+      "page_list": [
+        225
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "muhammid",
+      "pages": "225",
+      "page_list": [
+        225
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "mukattab",
+      "pages": "218",
+      "page_list": [
+        218
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "mukattib",
+      "pages": "218, 234",
+      "page_list": [
+        218,
+        234
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "218": [
+          "…воение средней согласной сохраняется, хотя оформление немного другое: mukattib — действительное причастие второй породы: «много и интенсивно пишущий…",
+          "…йствительное причастие второй породы: «много и интенсивно пишущий». А mukattab — это уже немножко труднее перевести, это такое же причастие, только…"
+        ],
+        "234": [
+          "…лностью вычислите значение слова muˀaδδin. Модель нашли? Нашли модель mukattib? Из зала: Причастие... А. З.: Причастие, правильно. Причастие действи…"
+        ]
+      }
+    },
+    {
+      "head": "Mundstück",
+      "pages": "242",
+      "page_list": [
+        242
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "mwlsm",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "navas",
+      "pages": "152",
+      "page_list": [
+        152
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "necest",
+      "pages": "306",
+      "page_list": [
+        306
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "necti",
+      "pages": "305",
+      "page_list": [
+        305
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "neuf",
+      "pages": "258",
+      "page_list": [
+        258
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "neun",
+      "pages": "258",
+      "page_list": [
+        258
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "nine",
+      "pages": "258",
+      "page_list": [
+        258
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "nyn",
+      "pages": "6, 230",
+      "page_list": [
+        6,
+        230
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "nynrk",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "öahaba",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
+      "head": "öahabal",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
+      "head": "ocfibö",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "of",
+      "pages": "123",
+      "page_list": [
+        123
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Oj",
+      "pages": "109, 110",
+      "page_list": [
+        109,
+        110
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "öLsz̲",
+      "pages": "9, 230",
+      "page_list": [
+        9,
+        230
+      ],
+      "discussed": true,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
+      "head": "ösem",
+      "pages": "255",
+      "page_list": [
+        255
+      ],
+      "discussed": false,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
+      "head": "P",
+      "pages": "9, 230",
+      "page_list": [
+        9,
+        230
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "peis",
+      "pages": "72",
+      "page_list": [
+        72
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "pesak",
+      "pages": "108",
+      "page_list": [
+        108
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "pet",
+      "pages": "255",
+      "page_list": [
+        255
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "piasek",
+      "pages": "108",
+      "page_list": [
+        108
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "port",
+      "pages": "67",
+      "page_list": [
+        67
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "porte",
+      "pages": "67",
+      "page_list": [
+        67
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "positus",
+      "pages": "348",
+      "page_list": [
+        348
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "post",
+      "pages": "348",
+      "page_list": [
+        348
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "poste",
+      "pages": "348",
+      "page_list": [
+        348
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "ppis",
+      "pages": "72",
+      "page_list": [
+        72
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "prosty",
+      "pages": "346",
+      "page_list": [
+        346
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "punch",
+      "pages": "173",
+      "page_list": [
+        173
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "räda",
+      "pages": "232",
+      "page_list": [
+        232
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Rauhbank",
+      "pages": "191",
+      "page_list": [
+        191
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "rawa",
+      "pages": "232",
+      "page_list": [
+        232
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "rawada",
+      "pages": "232",
+      "page_list": [
+        232
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "raz",
+      "pages": "108",
+      "page_list": [
+        108
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "rez",
+      "pages": "108",
+      "page_list": [
+        108
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "RgH",
+      "pages": "160",
+      "page_list": [
+        160
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "roz",
+      "pages": "67",
+      "page_list": [
+        67
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "roze",
+      "pages": "67",
+      "page_list": [
+        67
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "rrx",
+      "pages": "280",
+      "page_list": [
+        280
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Russia",
+      "pages": "80",
+      "page_list": [
+        80
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "rustii",
+      "pages": "293",
+      "page_list": [
+        293
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "rwa",
+      "pages": "70",
+      "page_list": [
+        70
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "rwe",
+      "pages": "70",
+      "page_list": [
+        70
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "s-t-r",
+      "pages": "215",
+      "page_list": [
+        215
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "safakira",
+      "pages": "221",
+      "page_list": [
+        221
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sähid",
+      "pages": "227",
+      "page_list": [
+        227
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "saläm",
+      "pages": "227, 228",
+      "page_list": [
+        227,
+        228
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "salima",
+      "pages": "227",
+      "page_list": [
+        227
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "saräb",
+      "pages": "225",
+      "page_list": [
+        225
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sarbät",
+      "pages": "225",
+      "page_list": [
+        225
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "särki",
+      "pages": "365",
+      "page_list": [
+        365
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "satar",
+      "pages": "215",
+      "page_list": [
+        215
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "satir",
+      "pages": "215",
+      "page_list": [
+        215
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "satr",
+      "pages": "215",
+      "page_list": [
+        215
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "satur",
+      "pages": "215",
+      "page_list": [
+        215
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Sau",
+      "pages": "340",
+      "page_list": [
+        340
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sayh",
+      "pages": "225",
+      "page_list": [
+        225
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "schwein",
+      "pages": "340",
+      "page_list": [
+        340
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sedem",
+      "pages": "255",
+      "page_list": [
+        255
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sen",
+      "pages": "107",
+      "page_list": [
+        107
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sest",
+      "pages": "255",
+      "page_list": [
+        255
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sfHfr",
+      "pages": "143",
+      "page_list": [
+        143
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "ship",
+      "pages": "330",
+      "page_list": [
+        330
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sitar",
+      "pages": "215",
+      "page_list": [
+        215
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "slm",
+      "pages": "233",
+      "page_list": [
+        233
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "solidum",
+      "pages": "152",
+      "page_list": [
+        152
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sou",
+      "pages": "152",
+      "page_list": [
+        152
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sow",
+      "pages": "340",
+      "page_list": [
+        340
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sportsman",
+      "pages": "242",
+      "page_list": [
+        242
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "st-",
+      "pages": "348",
+      "page_list": [
+        348
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "sta-",
+      "pages": "346, 348, 349",
+      "page_list": [
+        346,
+        348,
+        349
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "346": [
+          "…оказывается, должен быть восстановлен как корень с гласной а — корень sta-. И тогда это тот же корень, что и в русских стать, стоять (родственны…",
+          "…оять (родственные формы, где стать непосредственно сохраняет исходное sta-). На дославянском (не на славянском!) уровне у этого sta- конечное а…"
+        ],
+        "348": [
+          "…ва, устроенные по-русски вот таким же замечательным способом из этого sta-, которое стало st-. Но надо, чтобы первая часть была предлогом, и так…"
+        ],
+        "349": [
+          "…. З.: Глагол стать — это наше с вами прямое наследие индоевропейского sta-. Совершенно чистое. Вот как раз этим словом мы с вами сейчас и займем…"
+        ]
+      }
+    },
+    {
+      "head": "star",
+      "pages": "215",
+      "page_list": [
+        215
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "stolos",
+      "pages": "112",
+      "page_list": [
+        112
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "str",
+      "pages": "215",
+      "page_list": [
+        215
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "studens",
+      "pages": "231",
+      "page_list": [
+        231
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "studentis",
+      "pages": "231",
+      "page_list": [
+        231
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "su",
+      "pages": "342",
+      "page_list": [
+        342
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "su-",
+      "pages": "340",
+      "page_list": [
+        340
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "su-s",
+      "pages": "340",
+      "page_list": [
+        340
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "südän",
+      "pages": "222",
+      "page_list": [
+        222
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "suwdän",
+      "pages": "222",
+      "page_list": [
+        222
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "svini",
+      "pages": "342",
+      "page_list": [
+        342
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "swin",
+      "pages": "340",
+      "page_list": [
+        340
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "swine",
+      "pages": "340",
+      "page_list": [
+        340
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "swm",
+      "pages": "340",
+      "page_list": [
+        340
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "tälib",
+      "pages": "231",
+      "page_list": [
+        231
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "talkkuna",
+      "pages": "84",
+      "page_list": [
+        84
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "te",
+      "pages": "37",
+      "page_list": [
+        37
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "ter",
+      "pages": "143",
+      "page_list": [
+        143
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Tf",
+      "pages": "162, 293",
+      "page_list": [
+        162,
+        293
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "ti-ri-po",
+      "pages": "122",
+      "page_list": [
+        122
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "ti-ri-po-de",
+      "pages": "122",
+      "page_list": [
+        122
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Tj",
+      "pages": "280",
+      "page_list": [
+        280
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "toi",
+      "pages": "37",
+      "page_list": [
+        37
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "tolkuno",
+      "pages": "84",
+      "page_list": [
+        84
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "tribunus",
+      "pages": "152",
+      "page_list": [
+        152
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "tripode",
+      "pages": "122",
+      "page_list": [
+        122
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "tripos",
+      "pages": "122",
+      "page_list": [
+        122
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "u-JLbj",
+      "pages": "229",
+      "page_list": [
+        229
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "UJ",
+      "pages": "291",
+      "page_list": [
+        291
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "uRlfd",
+      "pages": "155",
+      "page_list": [
+        155
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "vestis",
+      "pages": "158",
+      "page_list": [
+        158
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "vi",
+      "pages": "116",
+      "page_list": [
+        116
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "vida",
+      "pages": "115, 116",
+      "page_list": [
+        115,
+        116
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "115": [
+          "…где сформировались потом французский, испанский, португальский языки: vida. Следующий шаг — галльско-романский язык, распространенный на террито…"
+        ],
+        "116": [
+          "…utā *vīvitā *vītā vīta (классическая латынь) vita (вульгарная латынь) vida (западнороманское) vide (галльско-романское) *viðe viе [vie] (старофр…"
+        ]
+      }
+    },
+    {
+      "head": "vide",
+      "pages": "115, 116",
+      "page_list": [
+        115,
+        116
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "115": [
+          "…льско-романский язык, распространенный на территории будущей Франции: vide. Следующий шаг — d ослабляется до звука ð (равного английскому звонко…"
+        ],
+        "116": [
+          "…классическая латынь) vita (вульгарная латынь) vida (западнороманское) vide (галльско-романское) *viðe viе [vie] (старофранцузское) viе [vi] (сов…"
+        ]
+      }
+    },
+    {
+      "head": "vie",
+      "pages": "116",
+      "page_list": [
+        116
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "ville",
+      "pages": "118",
+      "page_list": [
+        118
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "vita",
+      "pages": "115, 116",
+      "page_list": [
+        115,
+        116
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {
+        "115": [
+          "…зован в латыни, уже могут кое-что опознать, верно? Из зала: Латинское vita. А. З.: Совершенно верно. Но здесь я всё еще должен оставить это слов…",
+          "…ная латынь. Это то же самое, только уже нет долготы i в корне: просто vita. Дальше западнороманское слово, то есть распространенное в западной ч…"
+        ],
+        "116": [
+          "…wotā *wīwotā *vīvotā *vīvutā *vīvitā *vītā vīta (классическая латынь) vita (вульгарная латынь) vida (западнороманское) vide (галльско-романское)…"
+        ]
+      }
+    },
+    {
+      "head": "Vive",
+      "pages": "70",
+      "page_list": [
+        70
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "vleugel",
+      "pages": "366",
+      "page_list": [
+        366
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "vlta",
+      "pages": "117",
+      "page_list": [
+        117
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "Volk",
+      "pages": "184",
+      "page_list": [
+        184
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "vtta",
+      "pages": "116",
+      "page_list": [
+        116
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "wesz",
+      "pages": "108",
+      "page_list": [
+        108
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "wlkwos",
+      "pages": "112",
+      "page_list": [
+        112
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "y'hmd",
+      "pages": "225",
+      "page_list": [
+        225
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "y'srb",
+      "pages": "225",
+      "page_list": [
+        225
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "y'swd",
+      "pages": "222",
+      "page_list": [
+        222
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "y/hrg",
+      "pages": "226",
+      "page_list": [
+        226
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "y/öhb",
+      "pages": "230",
+      "page_list": [
+        230
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "y/sgd",
+      "pages": "223",
+      "page_list": [
+        223
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "y/shd",
+      "pages": "227",
+      "page_list": [
+        227
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "y/slm",
+      "pages": "227, 228, 233",
+      "page_list": [
+        227,
+        228,
+        233
+      ],
+      "discussed": true,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "y/syh",
+      "pages": "225",
+      "page_list": [
+        225
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "yaktubu",
+      "pages": "216",
+      "page_list": [
+        216
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "yatlubu",
+      "pages": "231",
+      "page_list": [
+        231
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "zä",
+      "pages": "67",
+      "page_list": [
+        67
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "zabic",
+      "pages": "356",
+      "page_list": [
+        356
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "zens",
+      "pages": "67",
+      "page_list": [
+        67
+      ],
+      "discussed": false,
+      "category": "lat",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
       "head": "а",
       "pages": "17, 318, 319, 386",
       "page_list": [
@@ -7296,6 +10366,17 @@
       "contexts": {}
     },
     {
+      "head": "леṗтчик",
+      "pages": "332",
+      "page_list": [
+        332
+      ],
+      "discussed": false,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
       "head": "лежачий",
       "pages": "194",
       "page_list": [
@@ -7333,17 +10414,6 @@
       "pages": "334",
       "page_list": [
         334
-      ],
-      "discussed": false,
-      "category": "rus",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "леṗтчик",
-      "pages": "332",
-      "page_list": [
-        332
       ],
       "discussed": false,
       "category": "rus",
@@ -7721,10 +10791,10 @@
       }
     },
     {
-      "head": "Михаилович",
-      "pages": "372",
+      "head": "Миха́йла",
+      "pages": "373",
       "page_list": [
-        372
+        373
       ],
       "discussed": false,
       "category": "rus",
@@ -7732,10 +10802,10 @@
       "contexts": {}
     },
     {
-      "head": "Миха́йла",
-      "pages": "373",
+      "head": "Михаилович",
+      "pages": "372",
       "page_list": [
-        373
+        372
       ],
       "discussed": false,
       "category": "rus",
@@ -11587,6 +14657,23 @@
       }
     },
     {
+      "head": "стой",
+      "pages": "372, 382",
+      "page_list": [
+        372,
+        382
+      ],
+      "discussed": true,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {
+        "372": [
+          "…случаях совершенно ясно, что окончание -и. А от глагола стоять будет стой, верно? Как вы думаете, что произошло? Довольно очевидно: это стои́ к…",
+          "…ошло? Довольно очевидно: это стои́ каким-то образом стянулось в слово стой. Есть и много других примеров. Вот имя Михаил, а отчество от него буд…"
+        ]
+      }
+    },
+    {
       "head": "стои́шь",
       "pages": "266",
       "page_list": [
@@ -11607,23 +14694,6 @@
       "category": "rus",
       "needs_review": false,
       "contexts": {}
-    },
-    {
-      "head": "стой",
-      "pages": "372, 382",
-      "page_list": [
-        372,
-        382
-      ],
-      "discussed": true,
-      "category": "rus",
-      "needs_review": false,
-      "contexts": {
-        "372": [
-          "…случаях совершенно ясно, что окончание -и. А от глагола стоять будет стой, верно? Как вы думаете, что произошло? Довольно очевидно: это стои́ к…",
-          "…ошло? Довольно очевидно: это стои́ каким-то образом стянулось в слово стой. Есть и много других примеров. Вот имя Михаил, а отчество от него буд…"
-        ]
-      }
     },
     {
       "head": "Стокгольм",
@@ -12754,6 +15824,17 @@
       "contexts": {}
     },
     {
+      "head": "узеṗл",
+      "pages": "383",
+      "page_list": [
+        383
+      ],
+      "discussed": false,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
       "head": "узел",
       "pages": "379, 389, 390",
       "page_list": [
@@ -12783,17 +15864,6 @@
       "pages": "379",
       "page_list": [
         379
-      ],
-      "discussed": false,
-      "category": "rus",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "узеṗл",
-      "pages": "383",
-      "page_list": [
-        383
       ],
       "discussed": false,
       "category": "rus",
@@ -13801,6 +16871,17 @@
       "contexts": {}
     },
     {
+      "head": "̂Ьновѣі",
+      "pages": "295",
+      "page_list": [
+        295
+      ],
+      "discussed": false,
+      "category": "tech",
+      "needs_review": true,
+      "contexts": {}
+    },
+    {
       "head": "Эйдельман",
       "pages": "246",
       "page_list": [
@@ -13920,3087 +17001,6 @@
       "discussed": false,
       "category": "rus",
       "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "admire",
-      "pages": "220",
-      "page_list": [
-        220
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "admirer",
-      "pages": "220",
-      "page_list": [
-        220
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Ahmad",
-      "pages": "220",
-      "page_list": [
-        220
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ailleurs",
-      "pages": "332",
-      "page_list": [
-        332
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Al-",
-      "pages": "221",
-      "page_list": [
-        221
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "al-gabr",
-      "pages": "221",
-      "page_list": [
-        221
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "al-himär",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "al-himäru",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "al-wädi",
-      "pages": "221",
-      "page_list": [
-        221
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "alibi",
-      "pages": "332",
-      "page_list": [
-        332
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Allemands",
-      "pages": "60",
-      "page_list": [
-        60
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "am",
-      "pages": "26",
-      "page_list": [
-        26
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "amiral",
-      "pages": "221",
-      "page_list": [
-        221
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "armenians",
-      "pages": "60",
-      "page_list": [
-        60
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "armeniens",
-      "pages": "60",
-      "page_list": [
-        60
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "aspirare",
-      "pages": "231",
-      "page_list": [
-        231
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Bahr",
-      "pages": "221",
-      "page_list": [
-        221
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "bhö",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "blty",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Bratpfanne",
-      "pages": "191",
-      "page_list": [
-        191
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "business",
-      "pages": "80",
-      "page_list": [
-        80
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "chair",
-      "pages": "82",
-      "page_list": [
-        82
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "chaise",
-      "pages": "82",
-      "page_list": [
-        82
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Charles",
-      "pages": "83",
-      "page_list": [
-        83
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "clause",
-      "pages": "20",
-      "page_list": [
-        20
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "concours",
-      "pages": "244",
-      "page_list": [
-        244
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "d",
-      "pages": "70, 72",
-      "page_list": [
-        70,
-        72
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "de",
-      "pages": "118, 123",
-      "page_list": [
-        118,
-        123
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "deit",
-      "pages": "69, 70, 72",
-      "page_list": [
-        69,
-        70,
-        72
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "69": [
-          "…более широкой: dejt. Следующая фаза: вместо еj получается дифтонг ei: deit. Следующая фаза состоит в том, что вместо этого е возникает звук типа…"
-        ],
-        "70": [
-          "…узское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → duét → dwet → dwe → dwa (doigt) А как э…"
-        ],
-        "72": [
-          "…Это значит, что если у вас на каком-нибудь этапе развития, допустим, deit переходит в døit, то и какой-нибудь reig непременно переходит в røig,…"
-        ]
-      }
-    },
-    {
-      "head": "deset",
-      "pages": "255",
-      "page_list": [
-        255
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "deutsch",
-      "pages": "60, 69",
-      "page_list": [
-        60,
-        69
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "60": [
-          "…сейчас как-то себя называют, верно? Как называют себя немцы? Из зала: Deutsch. А. З.: Deutsch, правильно. Совершенно ничего общего со словом Герман…",
-          "…бя называют, верно? Как называют себя немцы? Из зала: Deutsch. А. З.: Deutsch, правильно. Совершенно ничего общего со словом Германия. Это как раз…"
-        ],
-        "69": [
-          "…что вместо этого е возникает звук типа ø: døit. Что-то типа немецкого deutsch. Всё это примерно вторая половина первого тысячелетия нашей эры, каки…"
-        ]
-      }
-    },
-    {
-      "head": "deva",
-      "pages": "342",
-      "page_list": [
-        342
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "devet",
-      "pages": "255",
-      "page_list": [
-        255
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "devl",
-      "pages": "342",
-      "page_list": [
-        342
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "dig",
-      "pages": "68",
-      "page_list": [
-        68
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "digital",
-      "pages": "68",
-      "page_list": [
-        68
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "digitu",
-      "pages": "68, 70",
-      "page_list": [
-        68,
-        70
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "68": [
-          "…поскольку орфография традиционна. Возьмем, например, латинское слово digitum. Ну, поскольку вы такие образованные, то скажите мне, что это значит.…",
-          "…чит. Из зала: Число. А. З.: А, это потому, что есть современное слово digital? Ну да, конечно. Но это очень позднее значение слова. Из зала: Палец.…"
-        ],
-        "70": [
-          "…рили на улице. И это уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet →…",
-          "…ице. И это уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → du…"
-        ]
-      }
-    },
-    {
-      "head": "digitum",
-      "pages": "68, 70, 72, 75, 83",
-      "page_list": [
-        68,
-        70,
-        72,
-        75,
-        83
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "68": [
-          "…поскольку орфография традиционна. Возьмем, например, латинское слово digitum. Ну, поскольку вы такие образованные, то скажите мне, что это значит.…",
-          "…чит. Из зала: Число. А. З.: А, это потому, что есть современное слово digital? Ну да, конечно. Но это очень позднее значение слова. Из зала: Палец.…"
-        ],
-        "70": [
-          "…рили на улице. И это уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet →…",
-          "…ице. И это уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → du…"
-        ],
-        "72": [
-          "…ереход от одного этапа к следующему в разобранной нами эволюции слова digitum, обладают замечательным фундаментальным (и неожиданным для человечест…"
-        ],
-        "75": [
-          "…й — один из быстро развивающихся языков. Видите, как он скомкал слово digitum до doigt. Может быть, кто-нибудь вспомнит, как по-итальянски «палец»,…"
-        ],
-        "83": [
-          "…ршенно другое. Вот смотрите, как французский язык смял исконное слово digitum — в нем почти ничего не осталось. Всё, кроме звука d, новое. А другой…"
-        ]
-      }
-    },
-    {
-      "head": "digitus",
-      "pages": "68",
-      "page_list": [
-        68
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "digtu",
-      "pages": "68–70",
-      "page_list": [
-        68,
-        70
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "68": [
-          "…е позже, уже на территории будущей Франции, мы видим вот такую форму: digtu. В слове digitu ударение на первом слоге. И вот теряется безударная г…",
-          "…яется безударная гласная между двумя согласными. Вместо digitu просто digtu, правда с сохранением некоторой мягкости в этом dig, мягкости такого…"
-        ],
-        "70": [
-          "…о уже и есть современное французское произношение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → duét → dwe…"
-        ]
-      }
-    },
-    {
-      "head": "diot",
-      "pages": "60, 75",
-      "page_list": [
-        60,
-        75
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "60": [
-          "…Это как раз один из тех самых примеров. Deutsch — от древненемецкого diot «народ, люди». То есть слово deutsch в первоначальном значении — это…"
-        ]
-      }
-    },
-    {
-      "head": "doet",
-      "pages": "70",
-      "page_list": [
-        70
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "doigt",
-      "pages": "70, 75, 85",
-      "page_list": [
-        70,
-        75,
-        85
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "70": [
-          "…→ dejt → deit → døit → doit → dóet → doét → duét → dwet → dwe → dwa (doigt) А как это [dwa] записывается, помните? Записывается это, заметьте, т…",
-          "…мните? Записывается это, заметьте, так, как никогда не произносилось: doigt. Больше всего это похоже на хронологический уровень примерно Х века:…"
-        ],
-        "75": [
-          "…быстро развивающихся языков. Видите, как он скомкал слово digitum до doigt. Может быть, кто-нибудь вспомнит, как по-итальянски «палец», раз вы т…"
-        ],
-        "85": [
-          "…твование. Ярослав Пилецкий (10 класс): Во что еще может перейти слово doigt, которое на доске написано? А. З.: Во что еще может перейти? Это вопр…"
-        ]
-      }
-    },
-    {
-      "head": "doit",
-      "pages": "69, 70",
-      "page_list": [
-        69,
-        70
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "69": [
-          "…На следующем этапе ø превращается в нормальное о, то есть получается doit. Здесь мы приближаемся к Х веку, к эпохе «Песни о Роланде». Дальше пр…"
-        ],
-        "70": [
-          "…шение. digitum → digitu → digtu → dijtu → dijt → dejt → deit → døit → doit → dóet → doét → duét → dwet → dwe → dwa (doigt) А как это [dwa] запис…",
-          "…. Больше всего это похоже на хронологический уровень примерно Х века: doit. А как вы думаете, откуда взялось здесь g? Это действительно трудно в…"
-        ]
-      }
-    },
-    {
-      "head": "dpit",
-      "pages": "72",
-      "page_list": [
-        72
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "duet",
-      "pages": "70",
-      "page_list": [
-        70
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "dwa",
-      "pages": "70, 82",
-      "page_list": [
-        70,
-        82
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "70": [
-          "…dwe, хотя это уже звучало немножко старомодно. На улицах уже говорили dwa. И точно так же можно было говорить: Vive le [rwе]! «Да здравствует к…",
-          "…dijt → dejt → deit → døit → doit → dóet → doét → duét → dwet → dwe → dwa (doigt) А как это [dwa] записывается, помните? Записывается это, заме…"
-        ],
-        "82": [
-          "…с): Я хотела спросить про слово «палец». Последняя форма этого слова: dwa. А рядом что написано? 5 А. З.: Это орфография, современная французск…"
-        ]
-      }
-    },
-    {
-      "head": "dwe",
-      "pages": "70",
-      "page_list": [
-        70
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "dwet",
-      "pages": "70",
-      "page_list": [
-        70
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "döet",
-      "pages": "71",
-      "page_list": [
-        71
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "dĳt",
-      "pages": "69, 71",
-      "page_list": [
-        69,
-        71
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "dĳtu",
-      "pages": "69, 71, 75",
-      "page_list": [
-        69,
-        71,
-        75
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ecu",
-      "pages": "27",
-      "page_list": [
-        27
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Eh oui",
-      "pages": "60",
-      "page_list": [
-        60
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "eit",
-      "pages": "70",
-      "page_list": [
-        70
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "esurio",
-      "pages": "149",
-      "page_list": [
-        149
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "fa.it",
-      "pages": "152",
-      "page_list": [
-        152
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "factum",
-      "pages": "152",
-      "page_list": [
-        152
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "fakir",
-      "pages": "221",
-      "page_list": [
-        221
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "fakura",
-      "pages": "221",
-      "page_list": [
-        221
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "find",
-      "pages": "190",
-      "page_list": [
-        190
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "finna",
-      "pages": "190",
-      "page_list": [
-        190
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "football",
-      "pages": "242",
-      "page_list": [
-        242
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "fort",
-      "pages": "68",
-      "page_list": [
-        68
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Francia",
-      "pages": "56",
-      "page_list": [
-        56
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "frangais",
-      "pages": "56",
-      "page_list": [
-        56
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "friend",
-      "pages": "172, 330",
-      "page_list": [
-        172,
-        330
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "172": [
-          "огромная разница в понимании этих слов (английского friend и русского друг) — разница менталитетов. Хотя одно считается эквивале…"
-        ],
-        "330": [
-          "…имеры из вполне известных языков. Скажем, английское friendship — это friend плюс ship, которое означало «свойство, качество» и т. д. Русское кто-…"
-        ]
-      }
-    },
-    {
-      "head": "friendship",
-      "pages": "330",
-      "page_list": [
-        330
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "gens",
-      "pages": "68",
-      "page_list": [
-        68
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Germania",
-      "pages": "60",
-      "page_list": [
-        60
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "globus",
-      "pages": "245",
-      "page_list": [
-        245
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "grab",
-      "pages": "160",
-      "page_list": [
-        160
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "gwena",
-      "pages": "112",
-      "page_list": [
-        112
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "happiness",
-      "pages": "172",
-      "page_list": [
-        172
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "happy",
-      "pages": "172",
-      "page_list": [
-        172
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "haraga",
-      "pages": "226",
-      "page_list": [
-        226
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "harg",
-      "pages": "226",
-      "page_list": [
-        226
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "horn",
-      "pages": "232",
-      "page_list": [
-        232
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "is",
-      "pages": "27",
-      "page_list": [
-        27
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "k-t-b",
-      "pages": "215, 216",
-      "page_list": [
-        215,
-        216
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "215": [
-          "…написал». Какой корень в kataba тем самым? Из зала: к-т-б. А. З.: Да, k-t-b. Вот с этим корнем и будем играть дальше. Пожалуйста: kutiba — «он бы…",
-          "…ать какой-нибудь условный корень; пусть это будет хотя бы то же самое k-t-b «писать». Тогда kataba — это формула для глагола в перфекте. Условно…"
-        ],
-        "216": [
-          "в которые дальше можно вместо корня k-t-b подставлять любые другие корни, сколько их есть, — тысячи корней 1, ч…",
-          "…использовать. В качестве условного корня, как я уже сказал, я выберу k-t-b. Иногда в арабистике для корней даже используется вот такой знак корн…"
-        ]
-      }
-    },
-    {
-      "head": "karnayni",
-      "pages": "231",
-      "page_list": [
-        231
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "kataba",
-      "pages": "215, 216",
-      "page_list": [
-        215,
-        216
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "215": [
-          "…, то есть не передающее какое-то понятие, а грамматическое. Например, kataba — это «написал». Какой корень в kataba тем самым? Из зала: к-т-б. А.…",
-          "…е, а грамматическое. Например, kataba — это «написал». Какой корень в kataba тем самым? Из зала: к-т-б. А. З.: Да, k-t-b. Вот с этим корнем и буде…"
-        ],
-        "216": [
-          "…ля корней даже используется вот такой знак корня: √. (Пишет на доске: kataba, katiba, katuba.) Это три формулы перфекта. Чем они различаются? Они…",
-          "…. Чем они различаются? Они отражают следующую классификацию глаголов: kataba — это глаголы действия, katiba — это глаголы переменного состояния (н…"
-        ]
-      }
-    },
-    {
-      "head": "katb",
-      "pages": "218, 232",
-      "page_list": [
-        218,
-        232
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "218": [
-          "…шийся». Дальше. Имеются, кроме того, вот такие модели, самые простые: katb, kitb, kutb. Это самая простая модель, обычная для существительных. Е…"
-        ],
-        "232": [
-          "…ḳarn. Как видите, в точности по главной модели имен существительных: katb. А вот значение этого ḳarn замечательное: «рог». И это слово безумно…"
-        ]
-      }
-    },
-    {
-      "head": "katiba",
-      "pages": "216, 227",
-      "page_list": [
-        216,
-        227
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "216": [
-          "…й даже используется вот такой знак корня: √. (Пишет на доске: kataba, katiba, katuba.) Это три формулы перфекта. Чем они различаются? Они отражают…",
-          "…жают следующую классификацию глаголов: kataba — это глаголы действия, katiba — это глаголы переменного состояния (например, «он болен»), katuba —…"
-        ],
-        "227": [
-          "…гол salima «быть благополучным, жить хорошо, мирно». Заметьте: модель katiba — переменность, неустойчивость состояния. Соответственно, salām — «ми…"
-        ]
-      }
-    },
-    {
-      "head": "katlb",
-      "pages": "218",
-      "page_list": [
-        218
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "kattaba",
-      "pages": "217, 227",
-      "page_list": [
-        217,
-        227
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "217": [
-          "…такая за счет этого первого u. Еще одну формулу перфекта вам напишу: kattaba. На этот раз это уже будут элементы словообразования. Здесь то же сам…",
-          "…о, что называется в общетипологической терминологии «каузатив». Итак, kattaba — это интенсив и каузатив. Опять-таки, то же самое будет для любых др…"
-        ],
-        "227": [
-          "…рую я не выписывал: ˀaktaba. Это чистый каузатив. Каузатив может быть kattaba, но может быть другой вариант каузатива — ˀaktaba. Из зала: Я слышала…"
-        ]
-      }
-    },
-    {
-      "head": "katuba",
-      "pages": "216",
-      "page_list": [
-        216
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "katäb",
-      "pages": "218",
-      "page_list": [
-        218
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "kaufen",
-      "pages": "184, 185",
-      "page_list": [
-        184,
-        185
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "184": [
-          "…м немецком соответствующие древнегерманские слова дали Volk ‘народ’ и kaufen ‘покупать’. 184\b ОБ ИСТОРИИ РУССКОГО ЯЗЫКА"
-        ],
-        "185": [
-          "…заимствованием откуда-то еще. Так, германское слово, давшее немецкое kaufen, — это заимствование из латыни. А исконно ли соответствующее слово в…"
-        ]
-      }
-    },
-    {
-      "head": "king",
-      "pages": "184",
-      "page_list": [
-        184
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "kitb",
-      "pages": "218",
-      "page_list": [
-        218
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "krievs",
-      "pages": "61",
-      "page_list": [
-        61
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ktub",
-      "pages": "216",
-      "page_list": [
-        216
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "kuningaz",
-      "pages": "184",
-      "page_list": [
-        184
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "kutb",
-      "pages": "218",
-      "page_list": [
-        218
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "kutbän",
-      "pages": "218",
-      "page_list": [
-        218
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "kutiba",
-      "pages": "215, 217",
-      "page_list": [
-        215,
-        217
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "215": [
-          "…. З.: Да, k-t-b. Вот с этим корнем и будем играть дальше. Пожалуйста: kutiba — «он был написан». Действительный залог и страдательный залог выража…",
-          "…о надо как-то его переводить. Итак, kataba переведем как «написал». А kutiba — как «был написан». Соответственно, это послужит формулами, Лекция 1…"
-        ],
-        "217": [
-          "Еще одна формула, которую вы теперь уже знаете, — kutiba. Что она значит? Из зала: «Был написан». А. З.: «Был написан», соверш…"
-        ]
-      }
-    },
-    {
-      "head": "kätib",
-      "pages": "217",
-      "page_list": [
-        217
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "König",
-      "pages": "184",
-      "page_list": [
-        184
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "l-himär",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "l-himäru",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "l-kabir",
-      "pages": "221",
-      "page_list": [
-        221
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "list",
-      "pages": "334",
-      "page_list": [
-        334
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "loaf",
-      "pages": "184",
-      "page_list": [
-        184
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "mahazin",
-      "pages": "223",
-      "page_list": [
-        223
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "mahzan",
-      "pages": "223",
-      "page_list": [
-        223
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "mahärig",
-      "pages": "226",
-      "page_list": [
-        226
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "mahäzin",
-      "pages": "223",
-      "page_list": [
-        223
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "maktab",
-      "pages": "218, 219, 223",
-      "page_list": [
-        218,
-        219,
-        223
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "218": [
-          "…дальше вы увидите, как он используется. Дальше. Напишу еще, пожалуй: maktab. Это имя места действия. Например, как вы думаете, что бы это значило…",
-          "…Например, как вы думаете, что бы это значило именно для самого слова maktab? И. Б. Иткин: Скрипторий? А. З.: Могло бы и «скрипторий» значить. Из…"
-        ],
-        "219": [
-          "…модели для некоторых глаголов выступает вариант с другой огласовкой: maktib. Почему я его упоминаю? Потому что одно, по крайней мере, слово такой…",
-          "…го числа от некоторого типа существительных, большей частью от модели maktab (но также и от некоторых других моделей). Этим я ограничусь. Я мог бы…"
-        ],
-        "223": [
-          "…вершенно верно. Это один из вариантов имени места действия — там были maktab и maktib, я вам написал оба варианта. Это слово как раз типа maktib.…",
-          "…верно. Это один из вариантов имени места действия — там были maktab и maktib, я вам написал оба варианта. Это слово как раз типа maktib. А теперь…"
-        ]
-      }
-    },
-    {
-      "head": "maktib",
-      "pages": "219, 223",
-      "page_list": [
-        219,
-        223
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "219": [
-          "…модели для некоторых глаголов выступает вариант с другой огласовкой: maktib. Почему я его упоминаю? Потому что одно, по крайней мере, слово такой…",
-          "…го числа от некоторого типа существительных, большей частью от модели maktab (но также и от некоторых других моделей). Этим я ограничусь. Я мог бы…"
-        ],
-        "223": [
-          "…вершенно верно. Это один из вариантов имени места действия — там были maktab и maktib, я вам написал оба варианта. Это слово как раз типа maktib.…",
-          "…верно. Это один из вариантов имени места действия — там были maktab и maktib, я вам написал оба варианта. Это слово как раз типа maktib. А теперь…"
-        ]
-      }
-    },
-    {
-      "head": "maktüb",
-      "pages": "217",
-      "page_list": [
-        217
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "makätib",
-      "pages": "219",
-      "page_list": [
-        219
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "masgid",
-      "pages": "223",
-      "page_list": [
-        223
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "maslüm",
-      "pages": "233",
-      "page_list": [
-        233
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "maslüma",
-      "pages": "233",
-      "page_list": [
-        233
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "mhzn",
-      "pages": "223",
-      "page_list": [
-        223
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "moi",
-      "pages": "37",
-      "page_list": [
-        37
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "muhammad",
-      "pages": "225",
-      "page_list": [
-        225
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "muhammid",
-      "pages": "225",
-      "page_list": [
-        225
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "mukattab",
-      "pages": "218",
-      "page_list": [
-        218
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "mukattib",
-      "pages": "218, 234",
-      "page_list": [
-        218,
-        234
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "218": [
-          "…воение средней согласной сохраняется, хотя оформление немного другое: mukattib — действительное причастие второй породы: «много и интенсивно пишущий…",
-          "…йствительное причастие второй породы: «много и интенсивно пишущий». А mukattab — это уже немножко труднее перевести, это такое же причастие, только…"
-        ],
-        "234": [
-          "…лностью вычислите значение слова muˀaδδin. Модель нашли? Нашли модель mukattib? Из зала: Причастие... А. З.: Причастие, правильно. Причастие действи…"
-        ]
-      }
-    },
-    {
-      "head": "Mundstück",
-      "pages": "242",
-      "page_list": [
-        242
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "mwlsm",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "navas",
-      "pages": "152",
-      "page_list": [
-        152
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "necest",
-      "pages": "306",
-      "page_list": [
-        306
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "necti",
-      "pages": "305",
-      "page_list": [
-        305
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "neuf",
-      "pages": "258",
-      "page_list": [
-        258
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "neun",
-      "pages": "258",
-      "page_list": [
-        258
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "nine",
-      "pages": "258",
-      "page_list": [
-        258
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "nyn",
-      "pages": "6, 230",
-      "page_list": [
-        6,
-        230
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "nynrk",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ocfibö",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "of",
-      "pages": "123",
-      "page_list": [
-        123
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Oj",
-      "pages": "109, 110",
-      "page_list": [
-        109,
-        110
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "P",
-      "pages": "9, 230",
-      "page_list": [
-        9,
-        230
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "peis",
-      "pages": "72",
-      "page_list": [
-        72
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "pesak",
-      "pages": "108",
-      "page_list": [
-        108
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "pet",
-      "pages": "255",
-      "page_list": [
-        255
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "piasek",
-      "pages": "108",
-      "page_list": [
-        108
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "port",
-      "pages": "67",
-      "page_list": [
-        67
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "porte",
-      "pages": "67",
-      "page_list": [
-        67
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "positus",
-      "pages": "348",
-      "page_list": [
-        348
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "post",
-      "pages": "348",
-      "page_list": [
-        348
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "poste",
-      "pages": "348",
-      "page_list": [
-        348
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ppis",
-      "pages": "72",
-      "page_list": [
-        72
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "prosty",
-      "pages": "346",
-      "page_list": [
-        346
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "punch",
-      "pages": "173",
-      "page_list": [
-        173
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Rauhbank",
-      "pages": "191",
-      "page_list": [
-        191
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "rawa",
-      "pages": "232",
-      "page_list": [
-        232
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "rawada",
-      "pages": "232",
-      "page_list": [
-        232
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "raz",
-      "pages": "108",
-      "page_list": [
-        108
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "rez",
-      "pages": "108",
-      "page_list": [
-        108
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "RgH",
-      "pages": "160",
-      "page_list": [
-        160
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "roz",
-      "pages": "67",
-      "page_list": [
-        67
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "roze",
-      "pages": "67",
-      "page_list": [
-        67
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "rrx",
-      "pages": "280",
-      "page_list": [
-        280
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Russia",
-      "pages": "80",
-      "page_list": [
-        80
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "rustii",
-      "pages": "293",
-      "page_list": [
-        293
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "rwa",
-      "pages": "70",
-      "page_list": [
-        70
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "rwe",
-      "pages": "70",
-      "page_list": [
-        70
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "räda",
-      "pages": "232",
-      "page_list": [
-        232
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "s-t-r",
-      "pages": "215",
-      "page_list": [
-        215
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "safakira",
-      "pages": "221",
-      "page_list": [
-        221
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "salima",
-      "pages": "227",
-      "page_list": [
-        227
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "saläm",
-      "pages": "227, 228",
-      "page_list": [
-        227,
-        228
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sarbät",
-      "pages": "225",
-      "page_list": [
-        225
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "saräb",
-      "pages": "225",
-      "page_list": [
-        225
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "satar",
-      "pages": "215",
-      "page_list": [
-        215
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "satir",
-      "pages": "215",
-      "page_list": [
-        215
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "satr",
-      "pages": "215",
-      "page_list": [
-        215
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "satur",
-      "pages": "215",
-      "page_list": [
-        215
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Sau",
-      "pages": "340",
-      "page_list": [
-        340
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sayh",
-      "pages": "225",
-      "page_list": [
-        225
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "schwein",
-      "pages": "340",
-      "page_list": [
-        340
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sedem",
-      "pages": "255",
-      "page_list": [
-        255
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sen",
-      "pages": "107",
-      "page_list": [
-        107
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sest",
-      "pages": "255",
-      "page_list": [
-        255
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sfHfr",
-      "pages": "143",
-      "page_list": [
-        143
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ship",
-      "pages": "330",
-      "page_list": [
-        330
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sitar",
-      "pages": "215",
-      "page_list": [
-        215
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "slm",
-      "pages": "233",
-      "page_list": [
-        233
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "solidum",
-      "pages": "152",
-      "page_list": [
-        152
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sou",
-      "pages": "152",
-      "page_list": [
-        152
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sow",
-      "pages": "340",
-      "page_list": [
-        340
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sportsman",
-      "pages": "242",
-      "page_list": [
-        242
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "st-",
-      "pages": "348",
-      "page_list": [
-        348
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sta-",
-      "pages": "346, 348, 349",
-      "page_list": [
-        346,
-        348,
-        349
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "346": [
-          "…оказывается, должен быть восстановлен как корень с гласной а — корень sta-. И тогда это тот же корень, что и в русских стать, стоять (родственны…",
-          "…оять (родственные формы, где стать непосредственно сохраняет исходное sta-). На дославянском (не на славянском!) уровне у этого sta- конечное а…"
-        ],
-        "348": [
-          "…ва, устроенные по-русски вот таким же замечательным способом из этого sta-, которое стало st-. Но надо, чтобы первая часть была предлогом, и так…"
-        ],
-        "349": [
-          "…. З.: Глагол стать — это наше с вами прямое наследие индоевропейского sta-. Совершенно чистое. Вот как раз этим словом мы с вами сейчас и займем…"
-        ]
-      }
-    },
-    {
-      "head": "star",
-      "pages": "215",
-      "page_list": [
-        215
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "stolos",
-      "pages": "112",
-      "page_list": [
-        112
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "str",
-      "pages": "215",
-      "page_list": [
-        215
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "studens",
-      "pages": "231",
-      "page_list": [
-        231
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "studentis",
-      "pages": "231",
-      "page_list": [
-        231
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "su",
-      "pages": "342",
-      "page_list": [
-        342
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "su-",
-      "pages": "340",
-      "page_list": [
-        340
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "su-s",
-      "pages": "340",
-      "page_list": [
-        340
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "suwdän",
-      "pages": "222",
-      "page_list": [
-        222
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "svini",
-      "pages": "342",
-      "page_list": [
-        342
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "swin",
-      "pages": "340",
-      "page_list": [
-        340
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "swine",
-      "pages": "340",
-      "page_list": [
-        340
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "swm",
-      "pages": "340",
-      "page_list": [
-        340
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "sähid",
-      "pages": "227",
-      "page_list": [
-        227
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "särki",
-      "pages": "365",
-      "page_list": [
-        365
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "südän",
-      "pages": "222",
-      "page_list": [
-        222
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "talkkuna",
-      "pages": "84",
-      "page_list": [
-        84
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "te",
-      "pages": "37",
-      "page_list": [
-        37
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ter",
-      "pages": "143",
-      "page_list": [
-        143
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Tf",
-      "pages": "162, 293",
-      "page_list": [
-        162,
-        293
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ti-ri-po",
-      "pages": "122",
-      "page_list": [
-        122
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ti-ri-po-de",
-      "pages": "122",
-      "page_list": [
-        122
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Tj",
-      "pages": "280",
-      "page_list": [
-        280
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "toi",
-      "pages": "37",
-      "page_list": [
-        37
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "tolkuno",
-      "pages": "84",
-      "page_list": [
-        84
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "tribunus",
-      "pages": "152",
-      "page_list": [
-        152
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "tripode",
-      "pages": "122",
-      "page_list": [
-        122
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "tripos",
-      "pages": "122",
-      "page_list": [
-        122
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "tälib",
-      "pages": "231",
-      "page_list": [
-        231
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "u-JLbj",
-      "pages": "229",
-      "page_list": [
-        229
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "UJ",
-      "pages": "291",
-      "page_list": [
-        291
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "uRlfd",
-      "pages": "155",
-      "page_list": [
-        155
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "vestis",
-      "pages": "158",
-      "page_list": [
-        158
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "vi",
-      "pages": "116",
-      "page_list": [
-        116
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "vida",
-      "pages": "115, 116",
-      "page_list": [
-        115,
-        116
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "115": [
-          "…где сформировались потом французский, испанский, португальский языки: vida. Следующий шаг — галльско-романский язык, распространенный на террито…"
-        ],
-        "116": [
-          "…utā *vīvitā *vītā vīta (классическая латынь) vita (вульгарная латынь) vida (западнороманское) vide (галльско-романское) *viðe viе [vie] (старофр…"
-        ]
-      }
-    },
-    {
-      "head": "vide",
-      "pages": "115, 116",
-      "page_list": [
-        115,
-        116
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "115": [
-          "…льско-романский язык, распространенный на территории будущей Франции: vide. Следующий шаг — d ослабляется до звука ð (равного английскому звонко…"
-        ],
-        "116": [
-          "…классическая латынь) vita (вульгарная латынь) vida (западнороманское) vide (галльско-романское) *viðe viе [vie] (старофранцузское) viе [vi] (сов…"
-        ]
-      }
-    },
-    {
-      "head": "vie",
-      "pages": "116",
-      "page_list": [
-        116
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "ville",
-      "pages": "118",
-      "page_list": [
-        118
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "vita",
-      "pages": "115, 116",
-      "page_list": [
-        115,
-        116
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {
-        "115": [
-          "…зован в латыни, уже могут кое-что опознать, верно? Из зала: Латинское vita. А. З.: Совершенно верно. Но здесь я всё еще должен оставить это слов…",
-          "…ная латынь. Это то же самое, только уже нет долготы i в корне: просто vita. Дальше западнороманское слово, то есть распространенное в западной ч…"
-        ],
-        "116": [
-          "…wotā *wīwotā *vīvotā *vīvutā *vīvitā *vītā vīta (классическая латынь) vita (вульгарная латынь) vida (западнороманское) vide (галльско-романское)…"
-        ]
-      }
-    },
-    {
-      "head": "Vive",
-      "pages": "70",
-      "page_list": [
-        70
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "vleugel",
-      "pages": "366",
-      "page_list": [
-        366
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "vlta",
-      "pages": "117",
-      "page_list": [
-        117
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "Volk",
-      "pages": "184",
-      "page_list": [
-        184
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "vtta",
-      "pages": "116",
-      "page_list": [
-        116
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "wesz",
-      "pages": "108",
-      "page_list": [
-        108
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "wlkwos",
-      "pages": "112",
-      "page_list": [
-        112
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "y'hmd",
-      "pages": "225",
-      "page_list": [
-        225
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "y'srb",
-      "pages": "225",
-      "page_list": [
-        225
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "y'swd",
-      "pages": "222",
-      "page_list": [
-        222
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "y/hrg",
-      "pages": "226",
-      "page_list": [
-        226
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "y/sgd",
-      "pages": "223",
-      "page_list": [
-        223
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "y/shd",
-      "pages": "227",
-      "page_list": [
-        227
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "y/slm",
-      "pages": "227, 228, 233",
-      "page_list": [
-        227,
-        228,
-        233
-      ],
-      "discussed": true,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "y/syh",
-      "pages": "225",
-      "page_list": [
-        225
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "y/öhb",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "yaktubu",
-      "pages": "216",
-      "page_list": [
-        216
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "yatlubu",
-      "pages": "231",
-      "page_list": [
-        231
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "zabic",
-      "pages": "356",
-      "page_list": [
-        356
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "zens",
-      "pages": "67",
-      "page_list": [
-        67
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "zä",
-      "pages": "67",
-      "page_list": [
-        67
-      ],
-      "discussed": false,
-      "category": "lat",
-      "needs_review": false,
-      "contexts": {}
-    },
-    {
-      "head": "'ada",
-      "pages": "232",
-      "page_list": [
-        232
-      ],
-      "discussed": false,
-      "category": "tech",
-      "needs_review": true,
-      "contexts": {}
-    },
-    {
-      "head": "̂/slm",
-      "pages": "227",
-      "page_list": [
-        227
-      ],
-      "discussed": false,
-      "category": "tech",
-      "needs_review": true,
-      "contexts": {}
-    },
-    {
-      "head": "̂/tlb",
-      "pages": "231",
-      "page_list": [
-        231
-      ],
-      "discussed": false,
-      "category": "tech",
-      "needs_review": true,
-      "contexts": {}
-    },
-    {
-      "head": "̂/öhb.",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "tech",
-      "needs_review": true,
-      "contexts": {}
-    },
-    {
-      "head": "̂lld",
-      "pages": "156",
-      "page_list": [
-        156
-      ],
-      "discussed": false,
-      "category": "tech",
-      "needs_review": true,
-      "contexts": {}
-    },
-    {
-      "head": "öahaba",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "tech",
-      "needs_review": true,
-      "contexts": {}
-    },
-    {
-      "head": "öahabal",
-      "pages": "230",
-      "page_list": [
-        230
-      ],
-      "discussed": false,
-      "category": "tech",
-      "needs_review": true,
-      "contexts": {}
-    },
-    {
-      "head": "öLsz̲",
-      "pages": "9, 230",
-      "page_list": [
-        9,
-        230
-      ],
-      "discussed": true,
-      "category": "tech",
-      "needs_review": true,
-      "contexts": {}
-    },
-    {
-      "head": "ösem",
-      "pages": "255",
-      "page_list": [
-        255
-      ],
-      "discussed": false,
-      "category": "tech",
-      "needs_review": true,
-      "contexts": {}
-    },
-    {
-      "head": "̂Ьновѣі",
-      "pages": "295",
-      "page_list": [
-        295
-      ],
-      "discussed": false,
-      "category": "tech",
-      "needs_review": true,
       "contexts": {}
     },
     {

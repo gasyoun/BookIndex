@@ -4,7 +4,7 @@ title: "пустила"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 815
+source_index: 1071
 tags: ["lexicon"]
 ---
 

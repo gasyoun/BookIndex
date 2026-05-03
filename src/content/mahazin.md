@@ -4,7 +4,7 @@ title: "mahazin"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1210
+source_index: 110
 tags: ["lexicon"]
 ---
 

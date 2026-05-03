@@ -4,7 +4,7 @@ title: "necest"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1230
+source_index: 129
 tags: ["lexicon"]
 ---
 

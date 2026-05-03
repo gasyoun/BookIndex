@@ -4,7 +4,7 @@ title: "десят"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 292
+source_index: 548
 tags: ["lexicon"]
 ---
 

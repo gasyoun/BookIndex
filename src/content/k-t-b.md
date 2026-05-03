@@ -4,7 +4,7 @@ title: "k-t-b"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1185
+source_index: 83
 tags: ["lexicon"]
 ---
 

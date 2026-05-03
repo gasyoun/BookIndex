@@ -4,7 +4,7 @@ title: "y/slm"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1345
+source_index: 249
 tags: ["lexicon"]
 ---
 

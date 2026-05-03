@@ -1,10 +1,10 @@
 ---
-id: "alibi"
-title: "alibi"
+id: "алиби"
+title: "алиби"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1115
+source_index: 261
 tags: ["lexicon"]
 ---
 
@@ -14,13 +14,13 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "alibi",
+  "head": "алиби",
   "pages": "332",
   "page_list": [
     332
   ],
   "discussed": false,
-  "category": "lat",
+  "category": "rus",
   "needs_review": false,
   "contexts": {}
 }

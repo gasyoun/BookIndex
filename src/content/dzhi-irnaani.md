@@ -4,7 +4,7 @@ title: "джи́ирнаани"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 308
+source_index: 564
 tags: ["lexicon"]
 ---
 

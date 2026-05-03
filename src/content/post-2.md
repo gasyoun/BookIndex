@@ -1,10 +1,10 @@
 ---
-id: "post"
-title: "post"
+id: "пост"
+title: "пост"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1248
+source_index: 1024
 tags: ["lexicon"]
 ---
 
@@ -14,13 +14,13 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "post",
+  "head": "пост",
   "pages": "348",
   "page_list": [
     348
   ],
   "discussed": false,
-  "category": "lat",
+  "category": "rus",
   "needs_review": false,
   "contexts": {}
 }

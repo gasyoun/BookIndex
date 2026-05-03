@@ -4,7 +4,7 @@ title: "до девяти утра́"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 310
+source_index: 566
 tags: ["lexicon"]
 ---
 

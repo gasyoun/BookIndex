@@ -4,7 +4,7 @@ title: "Маня"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 584
+source_index: 840
 tags: ["lexicon"]
 ---
 

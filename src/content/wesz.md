@@ -4,7 +4,7 @@ title: "wesz"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1337
+source_index: 240
 tags: ["lexicon"]
 ---
 

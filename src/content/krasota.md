@@ -4,7 +4,7 @@ title: "красота"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 534
+source_index: 790
 tags: ["lexicon"]
 ---
 

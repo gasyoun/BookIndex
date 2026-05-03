@@ -4,7 +4,7 @@ title: "Израи́ль"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 468
+source_index: 724
 tags: ["lexicon"]
 ---
 

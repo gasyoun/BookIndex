@@ -4,7 +4,7 @@ title: "забытъ"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 375
+source_index: 631
 tags: ["lexicon"]
 ---
 

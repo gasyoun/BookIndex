@@ -4,7 +4,7 @@ title: "глоб-альный"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 220
+source_index: 476
 tags: ["lexicon"]
 ---
 

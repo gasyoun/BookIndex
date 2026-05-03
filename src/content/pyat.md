@@ -4,7 +4,7 @@ title: "пятъ"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 822
+source_index: 1078
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "ведет"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 89
+source_index: 345
 tags: ["lexicon"]
 ---
 

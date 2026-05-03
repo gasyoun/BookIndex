@@ -4,7 +4,7 @@ title: "gwena"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1178
+source_index: 76
 tags: ["lexicon"]
 ---
 

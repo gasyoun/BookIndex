@@ -4,7 +4,7 @@ title: "арбуз"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 25
+source_index: 281
 tags: ["lexicon"]
 ---
 

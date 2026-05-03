@@ -4,7 +4,7 @@ title: "милостивый"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 597
+source_index: 853
 tags: ["lexicon"]
 ---
 

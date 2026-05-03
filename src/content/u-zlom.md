@@ -4,7 +4,7 @@ title: "у́злом"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1020
+source_index: 1276
 tags: ["lexicon"]
 ---
 

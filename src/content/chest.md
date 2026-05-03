@@ -4,7 +4,7 @@ title: "честь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1072
+source_index: 1328
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "домовый"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 322
+source_index: 578
 tags: ["lexicon"]
 ---
 

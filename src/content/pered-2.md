@@ -4,7 +4,7 @@ title: "перёд"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 726
+source_index: 982
 tags: ["lexicon"]
 ---
 

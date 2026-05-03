@@ -4,7 +4,7 @@ title: "ter"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1311
+source_index: 215
 tags: ["lexicon"]
 ---
 

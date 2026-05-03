@@ -4,7 +4,7 @@ title: "Готланд"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 245
+source_index: 501
 tags: ["lexicon"]
 ---
 

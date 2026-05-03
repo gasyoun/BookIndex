@@ -4,7 +4,7 @@ title: "кирпич"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 510
+source_index: 766
 tags: ["lexicon"]
 ---
 

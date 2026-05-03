@@ -4,7 +4,7 @@ title: "ветр"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 124
+source_index: 380
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "сестрѣ"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 903
+source_index: 1159
 tags: ["lexicon"]
 ---
 

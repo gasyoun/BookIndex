@@ -4,7 +4,7 @@ title: "парса"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 714
+source_index: 970
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "на ины́й"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 637
+source_index: 893
 tags: ["lexicon"]
 ---
 

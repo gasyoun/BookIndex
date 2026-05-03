@@ -4,7 +4,7 @@ title: "пятью"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 825
+source_index: 1081
 tags: ["lexicon"]
 ---
 

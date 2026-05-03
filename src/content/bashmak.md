@@ -4,7 +4,7 @@ title: "башмак"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 31
+source_index: 287
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "изъян"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 472
+source_index: 728
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "вѣрѣцп/еѣрѣчи"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 204
+source_index: 460
 tags: ["lexicon"]
 ---
 

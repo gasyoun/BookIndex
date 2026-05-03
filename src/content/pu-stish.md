@@ -4,7 +4,7 @@ title: "пу́стишь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 816
+source_index: 1072
 tags: ["lexicon"]
 ---
 

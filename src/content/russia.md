@@ -4,7 +4,7 @@ title: "Russia"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1262
+source_index: 166
 tags: ["lexicon"]
 ---
 

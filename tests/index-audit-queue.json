@@ -47,7 +47,7 @@
   "totals": {
     "duplicate_heads_count": 0,
     "suspicious_heads_count": 23,
-    "sort_inversions_count": 20
+    "sort_inversions_count": 0
   },
   "suspicious_heads": {
     "lexicon_reverse": [
@@ -75,58 +75,5 @@
       "?Це"
     ]
   },
-  "sort_inversions": {
-    "lexicon": [
-      {
-        "index": 570,
-        "previous": "лесть",
-        "current": "леṗтчик"
-      },
-      {
-        "index": 602,
-        "previous": "Михаилович",
-        "current": "Миха́йла"
-      },
-      {
-        "index": 928,
-        "previous": "стоишь",
-        "current": "стой"
-      },
-      {
-        "index": 1015,
-        "previous": "у́зел",
-        "current": "узеṗл"
-      },
-      {
-        "index": 1106,
-        "previous": "ѵіе",
-        "current": "admire"
-      },
-      {
-        "index": 1155,
-        "previous": "dwet",
-        "current": "döet"
-      },
-      {
-        "index": 1156,
-        "previous": "döet",
-        "current": "dĳt"
-      },
-      {
-        "index": 1193,
-        "previous": "katuba",
-        "current": "katäb"
-      },
-      {
-        "index": 1203,
-        "previous": "kutiba",
-        "current": "kätib"
-      },
-      {
-        "index": 1212,
-        "previous": "mahzan",
-        "current": "mahärig"
-      }
-    ]
-  }
+  "sort_inversions": {}
 }

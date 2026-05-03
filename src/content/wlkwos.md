@@ -4,7 +4,7 @@ title: "wlkwos"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1338
+source_index: 241
 tags: ["lexicon"]
 ---
 

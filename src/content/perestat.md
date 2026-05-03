@@ -4,7 +4,7 @@ title: "перестать"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 733
+source_index: 989
 tags: ["lexicon"]
 ---
 

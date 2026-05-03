@@ -4,7 +4,7 @@ title: "рубанок"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 847
+source_index: 1103
 tags: ["lexicon"]
 ---
 

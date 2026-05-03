@@ -4,7 +4,7 @@ title: "вѣрѣци"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 203
+source_index: 459
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "tälib"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1321
+source_index: 212
 tags: ["lexicon"]
 ---
 

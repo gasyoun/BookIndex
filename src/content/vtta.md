@@ -4,7 +4,7 @@ title: "vtta"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1336
+source_index: 239
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "на́ это"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 641
+source_index: 897
 tags: ["lexicon"]
 ---
 

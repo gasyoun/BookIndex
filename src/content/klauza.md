@@ -4,7 +4,7 @@ title: "клауза"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 511
+source_index: 767
 tags: ["lexicon"]
 ---
 

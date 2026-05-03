@@ -4,7 +4,7 @@ title: "Нефертити"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 672
+source_index: 928
 tags: ["lexicon"]
 ---
 

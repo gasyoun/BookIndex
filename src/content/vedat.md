@@ -4,7 +4,7 @@ title: "ведать"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 86
+source_index: 342
 tags: ["lexicon"]
 ---
 

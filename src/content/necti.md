@@ -4,7 +4,7 @@ title: "necti"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1231
+source_index: 130
 tags: ["lexicon"]
 ---
 

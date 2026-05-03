@@ -4,7 +4,7 @@ title: "всадник"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 166
+source_index: 422
 tags: ["lexicon"]
 ---
 

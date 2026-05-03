@@ -4,7 +4,7 @@ title: "st-"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1291
+source_index: 196
 tags: ["lexicon"]
 ---
 

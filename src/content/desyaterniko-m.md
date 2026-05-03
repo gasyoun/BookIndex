@@ -4,7 +4,7 @@ title: "десятернико́м"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 297
+source_index: 553
 tags: ["lexicon"]
 ---
 

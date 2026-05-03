@@ -4,7 +4,7 @@ title: "кульку́"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 547
+source_index: 803
 tags: ["lexicon"]
 ---
 
