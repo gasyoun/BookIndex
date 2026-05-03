@@ -464,6 +464,56 @@ def validate_markdown_exports(data_path: Path, errors: list[str], warnings: list
         )
 
 
+def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: list[str]) -> None:
+    queue_path = data_path.parent / "tests" / "index-audit-queue.json"
+    if not queue_path.exists():
+        return
+    try:
+        queue = json.loads(queue_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        fail(f"[manual_audit] invalid {queue_path}: {exc}", errors)
+        return
+
+    manual_audit = queue.get("manual_audit")
+    if not isinstance(manual_audit, dict):
+        fail("[manual_audit] index-audit-queue.json manual_audit must be object", errors)
+        return
+    missing_terms = manual_audit.get("terms_missing")
+    if not isinstance(missing_terms, list) or not all(isinstance(term, str) for term in missing_terms):
+        fail("[manual_audit] terms_missing must be list[str]", errors)
+    totals = queue.get("totals")
+    if not isinstance(totals, dict):
+        fail("[manual_audit] totals must be object", errors)
+        return
+    for field in ("duplicate_heads_count", "suspicious_heads_count", "sort_inversions_count"):
+        if not isinstance(totals.get(field), int):
+            fail(f"[manual_audit] totals.{field} must be integer", errors)
+    data = json.loads(data_path.read_text(encoding="utf-8"))
+    duplicate_groups = 0
+    suspicious_heads = 0
+    for key in ENTITY_KEYS:
+        arr = data.get(key, [])
+        if not isinstance(arr, list):
+            continue
+        heads = [str(item.get("head", "")).strip() for item in arr if isinstance(item, dict)]
+        duplicate_groups += sum(1 for head, count in Counter(heads).items() if head and count > 1)
+        suspicious_heads += sum(1 for head in heads if head.startswith("?") or "\ufffd" in head)
+    if totals.get("duplicate_heads_count") != duplicate_groups:
+        fail(
+            "[manual_audit] stale duplicate_heads_count: "
+            f"{totals.get('duplicate_heads_count')} != {duplicate_groups}",
+            errors,
+        )
+    if totals.get("suspicious_heads_count") != suspicious_heads:
+        fail(
+            "[manual_audit] stale suspicious_heads_count: "
+            f"{totals.get('suspicious_heads_count')} != {suspicious_heads}",
+            errors,
+        )
+    if manual_audit.get("present") is not True:
+        warn("[manual_audit] index-errors.md is not marked present in queue", warnings)
+
+
 def main() -> int:
     configure_output_encoding()
     path = Path(sys.argv[1] if len(sys.argv) > 1 else "app_data.json")
@@ -494,6 +544,7 @@ def main() -> int:
     validate_edges(data, entity_index, errors)
     validate_cross_links(data, entity_index, errors)
     validate_markdown_exports(path, errors, warnings)
+    validate_manual_audit_queue(path, errors, warnings)
 
     print("validate_content.py report")
     print(f"- file: {path}")
