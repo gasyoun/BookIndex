@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "source": "app_data.json",
   "manual_audit": {
     "present": true,

@@ -474,6 +474,9 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
         fail(f"[manual_audit] invalid {queue_path}: {exc}", errors)
         return
 
+    if queue.get("schema_version") != 1:
+        fail("[manual_audit] index-audit-queue.json schema_version must be 1", errors)
+
     manual_audit = queue.get("manual_audit")
     if not isinstance(manual_audit, dict):
         fail("[manual_audit] index-audit-queue.json manual_audit must be object", errors)

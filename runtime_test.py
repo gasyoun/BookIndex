@@ -216,6 +216,7 @@ def check_static_guards():
         'collect_manual_audit_metrics(source, data)',
         'def build_manual_audit_queue(report: dict[str, Any]) -> dict[str, Any]:',
         '--write-manual-audit',
+        '"schema_version": 1',
         '"terms_missing"',
         '"terms_possible_matches"',
         '## Manual Audits',

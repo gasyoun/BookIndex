@@ -573,6 +573,7 @@ def build_manual_audit_queue(report: dict[str, Any]) -> dict[str, Any]:
         if metrics.get("sort_order", {}).get("inversions_sample")
     }
     return {
+        "schema_version": 1,
         "source": report.get("source"),
         "manual_audit": report.get("manual_audits", {}).get("index_errors", {}),
         "totals": {
