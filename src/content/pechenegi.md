@@ -4,7 +4,7 @@ title: "печенеги"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 37
+source_index: 36
 tags: ["ethnonyms"]
 ---
 

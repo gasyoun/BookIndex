@@ -4,7 +4,7 @@ title: "встрепенуться"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1107
+source_index: 1104
 tags: ["lexicon_reverse"]
 ---
 

@@ -4,7 +4,7 @@ title: "of"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1232
+source_index: 1229
 tags: ["lexicon_reverse"]
 ---
 

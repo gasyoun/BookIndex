@@ -4,7 +4,7 @@ title: "blty"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1391
+source_index: 1388
 tags: ["lexicon_reverse"]
 ---
 

@@ -4,7 +4,7 @@ title: "y/öhb"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1178
+source_index: 1175
 tags: ["lexicon_reverse"]
 ---
 

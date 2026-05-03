@@ -4,7 +4,7 @@ title: "кривичи древние"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 23
+source_index: 22
 tags: ["ethnonyms"]
 ---
 

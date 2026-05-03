@@ -4,7 +4,7 @@ title: "frangais"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1331
+source_index: 1328
 tags: ["lexicon_reverse"]
 ---
 

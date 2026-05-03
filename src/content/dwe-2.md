@@ -4,7 +4,7 @@ title: "dwe"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1226
+source_index: 1223
 tags: ["lexicon_reverse"]
 ---
 

@@ -4,7 +4,7 @@ title: "dĳtu"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1387
+source_index: 1384
 tags: ["lexicon_reverse"]
 ---
 

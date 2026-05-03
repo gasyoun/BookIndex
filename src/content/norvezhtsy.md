@@ -4,7 +4,7 @@ title: "норвежцы"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 34
+source_index: 33
 tags: ["ethnonyms"]
 ---
 

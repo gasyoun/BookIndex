@@ -4,7 +4,7 @@ title: "вент-"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1133
+source_index: 1130
 tags: ["lexicon_reverse"]
 ---
 

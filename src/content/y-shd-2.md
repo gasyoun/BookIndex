@@ -4,7 +4,7 @@ title: "y/shd"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1200
+source_index: 1197
 tags: ["lexicon_reverse"]
 ---
 

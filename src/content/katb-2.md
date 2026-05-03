@@ -4,7 +4,7 @@ title: "katb"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1187
+source_index: 1184
 tags: ["lexicon_reverse"]
 ---
 

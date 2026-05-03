@@ -4,7 +4,7 @@ title: "saläm"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1285
+source_index: 1282
 tags: ["lexicon_reverse"]
 ---
 

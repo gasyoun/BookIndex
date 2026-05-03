@@ -4,7 +4,7 @@ title: "y'swd"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1208
+source_index: 1205
 tags: ["lexicon_reverse"]
 ---
 

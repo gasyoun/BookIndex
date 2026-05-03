@@ -4,7 +4,7 @@ title: "kur?än"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1299
+source_index: 1296
 tags: ["lexicon_reverse"]
 ---
 

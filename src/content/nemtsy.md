@@ -4,7 +4,7 @@ title: "немцы"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 31
+source_index: 30
 tags: ["ethnonyms"]
 ---
 

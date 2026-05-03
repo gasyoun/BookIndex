@@ -4,7 +4,7 @@ title: "zabic"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1195
+source_index: 1192
 tags: ["lexicon_reverse"]
 ---
 

@@ -4,7 +4,7 @@ title: "rwa"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1173
+source_index: 1170
 tags: ["lexicon_reverse"]
 ---
 

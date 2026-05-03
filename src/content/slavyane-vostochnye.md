@@ -4,7 +4,7 @@ title: "славяне восточные"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 51
+source_index: 50
 tags: ["ethnonyms"]
 ---
 

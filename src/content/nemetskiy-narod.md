@@ -4,7 +4,7 @@ title: "немецкий народ"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 30
+source_index: 29
 tags: ["ethnonyms"]
 ---
 

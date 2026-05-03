@@ -4,7 +4,7 @@ title: "ведаться"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1105
+source_index: 1102
 tags: ["lexicon_reverse"]
 ---
 

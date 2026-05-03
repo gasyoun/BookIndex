@@ -4,7 +4,7 @@ title: "P9JLÄL0"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1137
+source_index: 1134
 tags: ["lexicon_reverse"]
 ---
 

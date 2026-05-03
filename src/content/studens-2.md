@@ -4,7 +4,7 @@ title: "studens"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1337
+source_index: 1334
 tags: ["lexicon_reverse"]
 ---
 

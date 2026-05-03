@@ -26388,41 +26388,19 @@
     {
       "head": "Вася",
       "page_list": [
-        48
+        48,
+        49
       ],
-      "pages": "48",
+      "pages": "48, 49",
       "discussed": false
     },
     {
       "head": "вася",
       "page_list": [
-        48
-      ],
-      "pages": "48",
-      "discussed": false
-    },
-    {
-      "head": "Вася",
-      "page_list": [
-        48
-      ],
-      "pages": "48",
-      "discussed": false
-    },
-    {
-      "head": "вася",
-      "page_list": [
+        48,
         49
       ],
-      "pages": "49",
-      "discussed": false
-    },
-    {
-      "head": "Вася",
-      "page_list": [
-        49
-      ],
-      "pages": "49",
+      "pages": "48, 49",
       "discussed": false
     },
     {

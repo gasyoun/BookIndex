@@ -4,7 +4,7 @@ title: "атігаі*"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1121
+source_index: 1118
 tags: ["lexicon_reverse"]
 ---
 

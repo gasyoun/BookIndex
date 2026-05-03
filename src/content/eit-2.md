@@ -4,7 +4,7 @@ title: "eit"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1363
+source_index: 1360
 tags: ["lexicon_reverse"]
 ---
 

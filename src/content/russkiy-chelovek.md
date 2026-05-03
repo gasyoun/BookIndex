@@ -4,7 +4,7 @@ title: "русский [человек]"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 47
+source_index: 46
 tags: ["ethnonyms"]
 ---
 

@@ -45,7 +45,7 @@
     }
   },
   "totals": {
-    "duplicate_heads_count": 3,
+    "duplicate_heads_count": 0,
     "suspicious_heads_count": 36,
     "sort_inversions_count": 23
   },

@@ -4,7 +4,7 @@ title: "псковские"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 41
+source_index: 40
 tags: ["ethnonyms"]
 ---
 

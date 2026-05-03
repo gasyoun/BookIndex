@@ -4,7 +4,7 @@ title: "индийцы современные"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 20
+source_index: 19
 tags: ["ethnonyms"]
 ---
 

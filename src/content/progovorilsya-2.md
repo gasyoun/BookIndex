@@ -4,7 +4,7 @@ title: "проговорился"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1098
+source_index: 1095
 tags: ["lexicon_reverse"]
 ---
 

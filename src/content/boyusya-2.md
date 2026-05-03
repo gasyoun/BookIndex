@@ -4,7 +4,7 @@ title: "боюся"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1110
+source_index: 1107
 tags: ["lexicon_reverse"]
 ---
 

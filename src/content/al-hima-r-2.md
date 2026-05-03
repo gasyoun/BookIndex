@@ -4,7 +4,7 @@ title: "al-himär"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1325
+source_index: 1322
 tags: ["lexicon_reverse"]
 ---
 

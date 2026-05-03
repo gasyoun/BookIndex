@@ -4,7 +4,7 @@ title: "сербы"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 48
+source_index: 47
 tags: ["ethnonyms"]
 ---
 

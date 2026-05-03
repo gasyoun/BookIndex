@@ -4,7 +4,7 @@ title: "doigt"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1360
+source_index: 1357
 tags: ["lexicon_reverse"]
 ---
 

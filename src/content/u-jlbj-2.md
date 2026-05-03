@@ -4,7 +4,7 @@ title: "u-JLbj"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1257
+source_index: 1254
 tags: ["lexicon_reverse"]
 ---
 

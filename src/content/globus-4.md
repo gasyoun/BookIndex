@@ -4,7 +4,7 @@ title: "globus"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1348
+source_index: 1345
 tags: ["lexicon_reverse"]
 ---
 

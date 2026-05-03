@@ -4,7 +4,7 @@ title: "mwlsm"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1280
+source_index: 1277
 tags: ["lexicon_reverse"]
 ---
 

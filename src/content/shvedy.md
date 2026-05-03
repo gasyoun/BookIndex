@@ -4,7 +4,7 @@ title: "шведы"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 61
+source_index: 60
 tags: ["ethnonyms"]
 ---
 

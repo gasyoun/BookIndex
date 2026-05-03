@@ -4,7 +4,7 @@ title: "football"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1272
+source_index: 1269
 tags: ["lexicon_reverse"]
 ---
 
