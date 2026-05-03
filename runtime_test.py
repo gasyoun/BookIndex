@@ -211,6 +211,9 @@ def check_static_guards():
         '"active_book_title"',
         '"markdown_exports"',
         'collect_markdown_export_metrics(source)',
+        'def collect_sort_order_metrics(items: list[dict[str, Any]], applicable: bool) -> dict[str, Any]:',
+        '"sort_inversions_count"',
+        '## Sort Inversions (Sample)',
     ]
     for needle in content_report_required:
         if needle not in content_report:

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import unicodedata
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -21,10 +22,24 @@ ENTITY_KEYS = (
     "lexicon_tech",
     "subject_index",
 )
+SORT_ORDER_KEYS = (
+    "names",
+    "toponyms",
+    "ethnonyms",
+    "languages",
+    "lexicon",
+    "subject_index",
+)
 
 DEFAULT_CORPUS_BOOK_ID = "zaliznyak-aaz-index"
 DEFAULT_CORPUS_BOOK_TITLE = "Из жизни слов и языков"
 DEFAULT_VIDEO_CATALOG_COUNT = 200
+
+
+def configure_output_encoding() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
 
 
 def pct(part: int, total: int) -> float:
@@ -50,7 +65,43 @@ def iter_context_snippets(value: Any) -> tuple[int, int]:
     return pages, snippets
 
 
-def collect_entity_metrics(items: list[Any]) -> dict[str, Any]:
+def sort_key(value: str) -> str:
+    normalized = unicodedata.normalize("NFKD", value.replace("ё", "е").replace("Ё", "Е"))
+    without_marks = "".join(
+        char
+        for char in normalized
+        if unicodedata.category(char) not in {"Mn", "Me", "Cf"}
+    )
+    return without_marks.casefold()
+
+
+def collect_sort_order_metrics(items: list[dict[str, Any]], applicable: bool) -> dict[str, Any]:
+    if not applicable:
+        return {
+            "applicable": False,
+            "checked_pairs": 0,
+            "inversions_count": 0,
+            "inversions_sample": [],
+        }
+
+    heads = [str(item.get("head", "")).strip() for item in items if str(item.get("head", "")).strip()]
+    inversions = []
+    for index, (previous, current) in enumerate(zip(heads, heads[1:]), start=1):
+        if sort_key(previous) > sort_key(current):
+            inversions.append({
+                "index": index,
+                "previous": previous,
+                "current": current,
+            })
+    return {
+        "applicable": True,
+        "checked_pairs": max(len(heads) - 1, 0),
+        "inversions_count": len(inversions),
+        "inversions_sample": inversions[:10],
+    }
+
+
+def collect_entity_metrics(items: list[Any], *, sort_order_applicable: bool) -> dict[str, Any]:
     total = len(items)
     valid_items = [x for x in items if isinstance(x, dict)]
 
@@ -113,6 +164,7 @@ def collect_entity_metrics(items: list[Any]) -> dict[str, Any]:
         "context_snippets_total": context_snippets_total,
         "duplicate_heads_count": len(duplicates),
         "duplicate_heads_top": duplicates[:10],
+        "sort_order": collect_sort_order_metrics(valid_items, sort_order_applicable),
         "coverage_pct": {
             "pages": pct(with_pages, total),
             "contexts": pct(with_contexts, total),
@@ -235,12 +287,13 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "items_suspect_true": 0,
         "context_snippets_total": 0,
         "duplicate_heads_count": 0,
+        "sort_inversions_count": 0,
     }
 
     for key in ENTITY_KEYS:
         raw = data.get(key, [])
         items = raw if isinstance(raw, list) else []
-        metrics = collect_entity_metrics(items)
+        metrics = collect_entity_metrics(items, sort_order_applicable=key in SORT_ORDER_KEYS)
         entities[key] = metrics
         totals["items_total"] += metrics["items_total"]
         totals["items_with_pages"] += metrics["items_with_pages"]
@@ -251,6 +304,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         totals["items_suspect_true"] += metrics["items_suspect_true"]
         totals["context_snippets_total"] += metrics["context_snippets_total"]
         totals["duplicate_heads_count"] += metrics["duplicate_heads_count"]
+        totals["sort_inversions_count"] += metrics["sort_order"]["inversions_count"]
 
     totals["coverage_pct"] = {
         "pages": pct(totals["items_with_pages"], totals["items_total"]),
@@ -295,6 +349,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- `suspect=true`: {totals['items_suspect_true']}",
         f"- Context snippets: {totals['context_snippets_total']}",
         f"- Duplicate heads groups: {totals['duplicate_heads_count']}",
+        f"- Sort inversions: {totals['sort_inversions_count']}",
         "",
         "## Corpus",
         "",
@@ -332,15 +387,20 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend([
         "## Entities",
         "",
-        "| Entity | Items | Pages % | Contexts % | Sources % | Duplicates |",
-        "|---|---:|---:|---:|---:|---:|",
+        "| Entity | Items | Pages % | Contexts % | Sources % | Duplicates | Sort inversions |",
+        "|---|---:|---:|---:|---:|---:|---:|",
     ])
 
     for key, metrics in report["entities"].items():
+        sort_inversions = (
+            str(metrics["sort_order"]["inversions_count"])
+            if metrics["sort_order"].get("applicable")
+            else "n/a"
+        )
         lines.append(
             f"| `{key}` | {metrics['items_total']} | {metrics['coverage_pct']['pages']} | "
             f"{metrics['coverage_pct']['contexts']} | {metrics['coverage_pct']['sources']} | "
-            f"{metrics['duplicate_heads_count']} |"
+            f"{metrics['duplicate_heads_count']} | {sort_inversions} |"
         )
 
     lines.append("")
@@ -353,6 +413,23 @@ def render_markdown(report: dict[str, Any]) -> str:
         head_items = ", ".join(f"`{item['head']}` x{item['count']}" for item in top[:5])
         lines.append(f"- `{key}`: {head_items}")
     if lines[-1] == "":
+        lines.append("- none")
+
+    lines.append("")
+    lines.append("## Sort Inversions (Sample)")
+    lines.append("")
+    has_sort_inversions = False
+    for key, metrics in report["entities"].items():
+        sample = metrics.get("sort_order", {}).get("inversions_sample", [])
+        if not sample:
+            continue
+        has_sort_inversions = True
+        formatted = ", ".join(
+            f"`{item['previous']}` > `{item['current']}`"
+            for item in sample[:5]
+        )
+        lines.append(f"- `{key}`: {formatted}")
+    if not has_sort_inversions:
         lines.append("- none")
 
     return "\n".join(lines) + "\n"
@@ -371,6 +448,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> int:
+    configure_output_encoding()
     args = parse_args(argv or sys.argv[1:])
     path = Path(args.path)
     if not path.exists():
