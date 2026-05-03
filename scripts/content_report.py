@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import unicodedata
 from collections import Counter
@@ -34,6 +35,7 @@ SORT_ORDER_KEYS = (
 DEFAULT_CORPUS_BOOK_ID = "zaliznyak-aaz-index"
 DEFAULT_CORPUS_BOOK_TITLE = "Из жизни слов и языков"
 DEFAULT_VIDEO_CATALOG_COUNT = 200
+MANUAL_AUDIT_TERM_RE = re.compile(r"\*\*([^*]+)\*\*")
 
 
 def configure_output_encoding() -> None:
@@ -277,7 +279,7 @@ def collect_markdown_export_metrics(source: str) -> dict[str, Any]:
     }
 
 
-def collect_manual_audit_metrics(source: str) -> dict[str, Any]:
+def collect_manual_audit_metrics(source: str, data: dict[str, Any]) -> dict[str, Any]:
     source_path = Path(source)
     base_dir = source_path.parent if source_path.parent != Path("") else Path(".")
     index_errors_path = base_dir / "tests" / "index-errors.md"
@@ -289,11 +291,27 @@ def collect_manual_audit_metrics(source: str) -> dict[str, Any]:
                 "headings": 0,
                 "table_rows": 0,
                 "bullet_items": 0,
+                "terms_total": 0,
+                "terms_found": 0,
+                "terms_missing": [],
             }
         }
 
     text = index_errors_path.read_text(encoding="utf-8")
     lines = text.splitlines()
+    terms = sorted(set(term.strip() for term in MANUAL_AUDIT_TERM_RE.findall(text) if term.strip()))
+    heads_by_term: dict[str, list[str]] = {}
+    for key in ENTITY_KEYS:
+        items = data.get(key, [])
+        if not isinstance(items, list):
+            continue
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            head = item.get("head")
+            if isinstance(head, str) and head in terms:
+                heads_by_term.setdefault(head, []).append(key)
+    missing_terms = [term for term in terms if term not in heads_by_term]
     return {
         "index_errors": {
             "present": True,
@@ -301,6 +319,10 @@ def collect_manual_audit_metrics(source: str) -> dict[str, Any]:
             "headings": sum(1 for line in lines if line.startswith("#")),
             "table_rows": sum(1 for line in lines if line.startswith("|") and not line.startswith("| :")),
             "bullet_items": sum(1 for line in lines if line.lstrip().startswith("* ")),
+            "terms_total": len(terms),
+            "terms_found": len(heads_by_term),
+            "terms_missing": missing_terms[:20],
+            "terms_found_by_section": heads_by_term,
         }
     }
 
@@ -356,7 +378,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "book_total_pages": total_pages,
         "corpus": collect_corpus_metrics(data),
         "markdown_exports": collect_markdown_export_metrics(source),
-        "manual_audits": collect_manual_audit_metrics(source),
+        "manual_audits": collect_manual_audit_metrics(source, data),
         "entities": entities,
         "totals": totals,
     }
@@ -427,8 +449,14 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Headings: {index_errors.get('headings', 0)}",
         f"- Table rows: {index_errors.get('table_rows', 0)}",
         f"- Bullet items: {index_errors.get('bullet_items', 0)}",
+        f"- Terms found: {index_errors.get('terms_found', 0)} / {index_errors.get('terms_total', 0)}",
         "",
     ])
+    missing_manual_terms = index_errors.get("terms_missing", [])
+    if missing_manual_terms:
+        lines.append("Manual audit terms missing from current heads:")
+        lines.extend(f"- `{term}`" for term in missing_manual_terms)
+        lines.append("")
 
     missing_markdown = report.get("markdown_exports", {}).get("missing_corpus_metadata_sample", [])
     if missing_markdown:
