@@ -283,6 +283,8 @@ npm run content:audit
 | [scripts/content_report.py](scripts/content_report.py) | Отчёты по покрытию контента |
 | [scripts/check_encoding.py](scripts/check_encoding.py) | UTF-8/mojibake guard |
 | [requirements.txt](requirements.txt) | Python-зависимости для локальных проверок |
+| [tests/index-errors.md](tests/index-errors.md) | Ручной список ошибок сортировки в указателях |
+| [tests/index-audit-queue.json](tests/index-audit-queue.json) | Машинно-читаемая редакторская очередь по ручному аудиту |
 | [tests/e2e/smoke.spec.new.js](tests/e2e/smoke.spec.new.js) | E2E smoke (Playwright) |
 | [codex_instruction_v2.md](codex_instruction_v2.md) | Инструкция для Codex (актуальна для `main`) |
 | [CODEX_WORKFLOW_RU.md](CODEX_WORKFLOW_RU.md) | Регламент оформления и публикации |
