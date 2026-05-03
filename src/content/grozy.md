@@ -4,7 +4,7 @@ title: "грозы"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 518
+source_index: 519
 tags: ["lexicon"]
 ---
 

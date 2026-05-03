@@ -4,7 +4,7 @@ title: "измени́шь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 722
+source_index: 723
 tags: ["lexicon"]
 ---
 

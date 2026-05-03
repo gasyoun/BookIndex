@@ -4,7 +4,7 @@ title: "паук"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 973
+source_index: 974
 tags: ["lexicon"]
 ---
 

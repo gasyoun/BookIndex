@@ -4,7 +4,7 @@ title: "петь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 994
+source_index: 995
 tags: ["lexicon"]
 ---
 

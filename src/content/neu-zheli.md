@@ -4,7 +4,7 @@ title: "неу́жели"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 926
+source_index: 927
 tags: ["lexicon"]
 ---
 

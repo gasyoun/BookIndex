@@ -4,7 +4,7 @@ title: "скоте"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1163
+source_index: 1164
 tags: ["lexicon"]
 ---
 

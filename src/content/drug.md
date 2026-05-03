@@ -4,7 +4,7 @@ title: "друг"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 587
+source_index: 588
 tags: ["lexicon"]
 ---
 

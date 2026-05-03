@@ -5327,6 +5327,17 @@
       "contexts": {}
     },
     {
+      "head": "выругать",
+      "pages": "314",
+      "page_list": [
+        314
+      ],
+      "discussed": false,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
       "head": "выругаю",
       "pages": "314",
       "page_list": [
@@ -14954,6 +14965,40 @@
       "pages": "358",
       "page_list": [
         358
+      ],
+      "discussed": false,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "суоми",
+      "pages": "59, 190",
+      "page_list": [
+        59,
+        190
+      ],
+      "discussed": true,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "счастлив",
+      "pages": "172",
+      "page_list": [
+        172
+      ],
+      "discussed": false,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "счастье",
+      "pages": "172",
+      "page_list": [
+        172
       ],
       "discussed": false,
       "category": "rus",
@@ -28944,6 +28989,39 @@
         29
       ],
       "pages": "29",
+      "discussed": false
+    },
+    {
+      "head": "выругать",
+      "page_list": [
+        314
+      ],
+      "pages": "314",
+      "discussed": false
+    },
+    {
+      "head": "суоми",
+      "page_list": [
+        59,
+        190
+      ],
+      "pages": "59, 190",
+      "discussed": true
+    },
+    {
+      "head": "счастлив",
+      "page_list": [
+        172
+      ],
+      "pages": "172",
+      "discussed": false
+    },
+    {
+      "head": "счастье",
+      "page_list": [
+        172
+      ],
+      "pages": "172",
       "discussed": false
     }
   ],

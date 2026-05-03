@@ -4,7 +4,7 @@ title: "Михаилович"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 858
+source_index: 859
 tags: ["lexicon"]
 ---
 

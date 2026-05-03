@@ -4,7 +4,7 @@ title: "закуски"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 655
+source_index: 656
 tags: ["lexicon"]
 ---
 

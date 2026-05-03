@@ -4,7 +4,7 @@ title: "есмь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 604
+source_index: 605
 tags: ["lexicon"]
 ---
 

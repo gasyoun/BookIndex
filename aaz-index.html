@@ -22373,6 +22373,17 @@
       "contexts": {}
     },
     {
+      "head": "выругать",
+      "pages": "314",
+      "page_list": [
+        314
+      ],
+      "discussed": false,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
       "head": "выругаю",
       "pages": "314",
       "page_list": [
@@ -32000,6 +32011,40 @@
       "pages": "358",
       "page_list": [
         358
+      ],
+      "discussed": false,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "суоми",
+      "pages": "59, 190",
+      "page_list": [
+        59,
+        190
+      ],
+      "discussed": true,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "счастлив",
+      "pages": "172",
+      "page_list": [
+        172
+      ],
+      "discussed": false,
+      "category": "rus",
+      "needs_review": false,
+      "contexts": {}
+    },
+    {
+      "head": "счастье",
+      "pages": "172",
+      "page_list": [
+        172
       ],
       "discussed": false,
       "category": "rus",
@@ -45990,6 +46035,39 @@
         29
       ],
       "pages": "29",
+      "discussed": false
+    },
+    {
+      "head": "выругать",
+      "page_list": [
+        314
+      ],
+      "pages": "314",
+      "discussed": false
+    },
+    {
+      "head": "суоми",
+      "page_list": [
+        59,
+        190
+      ],
+      "pages": "59, 190",
+      "discussed": true
+    },
+    {
+      "head": "счастлив",
+      "page_list": [
+        172
+      ],
+      "pages": "172",
+      "discussed": false
+    },
+    {
+      "head": "счастье",
+      "page_list": [
+        172
+      ],
+      "pages": "172",
       "discussed": false
     }
   ],
@@ -76340,7 +76418,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = '1e7b26502894';
+const APP_BUILD_ID = '75430776ab12';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -79936,7 +80014,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '1e7b26502894' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== '75430776ab12' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;

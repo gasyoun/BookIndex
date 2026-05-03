@@ -4,7 +4,7 @@ title: "узол"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1281
+source_index: 1285
 tags: ["lexicon"]
 ---
 

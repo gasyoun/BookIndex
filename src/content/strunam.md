@@ -4,7 +4,7 @@ title: "струнамъ"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1202
+source_index: 1203
 tags: ["lexicon"]
 ---
 

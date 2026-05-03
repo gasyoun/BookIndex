@@ -4,7 +4,7 @@ title: "заиграть"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 649
+source_index: 650
 tags: ["lexicon"]
 ---
 

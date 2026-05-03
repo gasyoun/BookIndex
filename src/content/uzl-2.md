@@ -4,7 +4,7 @@ title: "узлъ"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1279
+source_index: 1283
 tags: ["lexicon"]
 ---
 

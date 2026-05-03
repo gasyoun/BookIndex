@@ -4,7 +4,7 @@ title: "Ки́керо"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 764
+source_index: 765
 tags: ["lexicon"]
 ---
 

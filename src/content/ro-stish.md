@@ -4,7 +4,7 @@ title: "ро́стишь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1102
+source_index: 1103
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "прода́л"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1054
+source_index: 1055
 tags: ["lexicon"]
 ---
 

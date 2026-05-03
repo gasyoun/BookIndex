@@ -4,7 +4,7 @@ title: "листок"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 830
+source_index: 831
 tags: ["lexicon"]
 ---
 

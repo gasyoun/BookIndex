@@ -4,7 +4,7 @@ title: "у́гря"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1257
+source_index: 1261
 tags: ["lexicon"]
 ---
 

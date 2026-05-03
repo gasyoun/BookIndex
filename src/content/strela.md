@@ -4,7 +4,7 @@ title: "стрела"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1199
+source_index: 1200
 tags: ["lexicon"]
 ---
 

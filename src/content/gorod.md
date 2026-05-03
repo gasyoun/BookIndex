@@ -4,7 +4,7 @@ title: "городъ"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 493
+source_index: 494
 tags: ["lexicon"]
 ---
 

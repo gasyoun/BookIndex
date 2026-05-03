@@ -4,7 +4,7 @@ title: "Па́вел"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 955
+source_index: 956
 tags: ["lexicon"]
 ---
 

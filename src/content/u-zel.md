@@ -4,7 +4,7 @@ title: "у́зел"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1271
+source_index: 1275
 tags: ["lexicon"]
 ---
 

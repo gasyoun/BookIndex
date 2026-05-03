@@ -4,7 +4,7 @@ title: "на Угле́че"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 895
+source_index: 896
 tags: ["lexicon"]
 ---
 

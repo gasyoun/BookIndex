@@ -4,7 +4,7 @@ title: "семью"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1154
+source_index: 1155
 tags: ["lexicon"]
 ---
 

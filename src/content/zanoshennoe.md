@@ -4,7 +4,7 @@ title: "заношенное"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 662
+source_index: 663
 tags: ["lexicon"]
 ---
 

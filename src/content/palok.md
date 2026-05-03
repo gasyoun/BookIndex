@@ -4,7 +4,7 @@ title: "палок"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 961
+source_index: 962
 tags: ["lexicon"]
 ---
 

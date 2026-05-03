@@ -4,7 +4,7 @@ title: "уже"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1265
+source_index: 1269
 tags: ["lexicon"]
 ---
 

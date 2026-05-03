@@ -4,7 +4,7 @@ title: "И́род"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 746
+source_index: 747
 tags: ["lexicon"]
 ---
 

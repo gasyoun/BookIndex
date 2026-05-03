@@ -4,7 +4,7 @@ title: "кулька"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 800
+source_index: 801
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "у́гол"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1247
+source_index: 1251
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "не у́же ли"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 918
+source_index: 919
 tags: ["lexicon"]
 ---
 

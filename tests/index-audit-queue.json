@@ -8,17 +8,16 @@
     "table_rows": 3,
     "bullet_items": 8,
     "terms_total": 11,
-    "terms_found": 7,
-    "terms_missing": [
-      "выругать",
-      "суоми",
-      "счастлив",
-      "счастье"
-    ],
+    "terms_found": 11,
+    "terms_missing": [],
     "terms_possible_matches": {},
     "terms_found_by_section": {
       "Архангельская область": [
         "toponyms"
+      ],
+      "выругать": [
+        "lexicon",
+        "lexicon_reverse"
       ],
       "вырути": [
         "lexicon",
@@ -33,6 +32,18 @@
         "lexicon_reverse"
       ],
       "судить": [
+        "lexicon",
+        "lexicon_reverse"
+      ],
+      "суоми": [
+        "lexicon",
+        "lexicon_reverse"
+      ],
+      "счастлив": [
+        "lexicon",
+        "lexicon_reverse"
+      ],
+      "счастье": [
         "lexicon",
         "lexicon_reverse"
       ],

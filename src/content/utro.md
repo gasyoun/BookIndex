@@ -4,7 +4,7 @@ title: "утро"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1299
+source_index: 1303
 tags: ["lexicon"]
 ---
 

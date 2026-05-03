@@ -4,7 +4,7 @@ title: "преставился"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1034
+source_index: 1035
 tags: ["lexicon"]
 ---
 

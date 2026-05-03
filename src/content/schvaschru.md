@@ -4,7 +4,7 @@ title: "щващру"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1350
+source_index: 1354
 tags: ["lexicon"]
 ---
 

@@ -4,7 +4,7 @@ title: "пчёлы"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1075
+source_index: 1076
 tags: ["lexicon"]
 ---
 

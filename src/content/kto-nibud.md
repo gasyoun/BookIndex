@@ -4,7 +4,7 @@ title: "кто-нибудь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 797
+source_index: 798
 tags: ["lexicon"]
 ---
 

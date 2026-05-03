@@ -4,7 +4,7 @@ title: "голову"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 490
+source_index: 491
 tags: ["lexicon"]
 ---
 

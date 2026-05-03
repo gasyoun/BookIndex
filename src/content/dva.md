@@ -4,7 +4,7 @@ title: "два"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 533
+source_index: 534
 tags: ["lexicon"]
 ---
 

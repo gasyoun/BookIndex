@@ -4,7 +4,7 @@ title: "география"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 471
+source_index: 472
 tags: ["lexicon"]
 ---
 

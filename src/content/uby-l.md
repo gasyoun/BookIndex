@@ -4,7 +4,7 @@ title: "убы́л"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1233
+source_index: 1237
 tags: ["lexicon"]
 ---
 

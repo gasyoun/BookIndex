@@ -4,7 +4,7 @@ title: "мъне"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 877
+source_index: 878
 tags: ["lexicon"]
 ---
 

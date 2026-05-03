@@ -4,7 +4,7 @@ title: "тя"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1225
+source_index: 1229
 tags: ["lexicon"]
 ---
 

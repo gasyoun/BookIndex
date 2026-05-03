@@ -4,7 +4,7 @@ title: "и́ному"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 742
+source_index: 743
 tags: ["lexicon"]
 ---
 

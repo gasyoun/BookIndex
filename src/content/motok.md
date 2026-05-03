@@ -4,7 +4,7 @@ title: "моток"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 872
+source_index: 873
 tags: ["lexicon"]
 ---
 

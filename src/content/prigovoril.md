@@ -4,7 +4,7 @@ title: "приговорил"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 1040
+source_index: 1041
 tags: ["lexicon"]
 ---
 
