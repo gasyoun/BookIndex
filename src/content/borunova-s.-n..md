@@ -4,7 +4,7 @@ title: "Борунова С. Н."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 14
+source_index: 15
 tags: ["names"]
 ---
 

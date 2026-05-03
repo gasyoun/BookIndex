@@ -4,7 +4,7 @@ title: "Улицкая Л. Е."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 77
+source_index: 81
 tags: ["names"]
 ---
 

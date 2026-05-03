@@ -4,7 +4,7 @@ title: "Мартынов И. И."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 54
+source_index: 58
 tags: ["names"]
 ---
 

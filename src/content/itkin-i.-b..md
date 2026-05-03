@@ -4,7 +4,7 @@ title: "Иткин И. Б."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 41
+source_index: 45
 tags: ["names"]
 ---
 

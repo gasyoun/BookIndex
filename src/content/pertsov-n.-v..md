@@ -4,7 +4,7 @@ title: "Перцов Н. В."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 63
+source_index: 67
 tags: ["names"]
 ---
 

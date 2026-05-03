@@ -326,6 +326,20 @@
       "wiki": "https://ru.wikipedia.org/wiki/Блеген,_Карл"
     },
     {
+      "head": "Блок",
+      "page_list": [
+        25,
+        196,
+        215
+      ],
+      "pages": "25, 196, 215",
+      "discussed": true,
+      "category": "VI",
+      "subcategory": "literator",
+      "needs_review": true,
+      "note": "Александр Блок или лингвистический термин «блок»"
+    },
+    {
       "head": "Болотов С. Г.",
       "pages": "381",
       "category": "VI",
@@ -594,6 +608,20 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Виноградов,_Виктор_Владимирович",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Vinogradov_Viktor_Vladimirovich.jpg/220px-Vinogradov_Viktor_Vladimirovich.jpg"
+    },
+    {
+      "head": "Владимир",
+      "page_list": [
+        24,
+        200,
+        250
+      ],
+      "pages": "24, 200, 250",
+      "discussed": true,
+      "category": "VI",
+      "subcategory": "historical",
+      "needs_review": true,
+      "note": "Князь или город — проверить контекст каждой страницы"
     },
     {
       "head": "Воронцова В. Л.",
@@ -941,6 +969,22 @@
       ]
     },
     {
+      "head": "Зализняк А. А.",
+      "page_list": [
+        13,
+        18,
+        27,
+        80,
+        250
+      ],
+      "pages": "13, 18, 27, 80, 250",
+      "discussed": true,
+      "category": "VI",
+      "subcategory": "linguist",
+      "needs_review": true,
+      "note": "Автор книги (упоминания в предисловии и косвенно в тексте); по Мильчину обычно не индексируется"
+    },
+    {
       "head": "Заменгоф Л.",
       "pages": "128, 129",
       "category": "VI",
@@ -1014,6 +1058,18 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Иван_Грозный",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Vasnetsov_Ioann_4.jpg/220px-Vasnetsov_Ioann_4.jpg"
+    },
+    {
+      "head": "Иванов",
+      "page_list": [
+        259
+      ],
+      "pages": "259",
+      "discussed": false,
+      "category": "VI",
+      "subcategory": "linguist",
+      "needs_review": true,
+      "note": "Вяч. Вс. Иванов или однофамилец — проверить контекст"
     },
     {
       "head": "Иллич-Свитыч В. М.",
@@ -2327,49 +2383,7 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Valentin_Yanin.jpg/220px-Valentin_Yanin.jpg"
     },
     {
-      "head": "?Зализняк А. А.",
-      "page_list": [
-        13,
-        18,
-        27,
-        80,
-        250
-      ],
-      "pages": "13, 18, 27, 80, 250",
-      "discussed": true,
-      "category": "VI",
-      "subcategory": "linguist",
-      "needs_review": true,
-      "note": "Автор книги (упоминания в предисловии и косвенно в тексте); по Мильчину обычно не индексируется"
-    },
-    {
-      "head": "?Иванов",
-      "page_list": [
-        259
-      ],
-      "pages": "259",
-      "discussed": false,
-      "category": "VI",
-      "subcategory": "linguist",
-      "needs_review": true,
-      "note": "Вяч. Вс. Иванов или однофамилец — проверить контекст"
-    },
-    {
-      "head": "?Владимир",
-      "page_list": [
-        24,
-        200,
-        250
-      ],
-      "pages": "24, 200, 250",
-      "discussed": true,
-      "category": "VI",
-      "subcategory": "historical",
-      "needs_review": true,
-      "note": "Князь или город — проверить контекст каждой страницы"
-    },
-    {
-      "head": "?Ярослав",
+      "head": "Ярослав",
       "page_list": [
         85
       ],
@@ -2379,20 +2393,6 @@
       "subcategory": "historical",
       "needs_review": true,
       "note": "Ярослав Мудрый или часть слова «Ярославль»"
-    },
-    {
-      "head": "?Блок",
-      "page_list": [
-        25,
-        196,
-        215
-      ],
-      "pages": "25, 196, 215",
-      "discussed": true,
-      "category": "VI",
-      "subcategory": "literator",
-      "needs_review": true,
-      "note": "Александр Блок или лингвистический термин «блок»"
     }
   ],
   "edges": [

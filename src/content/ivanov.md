@@ -1,10 +1,10 @@
 ---
-id: "?Иванов"
-title: "?Иванов"
+id: "Иванов"
+title: "Иванов"
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 92
+source_index: 42
 tags: ["names"]
 ---
 
@@ -14,7 +14,7 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "?Иванов",
+  "head": "Иванов",
   "page_list": [
     259
   ],

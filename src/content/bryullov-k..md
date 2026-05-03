@@ -4,7 +4,7 @@ title: "Брюллов К."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 15
+source_index: 16
 tags: ["names"]
 ---
 

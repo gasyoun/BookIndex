@@ -46,17 +46,10 @@
   },
   "totals": {
     "duplicate_heads_count": 0,
-    "suspicious_heads_count": 36,
-    "sort_inversions_count": 23
+    "suspicious_heads_count": 31,
+    "sort_inversions_count": 20
   },
   "suspicious_heads": {
-    "names": [
-      "?Зализняк А. А.",
-      "?Иванов",
-      "?Владимир",
-      "?Ярослав",
-      "?Блок"
-    ],
     "lexicon_reverse": [
       "?а",
       "?атіг",
@@ -83,23 +76,6 @@
     ]
   },
   "sort_inversions": {
-    "names": [
-      {
-        "index": 91,
-        "previous": "Янин В. Л.",
-        "current": "?Зализняк А. А."
-      },
-      {
-        "index": 93,
-        "previous": "?Иванов",
-        "current": "?Владимир"
-      },
-      {
-        "index": 95,
-        "previous": "?Ярослав",
-        "current": "?Блок"
-      }
-    ],
     "lexicon": [
       {
         "index": 570,

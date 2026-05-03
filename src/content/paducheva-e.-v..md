@@ -4,7 +4,7 @@ title: "Падучева Е. В."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 61
+source_index: 65
 tags: ["names"]
 ---
 

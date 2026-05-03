@@ -4,7 +4,7 @@ title: "Поветкин В. И."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 67
+source_index: 71
 tags: ["names"]
 ---
 

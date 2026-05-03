@@ -4,7 +4,7 @@ title: "Лебедев И."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 50
+source_index: 54
 tags: ["names"]
 ---
 

@@ -1,10 +1,10 @@
 ---
-id: "?Зализняк А. А."
-title: "?Зализняк А. А."
+id: "Зализняк А. А."
+title: "Зализняк А. А."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 91
+source_index: 38
 tags: ["names"]
 ---
 
@@ -14,7 +14,7 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "?Зализняк А. А.",
+  "head": "Зализняк А. А.",
   "page_list": [
     13,
     18,

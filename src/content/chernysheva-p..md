@@ -4,7 +4,7 @@ title: "Чернышева П."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 86
+source_index: 90
 tags: ["names"]
 ---
 

@@ -4,7 +4,7 @@ title: "Сичинава Д. В."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 72
+source_index: 76
 tags: ["names"]
 ---
 

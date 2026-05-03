@@ -1,10 +1,10 @@
 ---
-id: "?Блок"
-title: "?Блок"
+id: "Блок"
+title: "Блок"
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 95
+source_index: 12
 tags: ["names"]
 ---
 
@@ -14,7 +14,7 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
-  "head": "?Блок",
+  "head": "Блок",
   "page_list": [
     25,
     196,

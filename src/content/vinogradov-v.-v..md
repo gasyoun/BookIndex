@@ -4,7 +4,7 @@ title: "Виноградов В. В."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 21
+source_index: 22
 tags: ["names"]
 ---
 

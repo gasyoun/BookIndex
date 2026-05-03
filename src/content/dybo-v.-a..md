@@ -4,7 +4,7 @@ title: "Дыбо В. А."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 32
+source_index: 34
 tags: ["names"]
 ---
 

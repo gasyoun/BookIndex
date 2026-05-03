@@ -4,7 +4,7 @@ title: "Милославский Е."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 56
+source_index: 60
 tags: ["names"]
 ---
 

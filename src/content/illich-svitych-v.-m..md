@@ -4,7 +4,7 @@ title: "Иллич-Свитыч В. М."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 39
+source_index: 43
 tags: ["names"]
 ---
 

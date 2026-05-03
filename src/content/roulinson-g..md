@@ -4,7 +4,7 @@ title: "Роулинсон Г."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 70
+source_index: 74
 tags: ["names"]
 ---
 

@@ -4,7 +4,7 @@ title: "Данте Алигьери"
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 31
+source_index: 33
 tags: ["names"]
 ---
 

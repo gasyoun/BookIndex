@@ -4,7 +4,7 @@ title: "Козлов Л."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 46
+source_index: 50
 tags: ["names"]
 ---
 

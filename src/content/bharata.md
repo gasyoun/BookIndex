@@ -4,7 +4,7 @@ title: "Бхарата"
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 17
+source_index: 18
 tags: ["names"]
 ---
 

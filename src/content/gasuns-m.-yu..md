@@ -4,7 +4,7 @@ title: "Гасунс М. Ю."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 25
+source_index: 27
 tags: ["names"]
 ---
 

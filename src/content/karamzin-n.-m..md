@@ -4,7 +4,7 @@ title: "Карамзин Н. М."
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "zaliznyak-aaz-index"
-source_index: 43
+source_index: 47
 tags: ["names"]
 ---
 
