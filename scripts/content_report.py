@@ -113,6 +113,11 @@ def collect_entity_metrics(items: list[Any], *, sort_order_applicable: bool) -> 
         for head, count in sorted(duplicate_counts.items(), key=lambda x: (-x[1], x[0]))
         if count > 1
     ]
+    suspicious_heads = [
+        head
+        for head in non_empty_heads
+        if head.startswith("?") or "\ufffd" in head
+    ]
 
     with_pages = 0
     unique_pages: set[int] = set()
@@ -164,6 +169,8 @@ def collect_entity_metrics(items: list[Any], *, sort_order_applicable: bool) -> 
         "context_snippets_total": context_snippets_total,
         "duplicate_heads_count": len(duplicates),
         "duplicate_heads_top": duplicates[:10],
+        "suspicious_heads_count": len(suspicious_heads),
+        "suspicious_heads_sample": suspicious_heads[:10],
         "sort_order": collect_sort_order_metrics(valid_items, sort_order_applicable),
         "coverage_pct": {
             "pages": pct(with_pages, total),
@@ -287,6 +294,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "items_suspect_true": 0,
         "context_snippets_total": 0,
         "duplicate_heads_count": 0,
+        "suspicious_heads_count": 0,
         "sort_inversions_count": 0,
     }
 
@@ -304,6 +312,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         totals["items_suspect_true"] += metrics["items_suspect_true"]
         totals["context_snippets_total"] += metrics["context_snippets_total"]
         totals["duplicate_heads_count"] += metrics["duplicate_heads_count"]
+        totals["suspicious_heads_count"] += metrics["suspicious_heads_count"]
         totals["sort_inversions_count"] += metrics["sort_order"]["inversions_count"]
 
     totals["coverage_pct"] = {
@@ -349,6 +358,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- `suspect=true`: {totals['items_suspect_true']}",
         f"- Context snippets: {totals['context_snippets_total']}",
         f"- Duplicate heads groups: {totals['duplicate_heads_count']}",
+        f"- Suspicious heads: {totals['suspicious_heads_count']}",
         f"- Sort inversions: {totals['sort_inversions_count']}",
         "",
         "## Corpus",
@@ -387,8 +397,8 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend([
         "## Entities",
         "",
-        "| Entity | Items | Pages % | Contexts % | Sources % | Duplicates | Sort inversions |",
-        "|---|---:|---:|---:|---:|---:|---:|",
+        "| Entity | Items | Pages % | Contexts % | Sources % | Duplicates | Suspicious heads | Sort inversions |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
     ])
 
     for key, metrics in report["entities"].items():
@@ -400,7 +410,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         lines.append(
             f"| `{key}` | {metrics['items_total']} | {metrics['coverage_pct']['pages']} | "
             f"{metrics['coverage_pct']['contexts']} | {metrics['coverage_pct']['sources']} | "
-            f"{metrics['duplicate_heads_count']} | {sort_inversions} |"
+            f"{metrics['duplicate_heads_count']} | {metrics['suspicious_heads_count']} | {sort_inversions} |"
         )
 
     lines.append("")
@@ -413,6 +423,20 @@ def render_markdown(report: dict[str, Any]) -> str:
         head_items = ", ".join(f"`{item['head']}` x{item['count']}" for item in top[:5])
         lines.append(f"- `{key}`: {head_items}")
     if lines[-1] == "":
+        lines.append("- none")
+
+    lines.append("")
+    lines.append("## Suspicious Heads (Sample)")
+    lines.append("")
+    has_suspicious_heads = False
+    for key, metrics in report["entities"].items():
+        sample = metrics.get("suspicious_heads_sample", [])
+        if not sample:
+            continue
+        has_suspicious_heads = True
+        formatted = ", ".join(f"`{head}`" for head in sample[:10])
+        lines.append(f"- `{key}`: {formatted}")
+    if not has_suspicious_heads:
         lines.append("- none")
 
     lines.append("")

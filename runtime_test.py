@@ -213,6 +213,8 @@ def check_static_guards():
         'collect_markdown_export_metrics(source)',
         'def collect_sort_order_metrics(items: list[dict[str, Any]], applicable: bool) -> dict[str, Any]:',
         '"sort_inversions_count"',
+        '"suspicious_heads_count"',
+        '## Suspicious Heads (Sample)',
         '## Sort Inversions (Sample)',
     ]
     for needle in content_report_required:
