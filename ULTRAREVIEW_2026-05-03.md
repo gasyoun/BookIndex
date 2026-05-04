@@ -87,11 +87,9 @@ v3 → v4.0 (hash routing, deep links)
 | Source coverage | 0% | **2%** | 0% |
 | Duplicate head groups | 1476 | **207** | 3 |
 
-### 3.3 Дублирующиеся markdown-файлы в `src/content/`
+### 3.3 ~~Дублирующиеся markdown-файлы в `src/content/`~~ ✅ НЕ ПРОБЛЕМА
 
-Директория `src/content/` содержит тысячи markdown-файлов экспорта. Многие имеют суффиксы `-2`, `-3`, `-4` (например, `zabit-2.md`, `zabit.md`). Это либо:
-- Дубли разных сущностей с одинаковым slug-ом
-- Артефакты экспорта, которые создают ложные duplicate head groups
+5 418 файлов с суффиксами `-2`, `-3`, `-4` — это корректный мульти-соурс экспорт. Каждый entity type (например, `lexicon` и `lexicon_reverse`) экспортируется отдельным файлом. Слово `zabit.md` — из `lexicon`, `zabit-2.md` — из `lexicon_reverse`. Бага нет.
 
 ### 3.4 Прочие вопросы
 
@@ -117,17 +115,24 @@ v3 → v4.0 (hash routing, deep links)
 - [ ] Вынести 23 suspicious heads в отдельную ручную задачу
 - [x] ~~Убедиться: README-метрики ≈ live dashboard ≈ `content_report.py`~~ — подтверждено
 
-### Фаза 2: v4.5 — Импорт второго источника
+### Фаза 2: v4.5 — Импорт второго источника ✅ ПОДГОТОВЛЕНО
 
-> Второй источник будет предоставлен владельцем.
+> Второй источник будет предоставлен владельцем. **Пайплайн готов** (`2a36d8c4`).
 
-Подготовительные шаги (можно начать уже сейчас):
+- [x] `data/imports/README.md` — документация жизненного цикла
+- [x] `data/imports/_template/draft.json` — шаблон для нового источника
+- [x] `scripts/import_source.py` — validate/merge/status инструмент
+- [x] `package.json` — `import:validate`, `import:merge`, `import:status` скрипты
 
-- [ ] Формализовать `data/imports/<book_id>/draft.json` schema
-- [ ] Создать шаблон importer: `scripts/import_source.py`
-- [ ] Добавить статусы источника: `draft` → `validated` → `published`
-- [ ] Добавить validation/report для нового источника без публикации в UI
-- [ ] После валидации — добавить второй источник в `APP_DATA.corpus.books`
+Когда получите книгу:
+
+```bash
+cp data/imports/_template/draft.json data/imports/<book_id>/draft.json
+# заполнить metadata и entity data
+python scripts/import_source.py --book-id <book_id> --validate
+python scripts/import_source.py --book-id <book_id> --merge
+npm run build && npm run check
+```
 
 Критерии готовности:
 - `books_total = 2`
