@@ -1,0 +1,33 @@
+{
+  "_comment": "Шаблон для нового источника. Скопируйте этот файл в data/imports/<book_id>/draft.json и заполните.",
+  "book_id": "FILL_ME",
+  "title": "FILL_ME",
+  "author": "FILL_ME",
+  "year": 0,
+  "edition": "FILL_ME",
+  "status": "draft",
+  "source_type": "book",
+  "pages_total": 0,
+  "default_route": "#v4/home/home",
+  "content_modules": ["app_data.json"],
+  "import_meta": {
+    "imported_at": "FILL_ME",
+    "source_file": "FILL_ME",
+    "importer_script": "scripts/import_source.py",
+    "importer_version": "1.0"
+  },
+  "data": {
+    "names": [],
+    "toponyms": [],
+    "ethnonyms": [],
+    "languages": [],
+    "lexicon": [],
+    "lexicon_reverse": [],
+    "lexicon_tech": [],
+    "subject_index": [],
+    "glossary": [],
+    "chapters": [],
+    "edges": [],
+    "language_edges": []
+  }
+}
