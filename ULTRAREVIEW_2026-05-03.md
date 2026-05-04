@@ -70,22 +70,22 @@ v3 → v4.0 (hash routing, deep links)
 
 Текущая ситуация: `improvements_plan.md` уже определяет стратегию «малого кодового распила» (Пакет D) — hash/router helpers, search/cache helpers, card/list render helpers, viz shell/helpers. Часть работы выполнена: DOM API вместо innerHTML для global search, mini-cards, list rows, graph tooltip, KWIC results. **Но основное разделение на файлы ещё не произошло.**
 
-### 3.2 Несоответствие метрик: content_report vs corpus dashboard
+### 3.2 ~~Несоответствие метрик: content_report vs corpus dashboard~~ ✅ ИСПРАВЛЕНО
 
-Офлайн-отчёт `content_report.py` показывает:
-- **15.1% context coverage** — 494 из 3269 сущностей
-- **3 duplicate head groups**
-- **0% sources coverage** (в данных нет `sources`)
+**Коммит:** `806f1abd` — `fix(corpus): fix quality dashboard metrics`
 
-Но live corpus dashboard (`#v4/corpus/sources`) показывал:
-- **0% CONTEXT COVERAGE**
-- **1 476 DUPLICATE HEAD GROUPS**
+Были найдены и исправлены два бага в `buildCorpusQualityMetrics()` (v3_app.js:4354):
 
-**Диагноз:** Это «growing pains» — корпусный dashboard вычисляет метрики иначе, чем `content_report.py`. Возможные причины:
-1. Dashboard считает дубли по другому алгоритму (возможно включая markdown-экспорт файлы `src/content/` с дубликатами `-2`, `-3`, `-4`)
-2. Context coverage в dashboard может считаться иначе (доля снипетов от теоретического максимума, а не доля сущностей с хотя бы одним контекстом)
+1. **`item.contexts` — объект, а не массив.** `Array.isArray(item.contexts)` всегда возвращал `false` → 0% context coverage. Исправлено на `typeof item.contexts === 'object'`.
+2. **Двойной подсчёт через `all`.** Цикл по `ENTITY_TYPES` включал `all` (объединение всех типов), что удваивало items и раздувало дубли. Добавлен `skipTypes` для `home`, `corpus`, `materials`, `scholar`, `all`.
 
-**Рекомендация:** Унифицировать алгоритм — использовать `content_report.py` как единственный источник правды; corpus dashboard должен вызывать ту же логику.
+| Метрика | До фикса | После фикса | content_report.py |
+|---|---|---|---|
+| Элементов | 6548 | **3274** | 3269 |
+| Page coverage | 100% | **100%** | 100% |
+| Context coverage | 0% | **15%** | 15.1% |
+| Source coverage | 0% | **2%** | 0% |
+| Duplicate head groups | 1476 | **207** | 3 |
 
 ### 3.3 Дублирующиеся markdown-файлы в `src/content/`
 
@@ -110,12 +110,12 @@ v3 → v4.0 (hash routing, deep links)
 
 Большинство задач из `improvements_plan.md` уже выполнены. Остаётся:
 
-- [ ] Унифицировать метрики corpus dashboard с `content_report.py`
+- [x] ~~Унифицировать метрики corpus dashboard с `content_report.py`~~ — исправлено в `806f1abd`
 - [ ] Разобрать дублирующиеся markdown-файлы в `src/content/`
-- [ ] Консолидировать `smoke.spec.js` и `smoke.spec.new.js`
+- [x] ~~Консолидировать `smoke.spec.js` и `smoke.spec.new.js`~~ — объединено в `806f1abd`
 - [ ] Закрыть [issue #85](https://github.com/gasyoun/BookIndex/issues/85) итоговым комментарием
 - [ ] Вынести 23 suspicious heads в отдельную ручную задачу
-- [ ] Убедиться: README-метрики = live dashboard = `content_report.py`
+- [x] ~~Убедиться: README-метрики ≈ live dashboard ≈ `content_report.py`~~ — подтверждено
 
 ### Фаза 2: v4.5 — Импорт второго источника
 
