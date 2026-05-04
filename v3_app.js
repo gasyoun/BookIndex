@@ -4359,14 +4359,19 @@ function buildCorpusQualityMetrics() {
     withSources: 0,
     duplicateGroups: 0,
   };
-  for (const conf of Object.values(ENTITY_TYPES || {})) {
+  // Skip synthetic/aggregate entity types to avoid double-counting items
+  // that appear in both their own type (e.g. 'names') and the 'all' combined index.
+  const skipTypes = new Set(['home', 'corpus', 'materials', 'scholar', 'all']);
+  for (const [typeKey, conf] of Object.entries(ENTITY_TYPES || {})) {
+    if (skipTypes.has(typeKey)) continue;
     const items = Array.isArray(conf && conf.items) ? conf.items : [];
     if (!items.length) continue;
     const heads = new Map();
     for (const item of items) {
       totals.items += 1;
       if (Array.isArray(item.page_list) && item.page_list.length) totals.withPages += 1;
-      if (Array.isArray(item.contexts) && item.contexts.length) totals.withContexts += 1;
+      // item.contexts is an object { page: [snippets] }, not an array
+      if (item.contexts && typeof item.contexts === 'object' && !Array.isArray(item.contexts) && Object.keys(item.contexts).length) totals.withContexts += 1;
       if (Array.isArray(item.sources) && item.sources.length) totals.withSources += 1;
       const head = normalizeSearchText(item.head || '');
       if (head) heads.set(head, (heads.get(head) || 0) + 1);
