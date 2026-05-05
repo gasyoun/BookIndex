@@ -476,8 +476,8 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
         fail(f"[manual_audit] invalid {queue_path}: {exc}", errors)
         return
 
-    if queue.get("schema_version") != 1:
-        fail("[manual_audit] index-audit-queue.json schema_version must be 1", errors)
+    if queue.get("schema_version") not in {1, 2}:
+        fail("[manual_audit] index-audit-queue.json schema_version must be 1 or 2", errors)
 
     manual_audit = queue.get("manual_audit")
     if not isinstance(manual_audit, dict):
@@ -499,6 +499,27 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
     ):
         if not isinstance(totals.get(field), int):
             fail(f"[manual_audit] totals.{field} must be integer", errors)
+    queues = queue.get("queues")
+    if queues is not None:
+        if not isinstance(queues, dict):
+            fail("[manual_audit] queues must be object when present", errors)
+        else:
+            for key in (
+                "missing_context",
+                "missing_pages",
+                "missing_source",
+                "duplicate_heads",
+                "suspicious_heads",
+                "sort_inversions",
+            ):
+                bucket = queues.get(key)
+                if not isinstance(bucket, dict):
+                    fail(f"[manual_audit] queues.{key} must be object", errors)
+                    continue
+                if not isinstance(bucket.get("total"), int):
+                    fail(f"[manual_audit] queues.{key}.total must be integer", errors)
+                if not isinstance(bucket.get("items"), list):
+                    fail(f"[manual_audit] queues.{key}.items must be list", errors)
     data = json.loads(data_path.read_text(encoding="utf-8"))
     duplicate_groups = 0
     suspicious_heads = 0

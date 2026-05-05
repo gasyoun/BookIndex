@@ -4417,7 +4417,114 @@ function formatCoveragePercent(count, total) {
   return `${Math.round((count / total) * 100)}%`;
 }
 
-function buildCorpusQualityMetrics() {
+const QUALITY_QUEUE_LIMIT = 50;
+const QUALITY_ENTITY_ORDER = ['lexicon', 'subject', 'lexicon_reverse', 'lexicon_tech', 'names', 'toponyms', 'ethnonyms', 'languages'];
+const QUALITY_SORT_ENTITY_KEYS = new Set(['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'subject']);
+const QUALITY_QUEUE_DEFS = [
+  { key: 'duplicate_heads', label: 'possible duplicates', empty: 'Нет дублей head.' },
+  { key: 'suspicious_heads', label: 'suspicious heads', empty: 'Нет suspicious heads.' },
+  { key: 'sort_inversions', label: 'sort inversions', empty: 'Нет нарушений сортировки.' },
+  { key: 'missing_context', label: 'missing context', empty: 'Все элементы имеют контексты.' },
+  { key: 'missing_pages', label: 'missing pages', empty: 'Все элементы имеют страницы.' },
+  { key: 'missing_source', label: 'missing source', empty: 'Все элементы имеют source.' },
+];
+
+function getQualityEntityPriority(entity) {
+  const idx = QUALITY_ENTITY_ORDER.indexOf(entity);
+  return idx >= 0 ? idx : QUALITY_ENTITY_ORDER.length;
+}
+
+function normalizeQualitySortKey(value) {
+  let s = String(value || '').replace(/ё/g, 'е').replace(/Ё/g, 'Е');
+  if (typeof s.normalize === 'function') s = s.normalize('NFKD');
+  return s
+    .replace(/[\u0300-\u036f\u0483-\u0489\u200c-\u200f\ufeff]/g, '')
+    .toLocaleLowerCase('ru');
+}
+
+function compareQualityHeads(a, b) {
+  const aKey = normalizeQualitySortKey(a);
+  const bKey = normalizeQualitySortKey(b);
+  if (aKey < bKey) return -1;
+  if (aKey > bKey) return 1;
+  return 0;
+}
+
+function compareQualityQueueItems(a, b) {
+  const entityDiff = getQualityEntityPriority(a.entity) - getQualityEntityPriority(b.entity);
+  if (entityDiff !== 0) return entityDiff;
+  const headDiff = compareQualityHeads(a.head, b.head);
+  if (headDiff !== 0) return headDiff;
+  const rawDiff = String(a.head || '').localeCompare(String(b.head || ''), 'ru', { sensitivity: 'base', numeric: true });
+  if (rawDiff !== 0) return rawDiff;
+  return String(a.queue || '').localeCompare(String(b.queue || ''));
+}
+
+function countQualityContextSnippets(contexts) {
+  if (Array.isArray(contexts)) return contexts.filter(raw => String(raw || '').trim()).length;
+  if (!contexts || typeof contexts !== 'object') return 0;
+  let total = 0;
+  for (const snippets of Object.values(contexts)) {
+    if (!Array.isArray(snippets)) continue;
+    total += snippets.filter(raw => String(raw || '').trim()).length;
+  }
+  return total;
+}
+
+function countItemQualityContextSnippets(item) {
+  if (!item || typeof item !== 'object') return 0;
+  const direct = countQualityContextSnippets(item.contexts);
+  let occurrence = 0;
+  const occurrences = item.occurrences && typeof item.occurrences === 'object' ? item.occurrences : {};
+  for (const occ of Object.values(occurrences)) {
+    if (!occ || typeof occ !== 'object') continue;
+    occurrence += countQualityContextSnippets(occ.contexts);
+  }
+  return Math.max(direct, occurrence);
+}
+
+function itemHasQualitySource(item) {
+  return !!(
+    (Array.isArray(item && item.sources) && item.sources.length)
+    || (item && item.occurrences && typeof item.occurrences === 'object' && Object.keys(item.occurrences).length)
+    || typeof (item && item.book_id) === 'string'
+  );
+}
+
+function getItemQualityPages(item) {
+  if (!Array.isArray(item && item.page_list)) return [];
+  const pages = item.page_list
+    .map(raw => parseInt(String(raw), 10))
+    .filter(page => Number.isFinite(page));
+  return Array.from(new Set(pages)).sort((a, b) => a - b);
+}
+
+function summarizeQualityPages(pages) {
+  if (!Array.isArray(pages) || !pages.length) return '0 pages';
+  if (pages.length <= 6) return pages.join(', ');
+  return `${pages.length} pages; first: ${pages.slice(0, 5).join(', ')}`;
+}
+
+function createQualityQueueRecord(queue, entity, item, reason, extra = {}) {
+  const head = String(item && item.head ? item.head : '').trim();
+  const pages = getItemQualityPages(item);
+  const out = {
+    queue,
+    entity,
+    head,
+    reason,
+    pagesCount: pages.length,
+    pagesSummary: summarizeQualityPages(pages),
+    contextSnippets: countItemQualityContextSnippets(item),
+    sourcePresent: itemHasQualitySource(item),
+    route: head ? buildItemHash(entity, head) : '',
+    ...extra,
+  };
+  if (item && typeof item.canonical_id === 'string' && item.canonical_id) out.canonicalId = item.canonical_id;
+  return out;
+}
+
+function buildCorpusQualityState() {
   const totals = {
     items: 0,
     withPages: 0,
@@ -4425,45 +4532,184 @@ function buildCorpusQualityMetrics() {
     withSources: 0,
     duplicateGroups: 0,
   };
-  // Skip synthetic/aggregate entity types to avoid double-counting items
-  // that appear in both their own type (e.g. 'names') and the 'all' combined index.
-  const skipTypes = new Set(['home', 'corpus', 'materials', 'scholar', 'all']);
-  for (const [typeKey, conf] of Object.entries(ENTITY_TYPES || {})) {
-    if (skipTypes.has(typeKey)) continue;
+  const queues = Object.fromEntries(QUALITY_QUEUE_DEFS.map(def => [def.key, []]));
+  const itemsByEntity = {};
+
+  for (const typeKey of QUALITY_ENTITY_ORDER) {
+    const conf = ENTITY_TYPES && ENTITY_TYPES[typeKey];
     const items = Array.isArray(conf && conf.items) ? conf.items : [];
+    itemsByEntity[typeKey] = items;
     if (!items.length) continue;
     const heads = new Map();
+    const itemsByHead = new Map();
     for (const item of items) {
+      if (!item || typeof item !== 'object') continue;
       totals.items += 1;
-      if (Array.isArray(item.page_list) && item.page_list.length) totals.withPages += 1;
-      const hasObjContexts = item.contexts && typeof item.contexts === 'object' && !Array.isArray(item.contexts) && Object.keys(item.contexts).length > 0;
-      const hasArrContexts = Array.isArray(item.contexts) && item.contexts.length > 0;
-      if (hasObjContexts || hasArrContexts) totals.withContexts += 1;
-      if (
-        (Array.isArray(item.sources) && item.sources.length)
-        || (item.occurrences && typeof item.occurrences === 'object' && Object.keys(item.occurrences).length)
-        || typeof item.book_id === 'string'
-      ) {
+      const pages = getItemQualityPages(item);
+      const contextSnippets = countItemQualityContextSnippets(item);
+      const hasSource = itemHasQualitySource(item);
+      if (pages.length) totals.withPages += 1;
+      else queues.missing_pages.push(createQualityQueueRecord('missing_pages', typeKey, item, 'No page_list entries.'));
+      if (contextSnippets > 0) totals.withContexts += 1;
+      else queues.missing_context.push(createQualityQueueRecord('missing_context', typeKey, item, 'No direct or occurrence context snippets.'));
+      if (hasSource) {
         totals.withSources += 1;
+      } else {
+        queues.missing_source.push(createQualityQueueRecord('missing_source', typeKey, item, 'No sources, occurrences, or book_id.'));
       }
-      const head = normalizeSearchText(item.head || '');
+      const rawHead = String(item.head || '').trim();
+      const head = normalizeSearchText(rawHead);
       if (head) heads.set(head, (heads.get(head) || 0) + 1);
+      if (rawHead) {
+        if (!itemsByHead.has(rawHead)) itemsByHead.set(rawHead, []);
+        itemsByHead.get(rawHead).push(item);
+      }
+      if (rawHead.startsWith('?') || rawHead.includes('\ufffd')) {
+        queues.suspicious_heads.push(createQualityQueueRecord(
+          'suspicious_heads',
+          typeKey,
+          item,
+          'Head starts with ? or contains replacement character.',
+          { needsReview: item.needs_review === true }
+        ));
+      }
     }
     for (const count of heads.values()) {
       if (count > 1) totals.duplicateGroups += 1;
     }
+    for (const [head, duplicates] of itemsByHead.entries()) {
+      if (duplicates.length <= 1) continue;
+      const pages = Array.from(new Set(duplicates.flatMap(getItemQualityPages))).sort((a, b) => a - b);
+      const canonicalIds = Array.from(new Set(duplicates.map(it => it && it.canonical_id).filter(Boolean))).sort();
+      queues.duplicate_heads.push({
+        queue: 'duplicate_heads',
+        entity: typeKey,
+        head,
+        reason: 'Same head appears more than once in this entity list.',
+        count: duplicates.length,
+        canonicalIds,
+        pagesCount: pages.length,
+        pagesSummary: summarizeQualityPages(pages),
+        route: buildItemHash(typeKey, head),
+      });
+    }
   }
-  return {
+
+  for (const typeKey of QUALITY_ENTITY_ORDER) {
+    if (!QUALITY_SORT_ENTITY_KEYS.has(typeKey)) continue;
+    const items = Array.isArray(itemsByEntity[typeKey]) ? itemsByEntity[typeKey] : [];
+    const heads = items.map(item => String(item && item.head ? item.head : '').trim()).filter(Boolean);
+    const byHead = new Map(items.map(item => [String(item && item.head ? item.head : '').trim(), item]));
+    for (let i = 1; i < heads.length; i++) {
+      const previous = heads[i - 1];
+      const current = heads[i];
+      if (compareQualityHeads(previous, current) <= 0) continue;
+      const item = byHead.get(current) || { head: current };
+      queues.sort_inversions.push(createQualityQueueRecord(
+        'sort_inversions',
+        typeKey,
+        item,
+        `Sort order inversion after “${previous}”.`,
+        { index: i, previous, current }
+      ));
+    }
+  }
+
+  for (const items of Object.values(queues)) {
+    items.sort(compareQualityQueueItems);
+  }
+  const metrics = {
     ...totals,
     pagesCoverage: formatCoveragePercent(totals.withPages, totals.items),
     contextsCoverage: formatCoveragePercent(totals.withContexts, totals.items),
     sourcesCoverage: formatCoveragePercent(totals.withSources, totals.items),
   };
+  return { metrics, queues };
+}
+
+function buildCorpusQualityMetrics() {
+  return buildCorpusQualityState().metrics;
+}
+
+function renderQualityQueueItem(item) {
+  const row = item.route ? document.createElement('a') : document.createElement('div');
+  row.className = 'quality-queue-item';
+  if (item.route) {
+    row.href = item.route;
+    row.onclick = (event) => {
+      event.preventDefault();
+      applyHash(row.getAttribute('href') || '#v4/corpus/sources');
+    };
+  }
+  const head = document.createElement('span');
+  head.className = 'quality-queue-head';
+  head.textContent = item.head || '(no head)';
+  const meta = document.createElement('span');
+  meta.className = 'quality-queue-meta';
+  const details = [];
+  if (item.entity) details.push(item.entity);
+  if (item.count) details.push(`x${item.count}`);
+  if (item.previous) details.push(`after: ${item.previous}`);
+  if (item.pagesSummary) details.push(`pages: ${item.pagesSummary}`);
+  if (Number.isFinite(item.contextSnippets)) details.push(`ctx: ${item.contextSnippets}`);
+  meta.textContent = details.join(' · ');
+  const reason = document.createElement('span');
+  reason.className = 'quality-queue-reason';
+  reason.textContent = item.reason || '';
+  row.appendChild(head);
+  row.appendChild(meta);
+  row.appendChild(reason);
+  return row;
+}
+
+function renderQualityQueues(section, queues) {
+  const wrap = document.createElement('div');
+  wrap.className = 'quality-queues';
+  const title = document.createElement('h4');
+  title.className = 'quality-queues-title';
+  title.textContent = 'Редакторские очереди';
+  wrap.appendChild(title);
+
+  for (const def of QUALITY_QUEUE_DEFS) {
+    const items = Array.isArray(queues && queues[def.key]) ? queues[def.key] : [];
+    const details = document.createElement('details');
+    details.className = 'quality-queue';
+    details.dataset.queue = def.key;
+    const summary = document.createElement('summary');
+    const label = document.createElement('span');
+    label.textContent = def.label;
+    const count = document.createElement('strong');
+    count.textContent = String(items.length);
+    summary.appendChild(label);
+    summary.appendChild(count);
+    details.appendChild(summary);
+
+    const list = document.createElement('div');
+    list.className = 'quality-queue-items';
+    if (items.length) {
+      for (const item of items.slice(0, QUALITY_QUEUE_LIMIT)) list.appendChild(renderQualityQueueItem(item));
+      if (items.length > QUALITY_QUEUE_LIMIT) {
+        const more = document.createElement('div');
+        more.className = 'quality-queue-more';
+        more.textContent = `Показано ${QUALITY_QUEUE_LIMIT} из ${items.length}.`;
+        list.appendChild(more);
+      }
+    } else {
+      const empty = document.createElement('div');
+      empty.className = 'quality-queue-empty';
+      empty.textContent = def.empty;
+      list.appendChild(empty);
+    }
+    details.appendChild(list);
+    wrap.appendChild(details);
+  }
+  section.appendChild(wrap);
 }
 
 function renderCorpusQualityPanel(panel) {
   if (!panel) return;
-  const metrics = buildCorpusQualityMetrics();
+  const state = buildCorpusQualityState();
+  const metrics = state.metrics;
   const section = document.createElement('section');
   section.className = 'corpus-quality-panel';
   const title = document.createElement('h3');
@@ -4482,8 +4728,9 @@ function renderCorpusQualityPanel(panel) {
 
   const note = document.createElement('p');
   note.className = 'corpus-quality-note';
-  note.textContent = '\u0411\u044b\u0441\u0442\u0440\u044b\u0439 runtime-\u0441\u0440\u0435\u0437 \u0434\u043b\u044f import readiness; \u043f\u043e\u0434\u0440\u043e\u0431\u043d\u044b\u0439 \u043e\u0442\u0447\u0451\u0442: scripts/content_report.py.';
+  note.textContent = '\u0411\u044b\u0441\u0442\u0440\u044b\u0439 runtime-\u0441\u0440\u0435\u0437 \u0434\u043b\u044f import readiness; \u043f\u043e\u0434\u0440\u043e\u0431\u043d\u044b\u0439 \u043e\u0442\u0447\u0451\u0442 \u0438 queue JSON: scripts/content_report.py.';
   section.appendChild(note);
+  renderQualityQueues(section, state.queues);
   panel.appendChild(section);
 }
 

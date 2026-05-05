@@ -183,9 +183,16 @@ Completion criterion: a user opens one entity and can clearly see where it appea
 
 ### Phase 4: v4.7 Context Quality
 
-Status: next main phase.
+Status: first queue workflow implemented; data cleanup still pending.
 
 Current context coverage is 17.8%. The next target is 35-40%.
+
+Implemented first slice:
+
+- enriched schema 2 quality queue JSON in `tests/index-audit-queue.json`;
+- `--write-quality-queue` in `scripts/content_report.py`;
+- expandable actionable queues in `#v4/corpus/sources`;
+- smoke coverage for queue counts, expansion, navigation, and compact viewport overflow.
 
 Priorities:
 
@@ -196,13 +203,13 @@ Priorities:
 
 Build actionable queues:
 
-- no context;
-- context exists only in occurrence data;
-- no usable source/citation;
-- suspicious head;
-- possible duplicate;
-- sort inversion;
-- needs page verification.
+- [x] no context;
+- [x] no usable source/citation;
+- [x] suspicious head;
+- [x] possible duplicate;
+- [x] sort inversion;
+- [ ] needs page verification;
+- [ ] cross-book duplicate candidate.
 
 Completion criterion: `#v4/corpus/sources` or a related quality view shows totals plus clickable editorial queues, so warnings can be handled without reading CI logs.
 
@@ -234,11 +241,11 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 ## 6. Recommended Next Sprint
 
 1. Update UltraReview/README whenever roadmap-changing work lands.
-2. Add a quality queue JSON output from `scripts/content_report.py`.
-3. Render that queue in the corpus/source quality UI.
-4. Resolve or classify the single `Зализняк А. А.` duplicate.
-5. Turn sort inversions into an explicit manual review queue.
-6. Start context expansion with `lexicon` and `subject_index`, using the queue as the worklist.
+2. Resolve or classify the single `Зализняк А. А.` duplicate through the quality queue.
+3. Review the 22 sort inversions and mark intentional grouped ordering separately from errors.
+4. Start context expansion with `lexicon` and `subject_index`, using the queue as the worklist.
+5. Decide the rule for `lexicon_reverse`: inherited context projection or intentionally contextless reverse index.
+6. Add cross-book duplicate candidates to the queue report.
 
 ---
 

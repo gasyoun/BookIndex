@@ -11,6 +11,7 @@ import unicodedata
 from collections import Counter
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 
 ENTITY_KEYS = (
@@ -23,6 +24,19 @@ ENTITY_KEYS = (
     "lexicon_tech",
     "subject_index",
 )
+ENTITY_ROUTE_KEYS = {
+    "subject_index": "subject",
+}
+QUALITY_ENTITY_PRIORITY = {
+    "lexicon": 0,
+    "subject_index": 1,
+    "lexicon_reverse": 2,
+    "lexicon_tech": 3,
+    "names": 4,
+    "toponyms": 5,
+    "ethnonyms": 6,
+    "languages": 7,
+}
 SORT_ORDER_KEYS = (
     "names",
     "toponyms",
@@ -116,6 +130,7 @@ def collect_sort_order_metrics(items: list[dict[str, Any]], applicable: bool) ->
         "applicable": True,
         "checked_pairs": max(len(heads) - 1, 0),
         "inversions_count": len(inversions),
+        "inversions": inversions,
         "inversions_sample": inversions[:10],
     }
 
@@ -203,6 +218,7 @@ def collect_entity_metrics(items: list[Any], *, sort_order_applicable: bool) -> 
         "context_pages_total": context_pages_total,
         "context_snippets_total": context_snippets_total,
         "duplicate_heads_count": len(duplicates),
+        "duplicate_heads": duplicates,
         "duplicate_heads_top": duplicates[:10],
         "suspicious_heads_count": len(suspicious_heads),
         "reviewed_suspicious_heads_count": len(reviewed_suspicious_heads),
@@ -633,6 +649,236 @@ def build_manual_audit_queue(report: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def get_item_head(item: dict[str, Any]) -> str:
+    return str(item.get("head", "")).strip()
+
+
+def get_item_pages(item: dict[str, Any]) -> list[int]:
+    pages = []
+    for raw in item.get("page_list") or []:
+        if isinstance(raw, int):
+            pages.append(raw)
+    return sorted(set(pages))
+
+
+def summarize_pages(pages: list[int]) -> str:
+    if not pages:
+        return "0 pages"
+    if len(pages) <= 6:
+        return ", ".join(str(page) for page in pages)
+    first = ", ".join(str(page) for page in pages[:5])
+    return f"{len(pages)} pages; first: {first}"
+
+
+def item_context_counts(item: dict[str, Any]) -> dict[str, int]:
+    direct_pages, direct_snippets = iter_context_snippets(item.get("contexts"))
+    occurrence_pages, occurrence_snippets = iter_occurrence_context_snippets(item.get("occurrences"))
+    return {
+        "direct_pages": direct_pages,
+        "direct_snippets": direct_snippets,
+        "occurrence_pages": occurrence_pages,
+        "occurrence_snippets": occurrence_snippets,
+        "pages": max(direct_pages, occurrence_pages),
+        "snippets": max(direct_snippets, occurrence_snippets),
+    }
+
+
+def item_has_source(item: dict[str, Any]) -> bool:
+    return (
+        is_non_empty_list(item.get("sources"))
+        or isinstance(item.get("occurrences"), dict) and bool(item.get("occurrences"))
+        or isinstance(item.get("book_id"), str)
+    )
+
+
+def build_item_route(entity: str, head: str) -> str | None:
+    if not head:
+        return None
+    route_entity = ENTITY_ROUTE_KEYS.get(entity, entity)
+    encoded_head = quote(head, safe="")
+    return f"#v4/{route_entity}/list/item/{route_entity}/{encoded_head}"
+
+
+def quality_entity_sort_key(entity: str, head: str = "") -> tuple[int, str, str]:
+    return (QUALITY_ENTITY_PRIORITY.get(entity, 99), sort_key(head), entity)
+
+
+def build_quality_item(
+    *,
+    entity: str,
+    item: dict[str, Any],
+    reason: str,
+    queue: str,
+    extra: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    head = get_item_head(item)
+    pages = get_item_pages(item)
+    contexts = item_context_counts(item)
+    out: dict[str, Any] = {
+        "queue": queue,
+        "entity": entity,
+        "head": head,
+        "reason": reason,
+        "pages_count": len(pages),
+        "pages_summary": summarize_pages(pages),
+        "context_snippets": contexts["snippets"],
+        "source_present": item_has_source(item),
+        "route": build_item_route(entity, head),
+    }
+    canonical_id = item.get("canonical_id")
+    if isinstance(canonical_id, str) and canonical_id:
+        out["canonical_id"] = canonical_id
+    if extra:
+        out.update(extra)
+    return out
+
+
+def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[str, Any]:
+    queues: dict[str, list[dict[str, Any]]] = {
+        "missing_context": [],
+        "missing_pages": [],
+        "missing_source": [],
+        "duplicate_heads": [],
+        "suspicious_heads": [],
+        "sort_inversions": [],
+    }
+
+    valid_by_entity: dict[str, list[dict[str, Any]]] = {}
+    for entity in ENTITY_KEYS:
+        items = data.get(entity, [])
+        valid_items = [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
+        valid_by_entity[entity] = valid_items
+
+        by_head: dict[str, list[dict[str, Any]]] = {}
+        for item in valid_items:
+            head = get_item_head(item)
+            if not head:
+                continue
+            by_head.setdefault(head, []).append(item)
+
+            pages = get_item_pages(item)
+            contexts = item_context_counts(item)
+            if not pages:
+                queues["missing_pages"].append(build_quality_item(
+                    entity=entity,
+                    item=item,
+                    queue="missing_pages",
+                    reason="No page_list entries.",
+                ))
+            if contexts["snippets"] <= 0:
+                queues["missing_context"].append(build_quality_item(
+                    entity=entity,
+                    item=item,
+                    queue="missing_context",
+                    reason="No direct or occurrence context snippets.",
+                ))
+            if not item_has_source(item):
+                queues["missing_source"].append(build_quality_item(
+                    entity=entity,
+                    item=item,
+                    queue="missing_source",
+                    reason="No sources, occurrences, or book_id.",
+                ))
+            if head.startswith("?") or "\ufffd" in head:
+                queues["suspicious_heads"].append(build_quality_item(
+                    entity=entity,
+                    item=item,
+                    queue="suspicious_heads",
+                    reason="Head starts with '?' or contains replacement character.",
+                    extra={"needs_review": item.get("needs_review") is True},
+                ))
+
+        for head, duplicates in by_head.items():
+            if len(duplicates) <= 1:
+                continue
+            canonical_ids = sorted({
+                str(item.get("canonical_id"))
+                for item in duplicates
+                if isinstance(item.get("canonical_id"), str) and item.get("canonical_id")
+            })
+            queues["duplicate_heads"].append({
+                "queue": "duplicate_heads",
+                "entity": entity,
+                "head": head,
+                "reason": "Same head appears more than once in this entity list.",
+                "count": len(duplicates),
+                "canonical_ids": canonical_ids,
+                "pages_summary": summarize_pages(sorted({page for item in duplicates for page in get_item_pages(item)})),
+                "route": build_item_route(entity, head),
+            })
+
+    for entity in SORT_ORDER_KEYS:
+        valid_items = valid_by_entity.get(entity, [])
+        inversions = collect_sort_order_metrics(valid_items, entity in SORT_ORDER_KEYS).get("inversions", [])
+        by_head = {get_item_head(item): item for item in valid_items if get_item_head(item)}
+        for inversion in inversions:
+            current = str(inversion.get("current", "")).strip()
+            item = by_head.get(current, {"head": current})
+            queues["sort_inversions"].append(build_quality_item(
+                entity=entity,
+                item=item,
+                queue="sort_inversions",
+                reason=f"Sort order inversion after `{inversion.get('previous', '')}`.",
+                extra={
+                    "index": inversion.get("index"),
+                    "previous": inversion.get("previous"),
+                    "current": current,
+                },
+            ))
+
+    for key, items in queues.items():
+        items.sort(key=lambda item: quality_entity_sort_key(str(item.get("entity", "")), str(item.get("head", ""))))
+
+    totals = dict(report.get("totals", {}))
+    totals.update({
+        "missing_context_count": len(queues["missing_context"]),
+        "missing_pages_count": len(queues["missing_pages"]),
+        "missing_source_count": len(queues["missing_source"]),
+    })
+
+    entities = report.get("entities", {})
+    suspicious = {
+        key: metrics.get("suspicious_heads", [])
+        for key, metrics in entities.items()
+        if metrics.get("suspicious_heads")
+    }
+    sort_inversions = {
+        key: metrics.get("sort_order", {}).get("inversions", metrics.get("sort_order", {}).get("inversions_sample", []))
+        for key, metrics in entities.items()
+        if metrics.get("sort_order", {}).get("inversions_count")
+    }
+    duplicate_heads = {
+        key: metrics.get("duplicate_heads", metrics.get("duplicate_heads_top", []))
+        for key, metrics in entities.items()
+        if metrics.get("duplicate_heads_count")
+    }
+
+    return {
+        "schema_version": 2,
+        "source": report.get("source"),
+        "manual_audit": report.get("manual_audits", {}).get("index_errors", {}),
+        "totals": totals,
+        "queue_order": [
+            "duplicate_heads",
+            "suspicious_heads",
+            "sort_inversions",
+            "missing_context",
+            "missing_pages",
+            "missing_source",
+        ],
+        "queues": {
+            key: {
+                "total": len(items),
+                "items": items,
+            }
+            for key, items in queues.items()
+        },
+        "duplicate_heads": duplicate_heads,
+        "suspicious_heads": suspicious,
+        "sort_inversions": sort_inversions,
+    }
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate BookIndex content metrics report.")
     parser.add_argument("path", nargs="?", default="app_data.json", help="Path to app_data.json")
@@ -646,6 +892,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         "--write-manual-audit",
         metavar="PATH",
         help="Write compact manual audit queue JSON to PATH",
+    )
+    parser.add_argument(
+        "--write-quality-queue",
+        metavar="PATH",
+        help="Write enriched actionable quality queue JSON to PATH",
     )
     return parser.parse_args(argv)
 
@@ -671,6 +922,13 @@ def main(argv: list[str] | None = None) -> int:
         audit_path.parent.mkdir(parents=True, exist_ok=True)
         audit_path.write_text(
             json.dumps(build_manual_audit_queue(report), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+    if args.write_quality_queue:
+        queue_path = Path(args.write_quality_queue)
+        queue_path.parent.mkdir(parents=True, exist_ok=True)
+        queue_path.write_text(
+            json.dumps(build_quality_queue(data, report), ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
 

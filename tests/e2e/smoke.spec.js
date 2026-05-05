@@ -71,8 +71,20 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('.corpus-source-card').filter({ hasText: 'Из жизни слов и языков' })).toBeVisible();
     await expect(page.locator('.corpus-source-card').filter({ hasText: 'Видеокаталог' })).toContainText('тайм-кодами');
     await expect(page.locator('.corpus-metrics-row').first()).toContainText('200');
-    await expect(page.locator('.corpus-quality-panel')).toContainText('source coverage');
-    await expect(page.locator('.corpus-quality-panel')).toContainText('duplicate head groups');
+    const quality = page.locator('.corpus-quality-panel');
+    await expect(quality).toContainText('source coverage');
+    await expect(quality).toContainText('duplicate head groups');
+    await expect(quality.locator('.quality-queue[data-queue="duplicate_heads"] summary')).toContainText('1');
+    await expect(quality.locator('.quality-queue[data-queue="suspicious_heads"] summary')).toContainText('23');
+    await expect(quality.locator('.quality-queue[data-queue="sort_inversions"] summary')).toContainText('22');
+
+    const duplicateQueue = quality.locator('.quality-queue[data-queue="duplicate_heads"]');
+    await duplicateQueue.locator('summary').click();
+    const duplicateLink = duplicateQueue.locator('.quality-queue-item[href]').first();
+    await expect(duplicateLink).toContainText('Зализняк А. А.');
+    await duplicateLink.click();
+    await expect(page.locator('.card')).toBeVisible();
+    await expect(page).toHaveURL(/#v4\/names\/list\/item\/names\//);
   });
 
   test('PWA manifest and service worker are available', async ({ page }) => {
@@ -141,6 +153,10 @@ test.describe('aaz-index smoke', () => {
 
       await page.goto('/aaz-index.html#v4/home/home');
       await expect(page.locator('.home-panel')).toBeVisible();
+      await assertNoPageOverflow();
+
+      await page.goto('/aaz-index.html#v4/corpus/sources');
+      await expect(page.locator('.quality-queue[data-queue="missing_context"]')).toBeVisible();
       await assertNoPageOverflow();
 
       await page.goto('/aaz-index.html#v4/names/list');
