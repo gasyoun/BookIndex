@@ -140,6 +140,10 @@ function normalizeCorpusRegistry() {
   if (!books.some(book => book && book.book_id === activeId)) {
     APP_DATA.corpus.active_book_id = defaults.active_book_id;
   }
+  
+  if (typeof inflateOccurrences === 'function') {
+    inflateOccurrences(APP_DATA.corpus.active_book_id);
+  }
 }
 
 function normalizeAppData() {
@@ -731,6 +735,22 @@ function applyActiveBookFromQuery(query) {
   const registry = getCorpusRegistry();
   if (!getCorpusBooks().some(book => book.book_id === bookId)) return;
   registry.active_book_id = bookId;
+  inflateOccurrences(bookId);
+}
+
+function inflateOccurrences(bookId) {
+  if (!APP_DATA) return;
+  const categories = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse', 'lexicon_tech', 'subject_index'];
+  for (const cat of categories) {
+    if (!Array.isArray(APP_DATA[cat])) continue;
+    for (const it of APP_DATA[cat]) {
+      if (it.occurrences && typeof it.occurrences === 'object') {
+        const occ = it.occurrences[bookId] || { pages: [], contexts: [] };
+        it.page_list = occ.pages || [];
+        it.contexts = occ.contexts || [];
+      }
+    }
+  }
 }
 
 function getPlannedVideoCatalogSource() {
@@ -4470,6 +4490,7 @@ function createCorpusSourceCard(source, options = {}) {
       event.preventDefault();
       if (source.book_id) {
         getCorpusRegistry().active_book_id = source.book_id;
+        inflateOccurrences(source.book_id);
       }
       applyHash(link.getAttribute('href') || '#v4/home/home');
     };
