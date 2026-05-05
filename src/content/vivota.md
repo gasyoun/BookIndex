@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_tech-991ddadd-3c81-52c7-8e07-305f9acfe5bf",
   "head": "*vivotä",
-  "pages": "115",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        115
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     115
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "115",
   "category": "tech",
-  "needs_review": true,
-  "contexts": {}
+  "needs_review": true
 }
 ```

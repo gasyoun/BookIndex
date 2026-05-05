@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-ef581e05-eb69-5a7f-8f9f-591fcf666854",
   "head": "Бируни, Аль",
-  "pages": "150",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Б",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        150
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     150
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "150",
+  "category": "VI",
+  "letter": "Б",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": null,
   "chapters": [
     "Древняя Индия"

@@ -14,18 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-b289c2b1-ac57-520c-b628-ab540ef679a7",
   "head": "киевско-черниговская зона",
-  "head_pages": "202",
-  "subs": [],
-  "discussed": false,
-  "letter": "К",
-  "letter_change": false,
-  "lat": 51,
-  "lon": 32,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        202
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     202
   ],
-  "contexts": {},
-  "epoch_class": "medieval"
+  "contexts": [],
+  "head_pages": "202",
+  "discussed": false,
+  "letter": "К",
+  "letter_change": false,
+  "epoch_class": "medieval",
+  "lat": 51,
+  "lon": 32
 }
 ```

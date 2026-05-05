@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-b30993ed-172e-58f3-9e94-e852c1de0260",
   "head": "Чедвик Дж.",
-  "pages": "121",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Ч",
-  "letter_change": true,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        121
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     121
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "121",
+  "category": "VI",
+  "letter": "Ч",
+  "letter_change": true,
+  "subcategory": "linguist",
   "epoch": 1950,
   "chapters": [
     "Историческая лингвистика (продолж.)"

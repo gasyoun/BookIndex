@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-124c0b2d-a675-585d-88ec-12add2b09b7d",
   "head": "Израи́ль",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        373
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     373
   ],
-  "pages": "373",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "373"
 }
 ```

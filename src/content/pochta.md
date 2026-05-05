@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-8a9240ce-95bf-5a9c-9bd8-199017d5bc0c",
   "head": "почта",
-  "pages": "189",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        189
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     189
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "189",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

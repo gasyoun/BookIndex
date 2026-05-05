@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-784480fb-cb5f-5f8d-9afb-97cc1e66dc8e",
   "head": "Шампольон Ф.",
-  "pages": "121",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Ш",
-  "letter_change": true,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        121
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     121
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "121",
+  "category": "VI",
+  "letter": "Ш",
+  "letter_change": true,
+  "subcategory": "linguist",
   "epoch": 1820,
   "chapters": [
     "Историческая лингвистика (продолж.)"

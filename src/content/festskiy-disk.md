@@ -14,13 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-7f41f939-92e3-5d54-aaa3-28c5b4b4249c",
   "head": "фестский диск",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        122
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     122
   ],
-  "pages": "122",
+  "contexts": [],
   "discussed": false,
-  "is_subrubric": false,
+  "pages": "122",
   "needs_review": false
 }
 ```

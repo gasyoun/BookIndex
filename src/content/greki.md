@@ -14,14 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "ethnonyms-7f8a4c21-ed22-5505-8d2f-c2854d649827",
   "head": "греки",
-  "pages": "141",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        141
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     141
   ],
+  "contexts": [],
   "discussed": false,
-  "subs": [],
-  "contexts": {},
+  "pages": "141",
   "lat": 39,
   "lon": 22
 }

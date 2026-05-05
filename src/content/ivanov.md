@@ -14,15 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-002d54c5-ffe0-5bf5-99bb-b2c780f00145",
   "head": "Иванов",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        259
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     259
   ],
-  "pages": "259",
+  "contexts": [],
   "discussed": false,
+  "pages": "259",
   "category": "VI",
   "subcategory": "linguist",
-  "needs_review": true,
-  "note": "Вяч. Вс. Иванов или однофамилец — проверить контекст"
+  "note": "Вяч. Вс. Иванов или однофамилец — проверить контекст",
+  "needs_review": true
 }
 ```

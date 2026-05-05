@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-e02dadae-896b-517d-8151-9cca096003e7",
   "head": "Bratpfanne",
-  "pages": "191",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        191
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     191
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "191",
   "category": "lat",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

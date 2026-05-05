@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-4937d1b0-6924-5b8f-99d3-a66c940cfe58",
   "head": "парикмахер",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        190
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     190
   ],
-  "pages": "190",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "190"
 }
 ```

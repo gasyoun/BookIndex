@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-8592e041-bc64-59fb-b4a6-d6b0025a64c3",
   "head": "Карамзин Н. М.",
-  "pages": "334",
-  "category": "I.2",
-  "discussed": false,
-  "letter": "К",
-  "letter_change": false,
-  "subcategory": "literator",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        334
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     334
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "334",
+  "category": "I.2",
+  "letter": "К",
+  "letter_change": false,
+  "subcategory": "literator",
   "epoch": 1800,
   "chapters": [
     "О жизни слов"

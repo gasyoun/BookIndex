@@ -14,15 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-27fca58b-20ef-565f-aa46-9ab64c298361",
   "head": "морфемы сильные vs. слабые",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        250,
+        251,
+        268
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     250,
     251,
     268
   ],
-  "pages": "250, 251, 268",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "250, 251, 268",
   "needs_review": false
 }
 ```

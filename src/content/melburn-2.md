@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-b4eeae7f-e01c-52a5-9a43-5fefae4226c9",
   "head": "Мельбурн",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        247
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     247
   ],
-  "pages": "247",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "247"
 }
 ```

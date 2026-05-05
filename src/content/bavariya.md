@@ -14,18 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-34e82082-bebd-538e-9a79-1964165b77a2",
   "head": "Бавария",
-  "head_pages": "60",
-  "subs": [],
-  "discussed": false,
-  "letter": "Б",
-  "letter_change": true,
-  "lat": 48.7,
-  "lon": 11.5,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        60
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     60
   ],
-  "contexts": {},
-  "epoch_class": "medieval"
+  "contexts": [],
+  "head_pages": "60",
+  "discussed": false,
+  "letter": "Б",
+  "letter_change": true,
+  "epoch_class": "medieval",
+  "lat": 48.7,
+  "lon": 11.5
 }
 ```

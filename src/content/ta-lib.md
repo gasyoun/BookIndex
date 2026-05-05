@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-c6259e47-8327-5d9c-a15f-75c2b57e167e",
   "head": "tälib",
-  "pages": "231",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        231
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     231
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "231",
   "category": "lat",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

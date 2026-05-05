@@ -14,7 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-933591b2-5c80-5c33-ad77-915a76436a9b",
   "head": "бытовая (живая, устная, разговорная) речь",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        18,
+        23,
+        45,
+        171,
+        192,
+        193,
+        194,
+        195
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     18,
     23,
@@ -25,9 +43,9 @@ _Основное текстовое поле не найдено; см. JSON н
     194,
     195
   ],
-  "pages": "18, 23, 45, 171, 192, 193, 194, 195",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "18, 23, 45, 171, 192, 193, 194, 195",
   "needs_review": false
 }
 ```

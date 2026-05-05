@@ -14,23 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-8a52c321-b90c-5915-b786-fb06d6b86971",
   "head": "Малая Азия",
-  "head_pages": "122",
-  "subs": [
-    {
-      "label": "∼ языки",
-      "pages": "122"
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        122
+      ],
+      "contexts": []
     }
-  ],
-  "discussed": true,
-  "letter": "М",
-  "letter_change": true,
-  "lat": 39,
-  "lon": 35,
+  },
+  "book_id": "mumintroll",
   "page_list": [
     122
   ],
-  "contexts": {},
-  "epoch_class": "ancient"
+  "contexts": [],
+  "head_pages": "122",
+  "discussed": true,
+  "letter": "М",
+  "letter_change": true,
+  "epoch_class": "ancient",
+  "lat": 39,
+  "lon": 35
 }
 ```

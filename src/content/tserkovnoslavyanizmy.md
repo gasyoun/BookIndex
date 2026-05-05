@@ -14,13 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-498a121a-c1da-5961-8be9-d6094c59c810",
   "head": "церковнославянизмы",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        194
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     194
   ],
-  "pages": "194",
+  "contexts": [],
   "discussed": false,
-  "is_subrubric": false,
+  "pages": "194",
   "needs_review": false
 }
 ```

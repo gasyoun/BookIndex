@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-e3fbb32c-cc48-549e-a1d1-842910dea684",
   "head": "al-himäru",
-  "pages": "230",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        230
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     230
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "230",
   "category": "lat",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

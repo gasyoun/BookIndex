@@ -14,14 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "ethnonyms-eac1d201-3d62-56fe-b0e6-56c6ac76e9b3",
   "head": "швабы",
-  "pages": "58",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        58
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     58
   ],
+  "contexts": [],
   "discussed": false,
-  "subs": [],
-  "contexts": {},
+  "pages": "58",
   "lat": 48.5,
   "lon": 9.5
 }

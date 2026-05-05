@@ -9,6 +9,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
+const DEFAULT_TOTAL_PAGES = 424;
 const APP_BUILD_ID = '__APP_BUILD_ID__';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
@@ -89,7 +90,7 @@ function buildDefaultCorpusRegistry() {
   const stats = APP_DATA && APP_DATA.book_stats && typeof APP_DATA.book_stats === 'object'
     ? APP_DATA.book_stats
     : {};
-  const pages = Number.isFinite(Number(stats.pages_total)) ? Number(stats.pages_total) : 404;
+  const pages = Number.isFinite(Number(stats.total_pages)) ? Number(stats.total_pages) : DEFAULT_TOTAL_PAGES;
   return {
     schema_version: 1,
     active_book_id: 'mumintroll',
@@ -228,10 +229,9 @@ function normalizeEditorialFlags(item) {
 }
 
 function getFirstContextQuote(item) {
-  if (!item || !item.contexts || typeof item.contexts !== 'object') return '';
-  const pages = Object.keys(item.contexts).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
-  for (const pg of pages) {
-    const snippets = Array.isArray(item.contexts[pg]) ? item.contexts[pg] : [];
+  const entries = getContextEntries(item, 1, 5000);
+  for (const entry of entries) {
+    const snippets = Array.isArray(entry.snippets) ? entry.snippets : [];
     for (const raw of snippets) {
       const text = String(raw || '').replace(/\s+/g, ' ').trim();
       if (text) return text;
@@ -296,6 +296,48 @@ function normalizeItemContexts(item) {
     if (out.length) normalized[String(page)] = out;
   }
   item.contexts = normalized;
+}
+
+function getContextEntries(itemOrContexts, pageStart = 1, pageEnd = 5000, explicitPageList = null) {
+  const source = itemOrContexts && typeof itemOrContexts === 'object' && Object.prototype.hasOwnProperty.call(itemOrContexts, 'contexts')
+    ? itemOrContexts.contexts
+    : itemOrContexts;
+  const pageSource = Array.isArray(explicitPageList)
+    ? explicitPageList
+    : (itemOrContexts && Array.isArray(itemOrContexts.page_list) ? itemOrContexts.page_list : []);
+  if (Array.isArray(source)) {
+    const snippets = [];
+    for (const raw of source) {
+      const snippet = normalizeContextSnippet(raw);
+      if (!snippet) continue;
+      snippets.push(snippet);
+      if (snippets.length >= KWIC_MAX_SNIPPETS_PER_PAGE) break;
+    }
+    if (!snippets.length) return [];
+    const pages = pageSource
+      .map((page) => parseInt(String(page || ''), 10))
+      .filter((page) => Number.isFinite(page) && page >= 1);
+    const page = pages.find((candidate) => candidate >= pageStart && candidate <= pageEnd);
+    if (pages.length && !page) return [];
+    return [{ page: page || Math.max(1, pageStart), snippets }];
+  }
+  const safe = source && typeof source === 'object' ? source : {};
+  const entries = [];
+  for (const [pageRaw, snippets] of Object.entries(safe)) {
+    const page = parseInt(String(pageRaw || ''), 10);
+    if (!Number.isFinite(page) || page < pageStart || page > pageEnd) continue;
+    if (!Array.isArray(snippets)) continue;
+    const normalizedSnippets = [];
+    for (const raw of snippets) {
+      const snippet = normalizeContextSnippet(raw);
+      if (!snippet) continue;
+      normalizedSnippets.push(snippet);
+      if (normalizedSnippets.length >= KWIC_MAX_SNIPPETS_PER_PAGE) break;
+    }
+    if (!normalizedSnippets.length) continue;
+    entries.push({ page, snippets: normalizedSnippets });
+  }
+  return entries;
 }
 
 function normalizeDescriptionYoText(value) {
@@ -649,7 +691,7 @@ let currentLecture = 0;
 let lectureCompareA = 1;
 let lectureCompareB = 2;
 let trendsRangeStart = 1;
-let trendsRangeEnd = 404;
+let trendsRangeEnd = DEFAULT_TOTAL_PAGES;
 let historyStack = [];
 let isNavigatingHistory = false;
 let suppressHashSync = false;
@@ -667,7 +709,7 @@ let currentKwicSource = 'lexicon';
 let currentKwicQuery = '';
 let currentKwicSort = 'left';
 let currentKwicPageStart = 1;
-let currentKwicPageEnd = 404;
+let currentKwicPageEnd = DEFAULT_TOTAL_PAGES;
 let pendingKwicTerm = '';
 const UI_STATE_STORAGE_KEY = 'zaliznyakiada.ui.v1';
 const UI_STATE_SCHEMA_VERSION = 2;
@@ -1026,7 +1068,7 @@ function clampUiInput(value, maxLen) {
 }
 
 function getTotalBookPages() {
-  return Math.max(1, parseInt(APP_DATA?.book_stats?.total_pages || 404, 10) || 404);
+  return Math.max(1, parseInt(APP_DATA?.book_stats?.total_pages || DEFAULT_TOTAL_PAGES, 10) || DEFAULT_TOTAL_PAGES);
 }
 
 function normalizeKwicSource(source) {
@@ -1087,7 +1129,7 @@ function shuffleArray(input) {
   return arr;
 }
 
-const ACCENT_SAFE_TOKEN_RE = /([^\s,;()[\]{}<>]+[\u0300-\u036f][^\s,;()[\]{}<>]*)/g;
+const ACCENT_SAFE_TOKEN_RE = /([^\s,;()[\]{}<>]*[\u0300-\u036f][^\s,;()[\]{}<>]*)/g;
 
 function wrapAccentSafeInEscapedText(escapedText) {
   return String(escapedText || '').replace(ACCENT_SAFE_TOKEN_RE, '<span class="accent-safe">$1</span>');
@@ -1523,7 +1565,7 @@ function restoreViewState() {
     if (!Number.isInteger(parsed.lectureCompareA)) parsed.lectureCompareA = 1;
     if (!Number.isInteger(parsed.lectureCompareB)) parsed.lectureCompareB = 2;
     if (!Number.isInteger(parsed.trendsRangeStart)) parsed.trendsRangeStart = 1;
-    if (!Number.isInteger(parsed.trendsRangeEnd)) parsed.trendsRangeEnd = 404;
+    if (!Number.isInteger(parsed.trendsRangeEnd)) parsed.trendsRangeEnd = getTotalBookPages();
     if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
     parsed.sortMostFrequentFirst = !!parsed.sortMostFrequentFirst;
     if (typeof parsed.currentGlossaryTerm !== 'string') parsed.currentGlossaryTerm = '';
@@ -1815,7 +1857,7 @@ function applyViewState(state) {
   lectureCompareA = Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1;
   lectureCompareB = Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2;
   trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
-  trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : 404;
+  trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : getTotalBookPages();
   searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
   sortMostFrequentFirst = !!state.sortMostFrequentFirst;
   currentGlossaryTerm = typeof state.currentGlossaryTerm === 'string' ? state.currentGlossaryTerm : '';
@@ -1872,7 +1914,7 @@ function sameViewState(a, b) {
     (a.currentKwicQuery || '') === (b.currentKwicQuery || '') &&
     (a.currentKwicSort || 'left') === (b.currentKwicSort || 'left') &&
     (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) &&
-    (a.currentKwicPageEnd || 404) === (b.currentKwicPageEnd || 404) &&
+    (a.currentKwicPageEnd || getTotalBookPages()) === (b.currentKwicPageEnd || getTotalBookPages()) &&
     (a.searchQuery || '') === (b.searchQuery || '') &&
     normalizeGlobalSearchScope(a.globalSearchScope) === normalizeGlobalSearchScope(b.globalSearchScope) &&
     !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst &&
@@ -2782,10 +2824,10 @@ function openLectureTerm(term) {
 
 function buildSearchSnippet(item, query) {
   const q = (query || '').trim().toLowerCase();
-  if (!q || !item || !item.contexts || typeof item.contexts !== 'object') return '';
-  const pages = Object.keys(item.contexts).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
-  for (const pg of pages) {
-    const ctxs = Array.isArray(item.contexts[pg]) ? item.contexts[pg] : [];
+  if (!q || !item) return '';
+  const entries = getContextEntries(item, 1, getTotalBookPages());
+  for (const entry of entries) {
+    const ctxs = Array.isArray(entry.snippets) ? entry.snippets : [];
     for (const raw of ctxs) {
       const text = String(raw || '').replace(/\s+/g, ' ').trim();
       if (!text) continue;
@@ -4397,7 +4439,13 @@ function buildCorpusQualityMetrics() {
       const hasObjContexts = item.contexts && typeof item.contexts === 'object' && !Array.isArray(item.contexts) && Object.keys(item.contexts).length > 0;
       const hasArrContexts = Array.isArray(item.contexts) && item.contexts.length > 0;
       if (hasObjContexts || hasArrContexts) totals.withContexts += 1;
-      if (Array.isArray(item.sources) && item.sources.length) totals.withSources += 1;
+      if (
+        (Array.isArray(item.sources) && item.sources.length)
+        || (item.occurrences && typeof item.occurrences === 'object' && Object.keys(item.occurrences).length)
+        || typeof item.book_id === 'string'
+      ) {
+        totals.withSources += 1;
+      }
       const head = normalizeSearchText(item.head || '');
       if (head) heads.set(head, (heads.get(head) || 0) + 1);
     }
@@ -4774,6 +4822,8 @@ function buildVisibleItemsCacheKey() {
     onlyQuestionCandidates ? '1' : '0',
     filters,
     String(itemCount),
+    selectedItem || '',
+    selectedItemType || '',
   ].join('::');
 }
 
@@ -4798,7 +4848,16 @@ function getVisibleItemsForCurrentEntity() {
   const maxResults = currentEntity === 'all' ? 5000 : (currentEntity === 'lexicon_reverse' ? 2500 : 800);
   let truncated = false;
   if (filtered.length > maxResults) {
-    filtered = filtered.slice(0, maxResults);
+    const fullFiltered = filtered;
+    filtered = fullFiltered.slice(0, maxResults);
+    if (selectedItem) {
+      const selected = fullFiltered.find(it => {
+        if (!it || it.head !== selectedItem) return false;
+        if (currentEntity !== 'all') return true;
+        return (it._entityType || currentEntity) === (selectedItemType || currentEntity);
+      });
+      if (selected && !filtered.includes(selected)) filtered.push(selected);
+    }
     truncated = true;
   }
   const value = { filtered, truncated, maxResults, candidateCount };
@@ -4975,6 +5034,9 @@ function appendListItemContent(item, it, itemType, showTypeLabel) {
   const head = document.createElement('span');
   head.className = `head ${it.discussed ? 'discussed' : ''}${itemType === 'lexicon_reverse' ? ' reverse-head' : ''}`;
   head.innerHTML = renderAccentSafe(it.head);
+  if (/[\u0300-\u036f]/.test(String(it.head || '')) && !head.querySelector('.accent-safe')) {
+    head.innerHTML = `<span class="accent-safe">${escapeHtml(it.head)}</span>`;
+  }
 
   const typeLabel = document.createElement('span');
   typeLabel.className = 'entity-type-tag';
@@ -5495,9 +5557,8 @@ function findItemByHeadAndType(head, type) {
 }
 
 function countItemContexts(item) {
-  const contexts = item && item.contexts && typeof item.contexts === 'object' && !Array.isArray(item.contexts)
-    ? item.contexts
-    : {};
+  if (Array.isArray(item && item.contexts)) return item.contexts.filter(Boolean).length;
+  const contexts = item && item.contexts && typeof item.contexts === 'object' ? item.contexts : {};
   let total = 0;
   for (const snippets of Object.values(contexts)) {
     if (Array.isArray(snippets)) total += snippets.filter(Boolean).length;
@@ -5589,9 +5650,19 @@ function renderCardInRight() {
   const hasMapCoords = Number.isFinite(Number(it.lat)) && Number.isFinite(Number(it.lon));
   const canOpenMapForCard = ['toponyms', 'ethnonyms', 'languages'].includes(eType) && hasMapCoords;
   const useTwoColumnCardLayout = eType === 'toponyms';
-  const itemSources = Array.isArray(it.sources) ? it.sources.slice(0, 5) : [];
   const itemBookId = String(it.book_id || it.bookId || getActiveBook().book_id || '');
   const itemBookLabel = getBookLabelForSearch(itemBookId);
+  const allPages = sortUniquePages(it.page_list || []);
+  let pagesText = it.pages || it.head_pages || '';
+  const itemSources = Array.isArray(it.sources) ? it.sources.slice(0, 5) : [];
+  if (!itemSources.length && itemBookLabel) {
+    itemSources.push({
+      label: itemBookLabel,
+      page: allPages.length ? allPages.join(', ') : pagesText,
+      quote: getFirstContextQuote(it),
+    });
+  }
+  it._cardSources = itemSources;
   const renderSourcesInHeader = eType === 'names' && itemSources.length > 0;
   const sourceConfirmedInline = editorial.source_confirmed
     ? '<span class="card-status-inline">source confirmed</span>'
@@ -5615,8 +5686,6 @@ function renderCardInRight() {
       headerSourcesHtml = `<div class="card-sources-inline"><span class="card-sources-label">Sources</span>${sourcePills}</div>`;
     }
   }
-  const allPages = sortUniquePages(it.page_list || []);
-  let pagesText = it.pages || it.head_pages || '';
   const pageLinksHtml = buildCardPageLinksHtml(allPages);
   const contextCount = countItemContexts(it);
   const sourceCount = itemSources.length;
@@ -5876,7 +5945,7 @@ function renderCardInRight() {
     bindActionWithKeyboard(btn, () => {
       const idx = parseInt(btn.dataset.sourceIdx || '-1', 10);
       if (!Number.isInteger(idx) || idx < 0) return;
-      const sources = Array.isArray(it.sources) ? it.sources : [];
+      const sources = Array.isArray(it._cardSources) ? it._cardSources : (Array.isArray(it.sources) ? it.sources : []);
       const src = sources[idx];
       if (!src) return;
       const entry = buildCardSourceBibEntry(it, eType, src, idx);
@@ -6164,7 +6233,7 @@ function renderHeatmapPanel(container) {
   const hm = document.getElementById('heatmap');
   const top = getHeatmapTopItems(currentEntity, 50);
 
-  const TOTAL_PAGES = 404;
+  const TOTAL_PAGES = getTotalBookPages();
   const cellW = 2.2, cellH = 14, labelW = 220;
   const W = labelW + TOTAL_PAGES * cellW + 30;
   const H = top.length * cellH + 40;
@@ -7475,7 +7544,7 @@ function buildHomeDeclarativeViewModel() {
   const earliestEpochLabel = earliestEpoch < 0 ? `${Math.abs(earliestEpoch)} до н. э.` : `${earliestEpoch} г.`;
 
   const statsCards = [
-    { key: 'pages', num: String(stats.total_pages || 404), label: 'страницы' },
+    { key: 'pages', num: String(stats.total_pages || getTotalBookPages()), label: 'страницы' },
     {
       key: 'lectures',
       num: stats.has_preface ? '10 + 1' : String(stats.lectures || 10),
@@ -7717,6 +7786,7 @@ function renderHomePanel(container) {
   const stats = APP_DATA.book_stats;
   const routes = APP_DATA.routes || [];
   const featured = APP_DATA.featured_quote || { text: '', page: '', lecture: '' };
+  const totalPages = getTotalBookPages();
   const vw = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 0;
   const vh = (typeof window !== 'undefined' && typeof window.innerHeight === 'number') ? window.innerHeight : 0;
   const isDesktop = vw >= 980;
@@ -7735,11 +7805,11 @@ function renderHomePanel(container) {
       <h2 class="home-stats-title">Книга в цифрах</h2>
       <button id="export-site-md" class="home-export-btn">Экспорт всего BookIndex в Markdown</button>
     </div>
-    <div class="home-stats-subtitle">Что внутри 404 страниц лекций А. А. Зализняка</div>
+    <div class="home-stats-subtitle">Что внутри ${escapeHtml(totalPages)} страниц лекций А. А. Зализняка</div>
     <div id="home-stats-grid" class="home-stats-grid">`;
 
   const cells = [
-    ['404', 'страницы'],
+    [String(totalPages), 'страницы'],
     [stats.has_preface ? '10 + 1' : String(stats.lectures || 10), stats.has_preface ? 'лекций + предисловие' : 'лекций'],
     [stats.names, 'имён'],
     [stats.languages, 'языков'],
@@ -7867,7 +7937,7 @@ function renderHomePanel(container) {
 }
 
 function openReadingPageTrends(page) {
-  const maxPage = Number((APP_DATA && APP_DATA.book_stats && APP_DATA.book_stats.total_pages) || 404) || 404;
+  const maxPage = getTotalBookPages();
   const p = Math.max(1, Math.min(maxPage, Number.isFinite(page) ? page : parseInt(String(page || ''), 10) || 1));
   currentEntity = 'scholar';
   currentTab = 'page_trends';
@@ -7901,7 +7971,7 @@ function openReadingNowPage(page) {
   syncNavigationState();
 }
 
-function wireReadingNowWidget(root, totalPages = 404) {
+function wireReadingNowWidget(root, totalPages = DEFAULT_TOTAL_PAGES) {
   if (!root || typeof root.querySelector !== 'function') return;
   const readingInput = root.querySelector('#reading-page-input');
   const readingGo = root.querySelector('#reading-page-go');
@@ -7910,7 +7980,7 @@ function wireReadingNowWidget(root, totalPages = 404) {
   const readingTrends = root.querySelector('#reading-page-trends');
   const readingResults = root.querySelector('#reading-now-results');
   if (!readingInput || !readingGo || !readingResults) return;
-  const maxPage = Math.max(1, Number(totalPages) || 404);
+  const maxPage = Math.max(1, Number(totalPages) || DEFAULT_TOTAL_PAGES);
   const clampReadingPage = (page) => {
     const raw = Number.isFinite(page) ? page : parseInt(String(page || ''), 10);
     if (!Number.isFinite(raw)) return 1;
@@ -8283,7 +8353,7 @@ function renderTasksPanel(container, options = {}) {
 function renderLecturesPanel(container) {
   const lectures = APP_DATA.lectures || [];
   const stats = APP_DATA.book_stats || {};
-  const maxPage = Number(stats.total_pages) || 404;
+  const maxPage = Number(stats.total_pages) || getTotalBookPages();
   let html = '<div class="panel active lectures-panel"><div class="lectures-inner">';
   html += '<h2 class="lectures-title">Все лекции книги — за пять минут</h2>';
   html += '<div class="lectures-intro">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
@@ -8841,23 +8911,7 @@ function buildKwicContextRow(opts) {
 }
 
 function iterateKwicContextEntries(contexts, pageStart, pageEnd) {
-  const safe = contexts && typeof contexts === 'object' && !Array.isArray(contexts) ? contexts : {};
-  const entries = [];
-  for (const [pageRaw, snippets] of Object.entries(safe)) {
-    const page = parseInt(String(pageRaw || ''), 10);
-    if (!Number.isFinite(page) || page < pageStart || page > pageEnd) continue;
-    if (!Array.isArray(snippets)) continue;
-    const normalizedSnippets = [];
-    for (const raw of snippets) {
-      const snippet = normalizeContextSnippet(raw);
-      if (!snippet) continue;
-      normalizedSnippets.push(snippet);
-      if (normalizedSnippets.length >= KWIC_MAX_SNIPPETS_PER_PAGE) break;
-    }
-    if (!normalizedSnippets.length) continue;
-    entries.push({ page, snippets: normalizedSnippets });
-  }
-  return entries;
+  return getContextEntries(contexts, pageStart, pageEnd);
 }
 
 function collectLexiconContextBundles(pageStart, pageEnd) {
@@ -8866,7 +8920,7 @@ function collectLexiconContextBundles(pageStart, pageEnd) {
   for (const it of items) {
     const itemHead = String(it?.head || '').trim();
     if (!itemHead) continue;
-    const entries = iterateKwicContextEntries(it && it.contexts, pageStart, pageEnd);
+    const entries = iterateKwicContextEntries(it, pageStart, pageEnd);
     if (!entries.length) continue;
     out.push({ itemHead, entries });
   }
@@ -9872,7 +9926,7 @@ function renderScholarChronologyPanel(container) {
 }
 
 function renderPageTrendsPanel(container) {
-  const totalPages = Math.max(1, parseInt(APP_DATA?.book_stats?.total_pages || 404, 10) || 404);
+  const totalPages = getTotalBookPages();
   const clamp = (v) => Math.max(1, Math.min(totalPages, Number.isInteger(v) ? v : parseInt(v || '1', 10) || 1));
   trendsRangeStart = clamp(trendsRangeStart);
   trendsRangeEnd = clamp(trendsRangeEnd);

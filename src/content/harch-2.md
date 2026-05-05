@@ -14,12 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-9a1429df-6d28-5ac0-8e7d-d71a147da1a9",
   "head": "харч",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        225,
+        226
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     225,
     226
   ],
-  "pages": "225, 226",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "225, 226"
 }
 ```

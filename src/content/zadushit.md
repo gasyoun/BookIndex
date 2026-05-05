@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-d0d7b450-b21a-5846-8d9a-4246007a7832",
   "head": "задушитъ",
-  "pages": "356",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        356
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     356
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "356",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

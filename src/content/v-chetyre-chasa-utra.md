@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-f5b68168-bf3d-5da7-adde-e76d3ef782b0",
   "head": "в четыре часа утра́",
-  "pages": "381",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        381
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     381
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "381",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

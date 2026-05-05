@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-a0f245de-e2db-5e43-b4c6-b3fdc8ad69ff",
   "head": "геогра́фия",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        370
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     370
   ],
-  "pages": "370",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "370"
 }
 ```

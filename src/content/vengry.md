@@ -14,14 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "ethnonyms-b99aeffc-e8a2-5c59-a6c5-3e93d367eba9",
   "head": "венгры",
-  "pages": "27",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        27
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     27
   ],
+  "contexts": [],
   "discussed": false,
-  "subs": [],
-  "contexts": {},
+  "pages": "27",
   "lat": 47.2,
   "lon": 19.5
 }

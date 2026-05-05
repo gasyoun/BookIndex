@@ -14,7 +14,22 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-b4593df7-c8c6-5eaf-a5b9-9814683f7219",
   "head": "лигатура",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        90,
+        142,
+        173,
+        230,
+        283
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     90,
     142,
@@ -22,9 +37,9 @@ _Основное текстовое поле не найдено; см. JSON н
     230,
     283
   ],
-  "pages": "90, 142, 173, 230, 283",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "90, 142, 173, 230, 283",
   "needs_review": false
 }
 ```

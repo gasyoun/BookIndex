@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-b50c9023-06e1-5dbf-9911-4f5e717b6fba",
   "head": "У́стюг",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        382
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     382
   ],
-  "pages": "382",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "382"
 }
 ```

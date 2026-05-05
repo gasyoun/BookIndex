@@ -14,13 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-ccf4057b-4958-5b70-827f-9da7189c27b9",
   "head": "полигенез",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        77
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     77
   ],
-  "pages": "77",
+  "contexts": [],
   "discussed": false,
-  "is_subrubric": false,
+  "pages": "77",
   "needs_review": false
 }
 ```

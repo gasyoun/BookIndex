@@ -14,13 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-9e0db748-dc23-5cdd-b82e-e9a78e58df3c",
   "head": "спортсмен",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        242,
+        243,
+        246
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     242,
     243,
     246
   ],
-  "pages": "242, 243, 246",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "242, 243, 246"
 }
 ```

@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-d5b1a29b-32d1-5a0b-9b4a-2767b50782de",
   "head": "Переверзева С. И.",
-  "pages": "173",
-  "category": "VI",
-  "discussed": false,
-  "letter": "П",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        173
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     173
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "173",
+  "category": "VI",
+  "letter": "П",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": null,
   "chapters": [
     "Древняя Индия"

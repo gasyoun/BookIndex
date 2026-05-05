@@ -56,11 +56,11 @@
     }
   },
   "totals": {
-    "duplicate_heads_count": 4,
+    "duplicate_heads_count": 1,
     "suspicious_heads_count": 23,
     "reviewed_suspicious_heads_count": 23,
     "unreviewed_suspicious_heads_count": 0,
-    "sort_inversions_count": 21
+    "sort_inversions_count": 22
   },
   "suspicious_heads": {
     "lexicon_reverse": [

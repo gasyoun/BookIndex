@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-f9407e58-aded-50e9-a3c1-e7f78200f0ae",
   "head": "Падова",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        246
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     246
   ],
-  "pages": "246",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "246"
 }
 ```

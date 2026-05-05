@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-9ae7b693-65ff-5a9d-9db0-76f13f5f4b97",
   "head": "Вяземский П. А.",
-  "pages": "274",
-  "category": "I.2",
-  "discussed": false,
-  "letter": "В",
-  "letter_change": false,
-  "subcategory": "literator",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        274
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     274
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "274",
+  "category": "I.2",
+  "letter": "В",
+  "letter_change": false,
+  "subcategory": "literator",
   "epoch": 1820,
   "chapters": [
     "Берестяные грамоты"

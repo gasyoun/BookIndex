@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-3dc5f79d-5168-5051-aa02-d8950284fa93",
   "head": "Петербург",
-  "pages": "246",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        246
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     246
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "246",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-6ab5dde7-86cc-590f-a68a-7a32bdeff713",
   "head": "Гутенберг И.",
-  "pages": "123",
-  "category": "II.2",
-  "discussed": false,
-  "letter": "Г",
-  "letter_change": false,
-  "subcategory": "historical",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        123
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     123
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "123",
+  "category": "II.2",
+  "letter": "Г",
+  "letter_change": false,
+  "subcategory": "historical",
   "epoch": 1450,
   "chapters": [
     "Историческая лингвистика (продолж.)"

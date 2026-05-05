@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-642d53dd-3d10-52f4-a82f-a7a3b8a49056",
   "head": "Люксембург",
-  "pages": "269",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        269
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     269
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "269",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

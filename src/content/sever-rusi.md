@@ -14,18 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-61bc11cc-84cc-5d36-8b8a-aacb6976d240",
   "head": "север [Руси]",
-  "head_pages": "200",
-  "subs": [],
-  "discussed": false,
-  "letter": "С",
-  "letter_change": true,
-  "lat": 62,
-  "lon": 35,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        200
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     200
   ],
-  "contexts": {},
-  "epoch_class": "medieval"
+  "contexts": [],
+  "head_pages": "200",
+  "discussed": false,
+  "letter": "С",
+  "letter_change": true,
+  "epoch_class": "medieval",
+  "lat": 62,
+  "lon": 35
 }
 ```

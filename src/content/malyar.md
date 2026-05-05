@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-eb3f7f65-b017-5fd9-96a3-1afe9a089739",
   "head": "маляр",
-  "pages": "191",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        191
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     191
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "191",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

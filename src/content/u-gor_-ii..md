@@ -14,15 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-cfa951cb-9c82-5e46-8654-3d257f0b0b74",
   "head": "у́горь_(II.)",
-  "pages": "378, 380",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        378,
+        380
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     378,
     380
   ],
+  "contexts": [],
   "discussed": true,
+  "pages": "378, 380",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

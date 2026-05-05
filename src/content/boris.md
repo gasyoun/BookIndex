@@ -1,11 +1,11 @@
 ---
 id: "Борис"
 title: "Борис"
-source_key: "lexicon"
-source: "Из жизни слов и языков"
-book_id: "mumintroll"
-source_index: 307
-tags: ["lexicon"]
+source_key: "names"
+source: "Из заметок о любительской лингвистике"
+book_id: "zametki"
+source_index: 146
+tags: ["names"]
 ---
 
 _Основное текстовое поле не найдено; см. JSON ниже._
@@ -14,22 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-9a05da66-f6ac-5747-83cc-dfd64ccbe844",
   "head": "Борис",
-  "pages": "293–295",
+  "aliases": [],
+  "occurrences": {
+    "zametki": {
+      "pages": [
+        101,
+        103
+      ],
+      "contexts": [
+        "князь-мученик"
+      ]
+    }
+  },
+  "book_id": "zametki",
   "page_list": [
-    293,
-    295
+    101,
+    103
   ],
-  "discussed": true,
-  "category": "rus",
-  "needs_review": false,
-  "contexts": {
-    "293": [
-      "система, о которой вы уже знаете. От кого поклон? От Бориса. К кому? Из зала: К Антону? А. З.: Нет, первая буква после к всё-таки…"
-    ],
-    "295": [
-      "Грамота № 579 (3 четверть XIV в.) Поклоно ѿ Бориса к Зѣновѣі і Федору. Вы моѧ ога, даіте коницка до Видомира вѣрѣ(-)ци д…"
-    ]
-  }
+  "contexts": [
+    "князь-мученик"
+  ]
 }
 ```

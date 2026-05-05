@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-814bee80-da1c-5559-b8af-ce0c723fe4e0",
   "head": "Париж",
-  "pages": "248",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        248
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     248
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "248",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-05e98db5-9a7e-545f-b222-3f6a3d02bc0d",
   "head": "сельдь",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        190
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     190
   ],
-  "pages": "190",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "190"
 }
 ```

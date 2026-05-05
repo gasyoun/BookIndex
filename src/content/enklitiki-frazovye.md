@@ -14,15 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-f6434a03-5c6c-564e-a986-5ac45448576a",
   "head": "энклитики: ∼ фразовые",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        19,
+        21,
+        26
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     19,
     21,
     26
   ],
-  "pages": "19, 21, 26",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": true,
+  "pages": "19, 21, 26",
   "needs_review": false
 }
 ```

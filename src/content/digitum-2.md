@@ -14,7 +14,22 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-264d2fc6-05cd-50a1-9127-44e402619029",
   "head": "digitum",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        68,
+        70,
+        72,
+        75,
+        83
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     68,
     70,
@@ -22,7 +37,8 @@ _Основное текстовое поле не найдено; см. JSON н
     75,
     83
   ],
-  "pages": "68, 70, 72, 75, 83",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "68, 70, 72, 75, 83"
 }
 ```

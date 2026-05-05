@@ -14,7 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-35cd7916-6b11-58b4-8756-32213d7e1f07",
   "head": "письменная традиция",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        64,
+        71,
+        94,
+        96,
+        106,
+        133
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     64,
     71,
@@ -23,9 +39,9 @@ _Основное текстовое поле не найдено; см. JSON н
     106,
     133
   ],
-  "pages": "64, 71, 94, 96, 106, 133",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "64, 71, 94, 96, 106, 133",
   "needs_review": false
 }
 ```

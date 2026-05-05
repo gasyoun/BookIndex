@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-de26e5dd-7cf5-5050-a3e2-ac25c31fe135",
   "head": "бицепс",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        246
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     246
   ],
-  "pages": "246",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "246"
 }
 ```

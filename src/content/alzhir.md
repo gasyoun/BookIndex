@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-755094fe-f671-5f02-ae45-31deb8035035",
   "head": "Алжир",
-  "pages": "221",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        221
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     221
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "221",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

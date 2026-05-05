@@ -14,15 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-5e910cb3-bba6-58a1-9e6c-6ff27262ca67",
   "head": "Бхагавадгита",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        153,
+        154,
+        157
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     153,
     154,
     157
   ],
-  "pages": "153, 154, 157",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "153, 154, 157",
   "needs_review": false
 }
 ```

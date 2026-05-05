@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-93751e44-2356-5453-ab84-a01efc31eb07",
   "head": "Альтаир",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        221
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     221
   ],
-  "pages": "221",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "221"
 }
 ```

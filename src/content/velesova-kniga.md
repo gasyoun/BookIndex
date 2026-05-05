@@ -14,14 +14,26 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-9adf5d54-0277-53ac-b6cb-321b9d985c4a",
   "head": "Велесова книга",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        143,
+        151
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     143,
     151
   ],
-  "pages": "143, 151",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "143, 151",
   "needs_review": false
 }
 ```

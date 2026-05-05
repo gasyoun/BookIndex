@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-b42b46ae-511a-5ab0-8cf1-4e03d806b16a",
   "head": "вентичи",
-  "pages": "62",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        62
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     62
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "62",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

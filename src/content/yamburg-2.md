@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-78c4251d-18e3-5d8b-b7a3-c7799dc6d0b1",
   "head": "Ямбург",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        246
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     246
   ],
-  "pages": "246",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "246"
 }
 ```

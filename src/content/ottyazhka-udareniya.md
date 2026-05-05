@@ -14,14 +14,26 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-f91e6e44-0f69-517c-8e15-a89f961f74b7",
   "head": "оттяжка ударения",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        377,
+        378
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     377,
     378
   ],
-  "pages": "377, 378",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "377, 378",
   "needs_review": false
 }
 ```

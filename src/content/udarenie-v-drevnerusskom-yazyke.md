@@ -14,16 +14,30 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-00dd4446-0065-504f-8b94-9012d5b982a5",
   "head": "ударение: ∼ в древнерусском языке",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        240,
+        249,
+        252,
+        330
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     240,
     249,
     252,
     330
   ],
-  "pages": "240, 249, 252, 330",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": true,
+  "pages": "240, 249, 252, 330",
   "needs_review": false
 }
 ```

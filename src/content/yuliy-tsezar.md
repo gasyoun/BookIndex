@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-2d72f673-450c-542f-be97-8b2c578de357",
   "head": "Юлий Цезарь",
-  "pages": "69",
-  "category": "II.2",
-  "discussed": false,
-  "letter": "Ю",
-  "letter_change": true,
-  "subcategory": "historical",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        69
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     69
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "69",
+  "category": "II.2",
+  "letter": "Ю",
+  "letter_change": true,
+  "subcategory": "historical",
   "epoch": -50,
   "chapters": [
     "Историческая лингвистика"

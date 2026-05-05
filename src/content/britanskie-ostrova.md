@@ -14,22 +14,32 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-f860da61-f5c8-50dd-bd70-3061ef18effb",
   "head": "Британские острова",
-  "head_pages": "60",
-  "subs": [],
-  "discussed": false,
-  "letter": "Б",
-  "letter_change": false,
-  "lat": 54,
-  "lon": -4,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        60
+      ],
+      "contexts": [
+        "…емецки звучит как deutsch, только в древней форме, называли и жителей Британских островов, и датчан, и прочих. В старых латинских записях это так и зн…"
+      ]
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     60
   ],
-  "contexts": {
-    "60": [
-      "…емецки звучит как deutsch, только в древней форме, называли и жителей Британских островов, и датчан, и прочих. В старых латинских записях это так и зн…"
-    ]
-  },
-  "epoch_class": "ancient"
+  "contexts": [
+    "…емецки звучит как deutsch, только в древней форме, называли и жителей Британских островов, и датчан, и прочих. В старых латинских записях это так и зн…"
+  ],
+  "head_pages": "60",
+  "discussed": false,
+  "letter": "Б",
+  "letter_change": false,
+  "epoch_class": "ancient",
+  "lat": 54,
+  "lon": -4
 }
 ```

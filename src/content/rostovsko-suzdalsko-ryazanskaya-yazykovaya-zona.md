@@ -14,18 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-0a8d96ed-156b-55a3-8097-250bfe4a36ad",
   "head": "ростовско-суздальско- рязанская языковая зона",
-  "head_pages": "202",
-  "subs": [],
-  "discussed": false,
-  "letter": "Р",
-  "letter_change": false,
-  "lat": 55,
-  "lon": 40,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        202
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     202
   ],
-  "contexts": {},
-  "epoch_class": "medieval"
+  "contexts": [],
+  "head_pages": "202",
+  "discussed": false,
+  "letter": "Р",
+  "letter_change": false,
+  "epoch_class": "medieval",
+  "lat": 55,
+  "lon": 40
 }
 ```

@@ -14,15 +14,26 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_tech-a8e74a3b-0c43-5c29-9ff1-c468e461a708",
   "head": "?дмъЦе",
-  "pages": "320",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        320
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     320
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "320",
   "category": "tech",
-  "needs_review": true,
-  "contexts": {},
-  "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification."
+  "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
+  "needs_review": true
 }
 ```

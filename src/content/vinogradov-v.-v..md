@@ -14,18 +14,30 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-61c128d0-5998-500b-88a9-5948b266c21d",
   "head": "Виноградов В. В.",
-  "pages": "274, 392",
-  "category": "VI",
-  "discussed": true,
-  "letter": "В",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        274,
+        392
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     274,
     392
   ],
+  "contexts": [],
+  "discussed": true,
+  "pages": "274, 392",
+  "category": "VI",
+  "letter": "В",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": 1940,
   "chapters": [
     "Берестяные грамоты",

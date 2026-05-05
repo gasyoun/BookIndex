@@ -347,7 +347,7 @@ def validate_contexts(data: dict[str, Any], errors: list[str]) -> None:
 
 
 def validate_chapters(data: dict[str, Any], errors: list[str]) -> None:
-    total_pages = int(data.get("book_stats", {}).get("total_pages", 404))
+    total_pages = int(data.get("book_stats", {}).get("total_pages", 424))
     chapters = data.get("chapters", [])
     if not isinstance(chapters, list):
         fail("[chapters] must be list", errors)
@@ -558,11 +558,13 @@ def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:
     queue = json.loads(queue_path.read_text(encoding="utf-8"))
     totals = queue.get("totals", {})
     manual_audit = queue.get("manual_audit", {})
+    duplicate_count = totals.get("duplicate_heads_count")
+    duplicate_label = "duplicate-head group" if duplicate_count == 1 else "duplicate-head groups"
     required_fragments = [
         f"{totals.get('suspicious_heads_count')} suspicious heads",
         f"{totals.get('unreviewed_suspicious_heads_count')} без triage",
         f"{totals.get('sort_inversions_count')} sort inversions",
-        f"{totals.get('duplicate_heads_count')} duplicate-head groups",
+        f"{duplicate_count} {duplicate_label}",
         f"найдено {manual_audit.get('terms_found')} из {manual_audit.get('terms_total')} терминов",
     ]
     missing_terms = manual_audit.get("terms_missing", [])

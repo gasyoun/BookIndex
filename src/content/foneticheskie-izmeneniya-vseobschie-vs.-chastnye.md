@@ -14,16 +14,30 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-2d9b9420-837b-5d69-a080-8c41a5f82c7f",
   "head": "фонетические изменения: ∼ всеобщие vs. частные",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        366,
+        367,
+        372,
+        374
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     366,
     367,
     372,
     374
   ],
-  "pages": "366, 367, 372, 374",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": true,
+  "pages": "366, 367, 372, 374",
   "needs_review": false
 }
 ```

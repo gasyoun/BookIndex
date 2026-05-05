@@ -14,16 +14,30 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-00b3d1d4-153f-5b16-ac88-9472a69c96c3",
   "head": "тактовая группа",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        16,
+        21,
+        219,
+        220
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     16,
     21,
     219,
     220
   ],
-  "pages": "16, 21, 219, 220",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "16, 21, 219, 220",
   "needs_review": false
 }
 ```

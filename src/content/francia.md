@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-67302987-1cbf-5fd1-9fa3-b72b35b60e73",
   "head": "Francia",
-  "pages": "56",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        56
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     56
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "56",
   "category": "lat",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

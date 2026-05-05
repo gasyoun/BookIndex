@@ -14,17 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "languages-c0b59102-cf41-52bb-a7e1-f334b12b92c4",
   "head": "раннероманские",
-  "pages": "115",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        115
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     115
   ],
+  "contexts": [],
   "discussed": false,
-  "subs": [],
-  "contexts": {},
-  "family": "Индоевропейская",
-  "group": "романская",
+  "pages": "115",
   "lat": 45,
-  "lon": 5
+  "lon": 5,
+  "family": "Индоевропейская",
+  "group": "романская"
 }
 ```

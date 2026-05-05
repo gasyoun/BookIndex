@@ -14,14 +14,26 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-b8b3eddf-899a-553b-addc-818f3b4b9069",
   "head": "ударная vs. безударная форма местоимений",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        37,
+        38
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     37,
     38
   ],
-  "pages": "37, 38",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "37, 38",
   "needs_review": false
 }
 ```

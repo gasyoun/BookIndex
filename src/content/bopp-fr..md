@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-91e30a13-6ef6-5e0b-ac0f-7c20ab91d4ac",
   "head": "Бопп Фр.",
-  "pages": "71",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Б",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        71
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     71
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "71",
+  "category": "VI",
+  "letter": "Б",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": 1820,
   "chapters": [
     "Историческая лингвистика"

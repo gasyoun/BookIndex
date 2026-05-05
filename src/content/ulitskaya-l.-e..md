@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-86bcd6af-3641-5840-84e9-46b7aaf6ab60",
   "head": "Улицкая Л. Е.",
-  "pages": "77",
-  "category": "I.2",
-  "discussed": false,
-  "letter": "У",
-  "letter_change": true,
-  "subcategory": "literator",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        77
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     77
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "77",
+  "category": "I.2",
+  "letter": "У",
+  "letter_change": true,
+  "subcategory": "literator",
   "epoch": 2000,
   "chapters": [
     "Историческая лингвистика"

@@ -654,7 +654,7 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#kwic-sort')).toBeVisible();
 
     const lexSeed = await page.evaluate(() => {
-      const maxPage = typeof getTotalBookPages === 'function' ? getTotalBookPages() : 404;
+      const maxPage = typeof getTotalBookPages === 'function' ? getTotalBookPages() : 424;
       const items = Array.isArray(APP_DATA?.lexicon) ? APP_DATA.lexicon : [];
       for (const it of items) {
         const contexts = it && typeof it.contexts === 'object' ? it.contexts : {};
@@ -682,7 +682,7 @@ test.describe('aaz-index smoke', () => {
     await page.locator('#kwic-source').selectOption('lexicon');
     await page.locator('#kwic-sort').selectOption('right');
     await page.locator('#kwic-page-start').fill('1');
-    await page.locator('#kwic-page-end').fill('404');
+    await page.locator('#kwic-page-end').fill('424');
     await page.locator('#kwic-query').fill(lexSeed);
     await page.locator('#kwic-run').click();
     await expect(page.locator('#kwic-source-hint')).toContainText('словарные карточки');
@@ -697,7 +697,7 @@ test.describe('aaz-index smoke', () => {
     await page.locator('#kwic-source').selectOption('lexicon');
     await page.locator('#kwic-sort').selectOption('right');
     await page.locator('#kwic-page-start').fill('1');
-    await page.locator('#kwic-page-end').fill('404');
+    await page.locator('#kwic-page-end').fill('424');
     await page.locator('#kwic-query').fill(lexSeed);
     await page.locator('#kwic-run').click();
     await expect(page.locator('#kwic-results .kwic-row').first()).toBeVisible();
@@ -707,7 +707,7 @@ test.describe('aaz-index smoke', () => {
 
     await page.goto('/aaz-index.html#materials/kwic');
     const glossarySeed = await page.evaluate(() => {
-      const maxPage = typeof getTotalBookPages === 'function' ? getTotalBookPages() : 404;
+      const maxPage = typeof getTotalBookPages === 'function' ? getTotalBookPages() : 424;
       const glossary = Array.isArray(APP_DATA?.glossary) ? APP_DATA.glossary : [];
       for (const g of glossary) {
         const term = String(g?.term || '').trim();
@@ -1213,7 +1213,7 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/aaz-index.html#v4/materials/kwic');
     await page.locator('#kwic-source').selectOption('lexicon');
     await page.locator('#kwic-page-start').fill('1');
-    await page.locator('#kwic-page-end').fill('404');
+    await page.locator('#kwic-page-end').fill('424');
     await page.locator('#kwic-query').fill('санскрит');
     await page.locator('#kwic-run').click();
     await expect(page.locator('#kwic-results .kwic-row').first()).toBeVisible();

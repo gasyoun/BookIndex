@@ -14,14 +14,26 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-d00215a2-0d5b-556b-912b-fc32b76e7aa9",
   "head": "моногенез",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        76,
+        77
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     76,
     77
   ],
-  "pages": "76, 77",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "76, 77",
   "needs_review": false
 }
 ```

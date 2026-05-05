@@ -14,15 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-c407f252-c346-55bc-aff3-e1ad9af0ed0b",
   "head": "Стокгольм",
-  "pages": "244, 248",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        244,
+        248
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     244,
     248
   ],
+  "contexts": [],
   "discussed": true,
+  "pages": "244, 248",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

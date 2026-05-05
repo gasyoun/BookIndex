@@ -14,21 +14,32 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-caf0250a-d76e-578c-b642-f47ce80b7b48",
   "head": "Бусбек",
-  "pages": "184",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Б",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {
-    "184": [
-      "…кольку в Крыму готы дожили до XVI века. Голландский дипломат XVI века Бусбек с изумлением обнаружил, что понимает некоторые слова в речи жителя Кр…"
-    ]
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        184
+      ],
+      "contexts": [
+        "…кольку в Крыму готы дожили до XVI века. Голландский дипломат XVI века Бусбек с изумлением обнаружил, что понимает некоторые слова в речи жителя Кр…"
+      ]
+    }
   },
+  "book_id": "mumintroll",
   "page_list": [
     184
   ],
+  "contexts": [
+    "…кольку в Крыму готы дожили до XVI века. Голландский дипломат XVI века Бусбек с изумлением обнаружил, что понимает некоторые слова в речи жителя Кр…"
+  ],
+  "discussed": false,
+  "pages": "184",
+  "category": "VI",
+  "letter": "Б",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": null,
   "chapters": [
     "История русского языка"

@@ -473,14 +473,14 @@ const tests = [
     const prev = first.contexts;
     try {
       first.contexts = { bad: 'oops', '12': [null, 123, 'sample kwic query context'] };
-      const rows = collectLexiconKwicRows('query', 1, 404);
+      const rows = collectLexiconKwicRows('query', 1, getTotalBookPages());
       if (!Array.isArray(rows)) throw new Error('collectLexiconKwicRows should return array');
       const bulk = {};
       for (let i = 1; i <= 70; i++) {
         bulk[String(i)] = Array.from({ length: 30 }, (_, j) => `stress query ${i}-${j}`);
       }
       first.contexts = bulk;
-      const capped = collectLexiconKwicRows('query', 1, 404);
+      const capped = collectLexiconKwicRows('query', 1, getTotalBookPages());
       if (!Array.isArray(capped)) throw new Error('collectLexiconKwicRows should return array');
       if (capped.length !== KWIC_MAX_ROWS) throw new Error(`kwic cap mismatch: ${capped.length}`);
       if (capped._truncated !== true) throw new Error('kwic truncation flag should be true');

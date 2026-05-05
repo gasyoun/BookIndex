@@ -14,13 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-d04a0460-7c73-54e3-9a45-2f3c841c9999",
   "head": "реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        140
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     140
   ],
-  "pages": "140",
+  "contexts": [],
   "discussed": false,
-  "is_subrubric": true,
+  "pages": "140",
   "needs_review": false
 }
 ```

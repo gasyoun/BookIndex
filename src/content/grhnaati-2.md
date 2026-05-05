@@ -14,14 +14,29 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-e68f5a6d-92c0-5ee7-aca1-01fdf9d58676",
   "head": "грхнаати",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        158,
+        159,
+        160,
+        167
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     158,
     159,
     160,
     167
   ],
-  "pages": "158, 159, 160, 167",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "158, 159, 160, 167"
 }
 ```

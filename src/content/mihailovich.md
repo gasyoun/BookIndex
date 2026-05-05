@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-24472df6-fb45-5c14-ac77-daf23da32f14",
   "head": "Михаилович",
-  "pages": "372",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        372
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     372
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "372",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

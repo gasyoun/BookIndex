@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-eeac0def-4f99-5a9a-8ce1-07998bf3d1ab",
   "head": "Станг Хр.",
-  "pages": "246",
-  "category": "VI",
-  "discussed": false,
-  "letter": "С",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        246
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     246
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "246",
+  "category": "VI",
+  "letter": "С",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": null,
   "chapters": [
     "Из русского ударения"

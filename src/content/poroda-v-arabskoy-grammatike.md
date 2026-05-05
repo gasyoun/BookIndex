@@ -14,14 +14,26 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-7a94db6d-db27-5d5b-b375-3393d5038ae1",
   "head": "порода [в арабской грамматике]",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        217,
+        218
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     217,
     218
   ],
-  "pages": "217, 218",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "217, 218",
   "needs_review": false
 }
 ```

@@ -14,27 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-3b56f03c-a94e-518c-8b65-c95ea64eccd2",
   "head": "Литва",
-  "head_pages": "",
-  "subs": [
-    {
-      "label": "∼ власть",
-      "pages": "200"
-    },
-    {
-      "label": "∼ экспансия",
-      "pages": "200"
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        200
+      ],
+      "contexts": []
     }
-  ],
-  "discussed": true,
-  "letter": "Л",
-  "letter_change": true,
-  "lat": 55.17,
-  "lon": 23.88,
+  },
+  "book_id": "mumintroll",
   "page_list": [
     200
   ],
-  "contexts": {},
-  "epoch_class": "medieval"
+  "contexts": [],
+  "head_pages": "",
+  "discussed": true,
+  "letter": "Л",
+  "letter_change": true,
+  "epoch_class": "medieval",
+  "lat": 55.17,
+  "lon": 23.88
 }
 ```

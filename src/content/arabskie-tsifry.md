@@ -14,13 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-cd8627db-c47e-5583-9be7-76c00521064f",
   "head": "арабские цифры",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        169
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     169
   ],
-  "pages": "169",
+  "contexts": [],
   "discussed": false,
-  "is_subrubric": false,
+  "pages": "169",
   "needs_review": false
 }
 ```

@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-467581aa-37a4-5106-850a-22d0da3bba14",
   "head": "благочестие",
-  "pages": "186",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        186
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     186
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "186",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

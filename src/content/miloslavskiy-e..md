@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-cea28119-8c68-5c57-a9f2-ae5a0326230a",
   "head": "Милославский Е.",
-  "pages": "76",
-  "category": "VI",
-  "discussed": false,
-  "letter": "М",
-  "letter_change": false,
-  "subcategory": "participant",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        76
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     76
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "76",
+  "category": "VI",
+  "letter": "М",
+  "letter_change": false,
+  "subcategory": "participant",
   "epoch": null,
   "chapters": [
     "Историческая лингвистика"

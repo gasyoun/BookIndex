@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-78c7925d-041a-5054-ae23-97a00325a747",
   "head": "грозам",
-  "pages": "265",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        265
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     265
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "265",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

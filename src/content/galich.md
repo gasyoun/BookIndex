@@ -14,18 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-bcfcdd39-ce8b-5915-a1d2-e83207105f89",
   "head": "Галич",
-  "head_pages": "27",
-  "subs": [],
-  "discussed": false,
-  "letter": "Г",
-  "letter_change": true,
-  "lat": 49.12,
-  "lon": 24.7,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        27
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     27
   ],
-  "contexts": {},
-  "epoch_class": "medieval"
+  "contexts": [],
+  "head_pages": "27",
+  "discussed": false,
+  "letter": "Г",
+  "letter_change": true,
+  "epoch_class": "medieval",
+  "lat": 49.12,
+  "lon": 24.7
 }
 ```

@@ -13,7 +13,7 @@ _Текстовое поле верхнего уровня не найдено; 
 
 ```json
 {
-  "total_pages": 404,
+  "total_pages": 424,
   "names": 96,
   "toponyms": 93,
   "ethnonyms": 62,

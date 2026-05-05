@@ -14,17 +14,31 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-fe0c4f4b-369c-5491-a8c3-b1c21867ed15",
   "head": "Владимир",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        24,
+        200,
+        250
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     24,
     200,
     250
   ],
-  "pages": "24, 200, 250",
+  "contexts": [],
   "discussed": true,
+  "pages": "24, 200, 250",
   "category": "VI",
   "subcategory": "historical",
-  "needs_review": true,
-  "note": "Князь или город — проверить контекст каждой страницы"
+  "note": "Князь или город — проверить контекст каждой страницы",
+  "needs_review": true
 }
 ```

@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-519ae4a4-d81b-59f3-8681-0e41587f492d",
   "head": "Бранденбург",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        269
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     269
   ],
-  "pages": "269",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "269"
 }
 ```
