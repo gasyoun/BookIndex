@@ -14,13 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-2e02d232-42f9-5b45-b866-8684e05d7c84",
   "head": "?атіг",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        220
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     220
   ],
-  "pages": "220",
+  "contexts": [],
   "discussed": false,
-  "needs_review": true,
-  "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification."
+  "pages": "220",
+  "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
+  "needs_review": true
 }
 ```

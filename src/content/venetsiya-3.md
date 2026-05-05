@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-4e91d042-2efb-5064-a534-e272c898dee9",
   "head": "Венеция",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        62
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     62
   ],
-  "pages": "62",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "62"
 }
 ```

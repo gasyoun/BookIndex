@@ -14,12 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-45ea8bca-6ccf-538f-ae47-a864580f46b7",
   "head": "Вюртемберг",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        246,
+        269
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     246,
     269
   ],
-  "pages": "246, 269",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "246, 269"
 }
 ```

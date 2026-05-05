@@ -14,18 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-4000b097-9469-5b18-85e2-62dd89e3b229",
   "head": "Бремен",
-  "head_pages": "61",
-  "subs": [],
-  "discussed": false,
-  "letter": "Б",
-  "letter_change": false,
-  "lat": 53.08,
-  "lon": 8.8,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        61
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     61
   ],
-  "contexts": {},
-  "epoch_class": "medieval"
+  "contexts": [],
+  "head_pages": "61",
+  "discussed": false,
+  "letter": "Б",
+  "letter_change": false,
+  "epoch_class": "medieval",
+  "lat": 53.08,
+  "lon": 8.8
 }
 ```

@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-73807ba2-c963-58d4-9d32-fbc3c747413f",
   "head": "Ки́керо",
-  "pages": "248",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        248
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     248
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "248",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-f11516ef-44a8-5a35-bff3-04a83cda61eb",
   "head": "Мейе А.",
-  "pages": "11",
-  "category": "VI",
-  "discussed": false,
-  "letter": "М",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        11
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     11
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "11",
+  "category": "VI",
+  "letter": "М",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": 1900,
   "chapters": [
     "От редколлегии и предисловие"

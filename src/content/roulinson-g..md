@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-56e2322f-174c-5982-8e1e-535bae269e81",
   "head": "Роулинсон Г.",
-  "pages": "121",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Р",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        121
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     121
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "121",
+  "category": "VI",
+  "letter": "Р",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": 1850,
   "chapters": [
     "Историческая лингвистика (продолж.)"

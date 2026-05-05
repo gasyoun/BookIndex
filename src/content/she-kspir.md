@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-077caa1d-c4f2-5f1d-a9ff-e3c0f33fac56",
   "head": "Ше́кспир",
-  "pages": "243",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        243
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     243
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "243",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-aa726cbf-9b1d-5c64-937a-bd4711b96595",
   "head": "свинство",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        339
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     339
   ],
-  "pages": "339",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "339"
 }
 ```

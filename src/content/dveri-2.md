@@ -14,7 +14,22 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-235b3a59-8184-5ba7-8ed2-835b9d856a00",
   "head": "двери",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        316,
+        317,
+        318,
+        319,
+        320
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     316,
     317,
@@ -22,7 +37,8 @@ _Основное текстовое поле не найдено; см. JSON н
     319,
     320
   ],
-  "pages": "316, 317, 318, 319, 320",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "316, 317, 318, 319, 320"
 }
 ```

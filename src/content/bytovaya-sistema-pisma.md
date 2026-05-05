@@ -14,7 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-b59fbb61-c232-5a53-82ef-b12a59bd9d87",
   "head": "бытовая система письма",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        277,
+        278,
+        282,
+        292,
+        293,
+        300
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     277,
     278,
@@ -23,9 +39,9 @@ _Основное текстовое поле не найдено; см. JSON н
     293,
     300
   ],
-  "pages": "277, 278, 282, 292, 293, 300",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "277, 278, 282, 292, 293, 300",
   "needs_review": false
 }
 ```

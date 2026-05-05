@@ -14,7 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-2b9d7e0d-c18f-5e49-bbae-222a4e0beecb",
   "head": "отпадение конечных гласных",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        111,
+        112,
+        117,
+        152,
+        390,
+        391
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     111,
     112,
@@ -23,9 +39,9 @@ _Основное текстовое поле не найдено; см. JSON н
     390,
     391
   ],
-  "pages": "111, 112, 117, 152, 390, 391",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "111, 112, 117, 152, 390, 391",
   "needs_review": false
 }
 ```

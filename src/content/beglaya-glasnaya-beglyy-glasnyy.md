@@ -14,7 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-6298284a-ad8f-57bc-88c4-f3d6e1763f23",
   "head": "беглая гласная, беглый гласный",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        103,
+        104,
+        341,
+        377,
+        378,
+        379,
+        380,
+        381
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     103,
     104,
@@ -25,9 +43,9 @@ _Основное текстовое поле не найдено; см. JSON н
     380,
     381
   ],
-  "pages": "103, 104, 341, 377, 378, 379, 380, 381",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "103, 104, 341, 377, 378, 379, 380, 381",
   "needs_review": false
 }
 ```

@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-08dac8e1-7f25-5ad0-b54f-39303730b554",
   "head": "Дыбо В. А.",
-  "pages": "246",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Д",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        246
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     246
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "246",
+  "category": "VI",
+  "letter": "Д",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": 1970,
   "chapters": [
     "Из русского ударения"

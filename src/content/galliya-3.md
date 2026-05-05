@@ -14,12 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-8d792996-9f7a-5e2a-87de-baec282259cb",
   "head": "Галлия",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        56,
+        126
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     56,
     126
   ],
-  "pages": "56, 126",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "56, 126"
 }
 ```

@@ -14,19 +14,31 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-18468dd6-0517-5f25-8311-f0ccbcf683f0",
   "head": "diot",
-  "pages": "60, 75",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        60,
+        75
+      ],
+      "contexts": [
+        "…Это как раз один из тех самых примеров. Deutsch — от древненемецкого diot «народ, люди». То есть слово deutsch в первоначальном значении — это…"
+      ]
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     60,
     75
   ],
+  "contexts": [
+    "…Это как раз один из тех самых примеров. Deutsch — от древненемецкого diot «народ, люди». То есть слово deutsch в первоначальном значении — это…"
+  ],
   "discussed": true,
+  "pages": "60, 75",
   "category": "lat",
-  "needs_review": false,
-  "contexts": {
-    "60": [
-      "…Это как раз один из тех самых примеров. Deutsch — от древненемецкого diot «народ, люди». То есть слово deutsch в первоначальном значении — это…"
-    ]
-  }
+  "needs_review": false
 }
 ```

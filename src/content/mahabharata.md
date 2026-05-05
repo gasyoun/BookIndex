@@ -14,15 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-aa820e1c-c6fd-5b57-81a1-c51fbcfb61af",
   "head": "Махабхарата",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        140,
+        141,
+        153
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     140,
     141,
     153
   ],
-  "pages": "140, 141, 153",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "140, 141, 153",
   "needs_review": false
 }
 ```

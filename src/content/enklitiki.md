@@ -14,7 +14,30 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-dda9d33a-c28c-57ad-b5a6-61e1e122c99b",
   "head": "энклитики",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        14,
+        16,
+        19,
+        20,
+        21,
+        22,
+        25,
+        30,
+        33,
+        37,
+        40,
+        41,
+        49
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     14,
     16,
@@ -30,9 +53,9 @@ _Основное текстовое поле не найдено; см. JSON н
     41,
     49
   ],
-  "pages": "14, 16, 19, 20, 21, 22, 25, 30, 33, 37, 40, 41, 49",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "14, 16, 19, 20, 21, 22, 25, 30, 33, 37, 40, 41, 49",
   "needs_review": false
 }
 ```

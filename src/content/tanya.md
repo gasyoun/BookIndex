@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-d77e4b18-e172-5c30-86d4-a50a49aea8fb",
   "head": "Таня",
-  "pages": "290",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        290
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     290
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "290",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

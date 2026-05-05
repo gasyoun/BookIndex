@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-a5327eca-6323-5afe-8f4d-73c6e0700f59",
   "head": "Гутенберг",
-  "pages": "248",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        248
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     248
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "248",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

@@ -14,12 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-31d8463c-289a-5315-a2f0-b073a509a6c3",
   "head": "даш",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        302,
+        303
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     302,
     303
   ],
-  "pages": "302, 303",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "302, 303"
 }
 ```

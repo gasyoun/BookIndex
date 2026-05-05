@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-634b840c-201f-5a6d-a487-14da08637016",
   "head": "рабство",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        335
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     335
   ],
-  "pages": "335",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "335"
 }
 ```

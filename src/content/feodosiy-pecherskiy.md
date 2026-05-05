@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-e16664a6-dfed-5018-b5d0-5d3effa86d1d",
   "head": "Феодосий Печерский",
-  "pages": "47",
-  "category": "II.2",
-  "discussed": false,
-  "letter": "Ф",
-  "letter_change": false,
-  "subcategory": "historical",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        47
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     47
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "47",
+  "category": "II.2",
+  "letter": "Ф",
+  "letter_change": false,
+  "subcategory": "historical",
   "epoch": 1060,
   "chapters": [
     "Порядок слов"

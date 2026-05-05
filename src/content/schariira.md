@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-757c6b74-eed9-5bd0-9681-6a4480598c17",
   "head": "щариира",
-  "pages": "165",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        165
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     165
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "165",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

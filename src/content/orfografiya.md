@@ -14,7 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-7300bdc6-dcc8-5af9-84f7-ae7c64bdb22a",
   "head": "орфография",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        68,
+        71,
+        80,
+        81,
+        82,
+        104,
+        126,
+        207
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     68,
     71,
@@ -25,9 +43,9 @@ _Основное текстовое поле не найдено; см. JSON н
     126,
     207
   ],
-  "pages": "68, 71, 80, 81, 82, 104, 126, 207",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "68, 71, 80, 81, 82, 104, 126, 207",
   "needs_review": false
 }
 ```

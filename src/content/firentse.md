@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-1b2cff6b-b1aa-54c9-a78e-a6cd0292727e",
   "head": "Фиренце",
-  "pages": "247",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        247
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     247
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "247",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

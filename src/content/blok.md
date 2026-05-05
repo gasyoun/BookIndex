@@ -14,17 +14,31 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-ccbd82f8-9f34-5ff5-8cd1-b02dce87891f",
   "head": "Блок",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        25,
+        196,
+        215
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     25,
     196,
     215
   ],
-  "pages": "25, 196, 215",
+  "contexts": [],
   "discussed": true,
+  "pages": "25, 196, 215",
   "category": "VI",
   "subcategory": "literator",
-  "needs_review": true,
-  "note": "Александр Блок или лингвистический термин «блок»"
+  "note": "Александр Блок или лингвистический термин «блок»",
+  "needs_review": true
 }
 ```

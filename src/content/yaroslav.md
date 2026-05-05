@@ -14,15 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-825ab60f-4ead-5a5b-a679-00fc7d64b9bd",
   "head": "Ярослав",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        85
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     85
   ],
-  "pages": "85",
+  "contexts": [],
   "discussed": false,
+  "pages": "85",
   "category": "VI",
   "subcategory": "historical",
-  "needs_review": true,
-  "note": "Ярослав Мудрый или часть слова «Ярославль»"
+  "note": "Ярослав Мудрый или часть слова «Ярославль»",
+  "needs_review": true
 }
 ```

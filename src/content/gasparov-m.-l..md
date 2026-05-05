@@ -14,18 +14,30 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-9af09cb2-330d-5a8d-9bc9-a6aa475c0dfd",
   "head": "Гаспаров М. Л.",
-  "pages": "77, 392",
-  "category": "I.2",
-  "discussed": true,
-  "letter": "Г",
-  "letter_change": true,
-  "subcategory": "literator",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        77,
+        392
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     77,
     392
   ],
+  "contexts": [],
+  "discussed": true,
+  "pages": "77, 392",
+  "category": "I.2",
+  "letter": "Г",
+  "letter_change": true,
+  "subcategory": "literator",
   "epoch": 1970,
   "chapters": [
     "Или и уже",

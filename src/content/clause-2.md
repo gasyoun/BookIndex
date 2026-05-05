@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-2ada1859-4e70-553a-84b2-f579abc59608",
   "head": "clause",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        20
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     20
   ],
-  "pages": "20",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "20"
 }
 ```

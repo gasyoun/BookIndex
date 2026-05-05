@@ -14,7 +14,22 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-d3061641-2afc-5c87-bfc6-481a5a1e1b47",
   "head": "джиирнаани",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        155,
+        159,
+        160,
+        164,
+        165
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     155,
     159,
@@ -22,7 +37,8 @@ _Основное текстовое поле не найдено; см. JSON н
     164,
     165
   ],
-  "pages": "155, 159, 160, 164, 165",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "155, 159, 160, 164, 165"
 }
 ```

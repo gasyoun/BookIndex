@@ -14,7 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-bc026852-7674-5c4f-ae6d-889d8a92cd8b",
   "head": "отпадение конечных гласных: ∼ ~ согласных",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        111,
+        112,
+        117,
+        118,
+        152,
+        329
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     111,
     112,
@@ -23,9 +39,9 @@ _Основное текстовое поле не найдено; см. JSON н
     152,
     329
   ],
-  "pages": "111, 112, 117, 118, 152, 329",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": true,
+  "pages": "111, 112, 117, 118, 152, 329",
   "needs_review": false
 }
 ```

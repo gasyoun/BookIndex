@@ -14,7 +14,22 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-1b6a28f4-8f0e-51e0-a3ca-6f1f4c7b7431",
   "head": "реконструкция [метод исторической лингвистики]",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        102,
+        111,
+        113,
+        123,
+        124
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     102,
     111,
@@ -22,9 +37,9 @@ _Основное текстовое поле не найдено; см. JSON н
     123,
     124
   ],
-  "pages": "102, 111, 113, 123, 124",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "102, 111, 113, 123, 124",
   "needs_review": false
 }
 ```

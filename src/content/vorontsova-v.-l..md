@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-b7b4b0b4-d9d1-5100-825e-040f27aafbad",
   "head": "Воронцова В. Л.",
-  "pages": "392",
-  "category": "VI",
-  "discussed": false,
-  "letter": "В",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        392
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     392
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "392",
+  "category": "VI",
+  "letter": "В",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": null,
   "chapters": [
     "Или и уже"

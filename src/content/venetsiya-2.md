@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-4e91d042-2efb-5064-a534-e272c898dee9",
   "head": "Венеция",
-  "pages": "62",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        62
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     62
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "62",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

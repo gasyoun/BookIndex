@@ -14,17 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "languages-b6b21428-b9d3-5e48-8bae-23b938a1886b",
   "head": "библейский",
-  "pages": "129",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        129
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     129
   ],
+  "contexts": [],
   "discussed": false,
-  "subs": [],
-  "contexts": {},
-  "family": "Афразийская",
-  "group": "семитская",
+  "pages": "129",
   "lat": 32,
-  "lon": 35
+  "lon": 35,
+  "family": "Афразийская",
+  "group": "семитская"
 }
 ```

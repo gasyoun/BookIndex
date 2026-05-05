@@ -14,12 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-822cb45a-6005-588b-a80b-ea5706bf8fe4",
   "head": "Германия",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        59,
+        60
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     59,
     60
   ],
-  "pages": "59, 60",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "59, 60"
 }
 ```

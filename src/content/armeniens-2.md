@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-cfcfd84d-2ca2-5185-b789-9a7eaed85798",
   "head": "armeniens",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        60
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     60
   ],
-  "pages": "60",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "60"
 }
 ```

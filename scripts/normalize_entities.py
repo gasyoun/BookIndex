@@ -74,7 +74,14 @@ def main():
             merged['page_list'] = occurrences.get(merged['book_id'], {}).get('pages', [])
             merged['contexts'] = occurrences.get(merged['book_id'], {}).get('contexts', [])
             
-            for k in ['head_pages', 'is_moderator', 'moderator_note', 'discussed']:
+            preserve_fields = [
+                'pages', 'category', 'letter', 'letter_change', 'subcategory', 'epoch', 'epoch_class',
+                'chapters', 'wiki', 'img', 'lat', 'lon', 'family', 'group', 'branch', 'area',
+                'description', 'desc', 'about', 'why', 'definition', 'etymology', 'note',
+                'needs_review', 'source_confirmed', 'verified', 'sources', 'editorial_flags',
+                'is_moderator', 'moderator_note', 'discussed', 'color', 'type', 'head_pages'
+            ]
+            for k in preserve_fields:
                 if k in group[0]:
                     merged[k] = group[0][k]
             

@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-7c1b8d16-4144-5c5b-b0e4-d5f108e2c2fc",
   "head": "Блеген К.",
-  "pages": "123",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Б",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        123
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     123
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "123",
+  "category": "VI",
+  "letter": "Б",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": null,
   "chapters": [
     "Историческая лингвистика (продолж.)"

@@ -14,17 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "languages-8748d830-d9f1-5765-937c-81ba57e80c8f",
   "head": "баскский*",
-  "pages": "135",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        135
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     135
   ],
+  "contexts": [],
   "discussed": false,
-  "subs": [],
-  "contexts": {},
-  "family": "Изолят",
-  "group": "изолят",
+  "pages": "135",
   "lat": 43,
-  "lon": -2
+  "lon": -2,
+  "family": "Изолят",
+  "group": "изолят"
 }
 ```

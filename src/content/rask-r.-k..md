@@ -14,18 +14,30 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-1672b9ee-7f71-5a34-9d01-01f3c38acaa3",
   "head": "Раск Р. К.",
-  "pages": "71, 73",
-  "category": "VI",
-  "discussed": true,
-  "letter": "Р",
-  "letter_change": true,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        71,
+        73
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     71,
     73
   ],
+  "contexts": [],
+  "discussed": true,
+  "pages": "71, 73",
+  "category": "VI",
+  "letter": "Р",
+  "letter_change": true,
+  "subcategory": "linguist",
   "epoch": 1820,
   "chapters": [
     "Историческая лингвистика"

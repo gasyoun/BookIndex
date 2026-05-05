@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-70b2bbe6-f605-5093-898e-f195b58659d6",
   "head": "Фридрих И.",
-  "pages": "121",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Ф",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        121
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     121
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "121",
+  "category": "VI",
+  "letter": "Ф",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": 1950,
   "chapters": [
     "Историческая лингвистика (продолж.)"

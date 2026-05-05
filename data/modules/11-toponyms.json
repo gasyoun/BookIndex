@@ -24,7 +24,12 @@
         "…зучали битву при Гастингсе. Устанавливается норманнское владычество в Англии, и начинается сильное влияние французского языка на английский. Из фр…"
       ],
       "head_pages": "82",
-      "discussed": false
+      "discussed": false,
+      "letter": "А",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 52,
+      "lon": -1.5
     },
     {
       "canonical_id": "toponyms-f09a3a8f-bf41-50f6-865b-fc838bb915b4",
@@ -48,7 +53,12 @@
         "…нте принимался за самую изысканную, высоко литературную форму речи на Апеннинском полуострове. А в некоторых языках складывается ситуация, когда в каче…"
       ],
       "head_pages": "192",
-      "discussed": false
+      "discussed": false,
+      "letter": "А",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 42,
+      "lon": 13
     },
     {
       "canonical_id": "toponyms-6eca804c-367a-5d6f-9c7f-a8a61be0f4f3",
@@ -98,7 +108,12 @@
         "Замечу, что и в русском языке довольно много заимствований из арабского. Кое-что прямо из арабского, еще больше — через посредство турецкого…"
       ],
       "head_pages": "211, 223",
-      "discussed": true
+      "discussed": true,
+      "letter": "А",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 25,
+      "lon": 45
     },
     {
       "canonical_id": "toponyms-0eafbc9c-dce8-54e7-a820-8d98ec33b15e",
@@ -122,7 +137,12 @@
         "…азывается даже больше, чем центральная и южная. В нее входят нынешняя Архангельская область, Вятская 1, Cеверный Урал, весь Кольский полуостров. А что бу…"
       ],
       "head_pages": "199",
-      "discussed": false
+      "discussed": false,
+      "letter": "А",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 64.5,
+      "lon": 41
     },
     {
       "canonical_id": "toponyms-c29631f7-4f5d-540f-8242-94d7d38f89ba",
@@ -146,7 +166,12 @@
         "…ое количество заимствований из арабского. Турецкий, персидский, языки Африки — всюду арабский язык играет роль такого же источника лексики, в особ…"
       ],
       "head_pages": "",
-      "discussed": true
+      "discussed": true,
+      "letter": "А",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 0,
+      "lon": 20
     },
     {
       "canonical_id": "toponyms-34e82082-bebd-538e-9a79-1964165b77a2",
@@ -166,7 +191,12 @@
       ],
       "contexts": [],
       "head_pages": "60",
-      "discussed": false
+      "discussed": false,
+      "letter": "Б",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 48.7,
+      "lon": 11.5
     },
     {
       "canonical_id": "toponyms-116fa4b7-d6b1-5af1-a920-29a77884dfe8",
@@ -190,7 +220,12 @@
         "…территориями практически всей современной Украины, значительной части Балкан, Италии, Испании, части Франции и т. д. Так что нет ничего удивительн…"
       ],
       "head_pages": "184",
-      "discussed": false
+      "discussed": false,
+      "letter": "Б",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 43,
+      "lon": 22
     },
     {
       "canonical_id": "toponyms-9f1ae182-12e1-588a-ae62-4dcc7d5c834c",
@@ -216,7 +251,12 @@
         "…но. Купцы и прочие визитеры из этих мест постоянно посещали все части Балтийского моря, и вот, пожалуйста, получилось это название: сакса. Так что с ка…"
       ],
       "head_pages": "61",
-      "discussed": false
+      "discussed": false,
+      "letter": "Б",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 58,
+      "lon": 20
     },
     {
       "canonical_id": "toponyms-92510155-1662-56c3-8754-f4d9303a51a9",
@@ -262,7 +302,12 @@
         "…Новые границы между будущей Великороссией и будущей Украиной вместе с Белоруссией в значительной степени совпадают с политическими границами Великого к…"
       ],
       "head_pages": "57, 196, 200, 201, 204, 206",
-      "discussed": true
+      "discussed": true,
+      "letter": "Б",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 53.7,
+      "lon": 27.95
     },
     {
       "canonical_id": "toponyms-77272b79-d2e2-5747-bf35-8da65ea8bf8b",
@@ -286,7 +331,12 @@
         "…А как звучал санскрит? А. З.: Ну, санскрит и сейчас звучит: в городе Бенарес (Варанаси) записали санскрит в качестве родного языка 500 человек. Из…"
       ],
       "head_pages": "124",
-      "discussed": false
+      "discussed": false,
+      "letter": "Б",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 25.32,
+      "lon": 83
     },
     {
       "canonical_id": "toponyms-4000b097-9469-5b18-85e2-62dd89e3b229",
@@ -306,7 +356,12 @@
       ],
       "contexts": [],
       "head_pages": "61",
-      "discussed": false
+      "discussed": false,
+      "letter": "Б",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 53.08,
+      "lon": 8.8
     },
     {
       "canonical_id": "toponyms-6fdbefeb-7f12-5252-8c61-5f30a6cd0d6a",
@@ -330,7 +385,12 @@
         "…орящие по-французски. Так что, сохраняя имя норманнов, они приносят в Британию французский язык. И вот масса заимствований, которая происходит в это…"
       ],
       "head_pages": "82",
-      "discussed": false
+      "discussed": false,
+      "letter": "Б",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 54,
+      "lon": -2
     },
     {
       "canonical_id": "toponyms-f860da61-f5c8-50dd-bd70-3061ef18effb",
@@ -354,7 +414,12 @@
         "…емецки звучит как deutsch, только в древней форме, называли и жителей Британских островов, и датчан, и прочих. В старых латинских записях это так и зн…"
       ],
       "head_pages": "60",
-      "discussed": false
+      "discussed": false,
+      "letter": "Б",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 54,
+      "lon": -4
     },
     {
       "canonical_id": "toponyms-05cef0ca-9a03-546a-be7c-6e56d003bdda",
@@ -380,7 +445,12 @@
         "Это мы называем ее Индией, а официальное индийское ее название — Бхарат. Индия — это вообще слово не индийское и ни в каком из индийских язык…"
       ],
       "head_pages": "141",
-      "discussed": false
+      "discussed": false,
+      "letter": "Б",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 21,
+      "lon": 78
     },
     {
       "canonical_id": "toponyms-1102e670-1343-5951-b926-aa1bee3d5ab0",
@@ -404,7 +474,12 @@
         "…учал санскрит? А. З.: Ну, санскрит и сейчас звучит: в городе Бенарес (Варанаси) записали санскрит в качестве родного языка 500 человек. Из зала: А п…"
       ],
       "head_pages": "124",
-      "discussed": false
+      "discussed": false,
+      "letter": "В",
+      "letter_change": true,
+      "epoch_class": "ancient",
+      "lat": 25.32,
+      "lon": 83
     },
     {
       "canonical_id": "toponyms-5ae4de51-6510-5277-8522-8ce0972083a1",
@@ -432,7 +507,12 @@
         "…нно территорию будущей Украины, значительную часть территории будущей Великороссии и территории Белоруссии. Ничего общего с современным делением этой те…"
       ],
       "head_pages": "199, 200",
-      "discussed": true
+      "discussed": true,
+      "letter": "В",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 56,
+      "lon": 38
     },
     {
       "canonical_id": "toponyms-f00f53c4-b84a-5d70-9b8c-d6be1ffdea62",
@@ -460,7 +540,12 @@
         "…то иной, как венгерский король. Это всё сообщает гонец, присланный из Венгрии к галицкому 5 Приведенный список рангов энклитик взят из книги: А. А.…"
       ],
       "head_pages": "27, 135",
-      "discussed": true
+      "discussed": true,
+      "letter": "В",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 47.16,
+      "lon": 19.5
     },
     {
       "canonical_id": "toponyms-4e91d042-2efb-5064-a534-e272c898dee9",
@@ -484,7 +569,12 @@
         "…— современная Италия, где говор крайнего юга и говор севера, допустим Венеции, настолько значительно различаются, что понимание между ними хотя и в…"
       ],
       "head_pages": "181",
-      "discussed": false
+      "discussed": false,
+      "letter": "В",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 45.44,
+      "lon": 12.32
     },
     {
       "canonical_id": "toponyms-6a1587d1-8457-5882-9ddb-93adc3994fa4",
@@ -508,7 +598,12 @@
         "…м, у нас есть какое-нибудь заимствованное слово из античности, да? Из Византии. Как ударение себя ведет — оно изменяется под стать законам древнерус…"
       ],
       "head_pages": "391",
-      "discussed": false
+      "discussed": false,
+      "letter": "В",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 41,
+      "lon": 29
     },
     {
       "canonical_id": "toponyms-fe0c4f4b-369c-5491-a8c3-b1c21867ed15",
@@ -532,7 +627,12 @@
         "…дная (новгородско-псковская) и центрально-восточная (Ростов, Суздаль, Владимир, Москва, Рязань). Как мы теперь знаем, это и были в диалектном отноше…"
       ],
       "head_pages": "200",
-      "discussed": false
+      "discussed": false,
+      "letter": "В",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 56.13,
+      "lon": 40.4
     },
     {
       "canonical_id": "toponyms-1b6a010c-35e4-5f09-a76b-ba46eeec35b4",
@@ -556,7 +656,12 @@
         "…чем центральная и южная. В нее входят нынешняя Архангельская область, Вятская 1, Cеверный Урал, весь Кольский полуостров. А что будет, если мы загл…"
       ],
       "head_pages": "199",
-      "discussed": false
+      "discussed": false,
+      "letter": "В",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 58.6,
+      "lon": 49.66
     },
     {
       "canonical_id": "toponyms-bcfcdd39-ce8b-5915-a1d2-e83207105f89",
@@ -576,7 +681,12 @@
       ],
       "contexts": [],
       "head_pages": "27",
-      "discussed": false
+      "discussed": false,
+      "letter": "Г",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 49.12,
+      "lon": 24.7
     },
     {
       "canonical_id": "toponyms-8d792996-9f7a-5e2a-87de-baec282259cb",
@@ -604,7 +714,12 @@
         "…которых я говорил. Франки, которые вторглись на территорию тогдашней Галлии, довольно быстро растворились с точки зрения языка среди своих завоев…"
       ],
       "head_pages": "56, 126",
-      "discussed": true
+      "discussed": true,
+      "letter": "Г",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 47,
+      "lon": 2
     },
     {
       "canonical_id": "toponyms-a7d29db9-1892-5d72-8fdb-8eb82bd6979a",
@@ -628,7 +743,12 @@
         "…066 году, норманны захватили Англию. Может быть, вы изучали битву при Гастингсе. Устанавливается норманнское владычество в Англии, и начинается сильн…"
       ],
       "head_pages": "82",
-      "discussed": false
+      "discussed": false,
+      "letter": "Г",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 50.85,
+      "lon": 0.57
     },
     {
       "canonical_id": "toponyms-1e3123bc-ec36-5486-9448-27a00c474fec",
@@ -652,7 +772,12 @@
         "…финнами соприкасались. Нынешняя Саксония — это область на юге бывшей ГДР. Из зала: Но они были на побережье Балтийского моря. А. З.: Конечно.…"
       ],
       "head_pages": "61",
-      "discussed": false
+      "discussed": false,
+      "letter": "Г",
+      "letter_change": false,
+      "epoch_class": "contemporary",
+      "lat": 52.5,
+      "lon": 13.4
     },
     {
       "canonical_id": "toponyms-822cb45a-6005-588b-a80b-ea5706bf8fe4",
@@ -690,7 +815,12 @@
         "…ется своими соседями по-разному. Вот некоторые примеры. Возьмем ту же Германию. Русские и другие славяне называют их немцами. А французы как называю…"
       ],
       "head_pages": "12, 56, 59, 60",
-      "discussed": true
+      "discussed": true,
+      "letter": "Г",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 51.16,
+      "lon": 10.45
     },
     {
       "canonical_id": "toponyms-cd173c0a-21ae-56e6-a562-208d32b002a1",
@@ -714,7 +844,12 @@
         "…зыка — в соответствии с увлечениями Петра I и с его прямыми связями с Голландией, где он, как известно, даже поработал плотником. Слова крейсер, шкипе…"
       ],
       "head_pages": "190",
-      "discussed": false
+      "discussed": false,
+      "letter": "Г",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 52.13,
+      "lon": 5.29
     },
     {
       "canonical_id": "toponyms-0a43c6a9-8be6-5d88-a7fa-11997c92afbe",
@@ -740,7 +875,12 @@
         "…шом количестве при археологических раскопках на Крите и в материковой Греции в начале и середине ХХ века. Они были на глиняных таблетках, пластино…"
       ],
       "head_pages": "77, 120",
-      "discussed": true
+      "discussed": true,
+      "letter": "Г",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 39.07,
+      "lon": 21.82
     },
     {
       "canonical_id": "toponyms-f546ae3d-d62c-5e68-8ca6-eaa819cac193",
@@ -814,7 +954,12 @@
         "…оевропейских языков, то есть, как уже было сказано, почти всех языков Европы, Индии и Ирана, можно различить такие, которые претерпели более глубо…"
       ],
       "head_pages": "58, 81, 84, 135, 136, 142, 147, 152, 180, 211",
-      "discussed": true
+      "discussed": true,
+      "letter": "Е",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 54,
+      "lon": 15
     },
     {
       "canonical_id": "toponyms-4b2db9c2-762c-5388-9850-d8c5eee2b734",
@@ -854,7 +999,12 @@
         "…о это соответствует известному решению арабского халифа, захватившего Египет, что все книги, кроме Корана, можно сжечь, поскольку всё, что следует…"
       ],
       "head_pages": "81, 192, 222, 223",
-      "discussed": true
+      "discussed": true,
+      "letter": "Е",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 26.82,
+      "lon": 30.8
     },
     {
       "canonical_id": "toponyms-1c425ad0-cccc-5b9d-bb5e-d3595c02bdec",
@@ -880,7 +1030,12 @@
         "…и западные языки. Первым по порядку оказывается ближайший к нам язык западного мира — польский. Это родственный язык, но он гораздо активнее, чем ру…"
       ],
       "head_pages": "189",
-      "discussed": false
+      "discussed": false,
+      "letter": "З",
+      "letter_change": true,
+      "epoch_class": "modern",
+      "lat": 40,
+      "lon": -10
     },
     {
       "canonical_id": "toponyms-fa477e79-360b-51f4-afa2-75144035939f",
@@ -958,7 +1113,12 @@
         "…вропейские языки, с одной стороны, и индоиранские, с другой. Но слово Индия, конечно, тут центральное. Это сразу показывает масштаб значимости яз…"
       ],
       "head_pages": "134–136, 138–142, 144, 146, 172, 173, 180, 192, 203",
-      "discussed": true
+      "discussed": true,
+      "letter": "И",
+      "letter_change": true,
+      "epoch_class": "ancient",
+      "lat": 21,
+      "lon": 78
     },
     {
       "canonical_id": "toponyms-66946002-6134-56fc-9126-bd9cbe7934f4",
@@ -986,7 +1146,12 @@
         "…ая часть мира, где существует немыслимое количество языков. Сейчас на Индостане существует не меньше чем 200 языков, уже вполне описанных и имеющих с…"
       ],
       "head_pages": "133, 152",
-      "discussed": true
+      "discussed": true,
+      "letter": "И",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 22,
+      "lon": 79
     },
     {
       "canonical_id": "toponyms-ef67cea3-45e5-5afc-9faa-62fca9f25708",
@@ -1010,7 +1175,12 @@
         "…орана, который уже сильно отличается от живых языков Марокко, Египта, Ирака. Высоким языком, который считается единственно пригодным для определе…"
       ],
       "head_pages": "192",
-      "discussed": false
+      "discussed": false,
+      "letter": "И",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 33.22,
+      "lon": 43.68
     },
     {
       "canonical_id": "toponyms-8a39e323-c80f-51fe-86b5-036db4c01611",
@@ -1038,7 +1208,12 @@
         "…ков, то есть, как уже было сказано, почти всех языков Европы, Индии и Ирана, можно различить такие, которые претерпели более глубокие изменения п…"
       ],
       "head_pages": "135, 139",
-      "discussed": true
+      "discussed": true,
+      "letter": "И",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 32.43,
+      "lon": 53.69
     },
     {
       "canonical_id": "toponyms-a1f35106-b1df-576f-b860-3e9c9a798fe0",
@@ -1068,7 +1243,12 @@
         "…в том, что медленно развиваются языки, которые живут в изоляции. Так, Исландия — остров, и исландский язык — один из самых медленно развивающихся из…"
       ],
       "head_pages": "65, 182",
-      "discussed": true
+      "discussed": true,
+      "letter": "И",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 64.96,
+      "lon": -19
     },
     {
       "canonical_id": "toponyms-1ec53bd1-e8a3-5ce6-9fd9-7af2ec643935",
@@ -1092,7 +1272,12 @@
         "…ктически всей современной Украины, значительной части Балкан, Италии, Испании, части Франции и т. д. Так что нет ничего удивительного в том, что во…"
       ],
       "head_pages": "184",
-      "discussed": false
+      "discussed": false,
+      "letter": "И",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 40.46,
+      "lon": -3.75
     },
     {
       "canonical_id": "toponyms-f1336cd1-6b40-535e-8308-6aa3e5cf5ca5",
@@ -1128,7 +1313,12 @@
         "…м Рѣц: в Рѣц и до Мстѣ. А. З.: Хорошее название. Подходит для Верхней Италии (смех в зале), где отсекаются конечные части слов... Для славянского…"
       ],
       "head_pages": "184",
-      "discussed": true
+      "discussed": true,
+      "letter": "И",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 41.87,
+      "lon": 12.57
     },
     {
       "canonical_id": "toponyms-5f1ad71b-a89b-55da-9d7f-1a53a9813c4a",
@@ -1152,7 +1342,12 @@
         "…лючить юго-восточную и северо-восточную периферию Европы — территорию Кавказа и север европейской части России, — то на всей остальной территории Е…"
       ],
       "head_pages": "",
-      "discussed": true
+      "discussed": true,
+      "letter": "К",
+      "letter_change": true,
+      "epoch_class": "ancient",
+      "lat": 43,
+      "lon": 44
     },
     {
       "canonical_id": "toponyms-0935829a-38e2-5fde-ad2c-a377427ea5ec",
@@ -1192,7 +1387,12 @@
         "…и называли Русью только маленькую часть страны — территорию нынешних Киевской, Черниговской и Переяславской 1 областей Украины. Остальные территори…"
       ],
       "head_pages": "57, 179, 199",
-      "discussed": true
+      "discussed": true,
+      "letter": "К",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 50.45,
+      "lon": 30.52
     },
     {
       "canonical_id": "toponyms-14109847-322c-5d0d-9585-edf11c03a03b",
@@ -1216,7 +1416,12 @@
         "…родской. Похожие на южно- и западнославянскую зоны — это прежде всего киевская и ростово-суздальская земля; и существенно то, что при этом между ним…"
       ],
       "head_pages": "200",
-      "discussed": false
+      "discussed": false,
+      "letter": "К",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 50.45,
+      "lon": 30.52
     },
     {
       "canonical_id": "toponyms-6266dc05-ee33-52d0-8ea7-0cfc4d1723a9",
@@ -1242,7 +1447,12 @@
         "…называть 1 Древнее Переяславское княжество располагалось к востоку от Киевского, в лесостепной зоне днепровского левобережья. Основная часть его терр…"
       ],
       "head_pages": "57",
-      "discussed": false
+      "discussed": false,
+      "letter": "К",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 50.45,
+      "lon": 30.52
     },
     {
       "canonical_id": "toponyms-b289c2b1-ac57-520c-b628-ab540ef679a7",
@@ -1262,7 +1472,12 @@
       ],
       "contexts": [],
       "head_pages": "202",
-      "discussed": false
+      "discussed": false,
+      "letter": "К",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 51,
+      "lon": 32
     },
     {
       "canonical_id": "toponyms-6fce1aa1-0589-5729-afdc-77d48623ac92",
@@ -1286,7 +1501,12 @@
         "…у. Во всем остальном славянстве представлена модель скотъ, и только в Новгороде — скоте. 1 Кировская область (Вятская губерния). — Ред. Лекция 24 февраля 2012 г.\b 199"
       ],
       "head_pages": "199",
-      "discussed": false
+      "discussed": false,
+      "letter": "К",
+      "letter_change": true,
+      "epoch_class": "modern",
+      "lat": 58.6,
+      "lon": 49.66
     },
     {
       "canonical_id": "toponyms-9eb89019-65f3-5237-9eef-e80e559e5002",
@@ -1310,7 +1530,12 @@
         "…находится на грани между слоговым и буквенным. 2 В 2022 году, обогнав Китай, Индия стала страной с самым большим населением в мире. В 2025 году в…"
       ],
       "head_pages": "142",
-      "discussed": false
+      "discussed": false,
+      "letter": "К",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 35.86,
+      "lon": 104.2
     },
     {
       "canonical_id": "toponyms-d5642c98-da61-5dd7-9921-e33a36e0bc49",
@@ -1334,7 +1559,12 @@
         "…входят нынешняя Архангельская область, Вятская 1, Cеверный Урал, весь Кольский полуостров. А что будет, если мы заглянем за рамки восточного славянс…"
       ],
       "head_pages": "199",
-      "discussed": false
+      "discussed": false,
+      "letter": "К",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 67.7,
+      "lon": 36
     },
     {
       "canonical_id": "toponyms-6f5f100d-6524-5264-98c8-7026a666e1c0",
@@ -1366,7 +1596,12 @@
         "…ты слова самых разных древних языков, распространенных вокруг острова Крит: египетского, этрусского, языков Палестины, языков Малой Азии. Но всё…"
       ],
       "head_pages": "121, 122",
-      "discussed": true
+      "discussed": true,
+      "letter": "К",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 35.24,
+      "lon": 24.81
     },
     {
       "canonical_id": "toponyms-d89b0747-7d7d-5230-be3d-29b85b7a54c0",
@@ -1390,7 +1625,12 @@
         "…знаков. С их помощью ему удалось выявить в тексте названия некоторых критских городов. И оказалось, что эти названия имеют грамматическое оформлени…"
       ],
       "head_pages": "121",
-      "discussed": false
+      "discussed": false,
+      "letter": "К",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 35.24,
+      "lon": 24.81
     },
     {
       "canonical_id": "toponyms-59fdc30f-ae9e-5e7a-9372-07268da16491",
@@ -1416,7 +1656,12 @@
         "…готского владычества. О Крыме стоит упомянуть специально, поскольку в Крыму готы дожили до XVI века. Голландский дипломат XVI века Бусбек с изумл…"
       ],
       "head_pages": "184",
-      "discussed": false
+      "discussed": false,
+      "letter": "К",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 45,
+      "lon": 34
     },
     {
       "canonical_id": "toponyms-3b56f03c-a94e-518c-8b65-c95ea64eccd2",
@@ -1436,7 +1681,12 @@
       ],
       "contexts": [],
       "head_pages": "",
-      "discussed": true
+      "discussed": true,
+      "letter": "Л",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 55.17,
+      "lon": 23.88
     },
     {
       "canonical_id": "toponyms-9ef4a94c-4b52-5a3b-95fc-1a0a5ba20e59",
@@ -1466,7 +1716,12 @@
         "…ельной степени совпадают с политическими границами Великого княжества Литовского в XIV–XV веках, когда экспансия Литвы привела к тому, что будущие Укр…"
       ],
       "head_pages": "200, 206",
-      "discussed": true
+      "discussed": true,
+      "letter": "Л",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 55,
+      "lon": 25
     },
     {
       "canonical_id": "toponyms-8a52c321-b90c-5915-b786-fb06d6b86971",
@@ -1486,7 +1741,12 @@
       ],
       "contexts": [],
       "head_pages": "122",
-      "discussed": true
+      "discussed": true,
+      "letter": "М",
+      "letter_change": true,
+      "epoch_class": "ancient",
+      "lat": 39,
+      "lon": 35
     },
     {
       "canonical_id": "toponyms-e9f56df4-3944-51d6-8e66-307100528ca8",
@@ -1514,7 +1774,12 @@
         "…знакомят с интересными сторонами дальней страны — скажем, Индонезии, Марокко или еще какой-нибудь. Конечно, за время передачи вы в действительност…"
       ],
       "head_pages": "132, 192",
-      "discussed": true
+      "discussed": true,
+      "letter": "М",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 31.79,
+      "lon": -7.09
     },
     {
       "canonical_id": "toponyms-826f7d2c-bb74-54e9-a8f6-b899311af6ee",
@@ -1610,7 +1875,12 @@
         "…ическая книжная форма центрального диалекта древнерусского языка. А в Новгороде, в новгородском диалекте, на месте этого ъ в конце было е. Например,…"
       ],
       "head_pages": "28, 57, 96, 179, 196, 198, 199, 208, 209, 236, 279, 294, 301, 306, 312, 314, 316, 319",
-      "discussed": true
+      "discussed": true,
+      "letter": "Н",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 58.52,
+      "lon": 31.27
     },
     {
       "canonical_id": "toponyms-e5428441-b01e-5f75-a7fa-aaacb109b030",
@@ -1634,7 +1904,12 @@
         "…раннонаправленная тенденция дает Уо́шингтон. При этой тенденции город Падуя будут называть словом Па́дова, город Флоренция — словом Фиренце (или…"
       ],
       "head_pages": "247",
-      "discussed": false
+      "discussed": false,
+      "letter": "П",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 45.41,
+      "lon": 11.88
     },
     {
       "canonical_id": "toponyms-0453e0cf-f2d3-5746-ac77-1146d7e21ffe",
@@ -1658,7 +1933,12 @@
         "…что он идет в страну Индию. Он дошел до области Синдху (это нынешний Пакистан) и даже отчасти завоевал ее, но, тем не менее, именно название Индия…"
       ],
       "head_pages": "141",
-      "discussed": false
+      "discussed": false,
+      "letter": "П",
+      "letter_change": false,
+      "epoch_class": "contemporary",
+      "lat": 30.37,
+      "lon": 69.34
     },
     {
       "canonical_id": "toponyms-c78a86f8-bb8f-508a-beb9-392970cd8c7d",
@@ -1682,7 +1962,12 @@
         "…распространенных вокруг острова Крит: египетского, этрусского, языков Палестины, языков Малой Азии. Но всё проваливалось, никакие из этих попыток не…"
       ],
       "head_pages": "",
-      "discussed": true
+      "discussed": true,
+      "letter": "П",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 31.95,
+      "lon": 35.23
     },
     {
       "canonical_id": "toponyms-ae01f000-8da2-5044-9af4-30dc84b7d1e0",
@@ -1706,7 +1991,12 @@
         "коллеги археолога Блегена, который вел раскопки в Пилосе на Пелопоннесе, с текстом только что найденной новой таблички. Это был некий список,…"
       ],
       "head_pages": "122",
-      "discussed": false
+      "discussed": false,
+      "letter": "П",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 37.5,
+      "lon": 22
     },
     {
       "canonical_id": "toponyms-12dc3746-56ef-5567-a689-7fd797869b7c",
@@ -1732,7 +2022,12 @@
         "…овершил путешествие из Новгорода либо в Киев, либо в Чернигов, либо в Переяславль. В Новгородской летописи XIII века сказано, что новгородский епископ…"
       ],
       "head_pages": "57",
-      "discussed": false
+      "discussed": false,
+      "letter": "П",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 50.07,
+      "lon": 31.45
     },
     {
       "canonical_id": "toponyms-38aaf6e5-132b-5f56-956d-78fc1c60664d",
@@ -1758,7 +2053,12 @@
         "…маленькую часть страны — территорию нынешних Киевской, Черниговской и Переяславской 1 областей Украины. Остальные территории тогда еще не воспринимались…"
       ],
       "head_pages": "57",
-      "discussed": false
+      "discussed": false,
+      "letter": "П",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 50.07,
+      "lon": 31.45
     },
     {
       "canonical_id": "toponyms-9077330a-7128-508f-b253-d9fbbac2681c",
@@ -1782,7 +2082,12 @@
         "коллеги археолога Блегена, который вел раскопки в Пилосе на Пелопоннесе, с текстом только что найденной новой таблички. Это бы…"
       ],
       "head_pages": "122",
-      "discussed": false
+      "discussed": false,
+      "letter": "П",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 36.92,
+      "lon": 21.7
     },
     {
       "canonical_id": "toponyms-5b0c67b8-0f9d-5f8c-8cbd-5d7b3d38299b",
@@ -1812,7 +2117,12 @@
         "…ичная германская земля, часть германского государства; считается, что Пруссия — традиционно самое чистое воплощение германского духа. Так вот: прус…"
       ],
       "head_pages": "56, 57",
-      "discussed": true
+      "discussed": true,
+      "letter": "П",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 54,
+      "lon": 19
     },
     {
       "canonical_id": "toponyms-35cf5915-4f58-5062-a9c5-b2d98919e15a",
@@ -1842,7 +2152,12 @@
         "…азывал, — что настоящая чистота новгородского диалекта наблюдается во Пскове. Подлинный стопроцентный северо-западный говор представлен именно во…"
       ],
       "head_pages": "198, 208",
-      "discussed": true
+      "discussed": true,
+      "letter": "П",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 57.82,
+      "lon": 28.33
     },
     {
       "canonical_id": "toponyms-b7f944b8-8c74-5f30-898f-35173fb15a9e",
@@ -1868,7 +2183,12 @@
         "…ть — лучше, чем где бы то ни было. Так что вы очень правильно назвали псковский говор, он действительно один из самых лингвистически ценных. Недаром…"
       ],
       "head_pages": "209",
-      "discussed": false
+      "discussed": false,
+      "letter": "П",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 57.82,
+      "lon": 28.33
     },
     {
       "canonical_id": "toponyms-bf05209f-2ce0-5282-b5e0-97c3d6950fe1",
@@ -1892,7 +2212,12 @@
         "…если эту тенденцию довести до конца, то есть до абсурда, то будет не Рим, а Рома, не Париж, а Пари, не Цицерон, а Ки́керо. До этого, правда, е…"
       ],
       "head_pages": "248",
-      "discussed": false
+      "discussed": false,
+      "letter": "Р",
+      "letter_change": true,
+      "epoch_class": "ancient",
+      "lat": 41.9,
+      "lon": 12.49
     },
     {
       "canonical_id": "toponyms-12fea81a-8901-569d-8ff6-2323e25089d6",
@@ -1920,7 +2245,12 @@
         "…и римляне. Germania — это латинское название страны, северного соседа Римской империи. А сами себя, взятых всех вместе, они никак не называли. По-в…"
       ],
       "head_pages": "60, 134",
-      "discussed": true
+      "discussed": true,
+      "letter": "Р",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 41.9,
+      "lon": 12.49
     },
     {
       "canonical_id": "toponyms-9340299e-4a45-593e-bb05-ca56b549cf6d",
@@ -1946,7 +2276,12 @@
         "…ьше западнороманское слово, то есть распространенное в западной части Римского мира, где сформировались потом французский, испанский, португальский…"
       ],
       "head_pages": "115, 272",
-      "discussed": true
+      "discussed": true,
+      "letter": "Р",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 41.9,
+      "lon": 12.49
     },
     {
       "canonical_id": "toponyms-c6afccc0-5672-53c3-bc49-136f8e834ea8",
@@ -1970,7 +2305,12 @@
         "…в XV веке, это будет примерно та же граница, которая сейчас отделяет Российскую Федерацию от Украины и Белоруссии. Но XV век — это позднее время по о…"
       ],
       "head_pages": "201",
-      "discussed": false
+      "discussed": false,
+      "letter": "Р",
+      "letter_change": false,
+      "epoch_class": "contemporary",
+      "lat": 61.52,
+      "lon": 105.32
     },
     {
       "canonical_id": "toponyms-8907d119-bf7a-51eb-b5ec-f9935bef9939",
@@ -2010,7 +2350,12 @@
         "…что довольно долго жители всей нынешней европейской части территории России, Украины и Белоруссии считали и называли Русью только маленькую часть…"
       ],
       "head_pages": "80, 135, 246, 328",
-      "discussed": true
+      "discussed": true,
+      "letter": "Р",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 61.52,
+      "lon": 105.32
     },
     {
       "canonical_id": "toponyms-ce79fde5-29ce-5f33-b928-ba936710e5b3",
@@ -2044,7 +2389,12 @@
         "…ревнего числа слогов. Он сохранил окончание именительного падежа -as. Ростов будет по-литовски Rostovas. Почему? Потому что это -as так же необход…"
       ],
       "head_pages": "152, 199, 200, 392",
-      "discussed": true
+      "discussed": true,
+      "letter": "Р",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 57.18,
+      "lon": 39.42
     },
     {
       "canonical_id": "toponyms-d5e2072b-a862-5d2c-b8a6-05e43a28a76f",
@@ -2064,7 +2414,12 @@
       ],
       "contexts": [],
       "head_pages": "201",
-      "discussed": false
+      "discussed": false,
+      "letter": "Р",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 56.83,
+      "lon": 40
     },
     {
       "canonical_id": "toponyms-0a8d96ed-156b-55a3-8097-250bfe4a36ad",
@@ -2084,7 +2439,12 @@
       ],
       "contexts": [],
       "head_pages": "202",
-      "discussed": false
+      "discussed": false,
+      "letter": "Р",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 55,
+      "lon": 40
     },
     {
       "canonical_id": "toponyms-7c15526f-b19c-5577-830b-70df666df2e4",
@@ -2110,7 +2470,12 @@
         "…тветственно, сам вырезанный на них знак носил то же название. И вот в русском языке есть оба слова: и бук, и буква — оба заимствованы из германског…"
       ],
       "head_pages": "186",
-      "discussed": false
+      "discussed": false,
+      "letter": "Р",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 55.75,
+      "lon": 37.62
     },
     {
       "canonical_id": "toponyms-e2aebd54-40f1-5284-bf45-87b0018f28d4",
@@ -2154,7 +2519,12 @@
         "…одя на них от наименования тех варяжских дружин, которые приходили на Русь и из которых происходили князья Древней Руси. 178\b ОБ ИСТОРИИ РУССКОГ…"
       ],
       "head_pages": "8, 57, 96, 178, 196, 197, 199, 279",
-      "discussed": true
+      "discussed": true,
+      "letter": "Р",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 54,
+      "lon": 32
     },
     {
       "canonical_id": "toponyms-61bc11cc-84cc-5d36-8b8a-aacb6976d240",
@@ -2174,7 +2544,12 @@
       ],
       "contexts": [],
       "head_pages": "200",
-      "discussed": false
+      "discussed": false,
+      "letter": "С",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 62,
+      "lon": 35
     },
     {
       "canonical_id": "toponyms-9d78577f-8da2-5b90-acfd-1cbb49e4f3f9",
@@ -2194,7 +2569,12 @@
       ],
       "contexts": [],
       "head_pages": "200",
-      "discussed": false
+      "discussed": false,
+      "letter": "С",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 62,
+      "lon": 60
     },
     {
       "canonical_id": "toponyms-9a9680ed-6f77-53a9-be8c-3bad5df0ef9c",
@@ -2236,7 +2616,12 @@
         "…казалась состоящей из двух частей, примерно одинаковых по значимости: северо-западная (новгородско-псковская) и центрально-восточная (Ростов, Суздаль, Влад…"
       ],
       "head_pages": "199, 200, 202, 203",
-      "discussed": true
+      "discussed": true,
+      "letter": "С",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 60,
+      "lon": 30
     },
     {
       "canonical_id": "toponyms-97a8b855-c040-52de-8e74-d9ac55617da9",
@@ -2262,7 +2647,12 @@
         "…в эту страну, считал, что он идет в страну Индию. Он дошел до области Синдху (это нынешний Пакистан) и даже отчасти завоевал ее, но, тем не менее,…"
       ],
       "head_pages": "141",
-      "discussed": false
+      "discussed": false,
+      "letter": "С",
+      "letter_change": false,
+      "epoch_class": "ancient",
+      "lat": 24,
+      "lon": 67
     },
     {
       "canonical_id": "toponyms-995f000d-55b6-5052-9571-2fa37ae0cdfc",
@@ -2286,7 +2676,12 @@
         "…и чувашский, и башкирский, и чагатайский — древний литературный язык Средней Азии, и кыпчакский язык половцев, с которыми наши предки контактирова…"
       ],
       "head_pages": "186",
-      "discussed": false
+      "discussed": false,
+      "letter": "С",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 43,
+      "lon": 65
     },
     {
       "canonical_id": "toponyms-345175d3-150a-573e-a4e7-ebc6c9a2522f",
@@ -2320,7 +2715,12 @@
         "…еская форма древнерусского языка, объединявшая в равной степени Киев, Суздаль, Ростов, будущую Москву и территорию Белоруссии. Условно говоря, зона…"
       ],
       "head_pages": "199, 200, 313",
-      "discussed": true
+      "discussed": true,
+      "letter": "С",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 56.42,
+      "lon": 40.45
     },
     {
       "canonical_id": "toponyms-56cb6402-810e-5aaa-9680-234a69b77c98",
@@ -2378,7 +2778,12 @@
         "…е племена владели огромными территориями практически всей современной Украины, значительной части Балкан, Италии, Испании, части Франции и т. д. Та…"
       ],
       "head_pages": "57, 179, 184, 196, 200, 201, 203, 206",
-      "discussed": true
+      "discussed": true,
+      "letter": "У",
+      "letter_change": true,
+      "epoch_class": "modern",
+      "lat": 48.38,
+      "lon": 31.17
     },
     {
       "canonical_id": "toponyms-e6e25995-353f-593a-a57b-16ea2cf6fc8d",
@@ -2404,7 +2809,12 @@
         "…ь и истории, напротив, несчастные. Самая главная из них — это история Фестского диска, о которой вы, наверное, слышали. Фестский диск найден тоже, кс…"
       ],
       "head_pages": "122",
-      "discussed": false
+      "discussed": false,
+      "letter": "Ф",
+      "letter_change": true,
+      "epoch_class": "ancient",
+      "lat": 35.05,
+      "lon": 24.81
     },
     {
       "canonical_id": "toponyms-457ed99f-9f87-5e9d-8f42-b1de4e086cc4",
@@ -2428,7 +2838,12 @@
         "…Европы неродственными остальным языкам Европы останутся только языки Финляндии, Эстонии, Венгрии и басков. Все остальные языки в большей или меньшей…"
       ],
       "head_pages": "",
-      "discussed": true
+      "discussed": true,
+      "letter": "Ф",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 61.92,
+      "lon": 25.75
     },
     {
       "canonical_id": "toponyms-8f8654be-bd11-51c3-8ca5-42b045b6327b",
@@ -2452,7 +2867,12 @@
         "На территории Италии долгое время наиболее престижным считался говор Флоренции, и, соответственно, тосканский диалект со времен Данте принимался за…"
       ],
       "head_pages": "192",
-      "discussed": false
+      "discussed": false,
+      "letter": "Ф",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 43.77,
+      "lon": 11.25
     },
     {
       "canonical_id": "toponyms-43681055-4246-5ce5-800c-694b4692e6b6",
@@ -2476,7 +2896,12 @@
         "…ром их первоначального расселения являлись земли, где находится город Франкфурт в западной Германии, который вы прекрасно знаете. Довольно поздно, в…"
       ],
       "head_pages": "56",
-      "discussed": false
+      "discussed": false,
+      "letter": "Ф",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 50.11,
+      "lon": 8.68
     },
     {
       "canonical_id": "toponyms-eff28ce8-01b5-5223-9774-f6358cb8b789",
@@ -2518,7 +2943,12 @@
         "…е всего со временем так и будет. Еще позже, уже на территории будущей Франции, мы видим вот такую форму: digtu. В слове digitu ударение на первом с…"
       ],
       "head_pages": "56, 57",
-      "discussed": true
+      "discussed": true,
+      "letter": "Ф",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 46.23,
+      "lon": 2.21
     },
     {
       "canonical_id": "toponyms-e5e5371c-2bce-5725-aa33-d18d57ff27da",
@@ -2542,7 +2972,12 @@
         "…это языки северной Индии и немножко еще в качестве колонии — бывшего Цейлона, ныне Шри-Ланки. А юг Индии — это зона дравидских языков, которые к и…"
       ],
       "head_pages": "174",
-      "discussed": false
+      "discussed": false,
+      "letter": "Ц",
+      "letter_change": true,
+      "epoch_class": "modern",
+      "lat": 7.87,
+      "lon": 80.77
     },
     {
       "canonical_id": "toponyms-52597d61-c669-52a8-9a66-5176d62a7256",
@@ -2566,7 +3001,12 @@
         "…лагать. Лиза Щеголькова: У меня еще вопрос есть. Вот страны разные, в Центральной Африке, например, они ниже по уровню развития языка более развитых ст…"
       ],
       "head_pages": "89",
-      "discussed": false
+      "discussed": false,
+      "letter": "Ц",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 6.6,
+      "lon": 20.93
     },
     {
       "canonical_id": "toponyms-c1cf9e72-5f87-5340-b775-b305e3eda52d",
@@ -2586,7 +3026,12 @@
       ],
       "contexts": [],
       "head_pages": "199",
-      "discussed": false
+      "discussed": false,
+      "letter": "Ц",
+      "letter_change": false,
+      "epoch_class": "medieval",
+      "lat": 55.75,
+      "lon": 37.62
     },
     {
       "canonical_id": "toponyms-af9cd53a-405f-51ac-8f58-2a77c71aeb76",
@@ -2616,7 +3061,12 @@
         "…сь». Значит, он совершил путешествие из Новгорода либо в Киев, либо в Чернигов, либо в Переяславль. В Новгородской летописи XIII века сказано, что н…"
       ],
       "head_pages": "57, 179",
-      "discussed": true
+      "discussed": true,
+      "letter": "Ч",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 51.5,
+      "lon": 31.3
     },
     {
       "canonical_id": "toponyms-e7b8b443-e7b3-561d-8834-3b91db9fe923",
@@ -2646,7 +3096,12 @@
         "…и одна область, названия которых начинаются со сво, све — «свой». Это Швеция, ее древние жители именовались свеар, первоначально — «свои люди». И…"
       ],
       "head_pages": "58, 248, 269",
-      "discussed": true
+      "discussed": true,
+      "letter": "Ш",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 60.13,
+      "lon": 18.64
     },
     {
       "canonical_id": "toponyms-8e309e7d-112e-5b37-8c94-c11d4f2b12a7",
@@ -2672,7 +3127,12 @@
         "…вестен город Шлиссельбург, и у него ударение на -бург вроде... А. З.: Шлиссельбу́рг — правильно. По-немецки он, конечно Шли́ссельбург, но по-русски вс…"
       ],
       "head_pages": "269",
-      "discussed": false
+      "discussed": false,
+      "letter": "Ш",
+      "letter_change": false,
+      "epoch_class": "modern",
+      "lat": 59.95,
+      "lon": 31.04
     },
     {
       "canonical_id": "toponyms-141c1b65-cbac-5eb7-b4e7-ec8c7eb906e8",
@@ -2692,7 +3152,12 @@
       ],
       "contexts": [],
       "head_pages": "173",
-      "discussed": false
+      "discussed": false,
+      "letter": "Ш",
+      "letter_change": false,
+      "epoch_class": "contemporary",
+      "lat": 7.87,
+      "lon": 80.77
     },
     {
       "canonical_id": "toponyms-7a7e26eb-b198-5e11-9278-e80dfc59be94",
@@ -2712,7 +3177,12 @@
       ],
       "contexts": [],
       "head_pages": "179",
-      "discussed": false
+      "discussed": false,
+      "letter": "Ю",
+      "letter_change": true,
+      "epoch_class": "medieval",
+      "lat": 50.07,
+      "lon": 31.45
     },
     {
       "canonical_id": "toponyms-1313d156-0ce7-5aae-a97b-0c6ca15ead99",

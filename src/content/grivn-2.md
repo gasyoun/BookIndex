@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-397e13da-8a2b-5b8b-95f8-18dfd40c63ba",
   "head": "гривъні",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        310
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     310
   ],
-  "pages": "310",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "310"
 }
 ```

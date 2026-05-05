@@ -14,12 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-fa477e79-360b-51f4-afa2-75144035939f",
   "head": "Индия",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        135,
+        141
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     135,
     141
   ],
-  "pages": "135, 141",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "135, 141"
 }
 ```

@@ -14,14 +14,26 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-0a833224-ba09-5673-9615-425a69439be5",
   "head": "чужая речь",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        23,
+        24
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     23,
     24
   ],
-  "pages": "23, 24",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "23, 24",
   "needs_review": false
 }
 ```

@@ -14,7 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-806d6722-8268-5df4-a6b2-8a498a321bf5",
   "head": "письмо [= графическая система]: ∼ бытовое vs. книжное",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        277,
+        278,
+        282,
+        292,
+        293,
+        300
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     277,
     278,
@@ -23,9 +39,9 @@ _Основное текстовое поле не найдено; см. JSON н
     293,
     300
   ],
-  "pages": "277, 278, 282, 292, 293, 300",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": true,
+  "pages": "277, 278, 282, 292, 293, 300",
   "needs_review": false
 }
 ```

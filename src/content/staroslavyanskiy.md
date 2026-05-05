@@ -14,17 +14,27 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "languages-80521167-e599-501c-a6ca-54fb6f873c75",
   "head": "старославянский",
-  "pages": "22",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        22
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     22
   ],
+  "contexts": [],
   "discussed": false,
-  "subs": [],
-  "contexts": {},
-  "family": "Индоевропейская",
-  "group": "славянская южная",
+  "pages": "22",
   "lat": 42,
-  "lon": 25
+  "lon": 25,
+  "family": "Индоевропейская",
+  "group": "славянская южная"
 }
 ```

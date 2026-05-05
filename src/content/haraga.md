@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-d6163966-643f-5f3a-a974-5c4bdbda8f91",
   "head": "haraga",
-  "pages": "226",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        226
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     226
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "226",
   "category": "lat",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

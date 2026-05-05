@@ -14,7 +14,22 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-6192dc11-91fd-5e7d-9e05-e85bd18b94c9",
   "head": "безударные слова, безударность",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        15,
+        37,
+        38,
+        385,
+        387
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     15,
     37,
@@ -22,9 +37,9 @@ _Основное текстовое поле не найдено; см. JSON н
     385,
     387
   ],
-  "pages": "15, 37, 38, 385, 387",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "15, 37, 38, 385, 387",
   "needs_review": false
 }
 ```

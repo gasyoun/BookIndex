@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-82f2bda9-ccfd-5ddf-95fa-169ca066b70b",
   "head": "Нефертити",
-  "pages": "86",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        86
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     86
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "86",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

@@ -14,7 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-38d77aad-4521-5851-bc0f-9e5df69049db",
   "head": "метод внутренней реконструкции",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        67,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        109
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     67,
     101,
@@ -25,9 +43,9 @@ _Основное текстовое поле не найдено; см. JSON н
     106,
     109
   ],
-  "pages": "67, 101, 102, 103, 104, 105, 106, 109",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "67, 101, 102, 103, 104, 105, 106, 109",
   "needs_review": false
 }
 ```

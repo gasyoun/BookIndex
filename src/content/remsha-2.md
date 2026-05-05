@@ -14,11 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-9b59cd20-6ad6-5df6-af25-daa244ed5917",
   "head": "Ремша",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        48
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     48
   ],
-  "pages": "48",
-  "discussed": false
+  "contexts": [],
+  "discussed": false,
+  "pages": "48"
 }
 ```

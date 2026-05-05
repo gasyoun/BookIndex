@@ -55,6 +55,9 @@ def is_non_empty_list(value: Any) -> bool:
 
 
 def iter_context_snippets(value: Any) -> tuple[int, int]:
+    if isinstance(value, list):
+        snippets = sum(1 for x in value if isinstance(x, str) and x.strip())
+        return (1 if snippets else 0), snippets
     if not isinstance(value, dict):
         return 0, 0
     pages = 0
@@ -64,6 +67,20 @@ def iter_context_snippets(value: Any) -> tuple[int, int]:
             continue
         pages += 1
         snippets += sum(1 for x in ctx if isinstance(x, str) and x.strip())
+    return pages, snippets
+
+
+def iter_occurrence_context_snippets(value: Any) -> tuple[int, int]:
+    if not isinstance(value, dict):
+        return 0, 0
+    pages = 0
+    snippets = 0
+    for occurrence in value.values():
+        if not isinstance(occurrence, dict):
+            continue
+        context_pages, context_snippets = iter_context_snippets(occurrence.get("contexts"))
+        pages += context_pages
+        snippets += context_snippets
     return pages, snippets
 
 
@@ -152,13 +169,17 @@ def collect_entity_metrics(items: list[Any], *, sort_order_applicable: bool) -> 
                     unique_pages.add(p)
 
         context_pages, context_snippets = iter_context_snippets(item.get("contexts"))
+        occurrence_context_pages, occurrence_context_snippets = iter_occurrence_context_snippets(item.get("occurrences"))
+        if occurrence_context_snippets > context_snippets:
+            context_pages, context_snippets = occurrence_context_pages, occurrence_context_snippets
         if context_pages > 0 or context_snippets > 0:
             with_contexts += 1
         context_pages_total += context_pages
         context_snippets_total += context_snippets
 
         sources = item.get("sources")
-        if is_non_empty_list(sources):
+        occurrences = item.get("occurrences")
+        if is_non_empty_list(sources) or isinstance(occurrences, dict) and bool(occurrences) or isinstance(item.get("book_id"), str):
             with_sources += 1
 
         editorial_flags = item.get("editorial_flags")

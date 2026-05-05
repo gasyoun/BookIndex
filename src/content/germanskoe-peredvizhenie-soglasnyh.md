@@ -14,7 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-e656134b-322e-5ab2-b65a-9f2718c27e91",
   "head": "германское передвижение согласных",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        35,
+        42,
+        47,
+        66,
+        73,
+        74
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     35,
     42,
@@ -23,9 +39,9 @@ _Основное текстовое поле не найдено; см. JSON н
     73,
     74
   ],
-  "pages": "35, 42, 47, 66, 73, 74",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "35, 42, 47, 66, 73, 74",
   "needs_review": false
 }
 ```

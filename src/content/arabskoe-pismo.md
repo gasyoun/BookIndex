@@ -14,13 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-e103cf70-aae8-5aec-968a-a5af18de72df",
   "head": "арабское письмо",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        228
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     228
   ],
-  "pages": "228",
+  "contexts": [],
   "discussed": false,
-  "is_subrubric": false,
+  "pages": "228",
   "needs_review": false
 }
 ```

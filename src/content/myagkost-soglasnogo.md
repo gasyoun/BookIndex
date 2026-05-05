@@ -14,7 +14,23 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-e504fdcf-ca31-589d-919b-4164516a1a03",
   "head": "мягкость [согласного]",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        68,
+        159,
+        160,
+        214,
+        223,
+        390
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     68,
     159,
@@ -23,9 +39,9 @@ _Основное текстовое поле не найдено; см. JSON н
     223,
     390
   ],
-  "pages": "68, 159, 160, 214, 223, 390",
+  "contexts": [],
   "discussed": true,
-  "is_subrubric": false,
+  "pages": "68, 159, 160, 214, 223, 390",
   "needs_review": false
 }
 ```

@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-77c46ea3-79bc-53e7-846b-2a163154a801",
   "head": "Гасунс М. Ю.",
-  "pages": "392",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Г",
-  "letter_change": false,
-  "subcategory": "edition_staff",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        392
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     392
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "392",
+  "category": "VI",
+  "letter": "Г",
+  "letter_change": false,
+  "subcategory": "edition_staff",
   "epoch": 2010,
   "chapters": [
     "Или и уже"

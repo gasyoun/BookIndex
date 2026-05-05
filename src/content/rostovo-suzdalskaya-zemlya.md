@@ -14,18 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-d5e2072b-a862-5d2c-b8a6-05e43a28a76f",
   "head": "ростово-суздальская земля",
-  "head_pages": "201",
-  "subs": [],
-  "discussed": false,
-  "letter": "Р",
-  "letter_change": false,
-  "lat": 56.83,
-  "lon": 40,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        201
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     201
   ],
-  "contexts": {},
-  "epoch_class": "medieval"
+  "contexts": [],
+  "head_pages": "201",
+  "discussed": false,
+  "letter": "Р",
+  "letter_change": false,
+  "epoch_class": "medieval",
+  "lat": 56.83,
+  "lon": 40
 }
 ```

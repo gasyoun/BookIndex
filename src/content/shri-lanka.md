@@ -14,18 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-141c1b65-cbac-5eb7-b4e7-ec8c7eb906e8",
   "head": "Шри-Ланка",
-  "head_pages": "173",
-  "subs": [],
-  "discussed": false,
-  "letter": "Ш",
-  "letter_change": false,
-  "lat": 7.87,
-  "lon": 80.77,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        173
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     173
   ],
-  "contexts": {},
-  "epoch_class": "contemporary"
+  "contexts": [],
+  "head_pages": "173",
+  "discussed": false,
+  "letter": "Ш",
+  "letter_change": false,
+  "epoch_class": "contemporary",
+  "lat": 7.87,
+  "lon": 80.77
 }
 ```

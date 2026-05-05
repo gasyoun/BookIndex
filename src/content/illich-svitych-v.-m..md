@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-42592d1b-fcc8-5146-8b12-bb003e036c81",
   "head": "Иллич-Свитыч В. М.",
-  "pages": "246",
-  "category": "VI",
-  "discussed": false,
-  "letter": "И",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        246
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     246
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "246",
+  "category": "VI",
+  "letter": "И",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": 1960,
   "chapters": [
     "Из русского ударения"

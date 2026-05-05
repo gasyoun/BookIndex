@@ -14,7 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon_reverse-d9277343-e41f-5600-9a15-1c900af44409",
   "head": "Видомирь",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        294,
+        295,
+        297,
+        298,
+        299,
+        300,
+        301
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     294,
     295,
@@ -24,7 +41,8 @@ _Основное текстовое поле не найдено; см. JSON н
     300,
     301
   ],
-  "pages": "294, 295, 297, 298, 299, 300, 301",
-  "discussed": true
+  "contexts": [],
+  "discussed": true,
+  "pages": "294, 295, 297, 298, 299, 300, 301"
 }
 ```

@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-313676f1-c4be-5f4b-842f-437e3c431b1b",
   "head": "Хлебников Велимир",
-  "pages": "273",
-  "category": "I.2",
-  "discussed": false,
-  "letter": "Х",
-  "letter_change": false,
-  "subcategory": "literator",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        273
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     273
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "273",
+  "category": "I.2",
+  "letter": "Х",
+  "letter_change": false,
+  "subcategory": "literator",
   "epoch": 1910,
   "chapters": [
     "Берестяные грамоты"

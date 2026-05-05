@@ -14,13 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-8406c2c5-5344-53a1-ab28-b714e7b5f9b1",
   "head": "архаизм",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        139
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     139
   ],
-  "pages": "139",
+  "contexts": [],
   "discussed": false,
-  "is_subrubric": false,
+  "pages": "139",
   "needs_review": false
 }
 ```

@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-8261d230-fec5-516e-a096-879248c43cc9",
   "head": "Брюллов К.",
-  "pages": "274",
-  "category": "I.2",
-  "discussed": false,
-  "letter": "Б",
-  "letter_change": false,
-  "subcategory": "literator",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        274
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     274
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "274",
+  "category": "I.2",
+  "letter": "Б",
+  "letter_change": false,
+  "subcategory": "literator",
   "epoch": 1830,
   "chapters": [
     "Берестяные грамоты"

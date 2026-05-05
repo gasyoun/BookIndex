@@ -14,21 +14,32 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-8dba118f-293d-52bd-a886-762aeda5d00e",
   "head": "Гримм В. и Я. (братья)",
-  "pages": "73",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Г",
-  "letter_change": false,
-  "subcategory": "linguist",
-  "contexts": {
-    "73": [
-      "…стики. Иначе это изменение ( p в f, t в th, k в h) называется законом Гримма, по имени одного из открывших его ученых. Другим лингвистом, независи…"
-    ]
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        73
+      ],
+      "contexts": [
+        "…стики. Иначе это изменение ( p в f, t в th, k в h) называется законом Гримма, по имени одного из открывших его ученых. Другим лингвистом, независи…"
+      ]
+    }
   },
+  "book_id": "mumintroll",
   "page_list": [
     73
   ],
+  "contexts": [
+    "…стики. Иначе это изменение ( p в f, t в th, k в h) называется законом Гримма, по имени одного из открывших его ученых. Другим лингвистом, независи…"
+  ],
+  "discussed": false,
+  "pages": "73",
+  "category": "VI",
+  "letter": "Г",
+  "letter_change": false,
+  "subcategory": "linguist",
   "epoch": 1820,
   "chapters": [
     "Историческая лингвистика"

@@ -14,18 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "toponyms-9d78577f-8da2-5b90-acfd-1cbb49e4f3f9",
   "head": "Северный Урал",
-  "head_pages": "200",
-  "subs": [],
-  "discussed": false,
-  "letter": "С",
-  "letter_change": false,
-  "lat": 62,
-  "lon": 60,
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        200
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     200
   ],
-  "contexts": {},
-  "epoch_class": "modern"
+  "contexts": [],
+  "head_pages": "200",
+  "discussed": false,
+  "letter": "С",
+  "letter_change": false,
+  "epoch_class": "modern",
+  "lat": 62,
+  "lon": 60
 }
 ```

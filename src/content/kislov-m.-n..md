@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-59e49b21-22da-56d6-b6b0-9396f8c0cf15",
   "head": "Кислов М. Н.",
-  "pages": "13",
-  "category": "VI",
-  "discussed": false,
-  "letter": "К",
-  "letter_change": false,
-  "subcategory": "participant",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        13
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     13
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "13",
+  "category": "VI",
+  "letter": "К",
+  "letter_change": false,
+  "subcategory": "participant",
   "epoch": null,
   "chapters": [
     "От редколлегии и предисловие"

@@ -14,13 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-1fd3f825-c6b4-5133-847a-f30dfdcb13e1",
   "head": "эмфаза, экспрессивность",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        38
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     38
   ],
-  "pages": "38",
+  "contexts": [],
   "discussed": false,
-  "is_subrubric": false,
+  "pages": "38",
   "needs_review": false
 }
 ```

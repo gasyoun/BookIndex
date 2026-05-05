@@ -14,14 +14,25 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "lexicon-e5428441-b01e-5f75-a7fa-aaacb109b030",
   "head": "Падуя",
-  "pages": "247",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        247
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     247
   ],
+  "contexts": [],
   "discussed": false,
+  "pages": "247",
   "category": "rus",
-  "needs_review": false,
-  "contexts": {}
+  "needs_review": false
 }
 ```

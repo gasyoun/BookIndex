@@ -14,21 +14,32 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-5c963c4a-95e9-51ee-bae5-34d574b10c19",
   "head": "Носков А.",
-  "pages": "286",
-  "category": "VI",
-  "discussed": false,
-  "letter": "Н",
-  "letter_change": false,
-  "subcategory": "participant",
-  "contexts": {
-    "286": [
-      "…исчезла, превратившись в Анну. И сколько-то лет еще жила Анна. Антон Носков (10 класс): А что это за ц? Это ч? А. З.: Да, эта буква, которая сейч…"
-    ]
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        286
+      ],
+      "contexts": [
+        "…исчезла, превратившись в Анну. И сколько-то лет еще жила Анна. Антон Носков (10 класс): А что это за ц? Это ч? А. З.: Да, эта буква, которая сейч…"
+      ]
+    }
   },
+  "book_id": "mumintroll",
   "page_list": [
     286
   ],
+  "contexts": [
+    "…исчезла, превратившись в Анну. И сколько-то лет еще жила Анна. Антон Носков (10 класс): А что это за ц? Это ч? А. З.: Да, эта буква, которая сейч…"
+  ],
+  "discussed": false,
+  "pages": "286",
+  "category": "VI",
+  "letter": "Н",
+  "letter_change": false,
+  "subcategory": "participant",
   "epoch": null,
   "chapters": [
     "Берестяные грамоты"

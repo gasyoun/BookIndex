@@ -14,13 +14,24 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "subject_index-170651cb-c3bf-595a-94ef-532aa00e6204",
   "head": "письменность: ∼ египетская",
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        120
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     120
   ],
-  "pages": "120",
+  "contexts": [],
   "discussed": false,
-  "is_subrubric": true,
+  "pages": "120",
   "needs_review": false
 }
 ```

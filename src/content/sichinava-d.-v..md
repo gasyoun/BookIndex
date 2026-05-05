@@ -14,17 +14,28 @@ _Основное текстовое поле не найдено; см. JSON н
 
 ```json
 {
+  "canonical_id": "names-a6e65c9c-01d0-5166-90e0-f70f86773466",
   "head": "Сичинава Д. В.",
-  "pages": "392",
-  "category": "VI",
-  "discussed": false,
-  "letter": "С",
-  "letter_change": false,
-  "subcategory": "edition_staff",
-  "contexts": {},
+  "aliases": [],
+  "occurrences": {
+    "mumintroll": {
+      "pages": [
+        392
+      ],
+      "contexts": []
+    }
+  },
+  "book_id": "mumintroll",
   "page_list": [
     392
   ],
+  "contexts": [],
+  "discussed": false,
+  "pages": "392",
+  "category": "VI",
+  "letter": "С",
+  "letter_change": false,
+  "subcategory": "edition_staff",
   "epoch": 2010,
   "chapters": [
     "Или и уже"
