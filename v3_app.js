@@ -4419,9 +4419,11 @@ function formatCoveragePercent(count, total) {
 
 const QUALITY_QUEUE_LIMIT = 50;
 const QUALITY_ENTITY_ORDER = ['lexicon', 'subject', 'lexicon_reverse', 'lexicon_tech', 'names', 'toponyms', 'ethnonyms', 'languages'];
+const QUALITY_CROSS_BOOK_ENTITY_ORDER = ['names', 'toponyms', 'ethnonyms', 'languages', 'subject', 'lexicon', 'lexicon_reverse', 'lexicon_tech'];
 const QUALITY_SORT_ENTITY_KEYS = new Set(['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'subject']);
 const QUALITY_QUEUE_DEFS = [
   { key: 'duplicate_heads', label: 'possible duplicates', empty: 'Нет дублей head.' },
+  { key: 'cross_book_duplicate_candidates', label: 'cross-book candidates', empty: 'No cross-book duplicate candidates.' },
   { key: 'suspicious_heads', label: 'suspicious heads', empty: 'Нет suspicious heads.' },
   { key: 'sort_inversions', label: 'sort inversions', empty: 'Нет нарушений сортировки.' },
   { key: 'missing_context', label: 'missing context', empty: 'Все элементы имеют контексты.' },
@@ -4434,12 +4436,21 @@ function getQualityEntityPriority(entity) {
   return idx >= 0 ? idx : QUALITY_ENTITY_ORDER.length;
 }
 
+function getQualityCrossBookEntityPriority(entity) {
+  const idx = QUALITY_CROSS_BOOK_ENTITY_ORDER.indexOf(entity);
+  return idx >= 0 ? idx : QUALITY_CROSS_BOOK_ENTITY_ORDER.length;
+}
+
 function normalizeQualitySortKey(value) {
   let s = String(value || '').replace(/ё/g, 'е').replace(/Ё/g, 'Е');
   if (typeof s.normalize === 'function') s = s.normalize('NFKD');
   return s
     .replace(/[\u0300-\u036f\u0483-\u0489\u200c-\u200f\ufeff]/g, '')
     .toLocaleLowerCase('ru');
+}
+
+function normalizeQualityCandidateKey(value) {
+  return normalizeSearchText(value).replace(/\s+/g, ' ').trim();
 }
 
 function compareQualityHeads(a, b) {
@@ -4458,6 +4469,14 @@ function compareQualityQueueItems(a, b) {
   const rawDiff = String(a.head || '').localeCompare(String(b.head || ''), 'ru', { sensitivity: 'base', numeric: true });
   if (rawDiff !== 0) return rawDiff;
   return String(a.queue || '').localeCompare(String(b.queue || ''));
+}
+
+function compareCrossBookCandidateRecords(a, b) {
+  const entityDiff = getQualityCrossBookEntityPriority(a.entity) - getQualityCrossBookEntityPriority(b.entity);
+  if (entityDiff !== 0) return entityDiff;
+  const headDiff = compareQualityHeads(a.head, b.head);
+  if (headDiff !== 0) return headDiff;
+  return String(a.entity || '').localeCompare(String(b.entity || ''));
 }
 
 function countQualityContextSnippets(contexts) {
@@ -4499,6 +4518,18 @@ function getItemQualityPages(item) {
   return Array.from(new Set(pages)).sort((a, b) => a - b);
 }
 
+function getItemQualityBooks(item) {
+  const books = new Set();
+  const occurrences = item && item.occurrences && typeof item.occurrences === 'object' ? item.occurrences : {};
+  for (const bookId of Object.keys(occurrences)) {
+    const trimmed = String(bookId || '').trim();
+    if (trimmed) books.add(trimmed);
+  }
+  const bookId = String(item && item.book_id ? item.book_id : '').trim();
+  if (bookId) books.add(bookId);
+  return Array.from(books).sort();
+}
+
 function summarizeQualityPages(pages) {
   if (!Array.isArray(pages) || !pages.length) return '0 pages';
   if (pages.length <= 6) return pages.join(', ');
@@ -4534,6 +4565,7 @@ function buildCorpusQualityState() {
   };
   const queues = Object.fromEntries(QUALITY_QUEUE_DEFS.map(def => [def.key, []]));
   const itemsByEntity = {};
+  const crossBookCandidates = new Map();
 
   for (const typeKey of QUALITY_ENTITY_ORDER) {
     const conf = ENTITY_TYPES && ENTITY_TYPES[typeKey];
@@ -4560,6 +4592,16 @@ function buildCorpusQualityState() {
       const rawHead = String(item.head || '').trim();
       const head = normalizeSearchText(rawHead);
       if (head) heads.set(head, (heads.get(head) || 0) + 1);
+      const candidateKey = normalizeQualityCandidateKey(rawHead);
+      if (candidateKey) {
+        if (!crossBookCandidates.has(candidateKey)) crossBookCandidates.set(candidateKey, []);
+        crossBookCandidates.get(candidateKey).push({
+          entity: typeKey,
+          head: rawHead,
+          item,
+          books: getItemQualityBooks(item),
+        });
+      }
       if (rawHead) {
         if (!itemsByHead.has(rawHead)) itemsByHead.set(rawHead, []);
         itemsByHead.get(rawHead).push(item);
@@ -4593,6 +4635,35 @@ function buildCorpusQualityState() {
         route: buildItemHash(typeKey, head),
       });
     }
+  }
+
+  for (const [normalizedHead, records] of crossBookCandidates.entries()) {
+    const books = Array.from(new Set(records.flatMap(record => record.books || []))).sort();
+    if (books.length <= 1) continue;
+    const sortedRecords = records.slice().sort(compareCrossBookCandidateRecords);
+    const preferred = sortedRecords[0] || {};
+    const pages = Array.from(new Set(records.flatMap(record => getItemQualityPages(record.item)))).sort((a, b) => a - b);
+    const canonicalIds = Array.from(new Set(records.map(record => record.item && record.item.canonical_id).filter(Boolean))).sort();
+    const entities = Array.from(new Set(records.map(record => record.entity).filter(Boolean)))
+      .sort((a, b) => getQualityEntityPriority(a) - getQualityEntityPriority(b) || String(a).localeCompare(String(b)));
+    const heads = Array.from(new Set(records.map(record => record.head).filter(Boolean))).sort(compareQualityHeads);
+    const route = preferred.head ? buildItemHash(preferred.entity, preferred.head) : '';
+    queues.cross_book_duplicate_candidates.push({
+      queue: 'cross_book_duplicate_candidates',
+      entity: preferred.entity || '',
+      head: preferred.head || normalizedHead,
+      reason: 'Same normalized head appears in multiple books; review canonical links or aliases.',
+      count: records.length,
+      books,
+      entities,
+      heads,
+      canonicalIds,
+      normalizedHead,
+      pagesCount: pages.length,
+      pagesSummary: summarizeQualityPages(pages),
+      route,
+      canonicalId: preferred.item && typeof preferred.item.canonical_id === 'string' ? preferred.item.canonical_id : '',
+    });
   }
 
   for (const typeKey of QUALITY_ENTITY_ORDER) {
@@ -4649,6 +4720,8 @@ function renderQualityQueueItem(item) {
   const details = [];
   if (item.entity) details.push(item.entity);
   if (item.count) details.push(`x${item.count}`);
+  if (Array.isArray(item.books) && item.books.length) details.push(`books: ${item.books.join(', ')}`);
+  if (Array.isArray(item.entities) && item.entities.length) details.push(`entities: ${item.entities.join(', ')}`);
   if (item.previous) details.push(`after: ${item.previous}`);
   if (item.pagesSummary) details.push(`pages: ${item.pagesSummary}`);
   if (Number.isFinite(item.contextSnippets)) details.push(`ctx: ${item.contextSnippets}`);

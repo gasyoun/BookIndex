@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import sys
+import unicodedata
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -84,6 +85,59 @@ def validate_suspicious_heads(data: dict[str, Any], warnings: list[str]) -> None
                 + (f" (+{len(suspicious) - 15} more)" if len(suspicious) > 15 else ""),
                 warnings,
             )
+
+
+def duplicate_candidate_head_key(value: str) -> str:
+    normalized = unicodedata.normalize(
+        "NFKD",
+        value.strip().replace("\u0451", "\u0435").replace("\u0401", "\u0415"),
+    )
+    chunks: list[str] = []
+    needs_space = False
+    for char in normalized:
+        if unicodedata.category(char) in {"Mn", "Me", "Cf"}:
+            continue
+        folded = char.casefold()
+        if folded.isalnum():
+            chunks.append(folded)
+            needs_space = True
+        elif needs_space:
+            chunks.append(" ")
+            needs_space = False
+    return " ".join("".join(chunks).split())
+
+
+def get_item_books(item: dict[str, Any]) -> list[str]:
+    books: set[str] = set()
+    occurrences = item.get("occurrences")
+    if isinstance(occurrences, dict):
+        for book_id in occurrences:
+            if isinstance(book_id, str) and book_id.strip():
+                books.add(book_id.strip())
+    book_id = item.get("book_id")
+    if isinstance(book_id, str) and book_id.strip():
+        books.add(book_id.strip())
+    return sorted(books)
+
+
+def count_cross_book_duplicate_candidates(data: dict[str, Any]) -> int:
+    by_head: dict[str, set[str]] = {}
+    for key in ENTITY_KEYS:
+        arr = data.get(key, [])
+        if not isinstance(arr, list):
+            continue
+        for item in arr:
+            if not isinstance(item, dict):
+                continue
+            head = str(item.get("head", "")).strip()
+            candidate_key = duplicate_candidate_head_key(head)
+            if not candidate_key:
+                continue
+            books = get_item_books(item)
+            if not books:
+                continue
+            by_head.setdefault(candidate_key, set()).update(books)
+    return sum(1 for books in by_head.values() if len(books) > 1)
 
 
 def validate_schema(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
@@ -499,6 +553,11 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
     ):
         if not isinstance(totals.get(field), int):
             fail(f"[manual_audit] totals.{field} must be integer", errors)
+    if "cross_book_duplicate_candidates_count" in totals and not isinstance(
+        totals.get("cross_book_duplicate_candidates_count"),
+        int,
+    ):
+        fail("[manual_audit] totals.cross_book_duplicate_candidates_count must be integer", errors)
     queues = queue.get("queues")
     if queues is not None:
         if not isinstance(queues, dict):
@@ -509,6 +568,7 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
                 "missing_pages",
                 "missing_source",
                 "duplicate_heads",
+                "cross_book_duplicate_candidates",
                 "suspicious_heads",
                 "sort_inversions",
             ):
@@ -564,6 +624,13 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
         fail(
             "[manual_audit] stale unreviewed_suspicious_heads_count: "
             f"{totals.get('unreviewed_suspicious_heads_count')} != {unreviewed_suspicious_heads}",
+            errors,
+        )
+    cross_book_count = count_cross_book_duplicate_candidates(data)
+    if totals.get("cross_book_duplicate_candidates_count") not in {None, cross_book_count}:
+        fail(
+            "[manual_audit] stale cross_book_duplicate_candidates_count: "
+            f"{totals.get('cross_book_duplicate_candidates_count')} != {cross_book_count}",
             errors,
         )
     if manual_audit.get("present") is not True:

@@ -69,6 +69,7 @@
     "reviewed_suspicious_heads_count": 23,
     "unreviewed_suspicious_heads_count": 0,
     "sort_inversions_count": 22,
+    "cross_book_duplicate_candidates_count": 8,
     "coverage_pct": {
       "pages": 98.9,
       "contexts": 17.8,
@@ -81,6 +82,7 @@
   },
   "queue_order": [
     "duplicate_heads",
+    "cross_book_duplicate_candidates",
     "suspicious_heads",
     "sort_inversions",
     "missing_context",
@@ -33908,6 +33910,219 @@
           ],
           "pages_summary": "1, 13, 18, 27, 80, 250",
           "route": "#v4/names/list/item/names/%D0%97%D0%B0%D0%BB%D0%B8%D0%B7%D0%BD%D1%8F%D0%BA%20%D0%90.%20%D0%90."
+        }
+      ]
+    },
+    "cross_book_duplicate_candidates": {
+      "total": 8,
+      "items": [
+        {
+          "queue": "cross_book_duplicate_candidates",
+          "entity": "names",
+          "head": "Борис",
+          "normalized_head": "борис",
+          "reason": "Same normalized head appears in multiple books; review canonical links or aliases.",
+          "count": 3,
+          "books": [
+            "mumintroll",
+            "zametki"
+          ],
+          "entities": [
+            "lexicon",
+            "lexicon_reverse",
+            "names"
+          ],
+          "heads": [
+            "Борис"
+          ],
+          "canonical_ids": [
+            "lexicon-9a05da66-f6ac-5747-83cc-dfd64ccbe844",
+            "lexicon_reverse-9a05da66-f6ac-5747-83cc-dfd64ccbe844",
+            "names-9a05da66-f6ac-5747-83cc-dfd64ccbe844"
+          ],
+          "pages_count": 5,
+          "pages_summary": "101, 103, 293, 294, 295",
+          "route": "#v4/names/list/item/names/%D0%91%D0%BE%D1%80%D0%B8%D1%81",
+          "canonical_id": "names-9a05da66-f6ac-5747-83cc-dfd64ccbe844"
+        },
+        {
+          "queue": "cross_book_duplicate_candidates",
+          "entity": "names",
+          "head": "Зализняк А. А.",
+          "normalized_head": "зализняк а а",
+          "reason": "Same normalized head appears in multiple books; review canonical links or aliases.",
+          "count": 2,
+          "books": [
+            "mumintroll",
+            "zametki"
+          ],
+          "entities": [
+            "names"
+          ],
+          "heads": [
+            "Зализняк А. А."
+          ],
+          "canonical_ids": [
+            "names-d4df30b5-6406-5553-8882-aa627a5b4262"
+          ],
+          "pages_count": 6,
+          "pages_summary": "1, 13, 18, 27, 80, 250",
+          "route": "#v4/names/list/item/names/%D0%97%D0%B0%D0%BB%D0%B8%D0%B7%D0%BD%D1%8F%D0%BA%20%D0%90.%20%D0%90.",
+          "canonical_id": "names-d4df30b5-6406-5553-8882-aa627a5b4262"
+        },
+        {
+          "queue": "cross_book_duplicate_candidates",
+          "entity": "names",
+          "head": "Иван III",
+          "normalized_head": "иван iii",
+          "reason": "Same normalized head appears in multiple books; review canonical links or aliases.",
+          "count": 1,
+          "books": [
+            "mumintroll",
+            "zametki"
+          ],
+          "entities": [
+            "names"
+          ],
+          "heads": [
+            "Иван III"
+          ],
+          "canonical_ids": [
+            "names-8f47216c-b42a-5910-a001-b4daae23a08e"
+          ],
+          "pages_count": 1,
+          "pages_summary": "209",
+          "route": "#v4/names/list/item/names/%D0%98%D0%B2%D0%B0%D0%BD%20III",
+          "canonical_id": "names-8f47216c-b42a-5910-a001-b4daae23a08e"
+        },
+        {
+          "queue": "cross_book_duplicate_candidates",
+          "entity": "names",
+          "head": "Пушкин А. С.",
+          "normalized_head": "пушкин а с",
+          "reason": "Same normalized head appears in multiple books; review canonical links or aliases.",
+          "count": 1,
+          "books": [
+            "mumintroll",
+            "zametki"
+          ],
+          "entities": [
+            "names"
+          ],
+          "heads": [
+            "Пушкин А. С."
+          ],
+          "canonical_ids": [
+            "names-f31ff1b3-e9b5-5fd7-bb9f-a757bc633280"
+          ],
+          "pages_count": 2,
+          "pages_summary": "296, 389",
+          "route": "#v4/names/list/item/names/%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD%20%D0%90.%20%D0%A1.",
+          "canonical_id": "names-f31ff1b3-e9b5-5fd7-bb9f-a757bc633280"
+        },
+        {
+          "queue": "cross_book_duplicate_candidates",
+          "entity": "names",
+          "head": "Толстая М. Н.",
+          "normalized_head": "толстая м н",
+          "reason": "Same normalized head appears in multiple books; review canonical links or aliases.",
+          "count": 1,
+          "books": [
+            "mumintroll",
+            "zametki"
+          ],
+          "entities": [
+            "names"
+          ],
+          "heads": [
+            "Толстая М. Н."
+          ],
+          "canonical_ids": [
+            "names-b5af9cfa-4fd0-5a90-8e4c-eb76c766ed0d"
+          ],
+          "pages_count": 1,
+          "pages_summary": "392",
+          "route": "#v4/names/list/item/names/%D0%A2%D0%BE%D0%BB%D1%81%D1%82%D0%B0%D1%8F%20%D0%9C.%20%D0%9D.",
+          "canonical_id": "names-b5af9cfa-4fd0-5a90-8e4c-eb76c766ed0d"
+        },
+        {
+          "queue": "cross_book_duplicate_candidates",
+          "entity": "names",
+          "head": "Фоменко А. Т.",
+          "normalized_head": "фоменко а т",
+          "reason": "Same normalized head appears in multiple books; review canonical links or aliases.",
+          "count": 1,
+          "books": [
+            "mumintroll",
+            "zametki"
+          ],
+          "entities": [
+            "names"
+          ],
+          "heads": [
+            "Фоменко А. Т."
+          ],
+          "canonical_ids": [
+            "names-f95f8db0-0f93-511e-9323-e83daa8fe8b6"
+          ],
+          "pages_count": 1,
+          "pages_summary": "80",
+          "route": "#v4/names/list/item/names/%D0%A4%D0%BE%D0%BC%D0%B5%D0%BD%D0%BA%D0%BE%20%D0%90.%20%D0%A2.",
+          "canonical_id": "names-f95f8db0-0f93-511e-9323-e83daa8fe8b6"
+        },
+        {
+          "queue": "cross_book_duplicate_candidates",
+          "entity": "names",
+          "head": "Цицерон",
+          "normalized_head": "цицерон",
+          "reason": "Same normalized head appears in multiple books; review canonical links or aliases.",
+          "count": 3,
+          "books": [
+            "mumintroll",
+            "zametki"
+          ],
+          "entities": [
+            "lexicon",
+            "lexicon_reverse",
+            "names"
+          ],
+          "heads": [
+            "Цицерон"
+          ],
+          "canonical_ids": [
+            "lexicon-f16e0376-31ae-54c8-ac4a-a3fdb895100a",
+            "lexicon_reverse-f16e0376-31ae-54c8-ac4a-a3fdb895100a",
+            "names-f16e0376-31ae-54c8-ac4a-a3fdb895100a"
+          ],
+          "pages_count": 2,
+          "pages_summary": "103, 248",
+          "route": "#v4/names/list/item/names/%D0%A6%D0%B8%D1%86%D0%B5%D1%80%D0%BE%D0%BD",
+          "canonical_id": "names-f16e0376-31ae-54c8-ac4a-a3fdb895100a"
+        },
+        {
+          "queue": "cross_book_duplicate_candidates",
+          "entity": "names",
+          "head": "Янин В. Л.",
+          "normalized_head": "янин в л",
+          "reason": "Same normalized head appears in multiple books; review canonical links or aliases.",
+          "count": 1,
+          "books": [
+            "mumintroll",
+            "zametki"
+          ],
+          "entities": [
+            "names"
+          ],
+          "heads": [
+            "Янин В. Л."
+          ],
+          "canonical_ids": [
+            "names-d63fac7a-7442-5d6b-83ae-45048e4afaa0"
+          ],
+          "pages_count": 3,
+          "pages_summary": "277, 288, 306",
+          "route": "#v4/names/list/item/names/%D0%AF%D0%BD%D0%B8%D0%BD%20%D0%92.%20%D0%9B.",
+          "canonical_id": "names-d63fac7a-7442-5d6b-83ae-45048e4afaa0"
         }
       ]
     },

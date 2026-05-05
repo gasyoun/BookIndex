@@ -37,6 +37,16 @@ QUALITY_ENTITY_PRIORITY = {
     "ethnonyms": 6,
     "languages": 7,
 }
+CROSS_BOOK_ENTITY_PRIORITY = {
+    "names": 0,
+    "toponyms": 1,
+    "ethnonyms": 2,
+    "languages": 3,
+    "subject_index": 4,
+    "lexicon": 5,
+    "lexicon_reverse": 6,
+    "lexicon_tech": 7,
+}
 SORT_ORDER_KEYS = (
     "names",
     "toponyms",
@@ -423,6 +433,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "reviewed_suspicious_heads_count": 0,
         "unreviewed_suspicious_heads_count": 0,
         "sort_inversions_count": 0,
+        "cross_book_duplicate_candidates_count": 0,
     }
 
     for key in ENTITY_KEYS:
@@ -444,6 +455,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         totals["unreviewed_suspicious_heads_count"] += metrics["unreviewed_suspicious_heads_count"]
         totals["sort_inversions_count"] += metrics["sort_order"]["inversions_count"]
 
+    totals["cross_book_duplicate_candidates_count"] = count_cross_book_duplicate_candidates(data)
     totals["coverage_pct"] = {
         "pages": pct(totals["items_with_pages"], totals["items_total"]),
         "contexts": pct(totals["items_with_contexts"], totals["items_total"]),
@@ -489,6 +501,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- `suspect=true`: {totals['items_suspect_true']}",
         f"- Context snippets: {totals['context_snippets_total']}",
         f"- Duplicate heads groups: {totals['duplicate_heads_count']}",
+        f"- Cross-book duplicate candidates: {totals['cross_book_duplicate_candidates_count']}",
         f"- Suspicious heads: {totals['suspicious_heads_count']}",
         f"- Reviewed suspicious heads: {totals['reviewed_suspicious_heads_count']}",
         f"- Unreviewed suspicious heads: {totals['unreviewed_suspicious_heads_count']}",
@@ -703,6 +716,60 @@ def quality_entity_sort_key(entity: str, head: str = "") -> tuple[int, str, str]
     return (QUALITY_ENTITY_PRIORITY.get(entity, 99), sort_key(head), entity)
 
 
+def cross_book_entity_sort_key(entity: str, head: str = "") -> tuple[int, str, str]:
+    return (CROSS_BOOK_ENTITY_PRIORITY.get(entity, 99), sort_key(head), entity)
+
+
+def duplicate_candidate_head_key(value: str) -> str:
+    normalized = unicodedata.normalize(
+        "NFKD",
+        value.strip().replace("\u0451", "\u0435").replace("\u0401", "\u0415"),
+    )
+    chunks: list[str] = []
+    needs_space = False
+    for char in normalized:
+        if unicodedata.category(char) in {"Mn", "Me", "Cf"}:
+            continue
+        folded = char.casefold()
+        if folded.isalnum():
+            chunks.append(folded)
+            needs_space = True
+        elif needs_space:
+            chunks.append(" ")
+            needs_space = False
+    return " ".join("".join(chunks).split())
+
+
+def get_item_books(item: dict[str, Any]) -> list[str]:
+    books: set[str] = set()
+    occurrences = item.get("occurrences")
+    if isinstance(occurrences, dict):
+        for book_id in occurrences:
+            if isinstance(book_id, str) and book_id.strip():
+                books.add(book_id.strip())
+    book_id = item.get("book_id")
+    if isinstance(book_id, str) and book_id.strip():
+        books.add(book_id.strip())
+    return sorted(books)
+
+
+def count_cross_book_duplicate_candidates(data: dict[str, Any]) -> int:
+    by_head: dict[str, set[str]] = {}
+    for entity in ENTITY_KEYS:
+        items = data.get(entity, [])
+        valid_items = [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
+        for item in valid_items:
+            head = get_item_head(item)
+            candidate_key = duplicate_candidate_head_key(head)
+            if not candidate_key:
+                continue
+            books = get_item_books(item)
+            if not books:
+                continue
+            by_head.setdefault(candidate_key, set()).update(books)
+    return sum(1 for books in by_head.values() if len(books) > 1)
+
+
 def build_quality_item(
     *,
     entity: str,
@@ -739,11 +806,13 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
         "missing_pages": [],
         "missing_source": [],
         "duplicate_heads": [],
+        "cross_book_duplicate_candidates": [],
         "suspicious_heads": [],
         "sort_inversions": [],
     }
 
     valid_by_entity: dict[str, list[dict[str, Any]]] = {}
+    cross_book_candidates: dict[str, list[dict[str, Any]]] = {}
     for entity in ENTITY_KEYS:
         items = data.get(entity, [])
         valid_items = [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
@@ -755,6 +824,14 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
             if not head:
                 continue
             by_head.setdefault(head, []).append(item)
+            candidate_key = duplicate_candidate_head_key(head)
+            if candidate_key:
+                cross_book_candidates.setdefault(candidate_key, []).append({
+                    "entity": entity,
+                    "head": head,
+                    "item": item,
+                    "books": get_item_books(item),
+                })
 
             pages = get_item_pages(item)
             contexts = item_context_counts(item)
@@ -807,6 +884,72 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
                 "route": build_item_route(entity, head),
             })
 
+    for normalized_head, records in cross_book_candidates.items():
+        books = sorted({
+            book
+            for record in records
+            for book in record.get("books", [])
+            if isinstance(book, str) and book
+        })
+        if len(books) <= 1:
+            continue
+        preferred = sorted(
+            records,
+            key=lambda record: cross_book_entity_sort_key(str(record.get("entity", "")), str(record.get("head", ""))),
+        )[0]
+        heads = sorted(
+            {
+                str(record.get("head", "")).strip()
+                for record in records
+                if str(record.get("head", "")).strip()
+            },
+            key=sort_key,
+        )
+        entities = sorted(
+            {
+                str(record.get("entity", "")).strip()
+                for record in records
+                if str(record.get("entity", "")).strip()
+            },
+            key=lambda entity: quality_entity_sort_key(entity),
+        )
+        canonical_ids = sorted({
+            str(record["item"].get("canonical_id"))
+            for record in records
+            if isinstance(record.get("item"), dict)
+            and isinstance(record["item"].get("canonical_id"), str)
+            and record["item"].get("canonical_id")
+        })
+        pages = sorted({
+            page
+            for record in records
+            if isinstance(record.get("item"), dict)
+            for page in get_item_pages(record["item"])
+        })
+        preferred_entity = str(preferred.get("entity", ""))
+        preferred_head = str(preferred.get("head", ""))
+        item: dict[str, Any] = {
+            "queue": "cross_book_duplicate_candidates",
+            "entity": preferred_entity,
+            "head": preferred_head,
+            "normalized_head": normalized_head,
+            "reason": "Same normalized head appears in multiple books; review canonical links or aliases.",
+            "count": len(records),
+            "books": books,
+            "entities": entities,
+            "heads": heads,
+            "canonical_ids": canonical_ids,
+            "pages_count": len(pages),
+            "pages_summary": summarize_pages(pages),
+            "route": build_item_route(preferred_entity, preferred_head),
+        }
+        preferred_item = preferred.get("item")
+        if isinstance(preferred_item, dict):
+            canonical_id = preferred_item.get("canonical_id")
+            if isinstance(canonical_id, str) and canonical_id:
+                item["canonical_id"] = canonical_id
+        queues["cross_book_duplicate_candidates"].append(item)
+
     for entity in SORT_ORDER_KEYS:
         valid_items = valid_by_entity.get(entity, [])
         inversions = collect_sort_order_metrics(valid_items, entity in SORT_ORDER_KEYS).get("inversions", [])
@@ -834,6 +977,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
         "missing_context_count": len(queues["missing_context"]),
         "missing_pages_count": len(queues["missing_pages"]),
         "missing_source_count": len(queues["missing_source"]),
+        "cross_book_duplicate_candidates_count": len(queues["cross_book_duplicate_candidates"]),
     })
 
     entities = report.get("entities", {})
@@ -860,6 +1004,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
         "totals": totals,
         "queue_order": [
             "duplicate_heads",
+            "cross_book_duplicate_candidates",
             "suspicious_heads",
             "sort_inversions",
             "missing_context",

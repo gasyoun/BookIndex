@@ -75,8 +75,13 @@ test.describe('aaz-index smoke', () => {
     await expect(quality).toContainText('source coverage');
     await expect(quality).toContainText('duplicate head groups');
     await expect(quality.locator('.quality-queue[data-queue="duplicate_heads"] summary')).toContainText('1');
+    await expect(quality.locator('.quality-queue[data-queue="cross_book_duplicate_candidates"] summary')).toContainText('8');
     await expect(quality.locator('.quality-queue[data-queue="suspicious_heads"] summary')).toContainText('23');
     await expect(quality.locator('.quality-queue[data-queue="sort_inversions"] summary')).toContainText('22');
+
+    const crossBookQueue = quality.locator('.quality-queue[data-queue="cross_book_duplicate_candidates"]');
+    await crossBookQueue.locator('summary').click();
+    await expect(crossBookQueue.locator('.quality-queue-item').first()).toContainText('books: mumintroll, zametki');
 
     const duplicateQueue = quality.locator('.quality-queue[data-queue="duplicate_heads"]');
     await duplicateQueue.locator('summary').click();

@@ -16,7 +16,7 @@ BookIndex is no longer just a single-book index. It is now a small corpus platfo
 The active roadmap has shifted:
 
 1. **v4.5 import pipeline is complete enough for production use.** The repository now has 3 books in the corpus, import fixtures/status files, and import tooling.
-2. **v4.6 normalization is partially implemented.** `canonical_id` and `occurrences` exist for almost all entities; `aliases` and deeper duplicate-candidate checks remain open.
+2. **v4.6 normalization is partially implemented.** `canonical_id` and `occurrences` exist for almost all entities; `aliases` remain open and cross-book duplicate candidates are now surfaced as a quality queue.
 3. **v4.7 context quality is the next high-value phase.** Current context coverage is 17.8%; the next realistic target remains 35-40%, with emphasis on lexicon and subject data.
 4. **v4.8 video catalog remains future work.** The corpus model already reserves planned video catalog capacity, but video schema/import/search is not implemented yet.
 
@@ -107,6 +107,7 @@ This remains a maintainability issue, not the highest product-value task.
 Current report:
 
 - 1 duplicate-head group: `names` -> `Зализняк А. А.` x2.
+- 8 cross-book duplicate candidates surfaced for canonical/alias review.
 - 23 suspicious heads, all reviewed.
 - 22 sort inversions across names, toponyms, ethnonyms, languages, and subject index.
 - `lexicon_reverse` has 0.0% direct context coverage, because it is mostly a reverse/index view and needs either inherited context display or an explicit quality rule.
@@ -123,7 +124,7 @@ Implemented:
 Still open:
 
 - `aliases` are not populated yet.
-- cross-book duplicate-candidate checks need to become a validation/report feature.
+- cross-book duplicate candidates are now a validation/report/UI queue with 8 current candidates.
 - occurrence matrix UI can be clearer and more actionable.
 
 ---
@@ -175,7 +176,7 @@ Status: partially implemented.
 - [x] `occurrences` generated for almost all entities.
 - [x] Card/source/export paths understand occurrence-shaped data.
 - [ ] Populate `aliases` for spelling variants.
-- [ ] Add a report section for cross-book duplicate candidates.
+- [x] Add a report section for cross-book duplicate candidates.
 - [ ] Improve occurrence matrix display in cards.
 - [ ] Add validation for inconsistent `head`, `display_name`, and `source_head`.
 
@@ -192,6 +193,7 @@ Implemented first slice:
 - enriched schema 2 quality queue JSON in `tests/index-audit-queue.json`;
 - `--write-quality-queue` in `scripts/content_report.py`;
 - expandable actionable queues in `#v4/corpus/sources`;
+- cross-book duplicate-candidate queue with 8 current candidates;
 - smoke coverage for queue counts, expansion, navigation, and compact viewport overflow.
 
 Priorities:
@@ -209,7 +211,7 @@ Build actionable queues:
 - [x] possible duplicate;
 - [x] sort inversion;
 - [ ] needs page verification;
-- [ ] cross-book duplicate candidate.
+- [x] cross-book duplicate candidate.
 
 Completion criterion: `#v4/corpus/sources` or a related quality view shows totals plus clickable editorial queues, so warnings can be handled without reading CI logs.
 
@@ -245,7 +247,7 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 3. Review the 22 sort inversions and mark intentional grouped ordering separately from errors.
 4. Start context expansion with `lexicon` and `subject_index`, using the queue as the worklist.
 5. Decide the rule for `lexicon_reverse`: inherited context projection or intentionally contextless reverse index.
-6. Add cross-book duplicate candidates to the queue report.
+6. Review the 8 cross-book duplicate candidates through the quality queue.
 
 ---
 
