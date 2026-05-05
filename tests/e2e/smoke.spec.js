@@ -16,27 +16,27 @@ test.describe('aaz-index smoke', () => {
     const sitePath = await siteDownload.path();
     const siteMarkdown = sitePath ? await fs.readFile(sitePath, 'utf8') : '';
     expect(siteMarkdown).toContain('Источник: **Из жизни слов и языков**');
-    expect(siteMarkdown).toContain('book_id: zaliznyak-aaz-index');
+    expect(siteMarkdown).toContain('book_id: mumintroll');
   });
 
   test('corpus shell registers current book and accepts book route aliases', async ({ page }) => {
-    await page.goto('/aaz-index.html#v4/books/zaliznyak-aaz-index/home/home');
+    await page.goto('/aaz-index.html#v4/books/mumintroll/home/home');
     await expect(page.locator('.home-panel')).toBeVisible();
     await expect(page.locator('#corpus-status .corpus-chip.active')).toContainText('Из жизни слов и языков');
     await expect(page.locator('#corpus-status')).toContainText('Видео: 200');
     await expect(page.locator('#global-search-scope')).toHaveValue('current');
 
     const corpus = await page.evaluate(() => window.APP_DATA && window.APP_DATA.corpus);
-    expect(corpus.active_book_id).toBe('zaliznyak-aaz-index');
+    expect(corpus.active_book_id).toBe('mumintroll');
     expect(corpus.books[0].source_type).toBe('book');
     expect(corpus.source_types.some((source) => source.type === 'video_catalog' && source.planned_count === 200)).toBe(true);
 
-    await page.goto('/aaz-index.html#v4/scholar/page_trends?books=zaliznyak-aaz-index');
+    await page.goto('/aaz-index.html#v4/scholar/page_trends?books=mumintroll');
     await expect(page.locator('.page-trends-source-chip')).toContainText('Из жизни слов и языков');
     const queryBookId = await page.evaluate(() => window.APP_DATA.corpus.active_book_id);
-    expect(queryBookId).toBe('zaliznyak-aaz-index');
+    expect(queryBookId).toBe('mumintroll');
 
-    await page.goto('/aaz-index.html#v4/books/zaliznyak-aaz-index/names/list');
+    await page.goto('/aaz-index.html#v4/books/mumintroll/names/list');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
     await expect(page).toHaveURL(/#v4\/names\/list$/);
   });
@@ -293,7 +293,7 @@ test.describe('aaz-index smoke', () => {
     const cardPath = await cardDownload.path();
     const cardMarkdown = cardPath ? await fs.readFile(cardPath, 'utf8') : '';
     expect(cardMarkdown).toContain('source: "Из жизни слов и языков"');
-    expect(cardMarkdown).toContain('book_id: "zaliznyak-aaz-index"');
+    expect(cardMarkdown).toContain('book_id: "mumintroll"');
     await page.locator('#right-content button#copy-card-link').click();
     await expect(page.locator('#ui-live-status')).toHaveCount(1);
     await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
@@ -774,7 +774,7 @@ test.describe('aaz-index smoke', () => {
     const sectionPath = await sectionDownload.path();
     const sectionMarkdown = sectionPath ? await fs.readFile(sectionPath, 'utf8') : '';
     expect(sectionMarkdown).toContain('Источник: **Из жизни слов и языков**');
-    expect(sectionMarkdown).toContain('- book_id: zaliznyak-aaz-index');
+    expect(sectionMarkdown).toContain('- book_id: mumintroll');
   });
 
   test('accented heads render as accent-safe spans in list and card', async ({ page }) => {
@@ -930,13 +930,13 @@ test.describe('aaz-index smoke', () => {
     const csvPath = await csvDownload.path();
     const csvText = csvPath ? await fs.readFile(csvPath, 'utf8') : '';
     expect(csvText.split('\n')[0]).toContain('book_id');
-    expect(csvText).toContain('zaliznyak-aaz-index');
+    expect(csvText).toContain('mumintroll');
     const mdDownloadPromise = page.waitForEvent('download');
     await page.locator('#trend-export-md').click();
     const mdDownload = await mdDownloadPromise;
     const mdPath = await mdDownload.path();
     const mdText = mdPath ? await fs.readFile(mdPath, 'utf8') : '';
-    expect(mdText).toContain('book_id: zaliznyak-aaz-index');
+    expect(mdText).toContain('book_id: mumintroll');
   });
 
   test('scholar page trends keeps selected range in hash route', async ({ page }) => {
@@ -971,7 +971,7 @@ test.describe('aaz-index smoke', () => {
       });
     });
     await copyBtn.click();
-    await expect.poll(() => page.evaluate(() => window.__copiedShareUrl || '')).toContain('books=zaliznyak-aaz-index');
+    await expect.poll(() => page.evaluate(() => window.__copiedShareUrl || '')).toContain('books=mumintroll');
     await page.goto('/aaz-index.html#v4/scholar/page_trends/range/120/140');
     await expect(page.locator('#trend-start-range')).toHaveValue('120');
     await expect(page.locator('#trend-end-range')).toHaveValue('140');
@@ -990,7 +990,7 @@ test.describe('aaz-index smoke', () => {
     const chronologyPath = await chronologyDownload.path();
     const chronologyMarkdown = chronologyPath ? await fs.readFile(chronologyPath, 'utf8') : '';
     expect(chronologyMarkdown).toContain('Источник: **Из жизни слов и языков**');
-    expect(chronologyMarkdown).toContain('book_id: zaliznyak-aaz-index');
+    expect(chronologyMarkdown).toContain('book_id: mumintroll');
     const row = page.locator('.chronology-event-link').first();
     await expect(row).toBeVisible();
     const before = page.url();
@@ -1015,7 +1015,7 @@ test.describe('aaz-index smoke', () => {
     const accentPath = await accentDownload.path();
     const accentMarkdown = accentPath ? await fs.readFile(accentPath, 'utf8') : '';
     expect(accentMarkdown).toContain('Источник: **Из жизни слов и языков**');
-    expect(accentMarkdown).toContain('book_id: zaliznyak-aaz-index');
+    expect(accentMarkdown).toContain('book_id: mumintroll');
   });
 
   test('phonetic correspondences table supports filters and links', async ({ page }) => {
@@ -1062,8 +1062,8 @@ test.describe('aaz-index smoke', () => {
     expect(scholarBib).toContain('author = {');
     expect(scholarBib).toContain('title = {');
     expect(scholarBib).toContain('year = {');
-    expect(scholarBib).toContain('book_id: zaliznyak-aaz-index');
-    expect(scholarBib).toContain('keywords = {bookindex,scholar,bibliography,corpus,zaliznyak-aaz-index}');
+    expect(scholarBib).toContain('book_id: mumintroll');
+    expect(scholarBib).toContain('keywords = {bookindex,scholar,bibliography,corpus,mumintroll}');
 
     await page.goto('/aaz-index.html#materials/further_reading');
     const furtherBtn = page.locator('#export-further-bib');
@@ -1074,8 +1074,8 @@ test.describe('aaz-index smoke', () => {
     expect(furtherDownload.suggestedFilename()).toBe('further-reading.bib');
     const furtherBib = await readBib(furtherDownload);
     expect(furtherBib).toContain('@misc{');
-    expect(furtherBib).toContain('book_id: zaliznyak-aaz-index');
-    expect(furtherBib).toContain('keywords = {bookindex,further_reading,corpus,zaliznyak-aaz-index}');
+    expect(furtherBib).toContain('book_id: mumintroll');
+    expect(furtherBib).toContain('keywords = {bookindex,further_reading,corpus,mumintroll}');
 
     await page.goto('/aaz-index.html#names/list');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
@@ -1088,8 +1088,8 @@ test.describe('aaz-index smoke', () => {
     expect(sourceDownload.suggestedFilename()).toContain('.bib');
     const sourceBib = await readBib(sourceDownload);
     expect(sourceBib).toContain('howpublished = {BookIndex card source}');
-    expect(sourceBib).toContain('book_id: zaliznyak-aaz-index');
-    expect(sourceBib).toContain('corpus,zaliznyak-aaz-index');
+    expect(sourceBib).toContain('book_id: mumintroll');
+    expect(sourceBib).toContain('corpus,mumintroll');
   });
   test('reading-now pager and quick trends navigation works', async ({ page }) => {
     await page.goto('/aaz-index.html#materials/lectures');
@@ -1348,11 +1348,11 @@ test.describe('aaz-index smoke', () => {
   });
 
   test('corpus viz hash opens current-book visualization shell', async ({ page }) => {
-    await page.goto('/aaz-index.html#v4/corpus/viz/module/viz03?books=zaliznyak-aaz-index');
-    await expect(page).toHaveURL(/#v4\/scholar\/viz\/module\/viz03\?books=zaliznyak-aaz-index/);
+    await page.goto('/aaz-index.html#v4/corpus/viz/module/viz03?books=mumintroll');
+    await expect(page).toHaveURL(/#v4\/scholar\/viz\/module\/viz03\?books=mumintroll/);
     await expect(page.locator('.viz-shell')).toBeVisible();
     await expect(page.locator('.viz-source-chip')).toContainText('Из жизни слов и языков');
-    await expect(page.locator('.viz-corpus-link')).toHaveAttribute('href', /#v4\/corpus\/viz\/module\/viz03\?books=zaliznyak-aaz-index/);
+    await expect(page.locator('.viz-corpus-link')).toHaveAttribute('href', /#v4\/corpus\/viz\/module\/viz03\?books=mumintroll/);
   });
 
   test('viz modules switch and render timeline + heatmap', async ({ page }) => {

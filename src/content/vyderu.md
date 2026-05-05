@@ -3,7 +3,7 @@ id: "выдеру"
 title: "выдеру"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 435
 tags: ["lexicon"]
 ---

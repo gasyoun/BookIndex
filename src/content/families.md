@@ -3,7 +3,7 @@ id: "families"
 title: "Как языки связаны"
 source_key: "routes"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 2
 tags: ["routes"]
 ---

@@ -3,7 +3,7 @@ id: "non_content_pages_7"
 title: "non_content_pages_7"
 source_key: "non_content_pages"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 6
 tags: ["non_content_pages"]
 ---

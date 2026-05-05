@@ -3,7 +3,7 @@ id: "финны"
 title: "финны"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 54
 tags: ["ethnonyms"]
 ---

@@ -3,7 +3,7 @@ id: "отсебятина"
 title: "отсебятина"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 85
 tags: ["lexicon_reverse"]
 ---

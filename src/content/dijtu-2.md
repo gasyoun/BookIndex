@@ -3,7 +3,7 @@ id: "dĳtu"
 title: "dĳtu"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1384
 tags: ["lexicon_reverse"]
 ---

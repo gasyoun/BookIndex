@@ -3,7 +3,7 @@ id: "иранские"
 title: "иранские"
 source_key: "languages"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 53
 tags: ["languages"]
 ---

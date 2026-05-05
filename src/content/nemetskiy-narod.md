@@ -3,7 +3,7 @@ id: "немецкий народ"
 title: "немецкий народ"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 29
 tags: ["ethnonyms"]
 ---

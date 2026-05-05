@@ -3,7 +3,7 @@ id: "пе́ред"
 title: "пе́ред"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 981
 tags: ["lexicon"]
 ---

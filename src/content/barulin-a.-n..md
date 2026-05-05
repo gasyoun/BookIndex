@@ -3,7 +3,7 @@ id: "Барулин А. Н."
 title: "Барулин А. Н."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 7
 tags: ["names"]
 ---

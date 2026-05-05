@@ -3,11 +3,11 @@ id: "corpus"
 title: "corpus"
 source_key: "corpus"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 tags: ["corpus"]
 ---
 
-Active book: Из жизни слов и языков (zaliznyak-aaz-index).
+Active book: Из жизни слов и языков (mumintroll).
 
 ## Books
 
@@ -22,10 +22,10 @@ Active book: Из жизни слов и языков (zaliznyak-aaz-index).
 
 ```json
 {
-  "active_book_id": "zaliznyak-aaz-index",
+  "active_book_id": "mumintroll",
   "books": [
     {
-      "book_id": "zaliznyak-aaz-index",
+      "book_id": "mumintroll",
       "title": "Из жизни слов и языков",
       "author": "А. А. Зализняк",
       "year": 2026,

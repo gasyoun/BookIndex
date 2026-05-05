@@ -3,7 +3,7 @@ id: "у́гълом"
 title: "у́гълом"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1263
 tags: ["lexicon"]
 ---

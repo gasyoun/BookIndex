@@ -3,7 +3,7 @@ id: "мъре"
 title: "мъре"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 879
 tags: ["lexicon"]
 ---

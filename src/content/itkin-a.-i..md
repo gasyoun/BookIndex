@@ -3,7 +3,7 @@ id: "Иткин А. И."
 title: "Иткин А. И."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 44
 tags: ["names"]
 ---

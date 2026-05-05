@@ -3,7 +3,7 @@ id: "Фоменко А. Т."
 title: "Фоменко А. Т."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 84
 tags: ["names"]
 ---

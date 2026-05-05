@@ -3,7 +3,7 @@ id: "Мейе А."
 title: "Мейе А."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 59
 tags: ["names"]
 ---

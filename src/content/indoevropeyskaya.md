@@ -3,7 +3,7 @@ id: "language_tree_1"
 title: "Индоевропейская"
 source_key: "language_tree"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 0
 tags: ["language_tree"]
 ---

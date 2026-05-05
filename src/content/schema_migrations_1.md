@@ -3,7 +3,7 @@ id: "schema_migrations_1"
 title: "schema_migrations_1"
 source_key: "schema_migrations"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 0
 tags: ["schema_migrations"]
 ---

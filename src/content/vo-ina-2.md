@@ -3,7 +3,7 @@ id: "во́ина"
 title: "во́ина"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 84
 tags: ["lexicon_reverse"]
 ---

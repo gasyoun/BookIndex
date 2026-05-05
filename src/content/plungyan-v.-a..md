@@ -3,7 +3,7 @@ id: "Плунгян В. А."
 title: "Плунгян В. А."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 70
 tags: ["names"]
 ---

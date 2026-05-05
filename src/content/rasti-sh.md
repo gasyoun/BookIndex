@@ -3,7 +3,7 @@ id: "расти́шь"
 title: "расти́шь"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1090
 tags: ["lexicon"]
 ---

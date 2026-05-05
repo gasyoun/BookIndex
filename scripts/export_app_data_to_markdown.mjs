@@ -18,7 +18,7 @@ const TEXT_FIELD_PRIORITY = [
 ];
 
 const DEFAULT_CORPUS_BOOK = {
-  book_id: 'zaliznyak-aaz-index',
+  book_id: 'mumintroll',
   title: 'Из жизни слов и языков',
 };
 

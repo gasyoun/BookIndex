@@ -3,7 +3,7 @@ id: "gens"
 title: "gens"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1335
 tags: ["lexicon_reverse"]
 ---

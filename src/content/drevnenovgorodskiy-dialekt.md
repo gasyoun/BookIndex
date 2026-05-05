@@ -3,7 +3,7 @@ id: "древненовгородский диалект"
 title: "древненовгородский диалект"
 source_key: "languages"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 35
 tags: ["languages"]
 ---

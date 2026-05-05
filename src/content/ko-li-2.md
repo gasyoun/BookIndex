@@ -3,7 +3,7 @@ id: "ко́ли"
 title: "ко́ли"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 269
 tags: ["lexicon_reverse"]
 ---

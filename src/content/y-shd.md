@@ -3,7 +3,7 @@ id: "y/shd"
 title: "y/shd"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 248
 tags: ["lexicon"]
 ---

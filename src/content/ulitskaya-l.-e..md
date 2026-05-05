@@ -3,7 +3,7 @@ id: "Улицкая Л. Е."
 title: "Улицкая Л. Е."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 81
 tags: ["names"]
 ---

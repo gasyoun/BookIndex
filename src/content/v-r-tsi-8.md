@@ -3,7 +3,7 @@ id: "вѣрѣци"
 title: "вѣрѣци"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 309
 tags: ["lexicon_reverse"]
 ---

@@ -3,7 +3,7 @@ id: "на и́ный"
 title: "на и́ный"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 357
 tags: ["lexicon_reverse"]
 ---

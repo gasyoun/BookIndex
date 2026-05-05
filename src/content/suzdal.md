@@ -3,7 +3,7 @@ id: "Суздаль"
 title: "Суздаль"
 source_key: "toponyms"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 79
 tags: ["toponyms"]
 ---

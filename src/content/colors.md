@@ -3,7 +3,7 @@ id: "colors"
 title: "colors"
 source_key: "colors"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 tags: ["colors"]
 ---
 

@@ -3,7 +3,7 @@ id: "у́гълъ"
 title: "у́гълъ"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 757
 tags: ["lexicon_reverse"]
 ---

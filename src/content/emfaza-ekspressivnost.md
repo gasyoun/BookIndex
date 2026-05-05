@@ -3,7 +3,7 @@ id: "эмфаза, экспрессивность"
 title: "эмфаза, экспрессивность"
 source_key: "subject_index"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 84
 tags: ["subject_index"]
 ---

@@ -3,7 +3,7 @@ id: "Карамзин Н. М."
 title: "Карамзин Н. М."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 47
 tags: ["names"]
 ---

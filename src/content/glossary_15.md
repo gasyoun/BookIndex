@@ -3,7 +3,7 @@ id: "glossary_15"
 title: "glossary_15"
 source_key: "glossary"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 14
 tags: ["glossary"]
 ---

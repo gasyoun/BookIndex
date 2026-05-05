@@ -3,7 +3,7 @@ id: "И́верская"
 title: "И́верская"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1056
 tags: ["lexicon_reverse"]
 ---

@@ -3,7 +3,7 @@ id: "по у́лицам"
 title: "по у́лицам"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1001
 tags: ["lexicon"]
 ---

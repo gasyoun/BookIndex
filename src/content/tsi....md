@@ -3,7 +3,7 @@ id: "?Ци..."
 title: "?Ци..."
 source_key: "lexicon_tech"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 28
 tags: ["lexicon_tech"]
 ---

@@ -3,7 +3,7 @@ id: "рыбка"
 title: "рыбка"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 33
 tags: ["lexicon_reverse"]
 ---

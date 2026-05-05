@@ -3,7 +3,7 @@ id: "Литовское княжество Великое"
 title: "Литовское княжество Великое"
 source_key: "toponyms"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 50
 tags: ["toponyms"]
 ---

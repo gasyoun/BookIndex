@@ -3,7 +3,7 @@ id: "ударение: ∼ в арабском языке"
 title: "ударение: ∼ в арабском языке"
 source_key: "subject_index"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 65
 tags: ["subject_index"]
 ---

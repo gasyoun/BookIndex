@@ -3,7 +3,7 @@ id: "среднефранцузский"
 title: "среднефранцузский"
 source_key: "languages"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 105
 tags: ["languages"]
 ---

@@ -3,7 +3,7 @@ id: "syntax"
 title: "Порядок слов и закон Вакернагеля"
 source_key: "routes"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 4
 tags: ["routes"]
 ---

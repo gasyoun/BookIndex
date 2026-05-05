@@ -3,7 +3,7 @@ id: "Ше́йкспир"
 title: "Ше́йкспир"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1340
 tags: ["lexicon"]
 ---

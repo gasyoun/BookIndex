@@ -3,7 +3,7 @@ id: "epoch_colors"
 title: "epoch_colors"
 source_key: "epoch_colors"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 tags: ["epoch_colors"]
 ---
 

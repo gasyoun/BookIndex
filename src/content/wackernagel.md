@@ -3,7 +3,7 @@ id: "wackernagel"
 title: "Закон Вакернагеля"
 source_key: "phonetic_laws"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 2
 tags: ["phonetic_laws"]
 ---

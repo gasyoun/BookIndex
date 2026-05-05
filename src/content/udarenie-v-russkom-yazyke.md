@@ -3,7 +3,7 @@ id: "ударение: ∼ в русском языке"
 title: "ударение: ∼ в русском языке"
 source_key: "subject_index"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 67
 tags: ["subject_index"]
 ---

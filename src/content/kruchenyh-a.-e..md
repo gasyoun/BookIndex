@@ -3,7 +3,7 @@ id: "Кручёных А. Е."
 title: "Кручёных А. Е."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 53
 tags: ["names"]
 ---

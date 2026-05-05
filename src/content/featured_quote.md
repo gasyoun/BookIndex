@@ -3,7 +3,7 @@ id: "featured_quote"
 title: "featured_quote"
 source_key: "featured_quote"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 tags: ["featured_quote"]
 ---
 

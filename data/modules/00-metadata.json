@@ -4,10 +4,10 @@
     "1->2: editorial_flags_and_sources"
   ],
   "corpus": {
-    "active_book_id": "zaliznyak-aaz-index",
+    "active_book_id": "mumintroll",
     "books": [
       {
-        "book_id": "zaliznyak-aaz-index",
+        "book_id": "mumintroll",
         "title": "Из жизни слов и языков",
         "author": "А. А. Зализняк",
         "year": 2026,

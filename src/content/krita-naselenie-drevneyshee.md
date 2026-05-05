@@ -3,7 +3,7 @@ id: "Крита население древнейшее"
 title: "Крита население древнейшее"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 23
 tags: ["ethnonyms"]
 ---

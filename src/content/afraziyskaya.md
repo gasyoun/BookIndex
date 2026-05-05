@@ -3,7 +3,7 @@ id: "language_tree_2"
 title: "Афразийская"
 source_key: "language_tree"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1
 tags: ["language_tree"]
 ---

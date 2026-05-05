@@ -3,7 +3,7 @@ id: "Карлсон"
 title: "Карлсон"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 511
 tags: ["lexicon_reverse"]
 ---

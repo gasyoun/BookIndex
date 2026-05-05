@@ -3,7 +3,7 @@ id: "Блеген К."
 title: "Блеген К."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 11
 tags: ["names"]
 ---

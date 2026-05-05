@@ -3,7 +3,7 @@ id: "Шампольон Ф."
 title: "Шампольон Ф."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 91
 tags: ["names"]
 ---

@@ -127,7 +127,7 @@ def check_static_guards():
         'function prefersReducedMotion() {',
         "window.matchMedia('(prefers-reduced-motion: reduce)'",
         'function buildDefaultCorpusRegistry() {',
-        "active_book_id: 'zaliznyak-aaz-index'",
+        "active_book_id: 'mumintroll'",
         'function applyActiveBookFromQuery(query) {',
         "params.get('books') || params.get('book')",
         "params.set('books', activeBookId);",
@@ -193,7 +193,7 @@ def check_static_guards():
 
     flat_exporter_required = [
         "const DEFAULT_CORPUS_BOOK = {",
-        "book_id: 'zaliznyak-aaz-index'",
+        "book_id: 'mumintroll'",
         'function getCorpusBookMeta(data, entity) {',
         'if (meta.source) lines.push(`source: ${JSON.stringify(meta.source)}`);',
         'if (meta.bookId) lines.push(`book_id: ${JSON.stringify(meta.bookId)}`);',
@@ -204,7 +204,7 @@ def check_static_guards():
             return False
 
     content_report_required = [
-        'DEFAULT_CORPUS_BOOK_ID = "zaliznyak-aaz-index"',
+        'DEFAULT_CORPUS_BOOK_ID = "mumintroll"',
         'DEFAULT_VIDEO_CATALOG_COUNT = 200',
         '"mode": "runtime_default"',
         '"mode": "explicit"',
@@ -256,19 +256,19 @@ def check_static_guards():
     if not isinstance(corpus, dict):
         print('[static] FAIL: app_data.json is missing explicit corpus registry')
         return False
-    if corpus.get('active_book_id') != 'zaliznyak-aaz-index':
-        print('[static] FAIL: corpus.active_book_id must be zaliznyak-aaz-index')
+    if corpus.get('active_book_id') != 'mumintroll':
+        print('[static] FAIL: corpus.active_book_id must be mumintroll')
         return False
     books = corpus.get('books')
     if not isinstance(books, list) or not books:
         print('[static] FAIL: corpus.books must contain the active book')
         return False
     active_book = next(
-        (book for book in books if isinstance(book, dict) and book.get('book_id') == 'zaliznyak-aaz-index'),
+        (book for book in books if isinstance(book, dict) and book.get('book_id') == 'mumintroll'),
         None,
     )
     if not active_book:
-        print('[static] FAIL: corpus.books is missing zaliznyak-aaz-index')
+        print('[static] FAIL: corpus.books is missing mumintroll')
         return False
     if active_book.get('title') != 'Из жизни слов и языков':
         print('[static] FAIL: corpus active book title drifted')

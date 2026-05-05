@@ -3,7 +3,7 @@ id: "клауза"
 title: "клауза"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 29
 tags: ["lexicon_reverse"]
 ---

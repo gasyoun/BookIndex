@@ -3,7 +3,7 @@ id: "ина́че"
 title: "ина́че"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 234
 tags: ["lexicon_reverse"]
 ---

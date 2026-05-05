@@ -32,7 +32,7 @@ SORT_ORDER_KEYS = (
     "subject_index",
 )
 
-DEFAULT_CORPUS_BOOK_ID = "zaliznyak-aaz-index"
+DEFAULT_CORPUS_BOOK_ID = "mumintroll"
 DEFAULT_CORPUS_BOOK_TITLE = "Из жизни слов и языков"
 DEFAULT_VIDEO_CATALOG_COUNT = 200
 MANUAL_AUDIT_TERM_RE = re.compile(r"\*\*([^*]+)\*\*")

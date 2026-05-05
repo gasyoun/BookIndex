@@ -3,7 +3,7 @@ id: "сдвиг [ударения]: ∼ влево"
 title: "сдвиг [ударения]: ∼ влево"
 source_key: "subject_index"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 61
 tags: ["subject_index"]
 ---

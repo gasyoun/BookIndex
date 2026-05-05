@@ -3,7 +3,7 @@ id: "беглая гласная, беглый гласный"
 title: "беглая гласная, беглый гласный"
 source_key: "subject_index"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 8
 tags: ["subject_index"]
 ---

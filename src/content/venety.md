@@ -3,7 +3,7 @@ id: "венеты"
 title: "венеты"
 source_key: "ethnonyms"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 8
 tags: ["ethnonyms"]
 ---

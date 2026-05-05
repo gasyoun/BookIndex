@@ -3,7 +3,7 @@ id: "ино́й"
 title: "ино́й"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 742
 tags: ["lexicon"]
 ---

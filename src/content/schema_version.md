@@ -3,7 +3,7 @@ id: "schema_version"
 title: "schema_version"
 source_key: "schema_version"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 tags: ["schema_version"]
 ---
 

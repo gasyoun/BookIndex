@@ -3,7 +3,7 @@ id: "u-JLbj"
 title: "u-JLbj"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1254
 tags: ["lexicon_reverse"]
 ---

@@ -3,7 +3,7 @@ id: "Пушкин А. С."
 title: "Пушкин А. С."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 72
 tags: ["names"]
 ---

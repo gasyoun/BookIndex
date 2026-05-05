@@ -3,7 +3,7 @@ id: "Иллич-Свитыч В. М."
 title: "Иллич-Свитыч В. М."
 source_key: "names"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 43
 tags: ["names"]
 ---

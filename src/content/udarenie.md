@@ -3,7 +3,7 @@ id: "ударение"
 title: "ударение"
 source_key: "subject_index"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 64
 tags: ["subject_index"]
 ---

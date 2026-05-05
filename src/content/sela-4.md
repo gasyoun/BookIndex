@@ -3,7 +3,7 @@ id: "села"
 title: "села"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 62
 tags: ["lexicon_reverse"]
 ---

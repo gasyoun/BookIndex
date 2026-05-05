@@ -2,7 +2,7 @@ import json
 import os
 
 draft = {
-  "book_id": "aaz-zametki-2025",
+  "book_id": "zametki",
   "title": "Из заметок о любительской лингвистике",
   "author": "А. А. Зализняк",
   "year": 2025,
@@ -81,8 +81,8 @@ draft = {
   }
 }
 
-os.makedirs('data/imports/aaz-zametki-2025', exist_ok=True)
-with open('data/imports/aaz-zametki-2025/draft.json', 'w', encoding='utf-8') as f:
+os.makedirs('data/imports/zametki', exist_ok=True)
+with open('data/imports/zametki/draft.json', 'w', encoding='utf-8') as f:
     json.dump(draft, f, ensure_ascii=False, indent=2)
 
 print("Draft JSON generated successfully.")

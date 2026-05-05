@@ -3,7 +3,7 @@ id: "прида́л"
 title: "прида́л"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 444
 tags: ["lexicon_reverse"]
 ---

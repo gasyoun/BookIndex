@@ -3,7 +3,7 @@ id: "language_tree_12"
 title: "Макросемья"
 source_key: "language_tree"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 11
 tags: ["language_tree"]
 ---

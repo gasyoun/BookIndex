@@ -3,7 +3,7 @@ id: "чагатайский"
 title: "чагатайский"
 source_key: "languages"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 119
 tags: ["languages"]
 ---

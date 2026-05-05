@@ -3,7 +3,7 @@ id: "оглушение согласных"
 title: "оглушение согласных"
 source_key: "subject_index"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 35
 tags: ["subject_index"]
 ---

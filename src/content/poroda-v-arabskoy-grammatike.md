@@ -3,7 +3,7 @@ id: "порода [в арабской грамматике]"
 title: "порода [в арабской грамматике]"
 source_key: "subject_index"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 53
 tags: ["subject_index"]
 ---

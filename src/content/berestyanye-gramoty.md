@@ -3,7 +3,7 @@ id: "chapters_9"
 title: "Берестяные грамоты"
 source_key: "chapters"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 8
 tags: ["chapters"]
 ---

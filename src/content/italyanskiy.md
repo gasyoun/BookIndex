@@ -3,7 +3,7 @@ id: "итальянский"
 title: "итальянский"
 source_key: "languages"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 56
 tags: ["languages"]
 ---

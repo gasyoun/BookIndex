@@ -3,7 +3,7 @@ id: "language_tree_16"
 title: "Изолят / тирренская"
 source_key: "language_tree"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 15
 tags: ["language_tree"]
 ---

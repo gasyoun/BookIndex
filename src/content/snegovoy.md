@@ -3,7 +3,7 @@ id: "снеговой"
 title: "снеговой"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1166
 tags: ["lexicon"]
 ---

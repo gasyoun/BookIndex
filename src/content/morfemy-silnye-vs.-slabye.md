@@ -3,7 +3,7 @@ id: "морфемы сильные vs. слабые"
 title: "морфемы сильные vs. слабые"
 source_key: "subject_index"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 29
 tags: ["subject_index"]
 ---

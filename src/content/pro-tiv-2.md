@@ -3,7 +3,7 @@ id: "про́тив"
 title: "про́тив"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 134
 tags: ["lexicon_reverse"]
 ---

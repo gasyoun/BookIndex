@@ -3,7 +3,7 @@ id: "scholar"
 title: "scholar"
 source_key: "scholar"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 tags: ["scholar"]
 ---
 

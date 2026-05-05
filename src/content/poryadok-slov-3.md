@@ -3,7 +3,7 @@ id: "lecture_summaries_2"
 title: "Порядок слов"
 source_key: "lecture_summaries"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1
 tags: ["lecture_summaries"]
 ---

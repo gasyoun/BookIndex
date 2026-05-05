@@ -3,7 +3,7 @@ id: "граждани́н"
 title: "граждани́н"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 505
 tags: ["lexicon"]
 ---

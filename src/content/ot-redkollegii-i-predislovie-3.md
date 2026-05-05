@@ -3,7 +3,7 @@ id: "lectures_1"
 title: "От редколлегии и предисловие"
 source_key: "lectures"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 0
 tags: ["lectures"]
 ---

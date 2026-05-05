@@ -3,7 +3,7 @@ id: "Кольский полуостров"
 title: "Кольский полуостров"
 source_key: "toponyms"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 45
 tags: ["toponyms"]
 ---

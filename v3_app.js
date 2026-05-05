@@ -92,10 +92,10 @@ function buildDefaultCorpusRegistry() {
   const pages = Number.isFinite(Number(stats.pages_total)) ? Number(stats.pages_total) : 404;
   return {
     schema_version: 1,
-    active_book_id: 'zaliznyak-aaz-index',
+    active_book_id: 'mumintroll',
     books: [
       {
-        book_id: 'zaliznyak-aaz-index',
+        book_id: 'mumintroll',
         title: 'Из жизни слов и языков',
         author: 'А. А. Зализняк',
         year: 2026,
@@ -3011,7 +3011,7 @@ function buildGlobalSearchFuseRecords() {
   if (!APP_DATA) return [];
   const records = [];
   const activeBook = getActiveBook();
-  const activeBookId = activeBook.book_id || 'zaliznyak-aaz-index';
+  const activeBookId = activeBook.book_id || 'mumintroll';
   const typedSources = [
     { type: 'names', kind: LABELS && LABELS.name ? LABELS.name : 'name', items: APP_DATA.names || [] },
     { type: 'toponyms', kind: LABELS && LABELS.place ? LABELS.place : 'toponym', items: APP_DATA.toponyms || [] },

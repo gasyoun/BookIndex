@@ -3,7 +3,7 @@ id: "edges_11"
 title: "edges_11"
 source_key: "edges"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 10
 tags: ["edges"]
 ---

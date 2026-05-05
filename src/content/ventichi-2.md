@@ -3,7 +3,7 @@ id: "вентичи"
 title: "вентичи"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 363
 tags: ["lexicon"]
 ---

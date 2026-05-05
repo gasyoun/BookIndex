@@ -3,7 +3,7 @@ id: "Флоренция"
 title: "Флоренция"
 source_key: "toponyms"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 83
 tags: ["toponyms"]
 ---

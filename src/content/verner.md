@@ -3,7 +3,7 @@ id: "verner"
 title: "Закон Вернера"
 source_key: "phonetic_laws"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1
 tags: ["phonetic_laws"]
 ---

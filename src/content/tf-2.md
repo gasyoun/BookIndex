@@ -3,7 +3,7 @@ id: "Tf"
 title: "Tf"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 source_index: 1227
 tags: ["lexicon_reverse"]
 ---

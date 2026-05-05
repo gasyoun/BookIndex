@@ -3,7 +3,7 @@ id: "book_stats"
 title: "book_stats"
 source_key: "book_stats"
 source: "Из жизни слов и языков"
-book_id: "zaliznyak-aaz-index"
+book_id: "mumintroll"
 tags: ["book_stats"]
 ---
 
