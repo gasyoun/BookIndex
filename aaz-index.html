@@ -76937,7 +76937,7 @@ const APP_DATA_SCHEMA_CURRENT = 2;
 const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
 const KWIC_MAX_SNIPPET_LENGTH = 420;
 const KWIC_MAX_ROWS = 1200;
-const APP_BUILD_ID = 'fd5128908fc2';
+const APP_BUILD_ID = 'd4d4ad1716eb';
 const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
   'desc',
   'about',
@@ -80533,7 +80533,7 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== 'fd5128908fc2' ? buildIdRaw : 'dev';
+  const buildId = buildIdRaw && buildIdRaw !== 'd4d4ad1716eb' ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -81396,6 +81396,9 @@ function createCorpusSourceCard(source, options = {}) {
     link.textContent = 'Открыть';
     link.onclick = (event) => {
       event.preventDefault();
+      if (source.book_id) {
+        getCorpusRegistry().active_book_id = source.book_id;
+      }
       applyHash(link.getAttribute('href') || '#v4/home/home');
     };
     actions.appendChild(link);

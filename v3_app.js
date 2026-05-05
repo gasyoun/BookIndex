@@ -4468,6 +4468,9 @@ function createCorpusSourceCard(source, options = {}) {
     link.textContent = 'Открыть';
     link.onclick = (event) => {
       event.preventDefault();
+      if (source.book_id) {
+        getCorpusRegistry().active_book_id = source.book_id;
+      }
       applyHash(link.getAttribute('href') || '#v4/home/home');
     };
     actions.appendChild(link);
