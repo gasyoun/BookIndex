@@ -135,9 +135,9 @@ npm run build && npm run check
 ```
 
 Критерии готовности:
-- `books_total = 2`
-- `aaz-index.html#v4/home/home` работает как раньше
-- Новый источник виден в `#v4/corpus/sources`
+- [x] `books_total = 2`
+- [x] `aaz-index.html#v4/home/home` работает как раньше
+- [x] Новый источник виден в `#v4/corpus/sources`
 - Поиск и карточки показывают source context для обеих книг
 
 ### Фаза 3: v4.6 — Нормализация сущностей
