@@ -8,7 +8,7 @@ Usage:
   python scripts/import_source.py --book-id <id> --status
 
 Lifecycle:
-  data/imports/<book_id>/draft.json  →  validate  →  merge into app_data.json
+  data/imports/<book_id>/draft.json  ->  validate  ->  merge into app_data.json
 """
 import argparse
 import json
@@ -108,7 +108,7 @@ def cmd_validate(book_id: str) -> int:
     if errors:
         print(f"[FAIL] Validation failed for {book_id} ({len(errors)} errors):")
         for e in errors:
-            print(f"  ✗ {e}")
+            print(f"  x {e}")
         return 1
 
     # Write status.json
@@ -117,7 +117,7 @@ def cmd_validate(book_id: str) -> int:
     total_items = sum(len(data.get(k, [])) for k in ENTITY_KEYS)
     print(f"[OK] Validation passed for {book_id}")
     print(f"  entities: {total_items}")
-    print(f"  status → validated (written to {status_path})")
+    print(f"  status -> validated (written to {status_path})")
     return 0
 
 

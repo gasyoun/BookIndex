@@ -28,6 +28,20 @@
           "lectures",
           "scholar"
         ]
+      },
+      {
+        "book_id": "aaz-zametki-2025",
+        "title": "Из заметок о любительской лингвистике",
+        "author": "А. А. Зализняк",
+        "year": 2025,
+        "edition": "2-е изд., испр. и доп. — М. : Альпина нон-фикшн, 2025",
+        "status": "published",
+        "source_type": "book",
+        "pages_total": 208,
+        "default_route": "#v4/home/home",
+        "content_modules": [
+          "app_data.json"
+        ]
       }
     ],
     "source_types": [
@@ -2393,6 +2407,135 @@
       "subcategory": "historical",
       "needs_review": true,
       "note": "Ярослав Мудрый или часть слова «Ярославль»"
+    },
+    {
+      "id": "name-aaz",
+      "contexts": [
+        "Автор книги, лингвист."
+      ],
+      "pages": [
+        1
+      ],
+      "head": "А. А. Зализняк",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-atf",
+      "contexts": [
+        "Автор «Новой хронологии», математик, академик РАН."
+      ],
+      "pages": [
+        2,
+        161,
+        164,
+        165,
+        167
+      ],
+      "head": "А. Т. Фоменко",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-sk",
+      "contexts": [
+        "Соавтор книг по «Новой хронологии»."
+      ],
+      "pages": [
+        164,
+        167
+      ],
+      "head": "Г. В. Носовский",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-mirolyubov",
+      "contexts": [
+        "Историк-любитель, опубликовавший «Велесову книгу»."
+      ],
+      "pages": [
+        170,
+        171
+      ],
+      "head": "Ю. П. Миролюбов",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-izenbek",
+      "contexts": [
+        "Офицер, нашедший дощечки «Велесовой книги»."
+      ],
+      "pages": [
+        170
+      ],
+      "head": "Али Изенбек",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-kur",
+      "contexts": [
+        "Генерал, историк-любитель, публиковавший статьи о «Велесовой книге»."
+      ],
+      "pages": [
+        171
+      ],
+      "head": "А. Кур (Куренков)",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-asov",
+      "contexts": [
+        "Главный пропагандист «Велесовой книги» в России."
+      ],
+      "pages": [
+        171,
+        172,
+        174
+      ],
+      "head": "А. И. Асов",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-tvorogov",
+      "contexts": [
+        "Лингвист, автор критики «Велесовой книги»."
+      ],
+      "pages": [
+        172
+      ],
+      "head": "О. В. Творогов",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-alekseev",
+      "contexts": [
+        "Лингвист, автор критики «Велесовой книги»."
+      ],
+      "pages": [
+        172
+      ],
+      "head": "А. А. Алексеев",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-solzhenitsyn",
+      "contexts": [
+        "Упомянут в связи с вручением Литературной премии его имени."
+      ],
+      "pages": [
+        197
+      ],
+      "head": "А. И. Солженицын",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "name-darvin",
+      "contexts": [
+        "Упомянут в контексте отношения к научному знанию."
+      ],
+      "pages": [
+        201
+      ],
+      "head": "Дарвин",
+      "_book_id": "aaz-zametki-2025"
     }
   ],
   "edges": [
@@ -5072,6 +5215,73 @@
       ],
       "contexts": {},
       "epoch_class": "medieval"
+    },
+    {
+      "id": "top-cordoba",
+      "contexts": [
+        "Географическое название, сопоставляемое Фоменко со словом 'Орда'."
+      ],
+      "pages": [
+        162
+      ],
+      "head": "Кордова",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "top-thessaloniki",
+      "contexts": [
+        "Греческий город."
+      ],
+      "pages": [
+        164
+      ],
+      "head": "Фессалоники (Салоники)",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "top-novgorod",
+      "contexts": [
+        "Древний город на Руси."
+      ],
+      "pages": [
+        170,
+        178
+      ],
+      "head": "Новгород",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "top-ruskolan",
+      "contexts": [
+        "Страна русов, фигурирующая в «Велесовой книге»."
+      ],
+      "pages": [
+        176
+      ],
+      "head": "Русколань",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "top-greckolan",
+      "contexts": [
+        "Название Греции в «Велесовой книге»."
+      ],
+      "pages": [
+        176
+      ],
+      "head": "Грецколань",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "top-kiev",
+      "contexts": [
+        "Древний город."
+      ],
+      "pages": [
+        194
+      ],
+      "head": "Киев",
+      "_book_id": "aaz-zametki-2025"
     }
   ],
   "ethnonyms": [
@@ -6353,6 +6563,83 @@
       },
       "lat": 60,
       "lon": 18
+    },
+    {
+      "id": "ethno-rusi",
+      "contexts": [
+        "Упоминаются в контексте 'русско-ордынской империи'."
+      ],
+      "pages": [
+        167
+      ],
+      "head": "русы (русские)",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "ethno-ordyncy",
+      "contexts": [
+        "Упоминаются вместе с русскими в теории Фоменко."
+      ],
+      "pages": [
+        167
+      ],
+      "head": "ордынцы",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "ethno-goty",
+      "contexts": [
+        "Племя, упоминаемое в «Велесовой книге»."
+      ],
+      "pages": [
+        174
+      ],
+      "head": "готы",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "ethno-hazary",
+      "contexts": [
+        "Племя, упоминаемое в «Велесовой книге»."
+      ],
+      "pages": [
+        174
+      ],
+      "head": "хазары",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "ethno-varyagi",
+      "contexts": [
+        "Племя, упоминаемое в «Велесовой книге»."
+      ],
+      "pages": [
+        174
+      ],
+      "head": "варяги",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "ethno-ariev",
+      "contexts": [
+        "Племена, фигурирующие в «Велесовой книге»."
+      ],
+      "pages": [
+        173
+      ],
+      "head": "арии",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "ethno-dasyu",
+      "contexts": [
+        "Племена, фигурирующие в «Велесовой книге»."
+      ],
+      "pages": [
+        173
+      ],
+      "head": "дасью",
+      "_book_id": "aaz-zametki-2025"
     }
   ],
   "languages": [
@@ -12653,6 +12940,115 @@
       "group": "славянская южная",
       "lat": 43,
       "lon": 22
+    },
+    {
+      "id": "lang-latin",
+      "contexts": [
+        "Язык, по Фоменко 'изобретенный' в XVII веке."
+      ],
+      "pages": [
+        161,
+        164
+      ],
+      "head": "Латынь",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "lang-french",
+      "contexts": [
+        "По Фоменко 'изобретен' вместе с латынью."
+      ],
+      "pages": [
+        161,
+        164
+      ],
+      "head": "Французский язык",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "lang-german",
+      "contexts": [
+        "По Фоменко 'изобретен' вместе с латынью."
+      ],
+      "pages": [
+        161,
+        164
+      ],
+      "head": "Немецкий язык",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "lang-spanish",
+      "contexts": [
+        "По Фоменко 'изобретен' вместе с латынью."
+      ],
+      "pages": [
+        161,
+        164
+      ],
+      "head": "Испанский язык",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "lang-english",
+      "contexts": [
+        "По Фоменко 'изобретен' вместе с латынью."
+      ],
+      "pages": [
+        161,
+        164
+      ],
+      "head": "Английский язык",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "lang-church-slavonic",
+      "contexts": [
+        "Язык священной традиции."
+      ],
+      "pages": [
+        178
+      ],
+      "head": "Церковнославянский язык",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "lang-polish",
+      "contexts": [
+        "Элементы (полонизмы) присутствуют в «Велесовой книге»."
+      ],
+      "pages": [
+        180,
+        182,
+        188
+      ],
+      "head": "Польский язык",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "lang-czech",
+      "contexts": [
+        "Элементы (богемизмы) присутствуют в «Велесовой книге»."
+      ],
+      "pages": [
+        180,
+        188
+      ],
+      "head": "Чешский язык",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "lang-serbian",
+      "contexts": [
+        "Элементы (сербизмы) присутствуют в «Велесовой книге»."
+      ],
+      "pages": [
+        180,
+        182,
+        188
+      ],
+      "head": "Сербский язык",
+      "_book_id": "aaz-zametki-2025"
     }
   ],
   "lexicon": [
@@ -30093,6 +30489,50 @@
       "category": "tech",
       "needs_review": true,
       "contexts": {}
+    },
+    {
+      "id": "tech-velesovica",
+      "contexts": [
+        "Шрифт, которым написана «Велесова книга», слегка видоизмененная кириллица."
+      ],
+      "pages": [
+        173
+      ],
+      "head": "Велесовица",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "tech-polonism",
+      "contexts": [
+        "Имитация польских форм в «Велесовой книге» (замена гласной на 'ен')."
+      ],
+      "pages": [
+        182
+      ],
+      "head": "Ложные полонизмы",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "tech-churchslavism",
+      "contexts": [
+        "Имитация церковнославянских форм в «Велесовой книге» (замена 'ж' на 'жд')."
+      ],
+      "pages": [
+        182
+      ],
+      "head": "Ложные церковнославянизмы",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "tech-serbism",
+      "contexts": [
+        "Имитация сербских форм будущего времени в «Велесовой книге»."
+      ],
+      "pages": [
+        182
+      ],
+      "head": "Ложные сербизмы",
+      "_book_id": "aaz-zametki-2025"
     }
   ],
   "lexicon_reverse": [
@@ -53893,6 +54333,50 @@
       "discussed": true,
       "is_subrubric": true,
       "needs_review": false
+    },
+    {
+      "id": "subj-fomenko-critique",
+      "contexts": [
+        "Разбор антинаучных лингвистических и исторических теорий Фоменко."
+      ],
+      "pages": [
+        161
+      ],
+      "head": "Критика «Новой хронологии» А. Т. Фоменко",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "subj-amateur-ling",
+      "contexts": [
+        "Анализ методов и ошибок любительской лингвистики."
+      ],
+      "pages": [
+        161
+      ],
+      "head": "Любительская лингвистика",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "subj-veles-book",
+      "contexts": [
+        "Лингвистический анализ и доказательство поддельности текста."
+      ],
+      "pages": [
+        170
+      ],
+      "head": "«Велесова книга» (ВК)",
+      "_book_id": "aaz-zametki-2025"
+    },
+    {
+      "id": "subj-truth-in-science",
+      "contexts": [
+        "Размышления о существовании объективной истины в гуманитарных науках."
+      ],
+      "pages": [
+        197
+      ],
+      "head": "Истина в науке",
+      "_book_id": "aaz-zametki-2025"
     }
   ],
   "book_stats": {

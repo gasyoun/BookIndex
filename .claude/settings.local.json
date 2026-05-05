@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -n \"innerHTML.*\\\\${\" v3_app.js)",
+      "Bash(grep -n \"html\\\\s*=.*\\\\`.*\\\\${\" v3_app.js)",
+      "Bash(grep -n \"parts\\\\.push.*\\\\`\\\\|parts\\\\.push.*\\\\${\" v3_app.js)",
+      "Bash(python -c ' *)",
+      "Bash(grep -n \"\\\\.innerHTML\\\\s*=.*\\\\`[^$\\\\`]*\\\\${.*\\\\}[^$\\\\`]*\\\\`\" v3_app.js)",
+      "Bash(grep -n \"innerText\\\\|textContent.*\\\\${\" v3_app.js)"
+    ]
+  }
+}
