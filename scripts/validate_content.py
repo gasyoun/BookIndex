@@ -120,6 +120,53 @@ def get_item_books(item: dict[str, Any]) -> list[str]:
     return sorted(books)
 
 
+def get_item_pages(item: dict[str, Any]) -> list[int]:
+    pages = []
+    for raw in item.get("page_list") or []:
+        if isinstance(raw, int):
+            pages.append(raw)
+    return sorted(set(pages))
+
+
+def get_context_page_keys(value: Any) -> list[int]:
+    if not isinstance(value, dict):
+        return []
+    pages = []
+    for raw in value:
+        try:
+            pages.append(int(raw))
+        except (TypeError, ValueError):
+            continue
+    return sorted(set(pages))
+
+
+def get_occurrence_pages(item: dict[str, Any]) -> list[int]:
+    pages: set[int] = set()
+    occurrences = item.get("occurrences")
+    if not isinstance(occurrences, dict):
+        return []
+    for occurrence in occurrences.values():
+        if not isinstance(occurrence, dict):
+            continue
+        for raw in occurrence.get("pages") or []:
+            if isinstance(raw, int):
+                pages.add(raw)
+        pages.update(get_context_page_keys(occurrence.get("contexts")))
+    return sorted(pages)
+
+
+def item_needs_page_verification(item: dict[str, Any]) -> bool:
+    page_list = set(get_item_pages(item))
+    occurrence_pages = set(get_occurrence_pages(item))
+    context_pages = set(get_context_page_keys(item.get("contexts")))
+    evidence_pages = occurrence_pages | context_pages
+    if not evidence_pages:
+        return False
+    if evidence_pages - page_list:
+        return True
+    return bool(occurrence_pages and page_list - occurrence_pages)
+
+
 def count_cross_book_duplicate_candidates(data: dict[str, Any]) -> int:
     by_head: dict[str, set[str]] = {}
     for key in ENTITY_KEYS:
@@ -138,6 +185,16 @@ def count_cross_book_duplicate_candidates(data: dict[str, Any]) -> int:
                 continue
             by_head.setdefault(candidate_key, set()).update(books)
     return sum(1 for books in by_head.values() if len(books) > 1)
+
+
+def count_needs_page_verification(data: dict[str, Any]) -> int:
+    total = 0
+    for key in ENTITY_KEYS:
+        arr = data.get(key, [])
+        if not isinstance(arr, list):
+            continue
+        total += sum(1 for item in arr if isinstance(item, dict) and item_needs_page_verification(item))
+    return total
 
 
 def validate_schema(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
@@ -558,6 +615,11 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
         int,
     ):
         fail("[manual_audit] totals.cross_book_duplicate_candidates_count must be integer", errors)
+    if "needs_page_verification_count" in totals and not isinstance(
+        totals.get("needs_page_verification_count"),
+        int,
+    ):
+        fail("[manual_audit] totals.needs_page_verification_count must be integer", errors)
     queues = queue.get("queues")
     if queues is not None:
         if not isinstance(queues, dict):
@@ -571,6 +633,7 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
                 "cross_book_duplicate_candidates",
                 "suspicious_heads",
                 "sort_inversions",
+                "needs_page_verification",
             ):
                 bucket = queues.get(key)
                 if not isinstance(bucket, dict):
@@ -631,6 +694,13 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
         fail(
             "[manual_audit] stale cross_book_duplicate_candidates_count: "
             f"{totals.get('cross_book_duplicate_candidates_count')} != {cross_book_count}",
+            errors,
+        )
+    page_verification_count = count_needs_page_verification(data)
+    if totals.get("needs_page_verification_count") not in {None, page_verification_count}:
+        fail(
+            "[manual_audit] stale needs_page_verification_count: "
+            f"{totals.get('needs_page_verification_count')} != {page_verification_count}",
             errors,
         )
     if manual_audit.get("present") is not True:

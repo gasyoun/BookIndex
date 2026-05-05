@@ -784,6 +784,24 @@ function applyActiveBookFromQuery(query) {
   inflateOccurrences(bookId);
 }
 
+function preserveCorpusQualityEvidence(item) {
+  if (!item || typeof item !== 'object') return;
+  if (!Object.prototype.hasOwnProperty.call(item, '__corpusPageList')) {
+    Object.defineProperty(item, '__corpusPageList', {
+      value: Array.isArray(item.page_list) ? item.page_list.slice() : [],
+      writable: true,
+      configurable: true,
+    });
+  }
+  if (!Object.prototype.hasOwnProperty.call(item, '__corpusContexts')) {
+    Object.defineProperty(item, '__corpusContexts', {
+      value: item.contexts,
+      writable: true,
+      configurable: true,
+    });
+  }
+}
+
 function inflateOccurrences(bookId) {
   if (!APP_DATA) return;
   const categories = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse', 'lexicon_tech', 'subject_index'];
@@ -791,6 +809,7 @@ function inflateOccurrences(bookId) {
     if (!Array.isArray(APP_DATA[cat])) continue;
     for (const it of APP_DATA[cat]) {
       if (it.occurrences && typeof it.occurrences === 'object') {
+        preserveCorpusQualityEvidence(it);
         const occ = it.occurrences[bookId] || { pages: [], contexts: [] };
         it.page_list = occ.pages || [];
         it.contexts = occ.contexts || [];
@@ -4426,6 +4445,7 @@ const QUALITY_QUEUE_DEFS = [
   { key: 'cross_book_duplicate_candidates', label: 'cross-book candidates', empty: 'No cross-book duplicate candidates.' },
   { key: 'suspicious_heads', label: 'suspicious heads', empty: 'Нет suspicious heads.' },
   { key: 'sort_inversions', label: 'sort inversions', empty: 'Нет нарушений сортировки.' },
+  { key: 'needs_page_verification', label: 'needs page verification', empty: 'No page verification candidates.' },
   { key: 'missing_context', label: 'missing context', empty: 'Все элементы имеют контексты.' },
   { key: 'missing_pages', label: 'missing pages', empty: 'Все элементы имеют страницы.' },
   { key: 'missing_source', label: 'missing source', empty: 'Все элементы имеют source.' },
@@ -4492,7 +4512,8 @@ function countQualityContextSnippets(contexts) {
 
 function countItemQualityContextSnippets(item) {
   if (!item || typeof item !== 'object') return 0;
-  const direct = countQualityContextSnippets(item.contexts);
+  const directContexts = Object.prototype.hasOwnProperty.call(item, '__corpusContexts') ? item.__corpusContexts : item.contexts;
+  const direct = countQualityContextSnippets(directContexts);
   let occurrence = 0;
   const occurrences = item.occurrences && typeof item.occurrences === 'object' ? item.occurrences : {};
   for (const occ of Object.values(occurrences)) {
@@ -4511,11 +4532,36 @@ function itemHasQualitySource(item) {
 }
 
 function getItemQualityPages(item) {
-  if (!Array.isArray(item && item.page_list)) return [];
-  const pages = item.page_list
-    .map(raw => parseInt(String(raw), 10))
+  const sourcePages = item && Array.isArray(item.__corpusPageList) ? item.__corpusPageList : item && item.page_list;
+  if (!Array.isArray(sourcePages)) return [];
+  const pages = sourcePages
+    .map(raw => Number(raw))
     .filter(page => Number.isFinite(page));
   return Array.from(new Set(pages)).sort((a, b) => a - b);
+}
+
+function getQualityContextPageKeys(contexts) {
+  if (!contexts || typeof contexts !== 'object' || Array.isArray(contexts)) return [];
+  const pages = Object.keys(contexts)
+    .map(raw => Number(raw))
+    .filter(page => Number.isFinite(page));
+  return Array.from(new Set(pages)).sort((a, b) => a - b);
+}
+
+function getItemQualityOccurrencePages(item) {
+  const pages = new Set();
+  const occurrences = item && item.occurrences && typeof item.occurrences === 'object' ? item.occurrences : {};
+  for (const occurrence of Object.values(occurrences)) {
+    if (!occurrence || typeof occurrence !== 'object') continue;
+    if (Array.isArray(occurrence.pages)) {
+      for (const raw of occurrence.pages) {
+        const page = Number(raw);
+        if (Number.isFinite(page)) pages.add(page);
+      }
+    }
+    for (const page of getQualityContextPageKeys(occurrence.contexts)) pages.add(page);
+  }
+  return Array.from(pages).sort((a, b) => a - b);
 }
 
 function getItemQualityBooks(item) {
@@ -4534,6 +4580,35 @@ function summarizeQualityPages(pages) {
   if (!Array.isArray(pages) || !pages.length) return '0 pages';
   if (pages.length <= 6) return pages.join(', ');
   return `${pages.length} pages; first: ${pages.slice(0, 5).join(', ')}`;
+}
+
+function getQualityPageVerificationDetails(item) {
+  const pageList = getItemQualityPages(item);
+  const occurrencePages = getItemQualityOccurrencePages(item);
+  const directContexts = item && Object.prototype.hasOwnProperty.call(item, '__corpusContexts') ? item.__corpusContexts : item && item.contexts;
+  const contextPages = getQualityContextPageKeys(directContexts);
+  const pageSet = new Set(pageList);
+  const occurrenceSet = new Set(occurrencePages);
+  const evidenceSet = new Set([...occurrencePages, ...contextPages]);
+  if (!evidenceSet.size) return null;
+  const missingFromPageList = Array.from(evidenceSet).filter(page => !pageSet.has(page)).sort((a, b) => a - b);
+  const missingFromEvidence = occurrencePages.length
+    ? pageList.filter(page => !occurrenceSet.has(page)).sort((a, b) => a - b)
+    : [];
+  if (!missingFromPageList.length && !missingFromEvidence.length) return null;
+  return {
+    count: new Set([...missingFromPageList, ...missingFromEvidence]).size,
+    pageList,
+    occurrencePages,
+    contextPages,
+    missingFromPageList,
+    missingFromEvidence,
+    pageListSummary: summarizeQualityPages(pageList),
+    occurrencePagesSummary: summarizeQualityPages(occurrencePages),
+    contextPagesSummary: summarizeQualityPages(contextPages),
+    missingFromPageListSummary: summarizeQualityPages(missingFromPageList),
+    missingFromEvidenceSummary: summarizeQualityPages(missingFromEvidence),
+  };
 }
 
 function createQualityQueueRecord(queue, entity, item, reason, extra = {}) {
@@ -4588,6 +4663,16 @@ function buildCorpusQualityState() {
         totals.withSources += 1;
       } else {
         queues.missing_source.push(createQualityQueueRecord('missing_source', typeKey, item, 'No sources, occurrences, or book_id.'));
+      }
+      const pageVerificationDetails = getQualityPageVerificationDetails(item);
+      if (pageVerificationDetails) {
+        queues.needs_page_verification.push(createQualityQueueRecord(
+          'needs_page_verification',
+          typeKey,
+          item,
+          'page_list differs from occurrence/context page evidence.',
+          pageVerificationDetails
+        ));
       }
       const rawHead = String(item.head || '').trim();
       const head = normalizeSearchText(rawHead);
@@ -4723,6 +4808,8 @@ function renderQualityQueueItem(item) {
   if (Array.isArray(item.books) && item.books.length) details.push(`books: ${item.books.join(', ')}`);
   if (Array.isArray(item.entities) && item.entities.length) details.push(`entities: ${item.entities.join(', ')}`);
   if (item.previous) details.push(`after: ${item.previous}`);
+  if (item.missingFromPageListSummary) details.push(`missing page_list: ${item.missingFromPageListSummary}`);
+  if (item.missingFromEvidenceSummary && item.missingFromEvidenceSummary !== '0 pages') details.push(`missing evidence: ${item.missingFromEvidenceSummary}`);
   if (item.pagesSummary) details.push(`pages: ${item.pagesSummary}`);
   if (Number.isFinite(item.contextSnippets)) details.push(`ctx: ${item.contextSnippets}`);
   meta.textContent = details.join(' · ');

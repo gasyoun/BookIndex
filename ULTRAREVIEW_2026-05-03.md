@@ -108,6 +108,7 @@ Current report:
 
 - 1 duplicate-head group: `names` -> `Зализняк А. А.` x2.
 - 8 cross-book duplicate candidates surfaced for canonical/alias review.
+- 6 page-verification candidates where `page_list` differs from occurrence/context evidence.
 - 23 suspicious heads, all reviewed.
 - 22 sort inversions across names, toponyms, ethnonyms, languages, and subject index.
 - `lexicon_reverse` has 0.0% direct context coverage, because it is mostly a reverse/index view and needs either inherited context display or an explicit quality rule.
@@ -194,6 +195,7 @@ Implemented first slice:
 - `--write-quality-queue` in `scripts/content_report.py`;
 - expandable actionable queues in `#v4/corpus/sources`;
 - cross-book duplicate-candidate queue with 8 current candidates;
+- page-verification queue with 6 current candidates;
 - smoke coverage for queue counts, expansion, navigation, and compact viewport overflow.
 
 Priorities:
@@ -210,7 +212,7 @@ Build actionable queues:
 - [x] suspicious head;
 - [x] possible duplicate;
 - [x] sort inversion;
-- [ ] needs page verification;
+- [x] needs page verification;
 - [x] cross-book duplicate candidate.
 
 Completion criterion: `#v4/corpus/sources` or a related quality view shows totals plus clickable editorial queues, so warnings can be handled without reading CI logs.
@@ -245,9 +247,9 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 1. Update UltraReview/README whenever roadmap-changing work lands.
 2. Resolve or classify the single `Зализняк А. А.` duplicate through the quality queue.
 3. Review the 22 sort inversions and mark intentional grouped ordering separately from errors.
-4. Start context expansion with `lexicon` and `subject_index`, using the queue as the worklist.
-5. Decide the rule for `lexicon_reverse`: inherited context projection or intentionally contextless reverse index.
-6. Review the 8 cross-book duplicate candidates through the quality queue.
+4. Review the 6 page-verification candidates and 8 cross-book duplicate candidates through the quality queue.
+5. Start context expansion with `lexicon` and `subject_index`, using the queue as the worklist.
+6. Decide the rule for `lexicon_reverse`: inherited context projection or intentionally contextless reverse index.
 
 ---
 

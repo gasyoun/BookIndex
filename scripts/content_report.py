@@ -434,6 +434,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "unreviewed_suspicious_heads_count": 0,
         "sort_inversions_count": 0,
         "cross_book_duplicate_candidates_count": 0,
+        "needs_page_verification_count": 0,
     }
 
     for key in ENTITY_KEYS:
@@ -456,6 +457,7 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         totals["sort_inversions_count"] += metrics["sort_order"]["inversions_count"]
 
     totals["cross_book_duplicate_candidates_count"] = count_cross_book_duplicate_candidates(data)
+    totals["needs_page_verification_count"] = count_needs_page_verification(data)
     totals["coverage_pct"] = {
         "pages": pct(totals["items_with_pages"], totals["items_total"]),
         "contexts": pct(totals["items_with_contexts"], totals["items_total"]),
@@ -502,6 +504,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Context snippets: {totals['context_snippets_total']}",
         f"- Duplicate heads groups: {totals['duplicate_heads_count']}",
         f"- Cross-book duplicate candidates: {totals['cross_book_duplicate_candidates_count']}",
+        f"- Needs page verification: {totals['needs_page_verification_count']}",
         f"- Suspicious heads: {totals['suspicious_heads_count']}",
         f"- Reviewed suspicious heads: {totals['reviewed_suspicious_heads_count']}",
         f"- Unreviewed suspicious heads: {totals['unreviewed_suspicious_heads_count']}",
@@ -674,6 +677,33 @@ def get_item_pages(item: dict[str, Any]) -> list[int]:
     return sorted(set(pages))
 
 
+def get_context_page_keys(value: Any) -> list[int]:
+    if not isinstance(value, dict):
+        return []
+    pages = []
+    for raw in value:
+        try:
+            pages.append(int(raw))
+        except (TypeError, ValueError):
+            continue
+    return sorted(set(pages))
+
+
+def get_occurrence_pages(item: dict[str, Any]) -> list[int]:
+    pages: set[int] = set()
+    occurrences = item.get("occurrences")
+    if not isinstance(occurrences, dict):
+        return []
+    for occurrence in occurrences.values():
+        if not isinstance(occurrence, dict):
+            continue
+        for raw in occurrence.get("pages") or []:
+            if isinstance(raw, int):
+                pages.add(raw)
+        pages.update(get_context_page_keys(occurrence.get("contexts")))
+    return sorted(pages)
+
+
 def summarize_pages(pages: list[int]) -> str:
     if not pages:
         return "0 pages"
@@ -681,6 +711,33 @@ def summarize_pages(pages: list[int]) -> str:
         return ", ".join(str(page) for page in pages)
     first = ", ".join(str(page) for page in pages[:5])
     return f"{len(pages)} pages; first: {first}"
+
+
+def page_verification_details(item: dict[str, Any]) -> dict[str, Any] | None:
+    page_list = get_item_pages(item)
+    occurrence_pages = get_occurrence_pages(item)
+    context_pages = get_context_page_keys(item.get("contexts"))
+    page_set = set(page_list)
+    evidence_pages = set(occurrence_pages) | set(context_pages)
+    if not evidence_pages:
+        return None
+    missing_from_page_list = sorted(evidence_pages - page_set)
+    missing_from_evidence = sorted(page_set - set(occurrence_pages)) if occurrence_pages else []
+    if not missing_from_page_list and not missing_from_evidence:
+        return None
+    return {
+        "page_list": page_list,
+        "occurrence_pages": occurrence_pages,
+        "context_pages": context_pages,
+        "missing_from_page_list": missing_from_page_list,
+        "missing_from_evidence": missing_from_evidence,
+        "page_list_summary": summarize_pages(page_list),
+        "occurrence_pages_summary": summarize_pages(occurrence_pages),
+        "context_pages_summary": summarize_pages(context_pages),
+        "missing_from_page_list_summary": summarize_pages(missing_from_page_list),
+        "missing_from_evidence_summary": summarize_pages(missing_from_evidence),
+        "count": len(set(missing_from_page_list) | set(missing_from_evidence)),
+    }
 
 
 def item_context_counts(item: dict[str, Any]) -> dict[str, int]:
@@ -770,6 +827,15 @@ def count_cross_book_duplicate_candidates(data: dict[str, Any]) -> int:
     return sum(1 for books in by_head.values() if len(books) > 1)
 
 
+def count_needs_page_verification(data: dict[str, Any]) -> int:
+    total = 0
+    for entity in ENTITY_KEYS:
+        items = data.get(entity, [])
+        valid_items = [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
+        total += sum(1 for item in valid_items if page_verification_details(item))
+    return total
+
+
 def build_quality_item(
     *,
     entity: str,
@@ -809,6 +875,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
         "cross_book_duplicate_candidates": [],
         "suspicious_heads": [],
         "sort_inversions": [],
+        "needs_page_verification": [],
     }
 
     valid_by_entity: dict[str, list[dict[str, Any]]] = {}
@@ -855,6 +922,15 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
                     item=item,
                     queue="missing_source",
                     reason="No sources, occurrences, or book_id.",
+                ))
+            page_details = page_verification_details(item)
+            if page_details:
+                queues["needs_page_verification"].append(build_quality_item(
+                    entity=entity,
+                    item=item,
+                    queue="needs_page_verification",
+                    reason="page_list differs from occurrence/context page evidence.",
+                    extra=page_details,
                 ))
             if head.startswith("?") or "\ufffd" in head:
                 queues["suspicious_heads"].append(build_quality_item(
@@ -978,6 +1054,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
         "missing_pages_count": len(queues["missing_pages"]),
         "missing_source_count": len(queues["missing_source"]),
         "cross_book_duplicate_candidates_count": len(queues["cross_book_duplicate_candidates"]),
+        "needs_page_verification_count": len(queues["needs_page_verification"]),
     })
 
     entities = report.get("entities", {})
@@ -1007,6 +1084,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
             "cross_book_duplicate_candidates",
             "suspicious_heads",
             "sort_inversions",
+            "needs_page_verification",
             "missing_context",
             "missing_pages",
             "missing_source",
