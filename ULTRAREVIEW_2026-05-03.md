@@ -1,224 +1,247 @@
-# BookIndex — Ultrareview & Future Work Plan (2026-05-03)
+# BookIndex - Ultrareview & Roadmap Refresh
 
-Аудитор: Antigravity (Claude Opus 4.6)  
-Дата: 2026-05-03  
-Ветка: `main` @ `b7ba8cf3`
+- Original audit date: 2026-05-03
+- Refresh date: 2026-05-06
+- Original auditor: Antigravity (Claude Opus 4.6)
+- Refresh author: Codex
+- Current base: `origin/main` @ `3e0eb931` (`Merge pull request #90`)
+- Primary metric source: `python scripts/content_report.py`
 
 ---
 
-## 1. Обзор проекта
+## 1. Executive Status
 
-**BookIndex** — автономный интерактивный SPA-справочник и корпусная лаборатория по книге А. А. Зализняка «Из жизни слов и языков» (Альпина нон-фикшн, 2026, 424 с.).
+BookIndex is no longer just a single-book index. It is now a small corpus platform around A. A. Zaliznyak materials, with a standalone SPA, corpus metadata, cross-book occurrences, normalized entity IDs, regenerated Markdown exports, and a 424-page first-book baseline.
 
-| Метрика | Значение |
+The active roadmap has shifted:
+
+1. **v4.5 import pipeline is complete enough for production use.** The repository now has 3 books in the corpus, import fixtures/status files, and import tooling.
+2. **v4.6 normalization is partially implemented.** `canonical_id` and `occurrences` exist for almost all entities; `aliases` and deeper duplicate-candidate checks remain open.
+3. **v4.7 context quality is the next high-value phase.** Current context coverage is 17.8%; the next realistic target remains 35-40%, with emphasis on lexicon and subject data.
+4. **v4.8 video catalog remains future work.** The corpus model already reserves planned video catalog capacity, but video schema/import/search is not implemented yet.
+
+---
+
+## 2. Current Metrics
+
+| Metric | Current value |
 |---|---:|
-| JS runtime (`v3_app.js`) | ~10 000 строк, 479 КБ |
-| HTML template (`v3_template.html`) | ~2 800 строк, 102 КБ |
-| Данные (`app_data.json`) | ~2.3 МБ |
-| Standalone-артефакт (`aaz-index.html`) | ~2.9 МБ |
-| Сущностей | 3 269 (8 типов) |
-| E2E-тесты (Playwright) | 66 |
-| Runtime guards | 21 функция |
-| Версия интерфейса | v4.4 |
+| Active first book pages | 424 |
+| Corpus books | 3 |
+| Source types | 2 |
+| Planned videos | 200 |
+| Items | 3381 |
+| Items with pages | 3344 (98.9%) |
+| Items with contexts | 603 (17.8%) |
+| Items with sources | 3380 (100.0%) |
+| Context snippets | 2556 |
+| Markdown exports | 5525 |
+| Markdown with source/book/corpus metadata | 5525 (100.0%) |
+| Duplicate-head groups | 1 |
+| Suspicious heads | 23 |
+| Reviewed suspicious heads | 23 |
+| Unreviewed suspicious heads | 0 |
+| Sort inversions | 22 |
+| Playwright smoke tests | 71 |
+| Runtime smoke tests | 21 |
+
+Approximate artifact sizes:
+
+| Artifact | Current size |
+|---|---:|
+| `v3_app.js` | 472 KB |
+| `v3_template.html` | 99 KB |
+| `app_data.json` | 3.8 MB |
+| `aaz-index.html` | 4.4 MB |
 
 ---
 
-## 2. Что сделано хорошо — сохранить
+## 3. What Is Solid
 
-### 2.1 Архитектурные решения
+### 3.1 Product Surface
 
-| Область | Оценка |
-|---|---|
-| **Плотность функций** | Впечатляюще: 8 типов сущностей, KWIC-конкорданс, D3-графы, карты Leaflet, деревья языков, шкалы, тепловые карты, фонетические соответствия, акцентные парадигмы, BibTeX-экспорт, тёмная тема, PWA, оффлайн |
-| **Маршрутизация** | Чистые хеш-маршруты `#v4/entity/tab/item/type/slug` с обратной совместимостью и транслитерированными slugs |
-| **Валидация данных** | Комплексный пайплайн (`validate_content.py`): страницы, контексты, рёбра, cross_links, editorial_flags |
-| **Тестирование** | Отличное: 66 Playwright-тестов + 21-функциональный runtime smoke + статические guard-ы + typecheck |
-| **Доступность** | `aria-live`, `aria-activedescendant`, keyboard navigation, `prefers-reduced-motion` |
-| **Оффлайн** | Service worker с multi-provider fallback и SVG-картой |
-| **CI** | Полный GitHub Actions: syntax → encoding → validation → runtime → build → sync → E2E |
-| **UI hardening** | Inline styles снижены с 172 до 11; CSS-переменные для тем; responsive smoke на 3 viewport-ах |
+- Standalone `aaz-index.html` remains the main deployable artifact.
+- Hash routing has stable `#v4/...` compatibility and canonical item routes.
+- Corpus pages, source panels, current-book routing, search, cards, KWIC, exports, and VIZ modules work together.
+- Reading mode, scholar panels, glossary, materials, BibTeX export, PWA/offline behavior, dark theme, and responsive smoke coverage are all guarded by tests.
 
-### 2.2 Качественный пайплайн скриптов
+### 3.2 Data Pipeline
 
-- `validate_content.py` — структурная валидация 9 аспектов данных
-- `content_report.py` — метрики качества с JSON/MD выводом
-- `check_encoding.py` — защита от mojibake
-- `check_inline_styles.mjs` — guard допустимых inline styles
-- `build_aaz_index.mjs` — детерминированная сборка с build_id
-- `split_app_data.py` / `assemble_app_data.py` — модульная работа с данными
-- `issue_quality_guard.py` — защита качества GitHub Issues
+- `app_data.json` is split into modules under `data/modules/`.
+- Import lifecycle exists under `data/imports/`.
+- `scripts/import_source.py` provides validate/merge/status tooling.
+- `scripts/normalize_entities.py` creates cross-book occurrence structure and now preserves presentation fields that the UI needs.
+- `scripts/content_report.py` is the best source of truth for quality metrics.
+- `scripts/validate_content.py` catches structural/content issues and is aligned with the 424-page book baseline.
 
-### 2.3 Эволюция проекта
+### 3.3 Test And Quality Guarding
 
-Git-история показывает ~60+ коммитов с чёткими conventional-prefix (`feat`, `fix`, `refactor`, `ux`, `chore`, `docs`). Проект прошёл через:
+- `npm run typecheck`
+- `npm run check:js`
+- `npm run check:ui`
+- `python runtime_test.py`
+- `python scripts/validate_content.py app_data.json`
+- `npm run check:e2e`
 
-```
-v3 → v4.0 (hash routing, deep links)
-   → v4.1 (KWIC, dark theme, D3, PWA, BibTeX)
-   → v4.2 (content audit, runtime guards, reduced-motion)
-   → v4.3 (autolinks, bidirectional relations, share links, VIZ modules)
-   → v4.4 (corpus shell, UI hardening, TypeScript typecheck, CSS extraction)
-```
+Latest known full validation before this document refresh: all major checks passed; Playwright passed 71/71. `validate_content.py` still reports known warnings: missing optional `jsonschema`, duplicate `Зализняк А. А.`, and reviewed suspicious heads in `lexicon_reverse`/`lexicon_tech`.
 
 ---
 
-## 3. Выявленные проблемы
+## 4. Current Issues
 
-### 3.1 Монолитный JS-файл
+### 4.1 Monolithic Runtime
 
-> **`v3_app.js` — ~10 000 строк в одном файле.** Содержит ВСЮ логику приложения: обработка данных, маршрутизация, рендеринг, поиск, D3-визуализации, карты, KWIC, scholar-панели, экспорт, темы, persistence, Web Workers.
+`v3_app.js` is still a large monolith. It is stable and well-tested, but future work would be safer if small domains are extracted gradually:
 
-Текущая ситуация: `improvements_plan.md` уже определяет стратегию «малого кодового распила» (Пакет D) — hash/router helpers, search/cache helpers, card/list render helpers, viz shell/helpers. Часть работы выполнена: DOM API вместо innerHTML для global search, mini-cards, list rows, graph tooltip, KWIC results. **Но основное разделение на файлы ещё не произошло.**
+- routing/hash helpers;
+- search and KWIC helpers;
+- list/card rendering;
+- corpus quality metrics;
+- VIZ shell helpers;
+- export helpers.
 
-### 3.2 ~~Несоответствие метрик: content_report vs corpus dashboard~~ ✅ ИСПРАВЛЕНО
+This remains a maintainability issue, not the highest product-value task.
 
-**Коммит:** `806f1abd` — `fix(corpus): fix quality dashboard metrics`
+### 4.2 Editorial Queue
 
-Были найдены и исправлены два бага в `buildCorpusQualityMetrics()` (v3_app.js:4354):
+Current report:
 
-1. **`item.contexts` — объект, а не массив.** `Array.isArray(item.contexts)` всегда возвращал `false` → 0% context coverage. Исправлено на `typeof item.contexts === 'object'`.
-2. **Двойной подсчёт через `all`.** Цикл по `ENTITY_TYPES` включал `all` (объединение всех типов), что удваивало items и раздувало дубли. Добавлен `skipTypes` для `home`, `corpus`, `materials`, `scholar`, `all`.
+- 1 duplicate-head group: `names` -> `Зализняк А. А.` x2.
+- 23 suspicious heads, all reviewed.
+- 22 sort inversions across names, toponyms, ethnonyms, languages, and subject index.
+- `lexicon_reverse` has 0.0% direct context coverage, because it is mostly a reverse/index view and needs either inherited context display or an explicit quality rule.
 
-| Метрика | До фикса | После фикса | content_report.py |
-|---|---|---|---|
-| Элементов | 6548 | **3274** | 3269 |
-| Page coverage | 100% | **100%** | 100% |
-| Context coverage | 0% | **15%** | 15.1% |
-| Source coverage | 0% | **2%** | 0% |
-| Duplicate head groups | 1476 | **207** | 3 |
+### 4.3 v4.6 Gaps
 
-### 3.3 ~~Дублирующиеся markdown-файлы в `src/content/`~~ ✅ НЕ ПРОБЛЕМА
+Implemented:
 
-5 418 файлов с суффиксами `-2`, `-3`, `-4` — это корректный мульти-соурс экспорт. Каждый entity type (например, `lexicon` и `lexicon_reverse`) экспортируется отдельным файлом. Слово `zabit.md` — из `lexicon`, `zabit-2.md` — из `lexicon_reverse`. Бага нет.
+- `canonical_id`: 3380 / 3381 entities.
+- `occurrences`: 3380 / 3381 entities.
+- multi-source occurrence examples exist.
+- source-aware cards/search/export paths are working.
 
-### 3.4 Прочие вопросы
+Still open:
 
-| Вопрос | Статус |
-|---|---|
-| Два файла тестов (`smoke.spec.js` + `smoke.spec.new.js`) | Требует консолидации |
-| `codex_instruction_v2.md` устарел (v4.3, ссылки на строки) | Уже неактуален для текущей v4.4 |
-| `Корпус 0` в навбаре | Может быть непонятен пользователю |
-| `vendor/alpinejs.cdn.min.js` добавлен | Не используется в production (experimental?) |
-
----
-
-## 4. Рекомендуемый порядок работ
-
-### Фаза 1: Стабилизация v4.4 (текущий спринт)
-
-Большинство задач из `improvements_plan.md` уже выполнены. Остаётся:
-
-- [x] ~~Унифицировать метрики corpus dashboard с `content_report.py`~~ — исправлено в `806f1abd`
-- [ ] Разобрать дублирующиеся markdown-файлы в `src/content/`
-- [x] ~~Консолидировать `smoke.spec.js` и `smoke.spec.new.js`~~ — объединено в `806f1abd`
-- [ ] Закрыть [issue #85](https://github.com/gasyoun/BookIndex/issues/85) итоговым комментарием
-- [ ] Вынести 23 suspicious heads в отдельную ручную задачу
-- [x] ~~Убедиться: README-метрики ≈ live dashboard ≈ `content_report.py`~~ — подтверждено
-
-### Фаза 2: v4.5 — Импорт второго источника ✅ ПОДГОТОВЛЕНО
-
-> Второй источник будет предоставлен владельцем. **Пайплайн готов** (`2a36d8c4`).
-
-- [x] `data/imports/README.md` — документация жизненного цикла
-- [x] `data/imports/_template/draft.json` — шаблон для нового источника
-- [x] `scripts/import_source.py` — validate/merge/status инструмент
-- [x] `package.json` — `import:validate`, `import:merge`, `import:status` скрипты
-
-Когда получите книгу:
-
-```bash
-cp data/imports/_template/draft.json data/imports/<book_id>/draft.json
-# заполнить metadata и entity data
-python scripts/import_source.py --book-id <book_id> --validate
-python scripts/import_source.py --book-id <book_id> --merge
-npm run build && npm run check
-```
-
-Критерии готовности:
-- [x] `books_total = 2`
-- [x] `aaz-index.html#v4/home/home` работает как раньше
-- [x] Новый источник виден в `#v4/corpus/sources`
-- Поиск и карточки показывают source context для обеих книг
-
-### Фаза 3: v4.6 — Нормализация сущностей
-
-- [ ] `canonical_id` для сущностей
-- [ ] Варианты написания в `aliases`
-- [ ] Матрица встречаемости: книга × страницы × контексты
-- [ ] Проверки на cross-book duplicate candidates
-
-### Фаза 4: v4.7 — Качество контекстов
-
-- [ ] Поднять coverage с 15.1% до 35–40%
-- [ ] Приоритизировать `lexicon`, `subject_index`, `lexicon_reverse`
-- [ ] Редакторские очереди: нет контекста / нет source / suspicious head / дубль
-
-### Фаза 5: v4.8 — Видеокаталог Зализняка
-
-- [ ] `video_catalog` schema
-- [ ] Импорт CSV/JSON для ~200 видео
-- [ ] Связь тайм-кодов с сущностями
-- [ ] Видео-результаты в corpus search
-
-### Фаза 6: v5 — Корпусные визуализации
-
-- [ ] Book filter во все VIZ-модули
-- [ ] Compare mode: `term frequency by source`
-- [ ] Book/source в legends, tooltips, exports
+- `aliases` are not populated yet.
+- cross-book duplicate-candidate checks need to become a validation/report feature.
+- occurrence matrix UI can be clearer and more actionable.
 
 ---
 
-## 5. Архитектурные рекомендации
+## 5. Roadmap
 
-### 5.1 Модульное разбиение JS (продолжение Пакета D)
+### Phase 0: Keep Current Main Stable
 
-Рекомендуемая целевая структура:
+Status: active discipline.
 
-```
-src/
-  core/         # parseAppData, normalizeAppData, migrateSchema
-  data/         # buildDataIndexes, getIndexedItem, hash slugs
-  routing/      # hash router, applyHash, syncNavigationState
-  search/       # global search, Fuse.js, KWIC
-  render/
-    home.js     # renderHomePanel
-    list.js     # renderListPanel, filters
-    card.js     # renderCardInRight
-    scholar.js  # renderScholarPanel, chronology, page trends
-    materials.js # lectures, glossary, gallery, KWIC panel
-  viz/
-    graph.js    # D3 name graph
-    map.js      # Leaflet + offline fallback
-    tree.js     # language tree
-    families.js # language families graph
-  ui/           # theme, density, breadcrumbs, announcements
-  export/       # markdown, BibTeX export
-  autolink.js   # autoLinkEntities, morphological variants
-  utils.js      # escapeHtml, safeUrl, etc.
-```
+- Keep `aaz-index.html` committed and buildable.
+- Keep `#v4/...` routes backward-compatible.
+- Keep the first book baseline at 424 pages.
+- Keep README, UltraReview, content report, and live UI metrics aligned.
+- Keep GitHub as the source of published truth: work should be pushed as branches/PRs unless explicitly local-only.
 
-**Сборка:** Простой bundler (esbuild или Node-скрипт) собирает модули обратно в `v3_app.js`. Standalone HTML остаётся идентичным. Каждый шаг — маленький, с проверкой `aaz-index.html`.
+### Phase 1: v4.4 Editorial Cleanup
 
-### 5.2 Единый источник правды для метрик
+Status: mostly cleanup, not architecture.
 
-`content_report.py` → corpus dashboard. Не дублировать логику подсчёта. Либо:
-- Corpus dashboard вызывает ту же формулу
-- Либо `content_report.py` генерирует JSON, который dashboard читает
+- [ ] Close or reframe issue #85 as completed first corpus layer.
+- [ ] Create a dedicated issue for the 23 reviewed suspicious heads.
+- [ ] Resolve or explicitly accept the `Зализняк А. А.` duplicate.
+- [ ] Decide whether the 22 sort inversions are true data errors or intentional grouped ordering.
+- [x] Align README/content report/live metrics after the 424-page update.
+- [x] Consolidate the main Playwright smoke suite at 71 tests.
 
-### 5.3 Правила, которые НЕ менять
+### Phase 2: v4.5 Import Pipeline
 
-- `#v4/...` маршруты остаются совместимыми
-- `aaz-index.html` — коммитимый standalone-артефакт
-- `app_data.json` — только чтение в рамках кодовых задач
-- Любая новая книга/видео входит через import/validation pipeline
-- `schema_version` не менять без необходимости
+Status: complete enough; now maintenance.
+
+- [x] Import lifecycle docs and template under `data/imports/`.
+- [x] `scripts/import_source.py` validate/merge/status workflow.
+- [x] Corpus has more than one source; current count is 3 books.
+- [x] New sources are visible in corpus source UI.
+- [x] Markdown exports include source/book/corpus metadata.
+
+Next work here should be only hardening:
+
+- [ ] Add fixtures for import failure modes.
+- [ ] Document when a draft source is allowed to become published.
+- [ ] Keep import and normalization scripts preserving UI-facing fields.
+
+### Phase 3: v4.6 Cross-Book Normalization
+
+Status: partially implemented.
+
+- [x] `canonical_id` generated for almost all entities.
+- [x] `occurrences` generated for almost all entities.
+- [x] Card/source/export paths understand occurrence-shaped data.
+- [ ] Populate `aliases` for spelling variants.
+- [ ] Add a report section for cross-book duplicate candidates.
+- [ ] Improve occurrence matrix display in cards.
+- [ ] Add validation for inconsistent `head`, `display_name`, and `source_head`.
+
+Completion criterion: a user opens one entity and can clearly see where it appears across books, with pages, source labels, and contexts where available.
+
+### Phase 4: v4.7 Context Quality
+
+Status: next main phase.
+
+Current context coverage is 17.8%. The next target is 35-40%.
+
+Priorities:
+
+1. `lexicon`: 1368 items, 12.9% with contexts.
+2. `subject_index`: 92 items, 4.3% with contexts.
+3. `lexicon_reverse`: define whether contexts are inherited from `lexicon` or intentionally omitted.
+4. `lexicon_tech`: 36 items, 11.1% with contexts.
+
+Build actionable queues:
+
+- no context;
+- context exists only in occurrence data;
+- no usable source/citation;
+- suspicious head;
+- possible duplicate;
+- sort inversion;
+- needs page verification.
+
+Completion criterion: `#v4/corpus/sources` or a related quality view shows totals plus clickable editorial queues, so warnings can be handled without reading CI logs.
+
+### Phase 5: v4.8 Zaliznyak Video Catalog
+
+Status: not started beyond planned count.
+
+- [ ] Define `video_catalog` schema.
+- [ ] Import CSV/JSON for roughly 200 videos.
+- [ ] Store URL, title, date, duration, transcript/timecodes, linked entities, and citation.
+- [ ] Link timecodes to entity cards.
+- [ ] Add video hits to corpus search next to book/page hits.
+
+Completion criterion: searching a term returns book pages and video timestamps in one corpus interface.
+
+### Phase 6: v5 Corpus Visualizations
+
+Status: future.
+
+- [ ] Add book/source filters to VIZ modules.
+- [ ] Add a first compare mode: term frequency by source.
+- [ ] Preserve selected books/sources in URL query params.
+- [ ] Show source/book labels in legends, tooltips, exports.
+
+Completion criterion: at least one VIZ module can compare two corpus sources while viewport smoke tests remain green.
 
 ---
 
-## 6. Выводы
+## 6. Recommended Next Sprint
 
-Проект находится в хорошем состоянии после серии v4.x-итераций. Codex/Claude успешно построили функционально богатое приложение с сильной системой качества. Главные точки роста:
+1. Update UltraReview/README whenever roadmap-changing work lands.
+2. Add a quality queue JSON output from `scripts/content_report.py`.
+3. Render that queue in the corpus/source quality UI.
+4. Resolve or classify the single `Зализняк А. А.` duplicate.
+5. Turn sort inversions into an explicit manual review queue.
+6. Start context expansion with `lexicon` and `subject_index`, using the queue as the worklist.
 
-1. **Данные > UI**: следующий прирост ценности даст не новый chrome UI, а импорт второго источника, нормализация сущностей и рост покрытия контекстами
-2. **Модульность JS**: постепенное разбиение 10 000-строчного файла снизит риск регрессий при AI-driven разработке
-3. **Метрики**: унифицировать corpus dashboard с content_report.py — это P0 bug, видимый пользователям
+---
+
+## 7. Bottom Line
+
+The project is in good shape. The biggest value is no longer more UI chrome or a new import skeleton. The best next move is **v4.7: make quality work visible, clickable, and measurable**, then use that workflow to raise context coverage and clean the remaining editorial queue.
