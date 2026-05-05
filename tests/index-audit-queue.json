@@ -56,11 +56,11 @@
     }
   },
   "totals": {
-    "duplicate_heads_count": 0,
+    "duplicate_heads_count": 4,
     "suspicious_heads_count": 23,
     "reviewed_suspicious_heads_count": 23,
     "unreviewed_suspicious_heads_count": 0,
-    "sort_inversions_count": 0
+    "sort_inversions_count": 21
   },
   "suspicious_heads": {
     "lexicon_reverse": [
@@ -91,5 +91,121 @@
       "?Ци..."
     ]
   },
-  "sort_inversions": {}
+  "sort_inversions": {
+    "names": [
+      {
+        "index": 96,
+        "previous": "Ярослав",
+        "current": "А. А. Зализняк"
+      },
+      {
+        "index": 100,
+        "previous": "Ю. П. Миролюбов",
+        "current": "Али Изенбек"
+      },
+      {
+        "index": 101,
+        "previous": "Али Изенбек",
+        "current": "А. Кур (Куренков)"
+      },
+      {
+        "index": 102,
+        "previous": "А. Кур (Куренков)",
+        "current": "А. И. Асов"
+      },
+      {
+        "index": 104,
+        "previous": "О. В. Творогов",
+        "current": "А. А. Алексеев"
+      }
+    ],
+    "toponyms": [
+      {
+        "index": 94,
+        "previous": "Южный Переславль",
+        "current": "Кордова"
+      },
+      {
+        "index": 96,
+        "previous": "Фессалоники (Салоники)",
+        "current": "Новгород"
+      },
+      {
+        "index": 98,
+        "previous": "Русколань",
+        "current": "Грецколань"
+      }
+    ],
+    "ethnonyms": [
+      {
+        "index": 61,
+        "previous": "шведы",
+        "current": "русы (русские)"
+      },
+      {
+        "index": 62,
+        "previous": "русы (русские)",
+        "current": "ордынцы"
+      },
+      {
+        "index": 63,
+        "previous": "ордынцы",
+        "current": "готы"
+      },
+      {
+        "index": 65,
+        "previous": "хазары",
+        "current": "варяги"
+      },
+      {
+        "index": 66,
+        "previous": "варяги",
+        "current": "арии"
+      }
+    ],
+    "languages": [
+      {
+        "index": 130,
+        "previous": "южнославянские",
+        "current": "Латынь"
+      },
+      {
+        "index": 132,
+        "previous": "Французский язык",
+        "current": "Немецкий язык"
+      },
+      {
+        "index": 133,
+        "previous": "Немецкий язык",
+        "current": "Испанский язык"
+      },
+      {
+        "index": 134,
+        "previous": "Испанский язык",
+        "current": "Английский язык"
+      },
+      {
+        "index": 136,
+        "previous": "Церковнославянский язык",
+        "current": "Польский язык"
+      },
+      {
+        "index": 138,
+        "previous": "Чешский язык",
+        "current": "Сербский язык"
+      }
+    ],
+    "subject_index": [
+      {
+        "index": 88,
+        "previous": "энклитики: ∼ фразовые",
+        "current": "Критика «Новой хронологии» А. Т. Фоменко"
+      },
+      {
+        "index": 90,
+        "previous": "Любительская лингвистика",
+        "current": "«Велесова книга» (ВК)"
+      }
+    ]
+  }
 }

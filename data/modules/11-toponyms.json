@@ -2306,6 +2306,73 @@
       ],
       "contexts": {},
       "epoch_class": "medieval"
+    },
+    {
+      "id": "top-cordoba",
+      "contexts": [
+        "Географическое название, сопоставляемое Фоменко со словом 'Орда'."
+      ],
+      "pages": [
+        162
+      ],
+      "head": "Кордова",
+      "_book_id": "zametki"
+    },
+    {
+      "id": "top-thessaloniki",
+      "contexts": [
+        "Греческий город."
+      ],
+      "pages": [
+        164
+      ],
+      "head": "Фессалоники (Салоники)",
+      "_book_id": "zametki"
+    },
+    {
+      "id": "top-novgorod",
+      "contexts": [
+        "Древний город на Руси."
+      ],
+      "pages": [
+        170,
+        178
+      ],
+      "head": "Новгород",
+      "_book_id": "zametki"
+    },
+    {
+      "id": "top-ruskolan",
+      "contexts": [
+        "Страна русов, фигурирующая в «Велесовой книге»."
+      ],
+      "pages": [
+        176
+      ],
+      "head": "Русколань",
+      "_book_id": "zametki"
+    },
+    {
+      "id": "top-greckolan",
+      "contexts": [
+        "Название Греции в «Велесовой книге»."
+      ],
+      "pages": [
+        176
+      ],
+      "head": "Грецколань",
+      "_book_id": "zametki"
+    },
+    {
+      "id": "top-kiev",
+      "contexts": [
+        "Древний город."
+      ],
+      "pages": [
+        194
+      ],
+      "head": "Киев",
+      "_book_id": "zametki"
     }
   ]
 }
