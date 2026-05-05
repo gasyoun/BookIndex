@@ -42,6 +42,20 @@
         "content_modules": [
           "app_data.json"
         ]
+      },
+      {
+        "book_id": "slovo",
+        "title": "«Слово о полку Игореве»: взгляд лингвиста",
+        "author": "А. А. Зализняк",
+        "year": 2024,
+        "edition": "4-е изд., испр. — М. : Альпина нон-фикшн, 2024",
+        "status": "published",
+        "source_type": "book",
+        "pages_total": 448,
+        "default_route": "#v4/home/home",
+        "content_modules": [
+          "app_data.json"
+        ]
       }
     ],
     "source_types": [
@@ -4667,6 +4681,16 @@
       "contexts": [
         "основатель Монгольской империи"
       ]
+    },
+    {
+      "head": "Зализняк А. А.",
+      "contexts": [
+        "Автор книги."
+      ],
+      "page_list": [
+        1
+      ],
+      "_book_id": "slovo"
     }
   ],
   "edges": [

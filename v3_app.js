@@ -273,8 +273,12 @@ function normalizeContextSnippet(raw) {
 function normalizeItemContexts(item) {
   if (!item || typeof item !== 'object') return;
   const src = item.contexts;
-  if (!src || typeof src !== 'object' || Array.isArray(src)) {
+  if (!src || typeof src !== 'object') {
     item.contexts = {};
+    return;
+  }
+  if (Array.isArray(src)) {
+    item.contexts = src.map(normalizeContextSnippet).filter(Boolean);
     return;
   }
   const normalized = {};
@@ -4390,8 +4394,9 @@ function buildCorpusQualityMetrics() {
     for (const item of items) {
       totals.items += 1;
       if (Array.isArray(item.page_list) && item.page_list.length) totals.withPages += 1;
-      // item.contexts is an object { page: [snippets] }, not an array
-      if (item.contexts && typeof item.contexts === 'object' && !Array.isArray(item.contexts) && Object.keys(item.contexts).length) totals.withContexts += 1;
+      const hasObjContexts = item.contexts && typeof item.contexts === 'object' && !Array.isArray(item.contexts) && Object.keys(item.contexts).length > 0;
+      const hasArrContexts = Array.isArray(item.contexts) && item.contexts.length > 0;
+      if (hasObjContexts || hasArrContexts) totals.withContexts += 1;
       if (Array.isArray(item.sources) && item.sources.length) totals.withSources += 1;
       const head = normalizeSearchText(item.head || '');
       if (head) heads.set(head, (heads.get(head) || 0) + 1);
@@ -5701,18 +5706,29 @@ function renderCardInRight() {
     }
     html += useTwoColumnCardLayout ? '</div></section>' : '</div>';
   }
-  const ctxKeys = it.contexts ? Object.keys(it.contexts).sort((a, b) => parseInt(a) - parseInt(b)) : [];
-  if (ctxKeys.length > 0) {
+  if (Array.isArray(it.contexts) && it.contexts.length > 0) {
     html += '<h3>Контексты упоминаний (KWIC)</h3>';
-    for (const pg of ctxKeys.slice(0, 10)) {
-      const ctxs = it.contexts[pg];
-      for (const ctx of ctxs.slice(0, 1)) {
-        const ctxHtml = renderContextTextWithLinks(ctx);
-        html += `
-          <div class="context-item">
-            <div class="context-page">стр. ${pg}</div>
-            <div class="context-text">${ctxHtml}</div>
-          </div>`;
+    for (const ctx of it.contexts.slice(0, 10)) {
+      const ctxHtml = renderContextTextWithLinks(ctx);
+      html += `
+        <div class="context-item">
+          <div class="context-text">${ctxHtml}</div>
+        </div>`;
+    }
+  } else if (it.contexts && typeof it.contexts === 'object' && !Array.isArray(it.contexts)) {
+    const ctxKeys = Object.keys(it.contexts).sort((a, b) => parseInt(a) - parseInt(b));
+    if (ctxKeys.length > 0) {
+      html += '<h3>Контексты упоминаний (KWIC)</h3>';
+      for (const pg of ctxKeys.slice(0, 10)) {
+        const ctxs = it.contexts[pg];
+        for (const ctx of ctxs.slice(0, 1)) {
+          const ctxHtml = renderContextTextWithLinks(ctx);
+          html += `
+            <div class="context-item">
+              <div class="context-page">стр. ${pg}</div>
+              <div class="context-text">${ctxHtml}</div>
+            </div>`;
+        }
       }
     }
   }

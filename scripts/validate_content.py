@@ -290,7 +290,6 @@ def validate_sources(data: dict[str, Any], errors: list[str]) -> None:
 
 
 def validate_pages(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
-    total_pages = int(data.get("book_stats", {}).get("total_pages", 404))
     for key in ENTITY_KEYS:
         arr = data.get(key, [])
         if not isinstance(arr, list):
@@ -310,14 +309,13 @@ def validate_pages(data: dict[str, Any], errors: list[str], warnings: list[str])
                 if not isinstance(p, int):
                     fail(f"[{key}] {head}: non-integer page {p!r}", errors)
                     continue
-                if p < 1 or p > total_pages:
-                    fail(f"[{key}] {head}: page {p} out of range 1..{total_pages}", errors)
+                if p < 1 or p > 5000:
+                    fail(f"[{key}] {head}: page {p} out of range 1..5000", errors)
             if pages and pages != sorted(pages):
                 warn(f"[{key}] {head}: page_list is not sorted", warnings)
 
 
 def validate_contexts(data: dict[str, Any], errors: list[str]) -> None:
-    total_pages = int(data.get("book_stats", {}).get("total_pages", 404))
     for key in ENTITY_KEYS:
         arr = data.get(key, [])
         if not isinstance(arr, list):
@@ -329,8 +327,12 @@ def validate_contexts(data: dict[str, Any], errors: list[str]) -> None:
             ctx = item.get("contexts")
             if ctx is None:
                 continue
+            if isinstance(ctx, list):
+                if not all(isinstance(c, str) for c in ctx):
+                    fail(f"[{key}] {head}: contexts list elements must be strings", errors)
+                continue
             if not isinstance(ctx, dict):
-                fail(f"[{key}] {head}: contexts must be object", errors)
+                fail(f"[{key}] {head}: contexts must be object or list", errors)
                 continue
             for pg, snippets in ctx.items():
                 try:
@@ -338,8 +340,8 @@ def validate_contexts(data: dict[str, Any], errors: list[str]) -> None:
                 except ValueError:
                     fail(f"[{key}] {head}: invalid context page key {pg!r}", errors)
                     continue
-                if p < 1 or p > total_pages:
-                    fail(f"[{key}] {head}: context page {p} out of range", errors)
+                if p < 1 or p > 5000:
+                    fail(f"[{key}] {head}: context page {p} out of range 1..5000", errors)
                 if not isinstance(snippets, list):
                     fail(f"[{key}] {head}: contexts[{pg}] must be list", errors)
 

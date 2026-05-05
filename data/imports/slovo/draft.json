@@ -1,0 +1,44 @@
+{
+  "book_id": "slovo",
+  "title": "«Слово о полку Игореве»: взгляд лингвиста",
+  "author": "А. А. Зализняк",
+  "year": 2024,
+  "edition": "4-е изд., испр. — М. : Альпина нон-фикшн, 2024",
+  "status": "draft",
+  "source_type": "book",
+  "pages_total": 448,
+  "default_route": "#v4/home/home",
+  "content_modules": [
+    "app_data.json"
+  ],
+  "import_meta": {
+    "imported_at": "2026-05-05T00:00:00Z",
+    "source_file": "PDFtoTXT/AAZ_Slovo_2024.txt",
+    "importer_script": "scripts/import_source.py",
+    "importer_version": "1.0"
+  },
+  "data": {
+    "names": [
+      {
+        "head": "Зализняк А. А.",
+        "contexts": [
+          "Автор книги."
+        ],
+        "page_list": [
+          1
+        ]
+      }
+    ],
+    "toponyms": [],
+    "ethnonyms": [],
+    "languages": [],
+    "lexicon": [],
+    "lexicon_reverse": [],
+    "lexicon_tech": [],
+    "subject_index": [],
+    "glossary": [],
+    "chapters": [],
+    "edges": [],
+    "language_edges": []
+  }
+}
