@@ -152,12 +152,19 @@ function injectSemanticStyles() {
       display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
       transition: transform 0.2s;
     }
-    .workspace-toggle:hover { transform: scale(1.1) rotate(5deg); }
-    
-    /* SEMANTIC SEARCH v7.3 */
-    .header-search-item.is-semantic { border-left: 3px solid #b388ff; background: rgba(179, 136, 255, 0.05); }
-    .header-search-item.is-semantic:hover { background: rgba(179, 136, 255, 0.1); }
     .header-search-item.is-semantic .header-search-kind { color: #b388ff; }
+
+    /* VIDEO ARCHIVE v8.1 */
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .video-card { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; cursor: pointer; }
+    .video-card:hover { transform: translateY(-5px); border-color: #80deea; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .video-thumb { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; display: flex; align-items: center; justify-content: center; }
+    .video-thumb::after { content: '▶'; font-size: 3rem; color: #fff; opacity: 0.6; }
+    .video-info { padding: 1rem; }
+    .video-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: #eee; }
+    .video-meta { font-size: 0.8rem; color: #888; display: flex; justify-content: space-between; }
+    .card-video-section { margin-top: 1.5rem; padding: 1rem; background: rgba(128, 222, 234, 0.05); border-radius: 8px; border: 1px dashed rgba(128, 222, 234, 0.3); }
+    .video-timecode-row { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
   `;
   document.head.appendChild(style);
 }
@@ -633,7 +640,7 @@ function initEntityTypes() {
   materials: {
     title: 'Материалы',
     items: [],
-    tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','kwic','gallery','russian_evolution','phonetic_laws','tasks','corpus_timeline'],
+    tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','kwic','gallery','russian_evolution','phonetic_laws','tasks','corpus_timeline','video_archive'],
   },
   scholar: {
     title: 'Профессиональный аппарат',
@@ -724,6 +731,7 @@ const TAB_LABELS = {
   chronology: 'Хронология открытий',
   page_trends: 'Динамика по страницам',
   corpus_timeline: 'Хронология лекций',
+  video_archive: 'Видеоархив',
 };
 
 // Единый сводный словник: все элементы из всех типов с пометкой
@@ -4673,6 +4681,7 @@ const CONTENT_RENDERERS = Object.freeze({
   gallery: renderGalleryPanel,
   russian_evolution: renderRussianEvolutionPanel,
   phonetic_laws: renderPhoneticLawsPanel,
+  video_archive: renderVideoArchivePanel,
   scholar: renderScholarPanel,
   chronology: renderScholarChronologyPanel,
   page_trends: renderPageTrendsPanel,
@@ -6688,7 +6697,34 @@ function renderCardInRight() {
     }
   }
 
-  // ТЕМАТИЧЕСКАЯ БЛИЗОСТЬ (v6.1)
+  // ВИДЕОАРХИВ (v8.1)
+  const videoHits = [];
+  (APP_DATA.video_catalog || []).forEach(v => {
+    v.timecodes.forEach(tc => {
+      if (tc.entities && tc.entities.includes(it.head)) {
+        videoHits.push({ video: v, timecode: tc });
+      }
+    });
+  });
+  
+  if (videoHits.length > 0) {
+    html += `<div class="card-video-section">
+      <h3 style="margin-top:0; font-size:1rem; color:#80deea;">🎞️ Упоминания в видеолекциях</h3>`;
+    videoHits.forEach(hit => {
+      const minutes = Math.floor(hit.timecode.time / 60);
+      const seconds = String(hit.timecode.time % 60).padStart(2, '0');
+      const timeStr = `${minutes}:${seconds}`;
+      html += `
+        <div class="video-timecode-row">
+          <span>
+            <strong>${escapeHtml(hit.video.title)}</strong><br>
+            <span style="font-size:0.8rem; color:#888;">${escapeHtml(hit.timecode.label)}</span>
+          </span>
+          <a href="${hit.video.url}&t=${hit.timecode.time}" target="_blank" class="viz-btn" style="text-decoration:none;">смотреть ${timeStr}</a>
+        </div>`;
+    });
+    html += `</div>`;
+  }
   const semanticLinks = APP_DATA.semantic_links ? APP_DATA.semantic_links[it.head] : null;
   if (semanticLinks && semanticLinks.length > 0) {
     html += `<h3>Тематическая близость <span class="v-badge">v6.1</span></h3>
@@ -10467,7 +10503,31 @@ function formatPhoneticCommentText(text) {
 
 let activePhoneticLawIdx = 0;
 
-function renderPhoneticLawsPanel(container) {
+function renderVideoArchivePanel(container) {
+  const videos = APP_DATA.video_catalog || [];
+  let html = `<div class="panel active video-panel"><div class="video-inner">
+    <h2 class="video-title">Видеоархив лекций А. А. Зализняка <span class="v-badge">v8.1 Multimedia</span></h2>
+    <div class="video-intro">Полный каталог видеозаписей лекций, выступлений и интервью. Все видео снабжены таймкодами, привязанными к терминам в справочнике.</div>
+    <div class="video-grid">`;
+  
+  videos.forEach(v => {
+    const date = new Date(v.date).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' });
+    html += `
+      <div class="video-card" onclick="window.open('${v.url}', '_blank')">
+        <div class="video-thumb"></div>
+        <div class="video-info">
+          <div class="video-title">${escapeHtml(v.title)}</div>
+          <div class="video-meta">
+            <span>${date}</span>
+            <span>${Math.round(v.duration / 60)} мин.</span>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  html += `</div></div></div>`;
+  container.innerHTML = html;
+}
   const laws = APP_DATA.phonetic_laws || [];
   if (!laws.length) {
     container.innerHTML = '<div class="panel active">Нет данных о фонетических законах.</div>';
