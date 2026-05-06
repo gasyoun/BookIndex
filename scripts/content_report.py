@@ -1369,6 +1369,65 @@ def build_context_entry_pack(quality_queue: dict[str, Any], limit: int = 25) -> 
     }
 
 
+def render_context_entry_pack_markdown(pack: dict[str, Any]) -> str:
+    progress = pack.get("progress", {})
+    totals = pack.get("queue_totals", {})
+    lines = [
+        "# v4.7 Context Entry Pack",
+        "",
+        str(pack.get("purpose", "")),
+        "",
+        "## Metrics",
+        "",
+        f"- Source: `{pack.get('source', '')}`",
+        f"- Targets: {pack.get('target_count', 0)} / {pack.get('limit', 0)}",
+        f"- v4.7 estimate: ~{progress.get('phase_estimate_percent', 0)}%",
+        (
+            f"- Context coverage: {progress.get('direct_context_coverage_percent', 0)}% direct / "
+            f"{progress.get('effective_context_coverage_percent', 0)}% effective"
+        ),
+        f"- Missing context queue: {totals.get('missing_context_count', 0)}",
+        "",
+        "## How To Use",
+        "",
+        "1. Open the route for one target.",
+        "2. Check the listed source pages in the book.",
+        "3. Add only source-confirmed snippets to `contexts` in `app_data.json`.",
+        "4. Re-run `npm run content:audit` and validation before committing.",
+        "",
+        "## Targets",
+        "",
+    ]
+
+    targets = pack.get("targets", [])
+    if not isinstance(targets, list) or not targets:
+        lines.append("_No context-entry targets._")
+        lines.append("")
+        return "\n".join(lines)
+
+    for target in targets:
+        if not isinstance(target, dict):
+            continue
+        rank = target.get("rank", "?")
+        head = target.get("head", "(no head)")
+        entity = target.get("entity", "")
+        lines.extend([
+            f"### {rank}. {head}",
+            "",
+            f"- Status: `{target.get('status', '')}`",
+            f"- Entity: `{entity}`",
+            f"- Canonical ID: `{target.get('canonical_id', '')}`",
+            f"- Route: `{target.get('route', '')}`",
+            f"- Pages: {target.get('pages_summary', '0 pages')}",
+            f"- Priority: {target.get('priority_tier', '')} {target.get('priority_score', 0)}",
+            f"- Reason: {target.get('priority_reason', '')}",
+            "- Contexts to add: _pending source check_",
+            "- Source notes: _pending_",
+            "",
+        ])
+    return "\n".join(lines)
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate BookIndex content metrics report.")
     parser.add_argument("path", nargs="?", default="app_data.json", help="Path to app_data.json")
@@ -1392,6 +1451,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         "--write-context-pack",
         metavar="PATH",
         help="Write v4.7 manual context-entry pack JSON to PATH",
+    )
+    parser.add_argument(
+        "--write-context-pack-md",
+        metavar="PATH",
+        help="Write v4.7 manual context-entry pack Markdown checklist to PATH",
     )
     parser.add_argument(
         "--context-pack-limit",
@@ -1426,7 +1490,7 @@ def main(argv: list[str] | None = None) -> int:
             encoding="utf-8",
         )
     quality_queue = None
-    if args.write_quality_queue or args.write_context_pack:
+    if args.write_quality_queue or args.write_context_pack or args.write_context_pack_md:
         quality_queue = build_quality_queue(data, report)
 
     if args.write_quality_queue:
@@ -1447,6 +1511,11 @@ def main(argv: list[str] | None = None) -> int:
             ) + "\n",
             encoding="utf-8",
         )
+    if args.write_context_pack_md:
+        pack_md_path = Path(args.write_context_pack_md)
+        pack_md_path.parent.mkdir(parents=True, exist_ok=True)
+        pack = build_context_entry_pack(quality_queue or build_quality_queue(data, report), args.context_pack_limit)
+        pack_md_path.write_text(render_context_entry_pack_markdown(pack), encoding="utf-8")
 
     if args.format == "json":
         print(json.dumps(report, ensure_ascii=False, indent=2))

@@ -710,6 +710,7 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
 def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
     queue_path = data_path.parent / "tests" / "index-audit-queue.json"
     pack_path = data_path.parent / "tests" / "context-entry-pack.json"
+    pack_md_path = data_path.parent / "tests" / "context-entry-pack.md"
     if not pack_path.exists():
         return
     if not queue_path.exists():
@@ -760,6 +761,17 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
         entry_fields = target.get("entry_fields")
         if not isinstance(entry_fields, dict):
             fail(f"[context_pack] target {index}.entry_fields must be object", errors)
+    if pack_md_path.exists():
+        markdown = pack_md_path.read_text(encoding="utf-8")
+        for fragment in (
+            "# v4.7 Context Entry Pack",
+            f"Targets: {pack.get('target_count')} / {pack.get('limit')}",
+        ):
+            if fragment not in markdown:
+                fail(f"[context_pack] markdown checklist missing {fragment!r}", errors)
+        for target in targets[:5]:
+            if isinstance(target, dict) and str(target.get("head", "")) not in markdown:
+                fail(f"[context_pack] markdown checklist missing target {target.get('head')!r}", errors)
 
 
 def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:
