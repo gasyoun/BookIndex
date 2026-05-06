@@ -257,8 +257,8 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 ## 6. Recommended Next Sprint
 
 1. Update UltraReview/README whenever roadmap-changing work lands.
-2. Resolve or classify the single `Зализняк А. А.` duplicate through the quality queue.
-3. Review the 22 sort inversions and mark intentional grouped ordering separately from errors.
+2. [DONE] Resolve or classify the single `Зализняк А. А.` duplicate through the quality queue.
+3. Review the 21 remaining sort inversions and mark intentional grouped ordering separately from errors.
 4. Review the 6 page-verification candidates and 8 cross-book duplicate candidates through the quality queue.
 5. Start context expansion with `lexicon` and `subject_index`, using the queue as the worklist.
 6. Decide the rule for `lexicon_reverse`: inherited context projection or intentionally contextless reverse index.

@@ -6,172 +6,30 @@
   "limit": 25,
   "target_count": 25,
   "progress": {
-    "phase_estimate_percent": 53.7,
-    "direct_context_coverage_percent": 17.8,
-    "effective_context_coverage_percent": 23.7,
+    "phase_estimate_percent": 54.2,
+    "direct_context_coverage_percent": 18.0,
+    "effective_context_coverage_percent": 23.9,
     "context_target_min_percent": 35.0,
     "context_target_max_percent": 40.0
   },
   "queue_totals": {
-    "missing_context_count": 2580,
+    "missing_context_count": 2571,
     "suspicious_heads_count": 23,
-    "sort_inversions_count": 22,
-    "duplicate_heads_count": 1,
+    "sort_inversions_count": 0,
+    "duplicate_heads_count": 0,
     "cross_book_duplicate_candidates_count": 8,
-    "needs_page_verification_count": 6
+    "needs_page_verification_count": 0
   },
   "targets": [
     {
       "rank": 1,
       "status": "needs_source_context",
       "entity": "subject_index",
-      "head": "двойственное число",
-      "canonical_id": "subject_index-7859f9c1-d616-5cbe-bed0-59f820f2c59c",
-      "item_index": 18,
-      "json_pointer": "/subject_index/18",
-      "contexts_pointer": "/subject_index/18/contexts",
-      "route": "#v4/subject/list/item/subject/%D0%B4%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5%20%D1%87%D0%B8%D1%81%D0%BB%D0%BE",
-      "pages_count": 24,
-      "pages": [
-        49,
-        114,
-        115,
-        142,
-        143,
-        144,
-        145,
-        146,
-        147,
-        154,
-        157,
-        163,
-        168,
-        175,
-        198,
-        203,
-        212,
-        228,
-        232,
-        235,
-        365,
-        366,
-        367,
-        368
-      ],
-      "pages_to_check": [
-        49,
-        114,
-        115,
-        142,
-        143,
-        144,
-        145,
-        146,
-        147,
-        154
-      ],
-      "pages_summary": "24 pages; first: 49, 114, 115, 142, 143",
-      "priority_score": 120,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "49": [],
-          "114": [],
-          "115": [],
-          "142": [],
-          "143": [],
-          "144": [],
-          "145": [],
-          "146": [],
-          "147": [],
-          "154": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
-      "rank": 2,
-      "status": "needs_source_context",
-      "entity": "subject_index",
-      "head": "заимствование, заимствованные слова",
-      "canonical_id": "subject_index-71f16226-79e0-5084-a79a-35acd1d0336c",
-      "item_index": 20,
-      "json_pointer": "/subject_index/20",
-      "contexts_pointer": "/subject_index/20/contexts",
-      "route": "#v4/subject/list/item/subject/%D0%B7%D0%B0%D0%B8%D0%BC%D1%81%D1%82%D0%B2%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%2C%20%D0%B7%D0%B0%D0%B8%D0%BC%D1%81%D1%82%D0%B2%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0",
-      "pages_count": 22,
-      "pages": [
-        73,
-        74,
-        83,
-        84,
-        85,
-        101,
-        173,
-        184,
-        185,
-        186,
-        188,
-        191,
-        221,
-        224,
-        241,
-        242,
-        331,
-        334,
-        348,
-        349,
-        376,
-        391
-      ],
-      "pages_to_check": [
-        73,
-        74,
-        83,
-        84,
-        85,
-        101,
-        173,
-        184,
-        185,
-        186
-      ],
-      "pages_summary": "22 pages; first: 73, 74, 83, 84, 85",
-      "priority_score": 120,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "73": [],
-          "74": [],
-          "83": [],
-          "84": [],
-          "85": [],
-          "101": [],
-          "173": [],
-          "184": [],
-          "185": [],
-          "186": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
-      "rank": 3,
-      "status": "needs_source_context",
-      "entity": "subject_index",
       "head": "иероглиф, иероглифический знак",
       "canonical_id": "subject_index-ddcf1675-cdb1-5d08-82ce-cd301c698dba",
-      "item_index": 21,
-      "json_pointer": "/subject_index/21",
-      "contexts_pointer": "/subject_index/21/contexts",
+      "item_index": 22,
+      "json_pointer": "/subject_index/22",
+      "contexts_pointer": "/subject_index/22/contexts",
       "route": "#v4/subject/list/item/subject/%D0%B8%D0%B5%D1%80%D0%BE%D0%B3%D0%BB%D0%B8%D1%84%2C%20%D0%B8%D0%B5%D1%80%D0%BE%D0%B3%D0%BB%D0%B8%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BD%D0%B0%D0%BA",
       "pages_count": 25,
       "pages": [
@@ -237,322 +95,14 @@
       }
     },
     {
-      "rank": 4,
-      "status": "needs_source_context",
-      "entity": "subject_index",
-      "head": "калька, калькирование",
-      "canonical_id": "subject_index-8ac13147-c4c4-5ee8-aa54-e46d70f84e3e",
-      "item_index": 23,
-      "json_pointer": "/subject_index/23",
-      "contexts_pointer": "/subject_index/23/contexts",
-      "route": "#v4/subject/list/item/subject/%D0%BA%D0%B0%D0%BB%D1%8C%D0%BA%D0%B0%2C%20%D0%BA%D0%B0%D0%BB%D1%8C%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5",
-      "pages_count": 22,
-      "pages": [
-        15,
-        17,
-        20,
-        21,
-        37,
-        48,
-        87,
-        88,
-        120,
-        121,
-        122,
-        148,
-        186,
-        198,
-        217,
-        227,
-        248,
-        249,
-        275,
-        331,
-        338,
-        342
-      ],
-      "pages_to_check": [
-        15,
-        17,
-        20,
-        21,
-        37,
-        48,
-        87,
-        88,
-        120,
-        121
-      ],
-      "pages_summary": "22 pages; first: 15, 17, 20, 21, 37",
-      "priority_score": 120,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "15": [],
-          "17": [],
-          "20": [],
-          "21": [],
-          "37": [],
-          "48": [],
-          "87": [],
-          "88": [],
-          "120": [],
-          "121": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
-      "rank": 5,
-      "status": "needs_source_context",
-      "entity": "subject_index",
-      "head": "разговорный язык, разговорная речь",
-      "canonical_id": "subject_index-54484d75-7754-5764-b7ef-550c851b48ae",
-      "item_index": 56,
-      "json_pointer": "/subject_index/56",
-      "contexts_pointer": "/subject_index/56/contexts",
-      "route": "#v4/subject/list/item/subject/%D1%80%D0%B0%D0%B7%D0%B3%D0%BE%D0%B2%D0%BE%D1%80%D0%BD%D1%8B%D0%B9%20%D1%8F%D0%B7%D1%8B%D0%BA%2C%20%D1%80%D0%B0%D0%B7%D0%B3%D0%BE%D0%B2%D0%BE%D1%80%D0%BD%D0%B0%D1%8F%20%D1%80%D0%B5%D1%87%D1%8C",
-      "pages_count": 27,
-      "pages": [
-        25,
-        26,
-        29,
-        30,
-        49,
-        71,
-        73,
-        74,
-        92,
-        93,
-        104,
-        105,
-        106,
-        110,
-        120,
-        140,
-        141,
-        171,
-        181,
-        193,
-        194,
-        195,
-        196,
-        211,
-        220,
-        252,
-        253
-      ],
-      "pages_to_check": [
-        25,
-        26,
-        29,
-        30,
-        49,
-        71,
-        73,
-        74,
-        92,
-        93
-      ],
-      "pages_summary": "27 pages; first: 25, 26, 29, 30, 49",
-      "priority_score": 120,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "25": [],
-          "26": [],
-          "29": [],
-          "30": [],
-          "49": [],
-          "71": [],
-          "73": [],
-          "74": [],
-          "92": [],
-          "93": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
-      "rank": 6,
-      "status": "needs_source_context",
-      "entity": "lexicon",
-      "head": "же",
-      "canonical_id": "lexicon-dad9cc26-8ac0-5295-9b25-c426ad5d65ba",
-      "item_index": 610,
-      "json_pointer": "/lexicon/610",
-      "contexts_pointer": "/lexicon/610/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%D0%B6%D0%B5",
-      "pages_count": 10,
-      "pages": [
-        9,
-        16,
-        18,
-        22,
-        25,
-        30,
-        34,
-        39,
-        67,
-        338
-      ],
-      "pages_to_check": [
-        9,
-        16,
-        18,
-        22,
-        25,
-        30,
-        34,
-        39,
-        67,
-        338
-      ],
-      "pages_summary": "10 pages; first: 9, 16, 18, 22, 25",
-      "priority_score": 115,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: lexicon context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "9": [],
-          "16": [],
-          "18": [],
-          "22": [],
-          "25": [],
-          "30": [],
-          "34": [],
-          "39": [],
-          "67": [],
-          "338": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
-      "rank": 7,
-      "status": "needs_source_context",
-      "entity": "subject_index",
-      "head": "берестяные грамоты",
-      "canonical_id": "subject_index-3bd3f8d9-3699-5eda-a330-486e2a9a6359",
-      "item_index": 10,
-      "json_pointer": "/subject_index/10",
-      "contexts_pointer": "/subject_index/10/contexts",
-      "route": "#v4/subject/list/item/subject/%D0%B1%D0%B5%D1%80%D0%B5%D1%81%D1%82%D1%8F%D0%BD%D1%8B%D0%B5%20%D0%B3%D1%80%D0%B0%D0%BC%D0%BE%D1%82%D1%8B",
-      "pages_count": 57,
-      "pages": [
-        23,
-        46,
-        179,
-        195,
-        196,
-        197,
-        198,
-        272,
-        273,
-        274,
-        275,
-        276,
-        277,
-        278,
-        279,
-        280,
-        281,
-        282,
-        283,
-        284,
-        285,
-        286,
-        287,
-        288,
-        289,
-        290,
-        291,
-        292,
-        293,
-        294,
-        295,
-        296,
-        297,
-        298,
-        299,
-        300,
-        301,
-        302,
-        303,
-        304,
-        305,
-        306,
-        307,
-        308,
-        309,
-        310,
-        311,
-        312,
-        313,
-        314,
-        315,
-        316,
-        317,
-        318,
-        319,
-        320,
-        321
-      ],
-      "pages_to_check": [
-        23,
-        46,
-        179,
-        195,
-        196,
-        197,
-        198,
-        272,
-        273,
-        274
-      ],
-      "pages_summary": "57 pages; first: 23, 46, 179, 195, 196",
-      "priority_score": 115,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "23": [],
-          "46": [],
-          "179": [],
-          "195": [],
-          "196": [],
-          "197": [],
-          "198": [],
-          "272": [],
-          "273": [],
-          "274": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
-      "rank": 8,
+      "rank": 2,
       "status": "needs_source_context",
       "entity": "subject_index",
       "head": "сдвиг [ударения]: ∼ вправо",
       "canonical_id": "subject_index-398dd821-ea36-554d-a69f-f637067e6f41",
-      "item_index": 62,
-      "json_pointer": "/subject_index/62",
-      "contexts_pointer": "/subject_index/62/contexts",
+      "item_index": 66,
+      "json_pointer": "/subject_index/66",
+      "contexts_pointer": "/subject_index/66/contexts",
       "route": "#v4/subject/list/item/subject/%D1%81%D0%B4%D0%B2%D0%B8%D0%B3%20%5B%D1%83%D0%B4%D0%B0%D1%80%D0%B5%D0%BD%D0%B8%D1%8F%5D%3A%20%E2%88%BC%20%D0%B2%D0%BF%D1%80%D0%B0%D0%B2%D0%BE",
       "pages_count": 26,
       "pages": [
@@ -619,14 +169,14 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 3,
       "status": "needs_source_context",
       "entity": "subject_index",
       "head": "ударение: ∼ в русском языке",
       "canonical_id": "subject_index-cf86eb4d-5dee-5ffe-8675-043c27227029",
-      "item_index": 67,
-      "json_pointer": "/subject_index/67",
-      "contexts_pointer": "/subject_index/67/contexts",
+      "item_index": 71,
+      "json_pointer": "/subject_index/71",
+      "contexts_pointer": "/subject_index/71/contexts",
       "route": "#v4/subject/list/item/subject/%D1%83%D0%B4%D0%B0%D1%80%D0%B5%D0%BD%D0%B8%D0%B5%3A%20%E2%88%BC%20%D0%B2%20%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC%20%D1%8F%D0%B7%D1%8B%D0%BA%D0%B5",
       "pages_count": 67,
       "pages": [
@@ -734,7 +284,7 @@
       }
     },
     {
-      "rank": 10,
+      "rank": 4,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "öLsz̲",
@@ -768,14 +318,14 @@
       }
     },
     {
-      "rank": 11,
+      "rank": 5,
       "status": "needs_source_context",
       "entity": "subject_index",
       "head": "Вакернагеля закон (механизм), вакернагелевский принцип",
       "canonical_id": "subject_index-350fbbd5-6132-511f-9dff-fcebbf022ebb",
-      "item_index": 14,
-      "json_pointer": "/subject_index/14",
-      "contexts_pointer": "/subject_index/14/contexts",
+      "item_index": 15,
+      "json_pointer": "/subject_index/15",
+      "contexts_pointer": "/subject_index/15/contexts",
       "route": "#v4/subject/list/item/subject/%D0%92%D0%B0%D0%BA%D0%B5%D1%80%D0%BD%D0%B0%D0%B3%D0%B5%D0%BB%D1%8F%20%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%20%28%D0%BC%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%B7%D0%BC%29%2C%20%D0%B2%D0%B0%D0%BA%D0%B5%D1%80%D0%BD%D0%B0%D0%B3%D0%B5%D0%BB%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BF%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF",
       "pages_count": 17,
       "pages": [
@@ -833,14 +383,14 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 6,
       "status": "needs_source_context",
       "entity": "subject_index",
       "head": "литературный язык, литературная форма языка",
       "canonical_id": "subject_index-dfd0504f-6e0a-57b6-ad4e-b534aa7eba76",
-      "item_index": 25,
-      "json_pointer": "/subject_index/25",
-      "contexts_pointer": "/subject_index/25/contexts",
+      "item_index": 28,
+      "json_pointer": "/subject_index/28",
+      "contexts_pointer": "/subject_index/28/contexts",
       "route": "#v4/subject/list/item/subject/%D0%BB%D0%B8%D1%82%D0%B5%D1%80%D0%B0%D1%82%D1%83%D1%80%D0%BD%D1%8B%D0%B9%20%D1%8F%D0%B7%D1%8B%D0%BA%2C%20%D0%BB%D0%B8%D1%82%D0%B5%D1%80%D0%B0%D1%82%D1%83%D1%80%D0%BD%D0%B0%D1%8F%20%D1%84%D0%BE%D1%80%D0%BC%D0%B0%20%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0",
       "pages_count": 17,
       "pages": [
@@ -898,60 +448,14 @@
       }
     },
     {
-      "rank": 13,
-      "status": "needs_source_context",
-      "entity": "lexicon",
-      "head": "на",
-      "canonical_id": "lexicon-0fb29a86-fa62-5c74-b172-82714797330d",
-      "item_index": 890,
-      "json_pointer": "/lexicon/890",
-      "contexts_pointer": "/lexicon/890/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%D0%BD%D0%B0",
-      "pages_count": 6,
-      "pages": [
-        15,
-        17,
-        124,
-        248,
-        254,
-        348
-      ],
-      "pages_to_check": [
-        15,
-        17,
-        124,
-        248,
-        254,
-        348
-      ],
-      "pages_summary": "15, 17, 124, 248, 254, 348",
-      "priority_score": 111,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: lexicon context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "15": [],
-          "17": [],
-          "124": [],
-          "248": [],
-          "254": [],
-          "348": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
-      "rank": 14,
+      "rank": 7,
       "status": "needs_source_context",
       "entity": "subject_index",
       "head": "фонетические изменения",
       "canonical_id": "subject_index-61e1605e-6dce-5652-abc7-fab856cee4a8",
-      "item_index": 75,
-      "json_pointer": "/subject_index/75",
-      "contexts_pointer": "/subject_index/75/contexts",
+      "item_index": 79,
+      "json_pointer": "/subject_index/79",
+      "contexts_pointer": "/subject_index/79/contexts",
       "route": "#v4/subject/list/item/subject/%D1%84%D0%BE%D0%BD%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F",
       "pages_count": 16,
       "pages": [
@@ -1008,7 +512,7 @@
       }
     },
     {
-      "rank": 15,
+      "rank": 8,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "за",
@@ -1051,7 +555,7 @@
       }
     },
     {
-      "rank": 16,
+      "rank": 9,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "ли",
@@ -1094,7 +598,7 @@
       }
     },
     {
-      "rank": 17,
+      "rank": 10,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "а",
@@ -1134,14 +638,14 @@
       }
     },
     {
-      "rank": 18,
+      "rank": 11,
       "status": "needs_source_context",
       "entity": "subject_index",
       "head": "правило [языковое]",
       "canonical_id": "subject_index-f200cff7-af5b-59a1-9493-b8e41b75f154",
-      "item_index": 55,
-      "json_pointer": "/subject_index/55",
-      "contexts_pointer": "/subject_index/55/contexts",
+      "item_index": 59,
+      "json_pointer": "/subject_index/59",
+      "contexts_pointer": "/subject_index/59/contexts",
       "route": "#v4/subject/list/item/subject/%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%BE%20%5B%D1%8F%D0%B7%D1%8B%D0%BA%D0%BE%D0%B2%D0%BE%D0%B5%5D",
       "pages_count": 14,
       "pages": [
@@ -1196,7 +700,7 @@
       }
     },
     {
-      "rank": 19,
+      "rank": 12,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "dĳtu",
@@ -1233,7 +737,7 @@
       }
     },
     {
-      "rank": 20,
+      "rank": 13,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "y/slm",
@@ -1270,7 +774,7 @@
       }
     },
     {
-      "rank": 21,
+      "rank": 14,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "бы",
@@ -1307,7 +811,7 @@
       }
     },
     {
-      "rank": 22,
+      "rank": 15,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "вѣрѣ",
@@ -1344,7 +848,7 @@
       }
     },
     {
-      "rank": 23,
+      "rank": 16,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "не",
@@ -1381,7 +885,7 @@
       }
     },
     {
-      "rank": 24,
+      "rank": 17,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "пятъ",
@@ -1418,7 +922,7 @@
       }
     },
     {
-      "rank": 25,
+      "rank": 18,
       "status": "needs_source_context",
       "entity": "lexicon",
       "head": "Русъ",
@@ -1449,6 +953,277 @@
           "57": [],
           "178": [],
           "179": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 19,
+      "status": "needs_source_context",
+      "entity": "lexicon",
+      "head": "ся",
+      "canonical_id": "lexicon-428362a9-3b89-5f8e-a443-a4793cf1333a",
+      "item_index": 1209,
+      "json_pointer": "/lexicon/1209",
+      "contexts_pointer": "/lexicon/1209/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D1%81%D1%8F",
+      "pages_count": 3,
+      "pages": [
+        36,
+        38,
+        39
+      ],
+      "pages_to_check": [
+        36,
+        38,
+        39
+      ],
+      "pages_summary": "36, 38, 39",
+      "priority_score": 108,
+      "priority_tier": "high",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "36": [],
+          "38": [],
+          "39": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 20,
+      "status": "needs_source_context",
+      "entity": "lexicon",
+      "head": "у",
+      "canonical_id": "lexicon-21eb0af8-fa3c-53b1-a35e-2de973872edd",
+      "item_index": 1231,
+      "json_pointer": "/lexicon/1231",
+      "contexts_pointer": "/lexicon/1231/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D1%83",
+      "pages_count": 3,
+      "pages": [
+        17,
+        337,
+        338
+      ],
+      "pages_to_check": [
+        17,
+        337,
+        338
+      ],
+      "pages_summary": "17, 337, 338",
+      "priority_score": 108,
+      "priority_tier": "high",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "17": [],
+          "337": [],
+          "338": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 21,
+      "status": "needs_source_context",
+      "entity": "subject_index",
+      "head": "энклитики",
+      "canonical_id": "subject_index-dda9d33a-c28c-57ad-b5a6-61e1e122c99b",
+      "item_index": 89,
+      "json_pointer": "/subject_index/89",
+      "contexts_pointer": "/subject_index/89/contexts",
+      "route": "#v4/subject/list/item/subject/%D1%8D%D0%BD%D0%BA%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8",
+      "pages_count": 13,
+      "pages": [
+        14,
+        16,
+        19,
+        20,
+        21,
+        22,
+        25,
+        30,
+        33,
+        37,
+        40,
+        41,
+        49
+      ],
+      "pages_to_check": [
+        14,
+        16,
+        19,
+        20,
+        21,
+        22,
+        25,
+        30,
+        33,
+        37
+      ],
+      "pages_summary": "13 pages; first: 14, 16, 19, 20, 21",
+      "priority_score": 108,
+      "priority_tier": "high",
+      "priority_reason": "v4.7 top priority: subject_index context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "14": [],
+          "16": [],
+          "19": [],
+          "20": [],
+          "21": [],
+          "22": [],
+          "25": [],
+          "30": [],
+          "33": [],
+          "37": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 22,
+      "status": "needs_source_context",
+      "entity": "lexicon",
+      "head": "d",
+      "canonical_id": "lexicon-ff5c8641-fc7d-57a1-8d99-e15308e88ca1",
+      "item_index": 30,
+      "json_pointer": "/lexicon/30",
+      "contexts_pointer": "/lexicon/30/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/d",
+      "pages_count": 2,
+      "pages": [
+        70,
+        72
+      ],
+      "pages_to_check": [
+        70,
+        72
+      ],
+      "pages_summary": "70, 72",
+      "priority_score": 107,
+      "priority_tier": "high",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "70": [],
+          "72": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 23,
+      "status": "needs_source_context",
+      "entity": "lexicon",
+      "head": "de",
+      "canonical_id": "lexicon-15521ed7-0db5-517e-8c35-88fd90ff389a",
+      "item_index": 31,
+      "json_pointer": "/lexicon/31",
+      "contexts_pointer": "/lexicon/31/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/de",
+      "pages_count": 2,
+      "pages": [
+        118,
+        123
+      ],
+      "pages_to_check": [
+        118,
+        123
+      ],
+      "pages_summary": "118, 123",
+      "priority_score": 107,
+      "priority_tier": "high",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "118": [],
+          "123": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 24,
+      "status": "needs_source_context",
+      "entity": "lexicon",
+      "head": "dĳt",
+      "canonical_id": "lexicon-3ca7ee6d-3a61-54ca-b543-7402c54375df",
+      "item_index": 44,
+      "json_pointer": "/lexicon/44",
+      "contexts_pointer": "/lexicon/44/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/d%C4%B3t",
+      "pages_count": 2,
+      "pages": [
+        69,
+        71
+      ],
+      "pages_to_check": [
+        69,
+        71
+      ],
+      "pages_summary": "69, 71",
+      "priority_score": 107,
+      "priority_tier": "high",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "69": [],
+          "71": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 25,
+      "status": "needs_source_context",
+      "entity": "lexicon",
+      "head": "nyn",
+      "canonical_id": "lexicon-283a2536-200d-5154-a82e-e16e158fc1c3",
+      "item_index": 134,
+      "json_pointer": "/lexicon/134",
+      "contexts_pointer": "/lexicon/134/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/nyn",
+      "pages_count": 2,
+      "pages": [
+        6,
+        230
+      ],
+      "pages_to_check": [
+        6,
+        230
+      ],
+      "pages_summary": "6, 230",
+      "priority_score": 107,
+      "priority_tier": "high",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "6": [],
+          "230": []
         },
         "source_notes": "",
         "verification_notes": ""

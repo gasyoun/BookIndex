@@ -28,7 +28,9 @@
       "lat": -25,
       "lon": 135,
       "family": "Австралийские",
-      "group": "австралийская"
+      "group": "австралийская",
+      "letter_change": true,
+      "letter": "А"
     },
     {
       "canonical_id": "languages-b8bbc2b1-c925-5a7a-87a6-e76d9258fe23",
@@ -56,7 +58,9 @@
       "lat": 41,
       "lon": 20,
       "family": "Индоевропейская",
-      "group": "албанская"
+      "group": "албанская",
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "languages-d33655c4-c735-5c2c-9923-7e57ff7f5a0a",
@@ -302,7 +306,29 @@
       "lat": 52,
       "lon": -1,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "А"
+    },
+    {
+      "canonical_id": "languages-3fc528ab-be13-52bb-8902-4881969a037b",
+      "head": "Английский язык",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "По Фоменко 'изобретен' вместе с латынью."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "По Фоменко 'изобретен' вместе с латынью."
+      ],
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "languages-5225896b-904f-5eed-937f-47532361c2c2",
@@ -458,7 +484,9 @@
       "lat": 24,
       "lon": 45,
       "family": "Афразийская",
-      "group": "семитская"
+      "group": "семитская",
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "languages-18cf5b1d-d004-525b-ba1d-5369612101fe",
@@ -486,7 +514,9 @@
       "lat": 30,
       "lon": 50,
       "family": "Афразийская",
-      "group": "семитская"
+      "group": "семитская",
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "languages-2d94d19d-3eb3-5f05-b4f8-2dc633a9db23",
@@ -514,7 +544,9 @@
       "lat": 33,
       "lon": 37,
       "family": "Афразийская",
-      "group": "семитская"
+      "group": "семитская",
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "languages-f3546bca-34ca-5c24-b11b-9b243a4473dd",
@@ -550,7 +582,9 @@
       "lat": 40,
       "lon": 45,
       "family": "Индоевропейская",
-      "group": "армянская"
+      "group": "армянская",
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "languages-1859ba72-a60e-5340-b3a1-3b656894bcd0",
@@ -578,7 +612,9 @@
       "lat": 64,
       "lon": 41,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "languages-7041cd60-63dd-590a-917f-cdc3f95df006",
@@ -610,7 +646,9 @@
       "lat": 56,
       "lon": 23,
       "family": "Индоевропейская",
-      "group": "балтийская"
+      "group": "балтийская",
+      "letter_change": true,
+      "letter": "Б"
     },
     {
       "canonical_id": "languages-0814a442-559e-5740-ae15-91174ebaa68a",
@@ -638,7 +676,9 @@
       "lat": 54,
       "lon": 28,
       "family": "Индоевропейская",
-      "group": "славянская общая"
+      "group": "славянская общая",
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "languages-8748d830-d9f1-5765-937c-81ba57e80c8f",
@@ -662,7 +702,9 @@
       "lat": 43,
       "lon": -2,
       "family": "Изолят",
-      "group": "изолят"
+      "group": "изолят",
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "languages-1ffb4bad-a535-5be2-a809-8d8c15052964",
@@ -690,7 +732,9 @@
       "lat": 54,
       "lon": 56,
       "family": "Тюркская",
-      "group": "тюркская"
+      "group": "тюркская",
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "languages-370b121b-1835-5ba4-9c88-ea74d8f285df",
@@ -764,7 +808,9 @@
       "lat": 53,
       "lon": 28,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "languages-b6b21428-b9d3-5e48-8bae-23b938a1886b",
@@ -788,7 +834,9 @@
       "lat": 32,
       "lon": 35,
       "family": "Афразийская",
-      "group": "семитская"
+      "group": "семитская",
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "languages-492b1743-d397-51bf-b76b-3416329840a9",
@@ -852,7 +900,9 @@
       "lat": 43,
       "lon": 25,
       "family": "Индоевропейская",
-      "group": "славянская южная"
+      "group": "славянская южная",
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "languages-e4530aa5-2cec-5418-8ea1-e7da5b48afeb",
@@ -882,7 +932,9 @@
       "lat": 60,
       "lon": 18,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": true,
+      "letter": "В"
     },
     {
       "canonical_id": "languages-38614e12-049e-5874-a63f-8983766b38d8",
@@ -912,7 +964,9 @@
       "lat": 59,
       "lon": 40,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "languages-c801e92f-556b-582e-87e6-50198f748909",
@@ -958,7 +1012,9 @@
       "lat": 54,
       "lon": 35,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "languages-fbcc7b4e-4eb0-556f-b61d-b887205666aa",
@@ -1002,7 +1058,9 @@
       "lat": 40,
       "lon": 60,
       "family": "Не классифицировано",
-      "group": "разное"
+      "group": "разное",
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "languages-c064dcb6-b2c3-5734-9a3a-36610c299331",
@@ -1038,7 +1096,9 @@
       "lat": 47,
       "lon": 2,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": true,
+      "letter": "Г"
     },
     {
       "canonical_id": "languages-e870a7ad-969e-59b1-871a-89a5db78b0e7",
@@ -1128,7 +1188,9 @@
       "lat": 52,
       "lon": 10,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "Г"
     },
     {
       "canonical_id": "languages-86d1ccf1-86a3-53f2-8792-9d24fffcf970",
@@ -1172,7 +1234,9 @@
       "lat": 52,
       "lon": 5,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "Г"
     },
     {
       "canonical_id": "languages-cf2e0082-ff1a-52da-9748-ef32ae7e8704",
@@ -1202,7 +1266,9 @@
       "lat": 48,
       "lon": 22,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "Г"
     },
     {
       "canonical_id": "languages-c3da757f-26c4-503b-ac49-a7c5464582d9",
@@ -1334,7 +1400,9 @@
       "lat": 39,
       "lon": 22,
       "family": "Индоевропейская",
-      "group": "эллинская"
+      "group": "эллинская",
+      "letter_change": false,
+      "letter": "Г"
     },
     {
       "canonical_id": "languages-68170b69-81a1-5928-b6d7-04521d1e8afc",
@@ -1362,7 +1430,9 @@
       "lat": 42,
       "lon": 43,
       "family": "Картвельская",
-      "group": "картвельская"
+      "group": "картвельская",
+      "letter_change": false,
+      "letter": "Г"
     },
     {
       "canonical_id": "languages-17515efe-71ce-562a-9660-f7965b489a94",
@@ -1398,7 +1468,9 @@
       "lat": 56,
       "lon": 10,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": true,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-25136a33-3297-5c13-bb37-766bd334631e",
@@ -1426,7 +1498,9 @@
       "lat": 13,
       "lon": 77,
       "family": "Дравидийская",
-      "group": "дравидийская"
+      "group": "дравидийская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-28d7d7e2-91df-55b8-b243-50bf26ec2187",
@@ -1474,7 +1548,9 @@
       "lat": 52,
       "lon": -1,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-be1d5d6c-3d37-5b47-b133-6353e14937df",
@@ -1502,7 +1578,9 @@
       "lat": 24,
       "lon": 45,
       "family": "Афразийская",
-      "group": "семитская"
+      "group": "семитская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-91ad855e-8454-5c98-99eb-448a920d10fc",
@@ -1530,7 +1608,9 @@
       "lat": 43,
       "lon": 25,
       "family": "Индоевропейская",
-      "group": "славянская южная"
+      "group": "славянская южная",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-4b0ed3c7-c670-5002-96f6-79d269875e17",
@@ -1558,7 +1638,9 @@
       "lat": 51,
       "lon": 10,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-8b1910bd-bf87-524b-b40e-3f5e1bdcbdc6",
@@ -1594,7 +1676,9 @@
       "lat": 50,
       "lon": 10,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-cdb42c19-b361-5b57-b728-b9c72eadb69f",
@@ -1632,7 +1716,9 @@
       "lat": 38,
       "lon": 23,
       "family": "Индоевропейская",
-      "group": "эллинская"
+      "group": "эллинская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-893a1b49-8b36-5a94-9cb5-f4177598970d",
@@ -1664,7 +1750,9 @@
       "lat": 27,
       "lon": 30,
       "family": "Афразийская",
-      "group": "египетская"
+      "group": "египетская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-c6205426-0128-521f-b405-2cbc1c415051",
@@ -1710,7 +1798,9 @@
       "lat": 25,
       "lon": 77,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-a0a3ffb6-7362-5002-901c-f8ddf6095f1c",
@@ -1748,7 +1838,9 @@
       "lat": 58,
       "lon": 31,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-661a85e2-596f-598e-8c2b-6ebf52ea6b32",
@@ -1776,7 +1868,9 @@
       "lat": 30,
       "lon": 53,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-acbf7f43-46d4-568a-a935-6fa7140a3504",
@@ -1804,7 +1898,9 @@
       "lat": 54,
       "lon": 20,
       "family": "Индоевропейская",
-      "group": "балтийская"
+      "group": "балтийская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-985fd59d-317c-515b-972f-06c4552c7887",
@@ -2046,7 +2142,9 @@
       "lat": 55,
       "lon": 32,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-408adeb2-c534-5790-91c9-07e0c4ece8a1",
@@ -2074,7 +2172,9 @@
       "lat": 62,
       "lon": 10,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-1c0160e5-d564-5018-98d5-abd150fa0371",
@@ -2102,7 +2202,9 @@
       "lat": 49,
       "lon": 32,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "languages-d9890de7-29d9-57a0-b418-f5d568c95afb",
@@ -2204,7 +2306,9 @@
       "lat": 50,
       "lon": 15,
       "family": "Не классифицировано",
-      "group": "разное"
+      "group": "разное",
+      "letter_change": true,
+      "letter": "Е"
     },
     {
       "canonical_id": "languages-b6580aed-d3b7-597a-8f15-97b78fceb87c",
@@ -2250,7 +2354,9 @@
       "lat": 27,
       "lon": 30,
       "family": "Афразийская",
-      "group": "египетская"
+      "group": "египетская",
+      "letter_change": false,
+      "letter": "Е"
     },
     {
       "canonical_id": "languages-9ec580ba-2741-5545-a024-0a0d6e26193c",
@@ -2278,7 +2384,9 @@
       "lat": 51,
       "lon": 8,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": true,
+      "letter": "З"
     },
     {
       "canonical_id": "languages-321d8f38-e636-5f8b-9baa-12a62dc8a600",
@@ -2310,7 +2418,9 @@
       "lat": 48,
       "lon": 5,
       "family": "Не классифицировано",
-      "group": "разное"
+      "group": "разное",
+      "letter_change": false,
+      "letter": "З"
     },
     {
       "canonical_id": "languages-72e55ad1-4899-5a8b-aa1c-2e1cea97bd53",
@@ -2338,7 +2448,9 @@
       "lat": 43,
       "lon": 0,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "З"
     },
     {
       "canonical_id": "languages-c380d0b2-ec14-54bf-aa6d-9de51fdf2e30",
@@ -2368,7 +2480,9 @@
       "lat": 54,
       "lon": 28,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "З"
     },
     {
       "canonical_id": "languages-925b1848-3c42-5242-91e5-540d7c8f6d1d",
@@ -2408,7 +2522,9 @@
       "lat": 52,
       "lon": 18,
       "family": "Индоевропейская",
-      "group": "славянская западная"
+      "group": "славянская западная",
+      "letter_change": false,
+      "letter": "З"
     },
     {
       "canonical_id": "languages-6aa71e05-3227-56d9-ad52-0be2310e4cbf",
@@ -2442,7 +2558,9 @@
       "lat": 48,
       "lon": 5,
       "family": "Не классифицировано",
-      "group": "разное"
+      "group": "разное",
+      "letter_change": false,
+      "letter": "З"
     },
     {
       "canonical_id": "languages-d5fd96ad-b5e7-5915-928b-a1e13579414d",
@@ -2472,7 +2590,9 @@
       "lat": 32,
       "lon": 35,
       "family": "Афразийская",
-      "group": "семитская"
+      "group": "семитская",
+      "letter_change": true,
+      "letter": "И"
     },
     {
       "canonical_id": "languages-983bb44d-7b0c-59d3-be15-77d690c618f0",
@@ -2530,7 +2650,9 @@
       "lat": 21,
       "lon": 78,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "languages-feb03b56-8d40-5ee7-88e7-8bcf3a1f83c2",
@@ -2650,7 +2772,9 @@
       "lat": 45,
       "lon": 30,
       "family": "Индоевропейская",
-      "group": "праиндоевропейская"
+      "group": "праиндоевропейская",
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "languages-e1224006-3897-5e49-8232-41f92a275e85",
@@ -2678,7 +2802,9 @@
       "lat": 30,
       "lon": 60,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "languages-56f655e8-9135-5ae7-b53c-328b2d21721c",
@@ -2716,7 +2842,9 @@
       "lat": 32,
       "lon": 54,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "languages-777d6061-0ab0-53af-bd63-16d10608c440",
@@ -2756,7 +2884,9 @@
       "lat": 65,
       "lon": -19,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "languages-fdd6a013-d6b3-5288-9471-c878e5324f95",
@@ -2806,7 +2936,29 @@
       "lat": 40,
       "lon": -3,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
+      "canonical_id": "languages-81b90f1b-04ee-556d-a9a9-d68253066ae9",
+      "head": "Испанский язык",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "По Фоменко 'изобретен' вместе с латынью."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "По Фоменко 'изобретен' вместе с латынью."
+      ],
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "languages-efb108c1-0033-5f26-88bb-1408e75f64e8",
@@ -2852,7 +3004,9 @@
       "lat": 42,
       "lon": 13,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "languages-e4137f36-4d78-51a0-aaaf-61827497ca5f",
@@ -2910,7 +3064,9 @@
       "lat": 35,
       "lon": 104,
       "family": "Сино-тибетская",
-      "group": "китайская"
+      "group": "китайская",
+      "letter_change": true,
+      "letter": "К"
     },
     {
       "canonical_id": "languages-78310160-98e4-5e45-8c13-22b01ed3e693",
@@ -2940,7 +3096,9 @@
       "lat": 27,
       "lon": 30,
       "family": "Афразийская",
-      "group": "египетская"
+      "group": "египетская",
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "languages-d43c00ac-336e-5737-8922-031e5e71ec88",
@@ -2968,7 +3126,9 @@
       "lat": 45,
       "lon": 34,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "languages-f5e26a92-be80-54ba-b868-7a9435af9c74",
@@ -2996,7 +3156,9 @@
       "lat": 51,
       "lon": 36,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "languages-0ef837bf-6f2d-5c65-a690-1ffbb9fdbc09",
@@ -3024,7 +3186,9 @@
       "lat": 45,
       "lon": 60,
       "family": "Тюркская",
-      "group": "тюркская"
+      "group": "тюркская",
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "languages-5a7821fa-9191-5d05-912b-185cb2a26eac",
@@ -3138,7 +3302,9 @@
       "lat": 42,
       "lon": 12,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": true,
+      "letter": "Л"
     },
     {
       "canonical_id": "languages-5ee78c22-546e-545d-809d-952741393994",
@@ -3308,7 +3474,29 @@
       "lat": 42,
       "lon": 12,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "Л"
+    },
+    {
+      "canonical_id": "languages-819e82fb-4f0f-570d-8691-beb8abb5f5cf",
+      "head": "Латынь",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Язык, по Фоменко 'изобретенный' в XVII веке."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Язык, по Фоменко 'изобретенный' в XVII веке."
+      ],
+      "letter_change": false,
+      "letter": "Л"
     },
     {
       "canonical_id": "languages-c85216ed-af4c-5f28-adfd-e84d77a09a83",
@@ -3340,7 +3528,9 @@
       "lat": 57,
       "lon": 24,
       "family": "Индоевропейская",
-      "group": "балтийская"
+      "group": "балтийская",
+      "letter_change": false,
+      "letter": "Л"
     },
     {
       "canonical_id": "languages-c3325444-0a4a-57d4-8029-9a774323c622",
@@ -3396,7 +3586,9 @@
       "lat": 55,
       "lon": 24,
       "family": "Индоевропейская",
-      "group": "балтийская"
+      "group": "балтийская",
+      "letter_change": false,
+      "letter": "Л"
     },
     {
       "canonical_id": "languages-259ce2e5-72c5-5b83-97f2-d7e273af0ab0",
@@ -3428,7 +3620,9 @@
       "lat": 51,
       "lon": 14,
       "family": "Индоевропейская",
-      "group": "славянская западная"
+      "group": "славянская западная",
+      "letter_change": false,
+      "letter": "Л"
     },
     {
       "canonical_id": "languages-a2098443-efad-50d9-8b84-c3ace806aced",
@@ -3456,7 +3650,9 @@
       "lat": 42,
       "lon": 22,
       "family": "Индоевропейская",
-      "group": "славянская южная"
+      "group": "славянская южная",
+      "letter_change": true,
+      "letter": "М"
     },
     {
       "canonical_id": "languages-6090fd2f-d36f-57ac-96cc-329f280fca93",
@@ -3484,7 +3680,9 @@
       "lat": -41,
       "lon": 174,
       "family": "Австронезийская",
-      "group": "полинезийская"
+      "group": "полинезийская",
+      "letter_change": false,
+      "letter": "М"
     },
     {
       "canonical_id": "languages-1a08738b-740e-57af-9430-521d448befaf",
@@ -3608,7 +3806,29 @@
       "lat": 51,
       "lon": 10,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": true,
+      "letter": "Н"
+    },
+    {
+      "canonical_id": "languages-985bff8f-308e-5781-8a15-86616e9b2c6a",
+      "head": "Немецкий язык",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "По Фоменко 'изобретен' вместе с латынью."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "По Фоменко 'изобретен' вместе с латынью."
+      ],
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "languages-abb7e9ea-9469-5e17-9793-2636fd65b0ea",
@@ -3692,7 +3912,9 @@
       "lat": 58,
       "lon": 31,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "languages-91f9e9ca-0169-5cda-a57b-bedd38a92264",
@@ -3726,7 +3948,9 @@
       "lat": 58,
       "lon": 30,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "languages-c27d8274-b825-50fe-bdaf-6decfb1693f3",
@@ -3758,7 +3982,9 @@
       "lat": 39,
       "lon": 22,
       "family": "Индоевропейская",
-      "group": "эллинская"
+      "group": "эллинская",
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "languages-5fd5e09a-dd49-5b23-808c-6dcf31dfd026",
@@ -3786,7 +4012,9 @@
       "lat": -41,
       "lon": 174,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "languages-65d92f25-e2a0-5f7c-9a68-7d8259d3768b",
@@ -3814,7 +4042,9 @@
       "lat": 21,
       "lon": 78,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "languages-b08af3ee-bfa2-53ac-92ca-3d0ffec03386",
@@ -3854,7 +4084,9 @@
       "lat": 62,
       "lon": 10,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "languages-06d151d2-14f2-5cde-81da-50bb7804934b",
@@ -3886,7 +4118,9 @@
       "lat": 40,
       "lon": 50,
       "family": "Макросемья",
-      "group": "ностратическая"
+      "group": "ностратическая",
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "languages-9fec3529-7194-59e5-9eaf-16df069ab3f1",
@@ -3914,7 +4148,9 @@
       "lat": 25,
       "lon": 85,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": true,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-15f473e2-8c63-53a4-b3e6-2e2de127747e",
@@ -3944,7 +4180,9 @@
       "lat": -6,
       "lon": 145,
       "family": "Папуасские",
-      "group": "папуасская"
+      "group": "папуасская",
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-2b41131d-69cf-577d-b4fb-972c5cf80905",
@@ -4002,7 +4240,9 @@
       "lat": 32,
       "lon": 54,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-df257d12-8f9e-546c-a0d6-4c4e4fa03788",
@@ -4030,7 +4270,9 @@
       "lat": 42,
       "lon": 12,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-2fcafebe-e4de-59d3-93c5-8430b98fc65b",
@@ -4058,7 +4300,9 @@
       "lat": 48,
       "lon": 38,
       "family": "Тюркская",
-      "group": "тюркская"
+      "group": "тюркская",
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-79f83b48-6088-5c22-a223-f049ed2cfdc3",
@@ -4136,7 +4380,29 @@
       "lat": 52,
       "lon": 19,
       "family": "Индоевропейская",
-      "group": "славянская западная"
+      "group": "славянская западная",
+      "letter_change": false,
+      "letter": "П"
+    },
+    {
+      "canonical_id": "languages-56fbbfc5-5af1-52bd-87b1-632cd6c94a5b",
+      "head": "Польский язык",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Элементы (полонизмы) присутствуют в «Велесовой книге»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Элементы (полонизмы) присутствуют в «Велесовой книге»."
+      ],
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-2ca73d0b-a52d-50e3-bf37-7d8d7a7cd722",
@@ -4172,7 +4438,9 @@
       "lat": 40,
       "lon": -8,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-0b78f167-2db5-5364-9fe1-c1fd0c82eb65",
@@ -4204,7 +4472,9 @@
       "lat": 55,
       "lon": 12,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-c63f90a7-339d-5db4-910d-a16f1d71e89a",
@@ -4262,7 +4532,9 @@
       "lat": 45,
       "lon": 40,
       "family": "Индоевропейская",
-      "group": "праиндоевропейская"
+      "group": "праиндоевропейская",
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-d74da5f4-e8da-5c74-a912-f28ec3d4f7f3",
@@ -4308,7 +4580,9 @@
       "lat": 52,
       "lon": 25,
       "family": "Индоевропейская",
-      "group": "славянская общая"
+      "group": "славянская общая",
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-0bed65c8-1343-5125-9a74-7ada5574eefb",
@@ -4340,7 +4614,9 @@
       "lat": 57,
       "lon": 28,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "languages-c0b59102-cf41-52bb-a7e1-f334b12b92c4",
@@ -4364,7 +4640,9 @@
       "lat": 45,
       "lon": 5,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": true,
+      "letter": "Р"
     },
     {
       "canonical_id": "languages-593b6fad-fa89-5042-be96-2c8a2745a6f9",
@@ -4392,7 +4670,9 @@
       "lat": 47,
       "lon": 2,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "languages-dad8c55a-b842-570b-95ff-e7a2c0c31617",
@@ -4456,7 +4736,9 @@
       "lat": 45,
       "lon": 5,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "languages-1886a9eb-3cbb-5e02-b75c-05bc15df1843",
@@ -4480,7 +4762,9 @@
       "lat": 55,
       "lon": 40,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "languages-77d1bc88-187d-5eb3-a2fa-286d3b530507",
@@ -4514,7 +4798,9 @@
       "lat": 46,
       "lon": 25,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "languages-13d64fad-2529-596e-bade-9b98b9c6ef91",
@@ -5460,7 +5746,9 @@
       "lat": 55,
       "lon": 38,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "languages-78a25a5a-9c00-5e6c-bba8-ef17b67136be",
@@ -5600,7 +5888,9 @@
       "lat": 27,
       "lon": 78,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": true,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-262c7ae1-51c8-5a3a-b5d8-bdf62b794bc7",
@@ -5628,7 +5918,9 @@
       "lat": 20,
       "lon": 30,
       "family": "Афразийская",
-      "group": "семитская"
+      "group": "семитская",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-2e6a4203-2776-531c-ab24-d1b6408a58d5",
@@ -5660,7 +5952,9 @@
       "lat": 28,
       "lon": 40,
       "family": "Афразийская",
-      "group": "семитская"
+      "group": "семитская",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-e0957d2e-700e-5d4e-9066-ffeaa9ff11c4",
@@ -5716,7 +6010,29 @@
       "lat": 44,
       "lon": 21,
       "family": "Индоевропейская",
-      "group": "славянская южная"
+      "group": "славянская южная",
+      "letter_change": false,
+      "letter": "С"
+    },
+    {
+      "canonical_id": "languages-a4a1a81e-cefb-5db6-a827-56222fe2587b",
+      "head": "Сербский язык",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Элементы (сербизмы) присутствуют в «Велесовой книге»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Элементы (сербизмы) присутствуют в «Велесовой книге»."
+      ],
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-6ace01d5-ab4b-5fb6-be75-8096bf115b60",
@@ -5744,7 +6060,9 @@
       "lat": 56,
       "lon": 70,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-a82468cc-8e5f-5e52-9eea-565c2d04a9cf",
@@ -5772,7 +6090,9 @@
       "lat": 47,
       "lon": 35,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-6209b47a-eb2f-55d9-a952-ee95913f90a4",
@@ -5944,7 +6264,9 @@
       "lat": 52,
       "lon": 30,
       "family": "Индоевропейская",
-      "group": "славянская общая"
+      "group": "славянская общая",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-f704064b-d29a-54e7-8180-fb690e58ebeb",
@@ -5976,7 +6298,9 @@
       "lat": 48,
       "lon": 19,
       "family": "Индоевропейская",
-      "group": "славянская западная"
+      "group": "славянская западная",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-2b24ecff-3f94-568b-9934-2e4ef0c0c602",
@@ -6036,7 +6360,9 @@
       "lat": 46,
       "lon": 15,
       "family": "Индоевропейская",
-      "group": "славянская южная"
+      "group": "славянская южная",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-909b899a-ffdb-5943-9bc3-fca080a1b4b7",
@@ -6070,7 +6396,9 @@
       "lat": 24,
       "lon": 80,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-6b2afe7d-2050-5e96-84b1-6c2c7d392786",
@@ -6098,7 +6426,9 @@
       "lat": 55,
       "lon": 38,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-1a6428d7-9a82-5364-a723-2fd71f5aee77",
@@ -6126,7 +6456,9 @@
       "lat": 47,
       "lon": 2,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-b096bce1-5f29-59ca-b69e-dfeeaf2b9342",
@@ -6156,7 +6488,9 @@
       "lat": 53,
       "lon": 27,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-6d50c985-ff3a-5b49-a724-6bf91a16a4ab",
@@ -6184,7 +6518,9 @@
       "lat": 55,
       "lon": 35,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-80521167-e599-501c-a6ca-54fb6f873c75",
@@ -6208,7 +6544,9 @@
       "lat": 42,
       "lon": 25,
       "family": "Индоевропейская",
-      "group": "славянская южная"
+      "group": "славянская южная",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-b1528c42-c756-518b-ad21-ca971a8cd9cb",
@@ -6246,7 +6584,9 @@
       "lat": 48,
       "lon": 2,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "languages-94ed7815-7dac-56f6-b4e4-c02522a162d1",
@@ -6288,7 +6628,9 @@
       "lat": 55,
       "lon": 50,
       "family": "Тюркская",
-      "group": "тюркская"
+      "group": "тюркская",
+      "letter_change": true,
+      "letter": "Т"
     },
     {
       "canonical_id": "languages-0133b42b-2139-5940-906b-3893a2279fe5",
@@ -6316,7 +6658,9 @@
       "lat": 43,
       "lon": 11,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "Т"
     },
     {
       "canonical_id": "languages-30a3d468-e08c-5af4-b579-2cc2207f5355",
@@ -6362,7 +6706,9 @@
       "lat": 39,
       "lon": 35,
       "family": "Тюркская",
-      "group": "тюркская"
+      "group": "тюркская",
+      "letter_change": false,
+      "letter": "Т"
     },
     {
       "canonical_id": "languages-4313a6b8-6fff-55d5-be38-fc809f66ba41",
@@ -6398,7 +6744,9 @@
       "lat": 45,
       "lon": 60,
       "family": "Тюркская",
-      "group": "тюркская"
+      "group": "тюркская",
+      "letter_change": false,
+      "letter": "Т"
     },
     {
       "canonical_id": "languages-93fe3c6c-9e32-54e1-bf98-de31db0cb058",
@@ -6500,7 +6848,9 @@
       "lat": 49,
       "lon": 32,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": true,
+      "letter": "У"
     },
     {
       "canonical_id": "languages-df4889e7-c61a-5d6f-a94a-ba4e306304fd",
@@ -6562,7 +6912,9 @@
       "lat": 62,
       "lon": 26,
       "family": "Уральская",
-      "group": "финно-угорская"
+      "group": "финно-угорская",
+      "letter_change": true,
+      "letter": "Ф"
     },
     {
       "canonical_id": "languages-3da7be2b-962a-538a-845b-7e97e71d3be1",
@@ -6802,7 +7154,29 @@
       "lat": 46,
       "lon": 2,
       "family": "Индоевропейская",
-      "group": "романская"
+      "group": "романская",
+      "letter_change": false,
+      "letter": "Ф"
+    },
+    {
+      "canonical_id": "languages-b4c8bf6a-29df-59e5-853f-e476cb09cadb",
+      "head": "Французский язык",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "По Фоменко 'изобретен' вместе с латынью."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "По Фоменко 'изобретен' вместе с латынью."
+      ],
+      "letter_change": false,
+      "letter": "Ф"
     },
     {
       "canonical_id": "languages-01f352da-b79b-5f4c-b64c-77d293fbecbd",
@@ -6840,7 +7214,9 @@
       "lat": 21,
       "lon": 78,
       "family": "Индоевропейская",
-      "group": "индоиранская"
+      "group": "индоиранская",
+      "letter_change": true,
+      "letter": "Х"
     },
     {
       "canonical_id": "languages-269f85a2-75d4-58cd-b9cf-16126d5e2cff",
@@ -6876,7 +7252,29 @@
       "lat": 50,
       "lon": 30,
       "family": "Индоевропейская",
-      "group": "славянская южная"
+      "group": "славянская южная",
+      "letter_change": true,
+      "letter": "Ц"
+    },
+    {
+      "canonical_id": "languages-d92ce8e3-2b6b-51f8-95db-fef84afa1f36",
+      "head": "Церковнославянский язык",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Язык священной традиции."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Язык священной традиции."
+      ],
+      "letter_change": false,
+      "letter": "Ц"
     },
     {
       "canonical_id": "languages-71d4798f-6d1a-5fc2-8a90-b65c3c38a1b4",
@@ -6904,7 +7302,9 @@
       "lat": 40,
       "lon": 65,
       "family": "Тюркская",
-      "group": "тюркская"
+      "group": "тюркская",
+      "letter_change": true,
+      "letter": "Ч"
     },
     {
       "canonical_id": "languages-dee4ed66-fd9c-5546-a34e-6e2c977e2d02",
@@ -6956,7 +7356,29 @@
       "lat": 50,
       "lon": 15,
       "family": "Индоевропейская",
-      "group": "славянская западная"
+      "group": "славянская западная",
+      "letter_change": false,
+      "letter": "Ч"
+    },
+    {
+      "canonical_id": "languages-de210365-088d-5907-bc5c-0656e3f3a518",
+      "head": "Чешский язык",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Элементы (богемизмы) присутствуют в «Велесовой книге»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Элементы (богемизмы) присутствуют в «Велесовой книге»."
+      ],
+      "letter_change": false,
+      "letter": "Ч"
     },
     {
       "canonical_id": "languages-d8e1b51b-7afb-5032-b181-0e9fe6d05ada",
@@ -6984,7 +7406,9 @@
       "lat": 56,
       "lon": 47,
       "family": "Тюркская",
-      "group": "тюркская"
+      "group": "тюркская",
+      "letter_change": false,
+      "letter": "Ч"
     },
     {
       "canonical_id": "languages-c6b8ef07-03f6-50c5-9195-882a46fd0e85",
@@ -7012,7 +7436,9 @@
       "lat": 67,
       "lon": 175,
       "family": "Чукотско-камчатская",
-      "group": "чукотская"
+      "group": "чукотская",
+      "letter_change": false,
+      "letter": "Ч"
     },
     {
       "canonical_id": "languages-5c73f83f-015f-55b5-9370-165bc8051a9c",
@@ -7062,7 +7488,9 @@
       "lat": 60,
       "lon": 18,
       "family": "Индоевропейская",
-      "group": "германская"
+      "group": "германская",
+      "letter_change": true,
+      "letter": "Ш"
     },
     {
       "canonical_id": "languages-531903dd-6de1-59a1-98c9-656d252750e5",
@@ -7098,7 +7526,9 @@
       "lat": 52,
       "lon": 20,
       "family": "Искусственные",
-      "group": "искусственный"
+      "group": "искусственный",
+      "letter_change": true,
+      "letter": "Э"
     },
     {
       "canonical_id": "languages-d40db8df-9ec1-5d36-9210-b9c0e8676d68",
@@ -7126,7 +7556,9 @@
       "lat": 59,
       "lon": 25,
       "family": "Уральская",
-      "group": "финно-угорская"
+      "group": "финно-угорская",
+      "letter_change": false,
+      "letter": "Э"
     },
     {
       "canonical_id": "languages-2f1ebe22-4057-5157-9da6-542083d23556",
@@ -7150,7 +7582,9 @@
       "lat": 59,
       "lon": 25,
       "family": "Уральская",
-      "group": "финно-угорская"
+      "group": "финно-угорская",
+      "letter_change": false,
+      "letter": "Э"
     },
     {
       "canonical_id": "languages-feeab85b-db7c-50a0-8ce1-c059e136c56a",
@@ -7184,7 +7618,9 @@
       "lat": 42,
       "lon": 12,
       "family": "Изолят / тирренская",
-      "group": "тирренская"
+      "group": "тирренская",
+      "letter_change": false,
+      "letter": "Э"
     },
     {
       "canonical_id": "languages-6adb6aa6-ffac-500a-81fa-4121e650409a",
@@ -7212,7 +7648,9 @@
       "lat": 52,
       "lon": 38,
       "family": "Индоевропейская",
-      "group": "славянская восточная"
+      "group": "славянская восточная",
+      "letter_change": true,
+      "letter": "Ю"
     },
     {
       "canonical_id": "languages-451d1bdd-c579-5191-af84-238d1bd4e8c7",
@@ -7244,169 +7682,9 @@
       "lat": 43,
       "lon": 22,
       "family": "Индоевропейская",
-      "group": "славянская южная"
-    },
-    {
-      "canonical_id": "languages-819e82fb-4f0f-570d-8691-beb8abb5f5cf",
-      "head": "Латынь",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Язык, по Фоменко 'изобретенный' в XVII веке."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Язык, по Фоменко 'изобретенный' в XVII веке."
-      ]
-    },
-    {
-      "canonical_id": "languages-b4c8bf6a-29df-59e5-853f-e476cb09cadb",
-      "head": "Французский язык",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "По Фоменко 'изобретен' вместе с латынью."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "По Фоменко 'изобретен' вместе с латынью."
-      ]
-    },
-    {
-      "canonical_id": "languages-985bff8f-308e-5781-8a15-86616e9b2c6a",
-      "head": "Немецкий язык",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "По Фоменко 'изобретен' вместе с латынью."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "По Фоменко 'изобретен' вместе с латынью."
-      ]
-    },
-    {
-      "canonical_id": "languages-81b90f1b-04ee-556d-a9a9-d68253066ae9",
-      "head": "Испанский язык",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "По Фоменко 'изобретен' вместе с латынью."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "По Фоменко 'изобретен' вместе с латынью."
-      ]
-    },
-    {
-      "canonical_id": "languages-3fc528ab-be13-52bb-8902-4881969a037b",
-      "head": "Английский язык",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "По Фоменко 'изобретен' вместе с латынью."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "По Фоменко 'изобретен' вместе с латынью."
-      ]
-    },
-    {
-      "canonical_id": "languages-d92ce8e3-2b6b-51f8-95db-fef84afa1f36",
-      "head": "Церковнославянский язык",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Язык священной традиции."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Язык священной традиции."
-      ]
-    },
-    {
-      "canonical_id": "languages-56fbbfc5-5af1-52bd-87b1-632cd6c94a5b",
-      "head": "Польский язык",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Элементы (полонизмы) присутствуют в «Велесовой книге»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Элементы (полонизмы) присутствуют в «Велесовой книге»."
-      ]
-    },
-    {
-      "canonical_id": "languages-de210365-088d-5907-bc5c-0656e3f3a518",
-      "head": "Чешский язык",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Элементы (богемизмы) присутствуют в «Велесовой книге»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Элементы (богемизмы) присутствуют в «Велесовой книге»."
-      ]
-    },
-    {
-      "canonical_id": "languages-a4a1a81e-cefb-5db6-a827-56222fe2587b",
-      "head": "Сербский язык",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Элементы (сербизмы) присутствуют в «Велесовой книге»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Элементы (сербизмы) присутствуют в «Велесовой книге»."
-      ]
+      "group": "славянская южная",
+      "letter_change": false,
+      "letter": "Ю"
     }
   ],
   "language_edges": [

@@ -883,6 +883,26 @@
       "lon": 21.82
     },
     {
+      "canonical_id": "toponyms-5d8961ab-3689-5971-8140-b202f9d7a397",
+      "head": "Грецколань",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Название Греции в «Велесовой книге»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Название Греции в «Велесовой книге»."
+      ],
+      "letter_change": false,
+      "letter": "Г"
+    },
+    {
       "canonical_id": "toponyms-f546ae3d-d62c-5e68-8ca6-eaa819cac193",
       "head": "Европа",
       "aliases": [],
@@ -1503,7 +1523,7 @@
       "head_pages": "199",
       "discussed": false,
       "letter": "К",
-      "letter_change": true,
+      "letter_change": false,
       "epoch_class": "modern",
       "lat": 58.6,
       "lon": 49.66
@@ -1565,6 +1585,26 @@
       "epoch_class": "modern",
       "lat": 67.7,
       "lon": 36
+    },
+    {
+      "canonical_id": "toponyms-1313d156-0ce7-5aae-a97b-0c6ca15ead99",
+      "head": "Кордова",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Географическое название, сопоставляемое Фоменко со словом 'Орда'."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Географическое название, сопоставляемое Фоменко со словом 'Орда'."
+      ],
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "toponyms-6f5f100d-6524-5264-98c8-7026a666e1c0",
@@ -2447,6 +2487,26 @@
       "lon": 40
     },
     {
+      "canonical_id": "toponyms-e2d4b047-fa05-531f-99c6-2e0ddcfd7bdc",
+      "head": "Русколань",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Страна русов, фигурирующая в «Велесовой книге»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Страна русов, фигурирующая в «Велесовой книге»."
+      ],
+      "letter_change": false,
+      "letter": "Р"
+    },
+    {
       "canonical_id": "toponyms-7c15526f-b19c-5577-830b-70df666df2e4",
       "head": "русские края",
       "aliases": [],
@@ -2786,6 +2846,26 @@
       "lon": 31.17
     },
     {
+      "canonical_id": "toponyms-8a8211f3-d4c0-588c-a940-3f24901950b3",
+      "head": "Фессалоники (Салоники)",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Греческий город."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Греческий город."
+      ],
+      "letter_change": true,
+      "letter": "Ф"
+    },
+    {
       "canonical_id": "toponyms-e6e25995-353f-593a-a57b-16ea2cf6fc8d",
       "head": "Фест",
       "aliases": [],
@@ -2811,7 +2891,7 @@
       "head_pages": "122",
       "discussed": false,
       "letter": "Ф",
-      "letter_change": true,
+      "letter_change": false,
       "epoch_class": "ancient",
       "lat": 35.05,
       "lon": 24.81
@@ -3183,78 +3263,6 @@
       "epoch_class": "medieval",
       "lat": 50.07,
       "lon": 31.45
-    },
-    {
-      "canonical_id": "toponyms-1313d156-0ce7-5aae-a97b-0c6ca15ead99",
-      "head": "Кордова",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Географическое название, сопоставляемое Фоменко со словом 'Орда'."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Географическое название, сопоставляемое Фоменко со словом 'Орда'."
-      ]
-    },
-    {
-      "canonical_id": "toponyms-8a8211f3-d4c0-588c-a940-3f24901950b3",
-      "head": "Фессалоники (Салоники)",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Греческий город."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Греческий город."
-      ]
-    },
-    {
-      "canonical_id": "toponyms-e2d4b047-fa05-531f-99c6-2e0ddcfd7bdc",
-      "head": "Русколань",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Страна русов, фигурирующая в «Велесовой книге»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Страна русов, фигурирующая в «Велесовой книге»."
-      ]
-    },
-    {
-      "canonical_id": "toponyms-5d8961ab-3689-5971-8140-b202f9d7a397",
-      "head": "Грецколань",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Название Греции в «Велесовой книге»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Название Греции в «Велесовой книге»."
-      ]
     }
   ]
 }

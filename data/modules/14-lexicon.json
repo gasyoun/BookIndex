@@ -14566,7 +14566,9 @@
             67,
             338
           ],
-          "contexts": []
+          "contexts": [
+            "Фразовые энклитики (же, ли, бы, древнегреческие μέν, δέ, древнерусские ся, ти и др.) занимают второе место во фразе — после первого ударного слова или словосочетания."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -14582,7 +14584,9 @@
         67,
         338
       ],
-      "contexts": [],
+      "contexts": [
+        "Фразовые энклитики (же, ли, бы, древнегреческие μέν, δέ, древнерусские ся, ти и др.) занимают второе место во фразе — после первого ударного слова или словосочетания."
+      ],
       "discussed": true,
       "pages": "9, 16–18, 22, 25, 30, 34, 39, 67, 338",
       "category": "rus",
@@ -21218,7 +21222,9 @@
             254,
             348
           ],
-          "contexts": []
+          "contexts": [
+            "…простейшее сочетание — предлог на плюс это слово: на мак, на стол, на дом. Тут надо, конечно, знать, какое акцентное свойство было у на. Так во…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -21230,7 +21236,9 @@
         254,
         348
       ],
-      "contexts": [],
+      "contexts": [
+        "…простейшее сочетание — предлог на плюс это слово: на мак, на стол, на дом. Тут надо, конечно, знать, какое акцентное свойство было у на. Так во…"
+      ],
       "discussed": true,
       "pages": "15, 17, 124, 248, 254, 348",
       "category": "rus",
@@ -62110,6 +62118,26 @@
   ],
   "subject_index": [
     {
+      "canonical_id": "subject_index-ff128d47-8e43-5f9f-9af1-31c87fd0fa03",
+      "head": "«Велесова книга» (ВК)",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Лингвистический анализ и доказательство поддельности текста."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Лингвистический анализ и доказательство поддельности текста."
+      ],
+      "letter_change": true,
+      "letter": "«"
+    },
+    {
       "canonical_id": "subject_index-920250e9-34bd-5a14-8618-ce6679eaedf0",
       "head": "аканье",
       "aliases": [],
@@ -62128,7 +62156,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "328",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "А"
     },
     {
       "canonical_id": "subject_index-c1291e64-e574-5c51-b5b5-4de4c20a9963",
@@ -62155,7 +62185,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "95, 168, 228, 229",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "subject_index-cd8627db-c47e-5583-9be7-76c00521064f",
@@ -62176,7 +62208,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "169",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "subject_index-e103cf70-aae8-5aec-968a-a5af18de72df",
@@ -62197,7 +62231,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "228",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "subject_index-01cee36d-812a-5387-976d-fcbb92b904f4",
@@ -62224,7 +62260,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "131, 170, 221, 234",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "subject_index-b0b7e80d-3c20-5094-b14b-47c5c2518151",
@@ -62245,7 +62283,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "131",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "subject_index-8406c2c5-5344-53a1-ab28-b714e7b5f9b1",
@@ -62266,7 +62306,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "139",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "subject_index-74b54e39-6c21-5ac4-86ca-da7d64d626c3",
@@ -62297,7 +62339,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "31, 34, 35, 36, 42, 43",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "Б"
     },
     {
       "canonical_id": "subject_index-6298284a-ad8f-57bc-88c4-f3d6e1763f23",
@@ -62332,7 +62376,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "103, 104, 341, 377, 378, 379, 380, 381",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "subject_index-6192dc11-91fd-5e7d-9e05-e85bd18b94c9",
@@ -62361,7 +62407,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "15, 37, 38, 385, 387",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "subject_index-3bd3f8d9-3699-5eda-a330-486e2a9a6359",
@@ -62428,7 +62476,10 @@
             320,
             321
           ],
-          "contexts": []
+          "contexts": [
+            "Берестяные грамоты — это письма и документы новгородцев XI-XV вв. Их уже найдено более 1200.",
+            "Берестяные грамоты — это живые голоса людей, их радости, заботы, деловые письма. Это — сама история."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62491,9 +62542,14 @@
         320,
         321
       ],
-      "contexts": [],
+      "contexts": [
+        "Берестяные грамоты — это письма и документы новгородцев XI-XV вв. Их уже найдено более 1200.",
+        "Берестяные грамоты — это живые голоса людей, их радости, заботы, деловые письма. Это — сама история."
+      ],
       "discussed": true,
-      "pages": "23, 46, 179, 195, 196, 197, 198, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321"
+      "pages": "23, 46, 179, 195, 196, 197, 198, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321",
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "subject_index-5e910cb3-bba6-58a1-9e6c-6ff27262ca67",
@@ -62518,7 +62574,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "153, 154, 157",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "subject_index-933591b2-5c80-5c33-ad77-915a76436a9b",
@@ -62553,7 +62611,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "18, 23, 45, 171, 192, 193, 194, 195",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "subject_index-b59fbb61-c232-5a53-82ef-b12a59bd9d87",
@@ -62584,7 +62644,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "277, 278, 282, 292, 293, 300",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "subject_index-350fbbd5-6132-511f-9dff-fcebbf022ebb",
@@ -62637,7 +62699,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "20, 21, 22, 23, 24, 25, 26, 29, 30, 31, 32, 33, 34, 35, 40, 41, 46",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "В"
     },
     {
       "canonical_id": "subject_index-24fc276e-7b6d-5938-b2b3-dfeebb1935d6",
@@ -62664,7 +62728,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "138, 140, 151, 172",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "subject_index-9adf5d54-0277-53ac-b6cb-321b9d985c4a",
@@ -62687,7 +62753,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "143, 151",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "subject_index-e656134b-322e-5ab2-b65a-9f2718c27e91",
@@ -62718,7 +62786,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "35, 42, 47, 66, 73, 74",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "Г"
     },
     {
       "canonical_id": "subject_index-7859f9c1-d616-5cbe-bed0-59f820f2c59c",
@@ -62752,7 +62822,10 @@
             367,
             368
           ],
-          "contexts": []
+          "contexts": [
+            "…числа. Двойственное число, действительно, есть в большинстве древних европейских языков, а некоторые из современных славянских языков сохраняют его до…",
+            "Употребление двойственного числа в «Слове» соответствует строгим грамматическим правилам древнерусского языка XII в., но в XVIII в. эти формы были уже не вполне ясны."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62782,10 +62855,15 @@
         367,
         368
       ],
-      "contexts": [],
+      "contexts": [
+        "…числа. Двойственное число, действительно, есть в большинстве древних европейских языков, а некоторые из современных славянских языков сохраняют его до…",
+        "Употребление двойственного числа в «Слове» соответствует строгим грамматическим правилам древнерусского языка XII в., но в XVIII в. эти формы были уже не вполне ясны."
+      ],
       "discussed": true,
       "pages": "49, 114, 115, 142, 143, 144, 145, 146, 147, 154, 157, 163, 168, 175, 198, 203, 212, 228, 232, 235, 365, 366, 367, 368",
-      "needs_review": true
+      "needs_review": true,
+      "letter_change": true,
+      "letter": "Д"
     },
     {
       "canonical_id": "subject_index-737afd1a-2b5c-50a5-9a77-e82af0586227",
@@ -62820,7 +62898,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "50, 51, 52, 54, 55, 58, 92, 177",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "subject_index-71f16226-79e0-5084-a79a-35acd1d0336c",
@@ -62852,7 +62932,9 @@
             376,
             391
           ],
-          "contexts": []
+          "contexts": [
+            "…заимствованием откуда-то еще. Так, германское слово, давшее немецкое kaufen, — это заимствование из латыни. А исконно ли соответствующее слово в…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62880,10 +62962,14 @@
         376,
         391
       ],
-      "contexts": [],
+      "contexts": [
+        "…заимствованием откуда-то еще. Так, германское слово, давшее немецкое kaufen, — это заимствование из латыни. А исконно ли соответствующее слово в…"
+      ],
       "discussed": true,
       "pages": "73, 74, 83, 84, 85, 101, 173, 184, 185, 186, 188, 191, 221, 224, 241, 242, 331, 334, 348, 349, 376, 391",
-      "needs_review": true
+      "needs_review": true,
+      "letter_change": true,
+      "letter": "З"
     },
     {
       "canonical_id": "subject_index-ddcf1675-cdb1-5d08-82ce-cd301c698dba",
@@ -62952,7 +63038,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "35, 42, 53, 54, 68, 71, 92, 93, 122, 139, 149, 213, 216, 217, 221, 231, 239, 265, 296, 323, 325, 334, 363, 364, 365",
-      "needs_review": true
+      "needs_review": true,
+      "letter_change": true,
+      "letter": "И"
     },
     {
       "canonical_id": "subject_index-d0d4640f-cb1e-5f03-99dd-bc8fb5e0c25c",
@@ -62973,7 +63061,29 @@
       "contexts": [],
       "discussed": false,
       "pages": "127",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
+      "canonical_id": "subject_index-d582ffc3-bccd-5392-89f4-830abb1abdc9",
+      "head": "Истина в науке",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Размышления о существовании объективной истины в гуманитарных науках."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Размышления о существовании объективной истины в гуманитарных науках."
+      ],
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "subject_index-8ac13147-c4c4-5ee8-aa54-e46d70f84e3e",
@@ -63005,7 +63115,10 @@
             338,
             342
           ],
-          "contexts": []
+          "contexts": [
+            "Слово, переведенное буквально, по частям. Например, «небоскреб» — это калька с английского skyscraper (sky=небо, scrape=скрести).",
+            "…то это калька из латинского же, если угодно, из латыни, откуда и сам английский заимствовал это слово. Это означает, ну, грубо говоря, такое п…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63033,10 +63146,35 @@
         338,
         342
       ],
-      "contexts": [],
+      "contexts": [
+        "Слово, переведенное буквально, по частям. Например, «небоскреб» — это калька с английского skyscraper (sky=небо, scrape=скрести).",
+        "…то это калька из латинского же, если угодно, из латыни, откуда и сам английский заимствовал это слово. Это означает, ну, грубо говоря, такое п…"
+      ],
       "discussed": true,
       "pages": "15, 17, 20, 21, 37, 48, 87, 88, 120, 121, 122, 148, 186, 198, 217, 227, 248, 249, 275, 331, 338, 342",
-      "needs_review": true
+      "needs_review": true,
+      "letter_change": true,
+      "letter": "К"
+    },
+    {
+      "canonical_id": "subject_index-f4378796-0030-58c8-a383-95e0191e0dd2",
+      "head": "Критика «Новой хронологии» А. Т. Фоменко",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Разбор антинаучных лингвистических и исторических теорий Фоменко."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Разбор антинаучных лингвистических и исторических теорий Фоменко."
+      ],
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "subject_index-b4593df7-c8c6-5eaf-a5b9-9814683f7219",
@@ -63065,7 +63203,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "90, 142, 173, 230, 283",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "Л"
     },
     {
       "canonical_id": "subject_index-dfd0504f-6e0a-57b6-ad4e-b534aa7eba76",
@@ -63118,7 +63258,29 @@
       "contexts": [],
       "discussed": true,
       "pages": "23, 134, 173, 181, 182, 191, 194, 195, 196, 200, 201, 202, 207, 269, 325, 375, 384",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Л"
+    },
+    {
+      "canonical_id": "subject_index-6789faea-e031-58f7-9000-8029bfae2de8",
+      "head": "Любительская лингвистика",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Анализ методов и ошибок любительской лингвистики."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Анализ методов и ошибок любительской лингвистики."
+      ],
+      "letter_change": false,
+      "letter": "Л"
     },
     {
       "canonical_id": "subject_index-aa820e1c-c6fd-5b57-81a1-c51fbcfb61af",
@@ -63143,7 +63305,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "140, 141, 153",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "М"
     },
     {
       "canonical_id": "subject_index-38d77aad-4521-5851-bc0f-9e5df69049db",
@@ -63178,7 +63342,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "67, 101, 102, 103, 104, 105, 106, 109",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "М"
     },
     {
       "canonical_id": "subject_index-d00215a2-0d5b-556b-912b-fc32b76e7aa9",
@@ -63201,7 +63367,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "76, 77",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "М"
     },
     {
       "canonical_id": "subject_index-27fca58b-20ef-565f-aa46-9ab64c298361",
@@ -63226,7 +63394,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "250, 251, 268",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "М"
     },
     {
       "canonical_id": "subject_index-e504fdcf-ca31-589d-919b-4164516a1a03",
@@ -63257,7 +63427,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "68, 159, 160, 214, 223, 390",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "М"
     },
     {
       "canonical_id": "subject_index-abf2c3f7-374d-595e-b337-b082ef4717a5",
@@ -63284,7 +63456,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "54, 55, 56, 57",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "Н"
     },
     {
       "canonical_id": "subject_index-ba17fe03-31f5-58cb-97a0-d6502edec3b5",
@@ -63305,7 +63479,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "189",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "subject_index-2081df81-beb2-59a5-a152-86d84519e04b",
@@ -63336,7 +63512,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "195, 259, 260, 266, 269, 364",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "subject_index-0747cfa2-e1d3-579f-9c12-67a46503c4c8",
@@ -63379,7 +63557,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "148, 154, 155, 158, 161, 162, 164, 215, 230, 231, 232, 233",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "О"
     },
     {
       "canonical_id": "subject_index-7bc76922-9191-5ce7-b747-c1563c3b361f",
@@ -63400,7 +63580,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "80",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "О"
     },
     {
       "canonical_id": "subject_index-a0dae0fb-2acf-5a94-8e12-a8c85184c680",
@@ -63421,7 +63603,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "328",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "О"
     },
     {
       "canonical_id": "subject_index-4a4071a8-dbf6-5927-a484-837796061d32",
@@ -63442,7 +63626,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "131",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "О"
     },
     {
       "canonical_id": "subject_index-7300bdc6-dcc8-5af9-84f7-ae7c64bdb22a",
@@ -63477,7 +63663,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "68, 71, 80, 81, 82, 104, 126, 207",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "О"
     },
     {
       "canonical_id": "subject_index-2b9d7e0d-c18f-5e49-bbae-222a4e0beecb",
@@ -63508,7 +63696,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "111, 112, 117, 152, 390, 391",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "О"
     },
     {
       "canonical_id": "subject_index-bc026852-7674-5c4f-ae6d-889d8a92cd8b",
@@ -63539,7 +63729,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "111, 112, 117, 118, 152, 329",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "О"
     },
     {
       "canonical_id": "subject_index-f91e6e44-0f69-517c-8e15-a89f961f74b7",
@@ -63562,7 +63754,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "377, 378",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "О"
     },
     {
       "canonical_id": "subject_index-08754afc-829a-5fbb-b557-003727a3b97f",
@@ -63585,7 +63779,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "283, 285",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "О"
     },
     {
       "canonical_id": "subject_index-9ca03b4a-ad5e-5914-b8a3-53b7d67fe225",
@@ -63606,7 +63802,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "368",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-57c174df-7e5e-5a3d-8329-f07dd1bee985",
@@ -63637,7 +63835,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "213, 215, 216, 217, 221, 230",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-35cd7916-6b11-58b4-8756-32213d7e1f07",
@@ -63668,7 +63868,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "64, 71, 94, 96, 106, 133",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-ce2086b2-e4b9-5725-9595-f8e49b44d3ba",
@@ -63711,7 +63913,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "90, 93, 94, 95, 96, 97, 102, 117, 119, 120, 168, 169",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-497977a9-05cc-5109-afac-d89405e4808b",
@@ -63732,7 +63936,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "120",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-170651cb-c3bf-595a-94ef-532aa00e6204",
@@ -63753,7 +63959,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "120",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-3cb3a97f-07ae-5174-8863-6b5f42f2f6ca",
@@ -63784,7 +63992,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "120, 122, 142, 143, 145, 228",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-806d6722-8268-5df4-a6b2-8a498a321bf5",
@@ -63815,7 +64025,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "277, 278, 282, 292, 293, 300",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-ccf4057b-4958-5b70-827f-9da7189c27b9",
@@ -63836,7 +64048,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "77",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-4458435b-648f-54ac-b075-21446a1dff37",
@@ -63857,7 +64071,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "193",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-7a94db6d-db27-5d5b-b375-3393d5038ae1",
@@ -63880,7 +64096,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "217, 218",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-ae8ded39-61ce-5040-a306-eaf6b3fc171f",
@@ -63913,7 +64131,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "14, 17, 18, 20, 28, 170, 171",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-f200cff7-af5b-59a1-9493-b8e41b75f154",
@@ -63960,7 +64180,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "30, 31, 41, 43, 44, 73, 74, 127, 165, 175, 224, 240, 243, 245",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "subject_index-54484d75-7754-5764-b7ef-550c851b48ae",
@@ -63997,7 +64219,10 @@
             252,
             253
           ],
-          "contexts": []
+          "contexts": [
+            "…а ведь начальное а — это совершенно нормальная форма разговорного русского языка: а он мне и говорит. И после этого было а-а-а. И он…",
+            "…а ведь на самом деле в разговорном языке, ну, по крайней мере, в разговорном стиле, в отличие от книжного, …"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64030,10 +64255,15 @@
         252,
         253
       ],
-      "contexts": [],
+      "contexts": [
+        "…а ведь начальное а — это совершенно нормальная форма разговорного русского языка: а он мне и говорит. И после этого было а-а-а. И он…",
+        "…а ведь на самом деле в разговорном языке, ну, по крайней мере, в разговорном стиле, в отличие от книжного, …"
+      ],
       "discussed": true,
       "pages": "25, 26, 29, 30, 49, 71, 73, 74, 92, 93, 104, 105, 106, 110, 120, 140, 141, 171, 181, 193, 194, 195, 196, 211, 220, 252, 253",
-      "needs_review": true
+      "needs_review": true,
+      "letter_change": true,
+      "letter": "Р"
     },
     {
       "canonical_id": "subject_index-1b6a28f4-8f0e-51e0-a3ca-6f1f4c7b7431",
@@ -64062,7 +64292,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "102, 111, 113, 123, 124",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "subject_index-d04a0460-7c73-54e3-9a45-2f3c841c9999",
@@ -64083,7 +64315,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "140",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "subject_index-4a73023b-0b13-508b-a7ca-8f4ef1698d21",
@@ -64114,7 +64348,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "75, 76, 106, 107, 179, 180",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "subject_index-cee12c47-520c-59ee-9b17-e92bd0baea6d",
@@ -64141,7 +64377,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "370, 371, 383, 385",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "С"
     },
     {
       "canonical_id": "subject_index-027699af-8fa4-576c-bd69-ba68e9f76459",
@@ -64172,7 +64410,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "371, 372, 377, 381, 382, 383",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "subject_index-398dd821-ea36-554d-a69f-f637067e6f41",
@@ -64243,7 +64483,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "67, 106, 107, 110, 119, 136, 145, 158, 173, 332, 333, 334, 335, 336, 367, 368, 369, 372, 373, 379, 380, 381, 382, 383, 384, 389",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "subject_index-00b3d1d4-153f-5b16-ac88-9472a69c96c3",
@@ -64270,7 +64512,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "16, 21, 219, 220",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "Т"
     },
     {
       "canonical_id": "subject_index-90fac88c-9294-5339-aa16-4876b2585d5c",
@@ -64307,7 +64551,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "15, 16, 37, 68, 69, 74, 100, 338, 340",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-cce8ae13-79c0-599e-8da5-f0c67ae86d5e",
@@ -64332,7 +64578,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "223, 231, 233",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-00dd4446-0065-504f-8b94-9012d5b982a5",
@@ -64359,7 +64607,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "240, 249, 252, 330",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-cf86eb4d-5dee-5ffe-8675-043c27227029",
@@ -64512,7 +64762,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-97ea2e15-cb86-501c-ae4e-9ea4d77ab7f6",
@@ -64533,7 +64785,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "172",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-e08d5e3b-86da-5065-8359-97cf9beee825",
@@ -64554,7 +64808,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "256",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-b33062de-b848-59ea-9a16-c0e1f8f68abb",
@@ -64575,7 +64831,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "271",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-7ba80882-8cf4-55b8-a27b-4bee5fa929a0",
@@ -64596,7 +64854,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "256",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-26997a1d-2ef1-5934-8a06-dcebdec8c8f4",
@@ -64617,7 +64877,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "172",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-b8b3eddf-899a-553b-addc-818f3b4b9069",
@@ -64640,7 +64902,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "37, 38",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "У"
     },
     {
       "canonical_id": "subject_index-7f41f939-92e3-5d54-aaa3-28c5b4b4249c",
@@ -64661,7 +64925,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "122",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "Ф"
     },
     {
       "canonical_id": "subject_index-61e1605e-6dce-5652-abc7-fab856cee4a8",
@@ -64712,7 +64978,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "71, 72, 82, 83, 84, 100, 116, 117, 327, 329, 363, 364, 365, 366, 367, 375",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Ф"
     },
     {
       "canonical_id": "subject_index-2d9b9420-837b-5d69-a080-8c41a5f82c7f",
@@ -64739,7 +65007,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "366, 367, 372, 374",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Ф"
     },
     {
       "canonical_id": "subject_index-92ed099a-e855-532a-b385-a41e27851dae",
@@ -64760,7 +65030,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "16",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Ф"
     },
     {
       "canonical_id": "subject_index-d15e5b4f-6cb4-5d7f-9ccc-40eb14723935",
@@ -64783,7 +65055,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "19, 21",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Ф"
     },
     {
       "canonical_id": "subject_index-498a121a-c1da-5961-8be9-d6094c59c810",
@@ -64804,7 +65078,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "194",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "Ц"
     },
     {
       "canonical_id": "subject_index-cef3ca37-7796-5fa5-9a2b-3ad92bdc3cbb",
@@ -64827,7 +65103,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "168, 169",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Ц"
     },
     {
       "canonical_id": "subject_index-95bb985d-7085-5782-b32b-5f31d7a2c04e",
@@ -64852,7 +65130,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "294, 297, 300",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Ц"
     },
     {
       "canonical_id": "subject_index-4c417d63-8a24-5b5e-8298-facfc842e08f",
@@ -64873,7 +65153,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "391",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "Ч"
     },
     {
       "canonical_id": "subject_index-0a833224-ba09-5673-9615-425a69439be5",
@@ -64896,7 +65178,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "23, 24",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Ч"
     },
     {
       "canonical_id": "subject_index-1fd3f825-c6b4-5133-847a-f30dfdcb13e1",
@@ -64917,7 +65201,9 @@
       "contexts": [],
       "discussed": false,
       "pages": "38",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": true,
+      "letter": "Э"
     },
     {
       "canonical_id": "subject_index-dda9d33a-c28c-57ad-b5a6-61e1e122c99b",
@@ -64962,7 +65248,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "14, 16, 19, 20, 21, 22, 25, 30, 33, 37, 40, 41, 49",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Э"
     },
     {
       "canonical_id": "subject_index-fd14dae8-b84f-5d2b-919c-0ce8ee7cdfb5",
@@ -64987,7 +65275,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "19, 21, 26",
-      "needs_review": false
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Э"
     },
     {
       "canonical_id": "subject_index-f6434a03-5c6c-564e-a986-5ac45448576a",
@@ -65012,79 +65302,9 @@
       "contexts": [],
       "discussed": true,
       "pages": "19, 21, 26",
-      "needs_review": false
-    },
-    {
-      "canonical_id": "subject_index-f4378796-0030-58c8-a383-95e0191e0dd2",
-      "head": "Критика «Новой хронологии» А. Т. Фоменко",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Разбор антинаучных лингвистических и исторических теорий Фоменко."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Разбор антинаучных лингвистических и исторических теорий Фоменко."
-      ]
-    },
-    {
-      "canonical_id": "subject_index-6789faea-e031-58f7-9000-8029bfae2de8",
-      "head": "Любительская лингвистика",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Анализ методов и ошибок любительской лингвистики."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Анализ методов и ошибок любительской лингвистики."
-      ]
-    },
-    {
-      "canonical_id": "subject_index-ff128d47-8e43-5f9f-9af1-31c87fd0fa03",
-      "head": "«Велесова книга» (ВК)",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Лингвистический анализ и доказательство поддельности текста."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Лингвистический анализ и доказательство поддельности текста."
-      ]
-    },
-    {
-      "canonical_id": "subject_index-d582ffc3-bccd-5392-89f4-830abb1abdc9",
-      "head": "Истина в науке",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Размышления о существовании объективной истины в гуманитарных науках."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Размышления о существовании объективной истины в гуманитарных науках."
-      ]
+      "needs_review": false,
+      "letter_change": false,
+      "letter": "Э"
     }
   ],
   "cross_links": {

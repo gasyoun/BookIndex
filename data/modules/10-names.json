@@ -1,6 +1,150 @@
 {
   "names": [
     {
+      "canonical_id": "names-c56f5498-aff3-57f1-9586-8364d68af640",
+      "head": "Saloni Z.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            157
+          ],
+          "contexts": [
+            "польский лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        157
+      ],
+      "contexts": [
+        "польский лингвист"
+      ],
+      "letter_change": true,
+      "letter": "S"
+    },
+    {
+      "canonical_id": "names-1d792b86-d1e5-5b74-88f7-744bca79aa30",
+      "head": "А. А. Алексеев",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Лингвист, автор критики «Велесовой книги»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Лингвист, автор критики «Велесовой книги»."
+      ],
+      "letter_change": true,
+      "letter": "А"
+    },
+    {
+      "canonical_id": "names-a22b2d42-1b9f-59a4-86e3-7c4e55091ae7",
+      "head": "А. А. Зализняк",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Автор книги, лингвист."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Автор книги, лингвист."
+      ],
+      "letter_change": false,
+      "letter": "А"
+    },
+    {
+      "canonical_id": "names-4d8a34ed-fb34-52bf-a738-0cc2bc88fb33",
+      "head": "А. И. Асов",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Главный пропагандист «Велесовой книги» в России."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Главный пропагандист «Велесовой книги» в России."
+      ],
+      "letter_change": false,
+      "letter": "А"
+    },
+    {
+      "canonical_id": "names-c07319d2-b2ba-590e-8650-34920b4318ba",
+      "head": "А. И. Солженицын",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Упомянут в связи с вручением Литературной премии его имени."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Упомянут в связи с вручением Литературной премии его имени."
+      ],
+      "letter_change": false,
+      "letter": "А"
+    },
+    {
+      "canonical_id": "names-269dcf11-bfe9-5162-87e4-d6a2a87c18b3",
+      "head": "А. Кур (Куренков)",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Генерал, историк-любитель, публиковавший статьи о «Велесовой книге»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Генерал, историк-любитель, публиковавший статьи о «Велесовой книге»."
+      ],
+      "letter_change": false,
+      "letter": "А"
+    },
+    {
+      "canonical_id": "names-42164893-cad9-5707-bae7-c51fea9dd8a0",
+      "head": "А. Т. Фоменко",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Автор «Новой хронологии», математик, академик РАН."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Автор «Новой хронологии», математик, академик РАН."
+      ],
+      "letter_change": false,
+      "letter": "А"
+    },
+    {
       "canonical_id": "names-fc9e8b91-3780-51ec-81cb-84c060726c63",
       "head": "Аванесов Р. И.",
       "aliases": [],
@@ -27,7 +171,7 @@
       "pages": "259",
       "category": "VI",
       "letter": "А",
-      "letter_change": true,
+      "letter_change": false,
       "subcategory": "linguist",
       "epoch": 1950,
       "chapters": [
@@ -176,6 +320,26 @@
       ]
     },
     {
+      "canonical_id": "names-97edcc55-ae34-5199-9e16-d4c11dddc22e",
+      "head": "Али Изенбек",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Офицер, нашедший дощечки «Велесовой книги»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Офицер, нашедший дощечки «Велесовой книги»."
+      ],
+      "letter_change": false,
+      "letter": "А"
+    },
+    {
       "canonical_id": "names-7334e7b6-c6cc-5088-bd7d-3b023be57b04",
       "head": "Ананьин Г. Г.",
       "aliases": [],
@@ -206,6 +370,30 @@
       "chapters": [
         "История русского языка"
       ]
+    },
+    {
+      "canonical_id": "names-a2e4cf54-6e0d-5c34-a076-04bdd5e79464",
+      "head": "Андроник",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            141
+          ],
+          "contexts": [
+            "император"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        141
+      ],
+      "contexts": [
+        "император"
+      ],
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "names-c4e00d0c-62f4-5796-9734-931e81c52e88",
@@ -289,6 +477,40 @@
         "О жизни слов"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Барулин,_Александр_Николаевич"
+    },
+    {
+      "canonical_id": "names-dce9025a-83e4-503e-8dfa-817eeb12c61d",
+      "head": "Батый",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            53,
+            75,
+            101,
+            119,
+            141,
+            201
+          ],
+          "contexts": [
+            "монгольский хан"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        53,
+        75,
+        101,
+        119,
+        141,
+        201
+      ],
+      "contexts": [
+        "монгольский хан"
+      ],
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "names-dc84489f-d528-5f60-94ee-c6ac16b915f5",
@@ -437,7 +659,59 @@
       "category": "VI",
       "subcategory": "literator",
       "note": "Александр Блок или лингвистический термин «блок»",
-      "needs_review": true
+      "needs_review": true,
+      "letter_change": false,
+      "letter": "Б"
+    },
+    {
+      "canonical_id": "names-f79d2f36-311b-536b-b7ee-f7dea4b9d150",
+      "head": "Боголюбский Андрей",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            113,
+            141
+          ],
+          "contexts": [
+            "князь"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        113,
+        141
+      ],
+      "contexts": [
+        "князь"
+      ],
+      "letter_change": false,
+      "letter": "Б"
+    },
+    {
+      "canonical_id": "names-31817100-8ac5-5aa1-90f2-7338e004e558",
+      "head": "Богородица Мария",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            141
+          ],
+          "contexts": [
+            "Матерь Божия"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        141
+      ],
+      "contexts": [
+        "Матерь Божия"
+      ],
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "names-5358346d-2629-51af-8431-7d1c259d957b",
@@ -503,6 +777,32 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Franz_Bopp.jpg/220px-Franz_Bopp.jpg"
     },
     {
+      "canonical_id": "names-9a05da66-f6ac-5747-83cc-dfd64ccbe844",
+      "head": "Борис",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            101,
+            103
+          ],
+          "contexts": [
+            "князь-мученик"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        101,
+        103
+      ],
+      "contexts": [
+        "князь-мученик"
+      ],
+      "letter_change": false,
+      "letter": "Б"
+    },
+    {
       "canonical_id": "names-f99d456e-1401-5658-bff0-f62f64ad9ca3",
       "head": "Борунова С. Н.",
       "aliases": [],
@@ -530,6 +830,30 @@
         "Или и уже"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Борунова,_Светлана_Николаевна"
+    },
+    {
+      "canonical_id": "names-22ef5b86-2951-5d64-96b9-38fa016e08b8",
+      "head": "Бродский Иосиф",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            21
+          ],
+          "contexts": [
+            "поэт"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        21
+      ],
+      "contexts": [
+        "поэт"
+      ],
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "names-8261d230-fec5-516e-a096-879248c43cc9",
@@ -723,6 +1047,64 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Jacob_Wackernagel.jpg/220px-Jacob_Wackernagel.jpg"
     },
     {
+      "canonical_id": "names-3b878ca4-767d-5259-bf39-0fac756c2fc2",
+      "head": "Варфоломей Юрьевич",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            101,
+            107
+          ],
+          "contexts": [
+            "посадник"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        101,
+        107
+      ],
+      "contexts": [
+        "посадник"
+      ],
+      "letter_change": false,
+      "letter": "В"
+    },
+    {
+      "canonical_id": "names-54ba0aa6-5b89-5286-b24d-2a1b2c9034b7",
+      "head": "Василько Теребовльский",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            71,
+            99,
+            111,
+            113,
+            115
+          ],
+          "contexts": [
+            "князь"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        71,
+        99,
+        111,
+        113,
+        115
+      ],
+      "contexts": [
+        "князь"
+      ],
+      "letter_change": false,
+      "letter": "В"
+    },
+    {
       "canonical_id": "names-43dfb2f5-a529-5c39-8723-4aeafd44fdba",
       "head": "Вентрис М.",
       "aliases": [],
@@ -763,6 +1145,34 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Вентрис,_Майкл",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Michael_Ventris.jpg/220px-Michael_Ventris.jpg"
+    },
+    {
+      "canonical_id": "names-6aac5d71-05d5-50ac-b87b-66317ee36902",
+      "head": "Вергилий",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            95,
+            103,
+            105
+          ],
+          "contexts": [
+            "римский поэт"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        95,
+        103,
+        105
+      ],
+      "contexts": [
+        "римский поэт"
+      ],
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "names-6799681b-cf6b-513d-8d3f-205b9eb9ee66",
@@ -871,7 +1281,9 @@
       "category": "VI",
       "subcategory": "historical",
       "note": "Князь или город — проверить контекст каждой страницы",
-      "needs_review": true
+      "needs_review": true,
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "names-b7b4b0b4-d9d1-5100-825e-040f27aafbad",
@@ -933,6 +1345,26 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Vyazemsky.jpg/220px-Vyazemsky.jpg"
     },
     {
+      "canonical_id": "names-c72d92bc-ef0d-5f2d-b692-fe6d6ad5b605",
+      "head": "Г. В. Носовский",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Соавтор книг по «Новой хронологии»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Соавтор книг по «Новой хронологии»."
+      ],
+      "letter_change": true,
+      "letter": "Г"
+    },
+    {
       "canonical_id": "names-9af09cb2-330d-5a8d-9bc9-a6aa475c0dfd",
       "head": "Гаспаров М. Л.",
       "aliases": [],
@@ -955,7 +1387,7 @@
       "pages": "77, 392",
       "category": "I.2",
       "letter": "Г",
-      "letter_change": true,
+      "letter_change": false,
       "subcategory": "literator",
       "epoch": 1970,
       "chapters": [
@@ -1040,6 +1472,90 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Гиппиус,_Алексей_Алексеевич",
       "img": null
+    },
+    {
+      "canonical_id": "names-0faaf6cf-10c3-579a-a009-9050a7303202",
+      "head": "Голубцова Е. С.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            57,
+            115,
+            205
+          ],
+          "contexts": [
+            "историк-антиковед"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        57,
+        115,
+        205
+      ],
+      "contexts": [
+        "историк-антиковед"
+      ],
+      "letter_change": false,
+      "letter": "Г"
+    },
+    {
+      "canonical_id": "names-3412e858-118d-564d-b5b7-2a42c6a1b9cd",
+      "head": "Гораций",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            95,
+            103
+          ],
+          "contexts": [
+            "римский поэт"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        95,
+        103
+      ],
+      "contexts": [
+        "римский поэт"
+      ],
+      "letter_change": false,
+      "letter": "Г"
+    },
+    {
+      "canonical_id": "names-7bd52c30-57e1-5db9-ae51-8b7a70ad9dea",
+      "head": "Гофман",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            127,
+            129,
+            135,
+            137
+          ],
+          "contexts": [
+            "астроном"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        127,
+        129,
+        135,
+        137
+      ],
+      "contexts": [
+        "астроном"
+      ],
+      "letter_change": false,
+      "letter": "Г"
     },
     {
       "canonical_id": "names-8dba118f-293d-52bd-a886-762aeda5d00e",
@@ -1166,6 +1682,30 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Gutenberg.jpg/220px-Gutenberg.jpg"
     },
     {
+      "canonical_id": "names-8f74c209-132a-580d-bd0c-cb5d103cb24a",
+      "head": "Гюргий Иванкович",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            77
+          ],
+          "contexts": [
+            "новгородец"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        77
+      ],
+      "contexts": [
+        "новгородец"
+      ],
+      "letter_change": false,
+      "letter": "Г"
+    },
+    {
       "canonical_id": "names-8005fdbe-b452-5c54-b927-934f521e2528",
       "head": "Даль В. И.",
       "aliases": [],
@@ -1235,6 +1775,50 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Данте_Алигьери",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Portrait_de_Dante.jpg/220px-Portrait_de_Dante.jpg"
+    },
+    {
+      "canonical_id": "names-fb4b256d-57b1-582d-94a2-cc5979d63caf",
+      "head": "Дарвин",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Упомянут в контексте отношения к научному знанию."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Упомянут в контексте отношения к научному знанию."
+      ],
+      "letter_change": false,
+      "letter": "Д"
+    },
+    {
+      "canonical_id": "names-4d4e8f6e-7128-5863-9495-a13af5625abf",
+      "head": "Дарвин Ч.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            201
+          ],
+          "contexts": [
+            "естествоиспытатель"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        201
+      ],
+      "contexts": [
+        "естествоиспытатель"
+      ],
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "names-08dac8e1-7f25-5ad0-b54f-39303730b554",
@@ -1421,23 +2005,43 @@
           "contexts": [
             "лингвист"
           ]
+        },
+        "slovo": {
+          "pages": [
+            1
+          ],
+          "contexts": [
+            "Автор книги."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
+        1,
+        7,
+        9,
+        11,
         13,
         18,
         27,
         80,
-        250
+        125,
+        127,
+        133,
+        169,
+        205,
+        250,
+        2025
       ],
       "contexts": [],
       "discussed": true,
-      "pages": "13, 18, 27, 80, 250",
+      "pages": "1, 7, 9, 11, 13, 18, 27, 80, 125, 127, 133, 169, 205, 250, 2025",
       "category": "VI",
       "subcategory": "linguist",
       "note": "Автор книги (упоминания в предисловии и косвенно в тексте); по Мильчину обычно не индексируется",
-      "needs_review": true
+      "needs_review": true,
+      "letter_change": false,
+      "letter": "З"
     },
     {
       "canonical_id": "names-519404e8-a768-5fed-ab51-bdc7e7421532",
@@ -1478,6 +2082,30 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/L._L._Zamenhof.jpg/220px-L._L._Zamenhof.jpg"
     },
     {
+      "canonical_id": "names-d5778648-7774-586b-8b28-49c42d22babf",
+      "head": "Иаков",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            73
+          ],
+          "contexts": [
+            "библейский персонаж"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        73
+      ],
+      "contexts": [
+        "библейский персонаж"
+      ],
+      "letter_change": true,
+      "letter": "И"
+    },
+    {
       "canonical_id": "names-8f47216c-b42a-5910-a001-b4daae23a08e",
       "head": "Иван III",
       "aliases": [],
@@ -1502,6 +2130,7 @@
       },
       "book_id": "mumintroll",
       "page_list": [
+        113,
         209
       ],
       "contexts": [
@@ -1509,10 +2138,10 @@
         "…й, которые начались с Ивана III и особенно интенсивно происходили при Иване IV. В отличие от псковской зоны, которая в деревнях замечательно сохр…"
       ],
       "discussed": false,
-      "pages": "209",
+      "pages": "113, 209",
       "category": "II.2",
       "letter": "И",
-      "letter_change": true,
+      "letter_change": false,
       "subcategory": "historical",
       "epoch": 1462,
       "chapters": [
@@ -1561,6 +2190,128 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Vasnetsov_Ioann_4.jpg/220px-Vasnetsov_Ioann_4.jpg"
     },
     {
+      "canonical_id": "names-816f9716-576d-560b-82fd-e7985c6086bc",
+      "head": "Иван Грозный",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            71,
+            101,
+            113
+          ],
+          "contexts": [
+            "русский царь"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        71,
+        101,
+        113
+      ],
+      "contexts": [
+        "русский царь"
+      ],
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
+      "canonical_id": "names-60da2103-5a71-57c9-8283-ab48bd8fc51d",
+      "head": "Иван Данилович",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            141
+          ],
+          "contexts": [
+            "великий князь"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        141
+      ],
+      "contexts": [
+        "великий князь"
+      ],
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
+      "canonical_id": "names-4bfa8fd5-0f26-510c-9618-4816b691b1ee",
+      "head": "Иван Калита",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            53,
+            119,
+            201
+          ],
+          "contexts": [
+            "великий князь"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        53,
+        119,
+        201
+      ],
+      "contexts": [
+        "великий князь"
+      ],
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
+      "canonical_id": "names-0b029595-2733-5650-aa19-ce3f455670ef",
+      "head": "Иванко Захарьинич",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            53,
+            71,
+            99,
+            101,
+            107,
+            113,
+            115,
+            119,
+            141,
+            201
+          ],
+          "contexts": [
+            "новгородский посадник"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        53,
+        71,
+        99,
+        101,
+        107,
+        113,
+        115,
+        119,
+        141,
+        201
+      ],
+      "contexts": [
+        "новгородский посадник"
+      ],
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
       "canonical_id": "names-002d54c5-ffe0-5bf5-99bb-b2c780f00145",
       "head": "Иванов",
       "aliases": [],
@@ -1582,7 +2333,133 @@
       "category": "VI",
       "subcategory": "linguist",
       "note": "Вяч. Вс. Иванов или однофамилец — проверить контекст",
-      "needs_review": true
+      "needs_review": true,
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
+      "canonical_id": "names-e1f6bdfe-bd29-55c1-8cc9-fa670daecb59",
+      "head": "Иванов Вяч. Вс.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            53,
+            71,
+            99,
+            101,
+            107,
+            113,
+            115,
+            119,
+            141,
+            201
+          ],
+          "contexts": [
+            "лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        53,
+        71,
+        99,
+        101,
+        107,
+        113,
+        115,
+        119,
+        141,
+        201
+      ],
+      "contexts": [
+        "лингвист"
+      ],
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
+      "canonical_id": "names-1fa79779-7a4a-5e5c-9392-875e8414c852",
+      "head": "Изяслав",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            89,
+            113
+          ],
+          "contexts": [
+            "князь"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        89,
+        113
+      ],
+      "contexts": [
+        "князь"
+      ],
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
+      "canonical_id": "names-4e323b82-48b3-5756-a62f-0cf29960efc1",
+      "head": "Изяслав Давыдович",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            113
+          ],
+          "contexts": [
+            "князь"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        113
+      ],
+      "contexts": [
+        "князь"
+      ],
+      "letter_change": false,
+      "letter": "И"
+    },
+    {
+      "canonical_id": "names-a55b6da2-b57a-5e3e-bb5d-5b4d6c238348",
+      "head": "Иисус Христос",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            69,
+            141,
+            145,
+            157,
+            165
+          ],
+          "contexts": [
+            "Мессия"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        69,
+        141,
+        145,
+        157,
+        165
+      ],
+      "contexts": [
+        "Мессия"
+      ],
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "names-42592d1b-fcc8-5146-8b12-bb003e036c81",
@@ -1613,6 +2490,34 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Иллич-Свитыч,_Владислав_Маркович",
       "img": null
+    },
+    {
+      "canonical_id": "names-088ba2c1-f2c3-5e49-bf9c-49966c507619",
+      "head": "Иоанн Креститель",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            71,
+            113,
+            141
+          ],
+          "contexts": [
+            "христианский пророк"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        71,
+        113,
+        141
+      ],
+      "contexts": [
+        "христианский пророк"
+      ],
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "names-23b24e0e-54ac-55d0-9138-1014ec3b9784",
@@ -1966,6 +2871,30 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Albrecht_Dürer_-_Portrait_of_Charlemagne_-_WGA07041.jpg/220px-Albrecht_Dürer_-_Portrait_of_Charlemagne_-_WGA07041.jpg"
     },
     {
+      "canonical_id": "names-2fc1110d-a81f-5bc2-bb92-bbff2348d3c3",
+      "head": "Катулл",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            103
+          ],
+          "contexts": [
+            "римский поэт"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        103
+      ],
+      "contexts": [
+        "римский поэт"
+      ],
+      "letter_change": false,
+      "letter": "К"
+    },
+    {
       "canonical_id": "names-59e49b21-22da-56d6-b6b0-9396f8c0cf15",
       "head": "Кислов М. Н.",
       "aliases": [],
@@ -2096,6 +3025,80 @@
       "chapters": [
         "История русского языка"
       ]
+    },
+    {
+      "canonical_id": "names-a7adb04a-a6ce-57ae-821c-4c83560201a5",
+      "head": "Колмогоров А. Н.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            123
+          ],
+          "contexts": [
+            "математик"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        123
+      ],
+      "contexts": [
+        "математик"
+      ],
+      "letter_change": false,
+      "letter": "К"
+    },
+    {
+      "canonical_id": "names-6d37e316-12ff-56e0-a182-7e18d92aa4f5",
+      "head": "Кочергина В. А.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            205
+          ],
+          "contexts": [
+            "лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        205
+      ],
+      "contexts": [
+        "лингвист"
+      ],
+      "letter_change": false,
+      "letter": "К"
+    },
+    {
+      "canonical_id": "names-46a541ca-106e-52f7-bd7c-d51e677b151f",
+      "head": "Красильников Ю. Д.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            59,
+            205
+          ],
+          "contexts": [
+            "физик"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        59,
+        205
+      ],
+      "contexts": [
+        "физик"
+      ],
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "names-b20591a1-1fed-5084-a68b-82ca8e8aaf9a",
@@ -2247,6 +3250,30 @@
       "img": null
     },
     {
+      "canonical_id": "names-a94a9c76-2e19-5ee6-ba24-9e10cebfc241",
+      "head": "Лотман Ю. М.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            59
+          ],
+          "contexts": [
+            "филолог, культуролог"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        59
+      ],
+      "contexts": [
+        "филолог, культуролог"
+      ],
+      "letter_change": false,
+      "letter": "Л"
+    },
+    {
       "canonical_id": "names-7971dc6c-635d-588a-bfd6-4e54e46dbbfa",
       "head": "Луховицкий В. В.",
       "aliases": [],
@@ -2279,6 +3306,54 @@
       ]
     },
     {
+      "canonical_id": "names-59206820-ea47-56f5-bc4d-1720f26d96b7",
+      "head": "Мамай",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            75
+          ],
+          "contexts": [
+            "ордынский темник"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        75
+      ],
+      "contexts": [
+        "ордынский темник"
+      ],
+      "letter_change": true,
+      "letter": "М"
+    },
+    {
+      "canonical_id": "names-e91b059e-6512-5ef8-b9b8-1a051a8a1902",
+      "head": "Мария Богородица",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            141
+          ],
+          "contexts": [
+            "Матерь Божия"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        141
+      ],
+      "contexts": [
+        "Матерь Божия"
+      ],
+      "letter_change": false,
+      "letter": "М"
+    },
+    {
       "canonical_id": "names-cc5a7bbb-803d-5500-8000-6df1e01cc23a",
       "head": "Мартынов И. И.",
       "aliases": [],
@@ -2299,13 +3374,63 @@
       "pages": "274",
       "category": "I.2",
       "letter": "М",
-      "letter_change": true,
+      "letter_change": false,
       "subcategory": "literator",
       "epoch": 1820,
       "chapters": [
         "Берестяные грамоты"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Мартынов,_Иван_Иванович_(филолог)"
+    },
+    {
+      "canonical_id": "names-bf21aa50-21f4-5161-b943-36a0bdcf5f0a",
+      "head": "Марциал",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            103,
+            205
+          ],
+          "contexts": [
+            "римский поэт"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        103,
+        205
+      ],
+      "contexts": [
+        "римский поэт"
+      ],
+      "letter_change": false,
+      "letter": "М"
+    },
+    {
+      "canonical_id": "names-930bbda7-5291-5058-ab22-edeb209de4af",
+      "head": "Маяковский В. В.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            33
+          ],
+          "contexts": [
+            "поэт"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        33
+      ],
+      "contexts": [
+        "поэт"
+      ],
+      "letter_change": false,
+      "letter": "М"
     },
     {
       "canonical_id": "names-f11516ef-44a8-5a35-bff3-04a83cda61eb",
@@ -2336,6 +3461,30 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Мейе,_Антуан",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Antoine_Meillet.jpg/220px-Antoine_Meillet.jpg"
+    },
+    {
+      "canonical_id": "names-21fa7466-2d75-5c20-8086-f0700414696a",
+      "head": "Менделеев Д. Н.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            151
+          ],
+          "contexts": [
+            "химик"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        151
+      ],
+      "contexts": [
+        "химик"
+      ],
+      "letter_change": false,
+      "letter": "М"
     },
     {
       "canonical_id": "names-cea28119-8c68-5c57-a9f2-ae5a0326230a",
@@ -2402,6 +3551,62 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Михаил_Ярославич",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Mikhail_of_tver.jpg/220px-Mikhail_of_tver.jpg"
+    },
+    {
+      "canonical_id": "names-9327d859-58fb-5389-a756-c6bdf4802337",
+      "head": "Михаил Юрьевич",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            101
+          ],
+          "contexts": [
+            "сын посадничий"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        101
+      ],
+      "contexts": [
+        "сын посадничий"
+      ],
+      "letter_change": false,
+      "letter": "М"
+    },
+    {
+      "canonical_id": "names-db3941d3-406b-521a-b051-86994ae08929",
+      "head": "Морозов Н. А.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            51,
+            57,
+            77,
+            87,
+            105
+          ],
+          "contexts": [
+            "ученый, революционер"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        51,
+        57,
+        77,
+        87,
+        105
+      ],
+      "contexts": [
+        "ученый, революционер"
+      ],
+      "letter_change": false,
+      "letter": "М"
     },
     {
       "canonical_id": "names-bf355b62-4c40-50c3-8352-4890569e2d09",
@@ -2479,6 +3684,78 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Nestor_the_Chronicler.jpg/220px-Nestor_the_Chronicler.jpg"
     },
     {
+      "canonical_id": "names-a916e758-91d4-5fc3-a1df-f0fdbe95697c",
+      "head": "Николаев С. Л.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            123
+          ],
+          "contexts": [
+            "лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        123
+      ],
+      "contexts": [
+        "лингвист"
+      ],
+      "letter_change": false,
+      "letter": "Н"
+    },
+    {
+      "canonical_id": "names-78ee3583-4ed5-5acc-8aa5-8fabf6e3dba7",
+      "head": "Николаева T. М.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            123
+          ],
+          "contexts": [
+            "лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        123
+      ],
+      "contexts": [
+        "лингвист"
+      ],
+      "letter_change": false,
+      "letter": "Н"
+    },
+    {
+      "canonical_id": "names-0202bd59-2146-5a4d-abfe-53a3b261cbbd",
+      "head": "Николов B.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            123
+          ],
+          "contexts": [
+            "исследователь"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        123
+      ],
+      "contexts": [
+        "исследователь"
+      ],
+      "letter_change": false,
+      "letter": "Н"
+    },
+    {
       "canonical_id": "names-5c963c4a-95e9-51ee-bae5-34d574b10c19",
       "head": "Носков А.",
       "aliases": [],
@@ -2509,6 +3786,96 @@
       "chapters": [
         "Берестяные грамоты"
       ]
+    },
+    {
+      "canonical_id": "names-4214dfa4-07d2-5eb9-a392-2ae1fd6dd7b4",
+      "head": "Носов Е. Н.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            39,
+            51,
+            53,
+            123,
+            137,
+            181,
+            205
+          ],
+          "contexts": [
+            "историк, археолог"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        39,
+        51,
+        53,
+        123,
+        137,
+        181,
+        205
+      ],
+      "contexts": [
+        "историк, археолог"
+      ],
+      "letter_change": false,
+      "letter": "Н"
+    },
+    {
+      "canonical_id": "names-41635ff9-b9ea-5ab7-873e-999f5a076aab",
+      "head": "Носовский Г. В.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            51,
+            53,
+            123,
+            137,
+            181,
+            205
+          ],
+          "contexts": [
+            "математик"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        51,
+        53,
+        123,
+        137,
+        181,
+        205
+      ],
+      "contexts": [
+        "математик"
+      ],
+      "letter_change": false,
+      "letter": "Н"
+    },
+    {
+      "canonical_id": "names-c5a71793-8616-5e38-bb6d-a42b5f786525",
+      "head": "О. В. Творогов",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Лингвист, автор критики «Велесовой книги»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Лингвист, автор критики «Велесовой книги»."
+      ],
+      "letter_change": true,
+      "letter": "О"
     },
     {
       "canonical_id": "names-0ab0632e-cd7e-59f9-b290-d3b9ba073158",
@@ -2687,6 +4054,30 @@
       ]
     },
     {
+      "canonical_id": "names-1dba999d-effb-5a84-aae4-476a527ed5e2",
+      "head": "Плавт",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            95
+          ],
+          "contexts": [
+            "римский комедиограф"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        95
+      ],
+      "contexts": [
+        "римский комедиограф"
+      ],
+      "letter_change": false,
+      "letter": "П"
+    },
+    {
       "canonical_id": "names-8a91d245-2677-5f76-b282-592859add5a1",
       "head": "Плунгян В. А.",
       "aliases": [],
@@ -2725,6 +4116,30 @@
       "img": null
     },
     {
+      "canonical_id": "names-b48a6fa6-bbc5-5c0e-9510-6bd8e3b27be5",
+      "head": "Плутарх",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            165
+          ],
+          "contexts": [
+            "древнегреческий историк"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        165
+      ],
+      "contexts": [
+        "древнегреческий историк"
+      ],
+      "letter_change": false,
+      "letter": "П"
+    },
+    {
       "canonical_id": "names-d52c99cb-b88c-5d39-830c-fc44cea96243",
       "head": "Поветкин В. И.",
       "aliases": [],
@@ -2754,6 +4169,30 @@
       "wiki": "https://ru.wikipedia.org/wiki/Поветкин,_Владимир_Иванович"
     },
     {
+      "canonical_id": "names-3be4ba05-8f21-5f43-ab2c-dc44b57061c9",
+      "head": "Постникова T. Е.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            59
+          ],
+          "contexts": [
+            "исследователь"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        59
+      ],
+      "contexts": [
+        "исследователь"
+      ],
+      "letter_change": false,
+      "letter": "П"
+    },
+    {
       "canonical_id": "names-f31ff1b3-e9b5-5fd7-bb9f-a757bc633280",
       "head": "Пушкин А. С.",
       "aliases": [],
@@ -2778,6 +4217,7 @@
       },
       "book_id": "mumintroll",
       "page_list": [
+        81,
         296,
         389
       ],
@@ -2785,7 +4225,7 @@
         "…А то, что восемь было раньше осемь, — это прекрасно известно. Даже у Пушкина встречаем — осьмнадцать лет. В этом слове в — это такое народное в, к…"
       ],
       "discussed": true,
-      "pages": "296, 389",
+      "pages": "81, 296, 389",
       "category": "I.2",
       "letter": "П",
       "letter_change": false,
@@ -2831,6 +4271,82 @@
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Rasmus_Christian_Rask2.jpg/220px-Rasmus_Christian_Rask2.jpg"
     },
     {
+      "canonical_id": "names-06881e26-565b-57c6-a383-726dee0eae64",
+      "head": "Рем",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            141
+          ],
+          "contexts": [
+            "мифический основатель Рима"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        141
+      ],
+      "contexts": [
+        "мифический основатель Рима"
+      ],
+      "letter_change": false,
+      "letter": "Р"
+    },
+    {
+      "canonical_id": "names-ef47d0b0-e693-57f3-8905-5858dc434313",
+      "head": "Романовы",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            11,
+            143,
+            145
+          ],
+          "contexts": [
+            "царская династия"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        11,
+        143,
+        145
+      ],
+      "contexts": [
+        "царская династия"
+      ],
+      "letter_change": false,
+      "letter": "Р"
+    },
+    {
+      "canonical_id": "names-86cf02fc-69ec-5918-b201-4b3ddc498d11",
+      "head": "Ромул",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            141
+          ],
+          "contexts": [
+            "мифический основатель Рима"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        141
+      ],
+      "contexts": [
+        "мифический основатель Рима"
+      ],
+      "letter_change": false,
+      "letter": "Р"
+    },
+    {
       "canonical_id": "names-56e2322f-174c-5982-8e1e-535bae269e81",
       "head": "Роулинсон Г.",
       "aliases": [],
@@ -2859,6 +4375,50 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Роулинсон,_Генри",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Henry_Creswicke_Rawlinson.jpg/220px-Henry_Creswicke_Rawlinson.jpg"
+    },
+    {
+      "canonical_id": "names-06e2e697-295f-51ac-bfa3-d20f437977a1",
+      "head": "Руссев Е. М.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            13,
+            15,
+            67,
+            69,
+            71,
+            81,
+            137,
+            155,
+            157,
+            165,
+            205
+          ],
+          "contexts": [
+            "историк"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        13,
+        15,
+        67,
+        69,
+        71,
+        81,
+        137,
+        155,
+        157,
+        165,
+        205
+      ],
+      "contexts": [
+        "историк"
+      ],
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "names-4d807f62-e8df-5281-ba6f-e2a6a761c11f",
@@ -2923,6 +4483,90 @@
       "img": null
     },
     {
+      "canonical_id": "names-033ab44f-6deb-59fb-bbba-20b42de78d7a",
+      "head": "Скалигер",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            87,
+            103,
+            107,
+            129
+          ],
+          "contexts": [
+            "историк-хронолог"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        87,
+        103,
+        107,
+        129
+      ],
+      "contexts": [
+        "историк-хронолог"
+      ],
+      "letter_change": false,
+      "letter": "С"
+    },
+    {
+      "canonical_id": "names-d0dd6d80-c16a-5d86-88b8-8aa1904276fd",
+      "head": "Скалигер И. Ю. (= Ж. Ж.)",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            87,
+            103,
+            107,
+            129
+          ],
+          "contexts": [
+            "историк-хронолог"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        87,
+        103,
+        107,
+        129
+      ],
+      "contexts": [
+        "историк-хронолог"
+      ],
+      "letter_change": false,
+      "letter": "С"
+    },
+    {
+      "canonical_id": "names-dc68d13d-42b1-5f74-91f7-e84bc2c68c50",
+      "head": "Скопина М. А.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            81
+          ],
+          "contexts": [
+            "математик"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        81
+      ],
+      "contexts": [
+        "математик"
+      ],
+      "letter_change": false,
+      "letter": "С"
+    },
+    {
       "canonical_id": "names-41932b2d-a603-5c1b-b4c8-9cbcafb92c8d",
       "head": "Слуцкий Б. А.",
       "aliases": [],
@@ -2957,6 +4601,82 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Слуцкий,_Борис_Абрамович",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Boris_Slutsky.jpg/220px-Boris_Slutsky.jpg"
+    },
+    {
+      "canonical_id": "names-7d410121-7683-580a-8f84-e92974f129e0",
+      "head": "Смирин В. М.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            57,
+            115,
+            205
+          ],
+          "contexts": [
+            "историк-антиковед"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        57,
+        115,
+        205
+      ],
+      "contexts": [
+        "историк-антиковед"
+      ],
+      "letter_change": false,
+      "letter": "С"
+    },
+    {
+      "canonical_id": "names-03e688c2-edce-5e0e-97a0-5b75411cb1eb",
+      "head": "Солженицын А. И.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            197
+          ],
+          "contexts": [
+            "писатель"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        197
+      ],
+      "contexts": [
+        "писатель"
+      ],
+      "letter_change": false,
+      "letter": "С"
+    },
+    {
+      "canonical_id": "names-2bb8ccc1-a303-5a2e-a2ff-ef388025cab5",
+      "head": "Солженицына Н. Д.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            197
+          ],
+          "contexts": [
+            "общественный деятель"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        197
+      ],
+      "contexts": [
+        "общественный деятель"
+      ],
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "names-eafd05ad-972c-57ec-8f56-907854a5a9a1",
@@ -3021,6 +4741,88 @@
       ]
     },
     {
+      "canonical_id": "names-4270923c-5466-56fa-85e6-73762660d39d",
+      "head": "Старец С. М.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            15,
+            27,
+            71,
+            137,
+            165,
+            205
+          ],
+          "contexts": [
+            "филолог, переводчик"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        15,
+        27,
+        71,
+        137,
+        165,
+        205
+      ],
+      "contexts": [
+        "филолог, переводчик"
+      ],
+      "letter_change": false,
+      "letter": "С"
+    },
+    {
+      "canonical_id": "names-6380ed8e-6c1c-55c5-85fb-e6045b36a582",
+      "head": "Старостин Г. С.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            27
+          ],
+          "contexts": [
+            "лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        27
+      ],
+      "contexts": [
+        "лингвист"
+      ],
+      "letter_change": false,
+      "letter": "С"
+    },
+    {
+      "canonical_id": "names-51bf6d94-7f47-53a5-ac27-129643b5ed8f",
+      "head": "Старостин С. А.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            27
+          ],
+          "contexts": [
+            "лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        27
+      ],
+      "contexts": [
+        "лингвист"
+      ],
+      "letter_change": false,
+      "letter": "С"
+    },
+    {
       "canonical_id": "names-b5af9cfa-4fd0-5a90-8e4c-eb76c766ed0d",
       "head": "Толстая М. Н.",
       "aliases": [],
@@ -3043,11 +4845,13 @@
       },
       "book_id": "mumintroll",
       "page_list": [
-        392
+        205,
+        392,
+        2025
       ],
       "contexts": [],
       "discussed": false,
-      "pages": "392",
+      "pages": "205, 392, 2025",
       "category": "VI",
       "letter": "Т",
       "letter_change": true,
@@ -3057,6 +4861,58 @@
         "Или и уже"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Толстая,_Марфа_Никитична"
+    },
+    {
+      "canonical_id": "names-51c741e1-2dff-527b-b661-36da53692135",
+      "head": "Толстая Р. А.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            205,
+            2025
+          ],
+          "contexts": [
+            "лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        205,
+        2025
+      ],
+      "contexts": [
+        "лингвист"
+      ],
+      "letter_change": false,
+      "letter": "Т"
+    },
+    {
+      "canonical_id": "names-3b2ea697-1d63-5c7e-840d-5c5caf0f3985",
+      "head": "Толстой И. В.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            205,
+            2025
+          ],
+          "contexts": [
+            "историк"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        205,
+        2025
+      ],
+      "contexts": [
+        "историк"
+      ],
+      "letter_change": false,
+      "letter": "Т"
     },
     {
       "canonical_id": "names-86bcd6af-3641-5840-84e9-46b7aaf6ab60",
@@ -3087,6 +4943,122 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Улицкая,_Людмила_Евгеньевна",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lyudmila_Ulitskaya.jpg/220px-Lyudmila_Ulitskaya.jpg"
+    },
+    {
+      "canonical_id": "names-56318e57-524d-5563-a451-3f075e3d7436",
+      "head": "Успенский Б. А.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            9
+          ],
+          "contexts": [
+            "филолог, семиотик"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        9
+      ],
+      "contexts": [
+        "филолог, семиотик"
+      ],
+      "letter_change": false,
+      "letter": "У"
+    },
+    {
+      "canonical_id": "names-dae62a6b-1dd8-5d7d-b66b-fa352202caf9",
+      "head": "Успенский В. А.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            9
+          ],
+          "contexts": [
+            "математик, лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        9
+      ],
+      "contexts": [
+        "математик, лингвист"
+      ],
+      "letter_change": false,
+      "letter": "У"
+    },
+    {
+      "canonical_id": "names-15c44ef5-69c8-5998-af12-514c15ccacc1",
+      "head": "Фант Г. И.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            17,
+            35,
+            37,
+            47,
+            49,
+            165,
+            2025
+          ],
+          "contexts": [
+            "физик-акустик"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        17,
+        35,
+        37,
+        47,
+        49,
+        165,
+        2025
+      ],
+      "contexts": [
+        "физик-акустик"
+      ],
+      "letter_change": true,
+      "letter": "Ф"
+    },
+    {
+      "canonical_id": "names-274ca584-ac3a-504f-b089-62bc5a10f578",
+      "head": "Фасмер М.",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            11,
+            39,
+            41,
+            75,
+            205
+          ],
+          "contexts": [
+            "лингвист"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        11,
+        39,
+        41,
+        75,
+        205
+      ],
+      "contexts": [
+        "лингвист"
+      ],
+      "letter_change": false,
+      "letter": "Ф"
     },
     {
       "canonical_id": "names-70d628a0-fa1a-586e-8eed-a283b8b8d07e",
@@ -3133,7 +5105,7 @@
       "pages": "104, 126, 127, 358, 389",
       "category": "VI",
       "letter": "Ф",
-      "letter_change": true,
+      "letter_change": false,
       "subcategory": "participant",
       "epoch": null,
       "chapters": [
@@ -3254,7 +5226,64 @@
       },
       "book_id": "mumintroll",
       "page_list": [
-        80
+        7,
+        9,
+        11,
+        13,
+        15,
+        51,
+        53,
+        55,
+        57,
+        59,
+        61,
+        63,
+        65,
+        67,
+        69,
+        71,
+        73,
+        75,
+        77,
+        79,
+        80,
+        81,
+        83,
+        85,
+        87,
+        89,
+        91,
+        93,
+        95,
+        97,
+        99,
+        101,
+        103,
+        105,
+        107,
+        109,
+        111,
+        113,
+        115,
+        117,
+        119,
+        123,
+        125,
+        127,
+        129,
+        131,
+        133,
+        135,
+        137,
+        139,
+        141,
+        143,
+        145,
+        159,
+        165,
+        199,
+        205,
+        2025
       ],
       "contexts": [
         "…е изд., испр. и доп. М.: Альпина нон-фикшн, 2023. Анатолий Тимофеевич Фоменко — академик РАН, математик, автор псевдонаучной концепции «Новой хроно…",
@@ -3262,7 +5291,7 @@
         "…как бусинес и т. д. Кстати, по этому поводу: замечательно, что тот же Фоменко постоянно оперирует словом Раша с твердой уверенностью, что так говор…"
       ],
       "discussed": false,
-      "pages": "80",
+      "pages": "7, 9, 11, 13, 15, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 80, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99, 101, 103, 105, 107, 109, 111, 113, 115, 117, 119, 123, 125, 127, 129, 131, 133, 135, 137, 139, 141, 143, 145, 159, 165, 199, 205, 2025",
       "category": "VI",
       "letter": "Ф",
       "letter_change": false,
@@ -3303,6 +5332,48 @@
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Фридрих,_Иоганнес",
       "img": null
+    },
+    {
+      "canonical_id": "names-027bd7f3-f8c8-55b3-bb9f-34f42de5670c",
+      "head": "Фукидид",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            55,
+            57,
+            59,
+            61,
+            127,
+            129,
+            135,
+            137,
+            205,
+            2025
+          ],
+          "contexts": [
+            "древнегреческий историк"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        55,
+        57,
+        59,
+        61,
+        127,
+        129,
+        135,
+        137,
+        205,
+        2025
+      ],
+      "contexts": [
+        "древнегреческий историк"
+      ],
+      "letter_change": false,
+      "letter": "Ф"
     },
     {
       "canonical_id": "names-2f4778f7-d318-585e-859b-43cf49b68195",
@@ -3404,6 +5475,86 @@
       ]
     },
     {
+      "canonical_id": "names-b5a728ac-8e9f-5f13-8c0e-b781486bd9ed",
+      "head": "Христос Иисус",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            77,
+            141,
+            145,
+            165
+          ],
+          "contexts": [
+            "Мессия"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        77,
+        141,
+        145,
+        165
+      ],
+      "contexts": [
+        "Мессия"
+      ],
+      "letter_change": false,
+      "letter": "Х"
+    },
+    {
+      "canonical_id": "names-72edb261-ec35-5336-ac5b-ac34b09989cb",
+      "head": "Цезарь",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            95,
+            179
+          ],
+          "contexts": [
+            "римский диктатор"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        95,
+        179
+      ],
+      "contexts": [
+        "римский диктатор"
+      ],
+      "letter_change": true,
+      "letter": "Ц"
+    },
+    {
+      "canonical_id": "names-f16e0376-31ae-54c8-ac4a-a3fdb895100a",
+      "head": "Цицерон",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            103
+          ],
+          "contexts": [
+            "римский оратор"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        103
+      ],
+      "contexts": [
+        "римский оратор"
+      ],
+      "letter_change": false,
+      "letter": "Ц"
+    },
+    {
       "canonical_id": "names-b30993ed-172e-58f3-9e94-e852c1de0260",
       "head": "Чедвик Дж.",
       "aliases": [],
@@ -3460,6 +5611,34 @@
       "chapters": [
         "Историческая лингвистика (продолж.)"
       ]
+    },
+    {
+      "canonical_id": "names-fc1e4b98-1560-5679-ac1d-27f3105fae69",
+      "head": "Чингиз-хан",
+      "aliases": [],
+      "occurrences": {
+        "zametki": {
+          "pages": [
+            77,
+            101,
+            141
+          ],
+          "contexts": [
+            "основатель Монгольской империи"
+          ]
+        }
+      },
+      "book_id": "zametki",
+      "page_list": [
+        77,
+        101,
+        141
+      ],
+      "contexts": [
+        "основатель Монгольской империи"
+      ],
+      "letter_change": false,
+      "letter": "Ч"
     },
     {
       "canonical_id": "names-784480fb-cb5f-5f8d-9afb-97cc1e66dc8e",
@@ -3536,6 +5715,26 @@
       ]
     },
     {
+      "canonical_id": "names-22c2cb2b-4573-5447-99ff-ce8ba636096b",
+      "head": "Ю. П. Миролюбов",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Историк-любитель, опубликовавший «Велесову книгу»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Историк-любитель, опубликовавший «Велесову книгу»."
+      ],
+      "letter_change": true,
+      "letter": "Ю"
+    },
+    {
       "canonical_id": "names-2d72f673-450c-542f-be97-8b2c578de357",
       "head": "Юлий Цезарь",
       "aliases": [],
@@ -3556,7 +5755,7 @@
       "pages": "69",
       "category": "II.2",
       "letter": "Ю",
-      "letter_change": true,
+      "letter_change": false,
       "subcategory": "historical",
       "epoch": -50,
       "chapters": [
@@ -3592,6 +5791,7 @@
       },
       "book_id": "mumintroll",
       "page_list": [
+        169,
         277,
         288,
         306
@@ -3601,7 +5801,7 @@
         "…роисходит с только что найденной грамотой. Это Валентин Лав рентьевич Янин, начальник экспедиции, который склонился над грамотой, и все остальны…"
       ],
       "discussed": true,
-      "pages": "277, 288, 306",
+      "pages": "169, 277, 288, 306",
       "category": "VI",
       "letter": "Я",
       "letter_change": true,
@@ -3635,1975 +5835,9 @@
       "category": "VI",
       "subcategory": "historical",
       "note": "Ярослав Мудрый или часть слова «Ярославль»",
-      "needs_review": true
-    },
-    {
-      "canonical_id": "names-a22b2d42-1b9f-59a4-86e3-7c4e55091ae7",
-      "head": "А. А. Зализняк",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Автор книги, лингвист."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Автор книги, лингвист."
-      ]
-    },
-    {
-      "canonical_id": "names-42164893-cad9-5707-bae7-c51fea9dd8a0",
-      "head": "А. Т. Фоменко",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Автор «Новой хронологии», математик, академик РАН."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Автор «Новой хронологии», математик, академик РАН."
-      ]
-    },
-    {
-      "canonical_id": "names-c72d92bc-ef0d-5f2d-b692-fe6d6ad5b605",
-      "head": "Г. В. Носовский",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Соавтор книг по «Новой хронологии»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Соавтор книг по «Новой хронологии»."
-      ]
-    },
-    {
-      "canonical_id": "names-22c2cb2b-4573-5447-99ff-ce8ba636096b",
-      "head": "Ю. П. Миролюбов",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Историк-любитель, опубликовавший «Велесову книгу»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Историк-любитель, опубликовавший «Велесову книгу»."
-      ]
-    },
-    {
-      "canonical_id": "names-97edcc55-ae34-5199-9e16-d4c11dddc22e",
-      "head": "Али Изенбек",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Офицер, нашедший дощечки «Велесовой книги»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Офицер, нашедший дощечки «Велесовой книги»."
-      ]
-    },
-    {
-      "canonical_id": "names-269dcf11-bfe9-5162-87e4-d6a2a87c18b3",
-      "head": "А. Кур (Куренков)",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Генерал, историк-любитель, публиковавший статьи о «Велесовой книге»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Генерал, историк-любитель, публиковавший статьи о «Велесовой книге»."
-      ]
-    },
-    {
-      "canonical_id": "names-4d8a34ed-fb34-52bf-a738-0cc2bc88fb33",
-      "head": "А. И. Асов",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Главный пропагандист «Велесовой книги» в России."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Главный пропагандист «Велесовой книги» в России."
-      ]
-    },
-    {
-      "canonical_id": "names-c5a71793-8616-5e38-bb6d-a42b5f786525",
-      "head": "О. В. Творогов",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Лингвист, автор критики «Велесовой книги»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Лингвист, автор критики «Велесовой книги»."
-      ]
-    },
-    {
-      "canonical_id": "names-1d792b86-d1e5-5b74-88f7-744bca79aa30",
-      "head": "А. А. Алексеев",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Лингвист, автор критики «Велесовой книги»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Лингвист, автор критики «Велесовой книги»."
-      ]
-    },
-    {
-      "canonical_id": "names-c07319d2-b2ba-590e-8650-34920b4318ba",
-      "head": "А. И. Солженицын",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Упомянут в связи с вручением Литературной премии его имени."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Упомянут в связи с вручением Литературной премии его имени."
-      ]
-    },
-    {
-      "canonical_id": "names-fb4b256d-57b1-582d-94a2-cc5979d63caf",
-      "head": "Дарвин",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Упомянут в контексте отношения к научному знанию."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Упомянут в контексте отношения к научному знанию."
-      ]
-    },
-    {
-      "canonical_id": "names-22ef5b86-2951-5d64-96b9-38fa016e08b8",
-      "head": "Бродский Иосиф",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            21
-          ],
-          "contexts": [
-            "поэт"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        21
-      ],
-      "contexts": [
-        "поэт"
-      ]
-    },
-    {
-      "canonical_id": "names-0faaf6cf-10c3-579a-a009-9050a7303202",
-      "head": "Голубцова Е. С.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            57,
-            115,
-            205
-          ],
-          "contexts": [
-            "историк-антиковед"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        57,
-        115,
-        205
-      ],
-      "contexts": [
-        "историк-антиковед"
-      ]
-    },
-    {
-      "canonical_id": "names-7bd52c30-57e1-5db9-ae51-8b7a70ad9dea",
-      "head": "Гофман",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            127,
-            129,
-            135,
-            137
-          ],
-          "contexts": [
-            "астроном"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        127,
-        129,
-        135,
-        137
-      ],
-      "contexts": [
-        "астроном"
-      ]
-    },
-    {
-      "canonical_id": "names-4d4e8f6e-7128-5863-9495-a13af5625abf",
-      "head": "Дарвин Ч.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            201
-          ],
-          "contexts": [
-            "естествоиспытатель"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        201
-      ],
-      "contexts": [
-        "естествоиспытатель"
-      ]
-    },
-    {
-      "canonical_id": "names-e1f6bdfe-bd29-55c1-8cc9-fa670daecb59",
-      "head": "Иванов Вяч. Вс.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            53,
-            71,
-            99,
-            101,
-            107,
-            113,
-            115,
-            119,
-            141,
-            201
-          ],
-          "contexts": [
-            "лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        53,
-        71,
-        99,
-        101,
-        107,
-        113,
-        115,
-        119,
-        141,
-        201
-      ],
-      "contexts": [
-        "лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-a7adb04a-a6ce-57ae-821c-4c83560201a5",
-      "head": "Колмогоров А. Н.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            123
-          ],
-          "contexts": [
-            "математик"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        123
-      ],
-      "contexts": [
-        "математик"
-      ]
-    },
-    {
-      "canonical_id": "names-6d37e316-12ff-56e0-a182-7e18d92aa4f5",
-      "head": "Кочергина В. А.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            205
-          ],
-          "contexts": [
-            "лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        205
-      ],
-      "contexts": [
-        "лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-46a541ca-106e-52f7-bd7c-d51e677b151f",
-      "head": "Красильников Ю. Д.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            59,
-            205
-          ],
-          "contexts": [
-            "физик"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        59,
-        205
-      ],
-      "contexts": [
-        "физик"
-      ]
-    },
-    {
-      "canonical_id": "names-a94a9c76-2e19-5ee6-ba24-9e10cebfc241",
-      "head": "Лотман Ю. М.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            59
-          ],
-          "contexts": [
-            "филолог, культуролог"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        59
-      ],
-      "contexts": [
-        "филолог, культуролог"
-      ]
-    },
-    {
-      "canonical_id": "names-21fa7466-2d75-5c20-8086-f0700414696a",
-      "head": "Менделеев Д. Н.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            151
-          ],
-          "contexts": [
-            "химик"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        151
-      ],
-      "contexts": [
-        "химик"
-      ]
-    },
-    {
-      "canonical_id": "names-db3941d3-406b-521a-b051-86994ae08929",
-      "head": "Морозов Н. А.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            51,
-            57,
-            77,
-            87,
-            105
-          ],
-          "contexts": [
-            "ученый, революционер"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        51,
-        57,
-        77,
-        87,
-        105
-      ],
-      "contexts": [
-        "ученый, революционер"
-      ]
-    },
-    {
-      "canonical_id": "names-a916e758-91d4-5fc3-a1df-f0fdbe95697c",
-      "head": "Николаев С. Л.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            123
-          ],
-          "contexts": [
-            "лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        123
-      ],
-      "contexts": [
-        "лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-78ee3583-4ed5-5acc-8aa5-8fabf6e3dba7",
-      "head": "Николаева T. М.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            123
-          ],
-          "contexts": [
-            "лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        123
-      ],
-      "contexts": [
-        "лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-0202bd59-2146-5a4d-abfe-53a3b261cbbd",
-      "head": "Николов B.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            123
-          ],
-          "contexts": [
-            "исследователь"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        123
-      ],
-      "contexts": [
-        "исследователь"
-      ]
-    },
-    {
-      "canonical_id": "names-4214dfa4-07d2-5eb9-a392-2ae1fd6dd7b4",
-      "head": "Носов Е. Н.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            39,
-            51,
-            53,
-            123,
-            137,
-            181,
-            205
-          ],
-          "contexts": [
-            "историк, археолог"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        39,
-        51,
-        53,
-        123,
-        137,
-        181,
-        205
-      ],
-      "contexts": [
-        "историк, археолог"
-      ]
-    },
-    {
-      "canonical_id": "names-41635ff9-b9ea-5ab7-873e-999f5a076aab",
-      "head": "Носовский Г. В.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            51,
-            53,
-            123,
-            137,
-            181,
-            205
-          ],
-          "contexts": [
-            "математик"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        51,
-        53,
-        123,
-        137,
-        181,
-        205
-      ],
-      "contexts": [
-        "математик"
-      ]
-    },
-    {
-      "canonical_id": "names-3be4ba05-8f21-5f43-ab2c-dc44b57061c9",
-      "head": "Постникова T. Е.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            59
-          ],
-          "contexts": [
-            "исследователь"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        59
-      ],
-      "contexts": [
-        "исследователь"
-      ]
-    },
-    {
-      "canonical_id": "names-06e2e697-295f-51ac-bfa3-d20f437977a1",
-      "head": "Руссев Е. М.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            13,
-            15,
-            67,
-            69,
-            71,
-            81,
-            137,
-            155,
-            157,
-            165,
-            205
-          ],
-          "contexts": [
-            "историк"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        13,
-        15,
-        67,
-        69,
-        71,
-        81,
-        137,
-        155,
-        157,
-        165,
-        205
-      ],
-      "contexts": [
-        "историк"
-      ]
-    },
-    {
-      "canonical_id": "names-033ab44f-6deb-59fb-bbba-20b42de78d7a",
-      "head": "Скалигер",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            87,
-            103,
-            107,
-            129
-          ],
-          "contexts": [
-            "историк-хронолог"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        87,
-        103,
-        107,
-        129
-      ],
-      "contexts": [
-        "историк-хронолог"
-      ]
-    },
-    {
-      "canonical_id": "names-d0dd6d80-c16a-5d86-88b8-8aa1904276fd",
-      "head": "Скалигер И. Ю. (= Ж. Ж.)",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            87,
-            103,
-            107,
-            129
-          ],
-          "contexts": [
-            "историк-хронолог"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        87,
-        103,
-        107,
-        129
-      ],
-      "contexts": [
-        "историк-хронолог"
-      ]
-    },
-    {
-      "canonical_id": "names-dc68d13d-42b1-5f74-91f7-e84bc2c68c50",
-      "head": "Скопина М. А.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            81
-          ],
-          "contexts": [
-            "математик"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        81
-      ],
-      "contexts": [
-        "математик"
-      ]
-    },
-    {
-      "canonical_id": "names-7d410121-7683-580a-8f84-e92974f129e0",
-      "head": "Смирин В. М.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            57,
-            115,
-            205
-          ],
-          "contexts": [
-            "историк-антиковед"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        57,
-        115,
-        205
-      ],
-      "contexts": [
-        "историк-антиковед"
-      ]
-    },
-    {
-      "canonical_id": "names-03e688c2-edce-5e0e-97a0-5b75411cb1eb",
-      "head": "Солженицын А. И.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            197
-          ],
-          "contexts": [
-            "писатель"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        197
-      ],
-      "contexts": [
-        "писатель"
-      ]
-    },
-    {
-      "canonical_id": "names-2bb8ccc1-a303-5a2e-a2ff-ef388025cab5",
-      "head": "Солженицына Н. Д.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            197
-          ],
-          "contexts": [
-            "общественный деятель"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        197
-      ],
-      "contexts": [
-        "общественный деятель"
-      ]
-    },
-    {
-      "canonical_id": "names-4270923c-5466-56fa-85e6-73762660d39d",
-      "head": "Старец С. М.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            15,
-            27,
-            71,
-            137,
-            165,
-            205
-          ],
-          "contexts": [
-            "филолог, переводчик"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        15,
-        27,
-        71,
-        137,
-        165,
-        205
-      ],
-      "contexts": [
-        "филолог, переводчик"
-      ]
-    },
-    {
-      "canonical_id": "names-6380ed8e-6c1c-55c5-85fb-e6045b36a582",
-      "head": "Старостин Г. С.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            27
-          ],
-          "contexts": [
-            "лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        27
-      ],
-      "contexts": [
-        "лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-51bf6d94-7f47-53a5-ac27-129643b5ed8f",
-      "head": "Старостин С. А.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            27
-          ],
-          "contexts": [
-            "лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        27
-      ],
-      "contexts": [
-        "лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-51c741e1-2dff-527b-b661-36da53692135",
-      "head": "Толстая Р. А.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            205,
-            2025
-          ],
-          "contexts": [
-            "лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        205,
-        2025
-      ],
-      "contexts": [
-        "лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-3b2ea697-1d63-5c7e-840d-5c5caf0f3985",
-      "head": "Толстой И. В.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            205,
-            2025
-          ],
-          "contexts": [
-            "историк"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        205,
-        2025
-      ],
-      "contexts": [
-        "историк"
-      ]
-    },
-    {
-      "canonical_id": "names-56318e57-524d-5563-a451-3f075e3d7436",
-      "head": "Успенский Б. А.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            9
-          ],
-          "contexts": [
-            "филолог, семиотик"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        9
-      ],
-      "contexts": [
-        "филолог, семиотик"
-      ]
-    },
-    {
-      "canonical_id": "names-dae62a6b-1dd8-5d7d-b66b-fa352202caf9",
-      "head": "Успенский В. А.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            9
-          ],
-          "contexts": [
-            "математик, лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        9
-      ],
-      "contexts": [
-        "математик, лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-15c44ef5-69c8-5998-af12-514c15ccacc1",
-      "head": "Фант Г. И.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            17,
-            35,
-            37,
-            47,
-            49,
-            165,
-            2025
-          ],
-          "contexts": [
-            "физик-акустик"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        17,
-        35,
-        37,
-        47,
-        49,
-        165,
-        2025
-      ],
-      "contexts": [
-        "физик-акустик"
-      ]
-    },
-    {
-      "canonical_id": "names-274ca584-ac3a-504f-b089-62bc5a10f578",
-      "head": "Фасмер М.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            11,
-            39,
-            41,
-            75,
-            205
-          ],
-          "contexts": [
-            "лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        11,
-        39,
-        41,
-        75,
-        205
-      ],
-      "contexts": [
-        "лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-027bd7f3-f8c8-55b3-bb9f-34f42de5670c",
-      "head": "Фукидид",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            55,
-            57,
-            59,
-            61,
-            127,
-            129,
-            135,
-            137,
-            205,
-            2025
-          ],
-          "contexts": [
-            "древнегреческий историк"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        55,
-        57,
-        59,
-        61,
-        127,
-        129,
-        135,
-        137,
-        205,
-        2025
-      ],
-      "contexts": [
-        "древнегреческий историк"
-      ]
-    },
-    {
-      "canonical_id": "names-c56f5498-aff3-57f1-9586-8364d68af640",
-      "head": "Saloni Z.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            157
-          ],
-          "contexts": [
-            "польский лингвист"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        157
-      ],
-      "contexts": [
-        "польский лингвист"
-      ]
-    },
-    {
-      "canonical_id": "names-a2e4cf54-6e0d-5c34-a076-04bdd5e79464",
-      "head": "Андроник",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            141
-          ],
-          "contexts": [
-            "император"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        141
-      ],
-      "contexts": [
-        "император"
-      ]
-    },
-    {
-      "canonical_id": "names-dce9025a-83e4-503e-8dfa-817eeb12c61d",
-      "head": "Батый",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            53,
-            75,
-            101,
-            119,
-            141,
-            201
-          ],
-          "contexts": [
-            "монгольский хан"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        53,
-        75,
-        101,
-        119,
-        141,
-        201
-      ],
-      "contexts": [
-        "монгольский хан"
-      ]
-    },
-    {
-      "canonical_id": "names-f79d2f36-311b-536b-b7ee-f7dea4b9d150",
-      "head": "Боголюбский Андрей",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            113,
-            141
-          ],
-          "contexts": [
-            "князь"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        113,
-        141
-      ],
-      "contexts": [
-        "князь"
-      ]
-    },
-    {
-      "canonical_id": "names-31817100-8ac5-5aa1-90f2-7338e004e558",
-      "head": "Богородица Мария",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            141
-          ],
-          "contexts": [
-            "Матерь Божия"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        141
-      ],
-      "contexts": [
-        "Матерь Божия"
-      ]
-    },
-    {
-      "canonical_id": "names-9a05da66-f6ac-5747-83cc-dfd64ccbe844",
-      "head": "Борис",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            101,
-            103
-          ],
-          "contexts": [
-            "князь-мученик"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        101,
-        103
-      ],
-      "contexts": [
-        "князь-мученик"
-      ]
-    },
-    {
-      "canonical_id": "names-3b878ca4-767d-5259-bf39-0fac756c2fc2",
-      "head": "Варфоломей Юрьевич",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            101,
-            107
-          ],
-          "contexts": [
-            "посадник"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        101,
-        107
-      ],
-      "contexts": [
-        "посадник"
-      ]
-    },
-    {
-      "canonical_id": "names-54ba0aa6-5b89-5286-b24d-2a1b2c9034b7",
-      "head": "Василько Теребовльский",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            71,
-            99,
-            111,
-            113,
-            115
-          ],
-          "contexts": [
-            "князь"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        71,
-        99,
-        111,
-        113,
-        115
-      ],
-      "contexts": [
-        "князь"
-      ]
-    },
-    {
-      "canonical_id": "names-6aac5d71-05d5-50ac-b87b-66317ee36902",
-      "head": "Вергилий",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            95,
-            103,
-            105
-          ],
-          "contexts": [
-            "римский поэт"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        95,
-        103,
-        105
-      ],
-      "contexts": [
-        "римский поэт"
-      ]
-    },
-    {
-      "canonical_id": "names-3412e858-118d-564d-b5b7-2a42c6a1b9cd",
-      "head": "Гораций",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            95,
-            103
-          ],
-          "contexts": [
-            "римский поэт"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        95,
-        103
-      ],
-      "contexts": [
-        "римский поэт"
-      ]
-    },
-    {
-      "canonical_id": "names-8f74c209-132a-580d-bd0c-cb5d103cb24a",
-      "head": "Гюргий Иванкович",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            77
-          ],
-          "contexts": [
-            "новгородец"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        77
-      ],
-      "contexts": [
-        "новгородец"
-      ]
-    },
-    {
-      "canonical_id": "names-d5778648-7774-586b-8b28-49c42d22babf",
-      "head": "Иаков",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            73
-          ],
-          "contexts": [
-            "библейский персонаж"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        73
-      ],
-      "contexts": [
-        "библейский персонаж"
-      ]
-    },
-    {
-      "canonical_id": "names-816f9716-576d-560b-82fd-e7985c6086bc",
-      "head": "Иван Грозный",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            71,
-            101,
-            113
-          ],
-          "contexts": [
-            "русский царь"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        71,
-        101,
-        113
-      ],
-      "contexts": [
-        "русский царь"
-      ]
-    },
-    {
-      "canonical_id": "names-60da2103-5a71-57c9-8283-ab48bd8fc51d",
-      "head": "Иван Данилович",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            141
-          ],
-          "contexts": [
-            "великий князь"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        141
-      ],
-      "contexts": [
-        "великий князь"
-      ]
-    },
-    {
-      "canonical_id": "names-4bfa8fd5-0f26-510c-9618-4816b691b1ee",
-      "head": "Иван Калита",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            53,
-            119,
-            201
-          ],
-          "contexts": [
-            "великий князь"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        53,
-        119,
-        201
-      ],
-      "contexts": [
-        "великий князь"
-      ]
-    },
-    {
-      "canonical_id": "names-0b029595-2733-5650-aa19-ce3f455670ef",
-      "head": "Иванко Захарьинич",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            53,
-            71,
-            99,
-            101,
-            107,
-            113,
-            115,
-            119,
-            141,
-            201
-          ],
-          "contexts": [
-            "новгородский посадник"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        53,
-        71,
-        99,
-        101,
-        107,
-        113,
-        115,
-        119,
-        141,
-        201
-      ],
-      "contexts": [
-        "новгородский посадник"
-      ]
-    },
-    {
-      "canonical_id": "names-1fa79779-7a4a-5e5c-9392-875e8414c852",
-      "head": "Изяслав",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            89,
-            113
-          ],
-          "contexts": [
-            "князь"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        89,
-        113
-      ],
-      "contexts": [
-        "князь"
-      ]
-    },
-    {
-      "canonical_id": "names-4e323b82-48b3-5756-a62f-0cf29960efc1",
-      "head": "Изяслав Давыдович",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            113
-          ],
-          "contexts": [
-            "князь"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        113
-      ],
-      "contexts": [
-        "князь"
-      ]
-    },
-    {
-      "canonical_id": "names-a55b6da2-b57a-5e3e-bb5d-5b4d6c238348",
-      "head": "Иисус Христос",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            69,
-            141,
-            145,
-            157,
-            165
-          ],
-          "contexts": [
-            "Мессия"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        69,
-        141,
-        145,
-        157,
-        165
-      ],
-      "contexts": [
-        "Мессия"
-      ]
-    },
-    {
-      "canonical_id": "names-088ba2c1-f2c3-5e49-bf9c-49966c507619",
-      "head": "Иоанн Креститель",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            71,
-            113,
-            141
-          ],
-          "contexts": [
-            "христианский пророк"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        71,
-        113,
-        141
-      ],
-      "contexts": [
-        "христианский пророк"
-      ]
-    },
-    {
-      "canonical_id": "names-2fc1110d-a81f-5bc2-bb92-bbff2348d3c3",
-      "head": "Катулл",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            103
-          ],
-          "contexts": [
-            "римский поэт"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        103
-      ],
-      "contexts": [
-        "римский поэт"
-      ]
-    },
-    {
-      "canonical_id": "names-59206820-ea47-56f5-bc4d-1720f26d96b7",
-      "head": "Мамай",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            75
-          ],
-          "contexts": [
-            "ордынский темник"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        75
-      ],
-      "contexts": [
-        "ордынский темник"
-      ]
-    },
-    {
-      "canonical_id": "names-e91b059e-6512-5ef8-b9b8-1a051a8a1902",
-      "head": "Мария Богородица",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            141
-          ],
-          "contexts": [
-            "Матерь Божия"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        141
-      ],
-      "contexts": [
-        "Матерь Божия"
-      ]
-    },
-    {
-      "canonical_id": "names-bf21aa50-21f4-5161-b943-36a0bdcf5f0a",
-      "head": "Марциал",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            103,
-            205
-          ],
-          "contexts": [
-            "римский поэт"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        103,
-        205
-      ],
-      "contexts": [
-        "римский поэт"
-      ]
-    },
-    {
-      "canonical_id": "names-930bbda7-5291-5058-ab22-edeb209de4af",
-      "head": "Маяковский В. В.",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            33
-          ],
-          "contexts": [
-            "поэт"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        33
-      ],
-      "contexts": [
-        "поэт"
-      ]
-    },
-    {
-      "canonical_id": "names-9327d859-58fb-5389-a756-c6bdf4802337",
-      "head": "Михаил Юрьевич",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            101
-          ],
-          "contexts": [
-            "сын посадничий"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        101
-      ],
-      "contexts": [
-        "сын посадничий"
-      ]
-    },
-    {
-      "canonical_id": "names-1dba999d-effb-5a84-aae4-476a527ed5e2",
-      "head": "Плавт",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            95
-          ],
-          "contexts": [
-            "римский комедиограф"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        95
-      ],
-      "contexts": [
-        "римский комедиограф"
-      ]
-    },
-    {
-      "canonical_id": "names-b48a6fa6-bbc5-5c0e-9510-6bd8e3b27be5",
-      "head": "Плутарх",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            165
-          ],
-          "contexts": [
-            "древнегреческий историк"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        165
-      ],
-      "contexts": [
-        "древнегреческий историк"
-      ]
-    },
-    {
-      "canonical_id": "names-06881e26-565b-57c6-a383-726dee0eae64",
-      "head": "Рем",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            141
-          ],
-          "contexts": [
-            "мифический основатель Рима"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        141
-      ],
-      "contexts": [
-        "мифический основатель Рима"
-      ]
-    },
-    {
-      "canonical_id": "names-ef47d0b0-e693-57f3-8905-5858dc434313",
-      "head": "Романовы",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            11,
-            143,
-            145
-          ],
-          "contexts": [
-            "царская династия"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        11,
-        143,
-        145
-      ],
-      "contexts": [
-        "царская династия"
-      ]
-    },
-    {
-      "canonical_id": "names-86cf02fc-69ec-5918-b201-4b3ddc498d11",
-      "head": "Ромул",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            141
-          ],
-          "contexts": [
-            "мифический основатель Рима"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        141
-      ],
-      "contexts": [
-        "мифический основатель Рима"
-      ]
-    },
-    {
-      "canonical_id": "names-b5a728ac-8e9f-5f13-8c0e-b781486bd9ed",
-      "head": "Христос Иисус",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            77,
-            141,
-            145,
-            165
-          ],
-          "contexts": [
-            "Мессия"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        77,
-        141,
-        145,
-        165
-      ],
-      "contexts": [
-        "Мессия"
-      ]
-    },
-    {
-      "canonical_id": "names-72edb261-ec35-5336-ac5b-ac34b09989cb",
-      "head": "Цезарь",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            95,
-            179
-          ],
-          "contexts": [
-            "римский диктатор"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        95,
-        179
-      ],
-      "contexts": [
-        "римский диктатор"
-      ]
-    },
-    {
-      "canonical_id": "names-f16e0376-31ae-54c8-ac4a-a3fdb895100a",
-      "head": "Цицерон",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            103
-          ],
-          "contexts": [
-            "римский оратор"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        103
-      ],
-      "contexts": [
-        "римский оратор"
-      ]
-    },
-    {
-      "canonical_id": "names-fc1e4b98-1560-5679-ac1d-27f3105fae69",
-      "head": "Чингиз-хан",
-      "aliases": [],
-      "occurrences": {
-        "zametki": {
-          "pages": [
-            77,
-            101,
-            141
-          ],
-          "contexts": [
-            "основатель Монгольской империи"
-          ]
-        }
-      },
-      "book_id": "zametki",
-      "page_list": [
-        77,
-        101,
-        141
-      ],
-      "contexts": [
-        "основатель Монгольской империи"
-      ]
-    },
-    {
-      "head": "Зализняк А. А.",
-      "contexts": [
-        "Автор книги."
-      ],
-      "page_list": [
-        1
-      ],
-      "_book_id": "slovo",
-      "pages": "13, 18, 27, 80, 250",
-      "category": "VI",
-      "subcategory": "linguist",
-      "note": "Автор книги (упоминания в предисловии и косвенно в тексте); по Мильчину обычно не индексируется",
       "needs_review": true,
-      "discussed": true
+      "letter_change": false,
+      "letter": "Я"
     }
   ],
   "edges": [

@@ -26,7 +26,9 @@
       "discussed": false,
       "pages": "130",
       "lat": -25,
-      "lon": 135
+      "lon": 135,
+      "letter_change": true,
+      "letter": "А"
     },
     {
       "canonical_id": "ethnonyms-3c587df2-5be9-5ac1-8b35-3ad99c789be3",
@@ -74,7 +76,9 @@
       "discussed": true,
       "pages": "83, 84, 94, 147, 172, 173, 296",
       "lat": 52,
-      "lon": -1
+      "lon": -1,
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "ethnonyms-20b71ddc-dc08-5442-b73b-0862e320bb3f",
@@ -120,7 +124,29 @@
       "discussed": true,
       "pages": "58, 168, 211, 213, 220, 222, 223, 229, 296",
       "lat": 25,
-      "lon": 45
+      "lon": 45,
+      "letter_change": false,
+      "letter": "А"
+    },
+    {
+      "canonical_id": "ethnonyms-1daa0566-129e-5f06-b65b-89d8c8fa3052",
+      "head": "арии",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Племена, фигурирующие в «Велесовой книге»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Племена, фигурирующие в «Велесовой книге»."
+      ],
+      "letter_change": false,
+      "letter": "А"
     },
     {
       "canonical_id": "ethnonyms-5a3ff469-5a7f-5a62-a92b-77920180d197",
@@ -142,7 +168,9 @@
       "discussed": false,
       "pages": "135",
       "lat": 43,
-      "lon": -2
+      "lon": -2,
+      "letter_change": true,
+      "letter": "Б"
     },
     {
       "canonical_id": "ethnonyms-347170ea-d970-5897-8195-7768d84558bd",
@@ -176,7 +204,9 @@
       "discussed": true,
       "pages": "204, 206",
       "lat": 53.7,
-      "lon": 27.95
+      "lon": 27.95,
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "ethnonyms-ac87e08c-8f1c-5096-a020-b690641901dd",
@@ -202,7 +232,9 @@
       "discussed": false,
       "pages": "199",
       "lat": 42.7,
-      "lon": 25.5
+      "lon": 25.5,
+      "letter_change": false,
+      "letter": "Б"
     },
     {
       "canonical_id": "ethnonyms-fb1b7a4f-8e19-5a66-9d15-037b7886244c",
@@ -236,7 +268,9 @@
       "discussed": true,
       "pages": "57, 178",
       "lat": 60,
-      "lon": 18
+      "lon": 18,
+      "letter_change": true,
+      "letter": "В"
     },
     {
       "canonical_id": "ethnonyms-b99aeffc-e8a2-5c59-a6c5-3e93d367eba9",
@@ -258,7 +292,9 @@
       "discussed": false,
       "pages": "27",
       "lat": 47.2,
-      "lon": 19.5
+      "lon": 19.5,
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "ethnonyms-27d63ce6-1510-5e1c-adab-17b7a59c86fa",
@@ -286,7 +322,9 @@
       "discussed": false,
       "pages": "61",
       "lat": 45.4,
-      "lon": 12.3
+      "lon": 12.3,
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "ethnonyms-b42b46ae-511a-5ab0-8cf1-4e03d806b16a",
@@ -312,7 +350,9 @@
       "discussed": false,
       "pages": "62",
       "lat": 54,
-      "lon": 36
+      "lon": 36,
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "ethnonyms-0f38bfd8-76a5-5e83-8aeb-48bf8afbb71c",
@@ -338,7 +378,9 @@
       "discussed": false,
       "pages": "204",
       "lat": 59.2,
-      "lon": 39.9
+      "lon": 39.9,
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "ethnonyms-91ae8459-57a6-5ccf-9240-a0906d8329d0",
@@ -364,7 +406,9 @@
       "discussed": false,
       "pages": "62",
       "lat": 54,
-      "lon": 36
+      "lon": 36,
+      "letter_change": false,
+      "letter": "В"
     },
     {
       "canonical_id": "ethnonyms-512a4aeb-b730-5d0d-b97d-422eb377d967",
@@ -408,7 +452,9 @@
       "discussed": true,
       "pages": "56, 59, 60, 184",
       "lat": 51.2,
-      "lon": 10.5
+      "lon": 10.5,
+      "letter_change": true,
+      "letter": "Г"
     },
     {
       "canonical_id": "ethnonyms-a7241f76-df65-58ec-9602-62eb99f8bc5e",
@@ -436,7 +482,9 @@
       "discussed": false,
       "pages": "184",
       "lat": 45,
-      "lon": 30
+      "lon": 30,
+      "letter_change": false,
+      "letter": "Г"
     },
     {
       "canonical_id": "ethnonyms-7f8a4c21-ed22-5505-8d2f-c2854d649827",
@@ -458,7 +506,29 @@
       "discussed": false,
       "pages": "141",
       "lat": 39,
-      "lon": 22
+      "lon": 22,
+      "letter_change": false,
+      "letter": "Г"
+    },
+    {
+      "canonical_id": "ethnonyms-5b1fae7d-febf-56ac-8a7d-d8e8fa1a4035",
+      "head": "дасью",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Племена, фигурирующие в «Велесовой книге»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Племена, фигурирующие в «Велесовой книге»."
+      ],
+      "letter_change": true,
+      "letter": "Д"
     },
     {
       "canonical_id": "ethnonyms-f1846507-a3af-5e82-83f2-de3cbe7755ef",
@@ -488,7 +558,9 @@
       "discussed": true,
       "pages": "59, 60",
       "lat": 56,
-      "lon": 10
+      "lon": 10,
+      "letter_change": false,
+      "letter": "Д"
     },
     {
       "canonical_id": "ethnonyms-bc89eb4b-e856-5e7a-93a1-8a6d652ec7cc",
@@ -524,7 +596,9 @@
       "discussed": true,
       "pages": "135, 145, 146",
       "lat": 50,
-      "lon": 10
+      "lon": 10,
+      "letter_change": true,
+      "letter": "Е"
     },
     {
       "canonical_id": "ethnonyms-34ae4ea2-b665-5701-ae59-d5a4a1e73f27",
@@ -572,7 +646,9 @@
       "discussed": true,
       "pages": "136, 155, 167, 169, 173, 204",
       "lat": 21,
-      "lon": 78
+      "lon": 78,
+      "letter_change": true,
+      "letter": "И"
     },
     {
       "canonical_id": "ethnonyms-29665da3-2252-5716-957b-7e244e060e79",
@@ -598,7 +674,9 @@
       "discussed": false,
       "pages": "147",
       "lat": 28,
-      "lon": 77
+      "lon": 77,
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "ethnonyms-91808446-c9ca-553e-b44a-d5f8548a23e5",
@@ -626,7 +704,9 @@
       "discussed": false,
       "pages": "145",
       "lat": 21,
-      "lon": 78
+      "lon": 78,
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "ethnonyms-f20950a5-b37b-581b-99d4-ba0d237f49e6",
@@ -658,7 +738,9 @@
       "discussed": true,
       "pages": "136, 137",
       "lat": 50,
-      "lon": 50
+      "lon": 50,
+      "letter_change": false,
+      "letter": "И"
     },
     {
       "canonical_id": "ethnonyms-43bf9c25-6fe3-5a89-befd-8b00c81473b5",
@@ -686,7 +768,9 @@
       "discussed": false,
       "pages": "61",
       "lat": 55,
-      "lon": 30
+      "lon": 30,
+      "letter_change": true,
+      "letter": "К"
     },
     {
       "canonical_id": "ethnonyms-82882a85-0a1e-53e6-8120-3c01ce8de30a",
@@ -714,7 +798,9 @@
       "discussed": false,
       "pages": "61",
       "lat": 55,
-      "lon": 30
+      "lon": 30,
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "ethnonyms-102bab3d-c208-5b58-80aa-abfc258cd982",
@@ -740,7 +826,9 @@
       "discussed": false,
       "pages": "121",
       "lat": 35.2,
-      "lon": 24.8
+      "lon": 24.8,
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "ethnonyms-d389b95e-6646-5521-912e-9b933c416da2",
@@ -766,7 +854,9 @@
       "discussed": false,
       "pages": "62",
       "lat": 35.2,
-      "lon": 24.8
+      "lon": 24.8,
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "ethnonyms-b19661c0-81e1-596f-b61c-6a1e91830d2c",
@@ -792,7 +882,9 @@
       "discussed": false,
       "pages": "90",
       "lat": 45,
-      "lon": 1
+      "lon": 1,
+      "letter_change": false,
+      "letter": "К"
     },
     {
       "canonical_id": "ethnonyms-bc6d6c06-0856-5dd3-9cc2-fc5b774a9b69",
@@ -824,7 +916,9 @@
       "discussed": true,
       "pages": "61, 146",
       "lat": 56.9,
-      "lon": 24.1
+      "lon": 24.1,
+      "letter_change": true,
+      "letter": "Л"
     },
     {
       "canonical_id": "ethnonyms-db501ae5-a623-5948-993f-f342588ca1a9",
@@ -852,7 +946,9 @@
       "discussed": false,
       "pages": "61",
       "lat": 56.9,
-      "lon": 24.1
+      "lon": 24.1,
+      "letter_change": false,
+      "letter": "Л"
     },
     {
       "canonical_id": "ethnonyms-432cf338-3244-5d00-9aa5-1fbc805e37d2",
@@ -890,7 +986,9 @@
       "discussed": true,
       "pages": "56, 65, 206",
       "lat": 55.2,
-      "lon": 24
+      "lon": 24,
+      "letter_change": false,
+      "letter": "Л"
     },
     {
       "canonical_id": "ethnonyms-6a4d64f0-af4b-525a-91a2-d4f02dc55963",
@@ -916,7 +1014,9 @@
       "discussed": false,
       "pages": "58",
       "lat": 51.2,
-      "lon": 10.5
+      "lon": 10.5,
+      "letter_change": true,
+      "letter": "Н"
     },
     {
       "canonical_id": "ethnonyms-cf03b170-d588-5948-b3dd-ec60ada77cdc",
@@ -948,7 +1048,9 @@
       "discussed": true,
       "pages": "59–61",
       "lat": 51.2,
-      "lon": 10.5
+      "lon": 10.5,
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "ethnonyms-13336e55-5855-54c7-bf66-36cc91df9cdb",
@@ -1008,7 +1110,9 @@
       "discussed": true,
       "pages": "57, 179, 200, 204, 310, 311, 314",
       "lat": 58.5,
-      "lon": 31.3
+      "lon": 31.3,
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "ethnonyms-884a20f0-ed3d-5758-85da-3bc46a6deccc",
@@ -1034,7 +1138,9 @@
       "discussed": false,
       "pages": "310",
       "lat": 58.5,
-      "lon": 31.3
+      "lon": 31.3,
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "ethnonyms-3999e68b-3b38-5c68-a0af-fc5c40f7fba0",
@@ -1066,7 +1172,9 @@
       "discussed": true,
       "pages": "59, 82",
       "lat": 60.5,
-      "lon": 8.5
+      "lon": 8.5,
+      "letter_change": false,
+      "letter": "Н"
     },
     {
       "canonical_id": "ethnonyms-4c480d52-5c52-54e2-9d55-4a15fc21a9dc",
@@ -1098,7 +1206,29 @@
       "discussed": true,
       "pages": "82, 178",
       "lat": 60,
-      "lon": 5
+      "lon": 5,
+      "letter_change": false,
+      "letter": "Н"
+    },
+    {
+      "canonical_id": "ethnonyms-b6a4a12f-d2b0-5309-ba6f-3022868a4a70",
+      "head": "ордынцы",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Упоминаются вместе с русскими в теории Фоменко."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Упоминаются вместе с русскими в теории Фоменко."
+      ],
+      "letter_change": true,
+      "letter": "О"
     },
     {
       "canonical_id": "ethnonyms-f8cc5e9b-17a0-570c-9b67-10866c3cfee3",
@@ -1132,7 +1262,9 @@
       "discussed": true,
       "pages": "90, 130",
       "lat": -6,
-      "lon": 145
+      "lon": 145,
+      "letter_change": true,
+      "letter": "П"
     },
     {
       "canonical_id": "ethnonyms-f9febee2-5102-5b95-9c24-33004bc97f47",
@@ -1158,7 +1290,9 @@
       "discussed": false,
       "pages": "187",
       "lat": 47,
-      "lon": 32
+      "lon": 32,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "ethnonyms-4db8d17b-8103-564b-ada5-a318b0847fe3",
@@ -1184,7 +1318,9 @@
       "discussed": false,
       "pages": "186",
       "lat": 48,
-      "lon": 38
+      "lon": 38,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "ethnonyms-9b4a6578-33cb-50ff-a553-b726f3c053dc",
@@ -1210,7 +1346,9 @@
       "discussed": false,
       "pages": "199",
       "lat": 51.9,
-      "lon": 19.1
+      "lon": 19.1,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "ethnonyms-e13a484e-99da-5bf6-a1d5-3c8b40c5c50d",
@@ -1232,7 +1370,9 @@
       "discussed": false,
       "pages": "56",
       "lat": 54.5,
-      "lon": 20
+      "lon": 20,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "ethnonyms-c1ddbcc5-aa0a-59a1-a0ef-763c16e501b0",
@@ -1258,7 +1398,9 @@
       "discussed": false,
       "pages": "204",
       "lat": 57.8,
-      "lon": 28.3
+      "lon": 28.3,
+      "letter_change": false,
+      "letter": "П"
     },
     {
       "canonical_id": "ethnonyms-bdb07aac-0107-5710-b6ec-0e721ed69ab3",
@@ -1294,7 +1436,9 @@
       "discussed": true,
       "pages": "56, 60, 134",
       "lat": 41.9,
-      "lon": 12.5
+      "lon": 12.5,
+      "letter_change": true,
+      "letter": "Р"
     },
     {
       "canonical_id": "ethnonyms-8b058ad1-4ae3-5dd9-a601-eb3596df6dab",
@@ -1364,7 +1508,9 @@
       "discussed": true,
       "pages": "55, 57, 60–63, 145, 147, 179, 238, 241",
       "lat": 55,
-      "lon": 38
+      "lon": 38,
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "ethnonyms-d9121daa-9860-571c-9988-41aef5098062",
@@ -1392,7 +1538,9 @@
       "discussed": false,
       "pages": "61",
       "lat": 50,
-      "lon": 25
+      "lon": 25,
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "ethnonyms-9633a752-29b7-5b82-abbd-27421027f3f2",
@@ -1420,7 +1568,9 @@
       "discussed": false,
       "pages": "178",
       "lat": 55,
-      "lon": 38
+      "lon": 38,
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "ethnonyms-b77048c5-af67-5f3f-8ec4-7329e37b7fcc",
@@ -1448,7 +1598,9 @@
       "discussed": false,
       "pages": "328",
       "lat": 55,
-      "lon": 38
+      "lon": 38,
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "ethnonyms-8f4a40bf-98f6-52a0-815f-691fdb3bb744",
@@ -1500,7 +1652,29 @@
       "discussed": true,
       "pages": "146, 151, 172, 238, 239",
       "lat": 55,
-      "lon": 38
+      "lon": 38,
+      "letter_change": false,
+      "letter": "Р"
+    },
+    {
+      "canonical_id": "ethnonyms-50034c45-bc97-50d3-b353-ba59adc54c95",
+      "head": "русы (русские)",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Упоминаются в контексте 'русско-ордынской империи'."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Упоминаются в контексте 'русско-ордынской империи'."
+      ],
+      "letter_change": false,
+      "letter": "Р"
     },
     {
       "canonical_id": "ethnonyms-7cd560ea-92f3-5a28-b8c3-401d61b36abf",
@@ -1526,7 +1700,9 @@
       "discussed": false,
       "pages": "199",
       "lat": 44,
-      "lon": 21
+      "lon": 21,
+      "letter_change": true,
+      "letter": "С"
     },
     {
       "canonical_id": "ethnonyms-be153ad9-02e1-5aa0-9c12-94558f913aba",
@@ -1552,7 +1728,9 @@
       "discussed": false,
       "pages": "52",
       "lat": 47,
-      "lon": 35
+      "lon": 35,
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "ethnonyms-38043cab-760e-5e0d-a16a-4c5e28fddbd0",
@@ -1592,7 +1770,9 @@
       "discussed": true,
       "pages": "57, 60, 84, 145",
       "lat": 50,
-      "lon": 30
+      "lon": 30,
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "ethnonyms-3c27cb9c-76df-5bb4-a024-93439eea5e49",
@@ -1620,7 +1800,9 @@
       "discussed": false,
       "pages": "200",
       "lat": 52,
-      "lon": 32
+      "lon": 32,
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "ethnonyms-fb35e2cb-fcf8-5782-9439-22fc03f3f885",
@@ -1648,7 +1830,9 @@
       "discussed": false,
       "pages": "200",
       "lat": 50,
-      "lon": 25
+      "lon": 25,
+      "letter_change": false,
+      "letter": "С"
     },
     {
       "canonical_id": "ethnonyms-ecc6ddc6-4678-5e9f-aa15-01c278af88fc",
@@ -1674,7 +1858,9 @@
       "discussed": false,
       "pages": "204",
       "lat": 55,
-      "lon": 50
+      "lon": 50,
+      "letter_change": true,
+      "letter": "Т"
     },
     {
       "canonical_id": "ethnonyms-24d0aba4-a868-53d9-8ebb-0c3b15dfbfc6",
@@ -1702,7 +1888,9 @@
       "discussed": false,
       "pages": "206",
       "lat": 49,
-      "lon": 32
+      "lon": 32,
+      "letter_change": true,
+      "letter": "У"
     },
     {
       "canonical_id": "ethnonyms-fbbe25a5-e622-5bad-8f00-b08615659537",
@@ -1742,7 +1930,9 @@
       "discussed": true,
       "pages": "59, 61, 62, 190",
       "lat": 62,
-      "lon": 26
+      "lon": 26,
+      "letter_change": true,
+      "letter": "Ф"
     },
     {
       "canonical_id": "ethnonyms-d045bd92-e47d-5e30-9e9e-9d4474527a29",
@@ -1774,7 +1964,9 @@
       "discussed": true,
       "pages": "56, 57",
       "lat": 50,
-      "lon": 5
+      "lon": 5,
+      "letter_change": false,
+      "letter": "Ф"
     },
     {
       "canonical_id": "ethnonyms-3ba84ede-0939-5b2a-96a4-7d3864b4825e",
@@ -1800,7 +1992,9 @@
       "discussed": false,
       "pages": "58",
       "lat": 46,
-      "lon": 2
+      "lon": 2,
+      "letter_change": false,
+      "letter": "Ф"
     },
     {
       "canonical_id": "ethnonyms-259f076f-edb8-5719-b981-888048a77141",
@@ -1878,7 +2072,29 @@
       "discussed": true,
       "pages": "56, 58, 60, 64, 82–84, 125, 147, 204, 238, 296",
       "lat": 46,
-      "lon": 2
+      "lon": 2,
+      "letter_change": false,
+      "letter": "Ф"
+    },
+    {
+      "canonical_id": "ethnonyms-b51fb8e2-8e99-56b0-91c8-f4e478bc6cf9",
+      "head": "хазары",
+      "aliases": [],
+      "occurrences": {
+        "mumintroll": {
+          "pages": [],
+          "contexts": [
+            "Племя, упоминаемое в «Велесовой книге»."
+          ]
+        }
+      },
+      "book_id": "mumintroll",
+      "page_list": [],
+      "contexts": [
+        "Племя, упоминаемое в «Велесовой книге»."
+      ],
+      "letter_change": true,
+      "letter": "Х"
     },
     {
       "canonical_id": "ethnonyms-6d177f65-9b59-588a-8251-afd848b3d800",
@@ -1906,7 +2122,9 @@
       "discussed": true,
       "pages": "146, 199",
       "lat": 49.8,
-      "lon": 15.5
+      "lon": 15.5,
+      "letter_change": true,
+      "letter": "Ч"
     },
     {
       "canonical_id": "ethnonyms-eac1d201-3d62-56fe-b0e6-56c6ac76e9b3",
@@ -1928,7 +2146,9 @@
       "discussed": false,
       "pages": "58",
       "lat": 48.5,
-      "lon": 9.5
+      "lon": 9.5,
+      "letter_change": true,
+      "letter": "Ш"
     },
     {
       "canonical_id": "ethnonyms-c523ab0f-0015-5653-af67-2dea9c9537de",
@@ -1956,97 +2176,9 @@
       "discussed": true,
       "pages": "59, 190",
       "lat": 60,
-      "lon": 18
-    },
-    {
-      "canonical_id": "ethnonyms-50034c45-bc97-50d3-b353-ba59adc54c95",
-      "head": "русы (русские)",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Упоминаются в контексте 'русско-ордынской империи'."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Упоминаются в контексте 'русско-ордынской империи'."
-      ]
-    },
-    {
-      "canonical_id": "ethnonyms-b6a4a12f-d2b0-5309-ba6f-3022868a4a70",
-      "head": "ордынцы",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Упоминаются вместе с русскими в теории Фоменко."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Упоминаются вместе с русскими в теории Фоменко."
-      ]
-    },
-    {
-      "canonical_id": "ethnonyms-b51fb8e2-8e99-56b0-91c8-f4e478bc6cf9",
-      "head": "хазары",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Племя, упоминаемое в «Велесовой книге»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Племя, упоминаемое в «Велесовой книге»."
-      ]
-    },
-    {
-      "canonical_id": "ethnonyms-1daa0566-129e-5f06-b65b-89d8c8fa3052",
-      "head": "арии",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Племена, фигурирующие в «Велесовой книге»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Племена, фигурирующие в «Велесовой книге»."
-      ]
-    },
-    {
-      "canonical_id": "ethnonyms-5b1fae7d-febf-56ac-8a7d-d8e8fa1a4035",
-      "head": "дасью",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [],
-          "contexts": [
-            "Племена, фигурирующие в «Велесовой книге»."
-          ]
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [],
-      "contexts": [
-        "Племена, фигурирующие в «Велесовой книге»."
-      ]
+      "lon": 18,
+      "letter_change": false,
+      "letter": "Ш"
     }
   ]
 }
