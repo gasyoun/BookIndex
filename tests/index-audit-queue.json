@@ -58,18 +58,20 @@
   "progress": {
     "v47": {
       "phase": "v4.7",
-      "phase_estimate_percent": 40.0,
+      "phase_estimate_percent": 53.7,
       "phase_estimate_note": "Queue workflow is complete; content cleanup and context expansion remain.",
       "queue_workflow_percent": 100.0,
       "queue_types_done": 8,
       "queue_types_total": 8,
       "context_coverage_percent": 17.8,
+      "effective_context_coverage_percent": 23.7,
+      "inherited_context_items": 198,
       "context_baseline_percent": 17.8,
       "context_target_min_percent": 35.0,
       "context_target_max_percent": 40.0,
-      "context_target_min_progress_percent": 50.9,
-      "context_target_max_progress_percent": 44.5,
-      "context_growth_progress_percent": 0.0
+      "context_target_min_progress_percent": 67.7,
+      "context_target_max_progress_percent": 59.2,
+      "context_growth_progress_percent": 34.3
     }
   },
   "totals": {
@@ -88,13 +90,16 @@
     "sort_inversions_count": 22,
     "cross_book_duplicate_candidates_count": 8,
     "needs_page_verification_count": 6,
+    "items_with_effective_contexts": 801,
+    "items_with_inherited_contexts": 198,
     "coverage_pct": {
       "pages": 98.9,
       "contexts": 17.8,
+      "effective_contexts": 23.7,
       "sources": 100.0,
       "editorial_flags": 0.0
     },
-    "missing_context_count": 2778,
+    "missing_context_count": 2580,
     "missing_pages_count": 37,
     "missing_source_count": 1
   },
@@ -110,7 +115,7 @@
   ],
   "queues": {
     "missing_context": {
-      "total": 2778,
+      "total": 2580,
       "items": [
         {
           "queue": "missing_context",
@@ -16111,18 +16116,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "deit",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "69, 70, 72",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/deit",
-          "canonical_id": "lexicon_reverse-d4e7cba7-0366-53fc-97ed-0810570a9c52"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "deset",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -16131,18 +16124,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/deset",
           "canonical_id": "lexicon_reverse-39be9ad1-7534-5781-84a3-514ab6a7a2da"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "deutsch",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "60, 69",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/deutsch",
-          "canonical_id": "lexicon_reverse-1cca4606-7dad-5c23-b25e-4a8db72eb8d1"
         },
         {
           "queue": "missing_context",
@@ -16207,30 +16188,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "digitu",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "68, 70",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/digitu",
-          "canonical_id": "lexicon_reverse-bb9055df-8cc5-55d6-b556-063eb48f72c6"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "digitum",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 5,
-          "pages_summary": "68, 70, 72, 75, 83",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/digitum",
-          "canonical_id": "lexicon_reverse-264d2fc6-05cd-50a1-9127-44e402619029"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "digitus",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -16239,18 +16196,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/digitus",
           "canonical_id": "lexicon_reverse-7a6d1597-ccc6-55b9-8dc9-f03fd692802d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "digtu",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "68, 69, 70",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/digtu",
-          "canonical_id": "lexicon_reverse-88ee52a2-8851-527b-9d3d-fb4a5c38d848"
         },
         {
           "queue": "missing_context",
@@ -16279,18 +16224,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "diot",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "60, 75",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/diot",
-          "canonical_id": "lexicon_reverse-18468dd6-0517-5f25-8311-f0ccbcf683f0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "doet",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -16315,30 +16248,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "doigt",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "70, 75, 85",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/doigt",
-          "canonical_id": "lexicon_reverse-10d9124c-f28b-537e-8b6b-6293fbd29f03"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "doit",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "69, 70",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/doit",
-          "canonical_id": "lexicon_reverse-391a5a10-1dbb-5e2d-8cfa-912f486cd880"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "dpit",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -16359,18 +16268,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/duet",
           "canonical_id": "lexicon_reverse-00c493a2-71ba-57f9-b839-aa7aeb01f44a"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "dwa",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "70, 82",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/dwa",
-          "canonical_id": "lexicon_reverse-ec286d8a-b98f-52eb-a9a4-d91c7b84d8dd"
         },
         {
           "queue": "missing_context",
@@ -16567,18 +16464,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "friend",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "172, 330",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/friend",
-          "canonical_id": "lexicon_reverse-a915c76c-5e3e-51f0-93bf-3ef38cda115f"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "friendship",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -16723,18 +16608,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "k-t-b",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "215, 216",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/k-t-b",
-          "canonical_id": "lexicon_reverse-3e5422d2-5705-5400-b240-cffa32704e43"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "karnayni",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -16759,30 +16632,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "kataba",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "215, 216",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/kataba",
-          "canonical_id": "lexicon_reverse-679fd6ab-f54d-595e-b0b6-e0fb6643fd19"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "katb",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "218, 232",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/katb",
-          "canonical_id": "lexicon_reverse-e4ec5e04-8fbb-5a7f-bb56-d3f2c4e023b7"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "kätib",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -16791,18 +16640,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/k%C3%A4tib",
           "canonical_id": "lexicon_reverse-2f2c0f0a-cd54-5806-8d47-9a8bce0d9c0a"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "katiba",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "216, 227",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/katiba",
-          "canonical_id": "lexicon_reverse-fd5aabdc-37db-5e83-b6c3-7ada3f31f099"
         },
         {
           "queue": "missing_context",
@@ -16819,18 +16656,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "kattaba",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "217, 227",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/kattaba",
-          "canonical_id": "lexicon_reverse-7efd4c50-63ce-5a08-9a89-163010ed8092"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "katuba",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -16839,18 +16664,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/katuba",
           "canonical_id": "lexicon_reverse-10d95b4a-8d38-51eb-b75e-52a71d3c1723"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "kaufen",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "184, 185",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/kaufen",
-          "canonical_id": "lexicon_reverse-aac0750e-999e-568b-8c40-8f29aab66830"
         },
         {
           "queue": "missing_context",
@@ -16959,18 +16772,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/kutb%C3%A4n",
           "canonical_id": "lexicon_reverse-4e57e2af-1c28-53a4-a379-93e58125cda4"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "kutiba",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "215, 217",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/kutiba",
-          "canonical_id": "lexicon_reverse-b666b295-ae8b-5c6a-81c9-48276d3db114"
         },
         {
           "queue": "missing_context",
@@ -17107,30 +16908,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "maktab",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "218, 219, 223",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/maktab",
-          "canonical_id": "lexicon_reverse-b0b5bd9d-e8a7-59a1-ba2b-02abe43da404"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "maktib",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "219, 223",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/maktib",
-          "canonical_id": "lexicon_reverse-c76269bb-2e95-5385-befc-d7580328c22b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "maktüb",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -17235,18 +17012,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/mukattab",
           "canonical_id": "lexicon_reverse-edcf72d2-b582-5967-b04b-5ca1884e3161"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "mukattib",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "218, 234",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/mukattib",
-          "canonical_id": "lexicon_reverse-cd12502d-d567-535b-996a-7a88d1a02ca7"
         },
         {
           "queue": "missing_context",
@@ -18127,18 +17892,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "sta-",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "346, 348, 349",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/sta-",
-          "canonical_id": "lexicon_reverse-8f1b195d-366b-5f98-9a77-b5f3dbb87e07"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "star",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -18523,30 +18276,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "vida",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "115, 116",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/vida",
-          "canonical_id": "lexicon_reverse-f54b0306-a7ac-5798-be4b-cda6c53623f8"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "vide",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "115, 116",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/vide",
-          "canonical_id": "lexicon_reverse-53157fad-02ca-5627-8b6a-8464a96c96ef"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "vie",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -18567,18 +18296,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/ville",
           "canonical_id": "lexicon_reverse-62d54305-9372-5624-b688-fe71f7438f59"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "vita",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "115, 116",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/vita",
-          "canonical_id": "lexicon_reverse-3bdf76ac-a82f-54f0-a0f1-35b406a6ef6d"
         },
         {
           "queue": "missing_context",
@@ -19087,18 +18804,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "ани",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "286, 287",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B0%D0%BD%D0%B8",
-          "canonical_id": "lexicon_reverse-72c5f085-183f-5e8c-96e7-035f037fed0f"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "анйа",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -19119,18 +18824,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B0%D0%BD%D0%B9%D0%B0%D0%B0%D0%BD%D0%B8",
           "canonical_id": "lexicon_reverse-a8151658-dc8a-5f95-bdc7-709b7082228d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Анна",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "286, 287",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%90%D0%BD%D0%BD%D0%B0",
-          "canonical_id": "lexicon_reverse-3628aec8-5b8a-56c9-b30b-136efcd92ae8"
         },
         {
           "queue": "missing_context",
@@ -19179,18 +18872,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B0%D0%BF%D1%82%D0%B5%D0%BA%D0%B0",
           "canonical_id": "lexicon_reverse-a4eee9a8-6b94-53df-8a55-7b5b90d73cfb"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "арбуз",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "187, 188, 245",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B0%D1%80%D0%B1%D1%83%D0%B7",
-          "canonical_id": "lexicon_reverse-de2734b8-46a3-58b7-87ed-96871bb18b05"
         },
         {
           "queue": "missing_context",
@@ -19339,18 +19020,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "белый",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "277, 345",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B1%D0%B5%D0%BB%D1%8B%D0%B9",
-          "canonical_id": "lexicon_reverse-6e57efbe-5faf-5b96-9e82-ed7ba5705580"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "берег",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -19459,18 +19128,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "боб",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "103, 109",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B1%D0%BE%D0%B1",
-          "canonical_id": "lexicon_reverse-2ebe1a5c-4e1b-5888-8168-a47385a7a367"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "боба",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -19515,30 +19172,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B1%D0%BE%D0%BB%D1%82%D0%B0%D1%82%D1%8C",
           "canonical_id": "lexicon_reverse-55ee3c19-5708-5bdb-94a6-f1c87577f25d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "бондон",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "364, 365",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B1%D0%BE%D0%BD%D0%B4%D0%BE%D0%BD",
-          "canonical_id": "lexicon_reverse-079ceb98-7f6a-50dc-b8ba-527be73775cd"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Борис",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "293, 294, 295",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%91%D0%BE%D1%80%D0%B8%D1%81",
-          "canonical_id": "lexicon_reverse-9a05da66-f6ac-5747-83cc-dfd64ccbe844"
         },
         {
           "queue": "missing_context",
@@ -19759,18 +19392,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "быть",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "260, 353",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B1%D1%8B%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-13af9786-c17e-5854-a5b7-28eabfb4bfb5"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "бьлыи",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -19879,30 +19500,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "Вася",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "48, 49",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%92%D0%B0%D1%81%D1%8F",
-          "canonical_id": "lexicon_reverse-75fdf01f-6f7f-55df-a6bf-7d48fc499f53"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "вася",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "48, 49",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%B0%D1%81%D1%8F",
-          "canonical_id": "lexicon_reverse-58216653-f598-5909-8811-b15494498022"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "вахати",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -19927,18 +19524,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "веверица",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "298, 315",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%B5%D0%B2%D0%B5%D1%80%D0%B8%D1%86%D0%B0",
-          "canonical_id": "lexicon_reverse-08033ab8-59b1-5a1b-a2a0-4d9d4df6a35b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "веверицъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -19959,18 +19544,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%B5%D0%B2%D0%B5%D1%80%D0%B8%D1%86%D1%8C",
           "canonical_id": "lexicon_reverse-bc3df3d0-a2a1-59cd-9378-e9ea1f5d2bd0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "ведать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "30, 138",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%B5%D0%B4%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-be6aca33-ac81-5fd0-9972-0cc93784277d"
         },
         {
           "queue": "missing_context",
@@ -20019,18 +19592,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%B5%D0%B4%D0%B5%D1%82%D1%8A",
           "canonical_id": "lexicon_reverse-65a75d3c-e0c9-5069-b5df-7fa2ef010acf"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "ведь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "22, 41",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%B5%D0%B4%D1%8C",
-          "canonical_id": "lexicon_reverse-13a3d7e8-2da3-5322-b64e-06890b9a9c5f"
         },
         {
           "queue": "missing_context",
@@ -20479,30 +20040,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "Видимирское озеро",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "294, 297",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%92%D0%B8%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D1%81%D0%BA%D0%BE%D0%B5%20%D0%BE%D0%B7%D0%B5%D1%80%D0%BE",
-          "canonical_id": "lexicon_reverse-678623ef-fd73-5b48-8f4b-4bcb332ed4ef"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Видомирь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 7,
-          "pages_summary": "7 pages; first: 294, 295, 297, 298, 299",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%92%D0%B8%D0%B4%D0%BE%D0%BC%D0%B8%D1%80%D1%8C",
-          "canonical_id": "lexicon_reverse-d9277343-e41f-5600-9a15-1c900af44409"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "вино",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -20515,18 +20052,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "виновате",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "278, 279",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%B8%D0%BD%D0%BE%D0%B2%D0%B0%D1%82%D0%B5",
-          "canonical_id": "lexicon_reverse-9b23e576-f08a-50e6-9571-6dd79ab14e38"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "виноватъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -20535,18 +20060,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%B8%D0%BD%D0%BE%D0%B2%D0%B0%D1%82%D1%8A",
           "canonical_id": "lexicon_reverse-da9c6947-4d5c-5ce0-b6a6-a825b0d1f876"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "вихаайа",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "159, 165",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%B8%D1%85%D0%B0%D0%B0%D0%B9%D0%B0",
-          "canonical_id": "lexicon_reverse-46e8d866-7f2d-521f-a1e7-dc6e00f73cff"
         },
         {
           "queue": "missing_context",
@@ -20791,18 +20304,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "восемь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 5,
-          "pages_summary": "253, 254, 255, 257, 258",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%BE%D1%81%D0%B5%D0%BC%D1%8C",
-          "canonical_id": "lexicon_reverse-84d160f7-67f1-52e5-9664-d281a46e5625"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "восемьдесят",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -20835,18 +20336,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%BE%D1%81%D1%81%D0%B5%D0%B4%D0%B0%D0%B5%D1%82",
           "canonical_id": "lexicon_reverse-dd201dce-54e6-558b-bd74-283ebdb6927a"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "восстать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "349, 350",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D0%BE%D1%81%D1%81%D1%82%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-eee5b745-1af0-575a-8c37-f41853017280"
         },
         {
           "queue": "missing_context",
@@ -20971,18 +20460,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "встал",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "349, 351, 353",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D1%81%D1%82%D0%B0%D0%BB",
-          "canonical_id": "lexicon_reverse-ab8408a9-492d-5e8b-bb3b-e81b8f86afd4"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "встала",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -21007,18 +20484,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "встать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "349, 350",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D1%81%D1%82%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-8d4baf9f-6402-568c-9c1d-8d0d185c8d94"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "встрепенуться",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -21027,18 +20492,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D1%81%D1%82%D1%80%D0%B5%D0%BF%D0%B5%D0%BD%D1%83%D1%82%D1%8C%D1%81%D1%8F",
           "canonical_id": "lexicon_reverse-0b230456-1d3c-506a-8afd-7c953f81b378"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "вчера",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "31, 32",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D1%87%D0%B5%D1%80%D0%B0",
-          "canonical_id": "lexicon_reverse-ee1911cd-e8ea-520c-afb0-d92b45ad1224"
         },
         {
           "queue": "missing_context",
@@ -21111,18 +20564,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D1%8B%D0%BF%D0%B8%D1%82%D0%BE",
           "canonical_id": "lexicon_reverse-6e8b295f-cfab-544d-9f43-09d9955fcd01"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "выроути",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "309, 310, 311",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D1%8B%D1%80%D0%BE%D1%83%D1%82%D0%B8",
-          "canonical_id": "lexicon_reverse-7f4e7dc1-df17-5ad3-995a-ea4bcb8f5549"
         },
         {
           "queue": "missing_context",
@@ -21231,18 +20672,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B2%D1%8B%D1%81%D0%B5%D1%87%D1%8C",
           "canonical_id": "lexicon_reverse-321873b8-fe54-5e6f-a367-588cf3680d5b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Вюртемберг",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "246, 269",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%92%D1%8E%D1%80%D1%82%D0%B5%D0%BC%D0%B1%D0%B5%D1%80%D0%B3",
-          "canonical_id": "lexicon_reverse-45ea8bca-6ccf-538f-ae47-a864580f46b7"
         },
         {
           "queue": "missing_context",
@@ -21439,18 +20868,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "Галлия",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "56, 126",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%93%D0%B0%D0%BB%D0%BB%D0%B8%D1%8F",
-          "canonical_id": "lexicon_reverse-8d792996-9f7a-5e2a-87de-baec282259cb"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "Гвадалквивир",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -21475,18 +20892,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "где-то",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "16, 18",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%B4%D0%B5-%D1%82%D0%BE",
-          "canonical_id": "lexicon_reverse-f8de0895-f4bc-5fc5-a1ea-5a24c8a4cb24"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "Гейне",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -21495,54 +20900,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%93%D0%B5%D0%B9%D0%BD%D0%B5",
           "canonical_id": "lexicon_reverse-0a6b0ac2-1d45-5ca2-bcc8-a136f0250885"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "география",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "369, 370",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%B5%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F",
-          "canonical_id": "lexicon_reverse-73f58fa7-8017-55d2-b162-0279fd87a383"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "геогра́фия",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "370",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%B5%D0%BE%D0%B3%D1%80%D0%B0%CC%81%D1%84%D0%B8%D1%8F",
-          "canonical_id": "lexicon_reverse-a0f245de-e2db-5e43-b4c6-b3fdc8ad69ff"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "географи́я",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "369",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%B5%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%CC%81%D1%8F",
-          "canonical_id": "lexicon_reverse-2ec18ba0-7b52-56a5-9df2-1d90488541e2"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Германия",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "59, 60",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%93%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D1%8F",
-          "canonical_id": "lexicon_reverse-822cb45a-6005-588b-a80b-ea5706bf8fe4"
         },
         {
           "queue": "missing_context",
@@ -21591,30 +20948,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BB%D0%BE%D0%B1-%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9",
           "canonical_id": "lexicon_reverse-b672d881-360e-515c-a56f-c0da406ed664"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "глобальный",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "269, 270",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BB%D0%BE%D0%B1%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9",
-          "canonical_id": "lexicon_reverse-7c0fb695-b0c6-5a0e-a3e7-2336585ea8eb"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "глобус",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "245, 269, 270",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BB%D0%BE%D0%B1%D1%83%D1%81",
-          "canonical_id": "lexicon_reverse-43ff7d9b-aa93-5428-8273-05d264fb9541"
         },
         {
           "queue": "missing_context",
@@ -21691,30 +21024,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "говорить",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "260, 261",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D0%B2%D0%BE%D1%80%D0%B8%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-cae87d5c-0d1b-5bbb-b19f-eabf5096e4cd"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "голов",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "239, 253",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2",
-          "canonical_id": "lexicon_reverse-2c84b583-3a88-54aa-be56-b0399b9d28b8"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "голов-ъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -21723,18 +21032,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2-%D1%8A",
           "canonical_id": "lexicon_reverse-55b72c72-5f4d-5208-97c0-416108be8b51"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "голова",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "193, 239",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%B0",
-          "canonical_id": "lexicon_reverse-42abd7f0-e06f-5c77-9fff-e5ae2ec78bae"
         },
         {
           "queue": "missing_context",
@@ -21751,18 +21048,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "голову",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "15, 239",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%83",
-          "canonical_id": "lexicon_reverse-16defd1d-070a-5592-8ca4-da29ae46257e"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "головъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -21771,54 +21056,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8A",
           "canonical_id": "lexicon_reverse-50d3655a-5b8e-524f-aad5-0053af96f31f"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "городе",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "202, 279",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B5",
-          "canonical_id": "lexicon_reverse-65e2ec82-bf63-5e33-9411-65f07badec9f"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "городъ",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "202, 278, 279",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%8A",
-          "canonical_id": "lexicon_reverse-37410b9b-88d0-51ee-a2a6-18d42a2a019e"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "господа",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "295, 296",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D1%81%D0%BF%D0%BE%D0%B4%D0%B0",
-          "canonical_id": "lexicon_reverse-6e6cbd8f-b8c4-571a-b1d9-1393ffa0ddab"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "господарь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "316, 317, 320",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D1%81%D0%BF%D0%BE%D0%B4%D0%B0%D1%80%D1%8C",
-          "canonical_id": "lexicon_reverse-6ed2559b-f737-532b-ba95-e1ef4d1e1c07"
         },
         {
           "queue": "missing_context",
@@ -21847,18 +21084,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "гость",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "24, 312, 342, 364",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D1%81%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-6104eb59-82fb-5269-8928-205260b0c043"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "гостья",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -21867,18 +21092,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D1%81%D1%82%D1%8C%D1%8F",
           "canonical_id": "lexicon_reverse-d9450894-cca4-559a-952d-78d4881dd4c0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "гостя",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "312, 313, 364",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D0%BE%D1%81%D1%82%D1%8F",
-          "canonical_id": "lexicon_reverse-eda866b6-6082-58f7-8252-9e7cd873523f"
         },
         {
           "queue": "missing_context",
@@ -21955,18 +21168,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "гривна",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "310, 314",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D1%80%D0%B8%D0%B2%D0%BD%D0%B0",
-          "canonical_id": "lexicon_reverse-8d6b14c5-9f60-5a32-9037-d44b4af831aa"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "гривне",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -21987,18 +21188,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D1%80%D0%B8%D0%B2%D0%BD%D1%83",
           "canonical_id": "lexicon_reverse-2979c798-fd98-53fe-9a79-ad770748999a"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "гривны",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "310, 311, 314",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D1%80%D0%B8%D0%B2%D0%BD%D1%8B",
-          "canonical_id": "lexicon_reverse-38898968-6de6-5e0a-bacd-22aac2bd08b8"
         },
         {
           "queue": "missing_context",
@@ -22051,18 +21240,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "гроза",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "263, 264, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D1%80%D0%BE%D0%B7%D0%B0",
-          "canonical_id": "lexicon_reverse-122b6398-6d48-53d5-b950-c132f0e4da3c"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "грозам",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -22083,18 +21260,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D1%80%D0%BE%D0%B7%D0%B0%D0%BC%D1%8A",
           "canonical_id": "lexicon_reverse-f4a71066-de5e-5a80-821b-95ffa827feab"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "грозы",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "263, 264, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D1%80%D0%BE%D0%B7%D1%8B",
-          "canonical_id": "lexicon_reverse-7475d496-1593-5fd4-a76a-9137929e741a"
         },
         {
           "queue": "missing_context",
@@ -22131,18 +21296,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D1%80%D1%85",
           "canonical_id": "lexicon_reverse-1f59fd32-ce82-5b7f-94f7-b7b493eb060f"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "грхнаати",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "158, 159, 160, 167",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B3%D1%80%D1%85%D0%BD%D0%B0%D0%B0%D1%82%D0%B8",
-          "canonical_id": "lexicon_reverse-e68f5a6d-92c0-5ee7-aca1-01fdf9d58676"
         },
         {
           "queue": "missing_context",
@@ -22255,18 +21408,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "даш",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "302, 303",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B0%D1%88",
-          "canonical_id": "lexicon_reverse-31d8463c-289a-5315-a2f0-b073a509a6c3"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "два",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -22275,30 +21416,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B2%D0%B0",
           "canonical_id": "lexicon_reverse-0040d35f-2667-57ca-89b3-14956cbf0ab3"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "двери",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 5,
-          "pages_summary": "316, 317, 318, 319, 320",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B2%D0%B5%D1%80%D0%B8",
-          "canonical_id": "lexicon_reverse-235b3a59-8184-5ba7-8ed2-835b9d856a00"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "двьри",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "317, 320",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B2%D1%8C%D1%80%D0%B8",
-          "canonical_id": "lexicon_reverse-56f37139-0bde-5ee5-93e2-dcf575adb780"
         },
         {
           "queue": "missing_context",
@@ -22335,30 +21452,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D0%BD%D0%B0%D0%B4%D1%86%D0%B0%D1%82%D1%8C",
           "canonical_id": "lexicon_reverse-3f84790c-f14a-59d6-960a-4da3dc8d9d6a"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "девять",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 6,
-          "pages_summary": "169, 253, 254, 255, 257, 258",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-b9516802-e91a-5a5f-893c-c5dc61a52af3"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "девятью",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "254, 255",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8C%D1%8E",
-          "canonical_id": "lexicon_reverse-646d68a6-3039-5218-b0b9-9cfa69b86b61"
         },
         {
           "queue": "missing_context",
@@ -22447,54 +21540,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "десят",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "253, 256",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B5%D1%81%D1%8F%D1%82",
-          "canonical_id": "lexicon_reverse-59909ce2-7a51-5c88-a877-ba2342dd70fc"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "десят-",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "253",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B5%D1%81%D1%8F%D1%82-",
-          "canonical_id": "lexicon_reverse-c89de457-bbe2-5522-96f4-1a92c9ce91ba"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "десятерни́к",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "237, 238",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B5%D1%81%D1%8F%D1%82%D0%B5%D1%80%D0%BD%D0%B8%CC%81%D0%BA",
-          "canonical_id": "lexicon_reverse-708aa87e-e91d-557d-b2ca-d21bbe193c74"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "десятерника́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "237, 238",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B5%D1%81%D1%8F%D1%82%D0%B5%D1%80%D0%BD%D0%B8%D0%BA%D0%B0%CC%81",
-          "canonical_id": "lexicon_reverse-223742c1-acab-51f5-a948-03671ff61e6a"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "десятернико́в",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -22567,42 +21612,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "десять",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 6,
-          "pages_summary": "253, 254, 255, 257, 258, 296",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B5%D1%81%D1%8F%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-82becedb-03ca-581d-825c-7bb80acda253"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "десятью",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "254, 255",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B5%D1%81%D1%8F%D1%82%D1%8C%D1%8E",
-          "canonical_id": "lexicon_reverse-a9bd4c21-7047-5c1b-9f6f-29e00e1dced9"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "джии",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "154, 155",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B6%D0%B8%D0%B8",
-          "canonical_id": "lexicon_reverse-444a4828-4493-526b-a195-11e22fa96fd4"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "джиир",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -22611,42 +21620,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B6%D0%B8%D0%B8%D1%80",
           "canonical_id": "lexicon_reverse-f70235d7-e847-5637-b62f-a8c61e2d653b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "джиирнаа",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "155, 160, 162, 164",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B6%D0%B8%D0%B8%D1%80%D0%BD%D0%B0%D0%B0",
-          "canonical_id": "lexicon_reverse-b3236c40-80ac-55fb-b8ca-1b79a00a33e3"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "джиирнаани",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 5,
-          "pages_summary": "155, 159, 160, 164, 165",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B6%D0%B8%D0%B8%D1%80%D0%BD%D0%B0%D0%B0%D0%BD%D0%B8",
-          "canonical_id": "lexicon_reverse-d3061641-2afc-5c87-bfc6-481a5a1e1b47"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "джи́ирнаани",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "165",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%B6%D0%B8%CC%81%D0%B8%D1%80%D0%BD%D0%B0%D0%B0%D0%BD%D0%B8",
-          "canonical_id": "lexicon_reverse-473cda62-18d2-5ff8-80d4-0363e95a38f4"
         },
         {
           "queue": "missing_context",
@@ -22683,18 +21656,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%BE%20%D0%BF%D1%8F%D1%82%D0%B8%20%D1%83%D1%82%D1%80%D0%B0%CC%81",
           "canonical_id": "lexicon_reverse-7dac72cd-ccb7-59db-addc-c4b763c5610e"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "до утра́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "381, 383",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%BE%20%D1%83%D1%82%D1%80%D0%B0%CC%81",
-          "canonical_id": "lexicon_reverse-90e879bc-d71a-5973-a953-aeb8aa1d5d84"
         },
         {
           "queue": "missing_context",
@@ -22759,18 +21720,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "дом",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "152, 251, 253",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%BE%D0%BC",
-          "canonical_id": "lexicon_reverse-3d84fd14-d942-5b45-bbd5-988a16da9bdf"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "дом-ъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -22791,18 +21740,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%BE%D0%BC%D0%BE%D0%B2%D0%B0%D1%8F",
           "canonical_id": "lexicon_reverse-ba2e25f8-dfcf-5426-a75a-a63dd4757c30"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "домовой",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "252, 258",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%BE%D0%BC%D0%BE%D0%B2%D0%BE%D0%B9",
-          "canonical_id": "lexicon_reverse-39e4ad19-0a8e-57a3-8054-a55cac483cf0"
         },
         {
           "queue": "missing_context",
@@ -22863,18 +21800,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%BB",
           "canonical_id": "lexicon_reverse-e15baaaf-3fe0-5043-a4d8-1b53ff3ca9dc"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "достать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "351, 353",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-6c7c5b64-774a-50b4-9332-4ba7194cebed"
         },
         {
           "queue": "missing_context",
@@ -23119,18 +22044,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "есмь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 8,
-          "pages_summary": "8 pages; first: 9, 25, 26, 27, 28",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B5%D1%81%D0%BC%D1%8C",
-          "canonical_id": "lexicon_reverse-1a3e4495-d4eb-5281-9e44-63f85141e73d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "есте",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -23191,18 +22104,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "жена",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "97, 112, 263, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B6%D0%B5%D0%BD%D0%B0",
-          "canonical_id": "lexicon_reverse-cbdf006e-39fb-5a89-bd37-5b7ac04ba9a0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "женамъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -23223,30 +22124,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B6%D1%91%D0%BD%D0%B0%D0%BC%D1%8A",
           "canonical_id": "lexicon_reverse-4d455919-2ecf-54ea-b869-48f08e7be41c"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "жены",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "263",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B6%D0%B5%D0%BD%D1%8B",
-          "canonical_id": "lexicon_reverse-a1f6fb8e-3f37-598b-a10b-4ff6b7c1d8c6"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "жёны",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "100, 263, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B6%D1%91%D0%BD%D1%8B",
-          "canonical_id": "lexicon_reverse-c74eb368-e082-5c70-a48f-4524b851496d"
         },
         {
           "queue": "missing_context",
@@ -23467,30 +22344,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "завтра",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "374, 375",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D0%B2%D1%82%D1%80%D0%B0",
-          "canonical_id": "lexicon_reverse-24176c06-ecbc-51d8-925e-b0f35c435ace"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "за́втра",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "374, 375, 381, 382",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%CC%81%D0%B2%D1%82%D1%80%D0%B0",
-          "canonical_id": "lexicon_reverse-75e13d72-13c6-5193-b6fd-813c192438f5"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "за́втреня",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -23575,18 +22428,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "заездить",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "357, 359",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D0%B5%D0%B7%D0%B4%D0%B8%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-564fd7d6-2822-5330-9eaf-5ad874d7bd0a"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "заезжено",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -23631,18 +22472,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D0%B6%D0%B8%D0%B2%D0%B0%D0%BB",
           "canonical_id": "lexicon_reverse-49b9097c-b103-53f6-a2e4-123374cd0b6d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "зажить",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "357, 359",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D0%B6%D0%B8%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-22190538-fff9-52a5-9615-72faac3130e5"
         },
         {
           "queue": "missing_context",
@@ -23787,18 +22616,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D1%82%D1%8A",
           "canonical_id": "lexicon_reverse-b1d517d8-6ff4-5bd9-acc3-319b777b3878"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "замъке",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "316, 317",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D0%BC%D1%8A%D0%BA%D0%B5",
-          "canonical_id": "lexicon_reverse-9c375241-587c-5d9e-a4ec-f1f47844cead"
         },
         {
           "queue": "missing_context",
@@ -24055,30 +22872,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "зау́тра",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "374, 375, 381, 382",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D1%83%CC%81%D1%82%D1%80%D0%B0",
-          "canonical_id": "lexicon_reverse-b238a71c-125e-52d1-a92e-b2adf350bb7f"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "заутра",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "389",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D1%83%D1%82%D1%80%D0%B0",
-          "canonical_id": "lexicon_reverse-eddfef77-9322-5f53-a62c-ae1f5be041b3"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "зау́треня",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -24111,18 +22904,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D1%87%D0%B5%D0%BC-%D1%82%D0%BE",
           "canonical_id": "lexicon_reverse-3d8bcb6c-fedf-5171-9f33-f15be427514b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "зачитать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "356, 358",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B0%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-8ebe61ae-a91d-52a0-a5ab-8a14b93b73ab"
         },
         {
           "queue": "missing_context",
@@ -24183,54 +22964,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B5%D0%BC%D0%BB%D0%B8%CC%81",
           "canonical_id": "lexicon_reverse-9668bf19-8657-59e4-b6ef-c06730744893"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "зёрна",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "263, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D1%91%D1%80%D0%BD%D0%B0",
-          "canonical_id": "lexicon_reverse-0b5dfed1-dc09-5155-8d25-bebe36cff853"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "зерно",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "263, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B5%D1%80%D0%BD%D0%BE",
-          "canonical_id": "lexicon_reverse-91d819fa-9ecb-5de7-901f-0c76e6f66eed"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "зиян",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "189, 208, 209",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B8%D1%8F%D0%BD",
-          "canonical_id": "lexicon_reverse-9ec391ff-a998-5d85-a0ff-11d0435ad8c5"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "зиять",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "208, 209",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B7%D0%B8%D1%8F%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-7ed8211d-3a89-5fd8-aea0-31e2fe0c54a4"
         },
         {
           "queue": "missing_context",
@@ -24451,30 +23184,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "и́дет",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "381",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%CC%81%D0%B4%D0%B5%D1%82",
-          "canonical_id": "lexicon_reverse-3e7700f5-dcf6-5591-b813-77befcccdcd7"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "идёт",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "160, 382",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%D0%B4%D1%91%D1%82",
-          "canonical_id": "lexicon_reverse-7986a1ca-9f11-56d8-9920-b2f97fbd82f4"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "идеть",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -24595,30 +23304,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "изумруд",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "185, 188",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%D0%B7%D1%83%D0%BC%D1%80%D1%83%D0%B4",
-          "canonical_id": "lexicon_reverse-9d0ca69a-4198-5033-9037-1f7b1a1fe138"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "изъян",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "188, 208",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%D0%B7%D1%8A%D1%8F%D0%BD",
-          "canonical_id": "lexicon_reverse-de6c1d70-2daa-5e3c-b32f-6a7033c24d6f"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "изъятъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -24627,42 +23312,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%D0%B7%D1%8A%D1%8F%D1%82%D1%8A",
           "canonical_id": "lexicon_reverse-61335237-2c7e-572d-b0a5-ae3126d6f4fa"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "или",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "361, 362, 385",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%D0%BB%D0%B8",
-          "canonical_id": "lexicon_reverse-f56cf8da-6715-5b62-9ee2-64ed4ad3dbb7"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "и́ли",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "361, 362, 385, 387",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%CC%81%D0%BB%D0%B8",
-          "canonical_id": "lexicon_reverse-0d5c8131-1235-552f-9015-dccb20b0653d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "или́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 7,
-          "pages_summary": "7 pages; first: 361, 362, 383, 385, 387",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%D0%BB%D0%B8%CC%81",
-          "canonical_id": "lexicon_reverse-cb6c22ff-2f16-57f2-ab98-4600cc257d69"
         },
         {
           "queue": "missing_context",
@@ -24691,30 +23340,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "и́наче",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "380, 384",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%CC%81%D0%BD%D0%B0%D1%87%D0%B5",
-          "canonical_id": "lexicon_reverse-25812cfb-5d12-5dac-8264-d29b33c4c5c1"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "ина́че",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "380, 384",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%D0%BD%D0%B0%CC%81%D1%87%D0%B5",
-          "canonical_id": "lexicon_reverse-43578fd8-720a-535d-b6c6-46d37a979145"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "инде",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -24723,18 +23348,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%B8%D0%BD%D0%B4%D0%B5",
           "canonical_id": "lexicon_reverse-19b1a2f9-8a2c-5fd7-9c8c-eaade6319cf2"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Индия",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "135, 141",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%98%D0%BD%D0%B4%D0%B8%D1%8F",
-          "canonical_id": "lexicon_reverse-fa477e79-360b-51f4-afa2-75144035939f"
         },
         {
           "queue": "missing_context",
@@ -25123,30 +23736,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "княже",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "31, 33",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BA%D0%BD%D1%8F%D0%B6%D0%B5",
-          "canonical_id": "lexicon_reverse-6fd1e873-570b-55d9-98a7-918260a25790"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "князь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "184, 185",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BA%D0%BD%D1%8F%D0%B7%D1%8C",
-          "canonical_id": "lexicon_reverse-65aa8cf2-a984-567e-a56b-02877ecf1e93"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "ковёр",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -25315,30 +23904,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "коровы",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "202",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BA%D0%BE%D1%80%D0%BE%D0%B2%D1%8B",
-          "canonical_id": "lexicon_reverse-797c2a93-557c-5c46-9fc2-299caae76f3c"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Коровы",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "278",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%9A%D0%BE%D1%80%D0%BE%D0%B2%D1%8B",
-          "canonical_id": "lexicon_reverse-e15cd7b3-bb45-565c-a18a-ad4911ac4fb9"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "котёл",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -25363,18 +23928,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "красота",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "263, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BA%D1%80%D0%B0%D1%81%D0%BE%D1%82%D0%B0",
-          "canonical_id": "lexicon_reverse-683dfb62-6bea-542f-b376-e3d4627516f0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "красотамъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -25383,18 +23936,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BA%D1%80%D0%B0%D1%81%D0%BE%D1%82%D0%B0%D0%BC%D1%8A",
           "canonical_id": "lexicon_reverse-89083d9c-3dcd-58c8-bf68-896486f90af0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "красоты",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "263, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BA%D1%80%D0%B0%D1%81%D0%BE%D1%82%D1%8B",
-          "canonical_id": "lexicon_reverse-d860efe7-4c99-528e-b644-304a837089bd"
         },
         {
           "queue": "missing_context",
@@ -25443,30 +23984,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BA%D1%82%D0%BE-%D0%BB%D0%B8%D0%B1%D0%BE",
           "canonical_id": "lexicon_reverse-4288d6dc-5a71-5d65-95e8-f4332f71aca1"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "кто-нибудь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "17, 330",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BA%D1%82%D0%BE-%D0%BD%D0%B8%D0%B1%D1%83%D0%B4%D1%8C",
-          "canonical_id": "lexicon_reverse-6accc498-17a9-512b-998b-b1b57d68757b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "кто-то",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "16, 17",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BA%D1%82%D0%BE-%D1%82%D0%BE",
-          "canonical_id": "lexicon_reverse-1df6c79e-2033-5fca-871a-dda61b8e0b64"
         },
         {
           "queue": "missing_context",
@@ -26131,42 +24648,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "Михаил",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "372, 374",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB",
-          "canonical_id": "lexicon_reverse-6aa32599-8a84-5cb8-8584-78ec4fe30084"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Миха́ил",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "373, 383",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%9C%D0%B8%D1%85%D0%B0%CC%81%D0%B8%D0%BB",
-          "canonical_id": "lexicon_reverse-82dec13c-70bc-562d-9cc3-df6030fa43e9"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Михаи́л",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "372, 374, 383",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%CC%81%D0%BB",
-          "canonical_id": "lexicon_reverse-4e2e807e-1824-51af-846d-31df9d3d8722"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "Миха́йла",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -26175,30 +24656,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%9C%D0%B8%D1%85%D0%B0%CC%81%D0%B9%D0%BB%D0%B0",
           "canonical_id": "lexicon_reverse-7c9f2b57-e686-56dc-8c79-17aaf33d5460"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Михаилович",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "372",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB%D0%BE%D0%B2%D0%B8%D1%87",
-          "canonical_id": "lexicon_reverse-24472df6-fb45-5c14-ac77-daf23da32f14"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Михайлович",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "372, 373",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87",
-          "canonical_id": "lexicon_reverse-557d016c-56db-59c7-b276-8777f8b93bb5"
         },
         {
           "queue": "missing_context",
@@ -26283,18 +24740,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BC%D0%BE%D0%BB%D1%87%D0%B8%CC%81%D1%88%D1%8C",
           "canonical_id": "lexicon_reverse-b666ba20-89a0-55ea-9d61-f90401717a53"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "море",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "263, 265, 277, 278",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BC%D0%BE%D1%80%D0%B5",
-          "canonical_id": "lexicon_reverse-bc9e281e-0b2d-5bd2-b859-11e3c6915f7b"
         },
         {
           "queue": "missing_context",
@@ -26719,18 +25164,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "наро",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "160, 167",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BD%D0%B0%D1%80%D0%BE",
-          "canonical_id": "lexicon_reverse-c8f6f2c3-b82a-546e-b816-e53703d34db2"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "народ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -26823,42 +25256,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BD%D0%B0%D1%81%D1%82%D1%83%D0%BF%D0%B8%D0%BB%D0%BE",
           "canonical_id": "lexicon_reverse-696685a0-33c1-5bdc-ac47-daa706fbd8c8"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "начал",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "241, 262",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BD%D0%B0%D1%87%D0%B0%D0%BB",
-          "canonical_id": "lexicon_reverse-3b646d9d-0bc0-5c5c-9327-6f45e949ecda"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "на́чал",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "259",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BD%D0%B0%CC%81%D1%87%D0%B0%D0%BB",
-          "canonical_id": "lexicon_reverse-df18d6b1-8ff6-5e38-93cd-90be286f138b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "нача́л",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "259",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BD%D0%B0%D1%87%D0%B0%CC%81%D0%BB",
-          "canonical_id": "lexicon_reverse-92fa7739-3f99-578c-ba2f-1643e2f0f610"
         },
         {
           "queue": "missing_context",
@@ -26991,30 +25388,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BD%D0%B5%D1%81%D0%B5%D1%82%D1%8C",
           "canonical_id": "lexicon_reverse-52b18027-65b7-53b1-a2fa-c4e621b100f0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "неу́жели",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "361",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BD%D0%B5%D1%83%CC%81%D0%B6%D0%B5%D0%BB%D0%B8",
-          "canonical_id": "lexicon_reverse-84a798e9-19e9-5655-bd10-8ec15e7183e2"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "неужели",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "336, 337",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BD%D0%B5%D1%83%D0%B6%D0%B5%D0%BB%D0%B8",
-          "canonical_id": "lexicon_reverse-1b0d113f-1a2c-54a7-b9b9-132035445c58"
         },
         {
           "queue": "missing_context",
@@ -27223,18 +25596,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "орёл",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "378, 379",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BE%D1%80%D1%91%D0%BB",
-          "canonical_id": "lexicon_reverse-a0f518f5-9b5b-5f54-aa18-857247e446d7"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "Оренбург",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -27411,18 +25772,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D0%B0%D0%BB%D0%BA",
           "canonical_id": "lexicon_reverse-c71d8afe-7715-5c70-afb3-4e3fb77773f7"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "палка",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "368, 380",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D0%B0%D0%BB%D0%BA%D0%B0",
-          "canonical_id": "lexicon_reverse-efb9cc21-2bfa-56b3-9838-3c033cd262cd"
         },
         {
           "queue": "missing_context",
@@ -27763,18 +26112,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "перестать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "351, 352, 353",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D0%B5%D1%80%D0%B5%D1%81%D1%82%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-235409df-83e9-5327-803f-18f2d4c12f0d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "переть",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -27795,18 +26132,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D0%B5%D1%81%D0%BA%D0%B0",
           "canonical_id": "lexicon_reverse-9aeff4c0-2329-5839-badd-cac772ed8a84"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "песок",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "103, 108",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D0%B5%D1%81%D0%BE%D0%BA",
-          "canonical_id": "lexicon_reverse-85b5faf6-5efd-5615-afbe-9f24c8baa6ca"
         },
         {
           "queue": "missing_context",
@@ -27987,18 +26312,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D0%BE%D0%B9%D0%B4%D0%B8",
           "canonical_id": "lexicon_reverse-a196088e-b018-5829-9547-8dcb24e76c85"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "полк",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "184, 185",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D0%BE%D0%BB%D0%BA",
-          "canonical_id": "lexicon_reverse-12ca75cb-ddd9-50a8-926b-dab027fe28b5"
         },
         {
           "queue": "missing_context",
@@ -28191,18 +26504,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D0%BE%D1%81%D1%82",
           "canonical_id": "lexicon_reverse-9b3952a2-03a4-5d52-838f-d3c7a8ac4973"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "поток",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "102, 109",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D0%BE%D1%82%D0%BE%D0%BA",
-          "canonical_id": "lexicon_reverse-b9945504-7a69-5bab-b930-7f7103a1a226"
         },
         {
           "queue": "missing_context",
@@ -28447,18 +26748,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "пристать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "349, 353",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D1%80%D0%B8%D1%81%D1%82%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-514a2ce8-4668-5eb2-80ab-cbd090cbe8ff"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "про",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -28479,18 +26768,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D1%80%D0%BE%CC%81%20%D1%8D%D1%82%D0%BE",
           "canonical_id": "lexicon_reverse-05ab591f-fe8b-5a1a-a966-e83de1a6755b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "проговорил",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "261, 268",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D1%80%D0%BE%D0%B3%D0%BE%D0%B2%D0%BE%D1%80%D0%B8%D0%BB",
-          "canonical_id": "lexicon_reverse-9bc16c9e-6fd0-51ce-9b6e-335a5e14e6c9"
         },
         {
           "queue": "missing_context",
@@ -28603,18 +26880,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "проститъ",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "343, 345",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%B8%D1%82%D1%8A",
-          "canonical_id": "lexicon_reverse-a50bd305-9b87-5ea1-90d5-d9ab670f0111"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "простоволосый",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -28695,18 +26960,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D1%80%D0%BE%D1%82%D0%B8%CC%81%D0%B2%D1%83",
           "canonical_id": "lexicon_reverse-a30de062-3430-5708-b7df-b5457c614fa0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "прощение",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "343, 347",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D1%80%D0%BE%D1%89%D0%B5%D0%BD%D0%B8%D0%B5",
-          "canonical_id": "lexicon_reverse-66f3feeb-b974-54d1-ab32-de5b70365d2a"
         },
         {
           "queue": "missing_context",
@@ -28839,30 +27092,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D1%8F%D1%82%D1%8A",
           "canonical_id": "lexicon_reverse-c97867b0-a660-5d4f-b0b8-53110e00479d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "пять",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "253, 254",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D1%8F%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-ebdb2ead-b2a8-5b87-8a41-62c09f838a27"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "пятьдесят",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "256, 257",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%BF%D1%8F%D1%82%D1%8C%D0%B4%D0%B5%D1%81%D1%8F%D1%82",
-          "canonical_id": "lexicon_reverse-5ace8976-6530-59e1-b005-0776820b38c7"
         },
         {
           "queue": "missing_context",
@@ -29143,18 +27372,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "рубежъ",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "313, 314",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%80%D1%83%D0%B1%D0%B5%D0%B6%D1%8A",
-          "canonical_id": "lexicon_reverse-25742343-1a52-5298-8002-321c38bf01a7"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "рубель",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -29239,18 +27456,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "русский",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "179, 192",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9",
-          "canonical_id": "lexicon_reverse-13d64fad-2529-596e-bade-9b98b9c6ef91"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "русъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 2,
@@ -29271,18 +27476,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%A0%D1%83%D1%81%D1%8A",
           "canonical_id": "lexicon_reverse-901392f4-219e-5e09-8812-f88703e36ca0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "рути",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "312, 314",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%80%D1%83%D1%82%D0%B8",
-          "canonical_id": "lexicon_reverse-724fa899-4a02-5436-ba89-37df71f197f9"
         },
         {
           "queue": "missing_context",
@@ -29599,42 +27792,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "села",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "263",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D0%B5%D0%BB%D0%B0",
-          "canonical_id": "lexicon_reverse-36b54fc0-0bcd-58c4-b4e3-f5ed51705b0d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "сёла",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "263, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%91%D0%BB%D0%B0",
-          "canonical_id": "lexicon_reverse-89452442-e645-5039-981e-6478e4b84e7b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "села́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "202",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D0%B5%D0%BB%D0%B0%CC%81",
-          "canonical_id": "lexicon_reverse-7b289dbd-74b3-57a0-8aae-8a1d007125df"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "селе́",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -29707,18 +27864,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "семнадцать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "256, 257",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D0%B5%D0%BC%D0%BD%D0%B0%D0%B4%D1%86%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-0317e579-5a19-5095-bb88-f82bd7e07317"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "семъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 2,
@@ -29727,30 +27872,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D0%B5%D0%BC%D1%8A",
           "canonical_id": "lexicon_reverse-04555f43-e30e-532f-bcf4-78a443544bf7"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "семь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "254, 255, 256, 258",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D0%B5%D0%BC%D1%8C",
-          "canonical_id": "lexicon_reverse-1870462f-8d94-5e2f-b87b-c34776b9bef6"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "семьдесят",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "256, 257, 258",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D0%B5%D0%BC%D1%8C%D0%B4%D0%B5%D1%81%D1%8F%D1%82",
-          "canonical_id": "lexicon_reverse-a4a7cff4-d5b2-5747-b3ef-86042476ddf7"
         },
         {
           "queue": "missing_context",
@@ -29859,18 +27980,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D0%B8%D0%B4%D1%8F%D1%87%D0%B8%D0%B9",
           "canonical_id": "lexicon_reverse-f5dff838-cf1f-5b21-96e4-62e3f6770258"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "скоте",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "199, 201",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D0%BA%D0%BE%D1%82%D0%B5",
-          "canonical_id": "lexicon_reverse-8d1f867f-6910-5258-a40d-def903274241"
         },
         {
           "queue": "missing_context",
@@ -30007,18 +28116,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "спортсмен",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "242, 243, 246",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D0%BF%D0%BE%D1%80%D1%82%D1%81%D0%BC%D0%B5%D0%BD",
-          "canonical_id": "lexicon_reverse-9e0db748-dc23-5cdd-b82e-e9a78e58df3c"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "стал",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -30027,18 +28124,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D0%B0%D0%BB",
           "canonical_id": "lexicon_reverse-583a463a-3770-5a42-a042-9bf86a0d2107"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "стать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "349, 350",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-be2ea74f-f54d-56ba-bc87-676172c1f494"
         },
         {
           "queue": "missing_context",
@@ -30063,42 +28148,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D0%B5%D0%BD%D0%B0",
           "canonical_id": "lexicon_reverse-f3e33f6d-0875-540b-8bc5-6a9e73f7ba7f"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "сте́ны",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "97, 100",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D0%B5%CC%81%D0%BD%D1%8B",
-          "canonical_id": "lexicon_reverse-408f576c-7ec3-56d9-8c83-1bcaf66d4726"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "стой",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "372, 382",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D0%BE%D0%B9",
-          "canonical_id": "lexicon_reverse-cabb46b5-e0e5-5b77-af4d-1c90659b6819"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "стои́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "372, 382",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D0%BE%D0%B8%CC%81",
-          "canonical_id": "lexicon_reverse-7c6de987-fd62-58ed-b14e-a22ab73860ea"
         },
         {
           "queue": "missing_context",
@@ -30159,18 +28208,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%A1%D1%82%D0%BE%D0%BA%D1%85%D0%BE%D0%BB%D1%8C%D0%BC",
           "canonical_id": "lexicon_reverse-e7ea8c25-427f-529e-9759-a5849d527429"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "стол",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "112, 248",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D0%BE%D0%BB",
-          "canonical_id": "lexicon_reverse-0a10abd1-e1e3-5c23-bc42-03315e12fe58"
         },
         {
           "queue": "missing_context",
@@ -30271,18 +28308,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "страна",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "193, 215",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B0",
-          "canonical_id": "lexicon_reverse-d3ff2a41-00de-5635-8699-68c1112cec4d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "Страсбург",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -30307,30 +28332,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "стре́лы",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "97, 100",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D1%80%D0%B5%CC%81%D0%BB%D1%8B",
-          "canonical_id": "lexicon_reverse-682f8ca6-4703-5e4b-9047-606f71c703e1"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "струна",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "263, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D1%80%D1%83%D0%BD%D0%B0",
-          "canonical_id": "lexicon_reverse-8fe0d418-20a6-5c52-9c51-badcc87ac331"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "струнамъ",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -30339,18 +28340,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D1%80%D1%83%D0%BD%D0%B0%D0%BC%D1%8A",
           "canonical_id": "lexicon_reverse-5d7b36c8-95c3-5fa6-9f0f-490329ac6ec0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "струны",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "263, 265",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%81%D1%82%D1%80%D1%83%D0%BD%D1%8B",
-          "canonical_id": "lexicon_reverse-a6bfebfb-7cb0-594b-aeae-4db3d42571d1"
         },
         {
           "queue": "missing_context",
@@ -30727,18 +28716,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "убить",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "353, 356",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B1%D0%B8%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-ab5ea6dc-a89e-5952-acbb-1f68020c92ad"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "убы́л",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -30783,30 +28760,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B8%D1%82%D1%8A",
           "canonical_id": "lexicon_reverse-4a1f943a-1462-5976-9de9-52d1f0b94f04"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "у́гла",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "381",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%CC%81%D0%B3%D0%BB%D0%B0",
-          "canonical_id": "lexicon_reverse-5341aee1-97f4-55dc-91ae-be8b243ce4d5"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "угла́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "378, 381",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B3%D0%BB%D0%B0%CC%81",
-          "canonical_id": "lexicon_reverse-bec8309f-22c5-51e3-9b7e-26cd71d55077"
         },
         {
           "queue": "missing_context",
@@ -30867,30 +28820,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B3%D0%BB%D1%8C",
           "canonical_id": "lexicon_reverse-2cef941d-bcc8-5f62-a400-2e42185484dd"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "угля́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "378, 380, 381, 383",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B3%D0%BB%D1%8F%CC%81",
-          "canonical_id": "lexicon_reverse-513a4eda-ae3c-5a97-b177-ed5259694da5"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "у́гля",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "378, 380, 381, 383",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%CC%81%D0%B3%D0%BB%D1%8F",
-          "canonical_id": "lexicon_reverse-18eb0c75-c726-5542-aa77-b72756cb9e51"
         },
         {
           "queue": "missing_context",
@@ -30967,30 +28896,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "у́горь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "378, 380",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%CC%81%D0%B3%D0%BE%D1%80%D1%8C",
-          "canonical_id": "lexicon_reverse-454936fb-9db0-51f5-868c-b8b73041e6dc"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "угорь",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "380",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B3%D0%BE%D1%80%D1%8C",
-          "canonical_id": "lexicon_reverse-0e2aa818-b7ec-5f1c-8323-e1cf00ea0c9d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "у́горь_(I.)",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 2,
@@ -31023,30 +28928,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%CC%81%D0%B3%D1%80%D1%8C",
           "canonical_id": "lexicon_reverse-00513cd9-19b1-5475-a73d-f5adb02a953d"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "угря́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "378, 381, 384",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B3%D1%80%D1%8F%CC%81",
-          "canonical_id": "lexicon_reverse-695f6aca-acbc-5872-ba40-abf901b37362"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "у́гря",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "380, 381, 384",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%CC%81%D0%B3%D1%80%D1%8F",
-          "canonical_id": "lexicon_reverse-b270d56d-29d7-5cb3-b245-1a072d0d1c4d"
         },
         {
           "queue": "missing_context",
@@ -31135,42 +29016,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "у́же",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "361, 362, 383, 384",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%CC%81%D0%B6%D0%B5",
-          "canonical_id": "lexicon_reverse-77402ea9-0a30-5583-8c70-6feb3f01c24f"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "уже",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 6,
-          "pages_summary": "34, 243, 337, 338, 361, 383",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B6%D0%B5",
-          "canonical_id": "lexicon_reverse-497a44a4-161e-5ea8-9ee0-be033b8bce7b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "уже́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "361, 362, 383, 384",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B6%D0%B5%CC%81",
-          "canonical_id": "lexicon_reverse-fe47486b-80e1-5b85-bcde-13098d1b3f59"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "у́жели",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -31195,30 +29040,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "у́зел",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "379",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%CC%81%D0%B7%D0%B5%D0%BB",
-          "canonical_id": "lexicon_reverse-b157831d-a7d0-5098-ac53-b30ec722f540"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "узел",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "379, 389, 390",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B7%D0%B5%D0%BB",
-          "canonical_id": "lexicon_reverse-5280e55a-6cc6-5217-8ff3-d78b5ae0c044"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "узл",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -31227,30 +29048,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B7%D0%BB",
           "canonical_id": "lexicon_reverse-4770085a-31a9-5e7b-86f0-5b842a77e733"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "у́зла",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "380, 381, 383",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%CC%81%D0%B7%D0%BB%D0%B0",
-          "canonical_id": "lexicon_reverse-9765b3f4-2329-513f-af9c-eb7fec97ba2e"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "узла́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "378, 380, 381, 383",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D0%B7%D0%BB%D0%B0%CC%81",
-          "canonical_id": "lexicon_reverse-40a4edbf-8159-5e3b-8ba4-60bee6d97e43"
         },
         {
           "queue": "missing_context",
@@ -31423,18 +29220,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "устать",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "351, 352, 353",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D1%81%D1%82%D0%B0%D1%82%D1%8C",
-          "canonical_id": "lexicon_reverse-2f0c548c-98b0-5de7-8740-c3eb6babbe50"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "устоял",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -31527,42 +29312,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D1%82%D1%80%D0%B0",
           "canonical_id": "lexicon_reverse-313ada2b-9f3c-583a-8b32-b32655c657ee"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "у́тро",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "374",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%CC%81%D1%82%D1%80%D0%BE",
-          "canonical_id": "lexicon_reverse-fd90b70d-6f57-5c91-8a1d-fb98ec0868f7"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "утро",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "374, 381",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D1%82%D1%80%D0%BE",
-          "canonical_id": "lexicon_reverse-e1075015-1fd3-5156-91ca-02864454db11"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "утро́",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "374",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%83%D1%82%D1%80%D0%BE%CC%81",
-          "canonical_id": "lexicon_reverse-e0d2abe0-adda-533c-9d60-d9c243b67c10"
         },
         {
           "queue": "missing_context",
@@ -31735,18 +29484,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "футбол",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "242, 243, 246",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%84%D1%83%D1%82%D0%B1%D0%BE%D0%BB",
-          "canonical_id": "lexicon_reverse-297ecae7-d0d0-5cbd-8003-2571b78f188c"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "Хайне",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -31759,18 +29496,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "харч",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "225, 226",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%85%D0%B0%D1%80%D1%87",
-          "canonical_id": "lexicon_reverse-9a1429df-6d28-5ac0-8e7d-d71a147da1a9"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "хижина",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -31779,18 +29504,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%85%D0%B8%D0%B6%D0%B8%D0%BD%D0%B0",
           "canonical_id": "lexicon_reverse-d08f5abd-5cb0-5ee5-84f1-c5bde658528b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "хлеб",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 3,
-          "pages_summary": "112, 184, 185",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%85%D0%BB%D0%B5%D0%B1",
-          "canonical_id": "lexicon_reverse-52d337de-61d6-5cd5-b0b3-85c19adb3901"
         },
         {
           "queue": "missing_context",
@@ -31819,18 +29532,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "целый",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "202, 320",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%86%D0%B5%D0%BB%D1%8B%D0%B9",
-          "canonical_id": "lexicon_reverse-1933d069-0585-56af-8bd9-72c213bcc8c8"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "цена",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -31839,18 +29540,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%86%D0%B5%D0%BD%D0%B0",
           "canonical_id": "lexicon_reverse-aba2de90-6271-544a-a393-ed667f14c9f0"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "це́ны",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "97, 100",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%86%D0%B5%CC%81%D0%BD%D1%8B",
-          "canonical_id": "lexicon_reverse-d2ece529-c835-524c-a376-820724ac1d79"
         },
         {
           "queue": "missing_context",
@@ -31999,30 +29688,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "Шекспир",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "243, 248",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%A8%D0%B5%D0%BA%D1%81%D0%BF%D0%B8%D1%80",
-          "canonical_id": "lexicon_reverse-f1c2da31-e3d5-5b6f-908a-55a601729056"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "Ше́кспир",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 1,
-          "pages_summary": "243",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D0%A8%D0%B5%CC%81%D0%BA%D1%81%D0%BF%D0%B8%D1%80",
-          "canonical_id": "lexicon_reverse-077caa1d-c4f2-5f1d-a9ff-e3c0f33fac56"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "шести́",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -32047,18 +29712,6 @@
         {
           "queue": "missing_context",
           "entity": "lexicon_reverse",
-          "head": "шестъ",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 4,
-          "pages_summary": "253, 255, 257, 258",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%88%D0%B5%D1%81%D1%82%D1%8A",
-          "canonical_id": "lexicon_reverse-952193ae-bd6d-5621-930d-2d15ee77c2d9"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
           "head": "шесть",
           "reason": "No direct or occurrence context snippets.",
           "pages_count": 1,
@@ -32067,18 +29720,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%88%D0%B5%D1%81%D1%82%D1%8C",
           "canonical_id": "lexicon_reverse-d4c79765-b984-5a63-975e-ed39c56a1a3b"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "шестьдесят",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "256, 257",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%88%D0%B5%D1%81%D1%82%D1%8C%D0%B4%D0%B5%D1%81%D1%8F%D1%82",
-          "canonical_id": "lexicon_reverse-af3866e4-e467-52cf-8757-3348a428594e"
         },
         {
           "queue": "missing_context",
@@ -32307,18 +29948,6 @@
           "source_present": true,
           "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%D1%B5%D1%96%D0%B5",
           "canonical_id": "lexicon_reverse-a8bf5563-9384-5f1e-b64f-ee4ee9475660"
-        },
-        {
-          "queue": "missing_context",
-          "entity": "lexicon_reverse",
-          "head": "’параани",
-          "reason": "No direct or occurrence context snippets.",
-          "pages_count": 2,
-          "pages_summary": "158, 167",
-          "context_snippets": 0,
-          "source_present": true,
-          "route": "#v4/lexicon_reverse/list/item/lexicon_reverse/%E2%80%99%D0%BF%D0%B0%D1%80%D0%B0%D0%B0%D0%BD%D0%B8",
-          "canonical_id": "lexicon_reverse-0f571a47-2f5a-5a63-a57f-360d2b1c0c59"
         },
         {
           "queue": "missing_context",

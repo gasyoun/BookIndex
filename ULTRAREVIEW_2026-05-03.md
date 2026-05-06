@@ -17,7 +17,7 @@ The active roadmap has shifted:
 
 1. **v4.5 import pipeline is complete enough for production use.** The repository now has 3 books in the corpus, import fixtures/status files, and import tooling.
 2. **v4.6 normalization is partially implemented.** `canonical_id` and `occurrences` exist for almost all entities; `aliases` remain open and cross-book duplicate candidates are now surfaced as a quality queue.
-3. **v4.7 context quality is the next high-value phase.** Current progress estimate is roughly 40%: quality-queue workflow is done, while context coverage remains 17.8% against the next realistic 35-40% target.
+3. **v4.7 context quality is the next high-value phase.** Current progress estimate is roughly 53.7%: quality-queue workflow is done, direct context coverage remains 17.8%, and effective context coverage is 23.7% after applying `lexicon_reverse` inheritance.
 4. **v4.8 video catalog remains future work.** The corpus model already reserves planned video catalog capacity, but video schema/import/search is not implemented yet.
 
 ---
@@ -33,7 +33,9 @@ The active roadmap has shifted:
 | Items | 3381 |
 | Items with pages | 3344 (98.9%) |
 | Items with contexts | 603 (17.8%) |
-| v4.7 progress estimate | ~40% |
+| Items with effective contexts | 801 (23.7%) |
+| Inherited context items | 198 |
+| v4.7 progress estimate | ~53.7% |
 | v4.7 queue workflow | 100% |
 | Items with sources | 3380 (100.0%) |
 | Context snippets | 2556 |
@@ -187,11 +189,11 @@ Completion criterion: a user opens one entity and can clearly see where it appea
 
 ### Phase 4: v4.7 Context Quality
 
-Status: queue workflow implemented and measurable; data cleanup/context expansion still pending.
+Status: queue workflow implemented and measurable; `lexicon_reverse` inheritance policy implemented; direct data cleanup/context expansion still pending.
 
-Current context coverage is 17.8%. The next target is 35-40%.
+Current direct context coverage is 17.8%; effective context coverage is 23.7%. The next target is 35-40%.
 
-Progress estimate: roughly 40%. This treats the queue workflow as complete and the context-growth track as not yet started beyond the v4.7 baseline.
+Progress estimate: roughly 53.7%. This treats the queue workflow as complete and counts `lexicon_reverse` inherited contexts as effective coverage without copying context text into the data.
 
 Implemented first slice:
 
@@ -201,6 +203,7 @@ Implemented first slice:
 - cross-book duplicate-candidate queue with 8 current candidates;
 - page-verification queue with 6 current candidates;
 - v4.7 progress metrics in `scripts/content_report.py`, queue JSON, and `#v4/corpus/sources`;
+- effective-context policy for `lexicon_reverse` inheriting from matching `lexicon` entries;
 - smoke coverage for queue counts, expansion, navigation, and compact viewport overflow.
 
 Priorities:

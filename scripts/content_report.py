@@ -355,13 +355,14 @@ def collect_markdown_export_metrics(source: str) -> dict[str, Any]:
 
 def build_v47_progress(totals: dict[str, Any]) -> dict[str, Any]:
     coverage = float(totals.get("coverage_pct", {}).get("contexts", 0.0) or 0.0)
-    context_target_min_progress = clamp_pct(round(coverage * 100.0 / V47_CONTEXT_TARGET_MIN_PCT, 1))
-    context_target_max_progress = clamp_pct(round(coverage * 100.0 / V47_CONTEXT_TARGET_MAX_PCT, 1))
+    effective_coverage = float(totals.get("coverage_pct", {}).get("effective_contexts", coverage) or coverage)
+    context_target_min_progress = clamp_pct(round(effective_coverage * 100.0 / V47_CONTEXT_TARGET_MIN_PCT, 1))
+    context_target_max_progress = clamp_pct(round(effective_coverage * 100.0 / V47_CONTEXT_TARGET_MAX_PCT, 1))
     context_growth_progress = 0.0
     remaining_growth = V47_CONTEXT_TARGET_MIN_PCT - V47_CONTEXT_BASELINE_PCT
     if remaining_growth > 0:
         context_growth_progress = clamp_pct(
-            round((coverage - V47_CONTEXT_BASELINE_PCT) * 100.0 / remaining_growth, 1)
+            round((effective_coverage - V47_CONTEXT_BASELINE_PCT) * 100.0 / remaining_growth, 1)
         )
     queue_workflow_percent = 100.0
     phase_estimate = round(
@@ -379,6 +380,8 @@ def build_v47_progress(totals: dict[str, Any]) -> dict[str, Any]:
         "queue_types_done": V47_QUEUE_TYPES_TOTAL,
         "queue_types_total": V47_QUEUE_TYPES_TOTAL,
         "context_coverage_percent": coverage,
+        "effective_context_coverage_percent": effective_coverage,
+        "inherited_context_items": totals.get("items_with_inherited_contexts", 0),
         "context_baseline_percent": V47_CONTEXT_BASELINE_PCT,
         "context_target_min_percent": V47_CONTEXT_TARGET_MIN_PCT,
         "context_target_max_percent": V47_CONTEXT_TARGET_MAX_PCT,
@@ -503,9 +506,13 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
 
     totals["cross_book_duplicate_candidates_count"] = count_cross_book_duplicate_candidates(data)
     totals["needs_page_verification_count"] = count_needs_page_verification(data)
+    effective_contexts = count_effective_context_items(data)
+    totals["items_with_effective_contexts"] = effective_contexts["effective"]
+    totals["items_with_inherited_contexts"] = effective_contexts["inherited"]
     totals["coverage_pct"] = {
         "pages": pct(totals["items_with_pages"], totals["items_total"]),
         "contexts": pct(totals["items_with_contexts"], totals["items_total"]),
+        "effective_contexts": pct(totals["items_with_effective_contexts"], totals["items_total"]),
         "sources": pct(totals["items_with_sources"], totals["items_total"]),
         "editorial_flags": pct(totals["items_with_editorial_flags"], totals["items_total"]),
     }
@@ -544,6 +551,11 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Items: **{totals['items_total']}**",
         f"- With pages: {totals['items_with_pages']} ({totals['coverage_pct']['pages']}%)",
         f"- With contexts: {totals['items_with_contexts']} ({totals['coverage_pct']['contexts']}%)",
+        (
+            f"- With effective contexts: {totals['items_with_effective_contexts']} "
+            f"({totals['coverage_pct']['effective_contexts']}%; "
+            f"{totals['items_with_inherited_contexts']} inherited)"
+        ),
         f"- With sources: {totals['items_with_sources']} ({totals['coverage_pct']['sources']}%)",
         (
             f"- With editorial flags: {totals['items_with_editorial_flags']} "
@@ -569,6 +581,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         ),
         (
             f"- Context coverage: {v47.get('context_coverage_percent', 0)}% "
+            f"direct / {v47.get('effective_context_coverage_percent', 0)}% effective "
             f"(target {v47.get('context_target_min_percent', 0)}-{v47.get('context_target_max_percent', 0)}%)"
         ),
         (
@@ -820,6 +833,63 @@ def item_context_counts(item: dict[str, Any]) -> dict[str, int]:
     }
 
 
+def build_inherited_context_index(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    index: dict[str, dict[str, Any]] = {}
+    lexicon = data.get("lexicon", [])
+    valid_items = [item for item in lexicon if isinstance(item, dict)] if isinstance(lexicon, list) else []
+    for item in valid_items:
+        head = get_item_head(item)
+        key = duplicate_candidate_head_key(head)
+        if not key:
+            continue
+        contexts = item_context_counts(item)
+        if contexts["snippets"] <= 0:
+            continue
+        existing = index.get(key)
+        if existing and existing["context_snippets"] >= contexts["snippets"]:
+            continue
+        index[key] = {
+            "entity": "lexicon",
+            "head": head,
+            "canonical_id": item.get("canonical_id") if isinstance(item.get("canonical_id"), str) else "",
+            "context_pages": contexts["pages"],
+            "context_snippets": contexts["snippets"],
+            "route": build_item_route("lexicon", head),
+        }
+    return index
+
+
+def effective_context_info(
+    entity: str,
+    item: dict[str, Any],
+    inherited_context_index: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    direct = item_context_counts(item)
+    out: dict[str, Any] = {
+        **direct,
+        "effective_pages": direct["pages"],
+        "effective_snippets": direct["snippets"],
+        "inherited": False,
+    }
+    if direct["snippets"] > 0 or entity != "lexicon_reverse":
+        return out
+    inherited = inherited_context_index.get(duplicate_candidate_head_key(get_item_head(item)))
+    if not inherited:
+        return out
+    out.update({
+        "effective_pages": inherited["context_pages"],
+        "effective_snippets": inherited["context_snippets"],
+        "inherited": True,
+        "inherited_context_from": {
+            "entity": inherited["entity"],
+            "head": inherited["head"],
+            "canonical_id": inherited["canonical_id"],
+            "route": inherited["route"],
+        },
+    })
+    return out
+
+
 def item_has_source(item: dict[str, Any]) -> bool:
     return (
         is_non_empty_list(item.get("sources"))
@@ -903,6 +973,30 @@ def count_needs_page_verification(data: dict[str, Any]) -> int:
     return total
 
 
+def count_effective_context_items(data: dict[str, Any]) -> dict[str, int]:
+    inherited_context_index = build_inherited_context_index(data)
+    direct = 0
+    effective = 0
+    inherited = 0
+    for entity in ENTITY_KEYS:
+        items = data.get(entity, [])
+        valid_items = [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
+        for item in valid_items:
+            direct_counts = item_context_counts(item)
+            if direct_counts["snippets"] > 0:
+                direct += 1
+            info = effective_context_info(entity, item, inherited_context_index)
+            if info["effective_snippets"] > 0:
+                effective += 1
+            if info.get("inherited"):
+                inherited += 1
+    return {
+        "direct": direct,
+        "effective": effective,
+        "inherited": inherited,
+    }
+
+
 def build_quality_item(
     *,
     entity: str,
@@ -934,6 +1028,7 @@ def build_quality_item(
 
 
 def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[str, Any]:
+    inherited_context_index = build_inherited_context_index(data)
     queues: dict[str, list[dict[str, Any]]] = {
         "missing_context": [],
         "missing_pages": [],
@@ -968,7 +1063,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
                 })
 
             pages = get_item_pages(item)
-            contexts = item_context_counts(item)
+            contexts = effective_context_info(entity, item, inherited_context_index)
             if not pages:
                 queues["missing_pages"].append(build_quality_item(
                     entity=entity,
@@ -976,7 +1071,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
                     queue="missing_pages",
                     reason="No page_list entries.",
                 ))
-            if contexts["snippets"] <= 0:
+            if contexts["effective_snippets"] <= 0:
                 queues["missing_context"].append(build_quality_item(
                     entity=entity,
                     item=item,

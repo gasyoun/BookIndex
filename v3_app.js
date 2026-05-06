@@ -4628,6 +4628,44 @@ function getQualityPageVerificationDetails(item) {
   };
 }
 
+function buildQualityInheritedContextIndex() {
+  const index = new Map();
+  const lexicon = Array.isArray(ENTITY_TYPES && ENTITY_TYPES.lexicon && ENTITY_TYPES.lexicon.items)
+    ? ENTITY_TYPES.lexicon.items
+    : [];
+  for (const item of lexicon) {
+    if (!item || typeof item !== 'object') continue;
+    const key = normalizeQualityCandidateKey(item.head);
+    if (!key) continue;
+    const snippets = countItemQualityContextSnippets(item);
+    if (snippets <= 0) continue;
+    const existing = index.get(key);
+    if (existing && existing.contextSnippets >= snippets) continue;
+    index.set(key, {
+      entity: 'lexicon',
+      head: String(item.head || '').trim(),
+      canonicalId: typeof item.canonical_id === 'string' ? item.canonical_id : '',
+      contextSnippets: snippets,
+      route: buildItemHash('lexicon', item.head),
+    });
+  }
+  return index;
+}
+
+function getEffectiveQualityContextInfo(typeKey, item, inheritedContextIndex) {
+  const directSnippets = countItemQualityContextSnippets(item);
+  if (directSnippets > 0 || typeKey !== 'lexicon_reverse') {
+    return { snippets: directSnippets, inherited: false };
+  }
+  const inherited = inheritedContextIndex.get(normalizeQualityCandidateKey(item && item.head));
+  if (!inherited) return { snippets: 0, inherited: false };
+  return {
+    snippets: inherited.contextSnippets,
+    inherited: true,
+    from: inherited,
+  };
+}
+
 function createQualityQueueRecord(queue, entity, item, reason, extra = {}) {
   const head = String(item && item.head ? item.head : '').trim();
   const pages = getItemQualityPages(item);
@@ -4652,12 +4690,15 @@ function buildCorpusQualityState() {
     items: 0,
     withPages: 0,
     withContexts: 0,
+    withEffectiveContexts: 0,
+    withInheritedContexts: 0,
     withSources: 0,
     duplicateGroups: 0,
   };
   const queues = Object.fromEntries(QUALITY_QUEUE_DEFS.map(def => [def.key, []]));
   const itemsByEntity = {};
   const crossBookCandidates = new Map();
+  const inheritedContextIndex = buildQualityInheritedContextIndex();
 
   for (const typeKey of QUALITY_ENTITY_ORDER) {
     const conf = ENTITY_TYPES && ENTITY_TYPES[typeKey];
@@ -4671,11 +4712,14 @@ function buildCorpusQualityState() {
       totals.items += 1;
       const pages = getItemQualityPages(item);
       const contextSnippets = countItemQualityContextSnippets(item);
+      const effectiveContext = getEffectiveQualityContextInfo(typeKey, item, inheritedContextIndex);
       const hasSource = itemHasQualitySource(item);
       if (pages.length) totals.withPages += 1;
       else queues.missing_pages.push(createQualityQueueRecord('missing_pages', typeKey, item, 'No page_list entries.'));
       if (contextSnippets > 0) totals.withContexts += 1;
-      else queues.missing_context.push(createQualityQueueRecord('missing_context', typeKey, item, 'No direct or occurrence context snippets.'));
+      if (effectiveContext.snippets > 0) totals.withEffectiveContexts += 1;
+      if (effectiveContext.inherited) totals.withInheritedContexts += 1;
+      else if (contextSnippets <= 0) queues.missing_context.push(createQualityQueueRecord('missing_context', typeKey, item, 'No direct or occurrence context snippets.'));
       if (hasSource) {
         totals.withSources += 1;
       } else {
@@ -4795,12 +4839,14 @@ function buildCorpusQualityState() {
     ...totals,
     pagesCoverage: formatCoveragePercent(totals.withPages, totals.items),
     contextsCoverage: formatCoveragePercent(totals.withContexts, totals.items),
+    effectiveContextsCoverage: formatCoveragePercent(totals.withEffectiveContexts, totals.items),
     sourcesCoverage: formatCoveragePercent(totals.withSources, totals.items),
   };
   const contextCoverageValue = totals.items ? Math.round((totals.withContexts / totals.items) * 1000) / 10 : 0;
+  const effectiveContextCoverageValue = totals.items ? Math.round((totals.withEffectiveContexts / totals.items) * 1000) / 10 : contextCoverageValue;
   const remainingGrowth = V47_CONTEXT_TARGET_MIN_PCT - V47_CONTEXT_BASELINE_PCT;
   const contextGrowthProgress = remainingGrowth > 0
-    ? clampQualityPercent(((contextCoverageValue - V47_CONTEXT_BASELINE_PCT) * 100) / remainingGrowth)
+    ? clampQualityPercent(((effectiveContextCoverageValue - V47_CONTEXT_BASELINE_PCT) * 100) / remainingGrowth)
     : 0;
   const progress = {
     phaseEstimatePercent: Math.round((
@@ -4811,10 +4857,12 @@ function buildCorpusQualityState() {
     queueTypesDone: V47_QUEUE_TYPES_TOTAL,
     queueTypesTotal: V47_QUEUE_TYPES_TOTAL,
     contextCoveragePercent: contextCoverageValue,
+    effectiveContextCoveragePercent: effectiveContextCoverageValue,
+    inheritedContextItems: totals.withInheritedContexts,
     contextTargetMinPercent: V47_CONTEXT_TARGET_MIN_PCT,
     contextTargetMaxPercent: V47_CONTEXT_TARGET_MAX_PCT,
-    contextTargetMinProgressPercent: clampQualityPercent((contextCoverageValue * 100) / V47_CONTEXT_TARGET_MIN_PCT),
-    contextTargetMaxProgressPercent: clampQualityPercent((contextCoverageValue * 100) / V47_CONTEXT_TARGET_MAX_PCT),
+    contextTargetMinProgressPercent: clampQualityPercent((effectiveContextCoverageValue * 100) / V47_CONTEXT_TARGET_MIN_PCT),
+    contextTargetMaxProgressPercent: clampQualityPercent((effectiveContextCoverageValue * 100) / V47_CONTEXT_TARGET_MAX_PCT),
     contextGrowthProgressPercent: Math.round(contextGrowthProgress * 10) / 10,
   };
   return { metrics, queues, progress };
@@ -4914,6 +4962,10 @@ function renderQualityProgress(section, progress) {
     `${formatQualityPercent(progress.contextTargetMinProgressPercent)} of ${formatQualityPercent(progress.contextTargetMinPercent)}`
   ));
   wrap.appendChild(createCorpusMetric(
+    'inherited contexts',
+    String(progress.inheritedContextItems || 0)
+  ));
+  wrap.appendChild(createCorpusMetric(
     'context growth',
     `${formatQualityPercent(progress.contextGrowthProgressPercent)} since baseline`
   ));
@@ -4936,6 +4988,7 @@ function renderCorpusQualityPanel(panel) {
   grid.appendChild(createCorpusMetric('\u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432', metrics.items));
   grid.appendChild(createCorpusMetric('page coverage', metrics.pagesCoverage));
   grid.appendChild(createCorpusMetric('context coverage', metrics.contextsCoverage));
+  grid.appendChild(createCorpusMetric('effective contexts', metrics.effectiveContextsCoverage));
   grid.appendChild(createCorpusMetric('source coverage', metrics.sourcesCoverage));
   grid.appendChild(createCorpusMetric('duplicate head groups', metrics.duplicateGroups));
   section.appendChild(grid);
