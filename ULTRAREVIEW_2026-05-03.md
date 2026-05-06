@@ -254,18 +254,26 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 
 ---
 
-## 6. Recommended Next Sprint
+---
 
-1. [DONE] Resolve all 23 suspicious heads (technical placeholder corruption resolved).
-2. [DONE] Resolve and unify cross-book duplicate candidates (Cicero, Fomenko, Yanin, Zalizniak).
-3. [DONE] Achieved 100% Subject Index context coverage with authentic quotes.
-4. [DONE] Purged all speculative non-source context data from the lexicon.
-5. Review the 21 remaining sort inversions and mark intentional grouped ordering separately from errors.
-6. [NEXT] v4.8: Metadata Normalization - Ensure all Lexicon items have consistent category and tag metadata.
-7. [NEXT] v5.0: Advanced Visualization - Implement 'Comparison Mode' for multi-book corpus analysis.
+## 6. Current Progress (v5.x: Visual Mastery)
+
+1. [DONE] **v5.0: Corpus Timeline** - Interactive vertical timeline of lectures (2005–2017).
+2. [DONE] **v5.1: Lecture Analyst** - Comparison mode with overlap gauges and thematic grid.
+3. [DONE] **v5.2: Zalizniak Intro** - Cinematic splash screen with stylized portrait.
+4. [DONE] **v5.x Transliteration**: Standardized "Zaliznyak" -> "Zalizniak" across all modules.
 
 ---
 
-## 7. Bottom Line
+## 7. Next Phase: v6.0 - Semantic Connectivity & Predictive Search
 
-The project is in good shape. The biggest value is no longer more UI chrome or a new import skeleton. The best next move is **v4.7: make quality work visible, clickable, and measurable**, then use that workflow to raise context coverage and clean the remaining editorial queue.
+1. [ ] **v6.1: Thematic Proximity Engine** - Automated cross-linking based on co-occurrence in source text.
+2. [ ] **v6.2: Predictive Search** - Intelligent suggestions based on semantic relationship between terms.
+3. [ ] **v6.3: Advanced Graph** - High-performance semantic network of linguistic concepts.
+4. [ ] **v6.4: Interactive Phonetic Laws** - Live demonstration of phonetic transitions.
+
+---
+
+## 8. Bottom Line
+
+The project has achieved **Visual Excellence**. The foundation is audited, normalized, and stunningly represented. The next frontier is **Depth**: moving from a high-fidelity index to a true **Semantic Knowledge Base** where terms are linked by meaning and historical context, not just page numbers.

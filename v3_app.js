@@ -69,9 +69,56 @@ function parseAppData() {
   
   if (typeof document !== 'undefined') {
     initPremiumIntro();
+    injectSemanticStyles();
   }
 
   return APP_DATA;
+}
+
+function injectSemanticStyles() {
+  if (document.getElementById('semantic-proximity-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'semantic-proximity-styles';
+  style.textContent = `
+    .semantic-proximity-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+    .semantic-link-chip { 
+      display: flex; align-items: center; background: rgba(255,255,255,0.05); 
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; 
+      padding: 0.4rem 1rem; text-decoration: none; color: #fff; font-size: 0.9rem; 
+      transition: all 0.3s; backdrop-filter: blur(5px);
+    }
+    .semantic-link-chip:hover { 
+      background: rgba(128, 222, 234, 0.15); border-color: #80deea; 
+      transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .semantic-link-head { font-weight: 500; margin-right: 0.5rem; }
+    .semantic-link-score { 
+      font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 10px; 
+      border: 1px solid; opacity: 0.9;
+    }
+    .v-badge { 
+      font-size: 0.7rem; vertical-align: super; background: #26a69a; 
+      color: #fff; padding: 0.1rem 0.3rem; border-radius: 4px; margin-left: 0.5rem;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+let __headToTypeMap = null;
+function findEntityTypeByHead(head) {
+  if (!__headToTypeMap) {
+    __headToTypeMap = {};
+    const cats = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_tech', 'subject_index'];
+    for (const c of cats) {
+      if (APP_DATA[c]) {
+        for (const item of APP_DATA[c]) {
+          const h = item.head || item.name;
+          if (h) __headToTypeMap[h] = c === 'subject_index' ? 'subject' : c;
+        }
+      }
+    }
+  }
+  return __headToTypeMap[head];
 }
 
 function initPremiumIntro() {
@@ -6442,12 +6489,31 @@ function renderCardInRight() {
   if (eType === 'lexicon') {
     const subjectIdx = getSubjectByLexiconIndex();
     let subjLinks = (subjectIdx && subjectIdx.exact && subjectIdx.exact[normalizeHeadForMatch(it.head)]) || [];
-    if (!subjLinks.length) {
-      const fallbackHead = pickBestCrosslinkByPageOverlap(sortUniquePages(it.page_list || []), subjectIdx && subjectIdx.byPage);
-      if (fallbackHead) subjLinks = [fallbackHead];
-    }
     if (subjLinks.length) {
       const linksHtml = subjLinks.map((h) => `<a href="${escapeHtml(buildItemHash('subject', h))}"
+        class="subject-inline-link">${escapeHtml(h)}</a>`).join(', ');
+      html += `<div class="card-subject-links"><strong>Тема:</strong> ${linksHtml}</div>`;
+    }
+  }
+
+  // ТЕМАТИЧЕСКАЯ БЛИЗОСТЬ (v6.1)
+  const semanticLinks = APP_DATA.semantic_links ? APP_DATA.semantic_links[it.head] : null;
+  if (semanticLinks && semanticLinks.length > 0) {
+    html += `<h3>Тематическая близость <span class="v-badge">v6.1</span></h3>
+             <div class="semantic-proximity-grid">`;
+    for (const link of semanticLinks) {
+      const relType = findEntityTypeByHead(link.head) || 'lexicon';
+      const scorePct = Math.round(link.score * 100);
+      html += `
+        <a href="${escapeHtml(buildItemHash(relType, link.head))}" class="semantic-link-chip">
+          <span class="semantic-link-head">${escapeHtml(link.head)}</span>
+          <span class="semantic-link-score" style="background: hsla(${180 + scorePct}, 70%, 40%, 0.2); border-color: hsla(${180 + scorePct}, 70%, 40%, 0.5);">
+            ${scorePct}%
+          </span>
+        </a>`;
+    }
+    html += '</div>';
+  }
         class="crosslink-badge"
         data-type="subject"
         data-head="${escapeHtml(h)}">${escapeHtml(h)}</a>`).join('');
