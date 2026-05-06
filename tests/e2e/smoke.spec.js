@@ -74,6 +74,10 @@ test.describe('aaz-index smoke', () => {
     const quality = page.locator('.corpus-quality-panel');
     await expect(quality).toContainText('source coverage');
     await expect(quality).toContainText('duplicate head groups');
+    await expect(quality).toContainText('v4.7 estimate');
+    await expect(quality).toContainText('~40%');
+    await expect(quality).toContainText('queue workflow');
+    await expect(quality).toContainText('100%');
     await expect(quality.locator('.quality-queue[data-queue="duplicate_heads"] summary')).toContainText('1');
     await expect(quality.locator('.quality-queue[data-queue="cross_book_duplicate_candidates"] summary')).toContainText('8');
     await expect(quality.locator('.quality-queue[data-queue="suspicious_heads"] summary')).toContainText('23');

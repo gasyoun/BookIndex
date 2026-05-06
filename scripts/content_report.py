@@ -59,6 +59,12 @@ SORT_ORDER_KEYS = (
 DEFAULT_CORPUS_BOOK_ID = "mumintroll"
 DEFAULT_CORPUS_BOOK_TITLE = "Из жизни слов и языков"
 DEFAULT_VIDEO_CATALOG_COUNT = 200
+V47_CONTEXT_BASELINE_PCT = 17.8
+V47_CONTEXT_TARGET_MIN_PCT = 35.0
+V47_CONTEXT_TARGET_MAX_PCT = 40.0
+V47_QUEUE_TYPES_TOTAL = 8
+V47_QUEUE_WORKFLOW_WEIGHT_PCT = 40.0
+V47_CONTEXT_GROWTH_WEIGHT_PCT = 40.0
 MANUAL_AUDIT_TERM_RE = re.compile(r"\*\*([^*]+)\*\*")
 
 
@@ -72,6 +78,10 @@ def pct(part: int, total: int) -> float:
     if total <= 0:
         return 0.0
     return round(part * 100.0 / total, 1)
+
+
+def clamp_pct(value: float) -> float:
+    return max(0.0, min(100.0, value))
 
 
 def is_non_empty_list(value: Any) -> bool:
@@ -343,6 +353,41 @@ def collect_markdown_export_metrics(source: str) -> dict[str, Any]:
     }
 
 
+def build_v47_progress(totals: dict[str, Any]) -> dict[str, Any]:
+    coverage = float(totals.get("coverage_pct", {}).get("contexts", 0.0) or 0.0)
+    context_target_min_progress = clamp_pct(round(coverage * 100.0 / V47_CONTEXT_TARGET_MIN_PCT, 1))
+    context_target_max_progress = clamp_pct(round(coverage * 100.0 / V47_CONTEXT_TARGET_MAX_PCT, 1))
+    context_growth_progress = 0.0
+    remaining_growth = V47_CONTEXT_TARGET_MIN_PCT - V47_CONTEXT_BASELINE_PCT
+    if remaining_growth > 0:
+        context_growth_progress = clamp_pct(
+            round((coverage - V47_CONTEXT_BASELINE_PCT) * 100.0 / remaining_growth, 1)
+        )
+    queue_workflow_percent = 100.0
+    phase_estimate = round(
+        V47_QUEUE_WORKFLOW_WEIGHT_PCT * queue_workflow_percent / 100.0
+        + V47_CONTEXT_GROWTH_WEIGHT_PCT * context_growth_progress / 100.0,
+        1,
+    )
+    return {
+        "phase": "v4.7",
+        "phase_estimate_percent": phase_estimate,
+        "phase_estimate_note": (
+            "Queue workflow is complete; content cleanup and context expansion remain."
+        ),
+        "queue_workflow_percent": queue_workflow_percent,
+        "queue_types_done": V47_QUEUE_TYPES_TOTAL,
+        "queue_types_total": V47_QUEUE_TYPES_TOTAL,
+        "context_coverage_percent": coverage,
+        "context_baseline_percent": V47_CONTEXT_BASELINE_PCT,
+        "context_target_min_percent": V47_CONTEXT_TARGET_MIN_PCT,
+        "context_target_max_percent": V47_CONTEXT_TARGET_MAX_PCT,
+        "context_target_min_progress_percent": context_target_min_progress,
+        "context_target_max_progress_percent": context_target_max_progress,
+        "context_growth_progress_percent": context_growth_progress,
+    }
+
+
 def collect_manual_audit_metrics(source: str, data: dict[str, Any]) -> dict[str, Any]:
     source_path = Path(source)
     base_dir = source_path.parent if source_path.parent != Path("") else Path(".")
@@ -464,6 +509,9 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "sources": pct(totals["items_with_sources"], totals["items_total"]),
         "editorial_flags": pct(totals["items_with_editorial_flags"], totals["items_total"]),
     }
+    progress = {
+        "v47": build_v47_progress(totals),
+    }
 
     return {
         "source": source,
@@ -474,11 +522,13 @@ def build_report(data: dict[str, Any], source: str) -> dict[str, Any]:
         "manual_audits": collect_manual_audit_metrics(source, data),
         "entities": entities,
         "totals": totals,
+        "progress": progress,
     }
 
 
 def render_markdown(report: dict[str, Any]) -> str:
     totals = report["totals"]
+    v47 = report.get("progress", {}).get("v47", {})
     lines = [
         "# Content Audit Report",
         "",
@@ -509,6 +559,23 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Reviewed suspicious heads: {totals['reviewed_suspicious_heads_count']}",
         f"- Unreviewed suspicious heads: {totals['unreviewed_suspicious_heads_count']}",
         f"- Sort inversions: {totals['sort_inversions_count']}",
+        "",
+        "## v4.7 Progress",
+        "",
+        f"- Phase estimate: ~{v47.get('phase_estimate_percent', 0)}%",
+        (
+            f"- Queue workflow: {v47.get('queue_workflow_percent', 0)}% "
+            f"({v47.get('queue_types_done', 0)}/{v47.get('queue_types_total', 0)} queue types)"
+        ),
+        (
+            f"- Context coverage: {v47.get('context_coverage_percent', 0)}% "
+            f"(target {v47.get('context_target_min_percent', 0)}-{v47.get('context_target_max_percent', 0)}%)"
+        ),
+        (
+            f"- Context target progress: {v47.get('context_target_min_progress_percent', 0)}% toward "
+            f"{v47.get('context_target_min_percent', 0)}%; "
+            f"{v47.get('context_growth_progress_percent', 0)}% growth since v4.7 baseline"
+        ),
         "",
         "## Corpus",
         "",
@@ -1078,6 +1145,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
         "schema_version": 2,
         "source": report.get("source"),
         "manual_audit": report.get("manual_audits", {}).get("index_errors", {}),
+        "progress": report.get("progress", {}),
         "totals": totals,
         "queue_order": [
             "duplicate_heads",

@@ -55,6 +55,23 @@
       ]
     }
   },
+  "progress": {
+    "v47": {
+      "phase": "v4.7",
+      "phase_estimate_percent": 40.0,
+      "phase_estimate_note": "Queue workflow is complete; content cleanup and context expansion remain.",
+      "queue_workflow_percent": 100.0,
+      "queue_types_done": 8,
+      "queue_types_total": 8,
+      "context_coverage_percent": 17.8,
+      "context_baseline_percent": 17.8,
+      "context_target_min_percent": 35.0,
+      "context_target_max_percent": 40.0,
+      "context_target_min_progress_percent": 50.9,
+      "context_target_max_progress_percent": 44.5,
+      "context_growth_progress_percent": 0.0
+    }
+  },
   "totals": {
     "items_total": 3381,
     "items_with_pages": 3344,

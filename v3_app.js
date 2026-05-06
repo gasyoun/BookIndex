@@ -4436,7 +4436,24 @@ function formatCoveragePercent(count, total) {
   return `${Math.round((count / total) * 100)}%`;
 }
 
+function clampQualityPercent(value) {
+  return Math.max(0, Math.min(100, value));
+}
+
+function formatQualityPercent(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return '0%';
+  const rounded = Math.round(numeric * 10) / 10;
+  return `${Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1)}%`;
+}
+
 const QUALITY_QUEUE_LIMIT = 50;
+const V47_CONTEXT_BASELINE_PCT = 17.8;
+const V47_CONTEXT_TARGET_MIN_PCT = 35;
+const V47_CONTEXT_TARGET_MAX_PCT = 40;
+const V47_QUEUE_TYPES_TOTAL = 8;
+const V47_QUEUE_WORKFLOW_WEIGHT_PCT = 40;
+const V47_CONTEXT_GROWTH_WEIGHT_PCT = 40;
 const QUALITY_ENTITY_ORDER = ['lexicon', 'subject', 'lexicon_reverse', 'lexicon_tech', 'names', 'toponyms', 'ethnonyms', 'languages'];
 const QUALITY_CROSS_BOOK_ENTITY_ORDER = ['names', 'toponyms', 'ethnonyms', 'languages', 'subject', 'lexicon', 'lexicon_reverse', 'lexicon_tech'];
 const QUALITY_SORT_ENTITY_KEYS = new Set(['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'subject']);
@@ -4780,7 +4797,27 @@ function buildCorpusQualityState() {
     contextsCoverage: formatCoveragePercent(totals.withContexts, totals.items),
     sourcesCoverage: formatCoveragePercent(totals.withSources, totals.items),
   };
-  return { metrics, queues };
+  const contextCoverageValue = totals.items ? Math.round((totals.withContexts / totals.items) * 1000) / 10 : 0;
+  const remainingGrowth = V47_CONTEXT_TARGET_MIN_PCT - V47_CONTEXT_BASELINE_PCT;
+  const contextGrowthProgress = remainingGrowth > 0
+    ? clampQualityPercent(((contextCoverageValue - V47_CONTEXT_BASELINE_PCT) * 100) / remainingGrowth)
+    : 0;
+  const progress = {
+    phaseEstimatePercent: Math.round((
+      V47_QUEUE_WORKFLOW_WEIGHT_PCT
+      + (V47_CONTEXT_GROWTH_WEIGHT_PCT * contextGrowthProgress / 100)
+    ) * 10) / 10,
+    queueWorkflowPercent: 100,
+    queueTypesDone: V47_QUEUE_TYPES_TOTAL,
+    queueTypesTotal: V47_QUEUE_TYPES_TOTAL,
+    contextCoveragePercent: contextCoverageValue,
+    contextTargetMinPercent: V47_CONTEXT_TARGET_MIN_PCT,
+    contextTargetMaxPercent: V47_CONTEXT_TARGET_MAX_PCT,
+    contextTargetMinProgressPercent: clampQualityPercent((contextCoverageValue * 100) / V47_CONTEXT_TARGET_MIN_PCT),
+    contextTargetMaxProgressPercent: clampQualityPercent((contextCoverageValue * 100) / V47_CONTEXT_TARGET_MAX_PCT),
+    contextGrowthProgressPercent: Math.round(contextGrowthProgress * 10) / 10,
+  };
+  return { metrics, queues, progress };
 }
 
 function buildCorpusQualityMetrics() {
@@ -4866,6 +4903,23 @@ function renderQualityQueues(section, queues) {
   section.appendChild(wrap);
 }
 
+function renderQualityProgress(section, progress) {
+  if (!progress) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'corpus-quality-progress';
+  wrap.appendChild(createCorpusMetric('v4.7 estimate', `~${formatQualityPercent(progress.phaseEstimatePercent)}`));
+  wrap.appendChild(createCorpusMetric('queue workflow', formatQualityPercent(progress.queueWorkflowPercent)));
+  wrap.appendChild(createCorpusMetric(
+    'context target',
+    `${formatQualityPercent(progress.contextTargetMinProgressPercent)} of ${formatQualityPercent(progress.contextTargetMinPercent)}`
+  ));
+  wrap.appendChild(createCorpusMetric(
+    'context growth',
+    `${formatQualityPercent(progress.contextGrowthProgressPercent)} since baseline`
+  ));
+  section.appendChild(wrap);
+}
+
 function renderCorpusQualityPanel(panel) {
   if (!panel) return;
   const state = buildCorpusQualityState();
@@ -4885,6 +4939,7 @@ function renderCorpusQualityPanel(panel) {
   grid.appendChild(createCorpusMetric('source coverage', metrics.sourcesCoverage));
   grid.appendChild(createCorpusMetric('duplicate head groups', metrics.duplicateGroups));
   section.appendChild(grid);
+  renderQualityProgress(section, state.progress);
 
   const note = document.createElement('p');
   note.className = 'corpus-quality-note';
