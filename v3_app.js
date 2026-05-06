@@ -4499,6 +4499,10 @@ function compareQualityHeads(a, b) {
 }
 
 function compareQualityQueueItems(a, b) {
+  if (a.queue === 'missing_context' && b.queue === 'missing_context') {
+    const priorityDiff = Number(b.priorityScore || 0) - Number(a.priorityScore || 0);
+    if (priorityDiff !== 0) return priorityDiff;
+  }
   const entityDiff = getQualityEntityPriority(a.entity) - getQualityEntityPriority(b.entity);
   if (entityDiff !== 0) return entityDiff;
   const headDiff = compareQualityHeads(a.head, b.head);
@@ -4666,6 +4670,35 @@ function getEffectiveQualityContextInfo(typeKey, item, inheritedContextIndex) {
   };
 }
 
+function getContextPriorityInfo(typeKey, item) {
+  const bases = {
+    lexicon: 100,
+    subject: 90,
+    lexicon_reverse: 80,
+    lexicon_tech: 70,
+    names: 45,
+    toponyms: 40,
+    ethnonyms: 40,
+    languages: 40,
+  };
+  const pages = getItemQualityPages(item);
+  const score = (bases[typeKey] || 20)
+    + Math.min(pages.length, 20)
+    + (item && item.discussed === true ? 5 : 0)
+    + (item && item.needs_review === true ? 5 : 0);
+  let reason = 'Lower-priority context gap after lexicon and subject work.';
+  if (typeKey === 'lexicon') reason = 'v4.7 top priority: lexicon context expansion.';
+  else if (typeKey === 'subject') reason = 'v4.7 top priority: subject_index context expansion.';
+  else if (typeKey === 'lexicon_reverse') reason = 'v4.7 priority: reverse index entries not covered by lexicon inheritance.';
+  else if (typeKey === 'lexicon_tech') reason = 'v4.7 priority: technical/OCR term needing source verification.';
+  return {
+    priorityScore: score,
+    priorityTier: score >= 105 ? 'high' : score >= 80 ? 'medium' : 'low',
+    priorityReason: reason,
+    priorityPagesCount: pages.length,
+  };
+}
+
 function createQualityQueueRecord(queue, entity, item, reason, extra = {}) {
   const head = String(item && item.head ? item.head : '').trim();
   const pages = getItemQualityPages(item);
@@ -4719,7 +4752,13 @@ function buildCorpusQualityState() {
       if (contextSnippets > 0) totals.withContexts += 1;
       if (effectiveContext.snippets > 0) totals.withEffectiveContexts += 1;
       if (effectiveContext.inherited) totals.withInheritedContexts += 1;
-      else if (contextSnippets <= 0) queues.missing_context.push(createQualityQueueRecord('missing_context', typeKey, item, 'No direct or occurrence context snippets.'));
+      else if (contextSnippets <= 0) queues.missing_context.push(createQualityQueueRecord(
+        'missing_context',
+        typeKey,
+        item,
+        'No direct or occurrence context snippets.',
+        getContextPriorityInfo(typeKey, item)
+      ));
       if (hasSource) {
         totals.withSources += 1;
       } else {
@@ -4889,6 +4928,7 @@ function renderQualityQueueItem(item) {
   meta.className = 'quality-queue-meta';
   const details = [];
   if (item.entity) details.push(item.entity);
+  if (item.priorityTier) details.push(`priority: ${item.priorityTier} ${item.priorityScore || ''}`.trim());
   if (item.count) details.push(`x${item.count}`);
   if (Array.isArray(item.books) && item.books.length) details.push(`books: ${item.books.join(', ')}`);
   if (Array.isArray(item.entities) && item.entities.length) details.push(`entities: ${item.entities.join(', ')}`);
@@ -4900,7 +4940,7 @@ function renderQualityQueueItem(item) {
   meta.textContent = details.join(' · ');
   const reason = document.createElement('span');
   reason.className = 'quality-queue-reason';
-  reason.textContent = item.reason || '';
+  reason.textContent = item.priorityReason || item.reason || '';
   row.appendChild(head);
   row.appendChild(meta);
   row.appendChild(reason);

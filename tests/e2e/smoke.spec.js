@@ -96,6 +96,10 @@ test.describe('aaz-index smoke', () => {
     await pageQueue.locator('summary').click();
     await expect(pageQueue.locator('.quality-queue-item').first()).toContainText('missing page_list');
 
+    const contextQueue = quality.locator('.quality-queue[data-queue="missing_context"]');
+    await contextQueue.locator('summary').click();
+    await expect(contextQueue.locator('.quality-queue-item').first()).toContainText('priority: high');
+
     const duplicateQueue = quality.locator('.quality-queue[data-queue="duplicate_heads"]');
     await duplicateQueue.locator('summary').click();
     const duplicateLink = duplicateQueue.locator('.quality-queue-item[href]').first();

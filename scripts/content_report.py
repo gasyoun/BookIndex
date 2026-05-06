@@ -997,6 +997,48 @@ def count_effective_context_items(data: dict[str, Any]) -> dict[str, int]:
     }
 
 
+CONTEXT_PRIORITY_BASE = {
+    "lexicon": 100,
+    "subject_index": 90,
+    "lexicon_reverse": 80,
+    "lexicon_tech": 70,
+    "names": 45,
+    "toponyms": 40,
+    "ethnonyms": 40,
+    "languages": 40,
+}
+
+
+def context_priority_info(entity: str, item: dict[str, Any]) -> dict[str, Any]:
+    pages = get_item_pages(item)
+    page_bonus = min(len(pages), 20)
+    discussed_bonus = 5 if item.get("discussed") is True else 0
+    review_bonus = 5 if item.get("needs_review") is True else 0
+    score = CONTEXT_PRIORITY_BASE.get(entity, 20) + page_bonus + discussed_bonus + review_bonus
+    if score >= 105:
+        tier = "high"
+    elif score >= 80:
+        tier = "medium"
+    else:
+        tier = "low"
+    if entity == "lexicon":
+        reason = "v4.7 top priority: lexicon context expansion."
+    elif entity == "subject_index":
+        reason = "v4.7 top priority: subject_index context expansion."
+    elif entity == "lexicon_reverse":
+        reason = "v4.7 priority: reverse index entries not covered by lexicon inheritance."
+    elif entity == "lexicon_tech":
+        reason = "v4.7 priority: technical/OCR term needing source verification."
+    else:
+        reason = "Lower-priority context gap after lexicon and subject work."
+    return {
+        "priority_score": score,
+        "priority_tier": tier,
+        "priority_reason": reason,
+        "priority_pages_count": len(pages),
+    }
+
+
 def build_quality_item(
     *,
     entity: str,
@@ -1077,6 +1119,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
                     item=item,
                     queue="missing_context",
                     reason="No direct or occurrence context snippets.",
+                    extra=context_priority_info(entity, item),
                 ))
             if not item_has_source(item):
                 queues["missing_source"].append(build_quality_item(
@@ -1208,7 +1251,13 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
             ))
 
     for key, items in queues.items():
-        items.sort(key=lambda item: quality_entity_sort_key(str(item.get("entity", "")), str(item.get("head", ""))))
+        if key == "missing_context":
+            items.sort(key=lambda item: (
+                -int(item.get("priority_score", 0)),
+                *quality_entity_sort_key(str(item.get("entity", "")), str(item.get("head", ""))),
+            ))
+        else:
+            items.sort(key=lambda item: quality_entity_sort_key(str(item.get("entity", "")), str(item.get("head", ""))))
 
     totals = dict(report.get("totals", {}))
     totals.update({
@@ -1235,6 +1284,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
         for key, metrics in entities.items()
         if metrics.get("duplicate_heads_count")
     }
+    context_priority_top = queues["missing_context"][:25]
 
     return {
         "schema_version": 2,
@@ -1262,6 +1312,7 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
         "duplicate_heads": duplicate_heads,
         "suspicious_heads": suspicious,
         "sort_inversions": sort_inversions,
+        "context_priority_top": context_priority_top,
     }
 
 
