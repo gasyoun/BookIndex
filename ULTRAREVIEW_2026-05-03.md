@@ -205,15 +205,17 @@ Implemented first slice:
 - v4.7 progress metrics in `scripts/content_report.py`, queue JSON, and `#v4/corpus/sources`;
 - effective-context policy for `lexicon_reverse` inheriting from matching `lexicon` entries;
 - priority-scored `missing_context` queue and top targets for manual context entry;
+- generated `tests/context-entry-pack.json` with the first 25 priority targets for source-based context entry;
 - smoke coverage for queue counts, expansion, navigation, and compact viewport overflow.
 
 Priorities:
 
 1. Start with top `missing_context` targets by priority score: `двойственное число`, `заимствование, заимствованные слова`, `иероглиф, иероглифический знак`, `калька, калькирование`, `разговорный язык, разговорная речь`.
-2. `lexicon`: 1368 items, 12.9% with contexts.
-3. `subject_index`: 92 items, 4.3% with contexts.
-4. `lexicon_reverse`: inherited effective context now applies where a matching `lexicon` context exists.
-5. `lexicon_tech`: 36 items, 11.1% with contexts.
+2. Refresh `tests/index-audit-queue.json` and `tests/context-entry-pack.json` together with `npm run content:audit` before editing contexts.
+3. `lexicon`: 1368 items, 12.9% with contexts.
+4. `subject_index`: 92 items, 4.3% with contexts.
+5. `lexicon_reverse`: inherited effective context now applies where a matching `lexicon` context exists.
+6. `lexicon_tech`: 36 items, 11.1% with contexts.
 
 Build actionable queues:
 

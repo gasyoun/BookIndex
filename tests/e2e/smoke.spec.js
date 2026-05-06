@@ -82,6 +82,8 @@ test.describe('aaz-index smoke', () => {
     await expect(quality).toContainText('24%');
     await expect(quality).toContainText('inherited contexts');
     await expect(quality).toContainText('198');
+    await expect(quality).toContainText('context pack');
+    await expect(quality).toContainText('25 targets');
     await expect(quality.locator('.quality-queue[data-queue="duplicate_heads"] summary')).toContainText('1');
     await expect(quality.locator('.quality-queue[data-queue="cross_book_duplicate_candidates"] summary')).toContainText('8');
     await expect(quality.locator('.quality-queue[data-queue="suspicious_heads"] summary')).toContainText('23');

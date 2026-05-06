@@ -9,7 +9,7 @@
     "import:validate": "python scripts/import_source.py --book-id",
     "import:merge": "python scripts/import_source.py --book-id",
     "import:status": "python scripts/import_source.py --book-id",
-    "content:audit": "python scripts/content_report.py app_data.json --write-quality-queue tests/index-audit-queue.json",
+    "content:audit": "python scripts/content_report.py app_data.json --write-quality-queue tests/index-audit-queue.json --write-context-pack tests/context-entry-pack.json",
     "check": "npm run typecheck && npm run check:js && npm run check:ui && npm run check:e2e",
     "check:js": "node --check v3_app.js && node --check scripts/build_aaz_index.mjs && node --check scripts/dev/static-server.mjs && node --check scripts/viz/build-viz-cache.js && node --check scripts/viz/viz-state.js",
     "check:ui": "node scripts/check_inline_styles.mjs",

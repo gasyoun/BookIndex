@@ -707,6 +707,61 @@ def validate_manual_audit_queue(data_path: Path, errors: list[str], warnings: li
         warn("[manual_audit] index-errors.md is not marked present in queue", warnings)
 
 
+def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
+    queue_path = data_path.parent / "tests" / "index-audit-queue.json"
+    pack_path = data_path.parent / "tests" / "context-entry-pack.json"
+    if not pack_path.exists():
+        return
+    if not queue_path.exists():
+        fail("[context_pack] index-audit-queue.json is required when context-entry-pack.json exists", errors)
+        return
+    try:
+        queue = json.loads(queue_path.read_text(encoding="utf-8"))
+        pack = json.loads(pack_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        fail(f"[context_pack] invalid queue/pack JSON: {exc}", errors)
+        return
+
+    if pack.get("schema_version") != 1:
+        fail("[context_pack] schema_version must be 1", errors)
+    targets = pack.get("targets")
+    if not isinstance(targets, list):
+        fail("[context_pack] targets must be list", errors)
+        return
+    if pack.get("target_count") != len(targets):
+        fail("[context_pack] target_count must match targets length", errors)
+
+    queue_targets = queue.get("context_priority_top")
+    if not isinstance(queue_targets, list):
+        fail("[context_pack] queue.context_priority_top must be list", errors)
+        return
+    limit = pack.get("limit")
+    if not isinstance(limit, int) or limit < 1:
+        fail("[context_pack] limit must be positive integer", errors)
+        limit = len(targets)
+    expected = queue_targets[:limit]
+    if len(targets) != len(expected):
+        fail(f"[context_pack] stale target count: {len(targets)} != {len(expected)}", errors)
+        return
+
+    for index, (target, source) in enumerate(zip(targets, expected), start=1):
+        if not isinstance(target, dict) or not isinstance(source, dict):
+            fail(f"[context_pack] target {index} must be object", errors)
+            continue
+        for field in ("entity", "head", "route", "priority_score", "priority_tier", "pages_summary"):
+            if target.get(field) != source.get(field):
+                fail(
+                    f"[context_pack] stale target {index}.{field}: "
+                    f"{target.get(field)!r} != {source.get(field)!r}",
+                    errors,
+                )
+        if target.get("status") != "needs_source_context":
+            fail(f"[context_pack] target {index}.status must be needs_source_context", errors)
+        entry_fields = target.get("entry_fields")
+        if not isinstance(entry_fields, dict):
+            fail(f"[context_pack] target {index}.entry_fields must be object", errors)
+
+
 def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:
     readme_path = data_path.parent / "README.md"
     queue_path = data_path.parent / "tests" / "index-audit-queue.json"
@@ -768,6 +823,7 @@ def main() -> int:
     validate_cross_links(data, entity_index, errors)
     validate_markdown_exports(path, errors, warnings)
     validate_manual_audit_queue(path, errors, warnings)
+    validate_context_entry_pack(path, errors)
     validate_readme_audit_summary(path, errors)
 
     print("validate_content.py report")

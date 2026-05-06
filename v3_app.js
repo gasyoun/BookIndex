@@ -4898,6 +4898,7 @@ function buildCorpusQualityState() {
     contextCoveragePercent: contextCoverageValue,
     effectiveContextCoveragePercent: effectiveContextCoverageValue,
     inheritedContextItems: totals.withInheritedContexts,
+    contextEntryPackTargets: Math.min(25, queues.missing_context.length),
     contextTargetMinPercent: V47_CONTEXT_TARGET_MIN_PCT,
     contextTargetMaxPercent: V47_CONTEXT_TARGET_MAX_PCT,
     contextTargetMinProgressPercent: clampQualityPercent((effectiveContextCoverageValue * 100) / V47_CONTEXT_TARGET_MIN_PCT),
@@ -5004,6 +5005,10 @@ function renderQualityProgress(section, progress) {
   wrap.appendChild(createCorpusMetric(
     'inherited contexts',
     String(progress.inheritedContextItems || 0)
+  ));
+  wrap.appendChild(createCorpusMetric(
+    'context pack',
+    `${progress.contextEntryPackTargets || 0} targets`
   ));
   wrap.appendChild(createCorpusMetric(
     'context growth',

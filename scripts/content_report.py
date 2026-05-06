@@ -1316,6 +1316,59 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
     }
 
 
+def build_context_entry_pack(quality_queue: dict[str, Any], limit: int = 25) -> dict[str, Any]:
+    targets = []
+    for rank, item in enumerate(quality_queue.get("context_priority_top", [])[:limit], start=1):
+        target = {
+            "rank": rank,
+            "status": "needs_source_context",
+            "entity": item.get("entity"),
+            "head": item.get("head"),
+            "canonical_id": item.get("canonical_id"),
+            "route": item.get("route"),
+            "pages_count": item.get("pages_count", 0),
+            "pages_summary": item.get("pages_summary", "0 pages"),
+            "priority_score": item.get("priority_score", 0),
+            "priority_tier": item.get("priority_tier", "low"),
+            "priority_reason": item.get("priority_reason", item.get("reason", "")),
+            "source_present": item.get("source_present", False),
+            "context_snippets": item.get("context_snippets", 0),
+            "entry_fields": {
+                "contexts": {},
+                "source_notes": "",
+                "verification_notes": "",
+            },
+        }
+        targets.append({key: value for key, value in target.items() if value is not None})
+
+    progress = quality_queue.get("progress", {}).get("v47", {})
+    totals = quality_queue.get("totals", {})
+    return {
+        "schema_version": 1,
+        "source": quality_queue.get("source"),
+        "purpose": "Manual context-entry work pack for the highest-priority v4.7 missing_context items.",
+        "selection_rule": "Top missing_context queue items sorted by priority_score, then entity priority and head.",
+        "limit": limit,
+        "target_count": len(targets),
+        "progress": {
+            "phase_estimate_percent": progress.get("phase_estimate_percent"),
+            "direct_context_coverage_percent": progress.get("context_coverage_percent"),
+            "effective_context_coverage_percent": progress.get("effective_context_coverage_percent"),
+            "context_target_min_percent": progress.get("context_target_min_percent"),
+            "context_target_max_percent": progress.get("context_target_max_percent"),
+        },
+        "queue_totals": {
+            "missing_context_count": totals.get("missing_context_count"),
+            "suspicious_heads_count": totals.get("suspicious_heads_count"),
+            "sort_inversions_count": totals.get("sort_inversions_count"),
+            "duplicate_heads_count": totals.get("duplicate_heads_count"),
+            "cross_book_duplicate_candidates_count": totals.get("cross_book_duplicate_candidates_count"),
+            "needs_page_verification_count": totals.get("needs_page_verification_count"),
+        },
+        "targets": targets,
+    }
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate BookIndex content metrics report.")
     parser.add_argument("path", nargs="?", default="app_data.json", help="Path to app_data.json")
@@ -1334,6 +1387,17 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         "--write-quality-queue",
         metavar="PATH",
         help="Write enriched actionable quality queue JSON to PATH",
+    )
+    parser.add_argument(
+        "--write-context-pack",
+        metavar="PATH",
+        help="Write v4.7 manual context-entry pack JSON to PATH",
+    )
+    parser.add_argument(
+        "--context-pack-limit",
+        type=int,
+        default=25,
+        help="Number of top missing-context targets to include in --write-context-pack",
     )
     return parser.parse_args(argv)
 
@@ -1361,11 +1425,26 @@ def main(argv: list[str] | None = None) -> int:
             json.dumps(build_manual_audit_queue(report), ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
+    quality_queue = None
+    if args.write_quality_queue or args.write_context_pack:
+        quality_queue = build_quality_queue(data, report)
+
     if args.write_quality_queue:
         queue_path = Path(args.write_quality_queue)
         queue_path.parent.mkdir(parents=True, exist_ok=True)
         queue_path.write_text(
-            json.dumps(build_quality_queue(data, report), ensure_ascii=False, indent=2) + "\n",
+            json.dumps(quality_queue, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+    if args.write_context_pack:
+        pack_path = Path(args.write_context_pack)
+        pack_path.parent.mkdir(parents=True, exist_ok=True)
+        pack_path.write_text(
+            json.dumps(
+                build_context_entry_pack(quality_queue or build_quality_queue(data, report), args.context_pack_limit),
+                ensure_ascii=False,
+                indent=2,
+            ) + "\n",
             encoding="utf-8",
         )
 
