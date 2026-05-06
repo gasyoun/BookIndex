@@ -60,6 +60,10 @@ function parseAppData() {
   vizCacheWarmPromise = null;
   vizScriptLoadPromises = new Map();
   cleanupActiveVizModule();
+  
+  // WORKSPACE INITIALIZATION (v7.1)
+  initScholarWorkspace();
+
   migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
   COLORS = APP_DATA.colors;
@@ -117,8 +121,121 @@ function injectSemanticStyles() {
     .phonetic-simulator { margin-top: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(128, 222, 234, 0.3); }
     .simulator-input { background: none; border: 1px solid #444; color: #fff; padding: 0.5rem 1rem; border-radius: 4px; width: 200px; font-family: monospace; }
     .simulator-result { font-size: 1.5rem; font-weight: 700; color: #80deea; margin-left: 1rem; }
+    
+    /* WORKSPACE UI v7.1 */
+    .pin-btn { 
+      background: none; border: none; cursor: pointer; font-size: 1.2rem; 
+      opacity: 0.4; transition: 0.2s; padding: 0; vertical-align: middle; 
+      color: #80deea; filter: grayscale(1);
+    }
+    .pin-btn:hover { opacity: 1; transform: scale(1.2); }
+    .pin-btn.active { opacity: 1; filter: none; }
+    
+    #scholar-workspace-drawer {
+      position: fixed; right: 0; top: 0; width: 320px; height: 100%; 
+      background: #1a1a1a; border-left: 1px solid rgba(128, 222, 234, 0.3); 
+      z-index: 1000; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5); display: flex; flex-direction: column;
+    }
+    #scholar-workspace-drawer.open { transform: translateX(0); }
+    .workspace-header { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+    .workspace-content { flex: 1; overflow-y: auto; padding: 1rem; }
+    .workspace-item { 
+      display: flex; justify-content: space-between; align-items: center; 
+      padding: 0.75rem; background: rgba(255,255,255,0.03); 
+      border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.9rem;
+    }
+    .workspace-toggle {
+      position: fixed; right: 20px; bottom: 20px; width: 60px; height: 60px;
+      border-radius: 50%; background: #26a69a; color: #fff; border: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 1001;
+      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+      transition: transform 0.2s;
+    }
+    .workspace-toggle:hover { transform: scale(1.1) rotate(5deg); }
   `;
   document.head.appendChild(style);
+}
+
+let scholarPins = new Set();
+
+function initScholarWorkspace() {
+  try {
+    const saved = localStorage.getItem('Zalizniakiada.pins_v7');
+    if (saved) scholarPins = new Set(JSON.parse(saved));
+  } catch(e) {}
+  
+  if (typeof document === 'undefined') return;
+  
+  const drawer = document.createElement('div');
+  drawer.id = 'scholar-workspace-drawer';
+  drawer.innerHTML = `
+    <div class="workspace-header">
+      <h3 style="margin:0; font-size:1.1rem; color:#80deea;">Портфель исследователя</h3>
+      <button class="viz-btn" onclick="toggleWorkspace(false)">Закрыть</button>
+    </div>
+    <div class="workspace-content" id="workspace-pins-list"></div>
+    <div class="workspace-footer" style="padding:1rem; border-top:1px solid rgba(255,255,255,0.1);">
+      <button class="intro-btn" style="width:100%; padding:0.8rem;" onclick="exportWorkspaceCollection()">Экспорт коллекции (.zip)</button>
+    </div>
+  `;
+  document.body.appendChild(drawer);
+  
+  const toggle = document.createElement('button');
+  toggle.className = 'workspace-toggle';
+  toggle.innerHTML = '📂';
+  toggle.title = 'Открыть портфель исследователя';
+  toggle.onclick = () => toggleWorkspace();
+  document.body.appendChild(toggle);
+  
+  updateWorkspaceUI();
+}
+
+function toggleWorkspace(open) {
+  const drawer = document.getElementById('scholar-workspace-drawer');
+  if (!drawer) return;
+  const isCurrentlyOpen = drawer.classList.contains('open');
+  const next = typeof open === 'boolean' ? open : !isCurrentlyOpen;
+  drawer.classList.toggle('open', next);
+}
+
+function togglePin(head, type) {
+  const key = `${type}:${head}`;
+  if (scholarPins.has(key)) {
+    scholarPins.delete(key);
+  } else {
+    scholarPins.add(key);
+  }
+  localStorage.setItem('Zalizniakiada.pins_v7', JSON.stringify(Array.from(scholarPins)));
+  updateWorkspaceUI();
+  // Update current card pin if visible
+  const btn = document.getElementById('card-pin-btn');
+  if (btn) btn.classList.toggle('active', scholarPins.has(key));
+}
+
+function updateWorkspaceUI() {
+  const list = document.getElementById('workspace-pins-list');
+  if (!list) return;
+  
+  if (scholarPins.size === 0) {
+    list.innerHTML = '<div style="color:#666; text-align:center; margin-top:3rem;">Портфель пуст.<br>Нажимайте на 📌 в карточках, чтобы добавить их сюда.</div>';
+    return;
+  }
+  
+  list.innerHTML = '';
+  scholarPins.forEach(key => {
+    const [type, head] = key.split(':');
+    const item = document.createElement('div');
+    item.className = 'workspace-item';
+    item.innerHTML = `
+      <div style="cursor:pointer;" onclick="navigateToItem('${type}', '${escapeHtml(head)}'); toggleWorkspace(false);">
+        <strong>${escapeHtml(head)}</strong>
+        <div style="font-size:0.7rem; color:#888; text-transform:uppercase;">${type}</div>
+      </div>
+      <button class="pin-btn active" onclick="togglePin('${escapeHtml(head)}', '${type}')">✕</button>
+    `;
+    list.appendChild(item);
+  });
 }
 
 let __headToTypeMap = null;
@@ -6403,7 +6520,11 @@ function renderCardInRight() {
       <div class="card-header">
         ${photo}
         <div class="card-title-block">
-          <h2>${renderAccentSafe(it.head)}</h2>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <h2>${renderAccentSafe(it.head)}</h2>
+            <button id="card-pin-btn" class="pin-btn${scholarPins.has(`${eType}:${it.head}`) ? ' active' : ''}" 
+                    onclick="togglePin('${escapeHtml(it.head)}', '${eType}')" title="Добавить в портфель">📌</button>
+          </div>
           <div class="card-meta-row">
             <div class="category">${escapeHtml(category)}</div>
             <div class="card-meta-right">
