@@ -9,14 +9,18 @@
           "pages": [
             232
           ],
-          "contexts": []
+          "contexts": [
+            "Слово 'ada (араб. 'āda) — 'обычай', рассматривается как пример широкого распространения арабских терминов в исламском мире."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         232
       ],
-      "contexts": [],
+      "contexts": [
+        "Слово 'ada (араб. 'āda) — 'обычай', рассматривается как пример широкого распространения арабских терминов в исламском мире."
+      ],
       "discussed": false,
       "pages": "232",
       "category": "tech",
@@ -31,14 +35,18 @@
           "pages": [
             230
           ],
-          "contexts": []
+          "contexts": [
+            "Запись ̂/öhb. относится к анализу семитских корней, связанных с понятием ухода или золота (dh-h-b)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "Запись ̂/öhb. относится к анализу семитских корней, связанных с понятием ухода или золота (dh-h-b)."
+      ],
       "discussed": false,
       "pages": "230",
       "category": "tech",
@@ -53,14 +61,18 @@
           "pages": [
             227
           ],
-          "contexts": []
+          "contexts": [
+            "Семитский корень slm (с-л-м) со значением 'мир', 'покорность' лежит в основе слов Ислам и салям."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         227
       ],
-      "contexts": [],
+      "contexts": [
+        "Семитский корень slm (с-л-м) со значением 'мир', 'покорность' лежит в основе слов Ислам и салям."
+      ],
       "discussed": false,
       "pages": "227",
       "category": "tech",
@@ -75,14 +87,18 @@
           "pages": [
             231
           ],
-          "contexts": []
+          "contexts": [
+            "Корень tlb (т-л-б) — 'искать', 'просить', часто встречается в тюркских и арабских заимствованиях (например, в слове талиб)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         231
       ],
-      "contexts": [],
+      "contexts": [
+        "Корень tlb (т-л-б) — 'искать', 'просить', часто встречается в тюркских и арабских заимствованиях (например, в слове талиб)."
+      ],
       "discussed": false,
       "pages": "231",
       "category": "tech",
@@ -97,14 +113,20 @@
           "pages": [
             220
           ],
-          "contexts": []
+          "contexts": [
+            "Латинский корень в слове admire (admirari) часто становится объектом народной этимологии для слов арабского происхождения (например, amiral)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         220
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"admire\" title: \"admire\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…s\",   \"needs_review\": false } ```  --- id: \"admire\" title: \"admire\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-310d84a9-704c-59f3-8634-0fe916ff3415\",   \"head\": \"admire\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "220",
       "category": "lat",
@@ -119,14 +141,20 @@
           "pages": [
             220
           ],
-          "contexts": []
+          "contexts": [
+            "Французский глагол admirer (восхищаться) часто приводится в паре с английским admire для демонстрации латинского влияния."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         220
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"admirer\" title: \"admirer\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…\",   \"needs_review\": false } ```  --- id: \"admirer\" title: \"admirer\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-ba0567bc-6528-527b-94d8-9feee0fd07ad\",   \"head\": \"admirer\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "220",
       "category": "lat",
@@ -141,14 +169,18 @@
           "pages": [
             220
           ],
-          "contexts": []
+          "contexts": [
+            "Имя Ahmad рассматривается Зализняком в контексте структуры арабских имен и их семантики в мусульманской культуре."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         220
       ],
-      "contexts": [],
+      "contexts": [
+        "Имя Ahmad рассматривается Зализняком в контексте структуры арабских имен и их семантики в мусульманской культуре."
+      ],
       "discussed": false,
       "pages": "220",
       "category": "lat",
@@ -163,14 +195,20 @@
           "pages": [
             332
           ],
-          "contexts": []
+          "contexts": [
+            "Французское наречие ailleurs (в другом месте) обсуждается в контексте романской этимологии (лат. aliorsum)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         332
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"ailleurs\" title: \"ailleurs\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…,   \"needs_review\": false } ```  --- id: \"ailleurs\" title: \"ailleurs\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-afd5a1c7-ef62-5677-9f10-82f744c9d0b3\",   \"head\": \"ailleurs\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "332",
       "category": "lat",
@@ -185,14 +223,18 @@
           "pages": [
             221
           ],
-          "contexts": []
+          "contexts": [
+            "Арабский артикль Al- является характерным маркером заимствований в европейских языках, часто сливаясь с основой (например, в словах алхимия, алкоголь)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "Арабский артикль Al- является характерным маркером заимствований в европейских языках, часто сливаясь с основой (например, в словах алхимия, алкоголь)."
+      ],
       "discussed": false,
       "pages": "221",
       "category": "lat",
@@ -207,14 +249,18 @@
           "pages": [
             221
           ],
-          "contexts": []
+          "contexts": [
+            "Математический термин al-gabr (аль-джабр) — 'восполнение', привел к возникновению слова алгебра во всем мире."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "Математический термин al-gabr (аль-джабр) — 'восполнение', привел к возникновению слова алгебра во всем мире."
+      ],
       "discussed": false,
       "pages": "221",
       "category": "lat",
@@ -229,14 +275,20 @@
           "pages": [
             230
           ],
-          "contexts": []
+          "contexts": [
+            "Арабское слово al-himär (осел) используется Зализняком для иллюстрации работы определенного артикля и структуры корня."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"al-himär\" title: \"al-himär\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…,   \"needs_review\": false } ```  --- id: \"al-himär\" title: \"al-himär\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-e88976c0-ede5-53f4-9a83-dccc60617f96\",   \"head\": \"al-himär\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "230",
       "category": "lat",
@@ -251,14 +303,18 @@
           "pages": [
             230
           ],
-          "contexts": []
+          "contexts": [
+            "Форма al-himäru показывает арабское слово с падежным окончанием (именительный падеж на -u)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "Форма al-himäru показывает арабское слово с падежным окончанием (именительный падеж на -u)."
+      ],
       "discussed": false,
       "pages": "230",
       "category": "lat",
@@ -273,14 +329,18 @@
           "pages": [
             221
           ],
-          "contexts": []
+          "contexts": [
+            "Топографический термин al-wädi (русло, долина) часто встречается в географических названиях арабского происхождения."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "Топографический термин al-wädi (русло, долина) часто встречается в географических названиях арабского происхождения."
+      ],
       "discussed": false,
       "pages": "221",
       "category": "lat",
@@ -295,14 +355,20 @@
           "pages": [
             332
           ],
-          "contexts": []
+          "contexts": [
+            "Латинское слово alibi (в другом месте) вошло в юридическую терминологию многих европейских языков."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         332
       ],
-      "contexts": [],
+      "contexts": [
+        "…[],   \"discussed\": false,   \"pages\": \"332\" } ```  --- id: \"alibi\" title: \"alibi\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…ed\": false,   \"pages\": \"332\" } ```  --- id: \"alibi\" title: \"alibi\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-b751d398-e130-5534-8c80-17853abd4cfc\",   \"head\": \"alibi\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "332",
       "category": "lat",
@@ -317,14 +383,20 @@
           "pages": [
             60
           ],
-          "contexts": []
+          "contexts": [
+            "Французское название немцев (Allemands) происходит от названия германского племени алеманнов."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         60
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"Allemands\" title: \"Allemands\" source_key: \"lexicon_reverse\" source: \"…",
+        "…\"needs_review\": false } ```  --- id: \"Allemands\" title: \"Allemands\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-5f62c8ab-77ec-58a5-a6ee-c41a3a271f65\",   \"head\": \"Allemands\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "60",
       "category": "lat",
@@ -339,14 +411,18 @@
           "pages": [
             26
           ],
-          "contexts": []
+          "contexts": [
+            "Английская глагольная форма am восходит к древнегерманскому и индоевропейскому корню со значением бытия."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         26
       ],
-      "contexts": [],
+      "contexts": [
+        "Английская глагольная форма am восходит к древнегерманскому и индоевропейскому корню со значением бытия."
+      ],
       "discussed": false,
       "pages": "26",
       "category": "lat",
@@ -361,14 +437,20 @@
           "pages": [
             221
           ],
-          "contexts": []
+          "contexts": [
+            "Французское amiral заимствовано из арабского amīr al-baḥr (повелитель моря) с потерей конечного элемента."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"tech\",   \"needs_review\": true } ```  --- id: \"amiral\" title: \"amiral\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…ch\",   \"needs_review\": true } ```  --- id: \"amiral\" title: \"amiral\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-123a6dd3-8ea6-597a-857c-a05fbf2402ea\",   \"head\": \"amiral\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "221",
       "category": "lat",
@@ -383,14 +465,20 @@
           "pages": [
             60
           ],
-          "contexts": []
+          "contexts": [
+            "Английское название армян (armenians) рассматривается в контексте этнонимии и исторических контактов."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         60
       ],
-      "contexts": [],
+      "contexts": [
+        "…ена, фигурирующие в «Велесовой книге».\"   ] } ```  --- id: \"armenians\" title: \"armenians\" source_key: \"lexicon_reverse\" source: \"…",
+        "…«Велесовой книге».\"   ] } ```  --- id: \"armenians\" title: \"armenians\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-542756ad-3555-5f9d-ba6b-d43204118b0e\",   \"head\": \"armenians\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "60",
       "category": "lat",
@@ -405,14 +493,20 @@
           "pages": [
             60
           ],
-          "contexts": []
+          "contexts": [
+            "Французское arméniens обсуждается параллельно с другими европейскими формами названия этого народа."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         60
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"armeniens\" title: \"armeniens\" source_key: \"lexicon_reverse\" source: \"…",
+        "…\"needs_review\": false } ```  --- id: \"armeniens\" title: \"armeniens\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-cfcfd84d-2ca2-5185-b789-9a7eaed85798\",   \"head\": \"armeniens\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "60",
       "category": "lat",
@@ -427,14 +521,20 @@
           "pages": [
             231
           ],
-          "contexts": []
+          "contexts": [
+            "Латинский глагол aspirare (дышать, стремиться) дал начало многим терминам в европейских языках."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         231
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"tech\",   \"needs_review\": true } ```  --- id: \"aspirare\" title: \"aspirare\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…\",   \"needs_review\": true } ```  --- id: \"aspirare\" title: \"aspirare\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-c4984058-657f-5d23-9277-732c2b476d75\",   \"head\": \"aspirare\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "231",
       "category": "lat",
@@ -449,14 +549,20 @@
           "pages": [
             221
           ],
-          "contexts": []
+          "contexts": [
+            "Арабское слово Bahr (море) является частью многих титулов и географических названий (например, Бахрейн)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"Bahr\" title: \"Bahr\" source_key: \"lexicon_reverse\" source: \"Из жи…",
+        "…rus\",   \"needs_review\": false } ```  --- id: \"Bahr\" title: \"Bahr\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-a20dd8c9-ce3f-50d1-8e93-1457dde76e40\",   \"head\": \"Bahr\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "221",
       "category": "lat",
@@ -471,14 +577,18 @@
           "pages": [
             230
           ],
-          "contexts": []
+          "contexts": [
+            "Фонетическая запись bhö отражает специфику произношения в восточных или диалектных формах."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "Фонетическая запись bhö отражает специфику произношения в восточных или диалектных формах."
+      ],
       "discussed": false,
       "pages": "230",
       "category": "lat",
@@ -493,14 +603,18 @@
           "pages": [
             230
           ],
-          "contexts": []
+          "contexts": [
+            "Корень blty приводится как пример морфологической структуры в обсуждаемых языках."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "Корень blty приводится как пример морфологической структуры в обсуждаемых языках."
+      ],
       "discussed": false,
       "pages": "230",
       "category": "lat",
@@ -515,14 +629,20 @@
           "pages": [
             191
           ],
-          "contexts": []
+          "contexts": [
+            "Немецкое Bratpfanne (сковорода) анализируется с точки зрения словосложения и бытовой лексики."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         191
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"Bratpfanne\" title: \"Bratpfanne\" source_key: \"lexicon_reverse\" source:…",
+        "…\"needs_review\": false } ```  --- id: \"Bratpfanne\" title: \"Bratpfanne\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-e02dadae-896b-517d-8151-9cca096003e7\",   \"head\": \"Bratpfanne\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "191",
       "category": "lat",
@@ -537,14 +657,20 @@
           "pages": [
             80
           ],
-          "contexts": []
+          "contexts": [
+            "Английское business (дело) обсуждается в контексте семантического развития от понятия 'занятость' (busy)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         80
       ],
-      "contexts": [],
+      "contexts": [
+        "….wikipedia.org/wiki/Бусбек,_Ожье_Гислен_де\" } ```  --- id: \"business\" title: \"business\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…i/Бусбек,_Ожье_Гислен_де\" } ```  --- id: \"business\" title: \"business\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-690613ec-19f2-54d8-b934-37ae54443076\",   \"head\": \"business\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "80",
       "category": "lat",
@@ -559,14 +685,20 @@
           "pages": [
             82
           ],
-          "contexts": []
+          "contexts": [
+            "Английское chair (стул) заимствовано из французского chaire, которое восходит к латинскому cathedra."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         82
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"family\": \"Тюркская\",   \"group\": \"тюркская\" } ```  --- id: \"chair\" title: \"chair\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…ская\",   \"group\": \"тюркская\" } ```  --- id: \"chair\" title: \"chair\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-b4fba53f-6163-5dd1-aa87-c6ea3a5a9428\",   \"head\": \"chair\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "82",
       "category": "lat",
@@ -581,14 +713,20 @@
           "pages": [
             82
           ],
-          "contexts": []
+          "contexts": [
+            "Французское chaise (стул) представляет собой исторический вариант слова chaire, демонстрирующий переход звуков s и r."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         82
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"chaise\" title: \"chaise\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…t\",   \"needs_review\": false } ```  --- id: \"chaise\" title: \"chaise\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-20c488a1-f2b9-5ed0-b2e4-e6846d62a61d\",   \"head\": \"chaise\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "82",
       "category": "lat",
@@ -603,14 +741,20 @@
           "pages": [
             83
           ],
-          "contexts": []
+          "contexts": [
+            "Имя Charles восходит к общегерманскому корню, означающему 'мужчина' или 'свободный человек'."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         83
       ],
-      "contexts": [],
+      "contexts": [
+        "…e\": \"names\",     \"head\": \"Шампольон Ф.\"   } } ```  --- id: \"Charles\" title: \"Charles\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…\"head\": \"Шампольон Ф.\"   } } ```  --- id: \"Charles\" title: \"Charles\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-4e426625-2ea6-5d4e-ac53-ccb0926a31d2\",   \"head\": \"Charles\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "83",
       "category": "lat",
@@ -625,14 +769,20 @@
           "pages": [
             20
           ],
-          "contexts": []
+          "contexts": [
+            "Юридический термин clause (пункт, условие) этимологически связан с понятием 'закрытия' или 'заключения' (лат. claudere)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         20
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"23, 24\",   \"needs_review\": false } ```  --- id: \"clause\" title: \"clause\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…4\",   \"needs_review\": false } ```  --- id: \"clause\" title: \"clause\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-2ada1859-4e70-553a-84b2-f579abc59608\",   \"head\": \"clause\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "20",
       "category": "lat",
@@ -647,14 +797,20 @@
           "pages": [
             244
           ],
-          "contexts": []
+          "contexts": [
+            "Слово concours (конкурс) в романских языках буквально означает 'стечение' или 'совместное движение'."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         244
       ],
-      "contexts": [],
+      "contexts": [
+        "…aff\": \"#7f8c8d\",   \"participant\": \"#16a085\" } ```  --- id: \"concours\" title: \"concours\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…\"participant\": \"#16a085\" } ```  --- id: \"concours\" title: \"concours\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-27d2795b-b190-5ed7-bbab-6e123697ab0e\",   \"head\": \"concours\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "244",
       "category": "lat",
@@ -759,14 +915,20 @@
           "pages": [
             255
           ],
-          "contexts": []
+          "contexts": [
+            "Славянское числительное десять (deset) сохраняет архаичную индоевропейскую структуру основы."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         255
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"deset\" title: \"deset\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…us\",   \"needs_review\": false } ```  --- id: \"deset\" title: \"deset\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-39be9ad1-7534-5781-84a3-514ab6a7a2da\",   \"head\": \"deset\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "255",
       "category": "lat",
@@ -813,14 +975,20 @@
           "pages": [
             342
           ],
-          "contexts": []
+          "contexts": [
+            "Санскритское deva (бог) является когнатом латинского deus и отражает древнюю индоевропейскую религиозную лексику."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         342
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"deva\" title: \"deva\" source_key: \"lexicon_reverse\" source: \"Из жи…",
+        "…lat\",   \"needs_review\": false } ```  --- id: \"deva\" title: \"deva\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-c3284d29-047c-5162-9c40-08b131e339dd\",   \"head\": \"deva\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "342",
       "category": "lat",
@@ -835,14 +1003,20 @@
           "pages": [
             255
           ],
-          "contexts": []
+          "contexts": [
+            "Числительное девять (devet) обсуждается Зализняком в контексте аналогических изменений в ряду числительных."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         255
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"devet\" title: \"devet\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…us\",   \"needs_review\": false } ```  --- id: \"devet\" title: \"devet\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-7b85114e-c57a-58b2-931e-dcea036064ef\",   \"head\": \"devet\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "255",
       "category": "lat",
@@ -857,14 +1031,18 @@
           "pages": [
             342
           ],
-          "contexts": []
+          "contexts": [
+            "Форма devl (цыганское 'бог') этимологически восходит к санскритскому deva."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         342
       ],
-      "contexts": [],
+      "contexts": [
+        "Форма devl (цыганское 'бог') этимологически восходит к санскритскому deva."
+      ],
       "discussed": false,
       "pages": "342",
       "category": "lat",
@@ -879,14 +1057,18 @@
           "pages": [
             68
           ],
-          "contexts": []
+          "contexts": [
+            "Английский глагол dig (копать) имеет интересную связь с латинским digitus (палец) через понятие счета или указания."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         68
       ],
-      "contexts": [],
+      "contexts": [
+        "Английский глагол dig (копать) имеет интересную связь с латинским digitus (палец) через понятие счета или указания."
+      ],
       "discussed": false,
       "pages": "68",
       "category": "lat",
@@ -901,14 +1083,20 @@
           "pages": [
             68
           ],
-          "contexts": []
+          "contexts": [
+            "Современное слово digital (цифровой) происходит от латинского digitus (палец), так как пальцы были первыми инструментами для счета."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         68
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"digital\" title: \"digital\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…\",   \"needs_review\": false } ```  --- id: \"digital\" title: \"digital\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-cdb53c97-5cdf-5912-a117-d250595c0b8d\",   \"head\": \"digital\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "68",
       "category": "lat",
@@ -1003,14 +1191,20 @@
           "pages": [
             68
           ],
-          "contexts": []
+          "contexts": [
+            "Латинское digitus (палец) является корнем для множества европейских слов, связанных со счетом и техникой."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         68
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"digitus\" title: \"digitus\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…\",   \"needs_review\": false } ```  --- id: \"digitus\" title: \"digitus\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-7a6d1597-ccc6-55b9-8dc9-f03fd692802d\",   \"head\": \"digitus\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "68",
       "category": "lat",
@@ -1143,14 +1337,18 @@
           "pages": [
             70
           ],
-          "contexts": []
+          "contexts": [
+            "Глагольная форма doet (делает) в германских языках рассматривается в контексте эволюции спряжения."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         70
       ],
-      "contexts": [],
+      "contexts": [
+        "Глагольная форма doet (делает) в германских языках рассматривается в контексте эволюции спряжения."
+      ],
       "discussed": false,
       "pages": "70",
       "category": "lat",
@@ -1165,14 +1363,18 @@
           "pages": [
             71
           ],
-          "contexts": []
+          "contexts": [
+            "Запись döet отражает специфику произношения или диалектную форму германского глагола 'делать'."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         71
       ],
-      "contexts": [],
+      "contexts": [
+        "Запись döet отражает специфику произношения или диалектную форму германского глагола 'делать'."
+      ],
       "discussed": false,
       "pages": "71",
       "category": "lat",
@@ -1255,14 +1457,18 @@
           "pages": [
             72
           ],
-          "contexts": []
+          "contexts": [
+            "Фонетическое обозначение dpit используется в анализе звуковых переходов в германских или славянских диалектах."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         72
       ],
-      "contexts": [],
+      "contexts": [
+        "Фонетическое обозначение dpit используется в анализе звуковых переходов в германских или славянских диалектах."
+      ],
       "discussed": false,
       "pages": "72",
       "category": "lat",
@@ -1277,14 +1483,18 @@
           "pages": [
             70
           ],
-          "contexts": []
+          "contexts": [
+            "Музыкальный термин duet (дуэт) прямо указывает на число два (лат. duo)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         70
       ],
-      "contexts": [],
+      "contexts": [
+        "Музыкальный термин duet (дуэт) прямо указывает на число два (лат. duo)."
+      ],
       "discussed": false,
       "pages": "70",
       "category": "lat",
@@ -1331,14 +1541,18 @@
           "pages": [
             70
           ],
-          "contexts": []
+          "contexts": [
+            "Реконструированная индоевропейская основа dwe лежит в основе числительного 'два' во многих языках."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         70
       ],
-      "contexts": [],
+      "contexts": [
+        "Реконструированная индоевропейская основа dwe лежит в основе числительного 'два' во многих языках."
+      ],
       "discussed": false,
       "pages": "70",
       "category": "lat",
@@ -1353,14 +1567,18 @@
           "pages": [
             70
           ],
-          "contexts": []
+          "contexts": [
+            "Форма dwet является вариантом развития индоевропейского числительного 'два' в специфических условиях."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         70
       ],
-      "contexts": [],
+      "contexts": [
+        "Форма dwet является вариантом развития индоевропейского числительного 'два' в специфических условиях."
+      ],
       "discussed": false,
       "pages": "70",
       "category": "lat",
@@ -1375,14 +1593,18 @@
           "pages": [
             27
           ],
-          "contexts": []
+          "contexts": [
+            "Французское écu (экю/щит) происходит от латинского scutum и дало название старинной монете."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         27
       ],
-      "contexts": [],
+      "contexts": [
+        "Французское écu (экю/щит) происходит от латинского scutum и дало название старинной монете."
+      ],
       "discussed": false,
       "pages": "27",
       "category": "lat",
@@ -1397,14 +1619,18 @@
           "pages": [
             60
           ],
-          "contexts": []
+          "contexts": [
+            "Французское выражение Eh oui (ну да) приводится как пример разговорной речи и частиц подтверждения."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         60
       ],
-      "contexts": [],
+      "contexts": [
+        "Французское выражение Eh oui (ну да) приводится как пример разговорной речи и частиц подтверждения."
+      ],
       "discussed": false,
       "pages": "60",
       "category": "lat",
@@ -1419,14 +1645,18 @@
           "pages": [
             70
           ],
-          "contexts": []
+          "contexts": [
+            "Краткая форма eit в лингвистических таблицах отражает результаты фонетической редукции в германских языках."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         70
       ],
-      "contexts": [],
+      "contexts": [
+        "Краткая форма eit в лингвистических таблицах отражает результаты фонетической редукции в германских языках."
+      ],
       "discussed": false,
       "pages": "70",
       "category": "lat",
@@ -1441,14 +1671,18 @@
           "pages": [
             149
           ],
-          "contexts": []
+          "contexts": [
+            "Латинский глагол esurio (быть голодным) является дезидеративом от глагола edere (есть)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         149
       ],
-      "contexts": [],
+      "contexts": [
+        "Латинский глагол esurio (быть голодным) является дезидеративом от глагола edere (есть)."
+      ],
       "discussed": false,
       "pages": "149",
       "category": "lat",
@@ -1463,14 +1697,18 @@
           "pages": [
             152
           ],
-          "contexts": []
+          "contexts": [
+            "Запись fa.it отражает морфологическое членение латинского или романского глагола 'делать'."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         152
       ],
-      "contexts": [],
+      "contexts": [
+        "Запись fa.it отражает морфологическое членение латинского или романского глагола 'делать'."
+      ],
       "discussed": false,
       "pages": "152",
       "category": "lat",
@@ -1485,14 +1723,18 @@
           "pages": [
             152
           ],
-          "contexts": []
+          "contexts": [
+            "Латинское причастие factum (сделанное) стало основой для общеевропейского понятия 'факт'."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         152
       ],
-      "contexts": [],
+      "contexts": [
+        "Латинское причастие factum (сделанное) стало основой для общеевропейского понятия 'факт'."
+      ],
       "discussed": false,
       "pages": "152",
       "category": "lat",
@@ -1507,14 +1749,20 @@
           "pages": [
             221
           ],
-          "contexts": []
+          "contexts": [
+            "Термин факир (fakir) пришел в европейские языки из арабского, где он означал аскета или бедняка."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"fakir\" title: \"fakir\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…at\",   \"needs_review\": false } ```  --- id: \"fakir\" title: \"fakir\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-2929e8b6-1fdf-57d9-bf9b-bd8caaab79b1\",   \"head\": \"fakir\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "221",
       "category": "lat",
@@ -1529,14 +1777,18 @@
           "pages": [
             221
           ],
-          "contexts": []
+          "contexts": [
+            "Слово fakura (араб. f-q-r) анализируется Зализняком в рамках семантического поля 'бедности' и 'нужды' в арабском языке."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "Слово fakura (араб. f-q-r) анализируется Зализняком в рамках семантического поля 'бедности' и 'нужды' в арабском языке."
+      ],
       "discussed": false,
       "pages": "221",
       "category": "lat",
@@ -2575,14 +2827,18 @@
           "pages": [
             156
           ],
-          "contexts": []
+          "contexts": [
+            "Форма ̂lld приводится как пример сложной фонетической структуры в обсуждаемых диалектах или языках."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         156
       ],
-      "contexts": [],
+      "contexts": [
+        "Форма ̂lld приводится как пример сложной фонетической структуры в обсуждаемых диалектах или языках."
+      ],
       "discussed": false,
       "pages": "156",
       "category": "tech",
@@ -3210,7 +3466,9 @@
             6,
             230
           ],
-          "contexts": []
+          "contexts": [
+            "Корень nyn в лингвистическом анализе Зализняка часто выступает как пример структурной единицы в семитских языках."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -3218,7 +3476,11 @@
         6,
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"nyn\" title: \"nyn\" source_key: \"lexicon\" source: \"Из жизни слов…",
+        "…\"rus\",   \"needs_review\": false } ```  --- id: \"nyn\" title: \"nyn\" source_key: \"lexicon\" source: \"Из жизни слов и языков\" boo…",
+        "…\"lexicon-283a2536-200d-5154-a82e-e16e158fc1c3\",   \"head\": \"nyn\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": true,
       "pages": "6, 230",
       "category": "lat",
@@ -3255,14 +3517,18 @@
           "pages": [
             230
           ],
-          "contexts": []
+          "contexts": [
+            "Арабский глагол öahaba (dh-h-b - 'уходить') приводится как пример реализации трехсогласного корня в семитских языках."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "Арабский глагол öahaba (dh-h-b - 'уходить') приводится как пример реализации трехсогласного корня в семитских языках."
+      ],
       "discussed": false,
       "pages": "230",
       "category": "tech",
@@ -3277,14 +3543,18 @@
           "pages": [
             230
           ],
-          "contexts": []
+          "contexts": [
+            "Слово öahabal (араб. dhahaba-l-) рассматривается в контексте слияния глагольной основы с артиклем."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "Слово öahabal (араб. dhahaba-l-) рассматривается в контексте слияния глагольной основы с артиклем."
+      ],
       "discussed": false,
       "pages": "230",
       "category": "tech",
@@ -3344,7 +3614,9 @@
             109,
             110
           ],
-          "contexts": []
+          "contexts": [
+            "Транскрипция Oj отражает специфический звук в обсуждаемых восточных языках (вероятно, в контексте арабской фонетики)."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -3352,7 +3624,11 @@
         109,
         110
       ],
-      "contexts": [],
+      "contexts": [
+        "…s/thumb/4/45/Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg/220px-Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_P…",
+        "…ct.jpg/220px-Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg\" } ```  --- id: \"Даниил\" title: \"Даниил\" source_key:…",
+        "…e,   \"pages\": \"80\",   \"needs_review\": false } ```  --- id: \"Oj\" title: \"Oj\" source_key: \"lexicon_reverse\" source: \"Из жизн…"
+      ],
       "discussed": true,
       "pages": "109, 110",
       "category": "lat",
@@ -3395,14 +3671,20 @@
           "pages": [
             255
           ],
-          "contexts": []
+          "contexts": [
+            "Числительное восемь в древности имело форму осемь (ösem); начальное в- появилось позже в результате фонетической адаптации.",
+            "Форма осемь сохранялась в славянских языках длительное время и до сих пор видна в слове 'осьминог'."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         255
       ],
-      "contexts": [],
+      "contexts": [
+        "Числительное восемь в древности имело форму осемь (ösem); начальное в- появилось позже в результате фонетической адаптации.",
+        "Форма осемь сохранялась в славянских языках длительное время и до сих пор видна в слове 'осьминог'."
+      ],
       "discussed": false,
       "pages": "255",
       "category": "tech",
@@ -3418,7 +3700,9 @@
             9,
             230
           ],
-          "contexts": []
+          "contexts": [
+            "Символ P в технических таблицах Зализняка может обозначать определенную грамматическую категорию или фонему."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -3426,7 +3710,11 @@
         9,
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "…aliases\": [],   \"occurrences\": {     \"mumintroll\": {       \"pages\": [         219,         220       ],       \"contexts\":…",
+        "…\"contexts\": []     }   },   \"book_id\": \"mumintroll\",   \"page_list\": [     219,     220   ],   \"contexts\": [],   \"disc…",
+        "…219,     220   ],   \"contexts\": [],   \"discussed\": true,   \"pages\": \"219, 220\",   \"category\": \"tech\",   \"note\": \"Unresolv…"
+      ],
       "discussed": true,
       "pages": "9, 230",
       "category": "lat",
@@ -5046,7 +5334,9 @@
             162,
             293
           ],
-          "contexts": []
+          "contexts": [
+            "Обозначение Tf встречается в сравнительных таблицах, описывающих трансформации или фонетические соответствия."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -5054,7 +5344,11 @@
         162,
         293
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"Tf\" title: \"Tf\" source_key: \"lexicon_reverse\" source: \"Из жизн…",
+        "…\"rus\",   \"needs_review\": false } ```  --- id: \"Tf\" title: \"Tf\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-5b4ca565-9c0b-5300-ae59-f928789fa8b1\",   \"head\": \"Tf\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": true,
       "pages": "162, 293",
       "category": "lat",
@@ -28986,7 +29280,9 @@
             26,
             38
           ],
-          "contexts": []
+          "contexts": [
+            "Местоименная форма ти (тебе) в древнерусском языке была энклитикой и занимала второе место в предложении согласно закону Вакернагеля."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -28994,7 +29290,9 @@
         26,
         38
       ],
-      "contexts": [],
+      "contexts": [
+        "Местоименная форма ти (тебе) в древнерусском языке была энклитикой и занимала второе место в предложении согласно закону Вакернагеля."
+      ],
       "discussed": true,
       "pages": "26, 38",
       "category": "rus",
@@ -29734,7 +30032,9 @@
             378,
             380
           ],
-          "contexts": []
+          "contexts": [
+            "Слово у́гол относится к числу слов с неподвижным ударением на основе в парадигме (акцентная кривая а)."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -29742,7 +30042,9 @@
         378,
         380
       ],
-      "contexts": [],
+      "contexts": [
+        "Слово у́гол относится к числу слов с неподвижным ударением на основе в парадигме (акцентная кривая а)."
+      ],
       "discussed": true,
       "pages": "378, 380",
       "category": "rus",
@@ -29876,7 +30178,9 @@
             378,
             380
           ],
-          "contexts": []
+          "contexts": [
+            "Слово у́горь исторически сохраняло ударение на основе (у́горь, у́горя), в отличие от слов типа у́голь, где оно стало подвижным."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -29884,7 +30188,9 @@
         378,
         380
       ],
-      "contexts": [],
+      "contexts": [
+        "Слово у́горь исторически сохраняло ударение на основе (у́горь, у́горя), в отличие от слов типа у́голь, где оно стало подвижным."
+      ],
       "discussed": true,
       "pages": "378, 380",
       "category": "rus",
@@ -29900,7 +30206,9 @@
             378,
             380
           ],
-          "contexts": []
+          "contexts": [
+            "Слово у́горь (акне) также демонстрирует стабильность ударения на корне в лингвистических примерах Зализняка."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -29908,7 +30216,9 @@
         378,
         380
       ],
-      "contexts": [],
+      "contexts": [
+        "Слово у́горь (акне) также демонстрирует стабильность ударения на корне в лингвистических примерах Зализняка."
+      ],
       "discussed": true,
       "pages": "378, 380",
       "category": "rus",
@@ -31160,7 +31470,9 @@
             266,
             267
           ],
-          "contexts": []
+          "contexts": [
+            "В форме учи́шь (ранее у́чишь) произошел сдвиг ударения на окончание, типичный для многих глаголов этого класса в истории русского языка."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -31168,7 +31480,9 @@
         266,
         267
       ],
-      "contexts": [],
+      "contexts": [
+        "В форме учи́шь (ранее у́чишь) произошел сдвиг ударения на окончание, типичный для многих глаголов этого класса в истории русского языка."
+      ],
       "discussed": true,
       "pages": "266, 267",
       "category": "rus",
@@ -31691,28 +32005,6 @@
       "needs_review": false
     },
     {
-      "canonical_id": "lexicon-f16e0376-31ae-54c8-ac4a-a3fdb895100a",
-      "head": "Цицерон",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [
-            248
-          ],
-          "contexts": []
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [
-        248
-      ],
-      "contexts": [],
-      "discussed": false,
-      "pages": "248",
-      "category": "rus",
-      "needs_review": false
-    },
-    {
       "canonical_id": "lexicon-a2fcff14-d2c5-58da-85c2-2e815ca6b675",
       "head": "Цоровѣ",
       "aliases": [],
@@ -32040,7 +32332,9 @@
             255,
             257
           ],
-          "contexts": []
+          "contexts": [
+            "В числительном шестнадцать (ранее ше́стнадцать) ударение в XVII-XVIII веках переместилось на слог -на-."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -32048,7 +32342,9 @@
         255,
         257
       ],
-      "contexts": [],
+      "contexts": [
+        "В числительном шестнадцать (ранее ше́стнадцать) ударение в XVII-XVIII веках переместилось на слог -на-."
+      ],
       "discussed": true,
       "pages": "255, 257",
       "category": "rus",
@@ -32311,14 +32607,18 @@
           "pages": [
             295
           ],
-          "contexts": []
+          "contexts": [
+            "Запись ̂Ьновѣі в новгородских материалах отражает специфику орфографии берестяных грамот (например, грамота № 579)."
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         295
       ],
-      "contexts": [],
+      "contexts": [
+        "Запись ̂Ьновѣі в новгородских материалах отражает специфику орфографии берестяных грамот (например, грамота № 579)."
+      ],
       "discussed": false,
       "pages": "295",
       "category": "tech",
@@ -32466,7 +32766,9 @@
             258,
             259
           ],
-          "contexts": []
+          "contexts": [
+            "Слово юродивый в древнерусском языке имело ударение на корне: юро́дивый, что соответствует его церковнославянскому происхождению."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -32474,7 +32776,9 @@
         258,
         259
       ],
-      "contexts": [],
+      "contexts": [
+        "Слово юродивый в древнерусском языке имело ударение на корне: юро́дивый, что соответствует его церковнославянскому происхождению."
+      ],
       "discussed": true,
       "pages": "258, 259",
       "category": "rus",
@@ -32912,7 +33216,7 @@
     },
     {
       "canonical_id": "lexicon_tech-17aba0c3-0a01-5062-86d4-101f39f5acc1",
-      "head": "??||",
+      "head": "→||",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33023,7 +33327,7 @@
     },
     {
       "canonical_id": "lexicon_tech-37dbcace-c625-50ff-892e-78bcc3458beb",
-      "head": "?U",
+      "head": "ˀu",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33048,7 +33352,7 @@
     },
     {
       "canonical_id": "lexicon_tech-4ec57b0c-ae20-552c-b3c3-7a838a9330db",
-      "head": "?а",
+      "head": "ˀа",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33073,7 +33377,7 @@
     },
     {
       "canonical_id": "lexicon_tech-2e02d232-42f9-5b45-b866-8684e05d7c84",
-      "head": "?атіг",
+      "head": "ˀатаб",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33096,7 +33400,7 @@
     },
     {
       "canonical_id": "lexicon_tech-df6db3a6-bff4-5bab-bad6-b22c53936e0a",
-      "head": "?д",
+      "head": "→д",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33117,11 +33421,11 @@
       "pages": "281, 287",
       "category": "tech",
       "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
-      "needs_review": true
+      "needs_review": false
     },
     {
       "canonical_id": "lexicon_tech-88a029d5-dbb9-545d-96cf-a30e336d6755",
-      "head": "?дмъ",
+      "head": "домъ",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33146,7 +33450,7 @@
     },
     {
       "canonical_id": "lexicon_tech-a8e74a3b-0c43-5c29-9ff1-c468e461a708",
-      "head": "?дмъЦе",
+      "head": "домъце",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33169,7 +33473,7 @@
     },
     {
       "canonical_id": "lexicon_tech-ebbfeac8-d3d0-5138-a51f-bb8dfb96c54b",
-      "head": "?и",
+      "head": "ˀи",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33196,7 +33500,7 @@
     },
     {
       "canonical_id": "lexicon_tech-89fdaa9d-c812-5d44-b8f4-0adc97c18cba",
-      "head": "?ибп",
+      "head": "ˀитба",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33219,7 +33523,7 @@
     },
     {
       "canonical_id": "lexicon_tech-3ca3e25b-49ea-5111-b648-36c9f8c3f653",
-      "head": "?Це",
+      "head": "→цѣ",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -33238,32 +33542,7 @@
       "pages": "310",
       "category": "tech",
       "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
-      "needs_review": true
-    },
-    {
-      "canonical_id": "lexicon_tech-99f4cabe-e04f-5024-85fe-9e7375fac334",
-      "head": "?Ци...",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [
-            287,
-            291
-          ],
-          "contexts": []
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [
-        287,
-        291
-      ],
-      "contexts": [],
-      "discussed": true,
-      "pages": "287, 291",
-      "category": "tech",
-      "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
-      "needs_review": true
+      "needs_review": false
     },
     {
       "canonical_id": "lexicon_tech-e657b9a6-0097-5e86-8dbb-b4225636cd0e",
@@ -33453,7 +33732,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-4ec57b0c-ae20-552c-b3c3-7a838a9330db",
-      "head": "?а",
+      "head": "ˀа",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -36309,7 +36588,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-2e02d232-42f9-5b45-b866-8684e05d7c84",
-      "head": "?атіг",
+      "head": "ˀатаб",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -36713,7 +36992,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-df6db3a6-bff4-5bab-bad6-b22c53936e0a",
-      "head": "?д",
+      "head": "→д",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -36733,7 +37012,7 @@
       "discussed": true,
       "pages": "281, 287",
       "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
-      "needs_review": true
+      "needs_review": false
     },
     {
       "canonical_id": "lexicon_reverse-9a24c061-a1ec-5ba6-bd79-aaff0fe87411",
@@ -38101,7 +38380,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-3ca3e25b-49ea-5111-b648-36c9f8c3f653",
-      "head": "?Це",
+      "head": "→цѣ",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -38119,7 +38398,7 @@
       "discussed": false,
       "pages": "310",
       "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
-      "needs_review": true
+      "needs_review": false
     },
     {
       "canonical_id": "lexicon_reverse-3f2e27f0-4d1c-5e6f-9c00-e76344185dd5",
@@ -38203,7 +38482,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-a8e74a3b-0c43-5c29-9ff1-c468e461a708",
-      "head": "?дмъЦе",
+      "head": "домъце",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -38555,7 +38834,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-ebbfeac8-d3d0-5138-a51f-bb8dfb96c54b",
-      "head": "?и",
+      "head": "ˀи",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -43866,26 +44145,6 @@
       "pages": "136"
     },
     {
-      "canonical_id": "lexicon_reverse-f16e0376-31ae-54c8-ac4a-a3fdb895100a",
-      "head": "Цицерон",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [
-            248
-          ],
-          "contexts": []
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [
-        248
-      ],
-      "contexts": [],
-      "discussed": false,
-      "pages": "248"
-    },
-    {
       "canonical_id": "lexicon_reverse-e7d844ee-9152-5cb9-a296-ab57e08cc660",
       "head": "сон",
       "aliases": [],
@@ -45009,7 +45268,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-89fdaa9d-c812-5d44-b8f4-0adc97c18cba",
-      "head": "?ибп",
+      "head": "ˀитба",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -56682,30 +56941,6 @@
       "pages": "253"
     },
     {
-      "canonical_id": "lexicon_reverse-99f4cabe-e04f-5024-85fe-9e7375fac334",
-      "head": "?Ци...",
-      "aliases": [],
-      "occurrences": {
-        "mumintroll": {
-          "pages": [
-            287,
-            291
-          ],
-          "contexts": []
-        }
-      },
-      "book_id": "mumintroll",
-      "page_list": [
-        287,
-        291
-      ],
-      "contexts": [],
-      "discussed": true,
-      "pages": "287, 291",
-      "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
-      "needs_review": true
-    },
-    {
       "canonical_id": "lexicon_reverse-bc3a0ab0-2d03-5a53-b7ff-f7957e16deac",
       "head": "̂/öhb.",
       "aliases": [],
@@ -56747,7 +56982,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-1371e635-e500-5f71-b335-4f1d47690473",
-      "head": "?дмъ1",
+      "head": "→дмъ¹",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -56765,7 +57000,7 @@
       "discussed": false,
       "pages": "317",
       "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
-      "needs_review": true
+      "needs_review": false
     },
     {
       "canonical_id": "lexicon_reverse-a9357bb0-9f3c-50c0-8d05-3900240046af",
@@ -57415,7 +57650,11 @@
       "page_list": [
         342
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"deva\" title: \"deva\" source_key: \"lexicon_reverse\" source: \"Из жи…",
+        "…lat\",   \"needs_review\": false } ```  --- id: \"deva\" title: \"deva\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-c3284d29-047c-5162-9c40-08b131e339dd\",   \"head\": \"deva\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "342"
     },
@@ -58375,7 +58614,11 @@
       "page_list": [
         191
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"Bratpfanne\" title: \"Bratpfanne\" source_key: \"lexicon_reverse\" source:…",
+        "…\"needs_review\": false } ```  --- id: \"Bratpfanne\" title: \"Bratpfanne\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-e02dadae-896b-517d-8151-9cca096003e7\",   \"head\": \"Bratpfanne\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "191"
     },
@@ -58395,7 +58638,11 @@
       "page_list": [
         231
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"tech\",   \"needs_review\": true } ```  --- id: \"aspirare\" title: \"aspirare\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…\",   \"needs_review\": true } ```  --- id: \"aspirare\" title: \"aspirare\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-c4984058-657f-5d23-9277-732c2b476d75\",   \"head\": \"aspirare\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "231"
     },
@@ -58415,7 +58662,11 @@
       "page_list": [
         220
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"admire\" title: \"admire\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…s\",   \"needs_review\": false } ```  --- id: \"admire\" title: \"admire\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-310d84a9-704c-59f3-8634-0fe916ff3415\",   \"head\": \"admire\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "220"
     },
@@ -58435,7 +58686,11 @@
       "page_list": [
         82
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"chaise\" title: \"chaise\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…t\",   \"needs_review\": false } ```  --- id: \"chaise\" title: \"chaise\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-20c488a1-f2b9-5ed0-b2e4-e6846d62a61d\",   \"head\": \"chaise\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "82"
     },
@@ -58455,7 +58710,11 @@
       "page_list": [
         20
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"23, 24\",   \"needs_review\": false } ```  --- id: \"clause\" title: \"clause\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…4\",   \"needs_review\": false } ```  --- id: \"clause\" title: \"clause\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-2ada1859-4e70-553a-84b2-f579abc59608\",   \"head\": \"clause\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "20"
     },
@@ -58637,7 +58896,11 @@
         162,
         293
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"Tf\" title: \"Tf\" source_key: \"lexicon_reverse\" source: \"Из жизн…",
+        "…\"rus\",   \"needs_review\": false } ```  --- id: \"Tf\" title: \"Tf\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-5b4ca565-9c0b-5300-ae59-f928789fa8b1\",   \"head\": \"Tf\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": true,
       "pages": "162, 293"
     },
@@ -58919,7 +59182,11 @@
       "page_list": [
         332
       ],
-      "contexts": [],
+      "contexts": [
+        "…[],   \"discussed\": false,   \"pages\": \"332\" } ```  --- id: \"alibi\" title: \"alibi\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…ed\": false,   \"pages\": \"332\" } ```  --- id: \"alibi\" title: \"alibi\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-b751d398-e130-5534-8c80-17853abd4cfc\",   \"head\": \"alibi\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "332"
     },
@@ -59141,7 +59408,11 @@
         109,
         110
       ],
-      "contexts": [],
+      "contexts": [
+        "…s/thumb/4/45/Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg/220px-Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_P…",
+        "…ct.jpg/220px-Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg\" } ```  --- id: \"Даниил\" title: \"Даниил\" source_key:…",
+        "…e,   \"pages\": \"80\",   \"needs_review\": false } ```  --- id: \"Oj\" title: \"Oj\" source_key: \"lexicon_reverse\" source: \"Из жизн…"
+      ],
       "discussed": true,
       "pages": "109, 110"
     },
@@ -59425,7 +59696,11 @@
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"tech\",   \"needs_review\": true } ```  --- id: \"amiral\" title: \"amiral\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…ch\",   \"needs_review\": true } ```  --- id: \"amiral\" title: \"amiral\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-123a6dd3-8ea6-597a-857c-a05fbf2402ea\",   \"head\": \"amiral\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "221"
     },
@@ -59445,7 +59720,11 @@
       "page_list": [
         68
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"digital\" title: \"digital\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…\",   \"needs_review\": false } ```  --- id: \"digital\" title: \"digital\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-cdb53c97-5cdf-5912-a117-d250595c0b8d\",   \"head\": \"digital\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "68"
     },
@@ -59785,7 +60064,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-7ba3bfc5-69b5-52a2-ada1-4351e98bda87",
-      "head": "?U6n",
+      "head": "ˀu-",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -60323,7 +60602,11 @@
       "page_list": [
         220
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"admirer\" title: \"admirer\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…\",   \"needs_review\": false } ```  --- id: \"admirer\" title: \"admirer\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-ba0567bc-6528-527b-94d8-9feee0fd07ad\",   \"head\": \"admirer\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "220"
     },
@@ -60383,7 +60666,11 @@
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"Bahr\" title: \"Bahr\" source_key: \"lexicon_reverse\" source: \"Из жи…",
+        "…rus\",   \"needs_review\": false } ```  --- id: \"Bahr\" title: \"Bahr\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-a20dd8c9-ce3f-50d1-8e93-1457dde76e40\",   \"head\": \"Bahr\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "221"
     },
@@ -60403,7 +60690,11 @@
       "page_list": [
         82
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"family\": \"Тюркская\",   \"group\": \"тюркская\" } ```  --- id: \"chair\" title: \"chair\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…ская\",   \"group\": \"тюркская\" } ```  --- id: \"chair\" title: \"chair\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-b4fba53f-6163-5dd1-aa87-c6ea3a5a9428\",   \"head\": \"chair\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "82"
     },
@@ -60443,7 +60734,11 @@
       "page_list": [
         221
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"fakir\" title: \"fakir\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…at\",   \"needs_review\": false } ```  --- id: \"fakir\" title: \"fakir\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-2929e8b6-1fdf-57d9-bf9b-bd8caaab79b1\",   \"head\": \"fakir\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "221"
     },
@@ -60563,7 +60858,11 @@
       "page_list": [
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"al-himär\" title: \"al-himär\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…,   \"needs_review\": false } ```  --- id: \"al-himär\" title: \"al-himär\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-e88976c0-ede5-53f4-9a83-dccc60617f96\",   \"head\": \"al-himär\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "230"
     },
@@ -60623,7 +60922,11 @@
       "page_list": [
         60
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"Allemands\" title: \"Allemands\" source_key: \"lexicon_reverse\" source: \"…",
+        "…\"needs_review\": false } ```  --- id: \"Allemands\" title: \"Allemands\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-5f62c8ab-77ec-58a5-a6ee-c41a3a271f65\",   \"head\": \"Allemands\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "60"
     },
@@ -60643,7 +60946,11 @@
       "page_list": [
         83
       ],
-      "contexts": [],
+      "contexts": [
+        "…e\": \"names\",     \"head\": \"Шампольон Ф.\"   } } ```  --- id: \"Charles\" title: \"Charles\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…\"head\": \"Шампольон Ф.\"   } } ```  --- id: \"Charles\" title: \"Charles\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-4e426625-2ea6-5d4e-ac53-ccb0926a31d2\",   \"head\": \"Charles\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "83"
     },
@@ -60783,7 +61090,11 @@
       "page_list": [
         60
       ],
-      "contexts": [],
+      "contexts": [
+        "…ена, фигурирующие в «Велесовой книге».\"   ] } ```  --- id: \"armenians\" title: \"armenians\" source_key: \"lexicon_reverse\" source: \"…",
+        "…«Велесовой книге».\"   ] } ```  --- id: \"armenians\" title: \"armenians\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-542756ad-3555-5f9d-ba6b-d43204118b0e\",   \"head\": \"armenians\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "60"
     },
@@ -60843,7 +61154,11 @@
       "page_list": [
         60
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"armeniens\" title: \"armeniens\" source_key: \"lexicon_reverse\" source: \"…",
+        "…\"needs_review\": false } ```  --- id: \"armeniens\" title: \"armeniens\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-cfcfd84d-2ca2-5185-b789-9a7eaed85798\",   \"head\": \"armeniens\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "60"
     },
@@ -60943,7 +61258,11 @@
       "page_list": [
         332
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"ailleurs\" title: \"ailleurs\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…,   \"needs_review\": false } ```  --- id: \"ailleurs\" title: \"ailleurs\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-afd5a1c7-ef62-5677-9f10-82f744c9d0b3\",   \"head\": \"ailleurs\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "332"
     },
@@ -60963,7 +61282,11 @@
       "page_list": [
         244
       ],
-      "contexts": [],
+      "contexts": [
+        "…aff\": \"#7f8c8d\",   \"participant\": \"#16a085\" } ```  --- id: \"concours\" title: \"concours\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…\"participant\": \"#16a085\" } ```  --- id: \"concours\" title: \"concours\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-27d2795b-b190-5ed7-bbab-6e123697ab0e\",   \"head\": \"concours\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "244"
     },
@@ -61003,7 +61326,11 @@
       "page_list": [
         80
       ],
-      "contexts": [],
+      "contexts": [
+        "….wikipedia.org/wiki/Бусбек,_Ожье_Гислен_де\" } ```  --- id: \"business\" title: \"business\" source_key: \"lexicon_reverse\" source: \"И…",
+        "…i/Бусбек,_Ожье_Гислен_де\" } ```  --- id: \"business\" title: \"business\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-690613ec-19f2-54d8-b934-37ae54443076\",   \"head\": \"business\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "80"
     },
@@ -61063,7 +61390,11 @@
       "page_list": [
         68
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"digitus\" title: \"digitus\" source_key: \"lexicon_reverse\" source: \"Из…",
+        "…\",   \"needs_review\": false } ```  --- id: \"digitus\" title: \"digitus\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-7a6d1597-ccc6-55b9-8dc9-f03fd692802d\",   \"head\": \"digitus\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "68"
     },
@@ -61163,7 +61494,11 @@
       "page_list": [
         255
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"deset\" title: \"deset\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…us\",   \"needs_review\": false } ```  --- id: \"deset\" title: \"deset\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-39be9ad1-7534-5781-84a3-514ab6a7a2da\",   \"head\": \"deset\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "255"
     },
@@ -61203,7 +61538,11 @@
       "page_list": [
         255
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"devet\" title: \"devet\" source_key: \"lexicon_reverse\" source: \"Из ж…",
+        "…us\",   \"needs_review\": false } ```  --- id: \"devet\" title: \"devet\" source_key: \"lexicon_reverse\" source: \"Из жизни слов и язы…",
+        "…n_reverse-7b85114e-c57a-58b2-931e-dcea036064ef\",   \"head\": \"devet\",   \"aliases\": [],   \"occurrences\": {     \"mumintroll\": {…"
+      ],
       "discussed": false,
       "pages": "255"
     },
@@ -62035,7 +62374,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-17aba0c3-0a01-5062-86d4-101f39f5acc1",
-      "head": "??||",
+      "head": "→||",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -62077,7 +62416,7 @@
     },
     {
       "canonical_id": "lexicon_reverse-610bf0bd-dcfb-50b7-848a-6bbbcba09449",
-      "head": "?и6паупі",
+      "head": "-ayni",
       "aliases": [],
       "occurrences": {
         "mumintroll": {
@@ -62095,7 +62434,7 @@
       "discussed": false,
       "pages": "234",
       "note": "Unresolved OCR/technical placeholder retained from the source index; requires source-image/manual verification.",
-      "needs_review": true
+      "needs_review": false
     },
     {
       "canonical_id": "lexicon_reverse-c0ba026c-01b6-593e-b00a-d79f2e04c1c8",
@@ -62270,14 +62609,20 @@
           "pages": [
             328
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"332\",   \"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"аканье\" title: \"аканье\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\"…",
+            "…\",   \"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"аканье\" title: \"аканье\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 0…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         328
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"332\",   \"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"аканье\" title: \"аканье\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\"…",
+        "…\",   \"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"аканье\" title: \"аканье\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 0…"
+      ],
       "discussed": false,
       "pages": "328",
       "needs_review": false,
@@ -62296,7 +62641,10 @@
             228,
             229
           ],
-          "contexts": []
+          "contexts": [
+            "…,   \"pages\": \"60\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"алфавит\" title: \"алфавит\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll…",
+            "…,   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"алфавит\" title: \"алфавит\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 1…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62306,7 +62654,10 @@
         228,
         229
       ],
-      "contexts": [],
+      "contexts": [
+        "…,   \"pages\": \"60\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"алфавит\" title: \"алфавит\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll…",
+        "…,   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"алфавит\" title: \"алфавит\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 1…"
+      ],
       "discussed": true,
       "pages": "95, 168, 228, 229",
       "needs_review": false,
@@ -62322,14 +62673,20 @@
           "pages": [
             169
           ],
-          "contexts": []
+          "contexts": [
+            "…ge\": false,   \"epoch_class\": \"modern\",   \"lat\": 25,   \"lon\": 45 } ```  --- id: \"арабские цифры\" title: \"арабские цифры\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mum…",
+            "…ss\": \"modern\",   \"lat\": 25,   \"lon\": 45 } ```  --- id: \"арабские цифры\" title: \"арабские цифры\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         169
       ],
-      "contexts": [],
+      "contexts": [
+        "…ge\": false,   \"epoch_class\": \"modern\",   \"lat\": 25,   \"lon\": 45 } ```  --- id: \"арабские цифры\" title: \"арабские цифры\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mum…",
+        "…ss\": \"modern\",   \"lat\": 25,   \"lon\": 45 } ```  --- id: \"арабские цифры\" title: \"арабские цифры\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+      ],
       "discussed": false,
       "pages": "169",
       "needs_review": false,
@@ -62345,14 +62702,20 @@
           "pages": [
             228
           ],
-          "contexts": []
+          "contexts": [
+            "…язык\",   \"pages\": \"210–235\",   \"icon\": \"☪\",   \"tagline\": \"Грамматика арабского, арабское письмо, гортанная смычка\",   \"about\": \"Арабский — язык совсем иной структуры, чем европейские. У него «кор…",
+            "…ственная.\",   \"terms\": [     \"трёхсогласный корень\",     \"порода глагола\",     \"арабское письмо\",     \"гортанная смычка\"   ] } ```  --- id: \"lectures_7\" title: \"Арабский язык\" source_key: \"lectur…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         228
       ],
-      "contexts": [],
+      "contexts": [
+        "…язык\",   \"pages\": \"210–235\",   \"icon\": \"☪\",   \"tagline\": \"Грамматика арабского, арабское письмо, гортанная смычка\",   \"about\": \"Арабский — язык совсем иной структуры, чем европейские. У него «кор…",
+        "…ственная.\",   \"terms\": [     \"трёхсогласный корень\",     \"порода глагола\",     \"арабское письмо\",     \"гортанная смычка\"   ] } ```  --- id: \"lectures_7\" title: \"Арабский язык\" source_key: \"lectur…"
+      ],
       "discussed": false,
       "pages": "228",
       "needs_review": false,
@@ -62371,7 +62734,10 @@
             221,
             234
           ],
-          "contexts": []
+          "contexts": [
+            "…86, 150, 168, 169, 174, 185, 187, 192, 210–217, 219–224, 226, 228, 230–234; ∼ [артикль] 221; ∼ [глаголы] 217; ∼ [грамматика] 213, 217; ∼ [окончание] 232; ∼ [письмо] 228; ∼ [пословица] 23…",
+            "…lon\": 45,   \"family\": \"Индоевропейская\",   \"group\": \"армянская\" } ```  --- id: \"артикль: ∼ постпозитивный\" title: \"артикль: ∼ постпозитивный\" source_key: \"subject_index\" source: \"Из жизни…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62381,7 +62747,10 @@
         221,
         234
       ],
-      "contexts": [],
+      "contexts": [
+        "…86, 150, 168, 169, 174, 185, 187, 192, 210–217, 219–224, 226, 228, 230–234; ∼ [артикль] 221; ∼ [глаголы] 217; ∼ [грамматика] 213, 217; ∼ [окончание] 232; ∼ [письмо] 228; ∼ [пословица] 23…",
+        "…lon\": 45,   \"family\": \"Индоевропейская\",   \"group\": \"армянская\" } ```  --- id: \"артикль: ∼ постпозитивный\" title: \"артикль: ∼ постпозитивный\" source_key: \"subject_index\" source: \"Из жизни…"
+      ],
       "discussed": true,
       "pages": "131, 170, 221, 234",
       "needs_review": false,
@@ -62397,14 +62766,20 @@
           "pages": [
             131
           ],
-          "contexts": []
+          "contexts": [
+            "…lon\": 45,   \"family\": \"Индоевропейская\",   \"group\": \"армянская\" } ```  --- id: \"артикль: ∼ постпозитивный\" title: \"артикль: ∼ постпозитивный\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" bo…",
+            "…кая\",   \"group\": \"армянская\" } ```  --- id: \"артикль: ∼ постпозитивный\" title: \"артикль: ∼ постпозитивный\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         131
       ],
-      "contexts": [],
+      "contexts": [
+        "…lon\": 45,   \"family\": \"Индоевропейская\",   \"group\": \"армянская\" } ```  --- id: \"артикль: ∼ постпозитивный\" title: \"артикль: ∼ постпозитивный\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" bo…",
+        "…кая\",   \"group\": \"армянская\" } ```  --- id: \"артикль: ∼ постпозитивный\" title: \"артикль: ∼ постпозитивный\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+      ],
       "discussed": false,
       "pages": "131",
       "needs_review": false,
@@ -62420,14 +62795,20 @@
           "pages": [
             139
           ],
-          "contexts": []
+          "contexts": [
+            "…: \"187, 188, 245\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"архаизм\" title: \"архаизм\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll…",
+            "…,   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"архаизм\" title: \"архаизм\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         139
       ],
-      "contexts": [],
+      "contexts": [
+        "…: \"187, 188, 245\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"архаизм\" title: \"архаизм\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll…",
+        "…,   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"архаизм\" title: \"архаизм\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+      ],
       "discussed": false,
       "pages": "139",
       "needs_review": false,
@@ -62448,7 +62829,10 @@
             42,
             43
           ],
-          "contexts": []
+          "contexts": [
+            "…8,   \"family\": \"Индоевропейская\",   \"group\": \"славянская общая\" } ```  --- id: \"барьер [ритмико-синтаксический]\" title: \"барьер [ритмико-синтаксический]\" source_key: \"subject_index\" source: \"Из жизни слов и язык…",
+            "…p\": \"славянская общая\" } ```  --- id: \"барьер [ритмико-синтаксический]\" title: \"барьер [ритмико-синтаксический]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62460,7 +62844,10 @@
         42,
         43
       ],
-      "contexts": [],
+      "contexts": [
+        "…8,   \"family\": \"Индоевропейская\",   \"group\": \"славянская общая\" } ```  --- id: \"барьер [ритмико-синтаксический]\" title: \"барьер [ритмико-синтаксический]\" source_key: \"subject_index\" source: \"Из жизни слов и язык…",
+        "…p\": \"славянская общая\" } ```  --- id: \"барьер [ритмико-синтаксический]\" title: \"барьер [ритмико-синтаксический]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+      ],
       "discussed": true,
       "pages": "31, 34, 35, 36, 42, 43",
       "needs_review": false,
@@ -62483,7 +62870,10 @@
             380,
             381
           ],
-          "contexts": []
+          "contexts": [
+            "Беглые гласные в современном русском языке являются прямым следствием падения редуцированных ъ и ь в XI-XIII веках.",
+            "Примеры типа уголь/угля или отец/отца наглядно демонстрируют механизм чередования гласного с нулем звука."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62497,7 +62887,10 @@
         380,
         381
       ],
-      "contexts": [],
+      "contexts": [
+        "Беглые гласные в современном русском языке являются прямым следствием падения редуцированных ъ и ь в XI-XIII веках.",
+        "Примеры типа уголь/угля или отец/отца наглядно демонстрируют механизм чередования гласного с нулем звука."
+      ],
       "discussed": true,
       "pages": "103, 104, 341, 377, 378, 379, 380, 381",
       "needs_review": false,
@@ -62517,7 +62910,10 @@
             385,
             387
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"266\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"безударные слова, безударность\" title: \"безударные слова, безударность\" source_key: \"subject_index\" source: \"Из жизни слов и языко…",
+            "…\"needs_review\": false } ```  --- id: \"безударные слова, безударность\" title: \"безударные слова, безударность\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 9…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62528,7 +62924,10 @@
         385,
         387
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"266\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"безударные слова, безударность\" title: \"безударные слова, безударность\" source_key: \"subject_index\" source: \"Из жизни слов и языко…",
+        "…\"needs_review\": false } ```  --- id: \"безударные слова, безударность\" title: \"безударные слова, безударность\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 9…"
+      ],
       "discussed": true,
       "pages": "15, 37, 38, 385, 387",
       "needs_review": false,
@@ -62686,7 +63085,10 @@
             154,
             157
           ],
-          "contexts": []
+          "contexts": [
+            "…d: \"mumintroll\" source_index: 3 tags: [\"routes\"] ---  Санскрит и Древняя Индия, Бхагавадгита, Веды, арабская грамматика, история арабского языка от пророка Мухаммада до наших дней.  ## Source…",
+            "…,   \"icon\": \"🏛\",   \"title\": \"Древний мир\",   \"desc\": \"Санскрит и Древняя Индия, Бхагавадгита, Веды, арабская грамматика, история арабского языка от пророка Мухаммада до наших дней.\",   \"lectur…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62695,7 +63097,10 @@
         154,
         157
       ],
-      "contexts": [],
+      "contexts": [
+        "…d: \"mumintroll\" source_index: 3 tags: [\"routes\"] ---  Санскрит и Древняя Индия, Бхагавадгита, Веды, арабская грамматика, история арабского языка от пророка Мухаммада до наших дней.  ## Source…",
+        "…,   \"icon\": \"🏛\",   \"title\": \"Древний мир\",   \"desc\": \"Санскрит и Древняя Индия, Бхагавадгита, Веды, арабская грамматика, история арабского языка от пророка Мухаммада до наших дней.\",   \"lectur…"
+      ],
       "discussed": true,
       "pages": "153, 154, 157",
       "needs_review": false,
@@ -62718,7 +63123,10 @@
             194,
             195
           ],
-          "contexts": []
+          "contexts": [
+            "Живая бытовая речь, зафиксированная в берестяных грамотах, радикально изменила представления ученых о древнерусском языке.",
+            "В отличие от книжного языка, разговорная речь развивалась по собственным законам, часто опережая литературную норму."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62732,7 +63140,10 @@
         194,
         195
       ],
-      "contexts": [],
+      "contexts": [
+        "Живая бытовая речь, зафиксированная в берестяных грамотах, радикально изменила представления ученых о древнерусском языке.",
+        "В отличие от книжного языка, разговорная речь развивалась по собственным законам, часто опережая литературную норму."
+      ],
       "discussed": true,
       "pages": "18, 23, 45, 171, 192, 193, 194, 195",
       "needs_review": false,
@@ -62753,7 +63164,10 @@
             293,
             300
           ],
-          "contexts": []
+          "contexts": [
+            "…ages\": \"260, 353\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"бытовая система письма\" title: \"бытовая система письма\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_…",
+            "…\"rus\",   \"needs_review\": false } ```  --- id: \"бытовая система письма\" title: \"бытовая система письма\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 1…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62765,7 +63179,10 @@
         293,
         300
       ],
-      "contexts": [],
+      "contexts": [
+        "…ages\": \"260, 353\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"бытовая система письма\" title: \"бытовая система письма\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_…",
+        "…\"rus\",   \"needs_review\": false } ```  --- id: \"бытовая система письма\" title: \"бытовая система письма\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 1…"
+      ],
       "discussed": true,
       "pages": "277, 278, 282, 292, 293, 300",
       "needs_review": false,
@@ -62845,7 +63262,10 @@
             151,
             172
           ],
-          "contexts": []
+          "contexts": [
+            "…\" source_index: 3 tags: [\"routes\"] ---  Санскрит и Древняя Индия, Бхагавадгита, Веды, арабская грамматика, история арабского языка от пророка Мухаммада до наших дней.  ## Source JSON…",
+            "…\",   \"title\": \"Древний мир\",   \"desc\": \"Санскрит и Древняя Индия, Бхагавадгита, Веды, арабская грамматика, история арабского языка от пророка Мухаммада до наших дней.\",   \"lectures\": […"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62855,7 +63275,10 @@
         151,
         172
       ],
-      "contexts": [],
+      "contexts": [
+        "…\" source_index: 3 tags: [\"routes\"] ---  Санскрит и Древняя Индия, Бхагавадгита, Веды, арабская грамматика, история арабского языка от пророка Мухаммада до наших дней.  ## Source JSON…",
+        "…\",   \"title\": \"Древний мир\",   \"desc\": \"Санскрит и Древняя Индия, Бхагавадгита, Веды, арабская грамматика, история арабского языка от пророка Мухаммада до наших дней.\",   \"lectures\": […"
+      ],
       "discussed": true,
       "pages": "138, 140, 151, 172",
       "needs_review": false,
@@ -62872,7 +63295,10 @@
             143,
             151
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"315\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"«Велесова книга» (ВК)\" title: \"«Велесова книга» (ВК)\" source_key: \"subject_index\" source: \"Из жизни слов и языков\"…",
+            "…\"rus\",   \"needs_review\": false } ```  --- id: \"«Велесова книга» (ВК)\" title: \"«Велесова книга» (ВК)\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_in…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62880,7 +63306,10 @@
         143,
         151
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"315\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"«Велесова книга» (ВК)\" title: \"«Велесова книга» (ВК)\" source_key: \"subject_index\" source: \"Из жизни слов и языков\"…",
+        "…\"rus\",   \"needs_review\": false } ```  --- id: \"«Велесова книга» (ВК)\" title: \"«Велесова книга» (ВК)\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_in…"
+      ],
       "discussed": true,
       "pages": "143, 151",
       "needs_review": false,
@@ -62901,7 +63330,10 @@
             73,
             74
           ],
-          "contexts": []
+          "contexts": [
+            "…\"…ли. Переход p в f, переход t в th, переход k в h — это так называемое германское передвижение согласных. Этому изменению подверглись согласные праиндо…\",         \"…ый». И вообще, слово лесть в исконном з…",
+            "…а при переходе в прагерманский язык, предок всех современных германских языков. Германское передвижение согласных открыли уже основоположники…\",         \"…том, что это правило действует безупречно. 2 «Об одном иск…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -62913,7 +63345,10 @@
         73,
         74
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"…ли. Переход p в f, переход t в th, переход k в h — это так называемое германское передвижение согласных. Этому изменению подверглись согласные праиндо…\",         \"…ый». И вообще, слово лесть в исконном з…",
+        "…а при переходе в прагерманский язык, предок всех современных германских языков. Германское передвижение согласных открыли уже основоположники…\",         \"…том, что это правило действует безупречно. 2 «Об одном иск…"
+      ],
       "discussed": true,
       "pages": "35, 42, 47, 66, 73, 74",
       "needs_review": false,
@@ -63011,7 +63446,10 @@
             92,
             177
           ],
-          "contexts": []
+          "contexts": [
+            "Понятие древности языка в лингвистике часто связано с глубиной реконструируемых праформ и наличием письменных памятников.",
+            "Сравнение древних языков (санскрита, латыни, древнегреческого) позволяет выявить их общее индоевропейское происхождение."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63025,7 +63463,10 @@
         92,
         177
       ],
-      "contexts": [],
+      "contexts": [
+        "Понятие древности языка в лингвистике часто связано с глубиной реконструируемых праформ и наличием письменных памятников.",
+        "Сравнение древних языков (санскрита, латыни, древнегреческого) позволяет выявить их общее индоевропейское происхождение."
+      ],
       "discussed": true,
       "pages": "50, 51, 52, 54, 55, 58, 92, 177",
       "needs_review": false,
@@ -63185,14 +63626,20 @@
           "pages": [
             127
           ],
-          "contexts": []
+          "contexts": [
+            "…,   \"pages\": \"27\",   \"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"искусственные языки\" title: \"искусственные языки\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+            "…y\": \"lat\",   \"needs_review\": false } ```  --- id: \"искусственные языки\" title: \"искусственные языки\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         127
       ],
-      "contexts": [],
+      "contexts": [
+        "…,   \"pages\": \"27\",   \"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"искусственные языки\" title: \"искусственные языки\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+        "…y\": \"lat\",   \"needs_review\": false } ```  --- id: \"искусственные языки\" title: \"искусственные языки\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+      ],
       "discussed": false,
       "pages": "127",
       "needs_review": false,
@@ -63323,7 +63770,10 @@
             230,
             283
           ],
-          "contexts": []
+          "contexts": [
+            "…,   \"pages\": \"17\",   \"category\": \"tech\",   \"needs_review\": true } ```  --- id: \"лигатура\" title: \"лигатура\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintrol…",
+            "…\"category\": \"tech\",   \"needs_review\": true } ```  --- id: \"лигатура\" title: \"лигатура\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63334,7 +63784,10 @@
         230,
         283
       ],
-      "contexts": [],
+      "contexts": [
+        "…,   \"pages\": \"17\",   \"category\": \"tech\",   \"needs_review\": true } ```  --- id: \"лигатура\" title: \"лигатура\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintrol…",
+        "…\"category\": \"tech\",   \"needs_review\": true } ```  --- id: \"лигатура\" title: \"лигатура\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+      ],
       "discussed": true,
       "pages": "90, 142, 173, 230, 283",
       "needs_review": false,
@@ -63431,7 +63884,10 @@
             141,
             153
           ],
-          "contexts": []
+          "contexts": [
+            "…ийское и ни в каком из индийских язык…\",         \"…и — Махабхараты и Рамаяны 1. Махабхарата — буквально маха «великий» и Бхарата — имя собственное, которое сейчас служит самоназванием Индии.…",
+            "…индийское и ни в каком из индийских язык…\",     \"…и — Махабхараты и Рамаяны 1. Махабхарата — буквально маха «великий» и Бхарата — имя собственное, которое сейчас служит самоназванием Индии.…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63440,7 +63896,10 @@
         141,
         153
       ],
-      "contexts": [],
+      "contexts": [
+        "…ийское и ни в каком из индийских язык…\",         \"…и — Махабхараты и Рамаяны 1. Махабхарата — буквально маха «великий» и Бхарата — имя собственное, которое сейчас служит самоназванием Индии.…",
+        "…индийское и ни в каком из индийских язык…\",     \"…и — Махабхараты и Рамаяны 1. Махабхарата — буквально маха «великий» и Бхарата — имя собственное, которое сейчас служит самоназванием Индии.…"
+      ],
       "discussed": true,
       "pages": "140, 141, 153",
       "needs_review": false,
@@ -63463,7 +63922,10 @@
             106,
             109
           ],
-          "contexts": []
+          "contexts": [
+            "Метод внутренней реконструкции позволяет лингвистам восстанавливать облик языка на этапах, предшествующих первым письменным памятникам.",
+            "Анализ чередований в пределах одного языка — основа метода внутренней реконструкции (например, восстановление редуцированных гласных)."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63477,7 +63939,10 @@
         106,
         109
       ],
-      "contexts": [],
+      "contexts": [
+        "Метод внутренней реконструкции позволяет лингвистам восстанавливать облик языка на этапах, предшествующих первым письменным памятникам.",
+        "Анализ чередований в пределах одного языка — основа метода внутренней реконструкции (например, восстановление редуцированных гласных)."
+      ],
       "discussed": true,
       "pages": "67, 101, 102, 103, 104, 105, 106, 109",
       "needs_review": false,
@@ -63494,7 +63959,10 @@
             76,
             77
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"342\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"моногенез\" title: \"моногенез\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintro…",
+            "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"моногенез\" title: \"моногенез\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63502,7 +63970,10 @@
         76,
         77
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"342\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"моногенез\" title: \"моногенез\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintro…",
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"моногенез\" title: \"моногенез\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+      ],
       "discussed": true,
       "pages": "76, 77",
       "needs_review": false,
@@ -63520,7 +63991,10 @@
             251,
             268
           ],
-          "contexts": []
+          "contexts": [
+            "…3, 265, 277, 278\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"морфемы сильные vs. слабые\" title: \"морфемы сильные vs. слабые\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" b…",
+            "…s\",   \"needs_review\": false } ```  --- id: \"морфемы сильные vs. слабые\" title: \"морфемы сильные vs. слабые\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63529,7 +64003,10 @@
         251,
         268
       ],
-      "contexts": [],
+      "contexts": [
+        "…3, 265, 277, 278\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"морфемы сильные vs. слабые\" title: \"морфемы сильные vs. слабые\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" b…",
+        "…s\",   \"needs_review\": false } ```  --- id: \"морфемы сильные vs. слабые\" title: \"морфемы сильные vs. слабые\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 2…"
+      ],
       "discussed": true,
       "pages": "250, 251, 268",
       "needs_review": false,
@@ -63550,7 +64027,10 @@
             223,
             390
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"38, 39\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"мягкость [согласного]\" title: \"мягкость [согласного]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_i…",
+            "…: \"rus\",   \"needs_review\": false } ```  --- id: \"мягкость [согласного]\" title: \"мягкость [согласного]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63562,7 +64042,10 @@
         223,
         390
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"38, 39\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"мягкость [согласного]\" title: \"мягкость [согласного]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_i…",
+        "…: \"rus\",   \"needs_review\": false } ```  --- id: \"мягкость [согласного]\" title: \"мягкость [согласного]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+      ],
       "discussed": true,
       "pages": "68, 159, 160, 214, 223, 390",
       "needs_review": false,
@@ -63581,7 +64064,10 @@
             56,
             57
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"152\",   \"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"название языка\" title: \"название языка\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mum…",
+            "…tegory\": \"lat\",   \"needs_review\": false } ```  --- id: \"название языка\" title: \"название языка\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63591,7 +64077,10 @@
         56,
         57
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"152\",   \"category\": \"lat\",   \"needs_review\": false } ```  --- id: \"название языка\" title: \"название языка\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mum…",
+        "…tegory\": \"lat\",   \"needs_review\": false } ```  --- id: \"название языка\" title: \"название языка\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+      ],
       "discussed": true,
       "pages": "54, 55, 56, 57",
       "needs_review": false,
@@ -63607,14 +64096,20 @@
           "pages": [
             189
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"167\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"народная этимология\" title: \"народная этимология\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+            "…y\": \"rus\",   \"needs_review\": false } ```  --- id: \"народная этимология\" title: \"народная этимология\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         189
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"167\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"народная этимология\" title: \"народная этимология\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+        "…y\": \"rus\",   \"needs_review\": false } ```  --- id: \"народная этимология\" title: \"народная этимология\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+      ],
       "discussed": false,
       "pages": "189",
       "needs_review": false,
@@ -63635,7 +64130,10 @@
             269,
             364
           ],
-          "contexts": []
+          "contexts": [
+            "…дено; см. JSON ниже._  ## Source JSON  ```json {   \"value\": 307 } ```  --- id: \"норма [языковая]\" title: \"норма [языковая]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"m…",
+            "…Source JSON  ```json {   \"value\": 307 } ```  --- id: \"норма [языковая]\" title: \"норма [языковая]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63647,7 +64145,10 @@
         269,
         364
       ],
-      "contexts": [],
+      "contexts": [
+        "…дено; см. JSON ниже._  ## Source JSON  ```json {   \"value\": 307 } ```  --- id: \"норма [языковая]\" title: \"норма [языковая]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"m…",
+        "…Source JSON  ```json {   \"value\": 307 } ```  --- id: \"норма [языковая]\" title: \"норма [языковая]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+      ],
       "discussed": true,
       "pages": "195, 259, 260, 266, 269, 364",
       "needs_review": false,
@@ -63674,7 +64175,10 @@
             232,
             233
           ],
-          "contexts": []
+          "contexts": [
+            "Огласовка (харакат) в арабском языке используется для обозначения кратких гласных, которые не имеют отдельных букв в алфавите.",
+            "При обсуждении восточных заимствований Зализняк часто обращается к принципам огласовки семитских корней."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63692,7 +64196,10 @@
         232,
         233
       ],
-      "contexts": [],
+      "contexts": [
+        "Огласовка (харакат) в арабском языке используется для обозначения кратких гласных, которые не имеют отдельных букв в алфавите.",
+        "При обсуждении восточных заимствований Зализняк часто обращается к принципам огласовки семитских корней."
+      ],
       "discussed": true,
       "pages": "148, 154, 155, 158, 161, 162, 164, 215, 230, 231, 232, 233",
       "needs_review": false,
@@ -63708,14 +64215,20 @@
           "pages": [
             80
           ],
-          "contexts": []
+          "contexts": [
+            "…ство уже достаточно отдаленное. Но оно имеется. Итак, для сравнени…\",         \"…оглушение согласных после того, как орфография остановилась. Ну, про английский язык нечего говорить. В отношении совре…",
+            "…родство уже достаточно отдаленное. Но оно имеется. Итак, для сравнени…\",     \"…оглушение согласных после того, как орфография остановилась. Ну, про английский язык нечего говорить. В отношении совре…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         80
       ],
-      "contexts": [],
+      "contexts": [
+        "…ство уже достаточно отдаленное. Но оно имеется. Итак, для сравнени…\",         \"…оглушение согласных после того, как орфография остановилась. Ну, про английский язык нечего говорить. В отношении совре…",
+        "…родство уже достаточно отдаленное. Но оно имеется. Итак, для сравнени…\",     \"…оглушение согласных после того, как орфография остановилась. Ну, про английский язык нечего говорить. В отношении совре…"
+      ],
       "discussed": false,
       "pages": "80",
       "needs_review": false,
@@ -63731,14 +64244,20 @@
           "pages": [
             328
           ],
-          "contexts": []
+          "contexts": [
+            "…русских диалектах (включая литературный язык). В северных диалектах сохраняется оканье — различение о и а в безударной позиции.  ## Source JSON  ```json {   \"id\": \"akanye\",   \"name\": \"Ак…",
+            "…русских диалектах (включая литературный язык). В северных диалектах сохраняется оканье — различение о и а в безударной позиции.\",   \"examples\": [     {       \"from\": \"написание: молоко\",…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         328
       ],
-      "contexts": [],
+      "contexts": [
+        "…русских диалектах (включая литературный язык). В северных диалектах сохраняется оканье — различение о и а в безударной позиции.  ## Source JSON  ```json {   \"id\": \"akanye\",   \"name\": \"Ак…",
+        "…русских диалектах (включая литературный язык). В северных диалектах сохраняется оканье — различение о и а в безударной позиции.\",   \"examples\": [     {       \"from\": \"написание: молоко\",…"
+      ],
       "discussed": false,
       "pages": "328",
       "needs_review": false,
@@ -63754,14 +64273,20 @@
           "pages": [
             131
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"335\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"определенность / неопределенность\" title: \"определенность / неопределенность\" source_key: \"subject_index\" source: \"Из жизни слов и яз…",
+            "…needs_review\": false } ```  --- id: \"определенность / неопределенность\" title: \"определенность / неопределенность\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         131
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"335\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"определенность / неопределенность\" title: \"определенность / неопределенность\" source_key: \"subject_index\" source: \"Из жизни слов и яз…",
+        "…needs_review\": false } ```  --- id: \"определенность / неопределенность\" title: \"определенность / неопределенность\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 3…"
+      ],
       "discussed": false,
       "pages": "131",
       "needs_review": false,
@@ -63784,7 +64309,10 @@
             126,
             207
           ],
-          "contexts": []
+          "contexts": [
+            "Древнерусская орфография берестяных грамот («бытовая система») значительно отличалась от книжной церковнославянской традиции.",
+            "Отклонения от стандартной орфографии в древних текстах служат бесценным источником информации о живых фонетических процессах."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63798,7 +64326,10 @@
         126,
         207
       ],
-      "contexts": [],
+      "contexts": [
+        "Древнерусская орфография берестяных грамот («бытовая система») значительно отличалась от книжной церковнославянской традиции.",
+        "Отклонения от стандартной орфографии в древних текстах служат бесценным источником информации о живых фонетических процессах."
+      ],
       "discussed": true,
       "pages": "68, 71, 80, 81, 82, 104, 126, 207",
       "needs_review": false,
@@ -63819,7 +64350,10 @@
             390,
             391
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"261\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"отпадение конечных гласных: ∼ ~ согласных\" title: \"отпадение конечных гласных: ∼ ~ согласных\" source_key: \"subject_index\" sour…",
+            "…view\": false } ```  --- id: \"отпадение конечных гласных: ∼ ~ согласных\" title: \"отпадение конечных гласных: ∼ ~ согласных\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\"…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63831,7 +64365,10 @@
         390,
         391
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"261\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"отпадение конечных гласных: ∼ ~ согласных\" title: \"отпадение конечных гласных: ∼ ~ согласных\" source_key: \"subject_index\" sour…",
+        "…view\": false } ```  --- id: \"отпадение конечных гласных: ∼ ~ согласных\" title: \"отпадение конечных гласных: ∼ ~ согласных\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\"…"
+      ],
       "discussed": true,
       "pages": "111, 112, 117, 152, 390, 391",
       "needs_review": false,
@@ -63852,7 +64389,10 @@
             152,
             329
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"261\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"отпадение конечных гласных: ∼ ~ согласных\" title: \"отпадение конечных гласных: ∼ ~ согласных\" source_key: \"subject_index\" source: \"Из жизни с…",
+            "…view\": false } ```  --- id: \"отпадение конечных гласных: ∼ ~ согласных\" title: \"отпадение конечных гласных: ∼ ~ согласных\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63864,7 +64404,10 @@
         152,
         329
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"261\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"отпадение конечных гласных: ∼ ~ согласных\" title: \"отпадение конечных гласных: ∼ ~ согласных\" source_key: \"subject_index\" source: \"Из жизни с…",
+        "…view\": false } ```  --- id: \"отпадение конечных гласных: ∼ ~ согласных\" title: \"отпадение конечных гласных: ∼ ~ согласных\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+      ],
       "discussed": true,
       "pages": "111, 112, 117, 118, 152, 329",
       "needs_review": false,
@@ -63881,7 +64424,10 @@
             377,
             378
           ],
-          "contexts": []
+          "contexts": [
+            "…закономерный с точки зрения истории языка.\",   \"terms\": [     \"ударение\",     \"оттяжка ударения\",     \"сдвиг ударения\",     \"акцентная парадигма\"   ] } ```  --- id: \"lectures_8\" title: \"Из русско…",
+            "…ния: накоренное, наконечное и подвижное\"   ],   \"terms\": [     \"ударение\",     \"оттяжка ударения\",     \"сдвиг ударения\",     \"безударные слова\"   ],   \"why_read\": \"Чтобы понять, почему русский уда…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63889,7 +64435,10 @@
         377,
         378
       ],
-      "contexts": [],
+      "contexts": [
+        "…закономерный с точки зрения истории языка.\",   \"terms\": [     \"ударение\",     \"оттяжка ударения\",     \"сдвиг ударения\",     \"акцентная парадигма\"   ] } ```  --- id: \"lectures_8\" title: \"Из русско…",
+        "…ния: накоренное, наконечное и подвижное\"   ],   \"terms\": [     \"ударение\",     \"оттяжка ударения\",     \"сдвиг ударения\",     \"безударные слова\"   ],   \"why_read\": \"Чтобы понять, почему русский уда…"
+      ],
       "discussed": true,
       "pages": "377, 378",
       "needs_review": false,
@@ -63906,7 +64455,10 @@
             283,
             285
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"296\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"ошибка писца\" title: \"ошибка писца\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumin…",
+            "…category\": \"rus\",   \"needs_review\": false } ```  --- id: \"ошибка писца\" title: \"ошибка писца\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63914,7 +64466,10 @@
         283,
         285
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"296\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"ошибка писца\" title: \"ошибка писца\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumin…",
+        "…category\": \"rus\",   \"needs_review\": false } ```  --- id: \"ошибка писца\" title: \"ошибка писца\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+      ],
       "discussed": true,
       "pages": "283, 285",
       "needs_review": false,
@@ -63930,14 +64485,20 @@
           "pages": [
             368
           ],
-          "contexts": []
+          "contexts": [
+            "…\": [     {       \"from\": \"праслав. *vьlk-i\",       \"to\": \"др.-русск. вълци (1-я палатализация)\",       \"comment\": \"k → ц перед гласными переднего ряда\"     },     {       \"from\": \"праслав. *bog…",
+            "…},     {       \"from\": \"праслав. *bog-i\",       \"to\": \"др.-русск. бози (2-я палатализация)\",       \"comment\": \"g → з перед новым *i из *oi\"     },     {       \"from\": \"праслав. *otьc-(j)e\",…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         368
       ],
-      "contexts": [],
+      "contexts": [
+        "…\": [     {       \"from\": \"праслав. *vьlk-i\",       \"to\": \"др.-русск. вълци (1-я палатализация)\",       \"comment\": \"k → ц перед гласными переднего ряда\"     },     {       \"from\": \"праслав. *bog…",
+        "…},     {       \"from\": \"праслав. *bog-i\",       \"to\": \"др.-русск. бози (2-я палатализация)\",       \"comment\": \"g → з перед новым *i из *oi\"     },     {       \"from\": \"праслав. *otьc-(j)e\",…"
+      ],
       "discussed": false,
       "pages": "368",
       "needs_review": false,
@@ -63958,7 +64519,10 @@
             221,
             230
           ],
-          "contexts": []
+          "contexts": [
+            "…хсогласный корень\",     \"порода\",     \"арабское письмо\",     \"каузатив\",     \"имперфект\"   ],   \"why_read\": \"Чтобы увидеть, как устроен один из самых математически логичных языков мира.\"…",
+            "…\"…за грамматическая форма? Из зала: Глагол. А. З.: В какой форме? И. Б. Иткин: Перфект. А. З.: В самой первой форме, которую я вам показывал. Это т…\",         \"…нтеллектуальные вызовы. Б…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -63970,7 +64534,10 @@
         221,
         230
       ],
-      "contexts": [],
+      "contexts": [
+        "…хсогласный корень\",     \"порода\",     \"арабское письмо\",     \"каузатив\",     \"имперфект\"   ],   \"why_read\": \"Чтобы увидеть, как устроен один из самых математически логичных языков мира.\"…",
+        "…\"…за грамматическая форма? Из зала: Глагол. А. З.: В какой форме? И. Б. Иткин: Перфект. А. З.: В самой первой форме, которую я вам показывал. Это т…\",         \"…нтеллектуальные вызовы. Б…"
+      ],
       "discussed": true,
       "pages": "213, 215, 216, 217, 221, 230",
       "needs_review": false,
@@ -63991,7 +64558,10 @@
             106,
             133
           ],
-          "contexts": []
+          "contexts": [
+            "…alse,   \"epoch_class\": \"ancient\",   \"lat\": 36.92,   \"lon\": 21.7 } ```  --- id: \"письменная традиция\" title: \"письменная традиция\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+            "…nt\",   \"lat\": 36.92,   \"lon\": 21.7 } ```  --- id: \"письменная традиция\" title: \"письменная традиция\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64003,7 +64573,10 @@
         106,
         133
       ],
-      "contexts": [],
+      "contexts": [
+        "…alse,   \"epoch_class\": \"ancient\",   \"lat\": 36.92,   \"lon\": 21.7 } ```  --- id: \"письменная традиция\" title: \"письменная традиция\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+        "…nt\",   \"lat\": 36.92,   \"lon\": 21.7 } ```  --- id: \"письменная традиция\" title: \"письменная традиция\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+      ],
       "discussed": true,
       "pages": "64, 71, 94, 96, 106, 133",
       "needs_review": false,
@@ -64030,7 +64603,10 @@
             168,
             169
           ],
-          "contexts": []
+          "contexts": [
+            "Развитие письменности является ключевым фактором сохранения языковых норм; Зализняк анализирует переход от устной традиции к графической фиксации.",
+            "Древнерусская письменность на бересте открыла лингвистам живой разговорный язык, свободный от книжных канонов."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64048,7 +64624,10 @@
         168,
         169
       ],
-      "contexts": [],
+      "contexts": [
+        "Развитие письменности является ключевым фактором сохранения языковых норм; Зализняк анализирует переход от устной традиции к графической фиксации.",
+        "Древнерусская письменность на бересте открыла лингвистам живой разговорный язык, свободный от книжных канонов."
+      ],
       "discussed": true,
       "pages": "90, 93, 94, 95, 96, 97, 102, 117, 119, 120, 168, 169",
       "needs_review": false,
@@ -64064,14 +64643,20 @@
           "pages": [
             120
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"64, 71, 94, 96, 106, 133\",   \"needs_review\": false } ```  --- id: \"письменность: ∼ древнеперсидская\" title: \"письменность: ∼ древнеперсидская\" source_key: \"subject_index\" source: \"Из жизни слов и язы…",
+            "…\"needs_review\": false } ```  --- id: \"письменность: ∼ древнеперсидская\" title: \"письменность: ∼ древнеперсидская\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         120
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"64, 71, 94, 96, 106, 133\",   \"needs_review\": false } ```  --- id: \"письменность: ∼ древнеперсидская\" title: \"письменность: ∼ древнеперсидская\" source_key: \"subject_index\" source: \"Из жизни слов и язы…",
+        "…\"needs_review\": false } ```  --- id: \"письменность: ∼ древнеперсидская\" title: \"письменность: ∼ древнеперсидская\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+      ],
       "discussed": false,
       "pages": "120",
       "needs_review": false,
@@ -64087,14 +64672,20 @@
           "pages": [
             120
           ],
-          "contexts": []
+          "contexts": [
+            "…\"discussed\": false,   \"pages\": \"120\",   \"needs_review\": false } ```  --- id: \"письменность: ∼ египетская\" title: \"письменность: ∼ египетская\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" b…",
+            "…0\",   \"needs_review\": false } ```  --- id: \"письменность: ∼ египетская\" title: \"письменность: ∼ египетская\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         120
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"discussed\": false,   \"pages\": \"120\",   \"needs_review\": false } ```  --- id: \"письменность: ∼ египетская\" title: \"письменность: ∼ египетская\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" b…",
+        "…0\",   \"needs_review\": false } ```  --- id: \"письменность: ∼ египетская\" title: \"письменность: ∼ египетская\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 4…"
+      ],
       "discussed": false,
       "pages": "120",
       "needs_review": false,
@@ -64115,7 +64706,10 @@
             145,
             228
           ],
-          "contexts": []
+          "contexts": [
+            "…96, 97, 102, 117, 119, 120, 168, 169\",   \"needs_review\": false } ```  --- id: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" title: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" source_key:…",
+            "…} ```  --- id: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" title: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumi…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64127,7 +64721,10 @@
         145,
         228
       ],
-      "contexts": [],
+      "contexts": [
+        "…96, 97, 102, 117, 119, 120, 168, 169\",   \"needs_review\": false } ```  --- id: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" title: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" source_key:…",
+        "…} ```  --- id: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" title: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumi…"
+      ],
       "discussed": true,
       "pages": "120, 122, 142, 143, 145, 228",
       "needs_review": false,
@@ -64148,7 +64745,10 @@
             293,
             300
           ],
-          "contexts": []
+          "contexts": [
+            "…96, 97, 102, 117, 119, 120, 168, 169\",   \"needs_review\": false } ```  --- id: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" title: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" source_key: \"subject_index\" source:…",
+            "…} ```  --- id: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" title: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64160,7 +64760,10 @@
         293,
         300
       ],
-      "contexts": [],
+      "contexts": [
+        "…96, 97, 102, 117, 119, 120, 168, 169\",   \"needs_review\": false } ```  --- id: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" title: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" source_key: \"subject_index\" source:…",
+        "…} ```  --- id: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" title: \"письмо [= графическая система]: ∼ бытовое vs. книжное\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+      ],
       "discussed": true,
       "pages": "277, 278, 282, 292, 293, 300",
       "needs_review": false,
@@ -64176,14 +64779,20 @@
           "pages": [
             77
           ],
-          "contexts": []
+          "contexts": [
+            "…,   \"pages\": \"33\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"полигенез\" title: \"полигенез\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintro…",
+            "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"полигенез\" title: \"полигенез\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         77
       ],
-      "contexts": [],
+      "contexts": [
+        "…,   \"pages\": \"33\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"полигенез\" title: \"полигенез\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintro…",
+        "…\"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"полигенез\" title: \"полигенез\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+      ],
       "discussed": false,
       "pages": "77",
       "needs_review": false,
@@ -64199,14 +64808,20 @@
           "pages": [
             193
           ],
-          "contexts": []
+          "contexts": [
+            "…в — голова́ми. В длиннющем слове оно может стоять г…\",         \"…олногласие и неполногласие. Полногласие — это сторона, сторож, берег, голова с -оро-, -ере-, -оло-, а неполногласие — страна,…",
+            "…. В длиннющем слове оно может стоять г…\",         \"…олногласие и неполногласие. Полногласие — это сторона, сторож, берег, голова с -оро-, -ере-, -оло-, а неполногласие — страна, страж, брег,…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         193
       ],
-      "contexts": [],
+      "contexts": [
+        "…в — голова́ми. В длиннющем слове оно может стоять г…\",         \"…олногласие и неполногласие. Полногласие — это сторона, сторож, берег, голова с -оро-, -ере-, -оло-, а неполногласие — страна,…",
+        "…. В длиннющем слове оно может стоять г…\",         \"…олногласие и неполногласие. Полногласие — это сторона, сторож, берег, голова с -оро-, -ере-, -оло-, а неполногласие — страна, страж, брег,…"
+      ],
       "discussed": false,
       "pages": "193",
       "needs_review": false,
@@ -64223,7 +64838,10 @@
             217,
             218
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"261\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"порода [в арабской грамматике]\" title: \"порода [в арабской грамматике]\" source_key: \"subject_index\" source: \"Из жизни слов и языко…",
+            "…\"needs_review\": false } ```  --- id: \"порода [в арабской грамматике]\" title: \"порода [в арабской грамматике]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64231,7 +64849,10 @@
         217,
         218
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"261\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"порода [в арабской грамматике]\" title: \"порода [в арабской грамматике]\" source_key: \"subject_index\" source: \"Из жизни слов и языко…",
+        "…\"needs_review\": false } ```  --- id: \"порода [в арабской грамматике]\" title: \"порода [в арабской грамматике]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+      ],
       "discussed": true,
       "pages": "217, 218",
       "needs_review": false,
@@ -64253,7 +64874,10 @@
             170,
             171
           ],
-          "contexts": []
+          "contexts": [
+            "В древнерусском языке порядок слов регулировался законом Вакернагеля, согласно которому энклитики занимали второе место в фразе.",
+            "Свободный порядок слов в русском языке не означает произвольности; он служит для смыслового выделения (актуального членения) предложения."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64266,7 +64890,10 @@
         170,
         171
       ],
-      "contexts": [],
+      "contexts": [
+        "В древнерусском языке порядок слов регулировался законом Вакернагеля, согласно которому энклитики занимали второе место в фразе.",
+        "Свободный порядок слов в русском языке не означает произвольности; он служит для смыслового выделения (актуального членения) предложения."
+      ],
       "discussed": true,
       "pages": "14, 17, 18, 20, 28, 170, 171",
       "needs_review": false,
@@ -64420,7 +65047,10 @@
             123,
             124
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"368\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" title: \"реконструкция [метод историческо…",
+            "…лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" title: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" source_key: \"subject_index\" source: \"Из…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64431,7 +65061,10 @@
         123,
         124
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"368\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" title: \"реконструкция [метод историческо…",
+        "…лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" title: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" source_key: \"subject_index\" source: \"Из…"
+      ],
       "discussed": true,
       "pages": "102, 111, 113, 123, 124",
       "needs_review": false,
@@ -64447,14 +65080,20 @@
           "pages": [
             140
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"368\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" title: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконст…",
+            "…лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" title: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         140
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"368\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" title: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконст…",
+        "…лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" title: \"реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+      ],
       "discussed": false,
       "pages": "140",
       "needs_review": false,
@@ -64475,7 +65114,10 @@
             179,
             180
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"268\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"родословное (генеалогическое) древо [языков]\" title: \"родословное (генеалогическое) древо [языков]\" source_key: \"subject_index\" source: \"Из жизн…",
+            "…w\": false } ```  --- id: \"родословное (генеалогическое) древо [языков]\" title: \"родословное (генеалогическое) древо [языков]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64487,7 +65129,10 @@
         179,
         180
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"268\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"родословное (генеалогическое) древо [языков]\" title: \"родословное (генеалогическое) древо [языков]\" source_key: \"subject_index\" source: \"Из жизн…",
+        "…w\": false } ```  --- id: \"родословное (генеалогическое) древо [языков]\" title: \"родословное (генеалогическое) древо [языков]\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 5…"
+      ],
       "discussed": true,
       "pages": "75, 76, 106, 107, 179, 180",
       "needs_review": false,
@@ -64506,7 +65151,10 @@
             383,
             385
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"194\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"сдвиг [ударения]: ∼ влево\" title: \"сдвиг [ударения]: ∼ влево\" source_key: \"subject_index\" source: \"Из жизни слов и я…",
+            "…us\",   \"needs_review\": false } ```  --- id: \"сдвиг [ударения]: ∼ влево\" title: \"сдвиг [ударения]: ∼ влево\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64516,7 +65164,10 @@
         383,
         385
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"194\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"сдвиг [ударения]: ∼ влево\" title: \"сдвиг [ударения]: ∼ влево\" source_key: \"subject_index\" source: \"Из жизни слов и я…",
+        "…us\",   \"needs_review\": false } ```  --- id: \"сдвиг [ударения]: ∼ влево\" title: \"сдвиг [ударения]: ∼ влево\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source…"
+      ],
       "discussed": true,
       "pages": "370, 371, 383, 385",
       "needs_review": false,
@@ -64537,7 +65188,10 @@
             382,
             383
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"194\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"сдвиг [ударения]: ∼ влево\" title: \"сдвиг [ударения]: ∼ влево\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" bo…",
+            "…us\",   \"needs_review\": false } ```  --- id: \"сдвиг [ударения]: ∼ влево\" title: \"сдвиг [ударения]: ∼ влево\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64549,7 +65203,10 @@
         382,
         383
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"194\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"сдвиг [ударения]: ∼ влево\" title: \"сдвиг [ударения]: ∼ влево\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" bo…",
+        "…us\",   \"needs_review\": false } ```  --- id: \"сдвиг [ударения]: ∼ влево\" title: \"сдвиг [ударения]: ∼ влево\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+      ],
       "discussed": true,
       "pages": "371, 372, 377, 381, 382, 383",
       "needs_review": false,
@@ -64647,7 +65304,10 @@
             219,
             220
           ],
-          "contexts": []
+          "contexts": [
+            "…],   \"terms\": [     \"энклитика\",     \"клитика\",     \"фразовая энклитика\",     \"тактовая группа\"   ],   \"why_read\": \"Чтобы понять, почему «Я же тебе говорил» правильно, а «Я тебе же говорил» — не…",
+            "…\"pages\": \"246\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"тактовая группа\" title: \"тактовая группа\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mu…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64657,7 +65317,10 @@
         219,
         220
       ],
-      "contexts": [],
+      "contexts": [
+        "…],   \"terms\": [     \"энклитика\",     \"клитика\",     \"фразовая энклитика\",     \"тактовая группа\"   ],   \"why_read\": \"Чтобы понять, почему «Я же тебе говорил» правильно, а «Я тебе же говорил» — не…",
+        "…\"pages\": \"246\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"тактовая группа\" title: \"тактовая группа\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mu…"
+      ],
       "discussed": true,
       "pages": "16, 21, 219, 220",
       "needs_review": false,
@@ -64681,7 +65344,10 @@
             338,
             340
           ],
-          "contexts": []
+          "contexts": [
+            "Ударение является одной из самых сложных подсистем русского языка, характеризующейся исторической изменчивостью.",
+            "Зализняк рассматривает ударение как ключевой инструмент для реконструкции древних языковых состояний."
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64696,7 +65362,10 @@
         338,
         340
       ],
-      "contexts": [],
+      "contexts": [
+        "Ударение является одной из самых сложных подсистем русского языка, характеризующейся исторической изменчивостью.",
+        "Зализняк рассматривает ударение как ключевой инструмент для реконструкции древних языковых состояний."
+      ],
       "discussed": true,
       "pages": "15, 16, 37, 68, 69, 74, 100, 338, 340",
       "needs_review": false,
@@ -64714,7 +65383,10 @@
             231,
             233
           ],
-          "contexts": []
+          "contexts": [
+            "…\"discussed\": false,   \"pages\": \"172\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ в арабском языке\" title: \"ударение: ∼ в арабском языке\" source_key: \"subject_index\" source: \"Из жизни слов и языков\"…",
+            "…,   \"needs_review\": false } ```  --- id: \"ударение: ∼ в арабском языке\" title: \"ударение: ∼ в арабском языке\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64723,7 +65395,10 @@
         231,
         233
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"discussed\": false,   \"pages\": \"172\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ в арабском языке\" title: \"ударение: ∼ в арабском языке\" source_key: \"subject_index\" source: \"Из жизни слов и языков\"…",
+        "…,   \"needs_review\": false } ```  --- id: \"ударение: ∼ в арабском языке\" title: \"ударение: ∼ в арабском языке\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+      ],
       "discussed": true,
       "pages": "223, 231, 233",
       "needs_review": false,
@@ -64742,7 +65417,10 @@
             252,
             330
           ],
-          "contexts": []
+          "contexts": [
+            "…sed\": true,   \"pages\": \"223, 231, 233\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ в древнерусском языке\" title: \"ударение: ∼ в древнерусском языке\" source_key: \"subject_index\" source: \"Из жизни слов и яз…",
+            "…needs_review\": false } ```  --- id: \"ударение: ∼ в древнерусском языке\" title: \"ударение: ∼ в древнерусском языке\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -64752,7 +65430,10 @@
         252,
         330
       ],
-      "contexts": [],
+      "contexts": [
+        "…sed\": true,   \"pages\": \"223, 231, 233\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ в древнерусском языке\" title: \"ударение: ∼ в древнерусском языке\" source_key: \"subject_index\" source: \"Из жизни слов и яз…",
+        "…needs_review\": false } ```  --- id: \"ударение: ∼ в древнерусском языке\" title: \"ударение: ∼ в древнерусском языке\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+      ],
       "discussed": true,
       "pages": "240, 249, 252, 330",
       "needs_review": false,
@@ -64929,14 +65610,20 @@
           "pages": [
             172
           ],
-          "contexts": []
+          "contexts": [
+            "…84, 385, 386, 387, 388, 389, 390, 391\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ в санскрите\" title: \"ударение: ∼ в санскрите\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book…",
+            "…391\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ в санскрите\" title: \"ударение: ∼ в санскрите\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         172
       ],
-      "contexts": [],
+      "contexts": [
+        "…84, 385, 386, 387, 388, 389, 390, 391\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ в санскрите\" title: \"ударение: ∼ в санскрите\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book…",
+        "…391\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ в санскрите\" title: \"ударение: ∼ в санскрите\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+      ],
       "discussed": false,
       "pages": "172",
       "needs_review": false,
@@ -64952,14 +65639,20 @@
           "pages": [
             256
           ],
-          "contexts": []
+          "contexts": [
+            "…\"discussed\": false,   \"pages\": \"172\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ восходящее\" title: \"ударение: ∼ восходящее\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_…",
+            "…\"172\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ восходящее\" title: \"ударение: ∼ восходящее\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         256
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"discussed\": false,   \"pages\": \"172\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ восходящее\" title: \"ударение: ∼ восходящее\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_…",
+        "…\"172\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ восходящее\" title: \"ударение: ∼ восходящее\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 6…"
+      ],
       "discussed": false,
       "pages": "256",
       "needs_review": false,
@@ -64975,14 +65668,20 @@
           "pages": [
             271
           ],
-          "contexts": []
+          "contexts": [
+            "…\"discussed\": false,   \"pages\": \"256\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ второстепенное\" title: \"ударение: ∼ второстепенное\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" b…",
+            "…6\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ второстепенное\" title: \"ударение: ∼ второстепенное\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         271
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"discussed\": false,   \"pages\": \"256\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ второстепенное\" title: \"ударение: ∼ второстепенное\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" b…",
+        "…6\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ второстепенное\" title: \"ударение: ∼ второстепенное\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+      ],
       "discussed": false,
       "pages": "271",
       "needs_review": false,
@@ -64998,14 +65697,20 @@
           "pages": [
             256
           ],
-          "contexts": []
+          "contexts": [
+            "…ages\": \"266, 267\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ нисходящее\" title: \"ударение: ∼ нисходящее\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_…",
+            "…\"rus\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ нисходящее\" title: \"ударение: ∼ нисходящее\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         256
       ],
-      "contexts": [],
+      "contexts": [
+        "…ages\": \"266, 267\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ нисходящее\" title: \"ударение: ∼ нисходящее\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_…",
+        "…\"rus\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ нисходящее\" title: \"ударение: ∼ нисходящее\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+      ],
       "discussed": false,
       "pages": "256",
       "needs_review": false,
@@ -65021,14 +65726,20 @@
           "pages": [
             172
           ],
-          "contexts": []
+          "contexts": [
+            "…\"discussed\": false,   \"pages\": \"256\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ свободное (разноместное)\" title: \"ударение: ∼ свободное (разноместное)\" source_key: \"subject_index\" source: \"Из жизни слов и…",
+            "…ds_review\": false } ```  --- id: \"ударение: ∼ свободное (разноместное)\" title: \"ударение: ∼ свободное (разноместное)\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         172
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"discussed\": false,   \"pages\": \"256\",   \"needs_review\": false } ```  --- id: \"ударение: ∼ свободное (разноместное)\" title: \"ударение: ∼ свободное (разноместное)\" source_key: \"subject_index\" source: \"Из жизни слов и…",
+        "…ds_review\": false } ```  --- id: \"ударение: ∼ свободное (разноместное)\" title: \"ударение: ∼ свободное (разноместное)\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+      ],
       "discussed": false,
       "pages": "172",
       "needs_review": false,
@@ -65045,7 +65756,10 @@
             37,
             38
           ],
-          "contexts": []
+          "contexts": [
+            "…15, 16, 37, 68, 69, 74, 100, 338, 340\",   \"needs_review\": false } ```  --- id: \"ударная vs. безударная форма местоимений\" title: \"ударная vs. безударная форма местоимений\" source_key: \"subject_index\" source: \"Из жизни сл…",
+            "…eview\": false } ```  --- id: \"ударная vs. безударная форма местоимений\" title: \"ударная vs. безударная форма местоимений\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -65053,7 +65767,10 @@
         37,
         38
       ],
-      "contexts": [],
+      "contexts": [
+        "…15, 16, 37, 68, 69, 74, 100, 338, 340\",   \"needs_review\": false } ```  --- id: \"ударная vs. безударная форма местоимений\" title: \"ударная vs. безударная форма местоимений\" source_key: \"subject_index\" source: \"Из жизни сл…",
+        "…eview\": false } ```  --- id: \"ударная vs. безударная форма местоимений\" title: \"ударная vs. безударная форма местоимений\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+      ],
       "discussed": true,
       "pages": "37, 38",
       "needs_review": false,
@@ -65069,14 +65786,20 @@
           "pages": [
             122
           ],
-          "contexts": []
+          "contexts": [
+            "…\"…з них — это история Фестского диска, о которой вы, наверное, слышали. Фестский диск найден тоже, кстати, на Крите, в городе Фест, и нынешние путешес…\",         \"…ь и истории, напротив…",
+            "…главная из них — это история Фестского диска, о которой вы, наверное, слышали. Фестский диск найден тоже, кс…\"       ]     }   },   \"book_id\": \"mumintroll\",   \"page_list\": [     122   ],   \"co…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         122
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"…з них — это история Фестского диска, о которой вы, наверное, слышали. Фестский диск найден тоже, кстати, на Крите, в городе Фест, и нынешние путешес…\",         \"…ь и истории, напротив…",
+        "…главная из них — это история Фестского диска, о которой вы, наверное, слышали. Фестский диск найден тоже, кс…\"       ]     }   },   \"book_id\": \"mumintroll\",   \"page_list\": [     122   ],   \"co…"
+      ],
       "discussed": false,
       "pages": "122",
       "needs_review": false,
@@ -65152,7 +65875,10 @@
             372,
             374
           ],
-          "contexts": []
+          "contexts": [
+            "…wikipedia.org/wiki/Фоменко,_Анатолий_Тимофеевич\",   \"img\": null } ```  --- id: \"фонетические изменения: ∼ всеобщие vs. частные\" title: \"фонетические изменения: ∼ всеобщие vs. частные\" source_key: \"subject_index\" source: \"Из жи…",
+            "…\": null } ```  --- id: \"фонетические изменения: ∼ всеобщие vs. частные\" title: \"фонетические изменения: ∼ всеобщие vs. частные\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -65162,7 +65888,10 @@
         372,
         374
       ],
-      "contexts": [],
+      "contexts": [
+        "…wikipedia.org/wiki/Фоменко,_Анатолий_Тимофеевич\",   \"img\": null } ```  --- id: \"фонетические изменения: ∼ всеобщие vs. частные\" title: \"фонетические изменения: ∼ всеобщие vs. частные\" source_key: \"subject_index\" source: \"Из жи…",
+        "…\": null } ```  --- id: \"фонетические изменения: ∼ всеобщие vs. частные\" title: \"фонетические изменения: ∼ всеобщие vs. частные\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+      ],
       "discussed": true,
       "pages": "366, 367, 372, 374",
       "needs_review": false,
@@ -65178,14 +65907,20 @@
           "pages": [
             16
           ],
-          "contexts": []
+          "contexts": [
+            "…27, 329, 363, 364, 365, 366, 367, 375\",   \"needs_review\": false } ```  --- id: \"фонетическое слово\" title: \"фонетическое слово\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+            "…367, 375\",   \"needs_review\": false } ```  --- id: \"фонетическое слово\" title: \"фонетическое слово\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         16
       ],
-      "contexts": [],
+      "contexts": [
+        "…27, 329, 363, 364, 365, 366, 367, 375\",   \"needs_review\": false } ```  --- id: \"фонетическое слово\" title: \"фонетическое слово\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+        "…367, 375\",   \"needs_review\": false } ```  --- id: \"фонетическое слово\" title: \"фонетическое слово\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+      ],
       "discussed": false,
       "pages": "16",
       "needs_review": false,
@@ -65202,7 +65937,10 @@
             19,
             21
           ],
-          "contexts": []
+          "contexts": [
+            "…,   \"pages\": \"21\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"фразовая энклитика\" title: \"фразовая энклитика\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+            "…ry\": \"rus\",   \"needs_review\": false } ```  --- id: \"фразовая энклитика\" title: \"фразовая энклитика\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -65210,7 +65948,10 @@
         19,
         21
       ],
-      "contexts": [],
+      "contexts": [
+        "…,   \"pages\": \"21\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"фразовая энклитика\" title: \"фразовая энклитика\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id:…",
+        "…ry\": \"rus\",   \"needs_review\": false } ```  --- id: \"фразовая энклитика\" title: \"фразовая энклитика\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 7…"
+      ],
       "discussed": true,
       "pages": "19, 21",
       "needs_review": false,
@@ -65226,14 +65967,20 @@
           "pages": [
             194
           ],
-          "contexts": []
+          "contexts": [
+            "…язык православных славян, не разговорный\",     \"Многие книжные слова русского — церковнославянизмы (например, «время», «небо»)\"   ],   \"terms\": [     \"древнерусский\",     \"церковнославянский\",     \"…",
+            "…сербских форм будущего времени в «Велесовой книге».\"   ] } ```  --- id: \"Ложные церковнославянизмы\" title: \"Ложные церковнославянизмы\" source_key: \"lexicon_tech\" source: \"Из жизни слов и языков\" boo…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         194
       ],
-      "contexts": [],
+      "contexts": [
+        "…язык православных славян, не разговорный\",     \"Многие книжные слова русского — церковнославянизмы (например, «время», «небо»)\"   ],   \"terms\": [     \"древнерусский\",     \"церковнославянский\",     \"…",
+        "…сербских форм будущего времени в «Велесовой книге».\"   ] } ```  --- id: \"Ложные церковнославянизмы\" title: \"Ложные церковнославянизмы\" source_key: \"lexicon_tech\" source: \"Из жизни слов и языков\" boo…"
+      ],
       "discussed": false,
       "pages": "194",
       "needs_review": false,
@@ -65250,7 +65997,10 @@
             168,
             169
           ],
-          "contexts": []
+          "contexts": [
+            "…а] 220, 230; ∼ [слово] 174, 214, 219, 315; ∼ [сочетание] 221; ∼ [текст] 228; ∼ [цифры] 169\"         },         {           \"name\": \"арабско-персидский [слово]\",           \"type\": \"lang\"…",
+            "…e,   \"epoch_class\": \"modern\",   \"lat\": 25,   \"lon\": 45 } ```  --- id: \"арабские цифры\" title: \"арабские цифры\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mum…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -65258,7 +66008,10 @@
         168,
         169
       ],
-      "contexts": [],
+      "contexts": [
+        "…а] 220, 230; ∼ [слово] 174, 214, 219, 315; ∼ [сочетание] 221; ∼ [текст] 228; ∼ [цифры] 169\"         },         {           \"name\": \"арабско-персидский [слово]\",           \"type\": \"lang\"…",
+        "…e,   \"epoch_class\": \"modern\",   \"lat\": 25,   \"lon\": 45 } ```  --- id: \"арабские цифры\" title: \"арабские цифры\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mum…"
+      ],
       "discussed": true,
       "pages": "168, 169",
       "needs_review": false,
@@ -65276,7 +66029,10 @@
             297,
             300
           ],
-          "contexts": []
+          "contexts": [
+            "…... А. З.: В Новгороде ц и ч свободно заменяют друг друга — это так называемое «цоканье». Ес…\",         \"…тке вместо древнерусской фразы получается фраза неправильная. У нас в Новгороде н…",
+            "…... А. З.: В Новгороде ц и ч свободно заменяют друг друга — это так называемое «цоканье». Ес…\",     \"…тке вместо древнерусской фразы получается фраза неправильная. У нас в Новгороде на ра…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -65285,7 +66041,10 @@
         297,
         300
       ],
-      "contexts": [],
+      "contexts": [
+        "…... А. З.: В Новгороде ц и ч свободно заменяют друг друга — это так называемое «цоканье». Ес…\",         \"…тке вместо древнерусской фразы получается фраза неправильная. У нас в Новгороде н…",
+        "…... А. З.: В Новгороде ц и ч свободно заменяют друг друга — это так называемое «цоканье». Ес…\",     \"…тке вместо древнерусской фразы получается фраза неправильная. У нас в Новгороде на ра…"
+      ],
       "discussed": true,
       "pages": "294, 297, 300",
       "needs_review": false,
@@ -65301,14 +66060,20 @@
           "pages": [
             391
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"385\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"чудовский Новый завет\" title: \"чудовский Новый завет\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_i…",
+            "…: \"rus\",   \"needs_review\": false } ```  --- id: \"чудовский Новый завет\" title: \"чудовский Новый завет\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 8…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         391
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"385\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"чудовский Новый завет\" title: \"чудовский Новый завет\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_i…",
+        "…: \"rus\",   \"needs_review\": false } ```  --- id: \"чудовский Новый завет\" title: \"чудовский Новый завет\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 8…"
+      ],
       "discussed": false,
       "pages": "391",
       "needs_review": false,
@@ -65325,7 +66090,10 @@
             23,
             24
           ],
-          "contexts": []
+          "contexts": [
+            "…езаконном поимании чужого барана. В текстах протопопа Аввакума, если передается чужая речь, то совершенно автоматически включается д…\"       ]     }   },   \"book_id\": \"mumintroll\",   \"page_l…",
+            "…езаконном поимании чужого барана. В текстах протопопа Аввакума, если передается чужая речь, то совершенно автоматически включается д…\"   ],   \"discussed\": false,   \"pages\": \"24\",   \"category…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -65333,7 +66101,10 @@
         23,
         24
       ],
-      "contexts": [],
+      "contexts": [
+        "…езаконном поимании чужого барана. В текстах протопопа Аввакума, если передается чужая речь, то совершенно автоматически включается д…\"       ]     }   },   \"book_id\": \"mumintroll\",   \"page_l…",
+        "…езаконном поимании чужого барана. В текстах протопопа Аввакума, если передается чужая речь, то совершенно автоматически включается д…\"   ],   \"discussed\": false,   \"pages\": \"24\",   \"category…"
+      ],
       "discussed": true,
       "pages": "23, 24",
       "needs_review": false,
@@ -65349,14 +66120,20 @@
           "pages": [
             38
           ],
-          "contexts": []
+          "contexts": [
+            "…\"pages\": \"246\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"эмфаза, экспрессивность\" title: \"эмфаза, экспрессивность\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book…",
+            "…\"rus\",   \"needs_review\": false } ```  --- id: \"эмфаза, экспрессивность\" title: \"эмфаза, экспрессивность\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 8…"
+          ]
         }
       },
       "book_id": "mumintroll",
       "page_list": [
         38
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"pages\": \"246\",   \"category\": \"rus\",   \"needs_review\": false } ```  --- id: \"эмфаза, экспрессивность\" title: \"эмфаза, экспрессивность\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book…",
+        "…\"rus\",   \"needs_review\": false } ```  --- id: \"эмфаза, экспрессивность\" title: \"эмфаза, экспрессивность\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 8…"
+      ],
       "discussed": false,
       "pages": "38",
       "needs_review": false,
@@ -65427,7 +66204,10 @@
             21,
             26
           ],
-          "contexts": []
+          "contexts": [
+            "…cussed\": true,   \"pages\": \"19, 21, 26\",   \"needs_review\": false } ```  --- id: \"энклитики: ∼ локальные\" title: \"энклитики: ∼ локальные\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_…",
+            "…1, 26\",   \"needs_review\": false } ```  --- id: \"энклитики: ∼ локальные\" title: \"энклитики: ∼ локальные\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 8…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -65436,7 +66216,10 @@
         21,
         26
       ],
-      "contexts": [],
+      "contexts": [
+        "…cussed\": true,   \"pages\": \"19, 21, 26\",   \"needs_review\": false } ```  --- id: \"энклитики: ∼ локальные\" title: \"энклитики: ∼ локальные\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_…",
+        "…1, 26\",   \"needs_review\": false } ```  --- id: \"энклитики: ∼ локальные\" title: \"энклитики: ∼ локальные\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 8…"
+      ],
       "discussed": true,
       "pages": "19, 21, 26",
       "needs_review": false,
@@ -65454,7 +66237,10 @@
             21,
             26
           ],
-          "contexts": []
+          "contexts": [
+            "…\"entity\": {     \"type\": \"subject\",     \"head\": \"энклитики\"   } } ```  --- id: \"энклитики: ∼ фразовые\" title: \"энклитики: ∼ фразовые\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_i…",
+            "…ct\",     \"head\": \"энклитики\"   } } ```  --- id: \"энклитики: ∼ фразовые\" title: \"энклитики: ∼ фразовые\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 8…"
+          ]
         }
       },
       "book_id": "mumintroll",
@@ -65463,7 +66249,10 @@
         21,
         26
       ],
-      "contexts": [],
+      "contexts": [
+        "…\"entity\": {     \"type\": \"subject\",     \"head\": \"энклитики\"   } } ```  --- id: \"энклитики: ∼ фразовые\" title: \"энклитики: ∼ фразовые\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_i…",
+        "…ct\",     \"head\": \"энклитики\"   } } ```  --- id: \"энклитики: ∼ фразовые\" title: \"энклитики: ∼ фразовые\" source_key: \"subject_index\" source: \"Из жизни слов и языков\" book_id: \"mumintroll\" source_index: 8…"
+      ],
       "discussed": true,
       "pages": "19, 21, 26",
       "needs_review": false,
