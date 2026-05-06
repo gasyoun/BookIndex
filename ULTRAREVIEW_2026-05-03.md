@@ -294,7 +294,7 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 
 1. [DONE] **v10.1: PWA Foundation** - Installable app with offline caching of corpus and assets.
 2. [DONE] **v10.2: Mobile UI Polish** - Touch targets, swipe gestures, and "Expedition Mode" indicators.
-3. [ ] **v10.3: Deep Offline Search** - Pre-indexed fuzzy search for use without any connectivity.
+3. [DONE] **v10.3: Deep Offline Search** - Pre-indexed fuzzy search for use without any connectivity.
 
 ---
 

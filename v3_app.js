@@ -64,6 +64,7 @@ function parseAppData() {
   // WORKSPACE INITIALIZATION (v7.1)
   initScholarWorkspace();
   initSearchWorker();
+  initCardNotes();
 
   migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
@@ -192,6 +193,17 @@ function injectSemanticStyles() {
     .offline-badge.is-offline { display: flex; animation: pulse 2s infinite; }
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
     
+    /* RESEARCHER DIARY v9.1 */
+    .card-note-section { margin-top: 2rem; padding: 1.2rem; background: rgba(128, 222, 234, 0.03); border-radius: 12px; border: 1px solid rgba(128, 222, 234, 0.2); }
+    .card-note-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.9rem; font-weight: 700; color: #80deea; }
+    .card-note-textarea { 
+      width: 100%; min-height: 120px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); 
+      border-radius: 8px; color: #e8e0d2; padding: 0.8rem; font-family: inherit; font-size: 0.95rem; resize: vertical;
+      transition: 0.3s;
+    }
+    .card-note-textarea:focus { border-color: #80deea; outline: none; box-shadow: 0 0 15px rgba(128, 222, 234, 0.1); }
+    .card-note-status { font-size: 0.75rem; color: #888; font-weight: normal; }
+
     @media (max-width: 768px) {
       .btn, .viz-btn, .tab, .search-item { min-height: 44px; } /* Apple's recommended touch target */
       .card-shell { padding: 1rem; }
@@ -6660,6 +6672,34 @@ function collectNameRelationLinks(head) {
     .sort((a, b) => (b.weight - a.weight) || compareHeadsRu(a.head, b.head));
 }
 
+let ytPlayer = null;
+
+let cardNotes = {};
+
+function initCardNotes() {
+  try {
+    const saved = localStorage.getItem('Zalizniakiada.notes_v9');
+    if (saved) cardNotes = JSON.parse(saved);
+  } catch(e) {}
+}
+
+function saveCardNote(id, text) {
+  if (!id) return;
+  cardNotes[id] = text;
+  try {
+    localStorage.setItem('Zalizniakiada.notes_v9', JSON.stringify(cardNotes));
+    const status = document.getElementById('card-note-status');
+    if (status) {
+      status.textContent = 'Сохранено';
+      setTimeout(() => { if (status) status.textContent = ''; }, 2000);
+    }
+  } catch(e) {}
+}
+
+function getCardNote(id) {
+  return cardNotes[id] || '';
+}
+
 function renderCardInRight() {
   const right = getRightContentHost();
   if (!right) return;
@@ -6804,6 +6844,23 @@ function renderCardInRight() {
       <strong>Примечание о подсчёте:</strong> ${escapeHtml(it.moderator_note)}
     </div>`;
   }
+
+  // RESEARCHER NOTE v9.1
+  const noteId = `${eType}::${it.head}`;
+  const currentNote = getCardNote(noteId);
+  html += `
+    <div class="card-note-section">
+      <div class="card-note-header">
+        <span>Дневник исследователя</span>
+        <span id="card-note-status" class="card-note-status"></span>
+      </div>
+      <textarea 
+        class="card-note-textarea" 
+        placeholder="Ваши заметки об этом элементе..."
+        oninput="saveCardNote('${noteId}', this.value)"
+      >${escapeHtml(currentNote)}</textarea>
+    </div>
+  `;
 
   // Контексты
   if (useTwoColumnCardLayout) html += '<div class="card-two-col-layout">';
