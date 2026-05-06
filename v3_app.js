@@ -6931,6 +6931,27 @@ function renderCardInRight() {
     </div>`;
   }
 
+  // RELATED VIDEOS v11.1
+  const relatedVideos = (APP_DATA.video_catalog || []).filter(v => {
+    return Array.isArray(v.related_entities) && v.related_entities.some(re => re.head === it.head);
+  });
+  
+  if (relatedVideos.length > 0) {
+    html += `
+      <div class="card-related-videos" style="margin-top:1.5rem; padding:1rem; background:rgba(128,222,234,0.05); border-radius:12px; border:1px solid rgba(128,222,234,0.2);">
+        <div style="font-size:0.9rem; font-weight:700; color:#80deea; margin-bottom:0.8rem;">Лекции по теме:</div>
+        <div class="video-links-list" style="display:flex; flex-direction:column; gap:0.6rem;">
+          ${relatedVideos.map(v => `
+            <a href="javascript:void(0)" onclick="openVideoPlayer('${v.id}')" style="color:#e8e0d2; text-decoration:none; font-size:0.9rem; display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:1rem;">🎬</span>
+              <span>${escapeHtml(v.title)}</span>
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
   // RESEARCHER NOTE v9.1
   const noteId = `${eType}::${it.head}`;
   const currentNote = getCardNote(noteId);
