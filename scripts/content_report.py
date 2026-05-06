@@ -1316,35 +1316,40 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
     }
 
 
-def get_context_pack_pages(data: dict[str, Any], item: dict[str, Any]) -> list[int]:
+def get_context_pack_source_item(data: dict[str, Any], item: dict[str, Any]) -> tuple[int | None, dict[str, Any] | None]:
     entity = item.get("entity")
     if not isinstance(entity, str):
-        return []
+        return None, None
     items = data.get(entity, [])
     if not isinstance(items, list):
-        return []
+        return None, None
     canonical_id = item.get("canonical_id")
     head = str(item.get("head", "")).strip()
-    for candidate in items:
+    for index, candidate in enumerate(items):
         if not isinstance(candidate, dict):
             continue
         if canonical_id and candidate.get("canonical_id") == canonical_id:
-            return get_item_pages(candidate)
+            return index, candidate
         if not canonical_id and head and get_item_head(candidate) == head:
-            return get_item_pages(candidate)
-    return []
+            return index, candidate
+    return None, None
 
 
 def build_context_entry_pack(data: dict[str, Any], quality_queue: dict[str, Any], limit: int = 25) -> dict[str, Any]:
     targets = []
     for rank, item in enumerate(quality_queue.get("context_priority_top", [])[:limit], start=1):
-        pages = get_context_pack_pages(data, item)
+        item_index, source_item = get_context_pack_source_item(data, item)
+        pages = get_item_pages(source_item) if source_item else []
+        entity = item.get("entity")
+        json_pointer = f"/{entity}/{item_index}" if isinstance(entity, str) and item_index is not None else None
         target = {
             "rank": rank,
             "status": "needs_source_context",
-            "entity": item.get("entity"),
+            "entity": entity,
             "head": item.get("head"),
             "canonical_id": item.get("canonical_id"),
+            "item_index": item_index,
+            "json_pointer": json_pointer,
             "route": item.get("route"),
             "pages_count": item.get("pages_count", 0),
             "pages": pages,
@@ -1444,6 +1449,7 @@ def render_context_entry_pack_markdown(pack: dict[str, Any]) -> str:
             f"- Status: `{target.get('status', '')}`",
             f"- Entity: `{entity}`",
             f"- Canonical ID: `{target.get('canonical_id', '')}`",
+            f"- JSON pointer: `{target.get('json_pointer', '')}`",
             f"- Route: `{target.get('route', '')}`",
             f"- Pages: {target.get('pages_summary', '0 pages')}",
             f"- Pages to check first: {pages_to_check_text}",

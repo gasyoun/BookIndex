@@ -758,13 +758,20 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
                     errors,
                 )
         source_pages: list[int] = []
+        source_index: int | None = None
         source_entity = target.get("entity")
         source_canonical_id = target.get("canonical_id")
         if isinstance(source_entity, str) and isinstance(data.get(source_entity), list):
-            for item in data[source_entity]:
+            for item_index, item in enumerate(data[source_entity]):
                 if isinstance(item, dict) and item.get("canonical_id") == source_canonical_id:
+                    source_index = item_index
                     source_pages = get_item_pages(item)
                     break
+        if target.get("item_index") != source_index:
+            fail(f"[context_pack] stale target {index}.item_index", errors)
+        expected_pointer = f"/{source_entity}/{source_index}" if isinstance(source_entity, str) and source_index is not None else None
+        if target.get("json_pointer") != expected_pointer:
+            fail(f"[context_pack] stale target {index}.json_pointer", errors)
         pages = target.get("pages")
         pages_to_check = target.get("pages_to_check")
         if not isinstance(pages, list) or not all(isinstance(page, int) for page in pages):
@@ -789,6 +796,8 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
         for target in targets[:5]:
             if isinstance(target, dict) and str(target.get("head", "")) not in markdown:
                 fail(f"[context_pack] markdown checklist missing target {target.get('head')!r}", errors)
+            if isinstance(target, dict) and str(target.get("json_pointer", "")) not in markdown:
+                fail(f"[context_pack] markdown checklist missing pointer {target.get('json_pointer')!r}", errors)
             if isinstance(target, dict) and "Pages to check first:" not in markdown:
                 fail("[context_pack] markdown checklist missing pages-to-check rows", errors)
 
