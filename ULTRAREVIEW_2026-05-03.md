@@ -286,7 +286,7 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 
 1. [DONE] **v8.1: Video Archive Foundation** - Cataloging videos with timecodes and entity links.
 2. [DONE] **v8.2: Embedded Multimedia Player** - Native player with timecode jumping.
-3. [ ] **v8.3: Global Multimedia Search** - Search results from books and video transcripts.
+3. [DONE] **v8.3: Global Multimedia Search** - Search results from books and video transcripts.
 
 ---
 

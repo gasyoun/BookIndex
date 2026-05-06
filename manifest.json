@@ -1,0 +1,16 @@
+{
+  "name": "Зализнякиада: Корпус",
+  "short_name": "Зализняк",
+  "description": "Справочный корпус А. А. Зализняка для полевой и академической работы.",
+  "start_url": "./v3_template.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#009688",
+  "icons": [
+    {
+      "src": "zalizniak_app_icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

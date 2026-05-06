@@ -181,6 +181,21 @@ function injectSemanticStyles() {
     .video-modal-tc-item:hover { background: rgba(128, 222, 234, 0.1); }
     .video-modal-tc-active { background: rgba(128, 222, 234, 0.2); border-left: 3px solid #80deea; }
     .video-modal-close { position: absolute; top: -40px; right: 0; color: #fff; background: none; border: none; font-size: 2rem; cursor: pointer; }
+
+    /* EXPEDITION MODE v10.2 */
+    .offline-badge {
+      position: fixed; bottom: 20px; left: 20px; padding: 6px 12px; border-radius: 20px;
+      background: #f44336; color: #fff; font-size: 0.8rem; font-weight: 700; z-index: 3000;
+      display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3); align-items: center; gap: 6px;
+    }
+    .offline-badge.is-offline { display: flex; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+    
+    @media (max-width: 768px) {
+      .btn, .viz-btn, .tab, .search-item { min-height: 44px; } /* Apple's recommended touch target */
+      .card-shell { padding: 1rem; }
+      #right-pane { border-left: none; }
+    }
   `;
   document.head.appendChild(style);
 }
@@ -216,6 +231,28 @@ function initScholarWorkspace() {
   toggle.onclick = () => toggleWorkspace();
   document.body.appendChild(toggle);
   
+  // OFFLINE INDICATOR (v10.2)
+  const badge = document.createElement('div');
+  badge.id = 'offline-badge';
+  badge.className = 'offline-badge';
+  badge.innerHTML = '<span>📡</span> Режим экспедиции (оффлайн)';
+  document.body.appendChild(badge);
+
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+  updateOnlineStatus();
+
+  // SWIPE TO BACK (v10.2)
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, false);
+  document.addEventListener('touchend', e => {
+    const touchEndX = e.changedTouches[0].screenX;
+    if (touchEndX - touchStartX > 100) { // Swipe right
+      if (selectedItem && rightPaneMode === 'card') {
+        closeItemDetails();
+      }
+    }
+  }, false);
   updateWorkspaceUI();
 
   // VIDEO MODAL INIT (v8.2)
@@ -234,6 +271,16 @@ function initScholarWorkspace() {
     </div>
   `;
   document.body.appendChild(modal);
+}
+
+function updateOnlineStatus() {
+  const badge = document.getElementById('offline-badge');
+  if (!badge) return;
+  if (navigator.onLine) {
+    badge.classList.remove('is-offline');
+  } else {
+    badge.classList.add('is-offline');
+  }
 }
 
 let ytPlayer = null;

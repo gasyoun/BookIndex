@@ -7,7 +7,7 @@ const SHELL_CACHE_NAME = `${CACHE_PREFIX}-shell-${SW_BUILD_ID}`;
 const RUNTIME_CACHE_NAME = `${CACHE_PREFIX}-runtime-v1`;
 const TILE_CACHE_NAME = `${CACHE_PREFIX}-tiles-v1`;
 const MEDIA_CACHE_NAME = `${CACHE_PREFIX}-media-v1`;
-const OFFLINE_URL = './aaz-index.html';
+const OFFLINE_URL = './v3_template.html';
 
 const MAX_RUNTIME_ENTRIES = 180;
 const MAX_TILE_ENTRIES = 1000;
@@ -40,23 +40,14 @@ const EXTERNAL_MEDIA_HOST_SUFFIXES = [
 ];
 
 const SHELL_ASSETS = [
-  './aaz-index.html',
-  './manifest.webmanifest',
-  './icon-192.svg',
-  './icon-512.svg',
+  './v3_template.html',
+  './v3_app.js',
+  './app_data.json',
+  './manifest.json',
+  './zalizniak_app_icon.png',
   './vendor/fuse.basic.min.js',
   './vendor/d3.v7.min.js',
   './vendor/alpinejs.cdn.min.js',
-  './scripts/viz/build-viz-cache.js',
-  './scripts/viz/build-viz-cache-worker.js',
-  './scripts/viz/viz-state.js',
-  './scripts/viz/cooccurrence-graph.js',
-  './scripts/viz/discovery-timeline.js',
-  './scripts/viz/heatmap-matrix.js',
-  './scripts/viz/lang-chord.js',
-  './scripts/viz/map-timeline.js',
-  './scripts/viz/narrative-sankey.js',
-  './scripts/viz/term-bump-chart.js',
 ];
 
 function isCacheableResponse(response) {
