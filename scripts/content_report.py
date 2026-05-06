@@ -1316,9 +1316,29 @@ def build_quality_queue(data: dict[str, Any], report: dict[str, Any]) -> dict[st
     }
 
 
-def build_context_entry_pack(quality_queue: dict[str, Any], limit: int = 25) -> dict[str, Any]:
+def get_context_pack_pages(data: dict[str, Any], item: dict[str, Any]) -> list[int]:
+    entity = item.get("entity")
+    if not isinstance(entity, str):
+        return []
+    items = data.get(entity, [])
+    if not isinstance(items, list):
+        return []
+    canonical_id = item.get("canonical_id")
+    head = str(item.get("head", "")).strip()
+    for candidate in items:
+        if not isinstance(candidate, dict):
+            continue
+        if canonical_id and candidate.get("canonical_id") == canonical_id:
+            return get_item_pages(candidate)
+        if not canonical_id and head and get_item_head(candidate) == head:
+            return get_item_pages(candidate)
+    return []
+
+
+def build_context_entry_pack(data: dict[str, Any], quality_queue: dict[str, Any], limit: int = 25) -> dict[str, Any]:
     targets = []
     for rank, item in enumerate(quality_queue.get("context_priority_top", [])[:limit], start=1):
+        pages = get_context_pack_pages(data, item)
         target = {
             "rank": rank,
             "status": "needs_source_context",
@@ -1327,6 +1347,8 @@ def build_context_entry_pack(quality_queue: dict[str, Any], limit: int = 25) -> 
             "canonical_id": item.get("canonical_id"),
             "route": item.get("route"),
             "pages_count": item.get("pages_count", 0),
+            "pages": pages,
+            "pages_to_check": pages[:10],
             "pages_summary": item.get("pages_summary", "0 pages"),
             "priority_score": item.get("priority_score", 0),
             "priority_tier": item.get("priority_tier", "low"),
@@ -1411,6 +1433,11 @@ def render_context_entry_pack_markdown(pack: dict[str, Any]) -> str:
         rank = target.get("rank", "?")
         head = target.get("head", "(no head)")
         entity = target.get("entity", "")
+        pages_to_check = target.get("pages_to_check", [])
+        pages_to_check_text = ", ".join(str(page) for page in pages_to_check) if pages_to_check else "none"
+        pages_count = target.get("pages_count", 0)
+        if isinstance(pages_to_check, list) and isinstance(pages_count, int) and pages_count > len(pages_to_check):
+            pages_to_check_text += f" (+{pages_count - len(pages_to_check)} more)"
         lines.extend([
             f"### {rank}. {head}",
             "",
@@ -1419,6 +1446,7 @@ def render_context_entry_pack_markdown(pack: dict[str, Any]) -> str:
             f"- Canonical ID: `{target.get('canonical_id', '')}`",
             f"- Route: `{target.get('route', '')}`",
             f"- Pages: {target.get('pages_summary', '0 pages')}",
+            f"- Pages to check first: {pages_to_check_text}",
             f"- Priority: {target.get('priority_tier', '')} {target.get('priority_score', 0)}",
             f"- Reason: {target.get('priority_reason', '')}",
             "- Contexts to add: _pending source check_",
@@ -1505,7 +1533,7 @@ def main(argv: list[str] | None = None) -> int:
         pack_path.parent.mkdir(parents=True, exist_ok=True)
         pack_path.write_text(
             json.dumps(
-                build_context_entry_pack(quality_queue or build_quality_queue(data, report), args.context_pack_limit),
+                build_context_entry_pack(data, quality_queue or build_quality_queue(data, report), args.context_pack_limit),
                 ensure_ascii=False,
                 indent=2,
             ) + "\n",
@@ -1514,7 +1542,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.write_context_pack_md:
         pack_md_path = Path(args.write_context_pack_md)
         pack_md_path.parent.mkdir(parents=True, exist_ok=True)
-        pack = build_context_entry_pack(quality_queue or build_quality_queue(data, report), args.context_pack_limit)
+        pack = build_context_entry_pack(data, quality_queue or build_quality_queue(data, report), args.context_pack_limit)
         pack_md_path.write_text(render_context_entry_pack_markdown(pack), encoding="utf-8")
 
     if args.format == "json":

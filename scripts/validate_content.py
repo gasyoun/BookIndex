@@ -717,6 +717,7 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
         fail("[context_pack] index-audit-queue.json is required when context-entry-pack.json exists", errors)
         return
     try:
+        data = json.loads(data_path.read_text(encoding="utf-8"))
         queue = json.loads(queue_path.read_text(encoding="utf-8"))
         pack = json.loads(pack_path.read_text(encoding="utf-8"))
     except Exception as exc:
@@ -756,6 +757,22 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
                     f"{target.get(field)!r} != {source.get(field)!r}",
                     errors,
                 )
+        source_pages: list[int] = []
+        source_entity = target.get("entity")
+        source_canonical_id = target.get("canonical_id")
+        if isinstance(source_entity, str) and isinstance(data.get(source_entity), list):
+            for item in data[source_entity]:
+                if isinstance(item, dict) and item.get("canonical_id") == source_canonical_id:
+                    source_pages = get_item_pages(item)
+                    break
+        pages = target.get("pages")
+        pages_to_check = target.get("pages_to_check")
+        if not isinstance(pages, list) or not all(isinstance(page, int) for page in pages):
+            fail(f"[context_pack] target {index}.pages must be list[int]", errors)
+        elif pages != source_pages:
+            fail(f"[context_pack] stale target {index}.pages", errors)
+        if pages_to_check != (pages or [])[:10]:
+            fail(f"[context_pack] target {index}.pages_to_check must be first 10 pages", errors)
         if target.get("status") != "needs_source_context":
             fail(f"[context_pack] target {index}.status must be needs_source_context", errors)
         entry_fields = target.get("entry_fields")
@@ -772,6 +789,8 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
         for target in targets[:5]:
             if isinstance(target, dict) and str(target.get("head", "")) not in markdown:
                 fail(f"[context_pack] markdown checklist missing target {target.get('head')!r}", errors)
+            if isinstance(target, dict) and "Pages to check first:" not in markdown:
+                fail("[context_pack] markdown checklist missing pages-to-check rows", errors)
 
 
 def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:
