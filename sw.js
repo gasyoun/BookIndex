@@ -45,6 +45,7 @@ const SHELL_ASSETS = [
   './app_data.json',
   './manifest.json',
   './zalizniak_app_icon.png',
+  './scripts/search-worker.js',
   './vendor/fuse.basic.min.js',
   './vendor/d3.v7.min.js',
   './vendor/alpinejs.cdn.min.js',

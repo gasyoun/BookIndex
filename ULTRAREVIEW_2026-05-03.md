@@ -290,6 +290,14 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 
 ---
 
-## 10. Bottom Line
+## 11. Expeditionary Mode: v10.0 - Mobile & Offline
 
-The project has achieved **Visual Excellence**. The foundation is audited, normalized, and stunningly represented. The next frontier is **Depth**: moving from a high-fidelity index to a true **Semantic Knowledge Base** where terms are linked by meaning and historical context, not just page numbers.
+1. [DONE] **v10.1: PWA Foundation** - Installable app with offline caching of corpus and assets.
+2. [DONE] **v10.2: Mobile UI Polish** - Touch targets, swipe gestures, and "Expedition Mode" indicators.
+3. [ ] **v10.3: Deep Offline Search** - Pre-indexed fuzzy search for use without any connectivity.
+
+---
+
+## 12. Bottom Line
+
+The project has achieved **Visual Excellence** and **Expeditionary Readiness**. The foundation is audited, normalized, and stunningly represented. The next frontier is **Depth**: moving from a high-fidelity index to a true **Semantic Knowledge Base** where terms are linked by meaning and historical context, not just page numbers.

@@ -63,6 +63,7 @@ function parseAppData() {
   
   // WORKSPACE INITIALIZATION (v7.1)
   initScholarWorkspace();
+  initSearchWorker();
 
   migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
@@ -1117,6 +1118,28 @@ let globalSearchCache = new Map();
 let globalSearchFuse = null;
 let globalSearchFuseSignature = '';
 let globalSearchFuseDisabled = false;
+let globalSearchWorker = null;
+let globalSearchWorkerReady = false;
+
+function initSearchWorker() {
+  if (typeof Worker === 'undefined') return;
+  try {
+    globalSearchWorker = new Worker('./scripts/search-worker.js');
+    globalSearchWorker.onmessage = (e) => {
+      if (e.data.type === 'ready') {
+        globalSearchWorkerReady = true;
+        console.log('[SearchWorker] Ready');
+      }
+      if (e.data.type === 'results') {
+        handleWorkerSearchResults(e.data.results, e.data.query);
+      }
+    };
+    const records = buildGlobalSearchFuseRecords();
+    globalSearchWorker.postMessage({ type: 'init', data: records });
+  } catch(e) {
+    console.error('[SearchWorker] Init failed', e);
+  }
+}
 const AGGREGATE_CACHE_MAX = 80;
 let aggregateCache = new Map();
 let nameGraphWorker = null;
@@ -3273,7 +3296,10 @@ function highlightSearchMatch(text, query) {
   return out;
 }
 
-function getGlobalSearchMatchesLegacy(query) {
+function handleWorkerSearchResults(results, query) {
+  // If sync results are already displayed, we can supplement or refine them
+  // For now, we'll use this to keep the index "hot" in the background
+}
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
   const qNorm = normalizeSearchText(q);
   if (q.length < 2) return [];
@@ -3594,6 +3620,12 @@ function ensureGlobalSearchFuse() {
 
 function getGlobalSearchMatchesFuzzy(queryNorm) {
   if (!queryNorm || queryNorm.length < 2) return [];
+  
+  // Use worker if ready for deep search
+  if (globalSearchWorkerReady) {
+    globalSearchWorker.postMessage({ type: 'search', query: queryNorm, options: { limit: GLOBAL_SEARCH_FUSE_LIMIT } });
+  }
+
   if (!ensureGlobalSearchFuse()) return [];
   const rows = globalSearchFuse.search(queryNorm, { limit: GLOBAL_SEARCH_FUSE_LIMIT });
   if (!rows.length) return [];
