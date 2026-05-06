@@ -214,11 +214,14 @@ function injectSemanticStyles() {
 }
 
 let scholarPins = new Set();
+let dossierMetadata = { title: '', description: '' };
 
 function initScholarWorkspace() {
   try {
     const saved = localStorage.getItem('Zalizniakiada.pins_v7');
     if (saved) scholarPins = new Set(JSON.parse(saved));
+    const savedMeta = localStorage.getItem('Zalizniakiada.dossier_meta_v9');
+    if (savedMeta) dossierMetadata = JSON.parse(savedMeta);
   } catch(e) {}
   
   if (typeof document === 'undefined') return;
@@ -229,6 +232,14 @@ function initScholarWorkspace() {
     <div class="workspace-header">
       <h3 style="margin:0; font-size:1.1rem; color:#80deea;">Портфель исследователя</h3>
       <button class="viz-btn" onclick="toggleWorkspace(false)">Закрыть</button>
+    </div>
+    <div style="padding:1rem; border-bottom:1px solid rgba(255,255,255,0.1);">
+      <input type="text" id="dossier-title" placeholder="Название досье..." 
+             style="width:100%; background:transparent; border:none; border-bottom:1px solid #444; color:#fff; font-weight:700; font-size:1rem; margin-bottom:0.5rem;"
+             oninput="updateDossierMetadata()">
+      <textarea id="dossier-desc" placeholder="Описание или цель исследования..." 
+                style="width:100%; height:60px; background:transparent; border:none; color:#888; font-size:0.85rem; resize:none;"
+                oninput="updateDossierMetadata()"></textarea>
     </div>
     <div class="workspace-content" id="workspace-pins-list"></div>
     <div class="workspace-footer" style="padding:1rem; border-top:1px solid rgba(255,255,255,0.1);">
@@ -264,6 +275,10 @@ function initScholarWorkspace() {
       if (selectedItem && rightPaneMode === 'card') {
         closeItemDetails();
       }
+    }
+    if (open) {
+      updateWorkspaceUI();
+      syncDossierUI();
     }
   }, false);
   updateWorkspaceUI();
@@ -353,6 +368,20 @@ function seekVideo(seconds) {
       iframe.src = src.toString();
     }
   }
+}
+
+function updateDossierMetadata() {
+  const title = document.getElementById('dossier-title').value;
+  const desc = document.getElementById('dossier-desc').value;
+  dossierMetadata = { title, description: desc };
+  localStorage.setItem('Zalizniakiada.dossier_meta_v9', JSON.stringify(dossierMetadata));
+}
+
+function syncDossierUI() {
+  const t = document.getElementById('dossier-title');
+  const d = document.getElementById('dossier-desc');
+  if (t) t.value = dossierMetadata.title || '';
+  if (d) d.value = dossierMetadata.description || '';
 }
 
 function toggleWorkspace(open) {
@@ -4445,6 +4474,43 @@ function itemToMarkdown(it, type) {
     lines.push('');
   }
   return yaml + lines.join('\n');
+}
+
+function exportWorkspaceCollection() {
+  if (!scholarPins || scholarPins.size === 0) {
+    alert('Портфель пуст. Добавьте элементы (📌) для экспорта.');
+    return;
+  }
+  
+  let md = `# Досье: ${dossierMetadata.title || 'Без названия'}\n\n`;
+  if (dossierMetadata.description) {
+    md += `> ${dossierMetadata.description}\n\n---\n\n`;
+  }
+  
+  md += `## Состав коллекции (${scholarPins.size} элементов)\n\n`;
+  
+  const sorted = Array.from(scholarPins).sort();
+  sorted.forEach(pinKey => {
+    const [type, head] = pinKey.split(':');
+    const it = findItemByHeadAndType(head, type);
+    if (!it) return;
+    
+    md += `### ${head} (${LABELS[type] || type})\n`;
+    const note = getCardNote(`${type}::${head}`);
+    if (note) {
+      md += `**Заметки исследователя:**\n${note}\n\n`;
+    }
+    md += `*   Упоминается на страницах: ${it.page_list ? it.page_list.join(', ') : '?'}\n`;
+    md += `*   [Ссылка в приложении](https://gasyoun.github.io/BookIndex/#${buildItemHash(type, head)})\n\n`;
+  });
+  
+  const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Dossier_${(dossierMetadata.title || 'Collection').replace(/\s+/g, '_')}.md`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 100);
 }
 
 function exportCurrentCardMarkdown() {
