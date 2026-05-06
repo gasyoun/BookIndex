@@ -3472,7 +3472,7 @@ function buildGlobalSearchFuseRecords() {
     const searchHead = normalizeSearchText(term);
     if (!searchHead) continue;
     records.push({
-      kind: '\u0442\u0435\u0440\u043c\u0438\u043d',
+      kind: '\u0442\u0435\u0440\u043d\u0438\u043d',
       type: 'glossary',
       head: term,
       meta: '\u0433\u043b\u043e\u0441\u0441\u0430\u0440\u0438\u0439',
@@ -3575,6 +3575,26 @@ function getGlobalSearchMatchesFuzzy(queryNorm) {
       score,
     }));
   }
+  
+  // VIDEO HITS v8.3
+  (APP_DATA.video_catalog || []).forEach(v => {
+    const titleLower = v.title.toLowerCase();
+    if (titleLower.includes(queryNorm)) {
+      out.push({ head: v.title, kind: 'Видео', videoId: v.id, score: 0.5 });
+    }
+    (v.timecodes || []).forEach(tc => {
+      if (tc.label.toLowerCase().includes(queryNorm)) {
+        out.push({ 
+          head: v.title, 
+          kind: 'Видео (момент)', 
+          meta: tc.label, 
+          videoId: v.id, 
+          time: tc.time,
+          score: 0.6 
+        });
+      }
+    });
+  });
   out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
   return out.slice(0, 40);
 }
@@ -3667,6 +3687,12 @@ function setGlobalSearchActiveItem(box, idx, scrollIntoView = true) {
 
 function openGlobalSearchMatch(match) {
   if (!match) return;
+  if (match.videoId) {
+    openVideoPlayer(match.videoId);
+    if (match.time) seekVideo(match.time);
+    closeGlobalSearch();
+    return;
+  }
   if (match.type === 'lecture') openLecturePage(match.lectureIndex || 0);
   else if (match.type === 'glossary') openGlossaryTerm(match.head || '');
   else if (match.type === 'route' && match.routeHash) {
