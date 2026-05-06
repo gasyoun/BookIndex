@@ -1101,6 +1101,7 @@ const VIZ_SCRIPT_BY_MODULE = Object.freeze({
   viz07: './scripts/viz/term-bump-chart.js',
   viz08: './scripts/viz/corpus-timeline.js',
   viz09: './scripts/viz/viz-semantic-graph.js',
+  viz10: './scripts/viz/comparative-timeline.js',
 });
 const VIZ_RENDERER_BY_MODULE = Object.freeze({
   viz01: 'renderMapTimeline',
@@ -1112,6 +1113,7 @@ const VIZ_RENDERER_BY_MODULE = Object.freeze({
   viz07: 'renderTermBumpChart',
   viz08: 'renderCorpusTimeline',
   viz09: 'renderSemanticGraph',
+  viz10: 'renderComparativeTimeline',
 });
 const CYRILLIC_TO_LATIN_MAP = Object.freeze({
   '\u0430': 'a',    // а
@@ -10555,6 +10557,7 @@ function getVizModuleCatalog() {
     { id: 'viz05', title: 'VIZ-05 · Sankey «Слово»', renderKey: 'renderNarrativeSankey', render: registry.renderNarrativeSankey },
     { id: 'viz08', title: 'VIZ-08 · Хронология лекций', renderKey: 'renderCorpusTimeline', render: registry.renderCorpusTimeline },
     { id: 'viz09', title: 'VIZ-09 · Семантическая сеть', renderKey: 'renderSemanticGraph', render: registry.renderSemanticGraph },
+    { id: 'viz10', title: 'VIZ-10 · Сравнительная хронология', renderKey: 'renderComparativeTimeline', render: registry.renderComparativeTimeline },
   ];
 }
 
