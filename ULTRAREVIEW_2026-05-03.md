@@ -267,7 +267,7 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 
 ## 7. Next Phase: v6.0 - Semantic Connectivity & Predictive Search
 
-1. [ ] **v6.1: Thematic Proximity Engine** - Automated cross-linking based on co-occurrence in source text.
+1. [DONE] **v6.1: Thematic Proximity Engine** - Automated cross-linking based on page co-occurrence.
 2. [ ] **v6.2: Predictive Search** - Intelligent suggestions based on semantic relationship between terms.
 3. [ ] **v6.3: Advanced Graph** - High-performance semantic network of linguistic concepts.
 4. [ ] **v6.4: Interactive Phonetic Laws** - Live demonstration of phonetic transitions.

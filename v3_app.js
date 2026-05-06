@@ -100,6 +100,14 @@ function injectSemanticStyles() {
       font-size: 0.7rem; vertical-align: super; background: #26a69a; 
       color: #fff; padding: 0.1rem 0.3rem; border-radius: 4px; margin-left: 0.5rem;
     }
+    .header-search-predictive { border-top: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; background: rgba(0,0,0,0.2); }
+    .predictive-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.05rem; margin-bottom: 0.5rem; }
+    .predictive-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .predictive-tag { 
+      font-size: 0.85rem; color: #80deea; background: rgba(128, 222, 234, 0.1); 
+      padding: 0.2rem 0.6rem; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+    }
+    .predictive-tag:hover { background: rgba(128, 222, 234, 0.2); transform: scale(1.05); }
   `;
   document.head.appendChild(style);
 }
@@ -3528,6 +3536,32 @@ function renderGlobalSearchResults(matches, query = '') {
       openGlobalSearchMatch(m);
     };
   });
+
+  // PREDICTIVE SUGGESTIONS (v6.2)
+  if (matches.length > 0) {
+    const topMatch = matches[0];
+    const related = APP_DATA.semantic_links ? APP_DATA.semantic_links[topMatch.head] : null;
+    if (related && related.length > 0) {
+      const suggestDiv = document.createElement('div');
+      suggestDiv.className = 'header-search-predictive';
+      suggestDiv.innerHTML = `<div class="predictive-label">Связанные темы:</div><div class="predictive-tags"></div>`;
+      const tagsContainer = suggestDiv.querySelector('.predictive-tags');
+      related.slice(0, 4).forEach(rel => {
+        const tag = document.createElement('span');
+        tag.className = 'predictive-tag';
+        tag.textContent = rel.head;
+        tag.onclick = (e) => {
+          e.stopPropagation();
+          const relType = findEntityTypeByHead(rel.head) || 'lexicon';
+          const hash = buildItemHash(relType, rel.head);
+          navigateToHash(hash);
+          closeGlobalSearchResults();
+        };
+        tagsContainer.appendChild(tag);
+      });
+      box.appendChild(suggestDiv);
+    }
+  }
 }
 
 function shouldIgnoreGlobalHotkeys(e) {
