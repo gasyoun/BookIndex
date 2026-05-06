@@ -282,6 +282,14 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 
 ---
 
-## 9. Bottom Line
+## 9. Multimedia Future: v8.0 - Multimedia Integration
+
+1. [DONE] **v8.1: Video Archive Foundation** - Cataloging videos with timecodes and entity links.
+2. [ ] **v8.2: Embedded Multimedia Player** - Native player with timecode jumping.
+3. [ ] **v8.3: Global Multimedia Search** - Search results from books and video transcripts.
+
+---
+
+## 10. Bottom Line
 
 The project has achieved **Visual Excellence**. The foundation is audited, normalized, and stunningly represented. The next frontier is **Depth**: moving from a high-fidelity index to a true **Semantic Knowledge Base** where terms are linked by meaning and historical context, not just page numbers.

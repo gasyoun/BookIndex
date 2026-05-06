@@ -165,6 +165,22 @@ function injectSemanticStyles() {
     .video-meta { font-size: 0.8rem; color: #888; display: flex; justify-content: space-between; }
     .card-video-section { margin-top: 1.5rem; padding: 1rem; background: rgba(128, 222, 234, 0.05); border-radius: 8px; border: 1px dashed rgba(128, 222, 234, 0.3); }
     .video-timecode-row { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+    
+    /* VIDEO PLAYER MODAL v8.2 */
+    #video-player-modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; justify-content: center;
+    }
+    .video-modal-content { 
+      width: 90%; max-width: 1200px; height: 80vh; background: #1a1a1a; 
+      display: grid; grid-template-columns: 1fr 300px; border-radius: 12px; overflow: hidden;
+    }
+    .video-modal-main { background: #000; display: flex; align-items: center; justify-content: center; position: relative; }
+    .video-modal-sidebar { background: #222; border-left: 1px solid #333; display: flex; flex-direction: column; }
+    .video-modal-tc-item { padding: 0.75rem; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; }
+    .video-modal-tc-item:hover { background: rgba(128, 222, 234, 0.1); }
+    .video-modal-tc-active { background: rgba(128, 222, 234, 0.2); border-left: 3px solid #80deea; }
+    .video-modal-close { position: absolute; top: -40px; right: 0; color: #fff; background: none; border: none; font-size: 2rem; cursor: pointer; }
   `;
   document.head.appendChild(style);
 }
@@ -201,6 +217,82 @@ function initScholarWorkspace() {
   document.body.appendChild(toggle);
   
   updateWorkspaceUI();
+
+  // VIDEO MODAL INIT (v8.2)
+  const modal = document.createElement('div');
+  modal.id = 'video-player-modal';
+  modal.innerHTML = `
+    <div style="position:relative; width:90%; max-width:1200px;">
+      <button class="video-modal-close" onclick="closeVideoPlayer()">✕</button>
+      <div class="video-modal-content">
+        <div class="video-modal-main" id="yt-player-container"></div>
+        <div class="video-modal-sidebar">
+          <div style="padding:1rem; border-bottom:1px solid #333; font-weight:700; color:#80deea;">Таймкоды</div>
+          <div id="video-modal-tc-list" style="flex:1; overflow-y:auto;"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+let ytPlayer = null;
+
+function openVideoPlayer(videoId) {
+  const v = (APP_DATA.video_catalog || []).find(x => x.id === videoId);
+  if (!v) return;
+  
+  const modal = document.getElementById('video-player-modal');
+  modal.style.display = 'flex';
+  
+  // Extract YouTube ID
+  const ytId = v.url.split('v=')[1];
+  
+  const tcList = document.getElementById('video-modal-tc-list');
+  tcList.innerHTML = v.timecodes.map(tc => {
+    const minutes = Math.floor(tc.time / 60);
+    const seconds = String(tc.time % 60).padStart(2, '0');
+    return `<div class="video-modal-tc-item" onclick="seekVideo(${tc.time})">
+      <div style="font-weight:700; color:#80deea;">${minutes}:${seconds}</div>
+      <div style="font-size:0.85rem; color:#ccc;">${escapeHtml(tc.label)}</div>
+    </div>`;
+  }).join('');
+
+  if (typeof YT !== 'undefined' && YT.Player) {
+    if (ytPlayer) {
+      ytPlayer.loadVideoById(ytId);
+    } else {
+      ytPlayer = new YT.Player('yt-player-container', {
+        height: '100%',
+        width: '100%',
+        videoId: ytId,
+        playerVars: { 'autoplay': 1, 'modestbranding': 1 }
+      });
+    }
+  } else {
+    // Fallback if API not loaded
+    document.getElementById('yt-player-container').innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${ytId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+  }
+}
+
+function closeVideoPlayer() {
+  document.getElementById('video-player-modal').style.display = 'none';
+  if (ytPlayer && ytPlayer.stopVideo) ytPlayer.stopVideo();
+  else document.getElementById('yt-player-container').innerHTML = '';
+}
+
+function seekVideo(seconds) {
+  if (ytPlayer && ytPlayer.seekTo) {
+    ytPlayer.seekTo(seconds, true);
+  } else {
+    // Fallback for iframe: re-render with start param
+    const iframe = document.querySelector('#yt-player-container iframe');
+    if (iframe) {
+      const src = new URL(iframe.src);
+      src.searchParams.set('start', seconds);
+      iframe.src = src.toString();
+    }
+  }
 }
 
 function toggleWorkspace(open) {
@@ -6720,7 +6812,7 @@ function renderCardInRight() {
             <strong>${escapeHtml(hit.video.title)}</strong><br>
             <span style="font-size:0.8rem; color:#888;">${escapeHtml(hit.timecode.label)}</span>
           </span>
-          <a href="${hit.video.url}&t=${hit.timecode.time}" target="_blank" class="viz-btn" style="text-decoration:none;">смотреть ${timeStr}</a>
+          <button onclick="openVideoPlayer('${hit.video.id}'); seekVideo(${hit.timecode.time});" class="viz-btn" style="text-decoration:none;">смотреть ${timeStr}</button>
         </div>`;
     });
     html += `</div>`;
@@ -10513,7 +10605,7 @@ function renderVideoArchivePanel(container) {
   videos.forEach(v => {
     const date = new Date(v.date).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' });
     html += `
-      <div class="video-card" onclick="window.open('${v.url}', '_blank')">
+      <div class="video-card" onclick="openVideoPlayer('${v.id}')">
         <div class="video-thumb"></div>
         <div class="video-info">
           <div class="video-title">${escapeHtml(v.title)}</div>
