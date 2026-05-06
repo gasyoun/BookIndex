@@ -153,6 +153,11 @@ function injectSemanticStyles() {
       transition: transform 0.2s;
     }
     .workspace-toggle:hover { transform: scale(1.1) rotate(5deg); }
+    
+    /* SEMANTIC SEARCH v7.3 */
+    .header-search-item.is-semantic { border-left: 3px solid #b388ff; background: rgba(179, 136, 255, 0.05); }
+    .header-search-item.is-semantic:hover { background: rgba(179, 136, 255, 0.1); }
+    .header-search-item.is-semantic .header-search-kind { color: #b388ff; }
   `;
   document.head.appendChild(style);
 }
@@ -3482,9 +3487,32 @@ function getGlobalSearchMatches(query) {
   const searchKey = `${getDataSignature()}::${scope}::${qNorm}`;
   const cached = globalSearchCache.get(searchKey);
   if (cached) return cached;
-  let matches = [];
   try {
     matches = getGlobalSearchMatchesFuzzy(qNorm);
+    
+    // SEMANTIC EXPANSION v7.3
+    if (matches.length > 0 && matches.length < 10) {
+      const topMatch = matches[0];
+      const related = APP_DATA.semantic_links ? APP_DATA.semantic_links[topMatch.head] : null;
+      if (related && related.length > 0) {
+        related.slice(0, 5).forEach(rel => {
+          if (!matches.some(m => m.head === rel.head)) {
+            const relType = findEntityTypeByHead(rel.head) || 'lexicon';
+            matches.push(enrichGlobalSearchRecord({
+              kind: 'тема',
+              type: relType,
+              head: rel.head,
+              meta: `релевантность ${Math.round(rel.score * 100)}%`,
+              lectureIndex: null,
+              snippet: `Связанная тема для "${topMatch.head}"`,
+              routeHash: buildItemHash(relType, rel.head),
+              score: 0.9 + (1 - rel.score), // Higher score (lower relevance in Fuse terms)
+              isSemanticExpansion: true
+            }));
+          }
+        });
+      }
+    }
   } catch (e) {
     matches = [];
   }
@@ -3564,37 +3592,33 @@ function openGlobalSearchMatch(match) {
 
 function appendGlobalSearchResult(box, match, idx, query) {
   if (!box || !match) return;
+  const isSemantic = !!match.isSemanticExpansion;
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
   const row = document.createElement('div');
-  row.className = 'header-search-item';
+  row.className = `header-search-item${isSemantic ? ' is-semantic' : ''}`;
   row.dataset.idx = String(idx);
-  safeSetAttr(row, 'role', 'option');
-  safeSetAttr(row, 'aria-selected', 'false');
-
-  const head = document.createElement('span');
-  head.innerHTML = highlightSearchMatch(match.head, q);
-  const kind = document.createElement('span');
-  kind.className = 'kind';
-  kind.textContent = String(match.kind || '');
-  row.appendChild(head);
-  row.appendChild(kind);
-
+  row.setAttribute('role', 'option');
+  row.setAttribute('aria-selected', 'false');
+  
+  const kindLabel = isSemantic ? 'Связанная тема' : (match.kind || 'результат');
+  const headHtml = highlightSearchMatch(match.head || '', q);
+  
   const metaParts = [];
   const bookLabel = getBookLabelForSearch(match.bookId);
   if (bookLabel) metaParts.push(bookLabel);
   if (match.meta) metaParts.push(String(match.meta || ''));
-  if (metaParts.length) {
-    const meta = document.createElement('div');
-    meta.className = 'search-meta';
-    meta.textContent = metaParts.join(' · ');
-    row.appendChild(meta);
-  }
-  if (match.snippet) {
-    const snippet = document.createElement('div');
-    snippet.className = 'search-snippet';
-    snippet.innerHTML = highlightSearchMatch(match.snippet, q);
-    row.appendChild(snippet);
-  }
+  const metaHtml = metaParts.length ? `<span class="header-search-meta">${escapeHtml(metaParts.join(' · '))}</span>` : '';
+  
+  const snippetHtml = match.snippet ? highlightSearchMatch(match.snippet, q) : '';
+  
+  row.innerHTML = `
+    <div class="header-search-line">
+      <span class="header-search-kind">${escapeHtml(kindLabel)}</span>
+      <span class="header-search-head">${headHtml}</span>
+      ${metaHtml}
+    </div>
+    ${snippetHtml ? `<div class="header-search-snippet">${snippetHtml}</div>` : ''}
+  `;
   box.appendChild(row);
 }
 

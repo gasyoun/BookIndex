@@ -277,7 +277,7 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 ## 8. Final Frontier: v7.0 - Scholarly Synthesis & AI Insights
 
 1. [DONE] **v7.1: Scholar's Workspace** - Persistent collections and pinning for research projects.
-2. [ ] **v7.2: Comparative Timelines** - Overlaying linguistic shifts with historical world events.
+2. [DONE] **v7.2: Comparative Timelines** - Overlaying linguistic shifts with historical world events.
 3. [ ] **v7.3: Semantic Search v2** - Advanced natural language query handling across the corpus.
 
 ---
