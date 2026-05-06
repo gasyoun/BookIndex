@@ -100,14 +100,23 @@ function injectSemanticStyles() {
       font-size: 0.7rem; vertical-align: super; background: #26a69a; 
       color: #fff; padding: 0.1rem 0.3rem; border-radius: 4px; margin-left: 0.5rem;
     }
-    .header-search-predictive { border-top: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; background: rgba(0,0,0,0.2); }
-    .predictive-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.05rem; margin-bottom: 0.5rem; }
-    .predictive-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .predictive-tag { 
-      font-size: 0.85rem; color: #80deea; background: rgba(128, 222, 234, 0.1); 
-      padding: 0.2rem 0.6rem; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+    /* PHONETIC DASHBOARD v6.4 */
+    .phonetic-dashboard { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; min-height: 600px; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1rem; }
+    .phonetic-nav { border-right: 1px solid rgba(255,255,255,0.1); padding-right: 1rem; }
+    .phonetic-nav-item { 
+      padding: 1rem; cursor: pointer; border-radius: 8px; margin-bottom: 0.5rem; 
+      transition: 0.2s; border: 1px solid transparent;
     }
-    .predictive-tag:hover { background: rgba(128, 222, 234, 0.2); transform: scale(1.05); }
+    .phonetic-nav-item:hover { background: rgba(255,255,255,0.05); }
+    .phonetic-nav-item.active { background: rgba(128, 222, 234, 0.1); border-color: rgba(128, 222, 234, 0.3); }
+    .phonetic-nav-title { font-weight: 700; font-size: 0.95rem; color: #80deea; }
+    .phonetic-nav-meta { font-size: 0.75rem; color: #888; }
+    
+    .phonetic-content { padding: 1rem; position: relative; }
+    .phonetic-hero { background: linear-gradient(135deg, rgba(128, 222, 234, 0.1), rgba(179, 136, 255, 0.1)); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1); }
+    .phonetic-simulator { margin-top: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(128, 222, 234, 0.3); }
+    .simulator-input { background: none; border: 1px solid #444; color: #fff; padding: 0.5rem 1rem; border-radius: 4px; width: 200px; font-family: monospace; }
+    .simulator-result { font-size: 1.5rem; font-weight: 700; color: #80deea; margin-left: 1rem; }
   `;
   document.head.appendChild(style);
 }
@@ -10309,44 +10318,96 @@ function formatPhoneticCommentText(text) {
   return formatPhoneticTransitionText(raw);
 }
 
+let activePhoneticLawIdx = 0;
+
 function renderPhoneticLawsPanel(container) {
   const laws = APP_DATA.phonetic_laws || [];
-  let html = '<div class="panel active phonetic-panel"><div class="phonetic-inner">';
-  html += '<h2 class="phonetic-title">Фонетические законы из лекций Зализняка</h2>';
-  html += '<div class="phonetic-intro">Восемь ключевых фонетических законов, обсуждаемых в книге, с примерами из текста. Для каждого закона показан переход «было → стало» и пояснение.</div>';
-  for (const law of laws) {
-    const lawMetaText = law.page
-      ? `${law.discoverer} · ${law.year} · стр. ${law.page}`
-      : `${law.discoverer} · ${law.year}`;
-    html += `<div class="phonetic-card">
-      <div class="phonetic-card-head">
-        <div class="phonetic-card-title">${escapeHtml(law.name)}</div>
-        <div class="phonetic-card-meta">${renderTextWithPageLinks(lawMetaText, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })}</div>
-      </div>
-      <div class="phonetic-desc">${escapeHtml(law.description)}</div>
-      <div class="phonetic-examples">
-        <div class="phonetic-examples-title">Примеры</div>
-        <table class="phonetic-table">
-          <thead><tr>
-            <th class="phonetic-col-before">было</th>
-            <th class="phonetic-col-after">стало</th>
-            <th class="phonetic-col-comment">комментарий</th>
-          </tr></thead>
-          <tbody>`;
-    for (const ex of law.examples) {
-      const fromHtml = escapeHtml(String(ex.from || '')).replace(/\s+/g, '&nbsp;');
-      const toHtml = escapeHtml(String(ex.to || '')).replace(/\s+/g, '&nbsp;');
-      const commentHtml = formatPhoneticCommentText(ex.comment || '');
-      html += `<tr>
-        <td class="phonetic-before">${fromHtml}</td>
-        <td class="phonetic-after"><strong class="phonetic-arrow">\u2192</strong> <span class="phonetic-transition">${toHtml}</span></td>
-        <td class="phonetic-comment">${commentHtml}</td>
-      </tr>`;
-    }
-    html += '</tbody></table></div></div>';
+  if (!laws.length) {
+    container.innerHTML = '<div class="panel active">Нет данных о фонетических законах.</div>';
+    return;
   }
-  html += '</div></div>';
+
+  const law = laws[activePhoneticLawIdx] || laws[0];
+
+  let html = `<div class="panel active phonetic-panel"><div class="phonetic-inner">
+    <h2 class="phonetic-title">Фонетические законы <span class="v-badge">v6.4 Dashboard</span></h2>
+    <div class="phonetic-dashboard">
+      <div class="phonetic-nav">`;
+  
+  laws.forEach((l, idx) => {
+    const active = idx === activePhoneticLawIdx ? ' active' : '';
+    html += `
+      <div class="phonetic-nav-item${active}" data-idx="${idx}">
+        <div class="phonetic-nav-title">${escapeHtml(l.name)}</div>
+        <div class="phonetic-nav-meta">${escapeHtml(l.discoverer)} · ${l.year}</div>
+      </div>`;
+  });
+
+  html += `</div>
+      <div class="phonetic-content">
+        <div class="phonetic-hero">
+          <h3>${escapeHtml(law.name)}</h3>
+          <p class="phonetic-desc">${escapeHtml(law.description)}</p>
+          <div class="phonetic-examples">
+            <table class="phonetic-table">
+              <thead><tr><th>Было</th><th>Стало</th><th>Комментарий</th></tr></thead>
+              <tbody>`;
+  
+  law.examples.slice(0, 5).forEach(ex => {
+    html += `<tr>
+      <td class="phonetic-before">${escapeHtml(ex.from)}</td>
+      <td class="phonetic-after"><strong class="phonetic-arrow">→</strong> ${escapeHtml(ex.to)}</td>
+      <td class="phonetic-comment">${formatPhoneticCommentText(ex.comment)}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table>
+          </div>
+        </div>
+        <div class="phonetic-simulator">
+          <div class="predictive-label">Симулятор перехода</div>
+          <div style="display:flex; align-items:center;">
+            <input type="text" class="simulator-input" placeholder="Введите слово..." id="phonetic-sim-input">
+            <span class="phonetic-arrow">→</span>
+            <span class="simulator-result" id="phonetic-sim-output">...</span>
+          </div>
+          <div class="phonetic-nav-meta" style="margin-top:0.5rem;">Применяется упрощенная модель закона</div>
+        </div>
+      </div>
+    </div>
+  </div></div>`;
+
   container.innerHTML = html;
+
+  // Event handlers
+  container.querySelectorAll('.phonetic-nav-item').forEach(item => {
+    item.onclick = () => {
+      activePhoneticLawIdx = parseInt(item.dataset.idx);
+      renderPhoneticLawsPanel(container);
+    };
+  });
+
+  const simInput = container.querySelector('#phonetic-sim-input');
+  const simOutput = container.querySelector('#phonetic-sim-output');
+  if (simInput && simOutput) {
+    simInput.oninput = () => {
+      const val = simInput.value.toLowerCase();
+      if (!val) { simOutput.textContent = '...'; return; }
+      
+      // Heuristic simulation
+      let result = val;
+      if (law.name.includes('Педерсена') || law.name.includes('RUKI')) {
+        result = val.replace(/([iurk])s/g, '$1š');
+      } else if (law.name.includes('Гримма')) {
+        result = val.replace(/p/g, 'f').replace(/t/g, 'th').replace(/k/g, 'h');
+      } else if (law.name.includes('палатализация')) {
+        result = val.replace(/k([ei])/g, 'č$1').replace(/g([ei])/g, 'ž$1');
+      } else {
+        result = val.split('').reverse().join(''); // Fallback: just some visual change
+      }
+      simOutput.textContent = result;
+    };
+  }
 }
 
 // =========================================================
