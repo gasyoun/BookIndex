@@ -6,9 +6,9 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 
 - Source: `app_data.json`
 - Targets: 25 / 25
-- v4.7 estimate: ~58.1%
-- Context coverage: 18.9% direct / 25.6% effective
-- Missing context queue: 2516
+- v4.7 estimate: ~59.3%
+- Context coverage: 19.2% direct / 26.1% effective
+- Missing context queue: 2497
 
 ## How To Use
 
@@ -19,87 +19,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 
 ## Targets
 
-### 1. öLsz̲
-
-- Status: `needs_source_context`
-- Entity: `lexicon`
-- Canonical ID: `lexicon-f7a181c9-7a7c-5b56-ac5c-b9897ee96ca3`
-- JSON pointer: `/lexicon/141`
-- Contexts pointer: `/lexicon/141/contexts`
-- Route: `#v4/lexicon/list/item/lexicon/%C3%B6Lsz%CC%B2`
-- Pages: 9, 230
-- Pages to check first: 9, 230
-- Priority: high 112
-- Reason: v4.7 top priority: lexicon context expansion.
-- Context keys template: `9, 230`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 2. Вакернагеля закон (механизм), вакернагелевский принцип
-
-- Status: `needs_source_context`
-- Entity: `subject_index`
-- Canonical ID: `subject_index-350fbbd5-6132-511f-9dff-fcebbf022ebb`
-- JSON pointer: `/subject_index/15`
-- Contexts pointer: `/subject_index/15/contexts`
-- Route: `#v4/subject/list/item/subject/%D0%92%D0%B0%D0%BA%D0%B5%D1%80%D0%BD%D0%B0%D0%B3%D0%B5%D0%BB%D1%8F%20%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%20%28%D0%BC%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%B7%D0%BC%29%2C%20%D0%B2%D0%B0%D0%BA%D0%B5%D1%80%D0%BD%D0%B0%D0%B3%D0%B5%D0%BB%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BF%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF`
-- Pages: 17 pages; first: 20, 21, 22, 23, 24
-- Pages to check first: 20, 21, 22, 23, 24, 25, 26, 29, 30, 31 (+7 more)
-- Priority: high 112
-- Reason: v4.7 top priority: subject_index context expansion.
-- Context keys template: `20, 21, 22, 23, 24, 25, 26, 29, 30, 31`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 3. за
-
-- Status: `needs_source_context`
-- Entity: `lexicon`
-- Canonical ID: `lexicon-9c54468c-6c2d-5ee0-babc-9f2cf5619125`
-- JSON pointer: `/lexicon/618`
-- Contexts pointer: `/lexicon/618/contexts`
-- Route: `#v4/lexicon/list/item/lexicon/%D0%B7%D0%B0`
-- Pages: 17, 348, 351, 353, 372
-- Pages to check first: 17, 348, 351, 353, 372
-- Priority: high 110
-- Reason: v4.7 top priority: lexicon context expansion.
-- Context keys template: `17, 348, 351, 353, 372`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 4. dĳtu
-
-- Status: `needs_source_context`
-- Entity: `lexicon`
-- Canonical ID: `lexicon-2b2a7a18-1e1c-5b4d-928a-cb8c3ad8458f`
-- JSON pointer: `/lexicon/45`
-- Contexts pointer: `/lexicon/45/contexts`
-- Route: `#v4/lexicon/list/item/lexicon/d%C4%B3tu`
-- Pages: 69, 71, 75
-- Pages to check first: 69, 71, 75
-- Priority: high 108
-- Reason: v4.7 top priority: lexicon context expansion.
-- Context keys template: `69, 71, 75`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 5. вѣрѣ
-
-- Status: `needs_source_context`
-- Entity: `lexicon`
-- Canonical ID: `lexicon-a7e4d5a8-51b8-56f6-9254-06fa1ddb2166`
-- JSON pointer: `/lexicon/458`
-- Contexts pointer: `/lexicon/458/contexts`
-- Route: `#v4/lexicon/list/item/lexicon/%D0%B2%D1%A3%D1%80%D1%A3`
-- Pages: 297, 301, 304
-- Pages to check first: 297, 301, 304
-- Priority: high 108
-- Reason: v4.7 top priority: lexicon context expansion.
-- Context keys template: `297, 301, 304`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 6. nyn
+### 1. nyn
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -115,7 +35,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 7. Oj
+### 2. Oj
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -131,7 +51,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 8. P
+### 3. P
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -147,7 +67,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 9. Tf
+### 4. Tf
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -163,87 +83,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 10. милостивый
-
-- Status: `needs_source_context`
-- Entity: `lexicon`
-- Canonical ID: `lexicon-54c5d400-6f6c-5d4a-8dc2-44ca002abf82`
-- JSON pointer: `/lexicon/854`
-- Contexts pointer: `/lexicon/854/contexts`
-- Route: `#v4/lexicon/list/item/lexicon/%D0%BC%D0%B8%D0%BB%D0%BE%D1%81%D1%82%D0%B8%D0%B2%D1%8B%D0%B9`
-- Pages: 258, 259
-- Pages to check first: 258, 259
-- Priority: high 107
-- Reason: v4.7 top priority: lexicon context expansion.
-- Context keys template: `258, 259`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 11. мя
-
-- Status: `needs_source_context`
-- Entity: `lexicon`
-- Canonical ID: `lexicon-9234c21c-7a08-52e5-a4fc-8fee2d935d84`
-- JSON pointer: `/lexicon/882`
-- Contexts pointer: `/lexicon/882/contexts`
-- Route: `#v4/lexicon/list/item/lexicon/%D0%BC%D1%8F`
-- Pages: 38, 39
-- Pages to check first: 38, 39
-- Priority: high 107
-- Reason: v4.7 top priority: lexicon context expansion.
-- Context keys template: `38, 39`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 12. семъ
-
-- Status: `needs_source_context`
-- Entity: `lexicon`
-- Canonical ID: `lexicon-04555f43-e30e-532f-bcf4-78a443544bf7`
-- JSON pointer: `/lexicon/1152`
-- Contexts pointer: `/lexicon/1152/contexts`
-- Route: `#v4/lexicon/list/item/lexicon/%D1%81%D0%B5%D0%BC%D1%8A`
-- Pages: 253, 257
-- Pages to check first: 253, 257
-- Priority: high 107
-- Reason: v4.7 top priority: lexicon context expansion.
-- Context keys template: `253, 257`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 13. Стокгольм
-
-- Status: `needs_source_context`
-- Entity: `lexicon`
-- Canonical ID: `lexicon-c407f252-c346-55bc-aff3-e1ad9af0ed0b`
-- JSON pointer: `/lexicon/1186`
-- Contexts pointer: `/lexicon/1186/contexts`
-- Route: `#v4/lexicon/list/item/lexicon/%D0%A1%D1%82%D0%BE%D0%BA%D0%B3%D0%BE%D0%BB%D1%8C%D0%BC`
-- Pages: 244, 248
-- Pages to check first: 244, 248
-- Priority: high 107
-- Reason: v4.7 top priority: lexicon context expansion.
-- Context keys template: `244, 248`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 14. суоми
-
-- Status: `needs_source_context`
-- Entity: `lexicon`
-- Canonical ID: `lexicon-379b555f-2a6c-51bd-ab1d-6b9c45d8e151`
-- JSON pointer: `/lexicon/1206`
-- Contexts pointer: `/lexicon/1206/contexts`
-- Route: `#v4/lexicon/list/item/lexicon/%D1%81%D1%83%D0%BE%D0%BC%D0%B8`
-- Pages: 59, 190
-- Pages to check first: 59, 190
-- Priority: high 107
-- Reason: v4.7 top priority: lexicon context expansion.
-- Context keys template: `59, 190`
-- Context snippets: _pending source check_
-- Source notes: _pending_
-
-### 15. ти
+### 5. ти
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -259,7 +99,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 16. у́гол
+### 6. у́гол
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -275,7 +115,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 17. у́горь_(I.)
+### 7. у́горь_(I.)
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -291,7 +131,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 18. у́горь_(II.)
+### 8. у́горь_(II.)
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -307,7 +147,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 19. учи́шь
+### 9. учи́шь
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -323,7 +163,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 20. шестнадцать
+### 10. шестнадцать
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -339,7 +179,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 21. юродивый
+### 11. юродивый
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -355,7 +195,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 22. огласовка
+### 12. огласовка
 
 - Status: `needs_source_context`
 - Entity: `subject_index`
@@ -371,7 +211,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 23. письменность
+### 13. письменность
 
 - Status: `needs_source_context`
 - Entity: `subject_index`
@@ -387,7 +227,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 24. 'ada
+### 14. 'ada
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -403,7 +243,7 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Context snippets: _pending source check_
 - Source notes: _pending_
 
-### 25. ̂/öhb.
+### 15. ̂/öhb.
 
 - Status: `needs_source_context`
 - Entity: `lexicon`
@@ -416,5 +256,165 @@ Manual context-entry work pack for the highest-priority v4.7 missing_context ite
 - Priority: high 106
 - Reason: v4.7 top priority: lexicon context expansion.
 - Context keys template: `230`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 16. ̂/slm
+
+- Status: `needs_source_context`
+- Entity: `lexicon`
+- Canonical ID: `lexicon-35f4e6cc-393c-5566-8a69-9d8d670765a1`
+- JSON pointer: `/lexicon/2`
+- Contexts pointer: `/lexicon/2/contexts`
+- Route: `#v4/lexicon/list/item/lexicon/%CC%82%2Fslm`
+- Pages: 227
+- Pages to check first: 227
+- Priority: high 106
+- Reason: v4.7 top priority: lexicon context expansion.
+- Context keys template: `227`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 17. ̂/tlb
+
+- Status: `needs_source_context`
+- Entity: `lexicon`
+- Canonical ID: `lexicon-8feb354e-2f5d-5a43-aac9-625a9936db22`
+- JSON pointer: `/lexicon/3`
+- Contexts pointer: `/lexicon/3/contexts`
+- Route: `#v4/lexicon/list/item/lexicon/%CC%82%2Ftlb`
+- Pages: 231
+- Pages to check first: 231
+- Priority: high 106
+- Reason: v4.7 top priority: lexicon context expansion.
+- Context keys template: `231`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 18. ̂lld
+
+- Status: `needs_source_context`
+- Entity: `lexicon`
+- Canonical ID: `lexicon-50a8b370-3017-5459-b341-e6076a4bbaae`
+- JSON pointer: `/lexicon/107`
+- Contexts pointer: `/lexicon/107/contexts`
+- Route: `#v4/lexicon/list/item/lexicon/%CC%82lld`
+- Pages: 156
+- Pages to check first: 156
+- Priority: high 106
+- Reason: v4.7 top priority: lexicon context expansion.
+- Context keys template: `156`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 19. öahaba
+
+- Status: `needs_source_context`
+- Entity: `lexicon`
+- Canonical ID: `lexicon-babc3f68-f531-5179-bdcf-6cd505b2ff02`
+- JSON pointer: `/lexicon/136`
+- Contexts pointer: `/lexicon/136/contexts`
+- Route: `#v4/lexicon/list/item/lexicon/%C3%B6ahaba`
+- Pages: 230
+- Pages to check first: 230
+- Priority: high 106
+- Reason: v4.7 top priority: lexicon context expansion.
+- Context keys template: `230`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 20. öahabal
+
+- Status: `needs_source_context`
+- Entity: `lexicon`
+- Canonical ID: `lexicon-57350523-ccee-5fb7-a4f0-eb2e26db4bca`
+- JSON pointer: `/lexicon/137`
+- Contexts pointer: `/lexicon/137/contexts`
+- Route: `#v4/lexicon/list/item/lexicon/%C3%B6ahabal`
+- Pages: 230
+- Pages to check first: 230
+- Priority: high 106
+- Reason: v4.7 top priority: lexicon context expansion.
+- Context keys template: `230`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 21. ösem
+
+- Status: `needs_source_context`
+- Entity: `lexicon`
+- Canonical ID: `lexicon-0725310f-c164-5689-b59d-6afb6853cc9c`
+- JSON pointer: `/lexicon/142`
+- Contexts pointer: `/lexicon/142/contexts`
+- Route: `#v4/lexicon/list/item/lexicon/%C3%B6sem`
+- Pages: 255
+- Pages to check first: 255
+- Priority: high 106
+- Reason: v4.7 top priority: lexicon context expansion.
+- Context keys template: `255`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 22. ̂Ьновѣі
+
+- Status: `needs_source_context`
+- Entity: `lexicon`
+- Canonical ID: `lexicon-071d6e3b-34f2-564a-93a1-4f025128e132`
+- JSON pointer: `/lexicon/1355`
+- Contexts pointer: `/lexicon/1355/contexts`
+- Route: `#v4/lexicon/list/item/lexicon/%CC%82%D0%AC%D0%BD%D0%BE%D0%B2%D1%A3%D1%96`
+- Pages: 295
+- Pages to check first: 295
+- Priority: high 106
+- Reason: v4.7 top priority: lexicon context expansion.
+- Context keys template: `295`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 23. ударение
+
+- Status: `needs_source_context`
+- Entity: `subject_index`
+- Canonical ID: `subject_index-90fac88c-9294-5339-aa16-4876b2585d5c`
+- JSON pointer: `/subject_index/68`
+- Contexts pointer: `/subject_index/68/contexts`
+- Route: `#v4/subject/list/item/subject/%D1%83%D0%B4%D0%B0%D1%80%D0%B5%D0%BD%D0%B8%D0%B5`
+- Pages: 9 pages; first: 15, 16, 37, 68, 69
+- Pages to check first: 15, 16, 37, 68, 69, 74, 100, 338, 340
+- Priority: medium 104
+- Reason: v4.7 top priority: subject_index context expansion.
+- Context keys template: `15, 16, 37, 68, 69, 74, 100, 338, 340`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 24. беглая гласная, беглый гласный
+
+- Status: `needs_source_context`
+- Entity: `subject_index`
+- Canonical ID: `subject_index-6298284a-ad8f-57bc-88c4-f3d6e1763f23`
+- JSON pointer: `/subject_index/9`
+- Contexts pointer: `/subject_index/9/contexts`
+- Route: `#v4/subject/list/item/subject/%D0%B1%D0%B5%D0%B3%D0%BB%D0%B0%D1%8F%20%D0%B3%D0%BB%D0%B0%D1%81%D0%BD%D0%B0%D1%8F%2C%20%D0%B1%D0%B5%D0%B3%D0%BB%D1%8B%D0%B9%20%D0%B3%D0%BB%D0%B0%D1%81%D0%BD%D1%8B%D0%B9`
+- Pages: 8 pages; first: 103, 104, 341, 377, 378
+- Pages to check first: 103, 104, 341, 377, 378, 379, 380, 381
+- Priority: medium 103
+- Reason: v4.7 top priority: subject_index context expansion.
+- Context keys template: `103, 104, 341, 377, 378, 379, 380, 381`
+- Context snippets: _pending source check_
+- Source notes: _pending_
+
+### 25. бытовая (живая, устная, разговорная) речь
+
+- Status: `needs_source_context`
+- Entity: `subject_index`
+- Canonical ID: `subject_index-933591b2-5c80-5c33-ad77-915a76436a9b`
+- JSON pointer: `/subject_index/13`
+- Contexts pointer: `/subject_index/13/contexts`
+- Route: `#v4/subject/list/item/subject/%D0%B1%D1%8B%D1%82%D0%BE%D0%B2%D0%B0%D1%8F%20%28%D0%B6%D0%B8%D0%B2%D0%B0%D1%8F%2C%20%D1%83%D1%81%D1%82%D0%BD%D0%B0%D1%8F%2C%20%D1%80%D0%B0%D0%B7%D0%B3%D0%BE%D0%B2%D0%BE%D1%80%D0%BD%D0%B0%D1%8F%29%20%D1%80%D0%B5%D1%87%D1%8C`
+- Pages: 8 pages; first: 18, 23, 45, 171, 192
+- Pages to check first: 18, 23, 45, 171, 192, 193, 194, 195
+- Priority: medium 103
+- Reason: v4.7 top priority: subject_index context expansion.
+- Context keys template: `18, 23, 45, 171, 192, 193, 194, 195`
 - Context snippets: _pending source check_
 - Source notes: _pending_
