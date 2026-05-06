@@ -300,6 +300,23 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 
 ---
 
-## 12. Bottom Line
+## 12. Semantic Knowledge Web: v11.0 - Cross-Modal Linking
+
+1. [DONE] **v11.1: Automated Semantic Linking** - Connecting video lectures to specific corpus terms via title analysis.
+2. [DONE] **v11.2: Deep Semantic Matching** - Using Russian stemming and n-gram intersection to find 812 links.
+
+---
+
+## 13. Bottom Line
 
 The project has achieved **Visual Excellence** and **Expeditionary Readiness**. The foundation is audited, normalized, and stunningly represented. The next frontier is **Depth**: moving from a high-fidelity index to a true **Semantic Knowledge Base** where terms are linked by meaning and historical context, not just page numbers.
+
+---
+
+### ✅ 2026-05-06: v12.2 «Stable Monolith» [RELEASE]
+*   **Multimedia Integration**: Полный архив из 191 видеолекции с YouTube-превью и таймкодами.
+*   **Semantic Knowledge Web**: 812 интеллектуальных связей между текстом и видео (Deep Stemming).
+*   **The Visual Scholar Package**: 14 визуализаций, включая новые (Карта мира, Сеть знаний, Древо языков, Мультимедийный мост).
+*   **Expeditionary Readiness**: 100% офлайн-доступ (PWA), мобильная оптимизация, фоновый поиск.
+*   **Repository Hygiene**: Очистка корня, создание `docs/history/`, обновление `README.md`.
+*   **Status**: Проект зафиксирован как стабильный монолит перед переходом к модульной архитектуре (v13.0).
