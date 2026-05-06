@@ -6,7 +6,10 @@
       "Bash(grep -n \"parts\\\\.push.*\\\\`\\\\|parts\\\\.push.*\\\\${\" v3_app.js)",
       "Bash(python -c ' *)",
       "Bash(grep -n \"\\\\.innerHTML\\\\s*=.*\\\\`[^$\\\\`]*\\\\${.*\\\\}[^$\\\\`]*\\\\`\" v3_app.js)",
-      "Bash(grep -n \"innerText\\\\|textContent.*\\\\${\" v3_app.js)"
+      "Bash(grep -n \"innerText\\\\|textContent.*\\\\${\" v3_app.js)",
+      "Bash(git commit *)",
+      "Bash(git checkout *)",
+      "Bash(git branch *)"
     ]
   }
 }
