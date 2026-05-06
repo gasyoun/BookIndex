@@ -282,14 +282,16 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 
 ---
 
-## 9. Multimedia Future: v8.0 - Multimedia Integration
+## 10. Researcher's Diary: v9.0 - Collaboration & Annotation
 
-1. [DONE] **v8.1: Video Archive Foundation** - Cataloging videos with timecodes and entity links.
-2. [DONE] **v8.2: Embedded Multimedia Player** - Native player with timecode jumping.
-3. [DONE] **v8.3: Global Multimedia Search** - Search results from books and video transcripts.
+1. [DONE] **v9.1: Personal Card Annotations** - Persistent scholarly notes on every entity card.
+2. [DONE] **v9.2: Scholarly Dossiers** - Naming and describing thematic collections.
+3. [DONE] **v9.3: Advanced Export** - Markdown export including researcher annotations and metadata.
 
 ---
 
+1. [DONE] **v8.1: Video Archive Foundation** - Cataloging videos with timecodes and entity links.
+2. [DONE] **v8.2: Embedded Multimedia Player** - Native player with timecode jumping.
 ## 11. Expeditionary Mode: v10.0 - Mobile & Offline
 
 1. [DONE] **v10.1: PWA Foundation** - Installable app with offline caching of corpus and assets.

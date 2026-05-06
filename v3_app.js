@@ -66,6 +66,20 @@ function parseAppData() {
   initSearchWorker();
   initCardNotes();
 
+  // EXPEDITION PROGRESS MOCK (v10.3)
+  const prog = document.createElement('div');
+  prog.id = 'expedition-progress';
+  document.body.appendChild(prog);
+  
+  if (!navigator.serviceWorker.controller) {
+    // Show indexing progress on first install
+    prog.style.width = '30%';
+    setTimeout(() => { prog.style.width = '70%'; }, 1000);
+    setTimeout(() => { prog.style.width = '100%'; setTimeout(() => prog.remove(), 500); }, 2500);
+  } else {
+    prog.remove();
+  }
+
   migrateAppDataSchema(APP_DATA);
   LABELS = APP_DATA.labels;
   COLORS = APP_DATA.colors;
@@ -208,6 +222,12 @@ function injectSemanticStyles() {
       .btn, .viz-btn, .tab, .search-item { min-height: 44px; } /* Apple's recommended touch target */
       .card-shell { padding: 1rem; }
       #right-pane { border-left: none; }
+    }
+    .search-highlight, mark { background: rgba(128, 222, 234, 0.3); color: #fff; padding: 0 2px; border-radius: 2px; }
+    
+    #expedition-progress {
+      position: fixed; top: 0; left: 0; width: 0%; height: 3px; 
+      background: #80deea; z-index: 5000; transition: width 0.4s;
     }
   `;
   document.head.appendChild(style);
@@ -10834,7 +10854,7 @@ function renderVideoArchivePanel(container) {
     const date = new Date(v.date).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' });
     html += `
       <div class="video-card" onclick="openVideoPlayer('${v.id}')">
-        <div class="video-thumb"></div>
+        <div class="video-thumb" style="background-image:url(https://img.youtube.com/vi/${v.url.split('v=')[1]}/mqdefault.jpg); background-size:cover;"></div>
         <div class="video-info">
           <div class="video-title">${escapeHtml(v.title)}</div>
           <div class="video-meta">
