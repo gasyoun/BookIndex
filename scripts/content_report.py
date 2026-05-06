@@ -1342,6 +1342,8 @@ def build_context_entry_pack(data: dict[str, Any], quality_queue: dict[str, Any]
         pages = get_item_pages(source_item) if source_item else []
         entity = item.get("entity")
         json_pointer = f"/{entity}/{item_index}" if isinstance(entity, str) and item_index is not None else None
+        contexts_pointer = f"{json_pointer}/contexts" if json_pointer else None
+        context_page_template = {str(page): [] for page in pages[:10]}
         target = {
             "rank": rank,
             "status": "needs_source_context",
@@ -1350,6 +1352,7 @@ def build_context_entry_pack(data: dict[str, Any], quality_queue: dict[str, Any]
             "canonical_id": item.get("canonical_id"),
             "item_index": item_index,
             "json_pointer": json_pointer,
+            "contexts_pointer": contexts_pointer,
             "route": item.get("route"),
             "pages_count": item.get("pages_count", 0),
             "pages": pages,
@@ -1361,7 +1364,7 @@ def build_context_entry_pack(data: dict[str, Any], quality_queue: dict[str, Any]
             "source_present": item.get("source_present", False),
             "context_snippets": item.get("context_snippets", 0),
             "entry_fields": {
-                "contexts": {},
+                "contexts": context_page_template,
                 "source_notes": "",
                 "verification_notes": "",
             },
@@ -1450,12 +1453,14 @@ def render_context_entry_pack_markdown(pack: dict[str, Any]) -> str:
             f"- Entity: `{entity}`",
             f"- Canonical ID: `{target.get('canonical_id', '')}`",
             f"- JSON pointer: `{target.get('json_pointer', '')}`",
+            f"- Contexts pointer: `{target.get('contexts_pointer', '')}`",
             f"- Route: `{target.get('route', '')}`",
             f"- Pages: {target.get('pages_summary', '0 pages')}",
             f"- Pages to check first: {pages_to_check_text}",
             f"- Priority: {target.get('priority_tier', '')} {target.get('priority_score', 0)}",
             f"- Reason: {target.get('priority_reason', '')}",
-            "- Contexts to add: _pending source check_",
+            f"- Context keys template: `{', '.join(str(page) for page in pages_to_check)}`",
+            "- Context snippets: _pending source check_",
             "- Source notes: _pending_",
             "",
         ])

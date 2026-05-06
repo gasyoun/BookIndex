@@ -772,6 +772,9 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
         expected_pointer = f"/{source_entity}/{source_index}" if isinstance(source_entity, str) and source_index is not None else None
         if target.get("json_pointer") != expected_pointer:
             fail(f"[context_pack] stale target {index}.json_pointer", errors)
+        expected_contexts_pointer = f"{expected_pointer}/contexts" if expected_pointer else None
+        if target.get("contexts_pointer") != expected_contexts_pointer:
+            fail(f"[context_pack] stale target {index}.contexts_pointer", errors)
         pages = target.get("pages")
         pages_to_check = target.get("pages_to_check")
         if not isinstance(pages, list) or not all(isinstance(page, int) for page in pages):
@@ -785,6 +788,11 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
         entry_fields = target.get("entry_fields")
         if not isinstance(entry_fields, dict):
             fail(f"[context_pack] target {index}.entry_fields must be object", errors)
+        else:
+            contexts_template = entry_fields.get("contexts")
+            expected_template = {str(page): [] for page in (pages_to_check or [])}
+            if contexts_template != expected_template:
+                fail(f"[context_pack] target {index}.entry_fields.contexts must mirror pages_to_check", errors)
     if pack_md_path.exists():
         markdown = pack_md_path.read_text(encoding="utf-8")
         for fragment in (
@@ -798,8 +806,12 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
                 fail(f"[context_pack] markdown checklist missing target {target.get('head')!r}", errors)
             if isinstance(target, dict) and str(target.get("json_pointer", "")) not in markdown:
                 fail(f"[context_pack] markdown checklist missing pointer {target.get('json_pointer')!r}", errors)
+            if isinstance(target, dict) and str(target.get("contexts_pointer", "")) not in markdown:
+                fail(f"[context_pack] markdown checklist missing contexts pointer {target.get('contexts_pointer')!r}", errors)
             if isinstance(target, dict) and "Pages to check first:" not in markdown:
                 fail("[context_pack] markdown checklist missing pages-to-check rows", errors)
+            if isinstance(target, dict) and "Context keys template:" not in markdown:
+                fail("[context_pack] markdown checklist missing context-key template rows", errors)
 
 
 def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:
