@@ -403,7 +403,7 @@ function initEntityTypes() {
   materials: {
     title: 'Материалы',
     items: [],
-    tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','kwic','gallery','russian_evolution','phonetic_laws','tasks'],
+    tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','kwic','gallery','russian_evolution','phonetic_laws','tasks','corpus_timeline'],
   },
   scholar: {
     title: 'Профессиональный аппарат',
@@ -493,6 +493,7 @@ const TAB_LABELS = {
   scholar: 'Профессиональный аппарат',
   chronology: 'Хронология открытий',
   page_trends: 'Динамика по страницам',
+  corpus_timeline: 'Хронология лекций',
 };
 
 // Единый сводный словник: все элементы из всех типов с пометкой
@@ -873,6 +874,7 @@ const VIZ_SCRIPT_BY_MODULE = Object.freeze({
   viz05: './scripts/viz/narrative-sankey.js',
   viz06: './scripts/viz/lang-chord.js',
   viz07: './scripts/viz/term-bump-chart.js',
+  viz08: './scripts/viz/corpus-timeline.js',
 });
 const VIZ_RENDERER_BY_MODULE = Object.freeze({
   viz01: 'renderMapTimeline',
@@ -882,6 +884,7 @@ const VIZ_RENDERER_BY_MODULE = Object.freeze({
   viz05: 'renderNarrativeSankey',
   viz06: 'renderLangChord',
   viz07: 'renderTermBumpChart',
+  viz08: 'renderCorpusTimeline',
 });
 const CYRILLIC_TO_LATIN_MAP = Object.freeze({
   '\u0430': 'a',    // а
@@ -4405,6 +4408,7 @@ const CONTENT_RENDERERS = Object.freeze({
   epochs: renderEpochsPanel,
   families: renderFamiliesPanel,
   tree: renderTreePanel,
+  corpus_timeline: renderCorpusTimelinePanel,
 });
 
 function renderContent() {
@@ -6620,6 +6624,16 @@ function renderHistogramPanel(container) {
 // =========================================================
 // ШКАЛА
 // =========================================================
+function renderCorpusTimelinePanel(container) {
+  container.innerHTML = `<div class="panel active"><div id="corpus-timeline-host"></div></div>`;
+  const host = container.querySelector('#corpus-timeline-host');
+  ensureVizModuleLoaded('viz08').then(() => {
+    if (window.VIZ_MODULES && window.VIZ_MODULES.renderCorpusTimeline) {
+      window.VIZ_MODULES.renderCorpusTimeline(host, APP_DATA);
+    }
+  });
+}
+
 function renderTimelinePanel(container) {
   container.innerHTML = `<div class="panel active"><div class="timeline-container">
     <p class="chart-intro">Имена на оси времени по векам. Каждая точка — одно имя; цвет показывает категорию. Кликните, чтобы открыть карточку.</p>
@@ -10070,6 +10084,7 @@ function getVizModuleCatalog() {
     { id: 'viz06', title: 'VIZ-06 · Хорда языков', renderKey: 'renderLangChord', render: registry.renderLangChord },
     { id: 'viz01', title: 'VIZ-01 · Карта по векам', renderKey: 'renderMapTimeline', render: registry.renderMapTimeline },
     { id: 'viz05', title: 'VIZ-05 · Sankey «Слово»', renderKey: 'renderNarrativeSankey', render: registry.renderNarrativeSankey },
+    { id: 'viz08', title: 'VIZ-08 · Хронология лекций', renderKey: 'renderCorpusTimeline', render: registry.renderCorpusTimeline },
   ];
 }
 
