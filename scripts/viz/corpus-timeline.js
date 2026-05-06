@@ -1,6 +1,6 @@
 /**
  * Corpus Timeline Visualization (v5.0)
- * Modern, interactive view of Zaliznyak's lectures.
+ * Modern, interactive view of Zalizniak's lectures.
  */
 
 window.VIZ_MODULES = window.VIZ_MODULES || {};

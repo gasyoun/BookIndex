@@ -21,13 +21,13 @@ _Текстовое поле верхнего уровня не найдено; 
           "title": "Древнерусские энклитики",
           "year": 2008,
           "note": "Монография, развивающая закон Вакернагеля для древнерусского материала.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         },
         {
           "title": "От праславянской акцентуации к русской",
           "year": 1985,
           "note": "Раздел о клитиках и ритмико-синтаксических барьерах.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         }
       ]
     },
@@ -38,7 +38,7 @@ _Текстовое поле верхнего уровня не найдено; 
           "title": "О профессиональной и любительской лингвистике",
           "year": 2010,
           "note": "Лекция-разоблачение лжелингвистики, тесно связана с темой сравнительного метода.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         }
       ]
     },
@@ -49,7 +49,7 @@ _Текстовое поле верхнего уровня не найдено; 
           "title": "Грамматический очерк санскрита",
           "year": 1978,
           "note": "Приложение к санскритско-русскому словарю В. А. Кочергиной — классическое описание санскрита для русского читателя.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         }
       ]
     },
@@ -60,13 +60,13 @@ _Текстовое поле верхнего уровня не найдено; 
           "title": "Древненовгородский диалект",
           "year": 2004,
           "note": "Главная монография о берестяных грамотах и древнем северо-западном диалекте, второе расширенное издание.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         },
         {
           "title": "Русское именное словоизменение",
           "year": 1967,
           "note": "Классическая работа о морфологии русского имени.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         }
       ]
     },
@@ -77,13 +77,13 @@ _Текстовое поле верхнего уровня не найдено; 
           "title": "От праславянской акцентуации к русской",
           "year": 1985,
           "note": "Главный труд Зализняка по истории русского ударения.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         },
         {
           "title": "Грамматический словарь русского языка",
           "year": 1977,
           "note": "Полный словарь русской морфологии с указанием акцентных типов; основа для всех последующих разработок.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         }
       ]
     },
@@ -94,19 +94,19 @@ _Текстовое поле верхнего уровня не найдено; 
           "title": "Древненовгородский диалект",
           "year": 2004,
           "note": "Главный труд по теме лекции; содержит описание диалекта и лингвистический анализ всех известных грамот.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         },
         {
           "title": "Палеография берестяных грамот и их внестратиграфическое датирование",
           "year": 2000,
           "note": "Метод датирования грамот по почерку, разработанный Зализняком и А. А. Гиппиусом.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         },
         {
           "title": "Новгородские грамоты на бересте (тома XI–XII, в соавторстве с В. Л. Яниным и А. А. Гиппиусом)",
           "year": "2004–2015",
           "note": "Корпус публикаций берестяных грамот.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         }
       ]
     },
@@ -117,7 +117,7 @@ _Текстовое поле верхнего уровня не найдено; 
           "title": "Лингвистические задачи",
           "year": 1963,
           "note": "Сборник задач по лингвистике для школьников — историческая основа всего жанра.",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         }
       ]
     },
@@ -128,7 +128,7 @@ _Текстовое поле верхнего уровня не найдено; 
           "title": "Древнерусские энклитики",
           "year": 2008,
           "note": "Содержит детальный разбор истории русских частиц «же», «ли», «бы».",
-          "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+          "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
         }
       ]
     }
@@ -172,37 +172,37 @@ _Текстовое поле верхнего уровня не найдено; 
         "name": "Орфографические особенности",
         "detail": "В «Слове» есть редкие написания, известные только из берестяных грамот, которые были найдены через 150 лет после публикации «Слова» Мусиным-Пушкиным. Фальсификатор XVIII века не мог их знать.",
         "page": "317–320",
-        "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+        "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
       },
       {
         "name": "Энклитика «ся» в свободной позиции",
         "detail": "В «Слове» возвратная частица «ся» иногда стоит отдельно от глагола (по закону Вакернагеля). Эта особенность древнерусского синтаксиса была забыта в XVIII веке и реконструирована лингвистами только в XX в.",
         "page": "320–323",
-        "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+        "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
       },
       {
         "name": "Двойственное число",
         "detail": "Употребление двойственного числа в «Слове» соответствует строгим грамматическим правилам древнерусского языка XII в., которые в XVIII в. лингвистам не были известны во всей полноте.",
         "page": "323–326",
-        "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+        "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
       },
       {
         "name": "Акцентологические соответствия",
         "detail": "Места ударения в «Слове» (где их можно реконструировать по метрике и параллелям) соответствуют системе древнерусского ударения, описанной Зализняком в 1985 году.",
         "page": "327–331",
-        "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+        "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
       },
       {
         "name": "Лексика и семантика",
         "detail": "Слова в «Слове» имеют значения, документированные позднейшими находками, но неизвестные в XVIII веке.",
         "page": "331–334",
-        "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+        "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
       },
       {
         "name": "Согласованность всех уровней",
         "detail": "Главный аргумент: фальсификатор XVIII в. должен был бы предусмотреть сотни мелких деталей орфографии, морфологии, синтаксиса, лексики и акцентологии — каждую по отдельности возможно подделать, но согласовать их все в единый текст практически невозможно.",
         "page": "334–337",
-        "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+        "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
       }
     ],
     "opponents": "А. Мазон (1940), А. А. Зимин (1960-е), Э. Кинан (2003) — главные представители скептической позиции.",
@@ -213,19 +213,19 @@ _Текстовое поле верхнего уровня не найдено; 
         "name": "Гипотеза поздней подделки",
         "detail": "Скептическая позиция исходила из того, что текст мог быть создан или радикально переработан в XVIII веке как стилизация под древнерусский памятник.",
         "page": "314–316",
-        "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+        "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
       },
       {
         "name": "Скептическая линия Э. Кинана",
         "detail": "Предполагалось, что язык «Слова» можно объяснить поздним книжным редактированием и искусственной стилизацией под древнерусскую норму.",
         "page": "338–340",
-        "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+        "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
       },
       {
         "name": "Возражение против аргумента согласованности",
         "detail": "Оппоненты считали, что отдельные архаические черты могли быть заимствованы из известных памятников, словарей и реконструкций, а не восходить к подлинному тексту XII века.",
         "page": "340–343",
-        "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+        "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
       }
     ]
   },
@@ -848,19 +848,19 @@ _Текстовое поле верхнего уровня не найдено; 
   "slovo_links": [
     {
       "title": "Страница А. А. Зализняка на ИСл РАН (публикации и PDF)",
-      "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+      "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
     }
   ],
   "slovo_reading": [
     {
       "title": "А. А. Зализняк. «Слово о полку Игореве»: взгляд лингвиста",
       "note": "Главная книга с развёрнутой аргументацией и ответами скептикам.",
-      "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+      "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
     },
     {
       "title": "Публикации А. А. Зализняка на ИСл РАН",
       "note": "Страница со списком работ и PDF-публикациями.",
-      "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+      "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
     },
     {
       "title": "Берестяные грамоты (архив gramoty.ru)",
@@ -870,7 +870,7 @@ _Текстовое поле верхнего уровня не найдено; 
     {
       "title": "Статьи о споре вокруг подлинности «Слова»",
       "note": "Для расширенного историографического и полемического контекста.",
-      "url": "https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"
+      "url": "https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"
     }
   ]
 }

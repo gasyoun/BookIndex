@@ -66,7 +66,51 @@ function parseAppData() {
   EPOCH_LABELS = APP_DATA.epoch_labels;
   EPOCH_COLORS = APP_DATA.epoch_colors;
   FAMILY_COLORS = APP_DATA.family_colors;
+  
+  if (typeof document !== 'undefined') {
+    initPremiumIntro();
+  }
+
   return APP_DATA;
+}
+
+function initPremiumIntro() {
+  const introSeen = localStorage.getItem('Zalizniakiada.intro_seen_v5');
+  if (introSeen) return;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'premium-intro-overlay';
+  overlay.style.cssText = `
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #1a1a1a; z-index: 10000; display: flex;
+    align-items: center; justify-content: center; color: #fff;
+    font-family: 'Inter', sans-serif; transition: opacity 1s ease;
+  `;
+  
+  overlay.innerHTML = `
+    <style>
+      #premium-intro-content { text-align: center; max-width: 600px; opacity: 0; transform: translateY(30px); animation: introFadeIn 1.5s forwards 0.5s; }
+      @keyframes introFadeIn { to { opacity: 1; transform: translateY(0); } }
+      .intro-portrait { width: 300px; height: 300px; border-radius: 50%; border: 4px solid #80deea; box-shadow: 0 0 50px rgba(128, 222, 234, 0.3); margin-bottom: 2rem; object-fit: cover; }
+      .intro-title { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #80deea, #b388ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+      .intro-subtitle { font-size: 1.2rem; color: #aaa; line-height: 1.6; margin-bottom: 3rem; }
+      .intro-btn { background: linear-gradient(135deg, #80deea, #26a69a); border: none; color: #fff; padding: 1rem 3rem; border-radius: 30px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: transform 0.2s; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+      .intro-btn:hover { transform: scale(1.05); }
+    </style>
+    <div id="premium-intro-content">
+      <img src="./public/Zalizniak_portrait.png" class="intro-portrait">
+      <h1 class="intro-title">Зализнякиада</h1>
+      <p class="intro-subtitle">Цифровой путеводитель по циклу лекций А. А. Зализняка «Из жизни слов и языков». Исследуйте связи, время и открытия великого лингвиста.</p>
+      <button class="intro-btn" onclick="dismissPremiumIntro()">Начать исследование</button>
+    </div>
+  `;
+  
+  document.body.appendChild(overlay);
+  window.dismissPremiumIntro = () => {
+    overlay.style.opacity = '0';
+    localStorage.setItem('Zalizniakiada.intro_seen_v5', 'true');
+    setTimeout(() => overlay.remove(), 1000);
+  };
 }
 
 function migrateAppDataSchema(data) {
@@ -712,13 +756,13 @@ let currentKwicSort = 'left';
 let currentKwicPageStart = 1;
 let currentKwicPageEnd = DEFAULT_TOTAL_PAGES;
 let pendingKwicTerm = '';
-const UI_STATE_STORAGE_KEY = 'zaliznyakiada.ui.v1';
+const UI_STATE_STORAGE_KEY = 'Zalizniakiada.ui.v1';
 const UI_STATE_SCHEMA_VERSION = 2;
-const THEME_STORAGE_KEY = 'zaliznyakiada.theme.v1';
-const DENSITY_STORAGE_KEY = 'zaliznyakiada.density.v1';
-const READING_PAGE_STORAGE_KEY = 'zaliznyakiada.readingPage.v1';
-const RECENT_ITEMS_STORAGE_KEY = 'zaliznyakiada.recentItems.v1';
-const TASKS_PROGRESS_STORAGE_KEY = 'zaliznyakiada.tasksProgress.v1';
+const THEME_STORAGE_KEY = 'Zalizniakiada.theme.v1';
+const DENSITY_STORAGE_KEY = 'Zalizniakiada.density.v1';
+const READING_PAGE_STORAGE_KEY = 'Zalizniakiada.readingPage.v1';
+const RECENT_ITEMS_STORAGE_KEY = 'Zalizniakiada.recentItems.v1';
+const TASKS_PROGRESS_STORAGE_KEY = 'Zalizniakiada.tasksProgress.v1';
 const TASKS_PROGRESS_SCHEMA_VERSION = 1;
 const TASKS_HISTORY_LIMIT = 80;
 let globalKeyHandlersWired = false;
@@ -3850,7 +3894,7 @@ function collectScholarBibliographyBibEntries() {
       if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
       if (work && work.note) noteParts.push(String(work.note));
       out.push(buildBibtexEntry({
-        author: normalizeBibtexText(work && (work.author || work.authors)) || 'A. A. Zaliznyak',
+        author: normalizeBibtexText(work && (work.author || work.authors)) || 'A. A. Zalizniak',
         title,
         year: String(work && work.year != null ? work.year : ''),
         url: String(work && work.url ? work.url : ''),
@@ -4287,7 +4331,7 @@ function exportWholeSiteMarkdown() {
       parts.push('');
     }
   }
-  downloadTextFile('zaliznyakiada-site.md', parts.join('\n'));
+  downloadTextFile('Zalizniakiada-site.md', parts.join('\n'));
 }
 
 // =========================================================
@@ -8983,6 +9027,111 @@ function renderLecturesPanel(container) {
 }
 
 function renderLectureComparePanel(container) {
+  if (!document.getElementById('lecture-compare-premium-styles')) {
+    const style = document.createElement('style');
+    style.id = 'lecture-compare-premium-styles';
+    style.textContent = `
+      .lecture-compare-panel {
+        background: radial-gradient(circle at top right, rgba(0, 150, 136, 0.05), transparent);
+        padding: 2rem;
+      }
+      .lecture-compare-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #80deea, #26a69a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+      }
+      .lecture-compare-controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 2rem 0;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 1.5rem;
+        border-radius: 15px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .lecture-compare-select {
+        background: #1a1a1a;
+        color: #fff;
+        border: 1px solid #444;
+        padding: 0.8rem;
+        border-radius: 10px;
+        width: 100%;
+        font-size: 1rem;
+      }
+      .compare-gauge-container {
+        display: flex;
+        justify-content: center;
+        margin: 3rem 0;
+      }
+      .compare-gauge {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: conic-gradient(#80deea var(--overlap), rgba(255,255,255,0.05) 0);
+        box-shadow: 0 0 40px rgba(128, 222, 234, 0.2);
+      }
+      .compare-gauge::after {
+        content: attr(data-percent) '%';
+        position: absolute;
+        width: 160px;
+        height: 160px;
+        background: #1a1a1a;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 800;
+        color: #80deea;
+      }
+      .compare-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .compare-type-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 1.2rem;
+        transition: transform 0.2s;
+      }
+      .compare-type-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .type-label {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: #80deea;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+      .type-shared-count {
+        font-size: 1.8rem;
+        font-weight: 800;
+      }
+      .compare-link {
+        color: #aaa;
+        text-decoration: none;
+        font-size: 0.9rem;
+        display: block;
+        margin-top: 0.3rem;
+      }
+      .compare-link:hover { color: #80deea; }
+    `;
+    document.head.appendChild(style);
+  }
+
   const chapters = APP_DATA.chapters || [];
   if (chapters.length < 2) {
     container.innerHTML = '<div class="panel active"><div class="panel-empty-state">Недостаточно лекций для сравнения.</div></div>';
@@ -9080,8 +9229,8 @@ function renderLectureComparePanel(container) {
   const recommendedPairs = buildRecommendedLecturePairs(10);
 
   let html = '<div class="panel active lecture-compare-panel"><div class="lecture-compare-inner">';
-  html += '<h2 class="lecture-compare-title">Сравнение двух лекций</h2>';
-  html += '<div class="lecture-compare-intro">Показываем пересечения и уникальные сущности по типам. Нажмите на элемент, чтобы открыть карточку.</div>';
+  html += '<h2 class="lecture-compare-title">Лекционный Аналитик</h2>';
+  html += '<div class="lecture-compare-intro">Сравнение тематического охвата двух лекций А. А. Зализняка.</div>';
   html += `<div class="lecture-compare-controls">
     <label class="lecture-compare-field">
       <div class="lecture-compare-label">Лекция A</div>
@@ -9096,8 +9245,44 @@ function renderLectureComparePanel(container) {
       </select>
     </label>
   </div>`;
+  // Calculate total shared for the gauge
+  let grandTotalShared = 0;
+  let grandTotalA = 0;
+  let grandTotalB = 0;
+  const sharedDetails = types.map(t => {
+    const setA = getChapterHeadsCached(t.key, chapterA);
+    const setB = getChapterHeadsCached(t.key, chapterB);
+    let shared = 0;
+    for (const h of setA) if (setB.has(h)) shared += 1;
+    grandTotalShared += shared;
+    grandTotalA += setA.size;
+    grandTotalB += setB.size;
+    return { label: t.label, type: t.key, shared, heads: [...setA].filter(h => setB.has(h)) };
+  });
+  
+  const overlapPercent = Math.round((grandTotalShared * 2) / (grandTotalA + grandTotalB) * 100) || 0;
+
+  html += `
+    <div class="compare-gauge-container">
+        <div class="compare-gauge" style="--overlap: ${overlapPercent}%" data-percent="${overlapPercent}"></div>
+    </div>
+    <div class="compare-grid">
+        ${sharedDetails.map(d => `
+            <div class="compare-type-card">
+                <div class="type-label">${d.label}</div>
+                <div class="type-shared-count">${d.shared}</div>
+                <div class="shared-list">
+                    ${asSorted(d.heads).slice(0, 3).map(h => `<a class="compare-link" href="${buildItemHash(d.type, h)}">${h}</a>`).join('')}
+                    ${d.shared > 3 ? `<div class="compare-link" style="opacity: 0.5">+${d.shared - 3} еще</div>` : ''}
+                </div>
+            </div>
+        `).join('')}
+    </div>
+  `;
+
   if (recommendedPairs.length) {
-    html += '<div class="lecture-compare-suggestions">';
+    html += '<div class="lecture-compare-suggestions" style="margin-top: 3rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 10px;">';
+    html += '<h4 style="color: #80deea; margin-bottom: 1rem;">Рекомендуемые пары для анализа</h4>';
     html += '<div class="lecture-compare-suggestions-title">Осмысленные пары для сравнения</div>';
     html += '<div class="lecture-compare-pair-list">';
     for (const rec of recommendedPairs) {
@@ -10720,7 +10905,7 @@ function renderScholarPanel(container) {
 
   // 1. Библиография
   html += '<h3 id="sch-biblio" class="scholar-section-title">1. Библиография работ Зализняка по темам лекций</h3>';
-  html += '<div class="scholar-section-intro">Каждая лекция в книге — выжимка из академических работ Зализняка. Здесь — ключевые публикации, где темы изложены подробнее. PDF-подборка: <a class="related-link" href="https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017" target="_blank" rel="noopener noreferrer">страница ИСл РАН ↗</a>.</div>';
+  html += '<div class="scholar-section-intro">Каждая лекция в книге — выжимка из академических работ Зализняка. Здесь — ключевые публикации, где темы изложены подробнее. PDF-подборка: <a class="related-link" href="https://inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017" target="_blank" rel="noopener noreferrer">страница ИСл РАН ↗</a>.</div>';
   html += '<div class="scholar-action-row"><button id="export-scholar-biblio-bib" class="scholar-action-button">Экспорт BibTeX (.bib)</button></div>';
   for (const lec of (s.bibliography || [])) {
     html += `<div class="scholar-card">

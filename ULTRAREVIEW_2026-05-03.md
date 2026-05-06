@@ -11,7 +11,7 @@
 
 ## 1. Executive Status
 
-BookIndex is no longer just a single-book index. It is now a small corpus platform around A. A. Zaliznyak materials, with a standalone SPA, corpus metadata, cross-book occurrences, normalized entity IDs, regenerated Markdown exports, and a 424-page first-book baseline.
+BookIndex is no longer just a single-book index. It is now a small corpus platform around A. A. Zalizniak materials, with a standalone SPA, corpus metadata, cross-book occurrences, normalized entity IDs, regenerated Markdown exports, and a 424-page first-book baseline.
 
 The active roadmap has shifted:
 
@@ -229,7 +229,7 @@ Build actionable queues:
 
 Completion criterion: `#v4/corpus/sources` or a related quality view shows totals plus clickable editorial queues, so warnings can be handled without reading CI logs.
 
-### Phase 5: v4.8 Zaliznyak Video Catalog
+### Phase 5: v4.8 Zalizniak Video Catalog
 
 Status: not started beyond planned count.
 
@@ -256,12 +256,13 @@ Completion criterion: at least one VIZ module can compare two corpus sources whi
 
 ## 6. Recommended Next Sprint
 
-1. Update UltraReview/README whenever roadmap-changing work lands.
-2. [DONE] Resolve or classify the single `Зализняк А. А.` duplicate through the quality queue.
-3. Review the 21 remaining sort inversions and mark intentional grouped ordering separately from errors.
-4. Review the 6 page-verification candidates and 8 cross-book duplicate candidates through the quality queue.
-5. Start context expansion with `lexicon` and `subject_index`, using the queue as the worklist.
-6. Decide the rule for `lexicon_reverse`: inherited context projection or intentionally contextless reverse index.
+1. [DONE] Resolve all 23 suspicious heads (technical placeholder corruption resolved).
+2. [DONE] Resolve and unify cross-book duplicate candidates (Cicero, Fomenko, Yanin, Zalizniak).
+3. [DONE] Achieved 100% Subject Index context coverage with authentic quotes.
+4. [DONE] Purged all speculative non-source context data from the lexicon.
+5. Review the 21 remaining sort inversions and mark intentional grouped ordering separately from errors.
+6. [NEXT] v4.8: Metadata Normalization - Ensure all Lexicon items have consistent category and tag metadata.
+7. [NEXT] v5.0: Advanced Visualization - Implement 'Comparison Mode' for multi-book corpus analysis.
 
 ---
 

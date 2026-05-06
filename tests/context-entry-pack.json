@@ -6,50 +6,47 @@
   "limit": 25,
   "target_count": 25,
   "progress": {
-    "phase_estimate_percent": 59.3,
-    "direct_context_coverage_percent": 19.2,
-    "effective_context_coverage_percent": 26.1,
+    "phase_estimate_percent": 73.7,
+    "direct_context_coverage_percent": 24.2,
+    "effective_context_coverage_percent": 32.3,
     "context_target_min_percent": 35.0,
     "context_target_max_percent": 40.0
   },
   "queue_totals": {
-    "missing_context_count": 2497,
-    "suspicious_heads_count": 23,
+    "missing_context_count": 2285,
+    "suspicious_heads_count": 0,
     "sort_inversions_count": 0,
     "duplicate_heads_count": 0,
     "cross_book_duplicate_candidates_count": 8,
-    "needs_page_verification_count": 0
+    "needs_page_verification_count": 1
   },
   "targets": [
     {
       "rank": 1,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "nyn",
-      "canonical_id": "lexicon-283a2536-200d-5154-a82e-e16e158fc1c3",
-      "item_index": 134,
-      "json_pointer": "/lexicon/134",
-      "contexts_pointer": "/lexicon/134/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/nyn",
-      "pages_count": 2,
+      "head": "find",
+      "canonical_id": "lexicon-a0884a43-c154-5100-ac22-10a169d8f6cd",
+      "item_index": 64,
+      "json_pointer": "/lexicon/64",
+      "contexts_pointer": "/lexicon/64/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/find",
+      "pages_count": 1,
       "pages": [
-        6,
-        230
+        190
       ],
       "pages_to_check": [
-        6,
-        230
+        190
       ],
-      "pages_summary": "6, 230",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "190",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "6": [],
-          "230": []
+          "190": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -59,31 +56,28 @@
       "rank": 2,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "Oj",
-      "canonical_id": "lexicon-fb7e3811-8230-5ede-8e7e-5cf7b92d99ee",
-      "item_index": 140,
-      "json_pointer": "/lexicon/140",
-      "contexts_pointer": "/lexicon/140/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/Oj",
-      "pages_count": 2,
+      "head": "finna",
+      "canonical_id": "lexicon-bfcbb2b2-f742-585e-881a-9f2657076ffe",
+      "item_index": 65,
+      "json_pointer": "/lexicon/65",
+      "contexts_pointer": "/lexicon/65/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/finna",
+      "pages_count": 1,
       "pages": [
-        109,
-        110
+        190
       ],
       "pages_to_check": [
-        109,
-        110
+        190
       ],
-      "pages_summary": "109, 110",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "190",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "109": [],
-          "110": []
+          "190": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -93,31 +87,28 @@
       "rank": 3,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "P",
-      "canonical_id": "lexicon-51031ce0-18a4-510e-b335-c605204e9145",
-      "item_index": 143,
-      "json_pointer": "/lexicon/143",
-      "contexts_pointer": "/lexicon/143/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/P",
-      "pages_count": 2,
+      "head": "football",
+      "canonical_id": "lexicon-6a938324-5261-53f5-a337-6f17a181a63a",
+      "item_index": 66,
+      "json_pointer": "/lexicon/66",
+      "contexts_pointer": "/lexicon/66/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/football",
+      "pages_count": 1,
       "pages": [
-        9,
-        230
+        242
       ],
       "pages_to_check": [
-        9,
-        230
+        242
       ],
-      "pages_summary": "9, 230",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "242",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "9": [],
-          "230": []
+          "242": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -127,31 +118,28 @@
       "rank": 4,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "Tf",
-      "canonical_id": "lexicon-5b4ca565-9c0b-5300-ae59-f928789fa8b1",
-      "item_index": 216,
-      "json_pointer": "/lexicon/216",
-      "contexts_pointer": "/lexicon/216/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/Tf",
-      "pages_count": 2,
+      "head": "fort",
+      "canonical_id": "lexicon-e39b915e-92fe-5724-992d-a84eaddcb757",
+      "item_index": 67,
+      "json_pointer": "/lexicon/67",
+      "contexts_pointer": "/lexicon/67/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/fort",
+      "pages_count": 1,
       "pages": [
-        162,
-        293
+        68
       ],
       "pages_to_check": [
-        162,
-        293
+        68
       ],
-      "pages_summary": "162, 293",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "68",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "162": [],
-          "293": []
+          "68": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -161,31 +149,28 @@
       "rank": 5,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "ти",
-      "canonical_id": "lexicon-0389920e-2f22-5479-8499-454848790967",
-      "item_index": 1220,
-      "json_pointer": "/lexicon/1220",
-      "contexts_pointer": "/lexicon/1220/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%D1%82%D0%B8",
-      "pages_count": 2,
+      "head": "Francia",
+      "canonical_id": "lexicon-67302987-1cbf-5fd1-9fa3-b72b35b60e73",
+      "item_index": 68,
+      "json_pointer": "/lexicon/68",
+      "contexts_pointer": "/lexicon/68/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/Francia",
+      "pages_count": 1,
       "pages": [
-        26,
-        38
+        56
       ],
       "pages_to_check": [
-        26,
-        38
+        56
       ],
-      "pages_summary": "26, 38",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "56",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "26": [],
-          "38": []
+          "56": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -195,31 +180,28 @@
       "rank": 6,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "у́гол",
-      "canonical_id": "lexicon-054b1e5a-f49e-5f1e-b959-3c01f5008bdd",
-      "item_index": 1251,
-      "json_pointer": "/lexicon/1251",
-      "contexts_pointer": "/lexicon/1251/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%D1%83%CC%81%D0%B3%D0%BE%D0%BB",
-      "pages_count": 2,
+      "head": "frangais",
+      "canonical_id": "lexicon-450098ed-8ec3-5c0c-932f-048cbdac657c",
+      "item_index": 69,
+      "json_pointer": "/lexicon/69",
+      "contexts_pointer": "/lexicon/69/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/frangais",
+      "pages_count": 1,
       "pages": [
-        378,
-        380
+        56
       ],
       "pages_to_check": [
-        378,
-        380
+        56
       ],
-      "pages_summary": "378, 380",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "56",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "378": [],
-          "380": []
+          "56": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -229,31 +211,28 @@
       "rank": 7,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "у́горь_(I.)",
-      "canonical_id": "lexicon-16077fdd-20cb-57f2-93e7-fd21bc75446b",
-      "item_index": 1257,
-      "json_pointer": "/lexicon/1257",
-      "contexts_pointer": "/lexicon/1257/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%D1%83%CC%81%D0%B3%D0%BE%D1%80%D1%8C_%28I.%29",
-      "pages_count": 2,
+      "head": "friendship",
+      "canonical_id": "lexicon-699d5cb0-06ed-563a-aeba-aca2813633ab",
+      "item_index": 71,
+      "json_pointer": "/lexicon/71",
+      "contexts_pointer": "/lexicon/71/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/friendship",
+      "pages_count": 1,
       "pages": [
-        378,
-        380
+        330
       ],
       "pages_to_check": [
-        378,
-        380
+        330
       ],
-      "pages_summary": "378, 380",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "330",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "378": [],
-          "380": []
+          "330": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -263,31 +242,28 @@
       "rank": 8,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "у́горь_(II.)",
-      "canonical_id": "lexicon-cfa951cb-9c82-5e46-8654-3d257f0b0b74",
-      "item_index": 1258,
-      "json_pointer": "/lexicon/1258",
-      "contexts_pointer": "/lexicon/1258/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%D1%83%CC%81%D0%B3%D0%BE%D1%80%D1%8C_%28II.%29",
-      "pages_count": 2,
+      "head": "gens",
+      "canonical_id": "lexicon-94e2d657-7332-519d-b27a-569bbe96b5c4",
+      "item_index": 72,
+      "json_pointer": "/lexicon/72",
+      "contexts_pointer": "/lexicon/72/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/gens",
+      "pages_count": 1,
       "pages": [
-        378,
-        380
+        68
       ],
       "pages_to_check": [
-        378,
-        380
+        68
       ],
-      "pages_summary": "378, 380",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "68",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "378": [],
-          "380": []
+          "68": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -297,31 +273,28 @@
       "rank": 9,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "учи́шь",
-      "canonical_id": "lexicon-2cb71cb3-7408-5ecc-aec7-4cacb9e4d194",
-      "item_index": 1307,
-      "json_pointer": "/lexicon/1307",
-      "contexts_pointer": "/lexicon/1307/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%D1%83%D1%87%D0%B8%CC%81%D1%88%D1%8C",
-      "pages_count": 2,
+      "head": "Germania",
+      "canonical_id": "lexicon-b558111d-4ac9-5e7d-97f6-e16d50634b1a",
+      "item_index": 73,
+      "json_pointer": "/lexicon/73",
+      "contexts_pointer": "/lexicon/73/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/Germania",
+      "pages_count": 1,
       "pages": [
-        266,
-        267
+        60
       ],
       "pages_to_check": [
-        266,
-        267
+        60
       ],
-      "pages_summary": "266, 267",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "60",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "266": [],
-          "267": []
+          "60": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -331,31 +304,28 @@
       "rank": 10,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "шестнадцать",
-      "canonical_id": "lexicon-faa78ad0-5ebc-5e18-87df-49663297b287",
-      "item_index": 1344,
-      "json_pointer": "/lexicon/1344",
-      "contexts_pointer": "/lexicon/1344/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%D1%88%D0%B5%D1%81%D1%82%D0%BD%D0%B0%D0%B4%D1%86%D0%B0%D1%82%D1%8C",
-      "pages_count": 2,
+      "head": "globus",
+      "canonical_id": "lexicon-fe83d701-c2b3-5ffc-9cf4-644cba2a425c",
+      "item_index": 74,
+      "json_pointer": "/lexicon/74",
+      "contexts_pointer": "/lexicon/74/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/globus",
+      "pages_count": 1,
       "pages": [
-        255,
-        257
+        245
       ],
       "pages_to_check": [
-        255,
-        257
+        245
       ],
-      "pages_summary": "255, 257",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "245",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "255": [],
-          "257": []
+          "245": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -365,31 +335,28 @@
       "rank": 11,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "юродивый",
-      "canonical_id": "lexicon-4f81b13c-767e-5c18-b564-d3dbc6d79fed",
-      "item_index": 1362,
-      "json_pointer": "/lexicon/1362",
-      "contexts_pointer": "/lexicon/1362/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%D1%8E%D1%80%D0%BE%D0%B4%D0%B8%D0%B2%D1%8B%D0%B9",
-      "pages_count": 2,
+      "head": "grab",
+      "canonical_id": "lexicon-1b424f8c-384e-5163-9a5a-100e5a383c3f",
+      "item_index": 75,
+      "json_pointer": "/lexicon/75",
+      "contexts_pointer": "/lexicon/75/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/grab",
+      "pages_count": 1,
       "pages": [
-        258,
-        259
+        160
       ],
       "pages_to_check": [
-        258,
-        259
+        160
       ],
-      "pages_summary": "258, 259",
-      "priority_score": 107,
-      "priority_tier": "high",
+      "pages_summary": "160",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "258": [],
-          "259": []
+          "160": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -398,58 +365,29 @@
     {
       "rank": 12,
       "status": "needs_source_context",
-      "entity": "subject_index",
-      "head": "огласовка",
-      "canonical_id": "subject_index-0747cfa2-e1d3-579f-9c12-67a46503c4c8",
-      "item_index": 38,
-      "json_pointer": "/subject_index/38",
-      "contexts_pointer": "/subject_index/38/contexts",
-      "route": "#v4/subject/list/item/subject/%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%BA%D0%B0",
-      "pages_count": 12,
+      "entity": "lexicon",
+      "head": "gwena",
+      "canonical_id": "lexicon-69dbb45c-b715-5d92-b090-5fb7c3529b8a",
+      "item_index": 76,
+      "json_pointer": "/lexicon/76",
+      "contexts_pointer": "/lexicon/76/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/gwena",
+      "pages_count": 1,
       "pages": [
-        148,
-        154,
-        155,
-        158,
-        161,
-        162,
-        164,
-        215,
-        230,
-        231,
-        232,
-        233
+        112
       ],
       "pages_to_check": [
-        148,
-        154,
-        155,
-        158,
-        161,
-        162,
-        164,
-        215,
-        230,
-        231
+        112
       ],
-      "pages_summary": "12 pages; first: 148, 154, 155, 158, 161",
-      "priority_score": 107,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
+      "pages_summary": "112",
+      "priority_score": 101,
+      "priority_tier": "medium",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "148": [],
-          "154": [],
-          "155": [],
-          "158": [],
-          "161": [],
-          "162": [],
-          "164": [],
-          "215": [],
-          "230": [],
-          "231": []
+          "112": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -458,58 +396,29 @@
     {
       "rank": 13,
       "status": "needs_source_context",
-      "entity": "subject_index",
-      "head": "письменность",
-      "canonical_id": "subject_index-ce2086b2-e4b9-5725-9595-f8e49b44d3ba",
-      "item_index": 50,
-      "json_pointer": "/subject_index/50",
-      "contexts_pointer": "/subject_index/50/contexts",
-      "route": "#v4/subject/list/item/subject/%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C",
-      "pages_count": 12,
+      "entity": "lexicon",
+      "head": "happiness",
+      "canonical_id": "lexicon-35220c98-a167-5693-99e3-7e936b9518ba",
+      "item_index": 77,
+      "json_pointer": "/lexicon/77",
+      "contexts_pointer": "/lexicon/77/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/happiness",
+      "pages_count": 1,
       "pages": [
-        90,
-        93,
-        94,
-        95,
-        96,
-        97,
-        102,
-        117,
-        119,
-        120,
-        168,
-        169
+        172
       ],
       "pages_to_check": [
-        90,
-        93,
-        94,
-        95,
-        96,
-        97,
-        102,
-        117,
-        119,
-        120
+        172
       ],
-      "pages_summary": "12 pages; first: 90, 93, 94, 95, 96",
-      "priority_score": 107,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
+      "pages_summary": "172",
+      "priority_score": 101,
+      "priority_tier": "medium",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "90": [],
-          "93": [],
-          "94": [],
-          "95": [],
-          "96": [],
-          "97": [],
-          "102": [],
-          "117": [],
-          "119": [],
-          "120": []
+          "172": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -519,12 +428,105 @@
       "rank": 14,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "'ada",
-      "canonical_id": "lexicon-7992c27c-145a-5c05-b16a-83a4b4cb3f3a",
-      "item_index": 0,
-      "json_pointer": "/lexicon/0",
-      "contexts_pointer": "/lexicon/0/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%27ada",
+      "head": "happy",
+      "canonical_id": "lexicon-85da163f-60b4-5845-8637-be66363d67f9",
+      "item_index": 78,
+      "json_pointer": "/lexicon/78",
+      "contexts_pointer": "/lexicon/78/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/happy",
+      "pages_count": 1,
+      "pages": [
+        172
+      ],
+      "pages_to_check": [
+        172
+      ],
+      "pages_summary": "172",
+      "priority_score": 101,
+      "priority_tier": "medium",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "172": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 15,
+      "status": "needs_source_context",
+      "entity": "lexicon",
+      "head": "haraga",
+      "canonical_id": "lexicon-d6163966-643f-5f3a-a974-5c4bdbda8f91",
+      "item_index": 79,
+      "json_pointer": "/lexicon/79",
+      "contexts_pointer": "/lexicon/79/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/haraga",
+      "pages_count": 1,
+      "pages": [
+        226
+      ],
+      "pages_to_check": [
+        226
+      ],
+      "pages_summary": "226",
+      "priority_score": 101,
+      "priority_tier": "medium",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "226": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 16,
+      "status": "needs_source_context",
+      "entity": "lexicon",
+      "head": "harg",
+      "canonical_id": "lexicon-8b6b50ba-a671-54a8-90a0-063d7712dfbe",
+      "item_index": 80,
+      "json_pointer": "/lexicon/80",
+      "contexts_pointer": "/lexicon/80/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/harg",
+      "pages_count": 1,
+      "pages": [
+        226
+      ],
+      "pages_to_check": [
+        226
+      ],
+      "pages_summary": "226",
+      "priority_score": 101,
+      "priority_tier": "medium",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
+      "source_present": true,
+      "context_snippets": 0,
+      "entry_fields": {
+        "contexts": {
+          "226": []
+        },
+        "source_notes": "",
+        "verification_notes": ""
+      }
+    },
+    {
+      "rank": 17,
+      "status": "needs_source_context",
+      "entity": "lexicon",
+      "head": "horn",
+      "canonical_id": "lexicon-08515e3e-66e0-51ac-a777-7baef203e067",
+      "item_index": 81,
+      "json_pointer": "/lexicon/81",
+      "contexts_pointer": "/lexicon/81/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/horn",
       "pages_count": 1,
       "pages": [
         232
@@ -533,8 +535,8 @@
         232
       ],
       "pages_summary": "232",
-      "priority_score": 106,
-      "priority_tier": "high",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
@@ -547,77 +549,46 @@
       }
     },
     {
-      "rank": 15,
+      "rank": 18,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "̂/öhb.",
-      "canonical_id": "lexicon-bc3a0ab0-2d03-5a53-b7ff-f7957e16deac",
-      "item_index": 1,
-      "json_pointer": "/lexicon/1",
-      "contexts_pointer": "/lexicon/1/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%CC%82%2F%C3%B6hb.",
+      "head": "is",
+      "canonical_id": "lexicon-dcbb3dab-be90-5259-8959-df17596bf003",
+      "item_index": 82,
+      "json_pointer": "/lexicon/82",
+      "contexts_pointer": "/lexicon/82/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/is",
       "pages_count": 1,
       "pages": [
-        230
+        27
       ],
       "pages_to_check": [
-        230
+        27
       ],
-      "pages_summary": "230",
-      "priority_score": 106,
-      "priority_tier": "high",
+      "pages_summary": "27",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "230": []
+          "27": []
         },
         "source_notes": "",
         "verification_notes": ""
       }
     },
     {
-      "rank": 16,
+      "rank": 19,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "̂/slm",
-      "canonical_id": "lexicon-35f4e6cc-393c-5566-8a69-9d8d670765a1",
-      "item_index": 2,
-      "json_pointer": "/lexicon/2",
-      "contexts_pointer": "/lexicon/2/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%CC%82%2Fslm",
-      "pages_count": 1,
-      "pages": [
-        227
-      ],
-      "pages_to_check": [
-        227
-      ],
-      "pages_summary": "227",
-      "priority_score": 106,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: lexicon context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "227": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
-      "rank": 17,
-      "status": "needs_source_context",
-      "entity": "lexicon",
-      "head": "̂/tlb",
-      "canonical_id": "lexicon-8feb354e-2f5d-5a43-aac9-625a9936db22",
-      "item_index": 3,
-      "json_pointer": "/lexicon/3",
-      "contexts_pointer": "/lexicon/3/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%CC%82%2Ftlb",
+      "head": "karnayni",
+      "canonical_id": "lexicon-d36c3bdd-2ee3-5690-bdc1-7bf9c1eaafb2",
+      "item_index": 84,
+      "json_pointer": "/lexicon/84",
+      "contexts_pointer": "/lexicon/84/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/karnayni",
       "pages_count": 1,
       "pages": [
         231
@@ -626,8 +597,8 @@
         231
       ],
       "pages_summary": "231",
-      "priority_score": 106,
-      "priority_tier": "high",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
@@ -640,93 +611,31 @@
       }
     },
     {
-      "rank": 18,
-      "status": "needs_source_context",
-      "entity": "lexicon",
-      "head": "̂lld",
-      "canonical_id": "lexicon-50a8b370-3017-5459-b341-e6076a4bbaae",
-      "item_index": 107,
-      "json_pointer": "/lexicon/107",
-      "contexts_pointer": "/lexicon/107/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%CC%82lld",
-      "pages_count": 1,
-      "pages": [
-        156
-      ],
-      "pages_to_check": [
-        156
-      ],
-      "pages_summary": "156",
-      "priority_score": 106,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: lexicon context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "156": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
-      "rank": 19,
-      "status": "needs_source_context",
-      "entity": "lexicon",
-      "head": "öahaba",
-      "canonical_id": "lexicon-babc3f68-f531-5179-bdcf-6cd505b2ff02",
-      "item_index": 136,
-      "json_pointer": "/lexicon/136",
-      "contexts_pointer": "/lexicon/136/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%C3%B6ahaba",
-      "pages_count": 1,
-      "pages": [
-        230
-      ],
-      "pages_to_check": [
-        230
-      ],
-      "pages_summary": "230",
-      "priority_score": 106,
-      "priority_tier": "high",
-      "priority_reason": "v4.7 top priority: lexicon context expansion.",
-      "source_present": true,
-      "context_snippets": 0,
-      "entry_fields": {
-        "contexts": {
-          "230": []
-        },
-        "source_notes": "",
-        "verification_notes": ""
-      }
-    },
-    {
       "rank": 20,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "öahabal",
-      "canonical_id": "lexicon-57350523-ccee-5fb7-a4f0-eb2e26db4bca",
-      "item_index": 137,
-      "json_pointer": "/lexicon/137",
-      "contexts_pointer": "/lexicon/137/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%C3%B6ahabal",
+      "head": "katäb",
+      "canonical_id": "lexicon-7ed1bc5d-2291-59d2-825e-bb87ddf45872",
+      "item_index": 85,
+      "json_pointer": "/lexicon/85",
+      "contexts_pointer": "/lexicon/85/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/kat%C3%A4b",
       "pages_count": 1,
       "pages": [
-        230
+        218
       ],
       "pages_to_check": [
-        230
+        218
       ],
-      "pages_summary": "230",
-      "priority_score": 106,
-      "priority_tier": "high",
+      "pages_summary": "218",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "230": []
+          "218": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -736,28 +645,28 @@
       "rank": 21,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "ösem",
-      "canonical_id": "lexicon-0725310f-c164-5689-b59d-6afb6853cc9c",
-      "item_index": 142,
-      "json_pointer": "/lexicon/142",
-      "contexts_pointer": "/lexicon/142/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%C3%B6sem",
+      "head": "kätib",
+      "canonical_id": "lexicon-2f2c0f0a-cd54-5806-8d47-9a8bce0d9c0a",
+      "item_index": 88,
+      "json_pointer": "/lexicon/88",
+      "contexts_pointer": "/lexicon/88/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/k%C3%A4tib",
       "pages_count": 1,
       "pages": [
-        255
+        217
       ],
       "pages_to_check": [
-        255
+        217
       ],
-      "pages_summary": "255",
-      "priority_score": 106,
-      "priority_tier": "high",
+      "pages_summary": "217",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "255": []
+          "217": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -767,28 +676,28 @@
       "rank": 22,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "̂Ьновѣі",
-      "canonical_id": "lexicon-071d6e3b-34f2-564a-93a1-4f025128e132",
-      "item_index": 1355,
-      "json_pointer": "/lexicon/1355",
-      "contexts_pointer": "/lexicon/1355/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/%CC%82%D0%AC%D0%BD%D0%BE%D0%B2%D1%A3%D1%96",
+      "head": "katlb",
+      "canonical_id": "lexicon-00e0296a-c1f3-5187-96aa-8ff8d78791f9",
+      "item_index": 90,
+      "json_pointer": "/lexicon/90",
+      "contexts_pointer": "/lexicon/90/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/katlb",
       "pages_count": 1,
       "pages": [
-        295
+        218
       ],
       "pages_to_check": [
-        295
+        218
       ],
-      "pages_summary": "295",
-      "priority_score": 106,
-      "priority_tier": "high",
+      "pages_summary": "218",
+      "priority_score": 101,
+      "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "295": []
+          "218": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -797,53 +706,29 @@
     {
       "rank": 23,
       "status": "needs_source_context",
-      "entity": "subject_index",
-      "head": "ударение",
-      "canonical_id": "subject_index-90fac88c-9294-5339-aa16-4876b2585d5c",
-      "item_index": 68,
-      "json_pointer": "/subject_index/68",
-      "contexts_pointer": "/subject_index/68/contexts",
-      "route": "#v4/subject/list/item/subject/%D1%83%D0%B4%D0%B0%D1%80%D0%B5%D0%BD%D0%B8%D0%B5",
-      "pages_count": 9,
+      "entity": "lexicon",
+      "head": "katuba",
+      "canonical_id": "lexicon-10d95b4a-8d38-51eb-b75e-52a71d3c1723",
+      "item_index": 92,
+      "json_pointer": "/lexicon/92",
+      "contexts_pointer": "/lexicon/92/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/katuba",
+      "pages_count": 1,
       "pages": [
-        15,
-        16,
-        37,
-        68,
-        69,
-        74,
-        100,
-        338,
-        340
+        216
       ],
       "pages_to_check": [
-        15,
-        16,
-        37,
-        68,
-        69,
-        74,
-        100,
-        338,
-        340
+        216
       ],
-      "pages_summary": "9 pages; first: 15, 16, 37, 68, 69",
-      "priority_score": 104,
+      "pages_summary": "216",
+      "priority_score": 101,
       "priority_tier": "medium",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "15": [],
-          "16": [],
-          "37": [],
-          "68": [],
-          "69": [],
-          "74": [],
-          "100": [],
-          "338": [],
-          "340": []
+          "216": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -852,50 +737,29 @@
     {
       "rank": 24,
       "status": "needs_source_context",
-      "entity": "subject_index",
-      "head": "беглая гласная, беглый гласный",
-      "canonical_id": "subject_index-6298284a-ad8f-57bc-88c4-f3d6e1763f23",
-      "item_index": 9,
-      "json_pointer": "/subject_index/9",
-      "contexts_pointer": "/subject_index/9/contexts",
-      "route": "#v4/subject/list/item/subject/%D0%B1%D0%B5%D0%B3%D0%BB%D0%B0%D1%8F%20%D0%B3%D0%BB%D0%B0%D1%81%D0%BD%D0%B0%D1%8F%2C%20%D0%B1%D0%B5%D0%B3%D0%BB%D1%8B%D0%B9%20%D0%B3%D0%BB%D0%B0%D1%81%D0%BD%D1%8B%D0%B9",
-      "pages_count": 8,
+      "entity": "lexicon",
+      "head": "king",
+      "canonical_id": "lexicon-0f407ee6-194f-5d92-8dfe-b65c9c5aef07",
+      "item_index": 94,
+      "json_pointer": "/lexicon/94",
+      "contexts_pointer": "/lexicon/94/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/king",
+      "pages_count": 1,
       "pages": [
-        103,
-        104,
-        341,
-        377,
-        378,
-        379,
-        380,
-        381
+        184
       ],
       "pages_to_check": [
-        103,
-        104,
-        341,
-        377,
-        378,
-        379,
-        380,
-        381
+        184
       ],
-      "pages_summary": "8 pages; first: 103, 104, 341, 377, 378",
-      "priority_score": 103,
+      "pages_summary": "184",
+      "priority_score": 101,
       "priority_tier": "medium",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "103": [],
-          "104": [],
-          "341": [],
-          "377": [],
-          "378": [],
-          "379": [],
-          "380": [],
-          "381": []
+          "184": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -904,50 +768,29 @@
     {
       "rank": 25,
       "status": "needs_source_context",
-      "entity": "subject_index",
-      "head": "бытовая (живая, устная, разговорная) речь",
-      "canonical_id": "subject_index-933591b2-5c80-5c33-ad77-915a76436a9b",
-      "item_index": 13,
-      "json_pointer": "/subject_index/13",
-      "contexts_pointer": "/subject_index/13/contexts",
-      "route": "#v4/subject/list/item/subject/%D0%B1%D1%8B%D1%82%D0%BE%D0%B2%D0%B0%D1%8F%20%28%D0%B6%D0%B8%D0%B2%D0%B0%D1%8F%2C%20%D1%83%D1%81%D1%82%D0%BD%D0%B0%D1%8F%2C%20%D1%80%D0%B0%D0%B7%D0%B3%D0%BE%D0%B2%D0%BE%D1%80%D0%BD%D0%B0%D1%8F%29%20%D1%80%D0%B5%D1%87%D1%8C",
-      "pages_count": 8,
+      "entity": "lexicon",
+      "head": "kitb",
+      "canonical_id": "lexicon-5956612f-de4f-572e-9489-64aac1f47f26",
+      "item_index": 95,
+      "json_pointer": "/lexicon/95",
+      "contexts_pointer": "/lexicon/95/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/kitb",
+      "pages_count": 1,
       "pages": [
-        18,
-        23,
-        45,
-        171,
-        192,
-        193,
-        194,
-        195
+        218
       ],
       "pages_to_check": [
-        18,
-        23,
-        45,
-        171,
-        192,
-        193,
-        194,
-        195
+        218
       ],
-      "pages_summary": "8 pages; first: 18, 23, 45, 171, 192",
-      "priority_score": 103,
+      "pages_summary": "218",
+      "priority_score": 101,
       "priority_tier": "medium",
-      "priority_reason": "v4.7 top priority: subject_index context expansion.",
+      "priority_reason": "v4.7 top priority: lexicon context expansion.",
       "source_present": true,
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "18": [],
-          "23": [],
-          "45": [],
-          "171": [],
-          "192": [],
-          "193": [],
-          "194": [],
-          "195": []
+          "218": []
         },
         "source_notes": "",
         "verification_notes": ""

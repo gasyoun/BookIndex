@@ -58,7 +58,7 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#global-search-results.open .header-search-group').first()).toContainText('\u0418\u0437 \u0436\u0438\u0437\u043d\u0438 \u0441\u043b\u043e\u0432 \u0438 \u044f\u0437\u044b\u043a\u043e\u0432');
 
     const savedScope = await page.evaluate(() => {
-      const raw = localStorage.getItem('zaliznyakiada.ui.v1');
+      const raw = localStorage.getItem('Zalizniakiada.ui.v1');
       return raw ? JSON.parse(raw).globalSearchScope : '';
     });
     expect(savedScope).toBe('corpus');
@@ -201,18 +201,18 @@ test.describe('aaz-index smoke', () => {
 
     const initial = await page.evaluate(() => ({
       dark: document.body.classList.contains('theme-dark'),
-      saved: localStorage.getItem('zaliznyakiada.theme.v1'),
+      saved: localStorage.getItem('Zalizniakiada.theme.v1'),
     }));
     await themeButton.click();
 
     const expectedDark = !initial.dark;
     const expectedSaved = expectedDark ? 'dark' : 'light';
     await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(expectedDark);
-    await expect.poll(() => page.evaluate(() => localStorage.getItem('zaliznyakiada.theme.v1'))).toBe(expectedSaved);
+    await expect.poll(() => page.evaluate(() => localStorage.getItem('Zalizniakiada.theme.v1'))).toBe(expectedSaved);
 
     await page.reload();
     await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(expectedDark);
-    await expect.poll(() => page.evaluate(() => localStorage.getItem('zaliznyakiada.theme.v1'))).toBe(expectedSaved);
+    await expect.poll(() => page.evaluate(() => localStorage.getItem('Zalizniakiada.theme.v1'))).toBe(expectedSaved);
   });
 
   test('dark theme keeps readable contrast on key panels', async ({ page }) => {
@@ -1080,7 +1080,7 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('.scholar-slovo-anchor[data-anchor="sch-slovo-arg-2"]')).toBeVisible();
     await expect(page.locator('#sch-slovo')).toBeVisible();
     await expect(page.locator('text=Что читать дальше')).toBeVisible();
-    await expect(page.locator('#content a[href*="inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017"]').first()).toBeVisible();
+    await expect(page.locator('#content a[href*="inslav.ru/people/Zalizniak-andrey-anatolevich-1935-2017"]').first()).toBeVisible();
   });
 
   test('BibTeX export works for scholar bibliography, further reading and card source', async ({ page }) => {
@@ -1278,7 +1278,7 @@ test.describe('aaz-index smoke', () => {
   test('materials tasks panel stores progress and answer history after reload', async ({ page }) => {
     await page.goto('/aaz-index.html#materials/tasks');
     await page.evaluate(() => {
-      localStorage.removeItem('zaliznyakiada.tasksProgress.v1');
+      localStorage.removeItem('Zalizniakiada.tasksProgress.v1');
     });
     await page.reload();
     await expect(page).toHaveURL(/#(?:v4\/)?materials\/tasks/);
@@ -1294,7 +1294,7 @@ test.describe('aaz-index smoke', () => {
     await expect(historyRows.first()).toBeVisible();
 
     const stored = await page.evaluate(() => {
-      const raw = localStorage.getItem('zaliznyakiada.tasksProgress.v1');
+      const raw = localStorage.getItem('Zalizniakiada.tasksProgress.v1');
       return raw ? JSON.parse(raw) : null;
     });
     expect(stored).toBeTruthy();
@@ -1311,7 +1311,7 @@ test.describe('aaz-index smoke', () => {
   test('materials tasks new pack collapses answer history to single-line summary', async ({ page }) => {
     await page.goto('/aaz-index.html#materials/tasks');
     await page.evaluate(() => {
-      localStorage.removeItem('zaliznyakiada.tasksProgress.v1');
+      localStorage.removeItem('Zalizniakiada.tasksProgress.v1');
     });
     await page.reload();
     await expect(page).toHaveURL(/#(?:v4\/)?materials\/tasks/);
