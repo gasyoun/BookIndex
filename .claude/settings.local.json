@@ -9,7 +9,8 @@
       "Bash(grep -n \"innerText\\\\|textContent.*\\\\${\" v3_app.js)",
       "Bash(git commit *)",
       "Bash(git checkout *)",
-      "Bash(git branch *)"
+      "Bash(git branch *)",
+      "PowerShell(Get-ChildItem src -Recurse -File | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Replace\\(\\(Get-Location\\).Path + \"\\\\\", \"\"\\) })"
     ]
   }
 }
