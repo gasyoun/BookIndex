@@ -90,6 +90,14 @@
       "keys": [
         "scholar"
       ]
+    },
+    {
+      "file": "99-extra.json",
+      "keys": [
+        "semantic_links",
+        "historical_context",
+        "video_catalog"
+      ]
     }
   ],
   "key_order": [
@@ -126,6 +134,9 @@
     "scholar",
     "cross_links",
     "featured_quote",
-    "further_reading"
+    "further_reading",
+    "semantic_links",
+    "historical_context",
+    "video_catalog"
   ]
 }
