@@ -66,5 +66,13 @@
 *   [DONE] **v16.0**: Digital Humanities (Clustering, Network, LOD).
 *   [DONE] **v17.6**: Secret Expedition (Gamification & Secrets).
 
+## Audit Summary
+
+- 0 suspicious heads
+- 0 без triage
+- 0 sort inversions
+- 0 duplicate-head groups
+- найдено 11 из 11 терминов
+
 ---
 👉 **Полная история документации**: [docs/history/](docs/history/)
