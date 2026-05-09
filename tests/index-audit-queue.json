@@ -3,7 +3,7 @@
   "source": "app_data.json",
   "manual_audit": {
     "present": true,
-    "path": "tests\\index-errors.md",
+    "path": "tests/index-errors.md",
     "headings": 3,
     "table_rows": 3,
     "bullet_items": 8,

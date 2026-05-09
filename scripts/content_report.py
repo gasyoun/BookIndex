@@ -395,11 +395,12 @@ def collect_manual_audit_metrics(source: str, data: dict[str, Any]) -> dict[str,
     source_path = Path(source)
     base_dir = source_path.parent if source_path.parent != Path("") else Path(".")
     index_errors_path = base_dir / "tests" / "index-errors.md"
+    index_errors_display_path = index_errors_path.as_posix()
     if not index_errors_path.is_file():
         return {
             "index_errors": {
                 "present": False,
-                "path": str(index_errors_path),
+                "path": index_errors_display_path,
                 "headings": 0,
                 "table_rows": 0,
                 "bullet_items": 0,
@@ -447,7 +448,7 @@ def collect_manual_audit_metrics(source: str, data: dict[str, Any]) -> dict[str,
     return {
         "index_errors": {
             "present": True,
-            "path": str(index_errors_path),
+            "path": index_errors_display_path,
             "headings": sum(1 for line in lines if line.startswith("#")),
             "table_rows": sum(1 for line in lines if line.startswith("|") and not line.startswith("| :")),
             "bullet_items": sum(1 for line in lines if line.lstrip().startswith("* ")),
