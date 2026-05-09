@@ -3554,11 +3554,10 @@ function wireGlobalUI() {
     entitySwitcher.onclick = (e) => {
       const target = e && e.target;
       if (!(target instanceof HTMLElement)) return;
-      const btn = target.closest('.entity-btn[data-entity]');
+      const btn = target.closest('.entity-btn');
       if (!btn) return;
-      const key = btn.dataset.entity;
-      if (!key || !ENTITY_TYPES[key]) return;
-      switchEntity(key);
+      const section = getNavSectionById(btn.dataset.navSection || '');
+      activateNavTarget(btn.dataset.defaultEntity || section.defaultEntity, btn.dataset.defaultTab || section.defaultTab);
     };
   }
 
@@ -3567,11 +3566,21 @@ function wireGlobalUI() {
     tabs.onclick = (e) => {
       const target = e && e.target;
       if (!(target instanceof HTMLElement)) return;
-      const btn = target.closest('.tab[data-tab]');
+      const btn = target.closest('.tab');
       if (!btn) return;
+      if (btn.dataset.action === 'focusGlobalSearch') {
+        const globalInput = document.getElementById('global-search');
+        if (globalInput && typeof globalInput.focus === 'function') {
+          globalInput.focus();
+          if (typeof globalInput.select === 'function') globalInput.select();
+        }
+        return;
+      }
+      const entity = btn.dataset.entity || currentEntity;
       const tab = btn.dataset.tab;
-      if (!tab || !ENTITY_TYPES[currentEntity].tabs.includes(tab)) return;
-      switchTab(tab);
+      if (!entity || !ENTITY_TYPES[entity]) return;
+      if (!tab || !ENTITY_TYPES[entity].tabs.includes(tab)) return;
+      activateNavTarget(entity, tab);
     };
   }
 
@@ -4298,28 +4307,137 @@ function exportWholeSiteMarkdown() {
 // =========================================================
 // ШАПКА: ПЕРЕКЛЮЧАТЕЛИ
 // =========================================================
+const NAV_SECTIONS = Object.freeze([
+  {
+    id: 'home',
+    label: 'Главная',
+    defaultEntity: 'home',
+    defaultTab: 'home',
+    items: [
+      { label: 'Главная', entity: 'home', tab: 'home' },
+    ],
+  },
+  {
+    id: 'indexes',
+    label: 'Указатели',
+    defaultEntity: 'all',
+    defaultTab: 'list',
+    entities: ['all', 'subject', 'names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse'],
+    items: [
+      { label: 'Сводный указатель', entity: 'all', tab: 'list' },
+      { label: 'Предметный', entity: 'subject', tab: 'list' },
+      { label: 'Имена', entity: 'names', tab: 'list' },
+      { label: 'Топонимы', entity: 'toponyms', tab: 'list' },
+      { label: 'Этнонимы', entity: 'ethnonyms', tab: 'list' },
+      { label: 'Языки', entity: 'languages', tab: 'list' },
+      { label: 'Лексика', entity: 'lexicon', tab: 'list' },
+      { label: 'Лексика с конца', entity: 'lexicon_reverse', tab: 'list' },
+    ],
+  },
+  {
+    id: 'materials',
+    label: 'Материалы',
+    defaultEntity: 'materials',
+    defaultTab: 'lectures',
+    items: [
+      { label: 'Лекции', entity: 'materials', tab: 'lectures' },
+      { label: 'Страница лекции', entity: 'materials', tab: 'lecture_pages' },
+      { label: 'Сравнение лекций', entity: 'materials', tab: 'lecture_compare' },
+      { label: 'Что почитать ещё', entity: 'materials', tab: 'further_reading' },
+      { label: 'Корпус', entity: 'materials', tab: 'sources' },
+    ],
+  },
+  {
+    id: 'apparatus',
+    label: 'Аппарат',
+    defaultEntity: 'scholar',
+    defaultTab: 'scholar',
+    items: [
+      { label: 'Профессиональный аппарат', entity: 'scholar', tab: 'scholar' },
+      { label: 'Хронология открытий', entity: 'scholar', tab: 'chronology' },
+      { label: 'Динамика по страницам', entity: 'scholar', tab: 'page_trends' },
+      { label: 'Визуализации', entity: 'scholar', tab: 'viz' },
+    ],
+  },
+  {
+    id: 'tools',
+    label: 'Инструменты',
+    defaultEntity: 'materials',
+    defaultTab: 'kwic',
+    items: [
+      { label: 'Поиск', action: 'focusGlobalSearch' },
+      { label: 'KWIC', entity: 'materials', tab: 'kwic' },
+      { label: 'Глоссарий', entity: 'materials', tab: 'glossary' },
+      { label: 'Галерея лингвистов', entity: 'materials', tab: 'gallery' },
+      { label: 'Русский во времени', entity: 'materials', tab: 'russian_evolution' },
+      { label: 'Фонетические законы', entity: 'materials', tab: 'phonetic_laws' },
+    ],
+  },
+  {
+    id: 'practice',
+    label: 'Практикум',
+    defaultEntity: 'materials',
+    defaultTab: 'tasks',
+    items: [
+      { label: 'Проверьте себя', entity: 'materials', tab: 'tasks' },
+    ],
+  },
+]);
+
+function getNavSectionById(id) {
+  return NAV_SECTIONS.find(section => section.id === id) || NAV_SECTIONS[0];
+}
+
+function getActiveNavSection() {
+  return NAV_SECTIONS.find(section => {
+    if (Array.isArray(section.entities) && section.entities.includes(currentEntity)) return true;
+    return section.items.some(item => item.entity === currentEntity && (!item.tab || item.tab === currentTab));
+  }) || NAV_SECTIONS[0];
+}
+
+function activateNavTarget(entity, tab) {
+  if (!entity || !ENTITY_TYPES[entity]) return;
+  const tabs = ENTITY_TYPES[entity].tabs || [];
+  const nextTab = tabs.includes(tab) ? tab : tabs[0];
+  closeGlobalSearchResults();
+  invalidateVisibleItemsCache();
+  currentEntity = entity;
+  currentTab = nextTab;
+  currentGlossaryTerm = '';
+  currentScholarAnchor = '';
+  pendingScholarAnchor = '';
+  activeFilters.clear();
+  onlyDiscussed = false;
+  onlyQuestionCandidates = false;
+  searchQuery = '';
+  sortMostFrequentFirst = false;
+  selectedItem = null;
+  selectedItemType = null;
+  rightPaneMode = 'histogram';
+  renderEntitySwitcher();
+  renderTabs();
+  renderContent();
+  if (currentEntity === 'scholar' && currentTab === 'viz') {
+    warmupVizCacheInWorker();
+  }
+  syncNavigationState();
+}
+
 function renderEntitySwitcher() {
   const container = document.getElementById('entity-switcher');
   container.innerHTML = '';
   safeSetAttr(container, 'role', 'toolbar');
-  safeSetAttr(container, 'aria-label', 'Entity switcher');
-  const order = ['materials', 'scholar', 'all', 'subject', 'names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse'];
-  for (const key of order) {
-    const conf = ENTITY_TYPES[key];
-    if (!conf) continue;
+  safeSetAttr(container, 'aria-label', 'Основные разделы');
+  const activeSection = getActiveNavSection();
+  for (const section of NAV_SECTIONS) {
     const btn = document.createElement('button');
-    btn.className = 'entity-btn' + (key === currentEntity ? ' active' : '');
-    btn.dataset.entity = key;
-    safeSetAttr(btn, 'aria-pressed', key === currentEntity ? 'true' : 'false');
-    const count = Array.isArray(conf.items) ? conf.items.length : 0;
-    const showCount = !['materials', 'scholar'].includes(key);
-    btn.textContent = conf.title;
-    if (showCount) {
-      const countSpan = document.createElement('span');
-      countSpan.className = 'count';
-      countSpan.textContent = String(count);
-      btn.appendChild(countSpan);
-    }
+    const isActive = section.id === activeSection.id;
+    btn.className = 'entity-btn nav-section-btn' + (isActive ? ' active' : '');
+    btn.dataset.navSection = section.id;
+    if (section.defaultEntity) btn.dataset.defaultEntity = section.defaultEntity;
+    if (section.defaultTab) btn.dataset.defaultTab = section.defaultTab;
+    safeSetAttr(btn, 'aria-pressed', isActive ? 'true' : 'false');
+    btn.textContent = section.label;
     container.appendChild(btn);
   }
 }
@@ -4328,15 +4446,18 @@ function renderTabs() {
   const container = document.getElementById('tabs');
   container.innerHTML = '';
   safeSetAttr(container, 'role', 'tablist');
-  safeSetAttr(container, 'aria-label', 'View tabs');
-  const conf = ENTITY_TYPES[currentEntity];
-  for (const tab of conf.tabs) {
+  safeSetAttr(container, 'aria-label', 'Раздел');
+  const section = getActiveNavSection();
+  for (const item of section.items) {
     const btn = document.createElement('button');
-    btn.className = 'tab' + (tab === currentTab ? ' active' : '');
-    btn.dataset.tab = tab;
+    const isActive = item.entity === currentEntity && (!item.tab || item.tab === currentTab);
+    btn.className = 'tab' + (isActive ? ' active' : '');
+    if (item.entity) btn.dataset.entity = item.entity;
+    if (item.tab) btn.dataset.tab = item.tab;
+    if (item.action) btn.dataset.action = item.action;
     safeSetAttr(btn, 'role', 'tab');
-    safeSetAttr(btn, 'aria-selected', tab === currentTab ? 'true' : 'false');
-    btn.textContent = TAB_LABELS[tab];
+    safeSetAttr(btn, 'aria-selected', isActive ? 'true' : 'false');
+    btn.textContent = item.label;
     container.appendChild(btn);
   }
 }

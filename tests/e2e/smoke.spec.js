@@ -2,12 +2,23 @@ const { test, expect } = require('@playwright/test');
 const fs = require('node:fs/promises');
 
 test.describe('aaz-index smoke', () => {
+  test('index page introduces the project instead of redirecting', async ({ page }) => {
+    await page.goto('/index.html');
+    await expect(page).toHaveURL(/\/index\.html$/);
+    await expect(page.locator('h1')).toHaveText('Зализнякиада');
+    await expect(page.locator('.button.primary')).toHaveAttribute('href', './aaz-index.html#v4/home/home');
+    await expect(page.locator('.route')).toHaveCount(6);
+    await expect(page.locator('body')).toContainText('главным публичным входом');
+  });
+
   test('loads home and renders navigation', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await expect(page.locator('#home-link')).toBeVisible();
-    await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(10);
+    await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(6);
     const firstLevelNav = await page.locator('#entity-switcher .entity-btn').allInnerTexts();
     expect(firstLevelNav.some((text) => /^Корпус\b/.test(text.trim()))).toBe(false);
+    expect(firstLevelNav.join(' ')).toContain('Указатели');
+    expect(firstLevelNav.join(' ')).toContain('Практикум');
     await expect(page.locator('#tabs .tab')).toHaveCount(1);
     await expect(page.locator('#tabs .tab')).toHaveText(/Главная|Home/);
     await expect(page.locator('.home-stats-hero')).toBeVisible();
@@ -153,7 +164,8 @@ test.describe('aaz-index smoke', () => {
   test('desktop header keeps title, search and back button on the same row', async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 768 });
     await page.goto('/aaz-index.html#home/home');
-    await page.locator('.entity-btn[data-entity="names"]').click();
+    await page.locator('.entity-btn[data-nav-section="indexes"]').click();
+    await page.locator('.tab[data-entity="names"][data-tab="list"]').click();
     const backBtn = page.locator('#back-btn');
     await expect(backBtn).toBeVisible();
     const spread = await page.evaluate(() => {
@@ -328,8 +340,8 @@ test.describe('aaz-index smoke', () => {
 
   test('opens name card from list', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
-    await page.locator('.entity-btn[data-entity="names"]').click();
-    await page.locator('.tab[data-tab="list"]').click();
+    await page.locator('.entity-btn[data-nav-section="indexes"]').click();
+    await page.locator('.tab[data-entity="names"][data-tab="list"]').click();
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
     await page.locator('#name-list .name-item').first().click();
     await expect(page.locator('#right-content .card h2')).toBeVisible();
@@ -353,7 +365,8 @@ test.describe('aaz-index smoke', () => {
 
     await page.goto('/aaz-index.html#v4/names/list');
     await expect(page.locator('#breadcrumb-nav')).toHaveCount(0);
-    await expect(page.locator('#entity-switcher .entity-btn.active')).toContainText(/\u0418\u043c\u0435\u043d\u0430/i);
+    await expect(page.locator('#entity-switcher .entity-btn.active')).toContainText(/Указатели/i);
+    await expect(page.locator('#tabs .tab.active')).toContainText(/\u0418\u043c\u0435\u043d\u0430/i);
 
     await page.goto('/aaz-index.html#v4/materials/kwic');
     await expect(page.locator('#breadcrumb-nav')).toHaveCount(0);
@@ -636,7 +649,7 @@ test.describe('aaz-index smoke', () => {
     const input = page.locator('#global-search');
     await input.fill('iv');
     await expect(page.locator('#global-search-results.open .header-search-item').first()).toBeVisible();
-    await page.locator('.entity-btn[data-entity="names"]').click();
+    await page.locator('.entity-btn[data-nav-section="indexes"]').click();
     await expect(page.locator('#global-search-results')).not.toHaveClass(/open/);
   });
 
@@ -894,8 +907,8 @@ test.describe('aaz-index smoke', () => {
 
   test('materials lecture compare tab renders', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
-    await page.locator('.entity-btn[data-entity="materials"]').click();
-    await page.locator('.tab[data-tab="lecture_compare"]').click();
+    await page.locator('.entity-btn[data-nav-section="materials"]').click();
+    await page.locator('.tab[data-entity="materials"][data-tab="lecture_compare"]').click();
     await expect(page.locator('#lecture-compare-a')).toBeVisible();
     await expect(page.locator('#lecture-compare-b')).toBeVisible();
     await expect(page.locator('.lecture-compare-pair[data-a][data-b]').first()).toBeVisible();
@@ -980,8 +993,8 @@ test.describe('aaz-index smoke', () => {
 
   test('scholar page trends renders export controls', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
-    await page.locator('.entity-btn[data-entity="scholar"]').click();
-    await page.locator('.tab[data-tab="page_trends"]').click();
+    await page.locator('.entity-btn[data-nav-section="apparatus"]').click();
+    await page.locator('.tab[data-entity="scholar"][data-tab="page_trends"]').click();
     await expect(page.locator('#trend-start-range')).toBeVisible();
     await expect(page.locator('#trend-end-range')).toBeVisible();
     await expect(page.locator('.page-trends-source-chip')).toContainText('Из жизни слов и языков');
