@@ -329,7 +329,17 @@
           }
         },
         "contexts": {
-          "$ref": "#/$defs/contextMap"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/contextMap"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
         },
         "sources": {
           "type": "array",
