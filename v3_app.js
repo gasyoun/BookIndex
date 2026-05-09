@@ -5677,7 +5677,7 @@ function appendListItemContent(item, it, itemType, showTypeLabel) {
   if (itemType !== 'lexicon_reverse' && currentEntity !== 'all') item.appendChild(bookChip);
   if (itemType !== 'lexicon_reverse') item.appendChild(pagesCount);
 
-  if (itemType === 'subject') {
+  if (itemType === 'subject' && currentEntity !== 'all') {
     const links = buildSubjectCrosslinks(it.head);
     if (links.length) {
       const crosslinks = document.createElement('div');
@@ -5915,6 +5915,7 @@ function getListColumnCount(entity, size) {
     return 1;
   }
   if (entity === 'all') {
+    if (w >= 900) return 2;
     return 1;
   }
   return 1;

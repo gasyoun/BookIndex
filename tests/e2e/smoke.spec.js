@@ -855,7 +855,7 @@ test.describe('aaz-index smoke', () => {
     expect(wrappedInList).toBeGreaterThan(0);
   });
 
-  test('reverse lexicon keeps columns and combined index stays single-line on desktop', async ({ page }) => {
+  test('reverse lexicon keeps columns and combined index uses compact columns on desktop', async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
 
     await page.goto('/aaz-index.html#lexicon_reverse/list');
@@ -872,19 +872,21 @@ test.describe('aaz-index smoke', () => {
       const count = parseInt(window.getComputedStyle(el).columnCount || '1', 10);
       return Number.isFinite(count) ? count : 1;
     });
-    expect(allColumns).toBe(1);
+    expect(allColumns).toBe(2);
     const listState = await page.locator('#name-list').evaluate((el) => {
       const rows = Array.from(el.querySelectorAll('.name-item'));
       const visible = (node) => !!node && getComputedStyle(node).display !== 'none' && getComputedStyle(node).visibility !== 'hidden';
       return {
         visibleBookChips: Array.from(el.querySelectorAll('.list-book-chip')).filter(visible).length,
         visibleTypeTags: Array.from(el.querySelectorAll('.entity-type-tag')).filter(visible).length,
+        visibleCrosslinks: Array.from(el.querySelectorAll('.subject-crosslinks')).filter(visible).length,
         nowrapHeads: rows.slice(0, 120).every((row) => getComputedStyle(row.querySelector('.head')).whiteSpace === 'nowrap'),
         tallRows: rows.slice(0, 120).filter((row) => row.getBoundingClientRect().height > 42).length,
       };
     });
     expect(listState.visibleBookChips).toBe(0);
     expect(listState.visibleTypeTags).toBe(0);
+    expect(listState.visibleCrosslinks).toBe(0);
     expect(listState.nowrapHeads).toBe(true);
     expect(listState.tallRows).toBe(0);
     await expect(page.locator('#name-list .letter-header').first()).toBeVisible();
