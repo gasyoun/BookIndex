@@ -3584,6 +3584,19 @@ function wireGlobalUI() {
     };
   }
 
+  const viewTabs = document.getElementById('view-tabs');
+  if (viewTabs) {
+    viewTabs.onclick = (e) => {
+      const target = e && e.target;
+      if (!(target instanceof HTMLElement)) return;
+      const btn = target.closest('.view-tab');
+      if (!btn) return;
+      const tab = btn.dataset.tab;
+      if (!tab || !ENTITY_TYPES[currentEntity].tabs.includes(tab)) return;
+      switchTab(tab);
+    };
+  }
+
   const input = document.getElementById('global-search');
   const box = document.getElementById('global-search-results');
   const scopeSelect = document.getElementById('global-search-scope');
@@ -4458,6 +4471,34 @@ function renderTabs() {
     safeSetAttr(btn, 'role', 'tab');
     safeSetAttr(btn, 'aria-selected', isActive ? 'true' : 'false');
     btn.textContent = item.label;
+    container.appendChild(btn);
+  }
+  renderViewTabs();
+}
+
+function shouldRenderViewTabs() {
+  const section = getActiveNavSection();
+  if (!section || section.id !== 'indexes') return false;
+  const conf = ENTITY_TYPES[currentEntity];
+  return !!(conf && Array.isArray(conf.tabs) && conf.tabs.length > 1);
+}
+
+function renderViewTabs() {
+  const container = document.getElementById('view-tabs');
+  if (!container) return;
+  container.innerHTML = '';
+  if (!shouldRenderViewTabs()) return;
+  const conf = ENTITY_TYPES[currentEntity];
+  safeSetAttr(container, 'role', 'tablist');
+  safeSetAttr(container, 'aria-label', 'View mode');
+  for (const tab of conf.tabs) {
+    const btn = document.createElement('button');
+    const isActive = tab === currentTab;
+    btn.className = 'view-tab' + (isActive ? ' active' : '');
+    btn.dataset.tab = tab;
+    safeSetAttr(btn, 'role', 'tab');
+    safeSetAttr(btn, 'aria-selected', isActive ? 'true' : 'false');
+    btn.textContent = TAB_LABELS[tab] || tab;
     container.appendChild(btn);
   }
 }

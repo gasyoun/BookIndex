@@ -23,6 +23,7 @@ test.describe('aaz-index smoke', () => {
     expect(firstLevelNav.join(' ')).toContain('Практикум');
     await expect(page.locator('#tabs .tab')).toHaveCount(1);
     await expect(page.locator('#tabs .tab')).toHaveText(/Главная|Home/);
+    await expect(page.locator('#view-tabs .view-tab')).toHaveCount(0);
     await expect(page.locator('.home-stats-hero')).toBeVisible();
     await expect(page.locator('#home-stats-grid .home-stat-cell')).toHaveCount(8);
     const siteDownloadPromise = page.waitForEvent('download');
@@ -377,6 +378,18 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/aaz-index.html#v4/names/list/item/names/' + encodeURIComponent('\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440 \u041c\u0430\u043a\u0435\u0434\u043e\u043d\u0441\u043a\u0438\u0439'));
     await expect(page.locator('#breadcrumb-nav')).toHaveCount(0);
     await expect(page.locator('#right-content .card h2')).toContainText(/\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440/i);
+  });
+
+  test('index pages expose local view modes in a third navigation row', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/names/list');
+    await expect(page.locator('#entity-switcher .entity-btn.active')).toContainText(/\u0423\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u0438/i);
+    await expect(page.locator('#tabs .tab.active')).toContainText(/\u0418\u043c\u0435\u043d\u0430/i);
+    await expect(page.locator('#view-tabs .view-tab')).toHaveCount(6);
+    await expect(page.locator('#view-tabs .view-tab[data-tab="list"]')).toHaveClass(/active/);
+
+    await page.locator('#view-tabs .view-tab[data-tab="graph"]').click();
+    await expect(page).toHaveURL(/#v4\/names\/graph$/);
+    await expect(page.locator('#view-tabs .view-tab[data-tab="graph"]')).toHaveClass(/active/);
   });
 
   test('context autolink renders clickable entity references', async ({ page }) => {

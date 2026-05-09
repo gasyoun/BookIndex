@@ -529,6 +529,14 @@
     flex-wrap: wrap;
     flex-shrink: 0;
   }
+  .view-tabs {
+    display: flex;
+    gap: 3px;
+    margin: -2px 0 7px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+  .view-tabs:empty { display: none; }
   .breadcrumb {
     display: flex;
     flex-wrap: wrap;
@@ -573,6 +581,24 @@
   .tab.active {
     color: #5a3818;
     border-bottom-color: #8a7050;
+    font-weight: bold;
+  }
+  .view-tab {
+    padding: 4px 9px;
+    cursor: pointer;
+    border: 1px solid #d8ccb5;
+    border-radius: 12px;
+    background: #faf5e8;
+    font-family: inherit;
+    font-size: 11px;
+    color: #6a5040;
+    transition: all 0.15s;
+  }
+  .view-tab:hover { background: #f0e8d8; }
+  .view-tab.active {
+    color: #5a3818;
+    border-color: #8a7050;
+    background: #efe3cc;
     font-weight: bold;
   }
 
@@ -4303,13 +4329,13 @@
   header h1, .home-link { color: var(--title); }
   .header-search-item .kind, .footer-meta { color: var(--muted); }
   .home-link:hover { border-bottom-color: var(--line-strong); }
-  .entity-btn, .tab, .back-btn, .header-search input, .header-search-scope, .filter-chip { border-color: var(--line); }
-  .entity-btn, .tab, .back-btn, .header-search-scope, .filter-chip { background: var(--surface-soft); color: var(--title); }
-  .entity-btn:hover, .tab:hover, .filter-chip:hover { background: var(--surface-soft-2); }
+  .entity-btn, .tab, .view-tab, .back-btn, .header-search input, .header-search-scope, .filter-chip { border-color: var(--line); }
+  .entity-btn, .tab, .view-tab, .back-btn, .header-search-scope, .filter-chip { background: var(--surface-soft); color: var(--title); }
+  .entity-btn:hover, .tab:hover, .view-tab:hover, .filter-chip:hover { background: var(--surface-soft-2); }
   .breadcrumb { color: var(--muted); }
   .breadcrumb-link { color: var(--title); }
   .breadcrumb-current { color: var(--title); }
-  .entity-btn.active, .tab.active, .filter-chip.active {
+  .entity-btn.active, .tab.active, .view-tab.active, .filter-chip.active {
     background: var(--title);
     border-color: var(--title);
     color: #fff;
@@ -4348,7 +4374,7 @@
     .back-btn { align-self: flex-start; }
 
     /* Переключатели и вкладки — горизонтальный скролл */
-    .entity-switcher, .tabs {
+    .entity-switcher, .tabs, .view-tabs {
       flex-wrap: nowrap;
       overflow-x: auto;
       overflow-y: hidden;
@@ -4356,14 +4382,15 @@
       scrollbar-width: thin;
       padding-bottom: 4px;
     }
-    .entity-switcher::-webkit-scrollbar, .tabs::-webkit-scrollbar { height: 4px; }
-    .entity-switcher::-webkit-scrollbar-thumb, .tabs::-webkit-scrollbar-thumb {
+    .entity-switcher::-webkit-scrollbar, .tabs::-webkit-scrollbar, .view-tabs::-webkit-scrollbar { height: 4px; }
+    .entity-switcher::-webkit-scrollbar-thumb, .tabs::-webkit-scrollbar-thumb, .view-tabs::-webkit-scrollbar-thumb {
       background: #c4b890; border-radius: 2px;
     }
     .breadcrumb { font-size: 10px; margin-top: 1px; }
     .entity-btn { flex-shrink: 0; padding: 6px 10px; font-size: 11px; }
     .entity-btn .count { display: none; }
     .tab { flex-shrink: 0; padding: 6px 10px; font-size: 11px; }
+    .view-tab { flex-shrink: 0; padding: 5px 9px; font-size: 11px; }
     .home-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .home-fact-pair { grid-template-columns: 1fr; }
 
@@ -4493,6 +4520,7 @@
   </h1>
   <div class="entity-switcher" id="entity-switcher"></div>
   <div class="tabs" id="tabs"></div>
+  <div class="view-tabs" id="view-tabs"></div>
 </header>
 
 <div class="content" id="content"></div>
