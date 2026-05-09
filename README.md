@@ -65,6 +65,7 @@
 | :--- | :--- |
 | [`docs/CODEX_WORKFLOW_RU.md`](docs/CODEX_WORKFLOW_RU.md) | Регламент Codex: scope, issue, проверки, публикация и применимость agent-roadmap-2026 к BookIndex |
 | [`docs/GEMINI_FLASH_WORKFLOW_RU.md`](docs/GEMINI_FLASH_WORKFLOW_RU.md) | Архитектура быстрого контура Gemini Flash: context pack, уровни автономности, проверки и handoff |
+| [`docs/NAVIGATION_RETHINK_RU.md`](docs/NAVIGATION_RETHINK_RU.md) | Предложение новой иерархии верхней навигации: указатели, материалы, аппарат, инструменты и практикум |
 | [`docs/history/`](docs/history/) | Архив исторических документов и предыдущих отчетов |
 
 ---

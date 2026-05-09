@@ -698,7 +698,7 @@ let suppressHashSync = false;
 let expectedHash = null;
 let globalSearchTimer = null;
 let globalSearchActiveIndex = -1;
-let globalSearchScope = 'current';
+let globalSearchScope = 'corpus';
 let pendingGlossaryQuery = '';
 let currentGlossaryTerm = '';
 let pendingScholarAnchor = '';
@@ -712,7 +712,7 @@ let currentKwicPageStart = 1;
 let currentKwicPageEnd = DEFAULT_TOTAL_PAGES;
 let pendingKwicTerm = '';
 const UI_STATE_STORAGE_KEY = 'Zalizniakiada.ui.v1';
-const UI_STATE_SCHEMA_VERSION = 2;
+const UI_STATE_SCHEMA_VERSION = 3;
 const THEME_STORAGE_KEY = 'Zalizniakiada.theme.v1';
 const DENSITY_STORAGE_KEY = 'Zalizniakiada.density.v1';
 const READING_PAGE_STORAGE_KEY = 'Zalizniakiada.readingPage.v1';
@@ -1794,18 +1794,6 @@ function applyTheme(theme) {
 }
 
 function initTheme() {
-  const saved = getSavedTheme();
-  if (saved) {
-    applyTheme(saved);
-    return;
-  }
-  if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
-    try {
-      const dark = !!window.matchMedia('(prefers-color-scheme: dark)').matches;
-      applyTheme(dark ? 'dark' : 'light');
-      return;
-    } catch (e) {}
-  }
   applyTheme('light');
 }
 
@@ -1908,7 +1896,9 @@ function applyViewState(state) {
   renderContent();
   const globalSearchInput = document.getElementById('global-search');
   if (globalSearchInput) globalSearchInput.value = typeof state.globalSearchQuery === 'string' ? state.globalSearchQuery : '';
-  globalSearchScope = normalizeGlobalSearchScope(state.globalSearchScope);
+  globalSearchScope = Object.prototype.hasOwnProperty.call(state, 'globalSearchScope')
+    ? normalizeGlobalSearchScope(state.globalSearchScope)
+    : normalizeGlobalSearchScope(globalSearchScope);
   const globalSearchScopeSelect = document.getElementById('global-search-scope');
   if (globalSearchScopeSelect && 'value' in globalSearchScopeSelect) globalSearchScopeSelect.value = globalSearchScope;
 }
@@ -3269,6 +3259,8 @@ function closeGlobalSearchResults() {
   const box = document.getElementById('global-search-results');
   if (!box) return;
   const input = document.getElementById('global-search');
+  const searchWrap = getGlobalSearchWrap(input);
+  if (searchWrap && searchWrap.classList) searchWrap.classList.remove('search-results-open');
   if (box.classList && typeof box.classList.remove === 'function') {
     box.classList.remove('open');
   } else {
@@ -3281,6 +3273,17 @@ function closeGlobalSearchResults() {
     safeSetAttr(input, 'aria-expanded', 'false');
     safeSetAttr(input, 'aria-activedescendant', '');
   }
+}
+
+function getGlobalSearchWrap(input) {
+  if (input && typeof input.closest === 'function') {
+    const wrap = input.closest('.header-search');
+    if (wrap) return wrap;
+  }
+  if (typeof document !== 'undefined' && typeof document.querySelector === 'function') {
+    return document.querySelector('.header-search');
+  }
+  return null;
 }
 
 function setGlobalSearchActiveItem(box, idx, scrollIntoView = true) {
@@ -3384,6 +3387,7 @@ function renderGlobalSearchEmpty(box, query) {
     return false;
   }
   const input = document.getElementById('global-search');
+  const searchWrap = getGlobalSearchWrap(input);
   const scope = normalizeGlobalSearchScope(globalSearchScope);
   const empty = document.createElement('div');
   empty.className = 'header-search-empty';
@@ -3395,6 +3399,7 @@ function renderGlobalSearchEmpty(box, query) {
   box._matches = [];
   globalSearchActiveIndex = -1;
   box.classList.add('open');
+  if (searchWrap && searchWrap.classList) searchWrap.classList.add('search-results-open');
   if (input) {
     safeSetAttr(input, 'aria-expanded', 'true');
     safeSetAttr(input, 'aria-activedescendant', '');
@@ -3405,6 +3410,7 @@ function renderGlobalSearchEmpty(box, query) {
 function renderGlobalSearchResults(matches, query = '') {
   const box = document.getElementById('global-search-results');
   const input = document.getElementById('global-search');
+  const searchWrap = getGlobalSearchWrap(input);
   if (!box) return;
   if (!matches.length) {
     renderGlobalSearchEmpty(box, query);
@@ -3428,6 +3434,7 @@ function renderGlobalSearchResults(matches, query = '') {
   box._matches = matches;
   globalSearchActiveIndex = -1;
   box.classList.add('open');
+  if (searchWrap && searchWrap.classList) searchWrap.classList.add('search-results-open');
   if (input) safeSetAttr(input, 'aria-expanded', 'true');
   box.querySelectorAll('.header-search-item').forEach(row => {
     row.onclick = () => {
@@ -5652,7 +5659,12 @@ function appendListItemContent(item, it, itemType, showTypeLabel) {
 
   const bookChip = document.createElement('span');
   bookChip.className = 'list-book-chip';
-  bookChip.textContent = getBookLabelForSearch(it.book_id || it.bookId || getActiveBook().book_id);
+  const sourceLabel = getBookLabelForSearch(it.book_id || it.bookId || getActiveBook().book_id);
+  bookChip.textContent = sourceLabel;
+  const hoverParts = [];
+  if (it._entityLabel) hoverParts.push(`Указатель: ${it._entityLabel}`);
+  if (sourceLabel) hoverParts.push(`Источник: ${sourceLabel}`);
+  if (hoverParts.length) safeSetAttr(item, 'title', hoverParts.join('\n'));
 
   if (itemType === 'lexicon_reverse') {
     item.appendChild(pagesCount);
@@ -5660,9 +5672,9 @@ function appendListItemContent(item, it, itemType, showTypeLabel) {
   } else {
     item.appendChild(head);
   }
-  if (showTypeLabel && typeLabel.textContent) item.appendChild(typeLabel);
+  if (showTypeLabel && typeLabel.textContent && currentEntity !== 'all') item.appendChild(typeLabel);
   if (it.is_moderator) item.appendChild(moderatorMark);
-  if (itemType !== 'lexicon_reverse') item.appendChild(bookChip);
+  if (itemType !== 'lexicon_reverse' && currentEntity !== 'all') item.appendChild(bookChip);
   if (itemType !== 'lexicon_reverse') item.appendChild(pagesCount);
 
   if (itemType === 'subject') {
@@ -5903,9 +5915,6 @@ function getListColumnCount(entity, size) {
     return 1;
   }
   if (entity === 'all') {
-    if (size < 180) return 1;
-    if (w >= 1800) return 3;
-    if (w >= 1250) return 2;
     return 1;
   }
   return 1;

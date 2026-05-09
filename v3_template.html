@@ -143,6 +143,10 @@
     max-width: 180px;
     min-width: 150px;
   }
+  .header-search.header-search-inline.search-results-open {
+    flex-basis: 260px;
+    max-width: 260px;
+  }
   .header-search-controls {
     align-items: stretch;
     display: flex;
@@ -164,11 +168,15 @@
     border: 1px solid var(--line);
     border-radius: 4px;
     color: var(--title);
+    display: none;
     flex: 0 0 auto;
     font-family: inherit;
     font-size: 11px;
     min-height: 28px;
     padding: 4px 7px;
+  }
+  .header-search.search-results-open .header-search-scope {
+    display: inline-flex;
   }
   .header-search-results {
     display: none;
@@ -946,7 +954,7 @@
     min-height: 0;
   }
   .name-list[data-entity="all"] {
-    column-gap: 18px;
+    column-gap: 0;
   }
   .letter-header {
     background: #8a7050;
@@ -970,10 +978,10 @@
     min-width: 0;
   }
   .name-list[data-entity="all"] .name-item {
-    align-items: flex-start;
-    gap: 6px;
-    min-height: 32px;
-    padding: 6px 10px;
+    align-items: center;
+    gap: 8px;
+    min-height: 30px;
+    padding: 5px 10px;
   }
   .name-item:hover { background: #fff8e8; }
   .name-item.selected {
@@ -985,6 +993,12 @@
     min-width: 0;
     overflow-wrap: anywhere;
     word-break: normal;
+  }
+  .name-list[data-entity="all"] .name-item .head {
+    overflow: hidden;
+    overflow-wrap: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .name-item-reverse {
     justify-content: flex-end;
@@ -1024,6 +1038,10 @@
     padding: 1px 5px;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .name-list[data-entity="all"] .entity-type-tag,
+  .name-list[data-entity="all"] .list-book-chip {
+    display: none;
   }
   .name-item .cat-dot {
     width: 8px; height: 8px;
@@ -4456,7 +4474,6 @@
     <span class="title-group">
       <a id="home-link" class="home-link" href="#v4/home/home">Зализнякиада (сопроводительный сайт-справочник)</a>
       <button class="back-btn" id="back-btn" type="button">← назад</button>
-      <button class="theme-btn" id="theme-btn" type="button" aria-label="Переключить тему" title="Переключить тему">◐</button>
       <select class="density-select" id="density-select" aria-label="Плотность интерфейса" title="Плотность интерфейса">
         <option value="compact">compact</option>
         <option value="reader">reader</option>
@@ -4468,7 +4485,7 @@
         <input id="global-search" type="text" placeholder="Поиск по сайту…" />
         <select class="header-search-scope" id="global-search-scope" aria-label="Область поиска" title="Область поиска">
           <option value="current">книга</option>
-          <option value="corpus">корпус</option>
+          <option value="corpus" selected>корпус</option>
         </select>
       </div>
       <div class="header-search-results" id="global-search-results"></div>

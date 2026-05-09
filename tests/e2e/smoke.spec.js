@@ -27,7 +27,8 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#corpus-status')).toHaveCount(0);
     await expect(page.locator('#home-howto-details')).toContainText('3 книги');
     await expect(page.locator('#home-howto-details')).toContainText('200 записей');
-    await expect(page.locator('#global-search-scope')).toHaveValue('current');
+    await expect(page.locator('#global-search-scope')).toHaveValue('corpus');
+    await expect(page.locator('#global-search-scope')).toBeHidden();
 
     const corpus = await page.evaluate(() => window.APP_DATA && window.APP_DATA.corpus);
     expect(corpus.active_book_id).toBe('mumintroll');
@@ -44,27 +45,29 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#v4\/names\/list$/);
   });
 
-  test('global search scope can switch between current book and corpus', async ({ page }) => {
+  test('global search defaults to corpus and reveals scope inside results', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/home/home');
     const input = page.locator('#global-search');
     const scope = page.locator('#global-search-scope');
-    await expect(scope).toHaveValue('current');
+    await expect(scope).toHaveValue('corpus');
+    await expect(scope).toBeHidden();
 
     await input.fill('иткин');
     const firstResult = page.locator('#global-search-results.open .header-search-item').first();
     await expect(firstResult).toBeVisible();
+    await expect(scope).toBeVisible();
     await expect(firstResult.locator('.search-meta')).toContainText('Из жизни слов и языков');
-
-    await scope.selectOption('corpus');
-    await expect(scope).toHaveValue('corpus');
-    await expect(firstResult).toBeVisible();
     await expect(page.locator('#global-search-results.open .header-search-group').first()).toContainText('\u0418\u0437 \u0436\u0438\u0437\u043d\u0438 \u0441\u043b\u043e\u0432 \u0438 \u044f\u0437\u044b\u043a\u043e\u0432');
+
+    await scope.selectOption('current');
+    await expect(scope).toHaveValue('current');
+    await expect(firstResult).toBeVisible();
 
     const savedScope = await page.evaluate(() => {
       const raw = localStorage.getItem('Zalizniakiada.ui.v1');
       return raw ? JSON.parse(raw).globalSearchScope : '';
     });
-    expect(savedScope).toBe('corpus');
+    expect(savedScope).toBe('current');
   });
 
   test('corpus sources panel shows books and planned video catalog', async ({ page }) => {
@@ -206,28 +209,22 @@ test.describe('aaz-index smoke', () => {
     }
   });
 
-  test('theme toggle persists after reload', async ({ page }) => {
+  test('theme toggle is removed and the default theme stays light', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
-    const themeButton = page.locator('#theme-btn');
-    await expect(themeButton).toBeVisible();
-
+    await expect(page.locator('#theme-btn')).toHaveCount(0);
     const initial = await page.evaluate(() => ({
       dark: document.body.classList.contains('theme-dark'),
       saved: localStorage.getItem('Zalizniakiada.theme.v1'),
     }));
-    await themeButton.click();
-
-    const expectedDark = !initial.dark;
-    const expectedSaved = expectedDark ? 'dark' : 'light';
-    await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(expectedDark);
-    await expect.poll(() => page.evaluate(() => localStorage.getItem('Zalizniakiada.theme.v1'))).toBe(expectedSaved);
+    expect(initial.dark).toBe(false);
+    expect(initial.saved).toBe('light');
 
     await page.reload();
-    await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(expectedDark);
-    await expect.poll(() => page.evaluate(() => localStorage.getItem('Zalizniakiada.theme.v1'))).toBe(expectedSaved);
+    await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(false);
+    await expect.poll(() => page.evaluate(() => localStorage.getItem('Zalizniakiada.theme.v1'))).toBe('light');
   });
 
-  test('dark theme keeps readable contrast on key panels', async ({ page }) => {
+  test('default theme keeps readable contrast on key panels', async ({ page }) => {
     const contrastFor = async (selector) => page.evaluate((sel) => {
       const node = document.querySelector(sel);
       if (!node) return null;
@@ -305,8 +302,7 @@ test.describe('aaz-index smoke', () => {
     }, selector);
 
     await page.goto('/aaz-index.html#home/home');
-    await page.locator('#theme-btn').click();
-    await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(true);
+    await expect.poll(() => page.evaluate(() => document.body.classList.contains('theme-dark'))).toBe(false);
 
     await page.goto('/aaz-index.html#names/list');
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
@@ -590,10 +586,11 @@ test.describe('aaz-index smoke', () => {
     const scope = page.locator('#global-search-scope');
 
     await input.fill('bookindex-no-such-term');
-    await expect(page.locator('#global-search-results.open .header-search-empty')).toContainText('текущей книге');
-
-    await scope.selectOption('corpus');
     await expect(page.locator('#global-search-results.open .header-search-empty')).toContainText('корпусе');
+    await expect(scope).toBeVisible();
+
+    await scope.selectOption('current');
+    await expect(page.locator('#global-search-results.open .header-search-empty')).toContainText('текущей книге');
   });
 
   test('global search fuzzy-matches typo query', async ({ page }) => {
@@ -858,7 +855,7 @@ test.describe('aaz-index smoke', () => {
     expect(wrappedInList).toBeGreaterThan(0);
   });
 
-  test('reverse lexicon keeps columns and combined index avoids left-menu overlap on desktop', async ({ page }) => {
+  test('reverse lexicon keeps columns and combined index stays single-line on desktop', async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
 
     await page.goto('/aaz-index.html#lexicon_reverse/list');
@@ -875,13 +872,21 @@ test.describe('aaz-index smoke', () => {
       const count = parseInt(window.getComputedStyle(el).columnCount || '1', 10);
       return Number.isFinite(count) ? count : 1;
     });
-    expect(allColumns).toBeGreaterThan(1);
-    expect(allColumns).toBeLessThanOrEqual(2);
-    const maxOverflow = await page.locator('#name-list').evaluate((el) => {
+    expect(allColumns).toBe(1);
+    const listState = await page.locator('#name-list').evaluate((el) => {
       const rows = Array.from(el.querySelectorAll('.name-item'));
-      return rows.slice(0, 120).reduce((max, row) => Math.max(max, row.scrollWidth - row.clientWidth), 0);
+      const visible = (node) => !!node && getComputedStyle(node).display !== 'none' && getComputedStyle(node).visibility !== 'hidden';
+      return {
+        visibleBookChips: Array.from(el.querySelectorAll('.list-book-chip')).filter(visible).length,
+        visibleTypeTags: Array.from(el.querySelectorAll('.entity-type-tag')).filter(visible).length,
+        nowrapHeads: rows.slice(0, 120).every((row) => getComputedStyle(row.querySelector('.head')).whiteSpace === 'nowrap'),
+        tallRows: rows.slice(0, 120).filter((row) => row.getBoundingClientRect().height > 42).length,
+      };
     });
-    expect(maxOverflow).toBeLessThanOrEqual(2);
+    expect(listState.visibleBookChips).toBe(0);
+    expect(listState.visibleTypeTags).toBe(0);
+    expect(listState.nowrapHeads).toBe(true);
+    expect(listState.tallRows).toBe(0);
     await expect(page.locator('#name-list .letter-header').first()).toBeVisible();
   });
 
