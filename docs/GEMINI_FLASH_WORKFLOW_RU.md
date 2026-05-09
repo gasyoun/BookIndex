@@ -220,6 +220,11 @@ Codex:
 
 Этот сценарий нужен, когда Gemini Flash просят не просто оценить header, а подготовить архитектуру изменения верхней навигации. Источник решения: `docs/NAVIGATION_RETHINK_RU.md`.
 
+Опубликованные источники решения:
+
+1. Роль `index.html`: https://github.com/gasyoun/BookIndex/blob/8807dd80a3f67f2ed5a5577a3a48a67392117ced/docs/NAVIGATION_RETHINK_RU.md#L191-L204
+2. Архитектура для Gemini Flash: https://github.com/gasyoun/BookIndex/blob/8807dd80a3f67f2ed5a5577a3a48a67392117ced/docs/GEMINI_FLASH_WORKFLOW_RU.md#L223-L392
+
 Цель изменения:
 
 1. Основным публичным входом становится `index.html`: страница знакомства с книгой, проектом и главными маршрутами.
@@ -384,8 +389,8 @@ Gemini Flash не обязан угадать точные текущие име
 - Корпус/источники: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/corpus/sources
 - Визуализации аппарата: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/viz/module/viz01?century=21
 - Репозиторий: https://github.com/gasyoun/BookIndex
-- Документ решения в репозитории: `docs/NAVIGATION_RETHINK_RU.md`
-- Рабочий регламент Gemini Flash: `docs/GEMINI_FLASH_WORKFLOW_RU.md`
+- Документ решения, роль `index.html`: https://github.com/gasyoun/BookIndex/blob/8807dd80a3f67f2ed5a5577a3a48a67392117ced/docs/NAVIGATION_RETHINK_RU.md#L191-L204
+- Рабочий регламент Gemini Flash, архитектура навигационной реформы: https://github.com/gasyoun/BookIndex/blob/8807dd80a3f67f2ed5a5577a3a48a67392117ced/docs/GEMINI_FLASH_WORKFLOW_RU.md#L223-L392
 
 Задача: подготовь архитектуру изменения верхней навигации так, чтобы главным публичным входом стал `index.html` как страница знакомства с книгой и проектом. Рабочий интерфейс остается в `aaz-index.html#v4/home/home` и получает разделы `Главная / Указатели / Материалы / Аппарат / Инструменты / Практикум`.
 
