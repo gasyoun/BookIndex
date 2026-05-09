@@ -39,12 +39,16 @@
     .hero {
       padding: clamp(28px, 7vw, 74px) clamp(18px, 5vw, 64px) 28px;
       border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, #fffdf8 0%, var(--paper) 100%);
+      background: #fffdf8;
     }
 
     .hero-inner {
       max-width: 980px;
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: clamp(20px, 5vw, 54px);
+      align-items: center;
     }
 
     .eyebrow {
@@ -78,6 +82,51 @@
       gap: 10px;
       margin-top: 26px;
       font-family: Arial, sans-serif;
+    }
+
+    .hero-visual {
+      display: grid;
+      gap: 14px;
+      justify-items: end;
+    }
+
+    .brand-mark {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      box-shadow: 0 14px 34px rgba(68, 44, 24, 0.18);
+    }
+
+    .index-sheet {
+      width: min(260px, 100%);
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 42px rgba(68, 44, 24, 0.12);
+      font-family: Arial, sans-serif;
+    }
+
+    .sheet-title {
+      margin-bottom: 12px;
+      color: var(--accent-strong);
+      font-weight: 700;
+    }
+
+    .sheet-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 8px 0;
+      border-top: 1px solid #eadcc6;
+      color: #40342a;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .sheet-row span:last-child {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
     }
 
     .button {
@@ -156,6 +205,9 @@
     }
 
     @media (max-width: 760px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { justify-items: start; }
+      .brand-mark { width: 72px; height: 72px; }
       .routes { grid-template-columns: 1fr; }
       .hero { padding-top: 30px; }
       .lead { font-size: 18px; }
@@ -166,12 +218,24 @@
   <div class="page">
     <section class="hero">
       <div class="hero-inner">
-        <p class="eyebrow">А. А. Зализняк · «Из жизни слов и языков»</p>
-        <h1>Зализнякиада</h1>
-        <p class="lead">BookIndex помогает входить в книгу не только с первой страницы: через темы, имена, языки, лекции, контексты и научный аппарат.</p>
-        <div class="actions">
-          <a class="button primary" href="./aaz-index.html#v4/home/home">Открыть BookIndex</a>
-          <a class="button secondary" href="./aaz-index.html#v4/all/list">Сводный указатель</a>
+        <div>
+          <p class="eyebrow">А. А. Зализняк · «Из жизни слов и языков»</p>
+          <h1>Зализнякиада</h1>
+          <p class="lead">BookIndex помогает входить в книгу не только с первой страницы: через темы, имена, языки, лекции, контексты и научный аппарат.</p>
+          <div class="actions">
+            <a class="button primary" href="./aaz-index.html#v4/home/home">Открыть BookIndex</a>
+            <a class="button secondary" href="./aaz-index.html#v4/all/list">Сводный указатель</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="BookIndex в миниатюре">
+          <img class="brand-mark" src="./icon-512.svg" alt="BookIndex" width="96" height="96" />
+          <div class="index-sheet" aria-hidden="true">
+            <div class="sheet-title">Что можно открыть</div>
+            <div class="sheet-row"><span>Лекции</span><span>11</span></div>
+            <div class="sheet-row"><span>Сводный указатель</span><span>3376</span></div>
+            <div class="sheet-row"><span>Контексты и KWIC</span><span>поиск</span></div>
+            <div class="sheet-row"><span>Аппарат</span><span>визуализации</span></div>
+          </div>
         </div>
       </div>
     </section>

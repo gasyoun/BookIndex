@@ -6,6 +6,8 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/index.html');
     await expect(page).toHaveURL(/\/index\.html$/);
     await expect(page.locator('h1')).toHaveText('Зализнякиада');
+    await expect(page.locator('.brand-mark')).toHaveAttribute('src', './icon-512.svg');
+    await expect(page.locator('.index-sheet')).toContainText('Сводный указатель');
     await expect(page.locator('.button.primary')).toHaveAttribute('href', './aaz-index.html#v4/home/home');
     await expect(page.locator('.route')).toHaveCount(6);
     await expect(page.locator('body')).toContainText('главным публичным входом');
