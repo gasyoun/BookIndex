@@ -4503,6 +4503,28 @@ function renderViewTabs() {
   }
 }
 
+function renderIndexSectionSummary() {
+  const section = getActiveNavSection();
+  if (!section || section.id !== 'indexes') return '';
+  const chips = section.items
+    .filter(item => item.entity && ENTITY_TYPES[item.entity] && Array.isArray(ENTITY_TYPES[item.entity].items))
+    .map(item => {
+      const conf = ENTITY_TYPES[item.entity];
+      const isActive = item.entity === currentEntity;
+      const count = conf.items.length;
+      return `<span class="index-section-summary-chip${isActive ? ' active' : ''}">
+        <span>${escapeHtml(item.label)}</span>
+        <span class="index-section-summary-count">${count}</span>
+      </span>`;
+    })
+    .join('');
+  if (!chips) return '';
+  return `<div class="index-section-summary" aria-label="Index section summary">
+    <span class="index-section-summary-title">\u0423\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u0438</span>
+    ${chips}
+  </div>`;
+}
+
 function invalidateVisibleItemsCache() {
   visibleItemsCache = null;
 }
@@ -5420,6 +5442,7 @@ function renderListPanel(container) {
     <div class="panel active">
       <div class="list-card-layout${isReverseLexicon ? ' reverse-fullwidth' : ''}">
         <div class="left-pane">
+          ${renderIndexSectionSummary()}
           <div class="filters">
             <div class="filters-top-row">
               <div class="filters-search">

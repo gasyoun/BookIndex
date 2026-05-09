@@ -386,6 +386,8 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#tabs .tab.active')).toContainText(/\u0418\u043c\u0435\u043d\u0430/i);
     await expect(page.locator('#view-tabs .view-tab')).toHaveCount(6);
     await expect(page.locator('#view-tabs .view-tab[data-tab="list"]')).toHaveClass(/active/);
+    await expect(page.locator('.index-section-summary')).toContainText(/\u0423\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u0438/);
+    await expect(page.locator('.index-section-summary-chip.active')).toContainText(/\u0418\u043c\u0435\u043d\u0430/);
 
     await page.locator('#view-tabs .view-tab[data-tab="graph"]').click();
     await expect(page).toHaveURL(/#v4\/names\/graph$/);
