@@ -5,7 +5,9 @@ test.describe('aaz-index smoke', () => {
   test('loads home and renders navigation', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     await expect(page.locator('#home-link')).toBeVisible();
-    await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(11);
+    await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(10);
+    const firstLevelNav = await page.locator('#entity-switcher .entity-btn').allInnerTexts();
+    expect(firstLevelNav.some((text) => /^Корпус\b/.test(text.trim()))).toBe(false);
     await expect(page.locator('#tabs .tab')).toHaveCount(1);
     await expect(page.locator('#tabs .tab')).toHaveText(/Главная|Home/);
     await expect(page.locator('.home-stats-hero')).toBeVisible();
@@ -22,8 +24,9 @@ test.describe('aaz-index smoke', () => {
   test('corpus shell registers current book and accepts book route aliases', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/books/mumintroll/home/home');
     await expect(page.locator('.home-panel')).toBeVisible();
-    await expect(page.locator('#corpus-status .corpus-chip.active')).toContainText('Из жизни слов и языков');
-    await expect(page.locator('#corpus-status')).toContainText('Видео: 200');
+    await expect(page.locator('#corpus-status')).toHaveCount(0);
+    await expect(page.locator('#home-howto-details')).toContainText('3 книги');
+    await expect(page.locator('#home-howto-details')).toContainText('200 записей');
     await expect(page.locator('#global-search-scope')).toHaveValue('current');
 
     const corpus = await page.evaluate(() => window.APP_DATA && window.APP_DATA.corpus);
@@ -66,47 +69,52 @@ test.describe('aaz-index smoke', () => {
 
   test('corpus sources panel shows books and planned video catalog', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/corpus/sources');
+    await expect(page).toHaveURL(/#v4\/materials\/sources$/);
     await expect(page.locator('.corpus-panel')).toBeVisible();
+    await expect(page.locator('#entity-switcher .entity-btn.active')).toContainText('Материалы');
+    await expect(page.locator('#tabs .tab.active')).toContainText('Корпус');
     await expect(page.locator('.corpus-panel-header h2')).toContainText('Источники корпуса');
     await expect(page.locator('.corpus-source-card').filter({ hasText: 'Из жизни слов и языков' })).toBeVisible();
     await expect(page.locator('.corpus-source-card').filter({ hasText: 'Видеокаталог' })).toContainText('тайм-кодами');
     await expect(page.locator('.corpus-metrics-row').first()).toContainText('200');
     const quality = page.locator('.corpus-quality-panel');
-    await expect(quality).toContainText('source coverage');
-    await expect(quality).toContainText('duplicate head groups');
-    await expect(quality).toContainText('v4.7 estimate');
-    await expect(quality).toContainText('~53.7%');
-    await expect(quality).toContainText('queue workflow');
+    await expect(quality).toContainText('Редакторские очереди');
+    await expect(quality).toContainText('покрытие источников');
+    await expect(quality).toContainText('группы дублей');
+    await expect(quality).toContainText('оценка v4.7');
+    await expect(quality).toContainText(/~\d+(?:\.\d+)?%/);
+    await expect(quality).toContainText('очереди');
     await expect(quality).toContainText('100%');
-    await expect(quality).toContainText('effective contexts');
-    await expect(quality).toContainText('24%');
-    await expect(quality).toContainText('inherited contexts');
-    await expect(quality).toContainText('198');
-    await expect(quality).toContainText('context pack');
-    await expect(quality).toContainText('25 targets');
-    await expect(quality.locator('.quality-queue[data-queue="duplicate_heads"] summary')).toContainText('1');
-    await expect(quality.locator('.quality-queue[data-queue="cross_book_duplicate_candidates"] summary')).toContainText('8');
-    await expect(quality.locator('.quality-queue[data-queue="suspicious_heads"] summary')).toContainText('23');
-    await expect(quality.locator('.quality-queue[data-queue="sort_inversions"] summary')).toContainText('22');
-    await expect(quality.locator('.quality-queue[data-queue="needs_page_verification"] summary')).toContainText('6');
+    await expect(quality).toContainText('эффективные контексты');
+    await expect(quality).toContainText('унаследованные контексты');
+    await expect(quality).toContainText('пакет контекстов');
+    await expect(quality).toContainText('25 целей');
+    await expect(quality.locator('.quality-queue[data-queue="duplicate_heads"] summary')).toContainText(/\d+/);
+    await expect(quality.locator('.quality-queue[data-queue="cross_book_duplicate_candidates"] summary')).toContainText(/\d+/);
+    await expect(quality.locator('.quality-queue[data-queue="suspicious_heads"] summary')).toContainText(/\d+/);
+    await expect(quality.locator('.quality-queue[data-queue="sort_inversions"] summary')).toContainText(/\d+/);
+    await expect(quality.locator('.quality-queue[data-queue="needs_page_verification"] summary')).toContainText(/\d+/);
 
     const crossBookQueue = quality.locator('.quality-queue[data-queue="cross_book_duplicate_candidates"]');
     await crossBookQueue.locator('summary').click();
-    await expect(crossBookQueue.locator('.quality-queue-item').first()).toContainText('books: mumintroll, zametki');
+    await expect(crossBookQueue.locator('.quality-queue-item').first()).toContainText('книги: mumintroll, zametki');
 
     const pageQueue = quality.locator('.quality-queue[data-queue="needs_page_verification"]');
     await pageQueue.locator('summary').click();
-    await expect(pageQueue.locator('.quality-queue-item').first()).toContainText('missing page_list');
+    await expect(pageQueue.locator('.quality-queue-item').first()).toContainText('нет в page_list');
 
     const contextQueue = quality.locator('.quality-queue[data-queue="missing_context"]');
     await contextQueue.locator('summary').click();
-    await expect(contextQueue.locator('.quality-queue-item').first()).toContainText('priority: high');
+    await expect(contextQueue.locator('.quality-queue-item').first()).toContainText('приоритет:');
 
-    const duplicateQueue = quality.locator('.quality-queue[data-queue="duplicate_heads"]');
-    await duplicateQueue.locator('summary').click();
-    const duplicateLink = duplicateQueue.locator('.quality-queue-item[href]').first();
-    await expect(duplicateLink).toContainText('Зализняк А. А.');
-    await duplicateLink.click();
+    const queueLink = crossBookQueue.locator('.quality-queue-item[href]').first();
+    await expect(queueLink).toBeVisible();
+    const qualityText = await quality.textContent();
+    expect(qualityText || '').not.toMatch(/source coverage|duplicate head|queue workflow|priority:|books:|missing page_list/i);
+    const sourceBadges = await page.locator('.corpus-source-badge').allTextContents();
+    expect(sourceBadges.join(' ')).toContain('опубликован');
+    expect(sourceBadges.join(' ')).not.toMatch(/\b(active|planned|published)\b/i);
+    await queueLink.click();
     await expect(page.locator('.card')).toBeVisible();
     await expect(page).toHaveURL(/#v4\/names\/list\/item\/names\//);
   });
@@ -149,12 +157,16 @@ test.describe('aaz-index smoke', () => {
       const home = document.getElementById('home-link');
       const search = document.getElementById('global-search');
       const back = document.getElementById('back-btn');
-      const meta = document.querySelector('header h1 .meta-inline');
-      const nodes = [home, search, back, meta].filter(Boolean);
+      const nodes = [home, search, back].filter(Boolean);
       const tops = nodes.map((n) => n.getBoundingClientRect().top);
-      return Math.max(...tops) - Math.min(...tops);
+      const searchWidth = search ? search.getBoundingClientRect().width : 0;
+      return { spread: Math.max(...tops) - Math.min(...tops), searchWidth };
     });
-    expect(spread).toBeLessThan(16);
+    expect(spread.spread).toBeLessThan(16);
+    expect(spread.searchWidth).toBeLessThanOrEqual(220);
+    await expect(page.locator('header h1 .meta-inline')).toHaveCount(0);
+    await expect(page.locator('#corpus-status')).toHaveCount(0);
+    await expect(page.locator('#breadcrumb-nav')).toHaveCount(0);
   });
 
   test('compact viewport smoke has no page-level horizontal overflow', async ({ page }) => {
@@ -339,23 +351,21 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
   });
 
-  test('breadcrumbs render route hierarchy with live links', async ({ page }) => {
+  test('breadcrumb row is removed because primary navigation owns route hierarchy', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/home/home');
-    const nav = page.locator('#breadcrumb-nav');
-    await expect(nav).toContainText(/\u0413\u043b\u0430\u0432\u043d\u0430\u044f/i);
-    await expect(nav.locator('a')).toHaveCount(0);
+    await expect(page.locator('#breadcrumb-nav')).toHaveCount(0);
 
     await page.goto('/aaz-index.html#v4/names/list');
-    await expect(nav.locator('a').first()).toContainText(/\u0413\u043b\u0430\u0432\u043d\u0430\u044f/i);
-    await expect(nav.locator('.breadcrumb-current')).toContainText(/\u0418\u043c\u0435\u043d\u0430/i);
+    await expect(page.locator('#breadcrumb-nav')).toHaveCount(0);
+    await expect(page.locator('#entity-switcher .entity-btn.active')).toContainText(/\u0418\u043c\u0435\u043d\u0430/i);
 
     await page.goto('/aaz-index.html#v4/materials/kwic');
-    await expect(nav).toContainText(/\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b/i);
-    await expect(nav.locator('.breadcrumb-current')).toContainText(/KWIC/);
+    await expect(page.locator('#breadcrumb-nav')).toHaveCount(0);
+    await expect(page.locator('#tabs .tab.active')).toContainText(/KWIC/);
 
     await page.goto('/aaz-index.html#v4/names/list/item/names/' + encodeURIComponent('\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440 \u041c\u0430\u043a\u0435\u0434\u043e\u043d\u0441\u043a\u0438\u0439'));
-    await expect(nav.locator('a')).toHaveCount(2);
-    await expect(nav.locator('.breadcrumb-current')).toContainText(/\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440/i);
+    await expect(page.locator('#breadcrumb-nav')).toHaveCount(0);
+    await expect(page.locator('#right-content .card h2')).toContainText(/\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440/i);
   });
 
   test('context autolink renders clickable entity references', async ({ page }) => {
@@ -848,7 +858,7 @@ test.describe('aaz-index smoke', () => {
     expect(wrappedInList).toBeGreaterThan(0);
   });
 
-  test('reverse lexicon and combined index render in multiple columns on desktop', async ({ page }) => {
+  test('reverse lexicon keeps columns and combined index avoids left-menu overlap on desktop', async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
 
     await page.goto('/aaz-index.html#lexicon_reverse/list');
@@ -866,6 +876,12 @@ test.describe('aaz-index smoke', () => {
       return Number.isFinite(count) ? count : 1;
     });
     expect(allColumns).toBeGreaterThan(1);
+    expect(allColumns).toBeLessThanOrEqual(2);
+    const maxOverflow = await page.locator('#name-list').evaluate((el) => {
+      const rows = Array.from(el.querySelectorAll('.name-item'));
+      return rows.slice(0, 120).reduce((max, row) => Math.max(max, row.scrollWidth - row.clientWidth), 0);
+    });
+    expect(maxOverflow).toBeLessThanOrEqual(2);
     await expect(page.locator('#name-list .letter-header').first()).toBeVisible();
   });
 

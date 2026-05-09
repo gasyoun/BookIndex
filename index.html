@@ -1,11 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BookIndex Vite Entry</title>
+  <meta http-equiv="refresh" content="0; url=./aaz-index.html" />
+  <link rel="canonical" href="./aaz-index.html" />
+  <title>BookIndex</title>
+  <script>
+    const target = new URL('./aaz-index.html', window.location.href);
+    target.search = window.location.search;
+    target.hash = window.location.hash;
+    window.location.replace(target.href);
+  </script>
 </head>
 <body>
-  <p>BookIndex Vite entrypoint placeholder.</p>
+  <p><a href="./aaz-index.html">Open BookIndex</a></p>
 </body>
 </html>

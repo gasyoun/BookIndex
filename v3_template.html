@@ -104,16 +104,6 @@
   .title-group .back-btn {
     margin-left: auto;
   }
-  header h1 .meta-inline {
-    font-size: 12px;
-    color: #888;
-    font-style: italic;
-    font-weight: normal;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-  }
   .home-link {
     color: inherit;
     text-decoration: none;
@@ -148,9 +138,9 @@
     flex: 1 1 auto;
   }
   .header-search.header-search-inline {
-    flex: 0 0 360px;
-    max-width: 360px;
-    min-width: 260px;
+    flex: 0 0 180px;
+    max-width: 180px;
+    min-width: 150px;
   }
   .header-search-controls {
     align-items: stretch;
@@ -954,6 +944,9 @@
     border-radius: 4px;
     min-height: 0;
   }
+  .name-list[data-entity="all"] {
+    column-gap: 18px;
+  }
   .letter-header {
     background: #8a7050;
     color: white;
@@ -973,13 +966,25 @@
     gap: 8px;
     transition: background 0.1s;
     font-size: 13px;
+    min-width: 0;
+  }
+  .name-list[data-entity="all"] .name-item {
+    align-items: flex-start;
+    gap: 6px;
+    min-height: 32px;
+    padding: 6px 10px;
   }
   .name-item:hover { background: #fff8e8; }
   .name-item.selected {
     background: #f0e8d8;
     font-weight: bold;
   }
-  .name-item .head { flex: 1; }
+  .name-item .head {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
   .name-item-reverse {
     justify-content: flex-end;
     text-align: right;
@@ -1003,6 +1008,7 @@
   .name-item .head.discussed { font-weight: bold; }
   .name-item .pages-count {
     color: #888;
+    flex: 0 0 auto;
     font-size: 11px;
   }
   .name-item .list-book-chip {
@@ -3659,6 +3665,7 @@
   /* Сводный словник: тип сущности рядом с именем */
   .entity-type-tag {
     display: inline-block;
+    flex: 0 0 auto;
     padding: 1px 6px;
     background: #e8dfc5;
     color: #6a5040;
@@ -4275,7 +4282,7 @@
   html, body { background: var(--bg); color: var(--text); }
   header { border-bottom-color: var(--line-strong); }
   header h1, .home-link { color: var(--title); }
-  header h1 .meta-inline, .header-search-item .kind, .footer-meta { color: var(--muted); }
+  .header-search-item .kind, .footer-meta { color: var(--muted); }
   .home-link:hover { border-bottom-color: var(--line-strong); }
   .entity-btn, .tab, .back-btn, .header-search input, .header-search-scope, .filter-chip { border-color: var(--line); }
   .entity-btn, .tab, .back-btn, .header-search-scope, .filter-chip { background: var(--surface-soft); color: var(--title); }
@@ -4314,7 +4321,6 @@
   @media (max-width: 900px) {
     body { padding: 8px 10px; }
     header h1 { font-size: 16px; gap: 6px; flex-wrap: wrap; align-items: flex-start; }
-    header h1 .meta-inline { font-size: 10px; display: inline; width: auto; flex: 1 1 auto; min-width: 0; }
     .title-group { gap: 6px; flex: 1 1 100%; flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
     .title-group .home-link { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
     .title-group .back-btn { flex: 0 0 auto; }
@@ -4448,7 +4454,6 @@
   <h1>
     <span class="title-group">
       <a id="home-link" class="home-link" href="#v4/home/home">Зализнякиада (сопроводительный сайт-справочник)</a>
-      <span class="meta-inline">А. А. Зализняк. Из жизни слов и языков · Альпина нон-фикшн, 2026 · 424 с.</span>
       <button class="back-btn" id="back-btn" type="button">← назад</button>
       <button class="theme-btn" id="theme-btn" type="button" aria-label="Переключить тему" title="Переключить тему">◐</button>
       <select class="density-select" id="density-select" aria-label="Плотность интерфейса" title="Плотность интерфейса">
@@ -4459,7 +4464,7 @@
     </span>
     <div class="header-search header-search-inline">
       <div class="header-search-controls">
-        <input id="global-search" type="text" placeholder="Глобальный поиск: имя, язык, топоним, термин, лекция…" />
+        <input id="global-search" type="text" placeholder="Поиск по сайту…" />
         <select class="header-search-scope" id="global-search-scope" aria-label="Область поиска" title="Область поиска">
           <option value="current">книга</option>
           <option value="corpus">корпус</option>
@@ -4468,10 +4473,8 @@
       <div class="header-search-results" id="global-search-results"></div>
     </div>
   </h1>
-  <div class="corpus-status" id="corpus-status" aria-label="Корпус и текущий источник"></div>
   <div class="entity-switcher" id="entity-switcher"></div>
   <div class="tabs" id="tabs"></div>
-  <nav class="breadcrumb" id="breadcrumb-nav" aria-label="Навигация"></nav>
 </header>
 
 <div class="content" id="content"></div>
