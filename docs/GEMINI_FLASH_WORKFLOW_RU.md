@@ -216,7 +216,183 @@ Codex:
 2. Собирает `aaz-index.html`.
 3. Проверяет маршруты.
 
-### 6.3 Корпус и источники
+### 6.3 Навигационная реформа по `docs/NAVIGATION_RETHINK_RU.md`
+
+Этот сценарий нужен, когда Gemini Flash просят не просто оценить header, а подготовить архитектуру изменения верхней навигации. Источник решения: `docs/NAVIGATION_RETHINK_RU.md`.
+
+Цель изменения:
+
+1. Основным публичным входом становится `index.html`: страница знакомства с книгой, проектом и главными маршрутами.
+2. `aaz-index.html#v4/home/home` остается основным рабочим интерфейсом приложения с новой иерархией `Главная / Указатели / Материалы / Аппарат / Инструменты / Практикум`.
+3. Все существующие hash-route сохраняются; меняется навигационная группировка, а не смысл адресов.
+4. `Корпус` не возвращается в первый уровень: он остается последним подпунктом в `Материалы`.
+
+Архитектура изменения:
+
+```text
+route state
+  -> index.html объясняет книгу и проект
+  -> главная кнопка открывает aaz-index.html#v4/home/home
+  -> SPA определяет текущий смысловой раздел
+  -> показывает компактный первый уровень
+  -> показывает локальный второй уровень выбранного раздела
+  -> оставляет рабочий контент прежнего route
+  -> сохраняет совместимость старых hash
+```
+
+Рекомендуемая модель данных:
+
+```js
+const NAV_SECTIONS = [
+  {
+    id: 'home',
+    label: 'Главная',
+    defaultHash: '#v4/home/home',
+    items: [
+      { label: 'Как пользоваться', hash: '#v4/home/home', anchor: 'howto' },
+      { label: 'Книга в цифрах', hash: '#v4/home/home', anchor: 'stats' }
+    ]
+  },
+  {
+    id: 'indexes',
+    label: 'Указатели',
+    defaultHash: '#v4/all/list',
+    items: [
+      { label: 'Сводный указатель', hash: '#v4/all/list' },
+      { label: 'Предметный', hash: '#v4/subject/list' },
+      { label: 'Имена', hash: '#v4/names/list' },
+      { label: 'Топонимы', hash: '#v4/toponyms/list' },
+      { label: 'Этнонимы', hash: '#v4/ethnonyms/list' },
+      { label: 'Языки', hash: '#v4/languages/list' },
+      { label: 'Лексика', hash: '#v4/lexicon/list' },
+      { label: 'Лексика с конца', hash: '#v4/lexicon_reverse/list' }
+    ]
+  },
+  {
+    id: 'materials',
+    label: 'Материалы',
+    defaultHash: '#v4/materials/lectures',
+    items: [
+      { label: 'Лекции', hash: '#v4/materials/lectures' },
+      { label: 'Страница лекции', hash: '#v4/materials/lecture_pages' },
+      { label: 'Сравнение лекций', hash: '#v4/materials/lecture_compare' },
+      { label: 'Что почитать ещё', hash: '#v4/materials/further_reading' },
+      { label: 'Корпус', hash: '#v4/corpus/sources' }
+    ]
+  },
+  {
+    id: 'apparatus',
+    label: 'Аппарат',
+    defaultHash: '#v4/scholar/scholar',
+    items: [
+      { label: 'Профессиональный аппарат', hash: '#v4/scholar/scholar' },
+      { label: 'Хронология открытий', hash: '#v4/scholar/chronology' },
+      { label: 'Динамика по страницам', hash: '#v4/scholar/page_trends' },
+      { label: 'Визуализации', hash: '#v4/scholar/viz' }
+    ]
+  },
+  {
+    id: 'tools',
+    label: 'Инструменты',
+    defaultHash: '#v4/materials/kwic',
+    items: [
+      { label: 'Поиск', action: 'focusGlobalSearch' },
+      { label: 'KWIC', hash: '#v4/materials/kwic' },
+      { label: 'Глоссарий', hash: '#v4/materials/glossary' },
+      { label: 'Галерея лингвистов', hash: '#v4/materials/gallery' },
+      { label: 'Русский во времени', hash: '#v4/materials/russian_evolution' },
+      { label: 'Фонетические законы', hash: '#v4/materials/phonetic_laws' }
+    ]
+  },
+  {
+    id: 'practice',
+    label: 'Практикум',
+    defaultHash: '#v4/materials/tasks',
+    items: [
+      { label: 'Проверьте себя', hash: '#v4/materials/tasks' }
+    ]
+  }
+];
+```
+
+Gemini Flash не обязан угадать точные текущие имена tabs/routes. Его задача - выдать проверяемую карту соответствий "старый route -> новый раздел -> локальный пункт" и отметить места, где нужен Codex-inspection.
+
+Файловые границы для плана:
+
+1. `v3_app.js` - route parsing, active section detection, click handlers, сохранение state.
+2. `v3_template.html` - CSS/markup верхней навигации, если структура header живет в шаблоне.
+3. `aaz-index.html` - только rebuild-артефакт после `npm run build`, не ручная правка.
+4. `index.html` - главная публичная вводная страница; не превращать в дубль рабочего приложения, держать коротким и ведущим в рабочий маршрут.
+5. `tests/e2e/smoke.spec.js` - smoke-критерии для desktop/mobile, route compatibility и отсутствия наложений.
+6. `docs/NAVIGATION_RETHINK_RU.md` - источник продуктового решения.
+
+Порядок внедрения:
+
+1. Inventory: составить таблицу всех текущих top-level кнопок, tabs и hash-route.
+2. Mapping: разложить их по шести новым разделам; спорные пункты пометить как `needs human decision`.
+3. State: описать функцию `getNavSectionForRoute(route)` и fallback для неизвестного route.
+4. Render: первый уровень всегда короткий; второй уровень рендерится только для активного раздела.
+5. Landing: `index.html` становится главным знакомством с книгой и ведет в `aaz-index.html#v4/home/home`.
+6. Cleanup: убрать счетчики и длинные labels из кнопок первого уровня; перенести их в summary внутри разделов.
+7. Verification: дать route smoke-list и ожидания для каждого экрана.
+
+Критерии готовности:
+
+1. На desktop первый уровень помещается в одну строку без наложений.
+2. На mobile первый уровень не создает горизонтальный overflow и не перекрывает поиск.
+3. `Корпус` отсутствует в первом уровне и доступен внутри `Материалы`.
+4. `Сводный указатель` доступен как основной пункт раздела `Указатели`.
+5. Старые route вроде `#v4/all/list`, `#v4/lexicon/list`, `#v4/scholar/viz/module/viz01?century=21` продолжают открываться.
+6. `index.html` не показывает placeholder: это главный публичный intro, но не рабочий SPA-интерфейс.
+7. Нет дублирования "первый уровень + breadcrumbs + локальные tabs" там, где локальная навигация уже объясняет позицию пользователя.
+
+Формат ответа Gemini Flash для этой задачи:
+
+```md
+## Navigation Mapping
+| Current item/route | New section | Local item | Notes |
+|---|---|---|---|
+
+## Implementation Plan
+1. ...
+
+## Files
+- `v3_app.js`: ...
+- `v3_template.html`: ...
+- `index.html`: ...
+- `tests/e2e/smoke.spec.js`: ...
+
+## Smoke Routes
+- `aaz-index.html#v4/home/home`: ...
+- `aaz-index.html#v4/all/list`: ...
+- `aaz-index.html#v4/corpus/sources`: ...
+- `aaz-index.html#v4/scholar/viz/module/viz01?century=21`: ...
+
+## Risks
+- ...
+```
+
+Минимальный prompt для Gemini Flash:
+
+```md
+Ты помогаешь BookIndex как быстрый UX-архитектор. Используй `docs/NAVIGATION_RETHINK_RU.md` как источник решения.
+
+Ссылки:
+- Главный публичный вход: https://gasyoun.github.io/BookIndex/index.html
+- Рабочий интерфейс: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/home/home
+- Сводный указатель: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/all/list
+- Корпус/источники: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/corpus/sources
+- Визуализации аппарата: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/viz/module/viz01?century=21
+- Репозиторий: https://github.com/gasyoun/BookIndex
+- Документ решения в репозитории: `docs/NAVIGATION_RETHINK_RU.md`
+- Рабочий регламент Gemini Flash: `docs/GEMINI_FLASH_WORKFLOW_RU.md`
+
+Задача: подготовь архитектуру изменения верхней навигации так, чтобы главным публичным входом стал `index.html` как страница знакомства с книгой и проектом. Рабочий интерфейс остается в `aaz-index.html#v4/home/home` и получает разделы `Главная / Указатели / Материалы / Аппарат / Инструменты / Практикум`.
+
+Не предлагай ломать существующие hash-route. Не выноси `Корпус` в первый уровень. Не добавляй счетчики в labels верхнего меню. Не превращай `index.html` в дубль рабочего приложения: это вводная страница с главной кнопкой перехода в рабочий интерфейс. Дай mapping, план внедрения, файлы, smoke-route и риски.
+```
+
+### 6.4 Корпус и источники
 
 Gemini Flash:
 
@@ -230,7 +406,7 @@ Codex:
 2. Запускает content validation.
 3. Не меняет факты без источника.
 
-### 6.4 Визуализации
+### 6.5 Визуализации
 
 Gemini Flash:
 
@@ -352,4 +528,5 @@ Scope:
 2. Первичный фокус: документация, редакторские очереди, UX-аудит, smoke-checklists.
 3. Для данных и UI Flash может предлагать, но не утверждать финальный diff.
 4. Источником правды остаются репозиторий, валидаторы, GitHub Actions и опубликованный GitHub Pages маршрут.
-5. Следующее практическое действие: начать с одного ручного context pack для реальной задачи и сохранить результат как пример в issue или отдельном отчете.
+5. Навигационную реформу вести через отдельный context pack: `docs/NAVIGATION_RETHINK_RU.md` + route mapping + smoke-list.
+6. Следующее практическое действие: начать с одного ручного context pack для реальной задачи и сохранить результат как пример в issue или отдельном отчете.
