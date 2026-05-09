@@ -67,6 +67,8 @@ python runtime_test.py                    # 21/21 runtime smoke
 npm run check                             # typecheck + check:js + check:ui + check:e2e
 ```
 
+The optional Gemini Flash workflow is documented in `docs/GEMINI_FLASH_WORKFLOW_RU.md`. Treat Gemini Flash as a fast analysis/drafting loop only: context pack in, findings/checks/risks out, with all file edits and publishing still going through Codex, local diffs, and the checks above.
+
 `runtime_test.py` runs JS in Node with a DOM stub and exercises 21 critical functions including all card types, all visualizations, and the materials tabs. A failure prints the offending function name. `npm run check:ui` enforces the inline-style policy via `scripts/check_inline_styles.mjs`.
 
 ## E2E (Playwright)

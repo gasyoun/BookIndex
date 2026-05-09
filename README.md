@@ -59,6 +59,16 @@
 
 ---
 
+## Рабочая документация
+
+| Документ | Назначение |
+| :--- | :--- |
+| [`docs/CODEX_WORKFLOW_RU.md`](docs/CODEX_WORKFLOW_RU.md) | Регламент Codex: scope, issue, проверки, публикация и применимость agent-roadmap-2026 к BookIndex |
+| [`docs/GEMINI_FLASH_WORKFLOW_RU.md`](docs/GEMINI_FLASH_WORKFLOW_RU.md) | Архитектура быстрого контура Gemini Flash: context pack, уровни автономности, проверки и handoff |
+| [`docs/history/`](docs/history/) | Архив исторических документов и предыдущих отчетов |
+
+---
+
 ## История версий (Major Milestones)
 *   [DONE] **v13.0**: Modular Transformation (Monolith → ESM).
 *   [DONE] **v14.0**: Professional Apparatus (Glosses, Isoglosses, Etymology).
