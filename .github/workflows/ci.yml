@@ -55,7 +55,7 @@ jobs:
 
       - name: Ensure manual audit queue is in sync
         run: |
-          python scripts/content_report.py app_data.json --write-manual-audit tests/index-audit-queue.json
+          python scripts/content_report.py app_data.json --write-quality-queue tests/index-audit-queue.json
           git diff --exit-code -- tests/index-audit-queue.json
 
       - name: Ensure split modules are in sync
