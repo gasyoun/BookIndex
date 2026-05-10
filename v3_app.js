@@ -1754,47 +1754,18 @@ function recordTaskAnswer(task, selectedOption, isCorrect) {
   return progress;
 }
 
-function getSavedTheme() {
-  if (typeof localStorage === 'undefined') return null;
-  try {
-    const raw = localStorage.getItem(THEME_STORAGE_KEY);
-    return raw === 'dark' || raw === 'light' ? raw : null;
-  } catch (e) {
-    return null;
-  }
-}
-
-function bodyHasDarkTheme() {
-  if (typeof document === 'undefined' || !document.body) return false;
-  const body = document.body;
-  if (body.classList && typeof body.classList.contains === 'function') return body.classList.contains('theme-dark');
-  return String(body.className || '').split(/\s+/).includes('theme-dark');
-}
-
-function applyTheme(theme) {
+function initTheme() {
   if (typeof document === 'undefined' || !document.body) return;
-  const isDark = theme === 'dark';
   const body = document.body;
-  if (body.classList && typeof body.classList.toggle === 'function') {
-    body.classList.toggle('theme-dark', isDark);
+  if (body.classList && typeof body.classList.remove === 'function') {
+    body.classList.remove('theme-dark');
   } else {
     const parts = String(body.className || '').split(/\s+/).filter(Boolean).filter(c => c !== 'theme-dark');
-    if (isDark) parts.push('theme-dark');
     body.className = parts.join(' ');
   }
   if (typeof localStorage !== 'undefined') {
-    try { localStorage.setItem(THEME_STORAGE_KEY, isDark ? 'dark' : 'light'); } catch (e) {}
+    try { localStorage.setItem(THEME_STORAGE_KEY, 'light'); } catch (e) {}
   }
-  const btn = document.getElementById('theme-btn');
-  if (btn) {
-    btn.textContent = isDark ? '☀' : '◐';
-    btn.title = isDark ? 'Светлая тема' : 'Тёмная тема';
-    btn.setAttribute('aria-label', btn.title);
-  }
-}
-
-function initTheme() {
-  applyTheme('light');
 }
 
 function prefersReducedMotion() {
@@ -1804,10 +1775,6 @@ function prefersReducedMotion() {
   } catch (e) {
     return false;
   }
-}
-
-function toggleTheme() {
-  applyTheme(bodyHasDarkTheme() ? 'light' : 'dark');
 }
 
 function normalizeDensityMode(mode) {
@@ -3530,8 +3497,6 @@ function wireGlobalUI() {
   wireGraphWorkersLifecycle();
   const backBtn = document.getElementById('back-btn');
   if (backBtn) backBtn.onclick = () => goBackInApp();
-  const themeBtn = document.getElementById('theme-btn');
-  if (themeBtn) themeBtn.onclick = () => toggleTheme();
   const densitySelect = document.getElementById('density-select');
   if (densitySelect) {
     if ('value' in densitySelect) densitySelect.value = getSavedDensityMode() || 'research';
