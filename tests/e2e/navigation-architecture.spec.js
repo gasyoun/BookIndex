@@ -119,4 +119,46 @@ test.describe('navigation architecture contract', () => {
       }
     });
   }
+
+  test('stale saved corpus section state falls back to the new first-level hierarchy', async ({ page }) => {
+    await page.goto('/aaz-index.html');
+    await page.evaluate(() => {
+      localStorage.setItem('Zalizniakiada.ui.v1', JSON.stringify({
+        version: 3,
+        currentEntity: 'corpus',
+        currentTab: 'sources',
+        selectedItem: null,
+        selectedItemType: null,
+        rightPaneMode: 'histogram',
+        currentLecture: 0,
+        lectureCompareA: 1,
+        lectureCompareB: 2,
+        trendsRangeStart: 1,
+        trendsRangeEnd: 424,
+        searchQuery: '',
+        sortMostFrequentFirst: false,
+        onlyDiscussed: false,
+        onlyQuestionCandidates: false,
+        currentGlossaryTerm: '',
+        currentScholarAnchor: '',
+        currentKwicSource: 'lexicon',
+        currentKwicQuery: '',
+        currentKwicSort: 'left',
+        currentKwicPageStart: 1,
+        currentKwicPageEnd: 424,
+        activeFilters: [],
+        globalSearchQuery: '',
+        globalSearchScope: 'corpus',
+      }));
+    });
+
+    await page.goto('/aaz-index.html');
+    await expect(page).toHaveURL(/#v4\/home\/home$/);
+    await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(6);
+    await expect(page.locator('#entity-switcher .entity-btn.active')).toContainText(/Главная/i);
+    await expect(page.locator('#tabs .tab')).toHaveCount(0);
+
+    const firstLevelNav = await page.locator('#entity-switcher .entity-btn').allInnerTexts();
+    expect(firstLevelNav.some((text) => /^Корпус\b/.test(text.trim()))).toBe(false);
+  });
 });

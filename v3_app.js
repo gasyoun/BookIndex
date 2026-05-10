@@ -395,11 +395,6 @@ function initEntityTypes() {
     items: [],
     tabs: ['home'],
   },
-  corpus: {
-    title: 'Корпус',
-    items: [],
-    tabs: ['sources'],
-  },
   materials: {
     title: 'Материалы',
     items: [],
@@ -2058,36 +2053,6 @@ function updateBackButton() {
   btn.style.display = historyStack.length > 1 ? 'inline-flex' : 'none';
 }
 
-function renderCorpusStatus() {
-  const host = document.getElementById('corpus-status');
-  if (!host) return;
-  host.innerHTML = '';
-  const activeBook = getActiveBook();
-  const books = getCorpusBooks();
-  const videoCatalog = getPlannedVideoCatalogSource();
-
-  const bookChip = document.createElement('span');
-  bookChip.className = 'corpus-chip active';
-  bookChip.textContent = `${activeBook.title || 'Текущая книга'} · ${activeBook.author || 'А. А. Зализняк'}`;
-  safeSetAttr(bookChip, 'title', `Текущий источник: ${activeBook.title || activeBook.book_id}`);
-  host.appendChild(bookChip);
-
-  const scopeChip = document.createElement('span');
-  scopeChip.className = 'corpus-chip';
-  scopeChip.textContent = books.length > 1 ? `Корпус: ${books.length} книг` : 'Корпус: 1 книга';
-  safeSetAttr(scopeChip, 'title', 'Будущая точка переключения между книгой и всем корпусом');
-  host.appendChild(scopeChip);
-
-  if (videoCatalog) {
-    const videoChip = document.createElement('span');
-    videoChip.className = 'corpus-chip planned';
-    const count = Number.isFinite(Number(videoCatalog.planned_count)) ? Number(videoCatalog.planned_count) : 200;
-    videoChip.textContent = `Видео: ${count} с тайм-кодами и стенограммами`;
-    safeSetAttr(videoChip, 'title', 'Запланированный тип источника: видеокаталог с тайм-кодами и стенограммами');
-    host.appendChild(videoChip);
-  }
-}
-
 async function copyCurrentUrl() {
   const canonicalHash = buildHashFromState();
   const activeBookId = getActiveBook().book_id || '';
@@ -2132,7 +2097,6 @@ async function copyCurrentUrl() {
 function syncNavigationState() {
   if (!isNavigatingHistory) pushHistoryState();
   updateBackButton();
-  renderCorpusStatus();
   persistViewState();
   if (suppressHashSync) return;
   if (typeof window === 'undefined' || !window.location) return;
