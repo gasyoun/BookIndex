@@ -4993,7 +4993,7 @@ function renderQualityQueueItem(item) {
     row.href = item.route;
     row.onclick = (event) => {
       event.preventDefault();
-      applyHash(row.getAttribute('href') || '#v4/corpus/sources');
+      applyHash(row.getAttribute('href') || '#v4/materials/sources');
     };
   }
   const head = document.createElement('span');

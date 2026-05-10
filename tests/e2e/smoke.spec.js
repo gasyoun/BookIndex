@@ -10,6 +10,7 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('.index-sheet')).toContainText('Сводный указатель');
     await expect(page.locator('.button.primary')).toHaveAttribute('href', './aaz-index.html#v4/home/home');
     await expect(page.locator('.route')).toHaveCount(6);
+    await expect(page.locator('.route', { hasText: 'Корпус источников' })).toHaveAttribute('href', './aaz-index.html#v4/materials/sources');
     await expect(page.locator('body')).toContainText('главным публичным входом');
   });
 
