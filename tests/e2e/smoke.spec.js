@@ -590,6 +590,7 @@ test.describe('aaz-index smoke', () => {
     const firstNode = page.locator('svg .name-graph-node').first();
     await firstNode.hover();
     await expect(page.locator('#graph-tooltip')).toBeVisible();
+    await expect(page.locator('#graph-stage')).toHaveAttribute('aria-label', 'Граф связей имен');
     await firstNode.click({ force: true });
     await expect(page).toHaveURL(/#(?:v4\/)?names\/list/);
     await expect(page.locator('#right-content .card h2')).toBeVisible();
@@ -1460,7 +1461,8 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#v4\/scholar\/viz\/module\/viz03\?books=mumintroll/);
     await expect(page.locator('.viz-shell')).toBeVisible();
     await expect(page.locator('.viz-source-chip')).toContainText('Из жизни слов и языков');
-    await expect(page.locator('.viz-corpus-link')).toHaveText('hash корпуса');
+    await expect(page.locator('.viz-canonical-link')).toHaveText('канонический маршрут');
+    await expect(page.locator('.viz-corpus-link')).toHaveText('маршрут корпуса');
     await expect(page.locator('.viz-corpus-link')).toHaveAttribute('href', /#v4\/corpus\/viz\/module\/viz03\?books=mumintroll/);
   });
 

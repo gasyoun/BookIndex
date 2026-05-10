@@ -7239,7 +7239,7 @@ function renderGraphPanel(container) {
       <span class="graph-metric" id="graph-summary"></span>
     </div>
     <div id="graph-status" class="graph-status">Calculating graph layout...</div>
-    <div id="graph-stage" aria-label="Person graph"></div>
+    <div id="graph-stage" aria-label="Граф связей имен"></div>
     <div id="graph-legend" class="graph-legend"></div>
     <div id="graph-tooltip" class="graph-tooltip" hidden></div>
   </div></div>`;
@@ -7361,7 +7361,7 @@ function renderGraphPanel(container) {
         .append('svg')
         .attr('viewBox', `0 0 ${W} ${H}`)
         .attr('role', 'img')
-        .attr('aria-label', 'Person graph');
+        .attr('aria-label', 'Граф связей имен');
       const root = svg.append('g').attr('class', 'graph-root');
       const linkLayer = root.append('g').attr('class', 'graph-links');
       const nodeLayer = root.append('g').attr('class', 'graph-nodes');
@@ -10253,8 +10253,8 @@ function renderVizPanel(container) {
       <h2 class="viz-title">Визуализации</h2>
       <div class="viz-header-actions">
         <span class="viz-source-chip">${escapeHtml(activeBookLabel)}</span>
-        <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический hash</a>
-        <a class="related-link viz-corpus-link" href="${escapeHtml(buildCorpusVizHash(currentVizModule))}">hash корпуса</a>
+        <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический маршрут</a>
+        <a class="related-link viz-corpus-link" href="${escapeHtml(buildCorpusVizHash(currentVizModule))}">маршрут корпуса</a>
       </div>
     </div>
     <div class="viz-module-tabs" id="viz-module-tabs"></div>
