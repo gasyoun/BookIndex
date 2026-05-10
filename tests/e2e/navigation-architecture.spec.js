@@ -1,4 +1,6 @@
 const { test, expect } = require('@playwright/test');
+const fs = require('fs');
+const path = require('path');
 
 const VIEWPORTS = [
   { name: 'desktop', width: 1366, height: 900 },
@@ -70,6 +72,15 @@ const ROUTES = [
 const FIRST_LEVEL_LABELS = ['Главная', 'Указатели', 'Материалы', 'Аппарат', 'Инструменты', 'Практикум'];
 const MATERIALS_TAB_LABELS = ['Лекции', 'Страница лекции', 'Сравнение лекций', 'Что почитать ещё', 'Корпус'];
 
+const RUNTIME_NAV_SOURCES = ['v3_app.js', 'v3_template.html'];
+const FORBIDDEN_RUNTIME_NAV_TOKENS = [
+  'breadcrumb-nav',
+  'renderBreadcrumb',
+  'theme-btn',
+  'header-search-scope',
+  'ENTITY_TYPES.corpus',
+];
+
 async function expectNoPageOverflow(page) {
   const metrics = await page.evaluate(() => {
     const root = document.scrollingElement || document.documentElement;
@@ -84,6 +95,16 @@ async function expectNoPageOverflow(page) {
 }
 
 test.describe('navigation architecture contract', () => {
+  test('runtime sources do not keep removed navigation hooks', () => {
+    const runtimeText = RUNTIME_NAV_SOURCES
+      .map((file) => fs.readFileSync(path.join(process.cwd(), file), 'utf8'))
+      .join('\n');
+
+    for (const token of FORBIDDEN_RUNTIME_NAV_TOKENS) {
+      expect(runtimeText, `removed navigation hook leaked back into runtime: ${token}`).not.toContain(token);
+    }
+  });
+
   for (const viewport of VIEWPORTS) {
     test.describe(viewport.name, () => {
       test.use({ viewport: { width: viewport.width, height: viewport.height } });
