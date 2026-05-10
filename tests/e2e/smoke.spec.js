@@ -1173,6 +1173,8 @@ test.describe('aaz-index smoke', () => {
     expect(scholarBib).toContain('author = {');
     expect(scholarBib).toContain('title = {');
     expect(scholarBib).toContain('year = {');
+    expect(scholarBib).toContain('Источник корпуса: Из жизни слов и языков');
+    expect(scholarBib).not.toContain('Corpus source:');
     expect(scholarBib).toContain('book_id: mumintroll');
     expect(scholarBib).toContain('keywords = {bookindex,scholar,bibliography,corpus,mumintroll}');
 
@@ -1185,6 +1187,8 @@ test.describe('aaz-index smoke', () => {
     expect(furtherDownload.suggestedFilename()).toBe('further-reading.bib');
     const furtherBib = await readBib(furtherDownload);
     expect(furtherBib).toContain('@misc{');
+    expect(furtherBib).toContain('Источник корпуса: Из жизни слов и языков');
+    expect(furtherBib).not.toContain('Corpus source:');
     expect(furtherBib).toContain('book_id: mumintroll');
     expect(furtherBib).toContain('keywords = {bookindex,further_reading,corpus,mumintroll}');
 
@@ -1199,6 +1203,8 @@ test.describe('aaz-index smoke', () => {
     expect(sourceDownload.suggestedFilename()).toContain('.bib');
     const sourceBib = await readBib(sourceDownload);
     expect(sourceBib).toContain('howpublished = {BookIndex card source}');
+    expect(sourceBib).toContain('Источник корпуса: Из жизни слов и языков');
+    expect(sourceBib).not.toContain('Corpus source:');
     expect(sourceBib).toContain('book_id: mumintroll');
     expect(sourceBib).toContain('corpus,mumintroll');
   });

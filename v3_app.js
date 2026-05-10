@@ -3714,7 +3714,7 @@ function buildCardSourceBibEntry(item, itemType, src, index = 0) {
   const activeBookLabel = getBookLabelForSearch(activeBookId);
   const noteParts = [];
   if (item && item.head) noteParts.push(`BookIndex card: ${item.head} (${itemType || 'item'})`);
-  if (activeBookLabel) noteParts.push(`Corpus source: ${activeBookLabel}`);
+  if (activeBookLabel) noteParts.push(`Источник корпуса: ${activeBookLabel}`);
   if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
   if (src.page != null && String(src.page).trim()) noteParts.push(`page ${String(src.page).trim()}`);
   if (src.quote) noteParts.push(String(src.quote));
@@ -3746,7 +3746,7 @@ function collectScholarBibliographyBibEntries() {
       if (!title) continue;
       const noteParts = [];
       if (lecture) noteParts.push(`Lecture: ${lecture}`);
-      if (activeBookLabel) noteParts.push(`Corpus source: ${activeBookLabel}`);
+      if (activeBookLabel) noteParts.push(`Источник корпуса: ${activeBookLabel}`);
       if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
       if (work && work.note) noteParts.push(String(work.note));
       out.push(buildBibtexEntry({
@@ -3781,7 +3781,7 @@ function collectFurtherReadingBibEntries() {
       const parsed = guessAuthorAndTitle(rawTitle, normalizeBibtexText(book && (book.author || book.authors)) || 'Unknown');
       const noteParts = [];
       if (topic) noteParts.push(`Topic: ${topic}`);
-      if (activeBookLabel) noteParts.push(`Corpus source: ${activeBookLabel}`);
+      if (activeBookLabel) noteParts.push(`Источник корпуса: ${activeBookLabel}`);
       if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
       if (book && book.why) noteParts.push(String(book.why));
       out.push(buildBibtexEntry({
