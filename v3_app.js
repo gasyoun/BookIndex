@@ -4512,10 +4512,10 @@ function renderIndexSectionSummary() {
       const conf = ENTITY_TYPES[item.entity];
       const isActive = item.entity === currentEntity;
       const count = conf.items.length;
-      return `<span class="index-section-summary-chip${isActive ? ' active' : ''}">
+      return `<button type="button" class="index-section-summary-chip${isActive ? ' active' : ''}" data-entity="${escapeHtml(item.entity)}" data-tab="list" aria-pressed="${isActive ? 'true' : 'false'}">
         <span>${escapeHtml(item.label)}</span>
         <span class="index-section-summary-count">${count}</span>
-      </span>`;
+      </button>`;
     })
     .join('');
   if (!chips) return '';
@@ -5475,6 +5475,20 @@ function renderListPanel(container) {
   `;
 
   const searchInput = document.getElementById('search-input');
+  const indexSummary = container.querySelector('.index-section-summary');
+  if (indexSummary) {
+    indexSummary.onclick = (e) => {
+      const target = e && e.target;
+      if (!(target instanceof HTMLElement)) return;
+      const btn = target.closest('.index-section-summary-chip');
+      if (!btn) return;
+      const entity = btn.dataset.entity;
+      const tab = btn.dataset.tab || 'list';
+      if (!entity || !ENTITY_TYPES[entity]) return;
+      if (!ENTITY_TYPES[entity].tabs.includes(tab)) return;
+      activateNavTarget(entity, tab);
+    };
+  }
   let searchTimeout = null;
   if (searchInput) safeSetAttr(searchInput, 'aria-label', 'List search');
   searchInput.oninput = (e) => {
