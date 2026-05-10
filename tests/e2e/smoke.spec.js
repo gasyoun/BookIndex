@@ -23,6 +23,7 @@ test.describe('aaz-index smoke', () => {
     expect(firstLevelNav.join(' ')).toContain('Практикум');
     await expect(page.locator('#tabs .tab')).toHaveCount(0);
     await expect(page.locator('#view-tabs .view-tab')).toHaveCount(0);
+    await expect(page.locator('#density-select')).toContainText('исследование');
     await expect(page.locator('.home-stats-hero')).toBeVisible();
     await expect(page.locator('#home-stats-grid .home-stat-cell')).toHaveCount(8);
     const siteDownloadPromise = page.waitForEvent('download');
