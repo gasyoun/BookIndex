@@ -54,13 +54,7 @@
 
     const map = root.L.map(mapId).setView([50, 30], 3);
     
-    // Theme-aware tiles
-    const isDark = document.body.classList.contains('theme-dark');
-    const tileUrl = isDark 
-      ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-      : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-      
-    root.L.tileLayer(tileUrl, {
+    root.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
