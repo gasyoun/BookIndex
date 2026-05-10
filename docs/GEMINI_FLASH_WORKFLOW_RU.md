@@ -220,10 +220,18 @@ Codex:
 
 Этот сценарий нужен, когда Gemini Flash просят не просто оценить header, а подготовить архитектуру изменения верхней навигации. Источник решения: `docs/NAVIGATION_RETHINK_RU.md`.
 
-Опубликованные источники решения:
+Источники решения внутри репозитория:
 
-1. Роль `index.html`: https://github.com/gasyoun/BookIndex/blob/8807dd80a3f67f2ed5a5577a3a48a67392117ced/docs/NAVIGATION_RETHINK_RU.md#L191-L204
-2. Архитектура для Gemini Flash: https://github.com/gasyoun/BookIndex/blob/8807dd80a3f67f2ed5a5577a3a48a67392117ced/docs/GEMINI_FLASH_WORKFLOW_RU.md#L223-L392
+1. Роль `index.html`: `docs/NAVIGATION_RETHINK_RU.md`, раздел 7.
+2. Инварианты навигации: `docs/NAVIGATION_RETHINK_RU.md`, раздел 8.
+3. Общий регламент Codex и применимость `agent-roadmap-2026`: `docs/CODEX_WORKFLOW_RU.md`, раздел 10.
+4. Этот runbook Gemini Flash: `docs/GEMINI_FLASH_WORKFLOW_RU.md`, раздел 6.3.
+
+Если нужен опубликованный URL, использовать ссылку на текущий `main`, а не на старый commit blob:
+
+1. https://github.com/gasyoun/BookIndex/blob/main/docs/NAVIGATION_RETHINK_RU.md
+2. https://github.com/gasyoun/BookIndex/blob/main/docs/GEMINI_FLASH_WORKFLOW_RU.md
+3. https://github.com/gasyoun/BookIndex/blob/main/docs/CODEX_WORKFLOW_RU.md
 
 Цель изменения:
 
@@ -231,6 +239,7 @@ Codex:
 2. `aaz-index.html#v4/home/home` остается основным рабочим интерфейсом приложения с новой иерархией `Главная / Указатели / Материалы / Аппарат / Инструменты / Практикум`.
 3. Все существующие hash-route сохраняются; меняется навигационная группировка, а не смысл адресов.
 4. `Корпус` не возвращается в первый уровень: он остается последним подпунктом в `Материалы`.
+5. Удаленные элементы не возвращаются: нет `theme-btn`, нет dark-theme веток, нет счетчиков в labels первого уровня, нет дублирующего второго ряда из одной кнопки.
 
 Архитектура изменения:
 
@@ -340,6 +349,7 @@ Gemini Flash не обязан угадать точные текущие име
 5. Landing: `index.html` становится главным знакомством с книгой и ведет в `aaz-index.html#v4/home/home`.
 6. Cleanup: убрать счетчики и длинные labels из кнопок первого уровня; перенести их в summary внутри разделов.
 7. Verification: дать route smoke-list и ожидания для каждого экрана.
+8. Guardrails: явно проверить, что правка не вернула `Корпус` в первый уровень, `theme-dark`, `theme-btn`, старый dropdown книга/корпус в поиске и дублирующие single-item tabs.
 
 Критерии готовности:
 
@@ -350,6 +360,23 @@ Gemini Flash не обязан угадать точные текущие име
 5. Старые route вроде `#v4/all/list`, `#v4/lexicon/list`, `#v4/scholar/viz/module/viz01?century=21` продолжают открываться.
 6. `index.html` не показывает placeholder: это главный публичный intro, но не рабочий SPA-интерфейс.
 7. Нет дублирования "первый уровень + breadcrumbs + локальные tabs" там, где локальная навигация уже объясняет позицию пользователя.
+8. Второй ряд tabs не рендерится для разделов с одним локальным пунктом.
+9. `view-tabs` есть только на указателях с несколькими режимами просмотра; на `#v4/all/list` его нет.
+10. Labels переключателя плотности русские, но значения остаются `compact`, `reader`, `research`.
+
+Обязательный smoke-набор для навигационной реформы:
+
+| Route | Что проверить |
+|---|---|
+| `aaz-index.html#v4/home/home` | Нет второго/третьего ряда навигации, header не перегружен. |
+| `aaz-index.html#v4/all/list` | Сводный указатель читается, нет `view-tabs`, нет блока "Смотрите также" в карточках списка. |
+| `aaz-index.html#v4/names/list` | Есть summary-chips указателей и отдельный ряд режимов текущего указателя. |
+| `aaz-index.html#v4/materials/lectures` | `Корпус` доступен внутри `Материалы`, но не в первом уровне. |
+| `aaz-index.html#v4/corpus/sources` | Очереди и статусы на русском. |
+| `aaz-index.html#v4/scholar/viz/module/viz01?century=21` | Нет лишней breadcrumb-строки поверх локальной навигации аппарата. |
+| `aaz-index.html#v4/materials/tasks` | Одиночный `Практикум` не дублирует кнопку вторым рядом. |
+
+Проверять desktop и mobile. Для каждого маршрута дополнительно фиксировать отсутствие горизонтального overflow, наложения header/search и возврата `theme-dark`.
 
 Формат ответа Gemini Flash для этой задачи:
 
@@ -389,12 +416,13 @@ Gemini Flash не обязан угадать точные текущие име
 - Корпус/источники: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/corpus/sources
 - Визуализации аппарата: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/viz/module/viz01?century=21
 - Репозиторий: https://github.com/gasyoun/BookIndex
-- Документ решения, роль `index.html`: https://github.com/gasyoun/BookIndex/blob/8807dd80a3f67f2ed5a5577a3a48a67392117ced/docs/NAVIGATION_RETHINK_RU.md#L191-L204
-- Рабочий регламент Gemini Flash, архитектура навигационной реформы: https://github.com/gasyoun/BookIndex/blob/8807dd80a3f67f2ed5a5577a3a48a67392117ced/docs/GEMINI_FLASH_WORKFLOW_RU.md#L223-L392
+- Документ решения и инварианты: https://github.com/gasyoun/BookIndex/blob/main/docs/NAVIGATION_RETHINK_RU.md
+- Рабочий регламент Gemini Flash: https://github.com/gasyoun/BookIndex/blob/main/docs/GEMINI_FLASH_WORKFLOW_RU.md
+- Регламент Codex и применимость agent-roadmap-2026: https://github.com/gasyoun/BookIndex/blob/main/docs/CODEX_WORKFLOW_RU.md
 
 Задача: подготовь архитектуру изменения верхней навигации так, чтобы главным публичным входом стал `index.html` как страница знакомства с книгой и проектом. Рабочий интерфейс остается в `aaz-index.html#v4/home/home` и получает разделы `Главная / Указатели / Материалы / Аппарат / Инструменты / Практикум`.
 
-Не предлагай ломать существующие hash-route. Не выноси `Корпус` в первый уровень. Не добавляй счетчики в labels верхнего меню. Не превращай `index.html` в дубль рабочего приложения: это вводная страница с главной кнопкой перехода в рабочий интерфейс. Дай mapping, план внедрения, файлы, smoke-route и риски.
+Не предлагай ломать существующие hash-route. Не выноси `Корпус` в первый уровень. Не добавляй счетчики в labels верхнего меню. Не возвращай dark-theme UI, `theme-btn`, dropdown книга/корпус в поиске и дублирующие single-item tabs. Не превращай `index.html` в дубль рабочего приложения: это вводная страница с главной кнопкой перехода в рабочий интерфейс. Дай mapping, план внедрения, файлы, smoke-route и риски.
 ```
 
 ### 6.4 Корпус и источники
