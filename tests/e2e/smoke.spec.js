@@ -77,6 +77,8 @@ test.describe('aaz-index smoke', () => {
     const scope = page.locator('#global-search-results.open #global-search-scope');
     await expect(scope).toBeVisible();
     await expect(scope).toHaveValue('corpus');
+    await expect(page.locator('.header-search > #global-search-scope')).toHaveCount(0);
+    await expect(scope).toHaveClass(/search-results-scope/);
     await expect(scope).toContainText('везде');
     await expect(scope).toContainText('текущая книга');
     await expect(firstResult.locator('.search-meta')).toContainText('Из жизни слов и языков');

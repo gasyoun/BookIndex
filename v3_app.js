@@ -3262,7 +3262,7 @@ function appendGlobalSearchScopeControl(box, query = '') {
   toolbar.appendChild(label);
 
   const select = document.createElement('select');
-  select.className = 'header-search-scope';
+  select.className = 'search-results-scope';
   select.id = 'global-search-scope';
   safeSetAttr(select, 'aria-label', '\u041e\u0431\u043b\u0430\u0441\u0442\u044c \u043f\u043e\u0438\u0441\u043a\u0430');
   safeSetAttr(select, 'title', '\u041e\u0431\u043b\u0430\u0441\u0442\u044c \u043f\u043e\u0438\u0441\u043a\u0430');
