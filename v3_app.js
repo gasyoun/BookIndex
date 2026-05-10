@@ -10254,7 +10254,7 @@ function renderVizPanel(container) {
       <div class="viz-header-actions">
         <span class="viz-source-chip">${escapeHtml(activeBookLabel)}</span>
         <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический hash</a>
-        <a class="related-link viz-corpus-link" href="${escapeHtml(buildCorpusVizHash(currentVizModule))}">corpus hash</a>
+        <a class="related-link viz-corpus-link" href="${escapeHtml(buildCorpusVizHash(currentVizModule))}">hash корпуса</a>
       </div>
     </div>
     <div class="viz-module-tabs" id="viz-module-tabs"></div>

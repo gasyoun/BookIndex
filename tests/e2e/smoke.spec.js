@@ -1460,6 +1460,7 @@ test.describe('aaz-index smoke', () => {
     await expect(page).toHaveURL(/#v4\/scholar\/viz\/module\/viz03\?books=mumintroll/);
     await expect(page.locator('.viz-shell')).toBeVisible();
     await expect(page.locator('.viz-source-chip')).toContainText('Из жизни слов и языков');
+    await expect(page.locator('.viz-corpus-link')).toHaveText('hash корпуса');
     await expect(page.locator('.viz-corpus-link')).toHaveAttribute('href', /#v4\/corpus\/viz\/module\/viz03\?books=mumintroll/);
   });
 
