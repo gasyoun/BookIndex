@@ -1926,12 +1926,7 @@ function openMaterialsLectures() {
   syncNavigationState();
 }
 
-function decodeBreadcrumbRouteParts(routeHash) {
-  const parsed = parseHashRoute(routeHash);
-  return parsed ? parsed.parts : [];
-}
-
-function getEntityBreadcrumbLabel(entity) {
+function getEntityDisplayLabel(entity) {
   const map = {
     home: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f',
     names: '\u0418\u043c\u0435\u043d\u0430',
@@ -1950,88 +1945,6 @@ function getEntityBreadcrumbLabel(entity) {
   if (map[entity]) return map[entity];
   if (ENTITY_TYPES[entity] && ENTITY_TYPES[entity].title) return ENTITY_TYPES[entity].title;
   return String(entity || '');
-}
-
-function getTabBreadcrumbLabel(entity, tab) {
-  if (!entity || !tab) return '';
-  if (entity === 'materials' && tab === 'kwic') return 'KWIC';
-  return TAB_LABELS[tab] || '';
-}
-
-function buildBreadcrumbTrail(routeHash) {
-  const parts = decodeBreadcrumbRouteParts(routeHash);
-  const entity = parts[0] || currentEntity || 'home';
-  const tab = parts[1] || (ENTITY_TYPES[entity] && ENTITY_TYPES[entity].tabs ? ENTITY_TYPES[entity].tabs[0] : 'home');
-  const trail = [];
-  const homeHash = buildCanonicalHash(['home', 'home']);
-
-  if (entity === 'home' && tab === 'home') {
-    trail.push({ label: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f' });
-    return trail;
-  }
-
-  trail.push({ label: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f', href: homeHash });
-
-  const entityHash = buildCanonicalHash([entity, entity === 'home' ? 'home' : 'list']);
-  trail.push({ label: getEntityBreadcrumbLabel(entity), href: entityHash });
-
-  if (entity === 'materials' || entity === 'scholar') {
-    const tabLabel = getTabBreadcrumbLabel(entity, tab);
-    if (tabLabel) trail.push({ label: tabLabel, href: buildCanonicalHash([entity, tab]) });
-  }
-
-  const itemPos = parts.indexOf('item');
-  if (itemPos >= 0 && parts[itemPos + 1] && parts[itemPos + 2]) {
-    const itemType = ENTITY_TYPES[parts[itemPos + 1]] ? parts[itemPos + 1] : entity;
-    const encodedHead = parts[itemPos + 2];
-    const resolvedHead = resolveItemHeadFromHash(itemType, encodedHead) || encodedHead;
-    trail.push({ label: resolvedHead });
-  }
-
-  if (trail.length > 1) {
-    trail[trail.length - 1].href = '';
-  }
-
-  return trail;
-}
-
-function renderBreadcrumb(routeHash) {
-  const host = document.getElementById('breadcrumb-nav') || document.getElementById('breadcrumbs');
-  if (!host) return;
-  const sourceHash = String(routeHash || ((typeof window !== 'undefined' && window.location) ? window.location.hash : '') || buildHashFromState());
-  const model = buildBreadcrumbTrail(sourceHash);
-  host.innerHTML = '';
-  if (!model.length) {
-    host.style.display = 'none';
-    return;
-  }
-  host.style.display = '';
-
-  model.forEach((crumb, idx) => {
-    const isLast = idx === model.length - 1;
-    if (!isLast && crumb.href) {
-      const link = document.createElement('a');
-      link.className = 'breadcrumb-link';
-      link.href = crumb.href;
-      link.textContent = crumb.label || '';
-      host.appendChild(link);
-    } else {
-      const current = document.createElement('span');
-      current.className = 'breadcrumb-current';
-      current.textContent = crumb.label || '';
-      host.appendChild(current);
-    }
-    if (!isLast) {
-      const sep = document.createElement('span');
-      sep.className = 'breadcrumb-sep';
-      sep.textContent = '\u203a';
-      host.appendChild(sep);
-    }
-  });
-}
-
-function renderBreadcrumbs(routeHash) {
-  renderBreadcrumb(routeHash);
 }
 
 function encodeHashPart(value) {
@@ -2220,7 +2133,6 @@ function syncNavigationState() {
   if (!isNavigatingHistory) pushHistoryState();
   updateBackButton();
   renderCorpusStatus();
-  renderBreadcrumbs(buildHashFromState());
   persistViewState();
   if (suppressHashSync) return;
   if (typeof window === 'undefined' || !window.location) return;
@@ -5075,7 +4987,7 @@ function buildCorpusQualityMetrics() {
 }
 
 function getQualityEntityLabel(entity) {
-  return getEntityBreadcrumbLabel(entity) || String(entity || '');
+  return getEntityDisplayLabel(entity) || String(entity || '');
 }
 
 function renderQualityQueueItem(item) {
