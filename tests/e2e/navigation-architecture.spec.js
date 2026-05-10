@@ -71,6 +71,11 @@ const ROUTES = [
 
 const FIRST_LEVEL_LABELS = ['Главная', 'Указатели', 'Материалы', 'Аппарат', 'Инструменты', 'Практикум'];
 const MATERIALS_TAB_LABELS = ['Лекции', 'Страница лекции', 'Сравнение лекций', 'Что почитать ещё', 'Корпус'];
+const DENSITY_OPTIONS = [
+  { label: 'плотно', value: 'compact', bodyClass: 'density-compact' },
+  { label: 'чтение', value: 'reader', bodyClass: 'density-reader' },
+  { label: 'исследование', value: 'research', bodyClass: 'density-research' },
+];
 
 const RUNTIME_NAV_SOURCES = ['v3_app.js', 'v3_template.html'];
 const FORBIDDEN_RUNTIME_NAV_TOKENS = [
@@ -102,6 +107,23 @@ test.describe('navigation architecture contract', () => {
 
     for (const token of FORBIDDEN_RUNTIME_NAV_TOKENS) {
       expect(runtimeText, `removed navigation hook leaked back into runtime: ${token}`).not.toContain(token);
+    }
+  });
+
+  test('density control keeps Russian labels with stable internal values', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/home/home');
+    const density = page.locator('#density-select');
+    await expect(density).toHaveAttribute('aria-label', 'Плотность интерфейса');
+
+    const options = await density.locator('option').evaluateAll((nodes) => nodes.map((node) => ({
+      label: node.textContent.trim(),
+      value: node.value,
+    })));
+    expect(options).toEqual(DENSITY_OPTIONS.map(({ label, value }) => ({ label, value })));
+
+    for (const option of DENSITY_OPTIONS) {
+      await density.selectOption(option.value);
+      await expect(page.locator('body')).toHaveClass(new RegExp(`\\b${option.bodyClass}\\b`));
     }
   });
 
