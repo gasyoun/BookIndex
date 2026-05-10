@@ -1934,7 +1934,6 @@ function getEntityDisplayLabel(entity) {
     subject: '\u041f\u0440\u0435\u0434\u043c\u0435\u0442\u043d\u044b\u0439 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c',
     materials: '\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b',
     scholar: '\u041f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b\u044c\u043d\u044b\u0439 \u0430\u043f\u043f\u0430\u0440\u0430\u0442',
-    corpus: '\u041a\u043e\u0440\u043f\u0443\u0441',
     all: '\u0421\u0432\u043e\u0434\u043d\u044b\u0439 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c',
   };
   if (map[entity]) return map[entity];
@@ -3315,7 +3314,7 @@ function renderGlobalSearchResults(matches, query = '') {
     if (groupedBySource) {
       const bookId = m && m.bookId ? String(m.bookId) : '';
       if (bookId !== lastBookId) {
-        appendGlobalSearchSourceGroup(box, getBookLabelForSearch(bookId) || 'Corpus source');
+        appendGlobalSearchSourceGroup(box, getBookLabelForSearch(bookId) || '\u0418\u0441\u0442\u043e\u0447\u043d\u0438\u043a \u043a\u043e\u0440\u043f\u0443\u0441\u0430');
         lastBookId = bookId;
       }
     }
@@ -4368,7 +4367,7 @@ function renderViewTabs() {
   if (!shouldRenderViewTabs()) return;
   const conf = ENTITY_TYPES[currentEntity];
   safeSetAttr(container, 'role', 'tablist');
-  safeSetAttr(container, 'aria-label', 'View mode');
+  safeSetAttr(container, 'aria-label', '\u0420\u0435\u0436\u0438\u043c\u044b \u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u0430');
   for (const tab of conf.tabs) {
     const btn = document.createElement('button');
     const isActive = tab === currentTab;
@@ -4397,7 +4396,7 @@ function renderIndexSectionSummary() {
     })
     .join('');
   if (!chips) return '';
-  return `<div class="index-section-summary" aria-label="Index section summary">
+  return `<div class="index-section-summary" aria-label="\u0421\u0432\u043e\u0434\u043a\u0430 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u0435\u0439">
     <span class="index-section-summary-title">\u0423\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u0438</span>
     ${chips}
   </div>`;
@@ -5368,7 +5367,7 @@ function renderListPanel(container) {
     };
   }
   let searchTimeout = null;
-  if (searchInput) safeSetAttr(searchInput, 'aria-label', 'List search');
+  if (searchInput) safeSetAttr(searchInput, 'aria-label', '\u041f\u043e\u0438\u0441\u043a \u043f\u043e \u0441\u043f\u0438\u0441\u043a\u0443');
   searchInput.oninput = (e) => {
     const val = clampUiInput(e.target.value, MAX_LIST_QUERY_LENGTH);
     if (e.target.value !== val) e.target.value = val;

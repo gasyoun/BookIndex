@@ -67,6 +67,9 @@ const ROUTES = [
   },
 ];
 
+const FIRST_LEVEL_LABELS = ['Главная', 'Указатели', 'Материалы', 'Аппарат', 'Инструменты', 'Практикум'];
+const MATERIALS_TAB_LABELS = ['Лекции', 'Страница лекции', 'Сравнение лекций', 'Что почитать ещё', 'Корпус'];
+
 async function expectNoPageOverflow(page) {
   const metrics = await page.evaluate(() => {
     const root = document.scrollingElement || document.documentElement;
@@ -97,7 +100,9 @@ test.describe('navigation architecture contract', () => {
           await expect(page.locator('#global-search-scope')).toHaveCount(0);
 
           const firstLevelNav = await page.locator('#entity-switcher .entity-btn').allInnerTexts();
+          expect(firstLevelNav.map((text) => text.trim())).toEqual(FIRST_LEVEL_LABELS);
           expect(firstLevelNav.some((text) => /^Корпус\b/.test(text.trim()))).toBe(false);
+          expect(firstLevelNav.join(' ')).not.toMatch(/\d/);
 
           if (route.activeTab) {
             await expect(page.locator('#tabs .tab.active')).toContainText(route.activeTab);
@@ -160,5 +165,22 @@ test.describe('navigation architecture contract', () => {
 
     const firstLevelNav = await page.locator('#entity-switcher .entity-btn').allInnerTexts();
     expect(firstLevelNav.some((text) => /^Корпус\b/.test(text.trim()))).toBe(false);
+  });
+
+  test('materials keeps corpus as the final local tab only', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/materials/lectures');
+    const tabs = await page.locator('#tabs .tab').allInnerTexts();
+    expect(tabs.map((text) => text.trim())).toEqual(MATERIALS_TAB_LABELS);
+    await expect(page.locator('#tabs .tab').last()).toContainText('Корпус');
+    await expect(page.locator('#entity-switcher .entity-btn')).toHaveText(FIRST_LEVEL_LABELS);
+  });
+
+  test('navigation rows expose Russian accessibility labels', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/names/list');
+    await expect(page.locator('#entity-switcher')).toHaveAttribute('aria-label', 'Основные разделы');
+    await expect(page.locator('#tabs')).toHaveAttribute('aria-label', 'Раздел');
+    await expect(page.locator('#view-tabs')).toHaveAttribute('aria-label', 'Режимы просмотра');
+    await expect(page.locator('.index-section-summary')).toHaveAttribute('aria-label', 'Сводка указателей');
+    await expect(page.locator('#search-input')).toHaveAttribute('aria-label', 'Поиск по списку');
   });
 });
