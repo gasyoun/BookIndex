@@ -291,7 +291,7 @@ const NAV_SECTIONS = [
       { label: 'Страница лекции', hash: '#v4/materials/lecture_pages' },
       { label: 'Сравнение лекций', hash: '#v4/materials/lecture_compare' },
       { label: 'Что почитать ещё', hash: '#v4/materials/further_reading' },
-      { label: 'Корпус', hash: '#v4/corpus/sources' }
+      { label: 'Корпус', hash: '#v4/materials/sources' }
     ]
   },
   {
@@ -372,7 +372,7 @@ Gemini Flash не обязан угадать точные текущие име
 | `aaz-index.html#v4/all/list` | Сводный указатель читается, нет `view-tabs`, нет блока "Смотрите также" в карточках списка. |
 | `aaz-index.html#v4/names/list` | Есть summary-chips указателей и отдельный ряд режимов текущего указателя. |
 | `aaz-index.html#v4/materials/lectures` | `Корпус` доступен внутри `Материалы`, но не в первом уровне. |
-| `aaz-index.html#v4/corpus/sources` | Очереди и статусы на русском. |
+| `aaz-index.html#v4/materials/sources` | Очереди и статусы на русском; legacy `#v4/corpus/sources` открывает тот же экран. |
 | `aaz-index.html#v4/scholar/viz/module/viz01?century=21` | Нет лишней breadcrumb-строки поверх локальной навигации аппарата. |
 | `aaz-index.html#v4/materials/tasks` | Одиночный `Практикум` не дублирует кнопку вторым рядом. |
 
@@ -399,7 +399,7 @@ Gemini Flash не обязан угадать точные текущие име
 ## Smoke Routes
 - `aaz-index.html#v4/home/home`: ...
 - `aaz-index.html#v4/all/list`: ...
-- `aaz-index.html#v4/corpus/sources`: ...
+- `aaz-index.html#v4/materials/sources`: ...
 - `aaz-index.html#v4/scholar/viz/module/viz01?century=21`: ...
 
 ## Risks
@@ -415,7 +415,7 @@ Gemini Flash не обязан угадать точные текущие име
 - Главный публичный вход: https://gasyoun.github.io/BookIndex/index.html
 - Рабочий интерфейс: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/home/home
 - Сводный указатель: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/all/list
-- Корпус/источники: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/corpus/sources
+- Корпус/источники: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/materials/sources
 - Визуализации аппарата: https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/viz/module/viz01?century=21
 - Репозиторий: https://github.com/gasyoun/BookIndex
 - Документ решения и инварианты: https://github.com/gasyoun/BookIndex/blob/main/docs/NAVIGATION_RETHINK_RU.md

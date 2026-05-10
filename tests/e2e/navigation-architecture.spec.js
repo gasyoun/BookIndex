@@ -43,7 +43,7 @@ const ROUTES = [
   },
   {
     name: 'corpus sources',
-    hash: '#v4/corpus/sources',
+    hash: '#v4/materials/sources',
     activeSection: /Материалы/i,
     activeTab: /Корпус/i,
     tabs: 5,
@@ -173,6 +173,13 @@ test.describe('navigation architecture contract', () => {
     expect(tabs.map((text) => text.trim())).toEqual(MATERIALS_TAB_LABELS);
     await expect(page.locator('#tabs .tab').last()).toContainText('Корпус');
     await expect(page.locator('#entity-switcher .entity-btn')).toHaveText(FIRST_LEVEL_LABELS);
+  });
+
+  test('legacy corpus sources hash opens the canonical materials route', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/corpus/sources');
+    await expect(page).toHaveURL(/#v4\/materials\/sources$/);
+    await expect(page.locator('#entity-switcher .entity-btn.active')).toContainText(/Материалы/i);
+    await expect(page.locator('#tabs .tab.active')).toContainText(/Корпус/i);
   });
 
   test('navigation rows expose Russian accessibility labels', async ({ page }) => {
