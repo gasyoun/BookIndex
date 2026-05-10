@@ -21,8 +21,7 @@ test.describe('aaz-index smoke', () => {
     expect(firstLevelNav.some((text) => /^Корпус\b/.test(text.trim()))).toBe(false);
     expect(firstLevelNav.join(' ')).toContain('Указатели');
     expect(firstLevelNav.join(' ')).toContain('Практикум');
-    await expect(page.locator('#tabs .tab')).toHaveCount(1);
-    await expect(page.locator('#tabs .tab')).toHaveText(/Главная|Home/);
+    await expect(page.locator('#tabs .tab')).toHaveCount(0);
     await expect(page.locator('#view-tabs .view-tab')).toHaveCount(0);
     await expect(page.locator('.home-stats-hero')).toBeVisible();
     await expect(page.locator('#home-stats-grid .home-stat-cell')).toHaveCount(8);
@@ -33,6 +32,13 @@ test.describe('aaz-index smoke', () => {
     const siteMarkdown = sitePath ? await fs.readFile(sitePath, 'utf8') : '';
     expect(siteMarkdown).toContain('Источник: **Из жизни слов и языков**');
     expect(siteMarkdown).toContain('book_id: mumintroll');
+  });
+
+  test('single-item navigation sections do not render a duplicate second row', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/materials/tasks');
+    await expect(page.locator('#entity-switcher .entity-btn.active')).toContainText(/Практикум/i);
+    await expect(page.locator('#tabs .tab')).toHaveCount(0);
+    await expect(page.locator('#view-tabs .view-tab')).toHaveCount(0);
   });
 
   test('corpus shell registers current book and accepts book route aliases', async ({ page }) => {

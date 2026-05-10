@@ -4461,6 +4461,10 @@ function renderTabs() {
   safeSetAttr(container, 'role', 'tablist');
   safeSetAttr(container, 'aria-label', 'Раздел');
   const section = getActiveNavSection();
+  if (section.items.length <= 1) {
+    renderViewTabs();
+    return;
+  }
   for (const item of section.items) {
     const btn = document.createElement('button');
     const isActive = item.entity === currentEntity && (!item.tab || item.tab === currentTab);
