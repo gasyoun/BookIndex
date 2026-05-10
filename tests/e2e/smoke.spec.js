@@ -48,8 +48,7 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#corpus-status')).toHaveCount(0);
     await expect(page.locator('#home-howto-details')).toContainText('3 книги');
     await expect(page.locator('#home-howto-details')).toContainText('200 записей');
-    await expect(page.locator('#global-search-scope')).toHaveValue('corpus');
-    await expect(page.locator('#global-search-scope')).toBeHidden();
+    await expect(page.locator('#global-search-scope')).toHaveCount(0);
 
     const corpus = await page.evaluate(() => window.APP_DATA && window.APP_DATA.corpus);
     expect(corpus.active_book_id).toBe('mumintroll');
@@ -69,14 +68,16 @@ test.describe('aaz-index smoke', () => {
   test('global search defaults to corpus and reveals scope inside results', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/home/home');
     const input = page.locator('#global-search');
-    const scope = page.locator('#global-search-scope');
-    await expect(scope).toHaveValue('corpus');
-    await expect(scope).toBeHidden();
+    await expect(page.locator('#global-search-scope')).toHaveCount(0);
 
     await input.fill('иткин');
     const firstResult = page.locator('#global-search-results.open .header-search-item').first();
     await expect(firstResult).toBeVisible();
+    const scope = page.locator('#global-search-results.open #global-search-scope');
     await expect(scope).toBeVisible();
+    await expect(scope).toHaveValue('corpus');
+    await expect(scope).toContainText('везде');
+    await expect(scope).toContainText('текущая книга');
     await expect(firstResult.locator('.search-meta')).toContainText('Из жизни слов и языков');
     await expect(page.locator('#global-search-results.open .header-search-group').first()).toContainText('\u0418\u0437 \u0436\u0438\u0437\u043d\u0438 \u0441\u043b\u043e\u0432 \u0438 \u044f\u0437\u044b\u043a\u043e\u0432');
 
@@ -625,10 +626,11 @@ test.describe('aaz-index smoke', () => {
   test('global search shows scope-aware empty state', async ({ page }) => {
     await page.goto('/aaz-index.html#home/home');
     const input = page.locator('#global-search');
-    const scope = page.locator('#global-search-scope');
+    await expect(page.locator('#global-search-scope')).toHaveCount(0);
 
     await input.fill('bookindex-no-such-term');
-    await expect(page.locator('#global-search-results.open .header-search-empty')).toContainText('корпусе');
+    await expect(page.locator('#global-search-results.open .header-search-empty')).toContainText('всем доступном');
+    const scope = page.locator('#global-search-results.open #global-search-scope');
     await expect(scope).toBeVisible();
 
     await scope.selectOption('current');

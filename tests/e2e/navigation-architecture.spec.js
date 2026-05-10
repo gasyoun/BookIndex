@@ -94,6 +94,7 @@ test.describe('navigation architecture contract', () => {
           await expect(page.locator('#view-tabs .view-tab')).toHaveCount(route.viewTabs);
           await expect(page.locator('#breadcrumb-nav')).toHaveCount(0);
           await expect(page.locator('#theme-btn')).toHaveCount(0);
+          await expect(page.locator('#global-search-scope')).toHaveCount(0);
 
           const firstLevelNav = await page.locator('#entity-switcher .entity-btn').allInnerTexts();
           expect(firstLevelNav.some((text) => /^Корпус\b/.test(text.trim()))).toBe(false);

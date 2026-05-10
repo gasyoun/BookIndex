@@ -149,15 +149,11 @@
     border: 1px solid var(--line);
     border-radius: 4px;
     color: var(--title);
-    display: none;
     flex: 0 0 auto;
     font-family: inherit;
     font-size: 11px;
     min-height: 28px;
     padding: 4px 7px;
-  }
-  .header-search.search-results-open .header-search-scope {
-    display: inline-flex;
   }
   .header-search-results {
     display: none;
@@ -172,6 +168,22 @@
     border: 1px solid #d4c8b0;
     border-radius: 4px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  }
+  .header-search-results-toolbar {
+    align-items: center;
+    background: var(--surface-soft);
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    padding: 6px 8px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .header-search-results-label {
+    font-size: 11px;
   }
   .header-search-results.open { display: block; }
   .header-search-group {
@@ -4476,10 +4488,6 @@
     <div class="header-search header-search-inline">
       <div class="header-search-controls">
         <input id="global-search" type="text" placeholder="Поиск по сайту…" />
-        <select class="header-search-scope" id="global-search-scope" aria-label="Область поиска" title="Область поиска">
-          <option value="current">книга</option>
-          <option value="corpus" selected>корпус</option>
-        </select>
       </div>
       <div class="header-search-results" id="global-search-results"></div>
     </div>

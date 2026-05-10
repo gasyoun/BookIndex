@@ -829,7 +829,7 @@ function normalizeGlobalSearchScope(scope) {
 }
 
 function getGlobalSearchScopeLabel(scope = globalSearchScope) {
-  return normalizeGlobalSearchScope(scope) === 'corpus' ? 'весь корпус' : 'текущая книга';
+  return normalizeGlobalSearchScope(scope) === 'corpus' ? 'везде' : 'текущая книга';
 }
 
 function getBookLabelForSearch(bookId) {
@@ -3271,9 +3271,10 @@ function renderGlobalSearchEmpty(box, query) {
   const empty = document.createElement('div');
   empty.className = 'header-search-empty';
   empty.textContent = scope === 'corpus'
-    ? '\u0412 \u043a\u043e\u0440\u043f\u0443\u0441\u0435 \u043d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e.'
+    ? '\u0412\u043e \u0432\u0441\u0435\u043c \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u043e\u043c \u043d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e.'
     : '\u0412 \u0442\u0435\u043a\u0443\u0449\u0435\u0439 \u043a\u043d\u0438\u0433\u0435 \u043d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e.';
   box.textContent = '';
+  appendGlobalSearchScopeControl(box, q);
   box.appendChild(empty);
   box._matches = [];
   globalSearchActiveIndex = -1;
@@ -3284,6 +3285,51 @@ function renderGlobalSearchEmpty(box, query) {
     safeSetAttr(input, 'aria-activedescendant', '');
   }
   return true;
+}
+
+function appendGlobalSearchScopeControl(box, query = '') {
+  if (!box) return null;
+  const toolbar = document.createElement('div');
+  toolbar.className = 'header-search-results-toolbar';
+  safeSetAttr(toolbar, 'role', 'presentation');
+
+  const label = document.createElement('span');
+  label.className = 'header-search-results-label';
+  label.textContent = '\u0418\u0441\u043a\u0430\u0442\u044c:';
+  toolbar.appendChild(label);
+
+  const select = document.createElement('select');
+  select.className = 'header-search-scope';
+  select.id = 'global-search-scope';
+  safeSetAttr(select, 'aria-label', '\u041e\u0431\u043b\u0430\u0441\u0442\u044c \u043f\u043e\u0438\u0441\u043a\u0430');
+  safeSetAttr(select, 'title', '\u041e\u0431\u043b\u0430\u0441\u0442\u044c \u043f\u043e\u0438\u0441\u043a\u0430');
+
+  const allOption = document.createElement('option');
+  allOption.value = 'corpus';
+  allOption.textContent = '\u0432\u0435\u0437\u0434\u0435';
+  select.appendChild(allOption);
+
+  const currentOption = document.createElement('option');
+  currentOption.value = 'current';
+  currentOption.textContent = '\u0442\u0435\u043a\u0443\u0449\u0430\u044f \u043a\u043d\u0438\u0433\u0430';
+  select.appendChild(currentOption);
+
+  select.value = normalizeGlobalSearchScope(globalSearchScope);
+  select.onchange = (e) => {
+    const target = e && e.target;
+    if (!target || typeof target.value !== 'string') return;
+    globalSearchScope = normalizeGlobalSearchScope(target.value);
+    clearGlobalSearchCaches();
+    const input = document.getElementById('global-search');
+    const q = input ? clampUiInput(input.value || query, MAX_GLOBAL_QUERY_LENGTH) : clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
+    if (input && input.value !== q) input.value = q;
+    renderGlobalSearchResults(getGlobalSearchMatches(q), q);
+    persistViewState();
+  };
+
+  toolbar.appendChild(select);
+  box.appendChild(toolbar);
+  return select;
 }
 
 function renderGlobalSearchResults(matches, query = '') {
@@ -3298,6 +3344,7 @@ function renderGlobalSearchResults(matches, query = '') {
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
   safeSetAttr(box, 'role', 'listbox');
   box.textContent = '';
+  appendGlobalSearchScopeControl(box, q);
   const groupedBySource = normalizeGlobalSearchScope(globalSearchScope) === 'corpus';
   let lastBookId = '';
   matches.forEach((m, idx) => {
@@ -3476,20 +3523,6 @@ function wireGlobalUI() {
 
   const input = document.getElementById('global-search');
   const box = document.getElementById('global-search-results');
-  const scopeSelect = document.getElementById('global-search-scope');
-  if (scopeSelect) {
-    if ('value' in scopeSelect) scopeSelect.value = globalSearchScope;
-    scopeSelect.onchange = (e) => {
-      const target = e && e.target;
-      if (!target || typeof target.value !== 'string') return;
-      globalSearchScope = normalizeGlobalSearchScope(target.value);
-      clearGlobalSearchCaches();
-      const q = input ? clampUiInput(input.value, MAX_GLOBAL_QUERY_LENGTH) : '';
-      if (input && input.value !== q) input.value = q;
-      renderGlobalSearchResults(getGlobalSearchMatches(q), q);
-      persistViewState();
-    };
-  }
   if (input && box) {
     safeSetAttr(input, 'role', 'combobox');
     safeSetAttr(input, 'aria-autocomplete', 'list');
