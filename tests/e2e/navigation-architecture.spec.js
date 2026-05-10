@@ -142,6 +142,17 @@ test.describe('navigation architecture contract', () => {
     }
   });
 
+  test('desktop first-level navigation stays on one row', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto('/aaz-index.html#v4/home/home');
+    await expect(page.locator('#entity-switcher .entity-btn')).toHaveCount(FIRST_LEVEL_LABELS.length);
+
+    const rowTops = await page.locator('#entity-switcher .entity-btn').evaluateAll((nodes) => (
+      [...new Set(nodes.map((node) => Math.round(node.getBoundingClientRect().top)))]
+    ));
+    expect(rowTops).toHaveLength(1);
+  });
+
   for (const viewport of VIEWPORTS) {
     test.describe(viewport.name, () => {
       test.use({ viewport: { width: viewport.width, height: viewport.height } });
