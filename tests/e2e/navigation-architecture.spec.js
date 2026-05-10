@@ -76,6 +76,14 @@ const DENSITY_OPTIONS = [
   { label: 'чтение', value: 'reader', bodyClass: 'density-reader' },
   { label: 'исследование', value: 'research', bodyClass: 'density-research' },
 ];
+const VIEW_TAB_CONTRACT_ROUTES = [
+  { hash: '#v4/all/list', viewTabs: 0 },
+  { hash: '#v4/names/list', viewTabs: 6 },
+  { hash: '#v4/lexicon/list', viewTabs: 2 },
+  { hash: '#v4/lexicon_reverse/list', viewTabs: 0 },
+  { hash: '#v4/materials/lectures', viewTabs: 0 },
+  { hash: '#v4/scholar/viz/module/viz01', viewTabs: 0 },
+];
 
 const RUNTIME_NAV_SOURCES = ['v3_app.js', 'v3_template.html'];
 const FORBIDDEN_RUNTIME_NAV_TOKENS = [
@@ -124,6 +132,13 @@ test.describe('navigation architecture contract', () => {
     for (const option of DENSITY_OPTIONS) {
       await density.selectOption(option.value);
       await expect(page.locator('body')).toHaveClass(new RegExp(`\\b${option.bodyClass}\\b`));
+    }
+  });
+
+  test('view tabs render only for multi-mode index routes', async ({ page }) => {
+    for (const route of VIEW_TAB_CONTRACT_ROUTES) {
+      await page.goto(`/aaz-index.html${route.hash}`);
+      await expect(page.locator('#view-tabs .view-tab')).toHaveCount(route.viewTabs);
     }
   });
 
