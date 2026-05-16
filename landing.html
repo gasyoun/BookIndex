@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Зализнякиада: вводная страница к BookIndex, сопроводительному сайту к книге А. А. Зализняка «Из жизни слов и языков»." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://gasyoun.github.io/BookIndex/landing.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gasyoun.github.io/BookIndex/landing.html" />
+  <meta property="og:title" content="Зализнякиада · BookIndex" />
+  <meta property="og:description" content="Вводная страница к BookIndex: лекции, указатели, KWIC, карты и научный аппарат по книге А. А. Зализняка." />
+  <meta property="og:image" content="https://gasyoun.github.io/BookIndex/zaliznyak_portrait.png" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:image:alt" content="Портрет А. А. Зализняка" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Зализнякиада · BookIndex</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #2f261d;
+      --muted: #6f6255;
+      --line: #d8c7ad;
+      --paper: #fffaf1;
+      --panel: #ffffff;
+      --accent: #7b4b20;
+      --accent-strong: #5a3818;
+      --soft: #f4ead8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.55 Georgia, "Times New Roman", serif;
+    }
+
+    a { color: var(--accent-strong); }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero {
+      padding: clamp(28px, 7vw, 74px) clamp(18px, 5vw, 64px) 28px;
+      border-bottom: 1px solid var(--line);
+      background: #fffdf8;
+    }
+
+    .hero-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: clamp(20px, 5vw, 54px);
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font: 13px/1.3 Arial, sans-serif;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      color: var(--accent-strong);
+      font-size: clamp(34px, 7vw, 72px);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 22px 0 0;
+      color: #42372d;
+      font-size: clamp(18px, 2.5vw, 24px);
+      line-height: 1.42;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+      font-family: Arial, sans-serif;
+    }
+
+    .hero-visual {
+      display: grid;
+      gap: 14px;
+      justify-items: end;
+    }
+
+    .brand-mark {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      box-shadow: 0 14px 34px rgba(68, 44, 24, 0.18);
+    }
+
+    .index-sheet {
+      width: min(260px, 100%);
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 42px rgba(68, 44, 24, 0.12);
+      font-family: Arial, sans-serif;
+    }
+
+    .sheet-title {
+      margin-bottom: 12px;
+      color: var(--accent-strong);
+      font-weight: 700;
+    }
+
+    .sheet-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 8px 0;
+      border-top: 1px solid #eadcc6;
+      color: #40342a;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .sheet-row span:last-child {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 10px 16px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .button.primary {
+      background: var(--accent-strong);
+      color: #fffaf1;
+    }
+
+    .button.secondary {
+      background: #fff;
+      color: var(--accent-strong);
+    }
+
+    main {
+      width: min(980px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    .routes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 0 28px;
+    }
+
+    .route {
+      display: block;
+      min-height: 126px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      text-decoration: none;
+    }
+
+    .route strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent-strong);
+      font: 700 17px/1.25 Arial, sans-serif;
+    }
+
+    .route span {
+      color: var(--muted);
+      font: 14px/1.42 Arial, sans-serif;
+    }
+
+    .note {
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      color: #49392a;
+    }
+
+    .note p { margin: 0; }
+
+    footer {
+      margin-top: auto;
+      padding: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font: 13px/1.4 Arial, sans-serif;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { justify-items: start; }
+      .brand-mark { width: 72px; height: 72px; }
+      .routes { grid-template-columns: 1fr; }
+      .hero { padding-top: 30px; }
+      .lead { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">А. А. Зализняк · «Из жизни слов и языков»</p>
+          <h1>Зализнякиада</h1>
+          <p class="lead">BookIndex помогает входить в книгу не только с первой страницы: через темы, имена, языки, лекции, контексты и научный аппарат.</p>
+          <div class="actions">
+            <a class="button primary" href="./aaz-index.html#v4/home/home">Открыть BookIndex</a>
+            <a class="button secondary" href="./aaz-index.html#v4/all/list">Сводный указатель</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="BookIndex в миниатюре">
+          <img class="brand-mark" src="./icon-512.svg" alt="BookIndex" width="96" height="96" decoding="async" />
+          <div class="index-sheet" aria-hidden="true">
+            <div class="sheet-title">Что можно открыть</div>
+            <div class="sheet-row"><span>Лекции</span><span>11</span></div>
+            <div class="sheet-row"><span>Сводный указатель</span><span>3376</span></div>
+            <div class="sheet-row"><span>Контексты и KWIC</span><span>поиск</span></div>
+            <div class="sheet-row"><span>Аппарат</span><span>визуализации</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <div class="routes" aria-label="Основные маршруты">
+        <a class="route" href="./aaz-index.html#v4/materials/lectures">
+          <strong>Читать лекции</strong>
+          <span>Оглавление, страницы лекций, сравнение и дополнительные материалы.</span>
+        </a>
+        <a class="route" href="./aaz-index.html#v4/all/list">
+          <strong>Искать в указателях</strong>
+          <span>Сводный указатель, предметы, имена, места, народы, языки и лексика.</span>
+        </a>
+        <a class="route" href="./aaz-index.html#v4/materials/kwic">
+          <strong>Смотреть контексты</strong>
+          <span>KWIC и поиск по употреблениям помогают читать вокруг слова или темы.</span>
+        </a>
+        <a class="route" href="./aaz-index.html#v4/scholar/scholar">
+          <strong>Открыть аппарат</strong>
+          <span>Хронология открытий, динамика по страницам и визуализации.</span>
+        </a>
+        <a class="route" href="./aaz-index.html#v4/materials/tasks">
+          <strong>Проверить себя</strong>
+          <span>Интерактивный практикум по мотивам книги и справочника.</span>
+        </a>
+        <a class="route" href="./aaz-index.html#v4/materials/sources">
+          <strong>Корпус источников</strong>
+          <span>Книги, планируемый видеокаталог и редакторские очереди.</span>
+        </a>
+      </div>
+
+      <div class="note">
+        <p>Рабочий интерфейс собран в автономном файле <a href="./aaz-index.html#v4/home/home">aaz-index.html</a>. Эта страница остается главным публичным входом и коротким объяснением проекта.</p>
+      </div>
+    </main>
+
+    <footer>BookIndex · сопроводительный сайт-справочник к книге А. А. Зализняка</footer>
+  </div>
+</body>
+</html>

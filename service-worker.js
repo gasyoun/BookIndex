@@ -9,7 +9,7 @@ const ASSETS = [
   './vendor/d3.v7.min.js',
   './vendor/alpinejs.cdn.min.js',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+  './vendor/leaflet.js'
 ];
 
 self.addEventListener('install', (event) => {

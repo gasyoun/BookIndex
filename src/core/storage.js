@@ -78,3 +78,48 @@ export async function getAllNotes() {
     request.onerror = (event) => reject(event.target.error);
   });
 }
+
+// --- Settings & Preferences ---
+
+const SETTINGS_KEY = 'v13_settings';
+
+/**
+ * Get all saved settings.
+ */
+export function getAllSettings() {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    console.error('Failed to parse settings from localStorage', e);
+    return {};
+  }
+}
+
+/**
+ * Get a specific setting.
+ */
+export function getSetting(key, defaultValue = null) {
+  const settings = getAllSettings();
+  return settings[key] !== undefined ? settings[key] : defaultValue;
+}
+
+/**
+ * Save a specific setting.
+ */
+export function setSetting(key, value) {
+  try {
+    const settings = getAllSettings();
+    settings[key] = value;
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  } catch (e) {
+    console.error('Failed to save setting to localStorage', e);
+  }
+}
+
+/**
+ * Clear all settings.
+ */
+export function clearAllSettings() {
+  localStorage.removeItem(SETTINGS_KEY);
+}

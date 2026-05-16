@@ -1,6 +1,6 @@
 {
   "name": "bookindex-aaz",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "private": true,
   "description": "E2E smoke checks for aaz-index standalone app",
   "scripts": {
@@ -10,26 +10,25 @@
     "import:merge": "python scripts/import_source.py --book-id",
     "import:status": "python scripts/import_source.py --book-id",
     "content:audit": "python scripts/content_report.py app_data.json --write-quality-queue tests/index-audit-queue.json --write-context-pack tests/context-entry-pack.json --write-context-pack-md tests/context-entry-pack.md",
-    "check": "npm run typecheck && npm run check:js && npm run check:ui && npm run check:e2e",
+    "check": "npm run typecheck && npm run check:parity && npm run check:js && npm run check:ui && npm run check:e2e",
     "check:js": "node --check v3_app.js && node --check scripts/build_aaz_index.mjs && node --check scripts/dev/static-server.mjs && node --check scripts/viz/build-viz-cache.js && node --check scripts/viz/viz-state.js",
+    "check:parity": "node scripts/check_parity.js",
     "check:ui": "node scripts/check_inline_styles.mjs",
     "check:e2e": "playwright test",
     "check:navigation": "playwright test tests/e2e/navigation-architecture.spec.js",
-    "build": "node scripts/build_aaz_index.mjs",
-    "build:legacy": "python scripts/build_aaz_index.py",
+    "dev": "vite",
+    "build": "vite build && node scripts/vite/postbuild-copy.mjs",
+    "preview": "vite preview --outDir dist-vite",
     "typecheck": "tsc -p tsconfig.typecheck.json",
-    "dev:vite": "vite",
-    "build:vite": "vite build && node scripts/vite/postbuild-copy.mjs",
-    "preview:vite": "vite preview --outDir dist-vite",
     "serve:static": "node scripts/dev/static-server.mjs 4173",
     "e2e": "playwright test",
     "e2e:headed": "playwright test --headed",
     "e2e:report": "playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "^1.54.0",
+    "@playwright/test": "^1.60.0",
     "typescript": "^5.7.3",
-    "vite": "^8.0.10",
+    "vite": "^5.4.21",
     "vite-plugin-singlefile": "^2.3.3"
   },
   "dependencies": {

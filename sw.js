@@ -1,13 +1,12 @@
 const SW_URL = new URL(self.location.href);
 const SW_BUILD_ID = SW_URL.searchParams.get('v') || 'dev';
 const CACHE_PREFIX = 'bookindex';
-// Kept for runtime_test compatibility and legacy guard checks.
 const CACHE_NAME = `bookindex-shell-${SW_BUILD_ID}`;
 const SHELL_CACHE_NAME = `${CACHE_PREFIX}-shell-${SW_BUILD_ID}`;
 const RUNTIME_CACHE_NAME = `${CACHE_PREFIX}-runtime-v1`;
 const TILE_CACHE_NAME = `${CACHE_PREFIX}-tiles-v1`;
 const MEDIA_CACHE_NAME = `${CACHE_PREFIX}-media-v1`;
-const OFFLINE_URL = './v3_template.html';
+const OFFLINE_URL = './index.html';
 
 const MAX_RUNTIME_ENTRIES = 180;
 const MAX_TILE_ENTRIES = 1000;
@@ -40,15 +39,16 @@ const EXTERNAL_MEDIA_HOST_SUFFIXES = [
 ];
 
 const SHELL_ASSETS = [
-  './v3_template.html',
-  './v3_app.js',
-  './app_data.json',
+  './index.html',
+  './robots.txt',
+  './sitemap.xml',
   './manifest.webmanifest',
   './icon-192.svg',
-  './scripts/search-worker.js',
+  './icon-512.svg',
+  './zaliznyak_portrait.png',
   './vendor/fuse.basic.min.js',
   './vendor/d3.v7.min.js',
-  './vendor/alpinejs.cdn.min.js',
+  './vendor/leaflet.js',
 ];
 
 function isCacheableResponse(response) {
@@ -110,7 +110,7 @@ async function putInCache(cacheName, request, response, maxEntries = 0) {
       await trimCacheEntries(cacheName, maxEntries);
     }
   } catch (err) {
-    // Ignore cache failures (quota, private mode); network response is still valid.
+    // Ignore cache failures
   }
   return response;
 }

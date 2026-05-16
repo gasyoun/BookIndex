@@ -1,12 +1,16 @@
 {
   "name": "Zalizniakiada BookIndex",
   "short_name": "BookIndex",
-  "start_url": "./aaz-index.html#home/home",
+  "id": "./aaz-index.html",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "./aaz-index.html#v4/home/home",
   "scope": "./",
   "display": "standalone",
   "background_color": "#faf8f3",
   "theme_color": "#5a3818",
-  "description": "Offline-capable companion index for A. A. Zalizniak lectures.",
+  "description": "Интерактивный справочник, корпусная лаборатория и указатель к книге А. А. Зализняка «Из жизни слов и языков».",
+  "categories": ["education", "books", "reference"],
   "icons": [
     {
       "src": "./icon-192.svg",

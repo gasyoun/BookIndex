@@ -1,4 +1,4 @@
-import { copyFileSync, existsSync, mkdirSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -18,4 +18,42 @@ if (!existsSync(targetDir)) {
 }
 
 copyFileSync(source, target);
+const stableHtml = readFileSync(target, 'utf8')
+  .replace(/\.\/manifest-[^"']+\.webmanifest/g, './manifest.webmanifest')
+  .replace(/\.\/icon-192-[^"']+\.svg/g, './icon-192.svg');
+writeFileSync(target, stableHtml);
 console.log(`Copied ${source} -> ${target}`);
+
+function copyRecursive(sourcePath, targetPath) {
+  const stat = statSync(sourcePath);
+  if (stat.isDirectory()) {
+    if (!existsSync(targetPath)) mkdirSync(targetPath, { recursive: true });
+    for (const entry of readdirSync(sourcePath)) {
+      copyRecursive(path.join(sourcePath, entry), path.join(targetPath, entry));
+    }
+    return;
+  }
+  mkdirSync(path.dirname(targetPath), { recursive: true });
+  copyFileSync(sourcePath, targetPath);
+}
+
+const deployAssets = [
+  'manifest.webmanifest',
+  'manifest.json',
+  'sw.js',
+  'service-worker.js',
+  'robots.txt',
+  'sitemap.xml',
+  'icon-192.svg',
+  'icon-512.svg',
+  'zaliznyak_portrait.png',
+  'vendor',
+];
+
+for (const relPath of deployAssets) {
+  const assetSource = path.resolve(rootDir, 'dist-vite', relPath);
+  if (!existsSync(assetSource)) continue;
+  const assetTarget = path.resolve(targetDir, relPath);
+  copyRecursive(assetSource, assetTarget);
+  console.log(`Copied ${assetSource} -> ${assetTarget}`);
+}

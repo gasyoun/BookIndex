@@ -1,7 +1,25 @@
 /**
- * Parse a string into Leipzig-style gloss objects.
- * Format: "word1 word2" + "gloss1 gloss2"
+ * @file linguistics.js
+ * @description Linguistic utilities, stemming, and numerical clamping
  */
+
+import { APP_DATA, DEFAULT_TOTAL_PAGES } from '../core/state.js';
+
+export function getTotalBookPages() {
+  const stats = APP_DATA && APP_DATA.book_stats ? APP_DATA.book_stats : {};
+  return Number.isFinite(Number(stats.total_pages)) ? Number(stats.total_pages) : DEFAULT_TOTAL_PAGES;
+}
+
+export function clampUiInput(val, maxLen) {
+  return String(val || '').slice(0, maxLen);
+}
+
+export function clampPageInBook(page) {
+  const p = parseInt(String(page || '1'), 10);
+  const total = getTotalBookPages();
+  if (!Number.isFinite(p)) return 1;
+  return Math.max(1, Math.min(total, p));
+}
 export function parseLeipzigGloss(text, gloss) {
   if (!text || !gloss) return null;
   const words = text.split(/\s+/);
@@ -40,19 +58,11 @@ export function compareHeadsRu(a, b) {
   return a.localeCompare(b, 'ru', { sensitivity: 'base', numeric: true });
 }
 
-export function clampPageInBook(page, totalPages = 424) {
-  const p = parseInt(String(page || '1'), 10);
-  if (!Number.isFinite(p)) return 1;
-  return Math.max(1, Math.min(totalPages, p));
+export function compareItemsByHead(a, b) {
+  return compareHeadsRu(a.head || a.name || '', b.head || b.name || '');
 }
 
-export function normalizePageRangeInBook(start, end, min = 1, max = 424) {
-  let s = parseInt(String(start || min), 10);
-  let e = parseInt(String(end || max), 10);
-  if (!Number.isFinite(s)) s = min;
-  if (!Number.isFinite(e)) e = max;
-  s = Math.max(min, Math.min(max, s));
-  e = Math.max(min, Math.min(max, e));
-  if (s > e) [s, e] = [e, s];
-  return { start: s, end: e };
+export function sortUniquePages(pages) {
+  if (!Array.isArray(pages)) return [];
+  return Array.from(new Set(pages.map(p => parseInt(p, 10)).filter(p => Number.isFinite(p)))).sort((a, b) => a - b);
 }
