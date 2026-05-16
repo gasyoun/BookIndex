@@ -8,9 +8,17 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate-and-build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -35,8 +43,14 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Dependency security audit
+        run: npm run check:security
+
       - name: Build standalone artifact
         run: npm run build
+
+      - name: Static security policy guard
+        run: npm run check:security:static
 
       - name: TypeScript / JS typecheck
         run: npm run typecheck
@@ -46,6 +60,9 @@ jobs:
 
       - name: UI inline style guard
         run: npm run check:ui
+
+      - name: Performance budget
+        run: npm run check:perf
 
       - name: Encoding / mojibake check
         run: python scripts/check_encoding.py
@@ -80,5 +97,5 @@ jobs:
       - name: Install Playwright browser (Chromium)
         run: npx playwright install --with-deps chromium
 
-      - name: E2E smoke (Playwright)
-        run: npm run check:e2e:smoke
+      - name: E2E full suite (Playwright)
+        run: npm run check:e2e

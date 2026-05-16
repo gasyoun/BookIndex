@@ -12,10 +12,6 @@ const MAX_RUNTIME_ENTRIES = 180;
 const MAX_TILE_ENTRIES = 1000;
 const MAX_MEDIA_ENTRIES = 400;
 
-const EXTERNAL_ASSET_HOSTS = new Set([
-  'unpkg.com',
-]);
-
 const TILE_HOSTS = new Set([
   'tile.openstreetmap.org',
   'a.tile.openstreetmap.org',
@@ -47,6 +43,7 @@ const SHELL_ASSETS = [
   './zaliznyak_portrait.png',
   './vendor/fuse.basic.min.js',
   './vendor/d3.v7.min.js',
+  './vendor/leaflet.css',
   './vendor/leaflet.js',
 ];
 
@@ -66,10 +63,7 @@ function isTileRequest(request, url) {
 }
 
 function isExternalAssetRequest(request, url) {
-  if (!url || !request) return false;
-  if (!EXTERNAL_ASSET_HOSTS.has(url.hostname)) return false;
-  return request.destination === 'style'
-    || request.destination === 'font';
+  return false;
 }
 
 function isExternalMediaRequest(request, url) {

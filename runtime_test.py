@@ -24,6 +24,8 @@ REQUIRED_FILES = [
     "service-worker.js",
     "package.json",
     "vite.config.mjs",
+    "vendor/leaflet.css",
+    "vendor/leaflet.js",
 ]
 
 TEXT_REQUIRED = {
@@ -31,24 +33,26 @@ TEXT_REQUIRED = {
         "Content-Security-Policy",
         "default-src 'self'",
         "script-src 'self' 'unsafe-inline'",
-        'rel="manifest" href="%BASE_URL%manifest.webmanifest"',
-        '<script id="app-data-json" type="application/json">',
-        '<script type="module" src="/src/entry.js"></script>',
-        "navigator.serviceWorker.register('./sw.js')",
+        'rel="manifest" href="./manifest.webmanifest"',
+        'rel="canonical" href="https://gasyoun.github.io/BookIndex/index.html"',
+        'property="og:image"',
+        'type="application/ld+json"',
+        'href="./aaz-index.html#v4/home/home"',
     ],
     "aaz-index.html": [
         "Content-Security-Policy",
         "default-src 'self'",
         'rel="manifest" href="./manifest.webmanifest"',
         '<script id="app-data-json" type="application/json">',
-        "navigator.serviceWorker.register('./sw.js')",
+        "navigator.serviceWorker.register(swUrl",
         "Книга в цифрах",
         "KWIC-конкорданс",
     ],
     "v3_app.js": [
-        "function safeUrl(url)",
-        "function loadScriptOnce(src, attrs = {})",
-        "Script URL is not allowed.",
+        "function safeUrl(url, fallback = '#')",
+        "function safeImageUrl(url, fallback = '')",
+        "function registerAppServiceWorker()",
+        "navigator.serviceWorker.register(swUrl",
         "Книга в цифрах",
         "KWIC-конкорданс",
     ],
@@ -57,16 +61,18 @@ TEXT_REQUIRED = {
         "const SHELL_ASSETS = [",
         "request.method !== 'GET'",
         "caches.match(OFFLINE_URL)",
-        "request.destination === 'style'",
+        "./vendor/leaflet.css",
     ],
     "service-worker.js": [
         "request.method !== 'GET'",
         "sameOrigin",
-        "allowedExternalStyle",
+        "./aaz-index.html",
+        "./vendor/leaflet.css",
     ],
     "vite.config.mjs": [
         "viteSingleFile()",
-        "injectAppDataPlugin()",
+        "bookIndexTemplatePlugin()",
+        "bookindex-template-transform",
         "host: '127.0.0.1'",
         "allowedHosts: ['localhost', '127.0.0.1']",
         "cors: false",
@@ -76,6 +82,7 @@ TEXT_REQUIRED = {
 TEXT_FORBIDDEN = {
     "index.html": [
         "script-src 'self' 'unsafe-inline' https://unpkg.com",
+        '<script type="module" src="/src/entry.js"></script>',
     ],
     "aaz-index.html": [
         "__APP_DATA_JSON__",
@@ -88,7 +95,12 @@ TEXT_FORBIDDEN = {
     ],
     "sw.js": [
         "request.destination === 'script'",
+        "unpkg.com",
         "'cdn.jsdelivr.net'",
+    ],
+    "service-worker.js": [
+        "unpkg.com",
+        "cdn.jsdelivr.net",
     ],
 }
 
@@ -199,11 +211,14 @@ def check_package_contract() -> None:
     package = load_json("package.json")
     scripts = package.get("scripts", {})
     required_scripts = {
-        "build": "npm run build:vite && node scripts/vite/postbuild-copy.mjs",
-        "build:vite": "vite build",
+        "build": "node scripts/build_aaz_index.mjs",
+        "build:vite": "vite build && node scripts/vite/postbuild-copy.mjs",
         "check:js": None,
         "check:e2e": None,
         "check:e2e:smoke": None,
+        "check:perf": None,
+        "check:security": None,
+        "check:security:static": None,
         "typecheck": None,
     }
     for name, expected in required_scripts.items():

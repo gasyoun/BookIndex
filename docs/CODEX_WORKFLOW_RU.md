@@ -97,13 +97,17 @@ python scripts/issue_quality_guard.py --repo gasyoun/BookIndex --state all
 Минимум:
 
 ```bash
-node scripts/bundle.js           # Обязательная сборка бандла
-python scripts/check_encoding.py
-python scripts/validate_content.py
-python scripts/build_aaz_index.py
+npm run build                    # Сборка итогового aaz-index.html
+python runtime_test.py            # infra/artifact contracts
+npm run check:security            # npm audit
+npm run check:security:static     # CSP/vendor/service-worker guard
+npm run check:perf                # size budgets
+python scripts/check_encoding.py  # Защита от битой кодировки
+python scripts/validate_content.py app_data.json
+npm run check                     # typecheck + JS/UI + full Playwright
 ```
 
-...
+`src/` сейчас не является безопасным автоматическим источником production runtime. Менять его только в задачах миграции/паритета и отдельно доказывать результат полным E2E.
 
 ## 8) UX/контент договоренности, которые нельзя забывать
 

@@ -4,16 +4,66 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
+<meta name="color-scheme" content="light">
+<meta name="application-name" content="BookIndex">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="./icon-192.svg">
-<meta name="description" content="А. А. Зализняк. Из жизни слов и языков — сопроводительный сайт-справочник">
-<title>Зализнякиада (сопроводительный сайт-справочник)</title>
-<link rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin="" />
+<link rel="apple-touch-icon" href="./icon-192.svg">
+<meta name="description" content="Интерактивный веб-справочник и корпусная лаборатория по наследию А. А. Зализняка: указатели, лекции, KWIC, карты, графы и научный аппарат.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://gasyoun.github.io/BookIndex/aaz-index.html">
+<title>Зализнякиада — интерактивный справочник по Зализняку | BookIndex</title>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gasyoun.github.io/BookIndex/aaz-index.html">
+<meta property="og:title" content="Зализнякиада — интерактивный справочник">
+<meta property="og:description" content="Корпусная лаборатория по книге А. А. Зализняка «Из жизни слов и языков»: указатели, KWIC, карты, графы и научный аппарат.">
+<meta property="og:image" content="https://gasyoun.github.io/BookIndex/zaliznyak_portrait.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="Портрет А. А. Зализняка">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Зализнякиада">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Зализнякиада — интерактивный справочник">
+<meta name="twitter:description" content="Корпусная лаборатория по наследию А. А. Зализняка. Поиск, карты, графы и KWIC-конкорданс.">
+<meta name="twitter:image" content="https://gasyoun.github.io/BookIndex/zaliznyak_portrait.png">
+<meta name="twitter:image:alt" content="Портрет А. А. Зализняка">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://gasyoun.github.io/BookIndex/aaz-index.html#app",
+      "name": "Зализнякиада",
+      "alternateName": "BookIndex",
+      "url": "https://gasyoun.github.io/BookIndex/aaz-index.html",
+      "description": "Интерактивный веб-справочник и корпусная лаборатория по наследию А. А. Зализняка.",
+      "inLanguage": "ru",
+      "applicationCategory": "ReferenceApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" },
+      "about": { "@id": "https://gasyoun.github.io/BookIndex/index.html#book" }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://gasyoun.github.io/BookIndex/aaz-index.html#dataset",
+      "name": "BookIndex: указатель к книге «Из жизни слов и языков»",
+      "description": "Структурированный указатель имен, топонимов, этнонимов, языков, лексики и предметных понятий для чтения книги А. А. Зализняка.",
+      "inLanguage": "ru",
+      "keywords": ["Зализняк", "лингвистика", "этимология", "древнерусский", "KWIC", "Digital Humanities"],
+      "isBasedOn": { "@id": "https://gasyoun.github.io/BookIndex/index.html#book" },
+      "license": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="./vendor/leaflet.css">
 <script src="./vendor/leaflet.js"></script>
 <script src="./vendor/fuse.basic.min.js"></script>
 <script src="./vendor/d3.v7.min.js"></script>
