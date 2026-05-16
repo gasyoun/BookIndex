@@ -26,6 +26,20 @@ export function perfDebug(label, ms, meta = '') {
 }
 
 const scriptLoadPromises = new Map();
+const LOCAL_SCRIPT_PROTOCOLS = new Set(['http:', 'https:', 'file:']);
+
+function isAllowedScriptUrl(src) {
+  try {
+    const parsed = new URL(src, document.baseURI);
+    if (!LOCAL_SCRIPT_PROTOCOLS.has(parsed.protocol)) return false;
+    if (parsed.protocol === 'file:') {
+      return window.location.protocol === 'file:' && /^\.{0,2}\//.test(src);
+    }
+    return parsed.origin === window.location.origin;
+  } catch (err) {
+    return false;
+  }
+}
 
 export function loadScriptOnce(src, attrs = {}) {
   if (typeof document === 'undefined') {
@@ -33,6 +47,7 @@ export function loadScriptOnce(src, attrs = {}) {
   }
   const url = String(src || '').trim();
   if (!url) return Promise.reject(new Error('Script URL is required.'));
+  if (!isAllowedScriptUrl(url)) return Promise.reject(new Error('Script URL is not allowed.'));
   if (scriptLoadPromises.has(url)) return scriptLoadPromises.get(url);
 
   const promise = new Promise((resolve, reject) => {
@@ -152,7 +167,20 @@ export function renderTextWithPageLinks(text, options = {}) {
 
 export function safeUrl(url) {
   if (!url || typeof url !== 'string') return '#';
-  if (url.startsWith('http') || url.startsWith('/') || url.startsWith('./')) return url;
+  const raw = url.trim();
+  if (!raw || /[\u0000-\u001f\u007f]/.test(raw)) return '#';
+  if (raw.startsWith('#')) return raw;
+  if (raw.startsWith('//')) return '#';
+  if (raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) return raw;
+  try {
+    const parsed = new URL(raw);
+    if (parsed.protocol === 'https:') return raw;
+    if (parsed.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(parsed.hostname)) {
+      return raw;
+    }
+  } catch (err) {
+    return '#';
+  }
   return '#';
 }
 

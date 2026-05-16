@@ -80,8 +80,8 @@ export function renderPhoneticLawsPanel(container) {
         <div class="law-desc">${escapeHtml(law.description || '')}</div>
         <div class="law-examples">
           ${(law.examples || []).map(ex => `<div class="law-example">
-            <span class="law-example-source">${escapeHtml(ex.source)}</span> → 
-            <span class="law-example-target">${escapeHtml(ex.target)}</span> 
+            <span class="law-example-source">${escapeHtml(ex.source)}</span> →
+            <span class="law-example-target">${escapeHtml(ex.target)}</span>
             <span class="law-example-comment">(${escapeHtml(ex.comment || '')})</span>
           </div>`).join('')}
         </div>

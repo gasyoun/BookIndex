@@ -14,7 +14,6 @@ const MAX_MEDIA_ENTRIES = 400;
 
 const EXTERNAL_ASSET_HOSTS = new Set([
   'unpkg.com',
-  'cdn.jsdelivr.net',
 ]);
 
 const TILE_HOSTS = new Set([
@@ -69,8 +68,7 @@ function isTileRequest(request, url) {
 function isExternalAssetRequest(request, url) {
   if (!url || !request) return false;
   if (!EXTERNAL_ASSET_HOSTS.has(url.hostname)) return false;
-  return request.destination === 'script'
-    || request.destination === 'style'
+  return request.destination === 'style'
     || request.destination === 'font';
 }
 

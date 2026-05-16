@@ -48,6 +48,17 @@ export default {
   },
   server: {
     open: true,
-    port: 3000
+    host: '127.0.0.1',
+    allowedHosts: ['localhost', '127.0.0.1'],
+    cors: false,
+    port: 3000,
+    fs: {
+      strict: true,
+    },
+  },
+  preview: {
+    host: '127.0.0.1',
+    allowedHosts: ['localhost', '127.0.0.1'],
+    cors: false,
   }
 };

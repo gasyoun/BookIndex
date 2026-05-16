@@ -21,9 +21,17 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const request = event.request;
+  if (!request || request.method !== 'GET') return;
+
+  const url = new URL(request.url);
+  const sameOrigin = url.origin === self.location.origin;
+  const allowedExternalStyle = request.destination === 'style'
+    && url.href === 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+
+  if (!sameOrigin && !allowedExternalStyle) return;
+
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    caches.match(request).then((response) => response || fetch(request))
   );
 });
