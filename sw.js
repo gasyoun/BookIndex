@@ -35,6 +35,7 @@ const EXTERNAL_MEDIA_HOST_SUFFIXES = [
 
 const SHELL_ASSETS = [
   './index.html',
+  './aaz-index.html',
   './robots.txt',
   './sitemap.xml',
   './manifest.webmanifest',
