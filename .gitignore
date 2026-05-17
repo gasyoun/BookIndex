@@ -4,3 +4,5 @@ test-results/
 __pycache__/
 scripts/__pycache__/
 dist-vite/
+scratch/
+*.bak

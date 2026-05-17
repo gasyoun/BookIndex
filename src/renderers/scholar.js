@@ -8,12 +8,12 @@ import { exportAllNotesMarkdown } from '../utils/export.js';
 import { buildBibliographyIndex, exportBibliographyBibTeX } from '../core/bibliography.js';
 import { buildTopicClusters, calculateCentrality } from '../core/analytics.js';
 import { QUIZ_LEVELS, checkAnswer } from '../core/quiz.js';
-import { 
-  APP_DATA, 
-  currentVizModule, 
-  ensureVizStateLoaded, 
-  ensureVizModuleLoaded, 
-  warmupVizCacheInWorker, 
+import {
+  APP_DATA,
+  currentVizModule,
+  ensureVizStateLoaded,
+  ensureVizModuleLoaded,
+  warmupVizCacheInWorker,
   cleanupActiveVizModule,
   getVizRegistry,
   buildVizHash,
@@ -46,7 +46,7 @@ export function renderScholarDashboard(container) {
       </div>
     </div>
   `;
-  
+
   const exportBtn = container.querySelector('#export-all-notes');
   if (exportBtn) {
     exportBtn.onclick = () => exportAllNotesMarkdown();
@@ -55,7 +55,7 @@ export function renderScholarDashboard(container) {
 
 export function renderBibliographyIndex(container) {
   const index = buildBibliographyIndex();
-  
+
   container.innerHTML = `
     <div class="panel active bibliography-panel">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -78,7 +78,7 @@ export function renderBibliographyIndex(container) {
       </div>
     </div>
   `;
-  
+
   const exportBtn = container.querySelector('#export-bibtex');
   if (exportBtn) {
     exportBtn.onclick = () => {
@@ -91,7 +91,7 @@ export function renderBibliographyIndex(container) {
 
 export function renderTopicClusters(container) {
   const clusters = buildTopicClusters();
-  
+
   container.innerHTML = `
     <div class="panel active analytics-panel">
       <h2 class="scholar-title">Дальнее чтение: тематические кластеры (v16.0)</h2>
@@ -112,7 +112,7 @@ export function renderTopicClusters(container) {
 
 export function renderKnowledgeHubs(container) {
   const hubs = calculateCentrality();
-  
+
   container.innerHTML = `
     <div class="panel active analytics-panel">
       <h2 class="scholar-title">Хабы знаний: сетевой анализ (v16.1)</h2>
@@ -135,7 +135,7 @@ export function renderKnowledgeHubs(container) {
 
 export function renderQuiz(container, levelId = 1) {
   const level = QUIZ_LEVELS.find(l => l.id === levelId);
-  
+
   container.innerHTML = `
     <div class="panel active quiz-panel">
       <h2 class="scholar-title">Лингвистический тренажер: ${escapeHtml(level.title)}</h2>

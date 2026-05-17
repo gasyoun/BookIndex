@@ -3,10 +3,10 @@
  * @description Renderers for complex visualizations and linguistic dashboards (KWIC, Heatmap, Maps)
  */
 
-import { 
-  APP_DATA, 
-  currentTab, 
-  currentEntity, 
+import {
+  APP_DATA,
+  currentTab,
+  currentEntity,
   currentVizModule,
   currentKwicQuery,
   currentKwicSource,
@@ -16,24 +16,24 @@ import {
   MAX_LIST_QUERY_LENGTH,
   KWIC_MAX_ROWS
 } from '../core/state.js';
-import { 
-  escapeHtml, 
-  safeUrl, 
-  safeImageUrl, 
-  bindActionWithKeyboard 
+import {
+  escapeHtml,
+  safeUrl,
+  safeImageUrl,
+  bindActionWithKeyboard
 } from '../utils/dom.js';
-import { 
-  getBookLabelForSearch 
+import {
+  getBookLabelForSearch
 } from '../core/data.js';
-import { 
-  normalizeHeadForMatch, 
-  compareHeadsRu, 
-  clampUiInput, 
-  normalizePageRangeInBook 
+import {
+  normalizeHeadForMatch,
+  compareHeadsRu,
+  clampUiInput,
+  normalizePageRangeInBook
 } from '../utils/linguistics.js';
 
 // --- External References ---
-/* global getTotalBookPages, normalizeKwicSource, normalizeKwicSort, 
+/* global getTotalBookPages, normalizeKwicSource, normalizeKwicSort,
    buildReadingNowHash, collectLexiconContextBundles, buildKwicContextRow,
    collectMatchingGlossaryTerms, navigateToItem, openGlossaryTerm, openReadingNowPage,
    persistViewState, getVizModuleCatalog, cleanupActiveVizModule,
@@ -46,7 +46,7 @@ export function collectLexiconKwicRows(query, pageStart, pageEnd) {
   if (qNorm.length < 2) return [];
   const rows = [];
   rows._truncated = false;
-  
+
   // Logic from v3_app.js
   const bundles = typeof collectLexiconContextBundles === 'function' ? collectLexiconContextBundles(pageStart, pageEnd) : [];
   for (const bundle of bundles) {
@@ -77,7 +77,7 @@ export function collectLexiconKwicRows(query, pageStart, pageEnd) {
 export function renderRetrogradeSuffixTree(container) {
   const lexicon = APP_DATA.lexicon || [];
   const suffixMap = new Map();
-  
+
   // Group words by last 3 characters
   lexicon.forEach(it => {
     const head = it.head || '';
@@ -86,12 +86,12 @@ export function renderRetrogradeSuffixTree(container) {
     if (!suffixMap.has(suffix)) suffixMap.set(suffix, []);
     suffixMap.get(suffix).push(head);
   });
-  
+
   const sorted = Array.from(suffixMap.entries())
     .filter(e => e[1].length > 2)
     .sort((a, b) => b[1].length - a[1].length)
     .slice(0, 20);
-    
+
   container.innerHTML = `
     <div class="viz-card">
       <h3>Ретроградный анализ суффиксов (v14.0)</h3>
@@ -112,9 +112,9 @@ export function renderEtymoFlow(container, itemHead) {
     container.innerHTML = '<div class="panel-muted-message">Этимологическая цепочка для данного элемента не найдена.</div>';
     return;
   }
-  
+
   const chain = item.etymology_chain;
-  
+
   container.innerHTML = `
     <div class="etymo-flow">
       <h3>Развитие формы: ${escapeHtml(itemHead)}</h3>
@@ -134,7 +134,7 @@ export function renderEtymoFlow(container, itemHead) {
 
 export function renderKwicPanel(container) {
   const totalPages = typeof getTotalBookPages === 'function' ? getTotalBookPages() : 424;
-  
+
   container.innerHTML = `<div class="panel active kwic-panel">
     <div class="kwic-inner">
       <h2 class="kwic-title">KWIC-конкорданс</h2>
@@ -147,15 +147,15 @@ export function renderKwicPanel(container) {
       <div id="kwic-results" class="kwic-results"></div>
     </div>
   </div>`;
-  
+
   const resultsEl = container.querySelector('#kwic-results');
   const runBtn = container.querySelector('#kwic-run');
-  
+
   const renderRows = () => {
     const query = container.querySelector('#kwic-query').value;
     const sortBy = container.querySelector('#kwic-sort').value; // "left" or "right"
     let rows = collectLexiconKwicRows(query, currentKwicPageStart, currentKwicPageEnd);
-    
+
     // N-Gram Sorting (v16.3)
     if (sortBy === 'left') {
       rows.sort((a, b) => (a.leftText.split(' ').pop() || '').localeCompare(b.leftText.split(' ').pop() || ''));
@@ -170,7 +170,7 @@ export function renderKwicPanel(container) {
       </div>
     `).join('');
   };
-  
+
   container.querySelector('.kwic-controls').innerHTML += `
     <select id="kwic-sort" class="kwic-select">
       <option value="none">Без сортировки</option>
@@ -178,7 +178,7 @@ export function renderKwicPanel(container) {
       <option value="right">Сортировка по слову СПРАВА</option>
     </select>
   `;
-  
+
   if (runBtn) runBtn.onclick = renderRows;
 }
 
@@ -189,7 +189,7 @@ export function renderIsoglossMap(container, featureId) {
       <div class="map-placeholder" style="background:#e0f2f1; height:400px; position:relative; border-radius:12px; overflow:hidden;">
         <svg width="100%" height="100%" viewBox="0 0 800 400">
           <path d="M100,100 Q200,50 400,100 T700,100 L700,300 Q400,350 100,300 Z" fill="#b2dfdb" />
-          <path d="M200,150 Q300,120 400,150 T500,200 L450,250 Q300,280 200,250 Z" 
+          <path d="M200,150 Q300,120 400,150 T500,200 L450,250 Q300,280 200,250 Z"
                 fill="rgba(255,82,82,0.3)" stroke="#ff5252" stroke-width="2" stroke-dasharray="4 2" />
           <text x="350" y="200" fill="#d32f2f" font-weight="700">Зона распространения: ${escapeHtml(featureId)}</text>
         </svg>

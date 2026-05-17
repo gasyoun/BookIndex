@@ -11,11 +11,11 @@ let ytPlayer = null;
 export function openVideoPlayer(videoId) {
   const v = (APP_DATA.video_catalog || []).find(x => x.id === videoId);
   if (!v) return;
-  
+
   const modal = document.getElementById('video-player-modal');
   if (!modal) return;
   modal.style.display = 'flex';
-  
+
   const ytId = v.url.split('v=')[1];
   const tcList = document.getElementById('video-modal-tc-list');
   if (tcList) {
@@ -59,7 +59,7 @@ export function renderVideoArchivePanel(container) {
   let html = `<div class="panel active video-panel"><div class="video-inner">
     <h2 class="video-title">Видеоархив лекций А. А. Зализняка</h2>
     <div class="video-grid">`;
-  
+
   videos.forEach(v => {
     const ytId = v.url.split('v=')[1];
     html += `

@@ -19,7 +19,7 @@ export function renderHomePanel(container) {
   const routes = APP_DATA.routes || [];
   const featured = APP_DATA.featured_quote || { text: '', page: '', lecture: '' };
   const totalPages = typeof getTotalBookPages === 'function' ? getTotalBookPages() : 424;
-  
+
   let html = `<div class="panel active home-panel"><div class="home-panel-inner">`;
 
   // Stats Hero
@@ -68,11 +68,11 @@ export function renderHomePanel(container) {
 
   html += '</div></div>';
   container.innerHTML = html;
-  
+
   if (typeof bindNavigateLinks === 'function') {
     bindNavigateLinks(container, '.route-link', 'all');
   }
-  
+
   const exportBtn = document.getElementById('export-site-md');
   if (exportBtn && typeof exportWholeSiteMarkdown === 'function') {
     exportBtn.onclick = () => exportWholeSiteMarkdown();

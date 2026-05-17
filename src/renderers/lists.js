@@ -3,9 +3,9 @@
  * @description Renderers for navigation switchers and entity lists
  */
 
-import { 
-  APP_DATA, 
-  currentEntity, 
+import {
+  APP_DATA,
+  currentEntity,
   currentTab,
   searchQuery,
   MAX_LIST_QUERY_LENGTH,
@@ -13,21 +13,21 @@ import {
   ENTITY_TYPES,
   TAB_LABELS
 } from '../core/state.js';
-import { 
-  escapeHtml, 
+import {
+  escapeHtml,
   bindActionWithKeyboard,
-  safeSetAttr 
+  safeSetAttr
 } from '../utils/dom.js';
-import { 
-  normalizeHeadForMatch, 
-  clampUiInput, 
-  compareHeadsRu 
+import {
+  normalizeHeadForMatch,
+  clampUiInput,
+  compareHeadsRu
 } from '../utils/linguistics.js';
 import { intellectualSearch } from '../core/search.js';
 
 // --- External References ---
-/* global cleanupActiveVizModule, setMobileSheetOpen, renderHomePanel, 
-   renderCorpusSourcesPanel, renderLecturesPanel, renderScholarPanel, 
+/* global cleanupActiveVizModule, setMobileSheetOpen, renderHomePanel,
+   renderCorpusSourcesPanel, renderLecturesPanel, renderScholarPanel,
    renderListPanel, renderCardsPanel, syncNavigationState, selectListItem,
    renderList, renderRightContent, getVisibleItemsForCurrentEntity,
    persistViewState, invalidateVisibleItemsCache, navigateToItem,
@@ -40,7 +40,7 @@ export function renderEntitySwitcher() {
   const container = document.getElementById('entity-switcher');
   if (!container) return;
   container.innerHTML = '';
-  
+
   const order = ['corpus', 'materials', 'scholar', 'all', 'subject', 'names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse'];
   order.forEach(key => {
     const conf = ENTITY_TYPES[key];
@@ -57,10 +57,10 @@ export function renderTabs() {
   const container = document.getElementById('tabs');
   if (!container) return;
   container.innerHTML = '';
-  
+
   const conf = ENTITY_TYPES[currentEntity];
   if (!conf || !conf.tabs) return;
-  
+
   conf.tabs.forEach(tab => {
     const btn = document.createElement('button');
     btn.className = 'tab' + (tab === currentTab ? ' active' : '');
@@ -86,7 +86,7 @@ export function renderListPanel(container) {
       </div>
     </div>
   `;
-  
+
   const searchInput = container.querySelector('#search-input');
   if (searchInput) {
     searchInput.oninput = (e) => {

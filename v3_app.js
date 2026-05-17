@@ -141,7 +141,7 @@ function normalizeCorpusRegistry() {
   if (!books.some(book => book && book.book_id === activeId)) {
     APP_DATA.corpus.active_book_id = defaults.active_book_id;
   }
-  
+
   if (typeof inflateOccurrences === 'function') {
     inflateOccurrences(APP_DATA.corpus.active_book_id);
   }
@@ -5427,7 +5427,7 @@ function renderListPanel(container) {
       selectListItem(it, rowType);
     };
   }
-  
+
   document.getElementById('only-discussed-btn').onclick = (e) => {
     onlyDiscussed = !onlyDiscussed;
     e.target.classList.toggle('active', onlyDiscussed);
@@ -6759,7 +6759,7 @@ function renderTimelinePanel(container) {
 
   const isNarrow = window.innerWidth < 1000;
   const ticks = [-1500, -500, 0, 500, 1000, 1500, 1700, 1850, 1900, 1950, 2000, 2025];
-  
+
   if (isNarrow) {
     // Вертикальная шкала для узких экранов
     const W = Math.max(480, window.innerWidth - 80);
@@ -9977,7 +9977,7 @@ function renderGlossaryPanel(container) {
   if (glist && typeof window !== 'undefined' && typeof window.innerWidth === 'number' && window.innerWidth < 900) {
     glist.style.gridTemplateColumns = '1fr';
   }
-  
+
   const applyGlossaryFilter = (value) => {
     const q = (value || '').trim().toLowerCase();
     container.querySelectorAll('.glossary-entry').forEach(el => {

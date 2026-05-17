@@ -3,32 +3,32 @@
  * @description Renderers for individual entity cards and details
  */
 
-import { 
-  APP_DATA, 
-  currentEntity, 
-  selectedItem, 
-  selectedItemType, 
+import {
+  APP_DATA,
+  currentEntity,
+  selectedItem,
+  selectedItemType,
   scholarPins,
   LABELS,
   COLORS,
   EPOCH_LABELS,
   MAX_LIST_QUERY_LENGTH
 } from '../core/state.js';
-import { 
-  escapeHtml, 
-  safeUrl, 
-  safeImageUrl, 
+import {
+  escapeHtml,
+  safeUrl,
+  safeImageUrl,
   bindActionWithKeyboard,
-  announceUiMessage 
+  announceUiMessage
 } from '../utils/dom.js';
-import { 
-  sortUniquePages, 
-  clampUiInput, 
-  clampPageInBook 
+import {
+  sortUniquePages,
+  clampUiInput,
+  clampPageInBook
 } from '../utils/linguistics.js';
-import { 
-  getActiveBook, 
-  getBookLabelForSearch 
+import {
+  getActiveBook,
+  getBookLabelForSearch
 } from '../core/data.js';
 import { getNote, saveNote } from '../core/storage.js';
 import { parseLeipzigGloss } from '../utils/linguistics.js';
@@ -68,8 +68,8 @@ function renderGloss(text, gloss) {
 export function renderCardInRight() {
   const right = typeof getRightContentHost === 'function' ? getRightContentHost() : document.getElementById('right-pane-content');
   if (!right) return;
-  
-  const it = typeof findItemByHeadAndType === 'function' 
+
+  const it = typeof findItemByHeadAndType === 'function'
     ? findItemByHeadAndType(selectedItem, selectedItemType)
     : (APP_DATA[selectedItemType] || []).find(x => x.head === selectedItem);
 
@@ -82,7 +82,7 @@ export function renderCardInRight() {
   const wikiLink = it.wiki ? `<a class="wiki-link" href="${escapeHtml(safeUrl(it.wiki))}" target="_blank" rel="noopener noreferrer">Статья в Википедии →</a>` : '';
   const eType = it._entityType || currentEntity;
   const editorial = (it.editorial_flags && typeof it.editorial_flags === 'object') ? it.editorial_flags : {};
-  
+
   let category = '';
   if (eType === 'names') category = LABELS[it.subcategory] || 'Имя';
   else if (eType === 'toponyms') category = 'Топоним';
@@ -92,7 +92,7 @@ export function renderCardInRight() {
   const itemBookId = String(it.book_id || it.bookId || getActiveBook().book_id || '');
   const itemBookLabel = getBookLabelForSearch(itemBookId);
   const allPages = sortUniquePages(it.page_list || []);
-  
+
   let html = `
     <div class="card">
       <div class="card-header">
@@ -100,7 +100,7 @@ export function renderCardInRight() {
         <div class="card-title-block">
           <div style="display:flex; align-items:center; justify-content:space-between;">
             <h2>${escapeHtml(it.head)}</h2>
-            <button id="card-pin-btn" class="pin-btn${scholarPins.has(`${eType}:${it.head}`) ? ' active' : ''}" 
+            <button id="card-pin-btn" class="pin-btn${scholarPins.has(`${eType}:${it.head}`) ? ' active' : ''}"
                     onclick="togglePin('${escapeHtml(it.head)}', '${eType}')">📌</button>
           </div>
           <div class="category">${escapeHtml(category)}</div>
@@ -117,9 +117,9 @@ export function renderCardInRight() {
       <div id="card-dynamic-content"></div>
     </div>
   `;
-  
+
   right.innerHTML = html;
-  
+
   // RESEARCHER NOTE (Async)
   const noteId = `${eType}:${it.head}`;
   const dynamicContent = right.querySelector('#card-dynamic-content');
@@ -133,7 +133,7 @@ export function renderCardInRight() {
       `;
       const textarea = dynamicContent.querySelector('.card-note-textarea');
       textarea.oninput = (e) => saveNote(noteId, e.target.value);
-      
+
       // AI INSIGHT (v15.0)
       const insights = getLinguisticInsight(it.head, eType);
       const aiDiv = document.createElement('div');
@@ -145,7 +145,7 @@ export function renderCardInRight() {
         </ul>
       `;
       dynamicContent.appendChild(aiDiv);
-      
+
       // JSON-LD (v16.2 Semantic Web)
       let ldScript = document.getElementById('entity-jsonld');
       if (!ldScript) {
@@ -157,7 +157,7 @@ export function renderCardInRight() {
       ldScript.textContent = generateEntityJsonLd(it, eType);
     }
   });
-  
+
   // Wire up actions
   const pinBtn = right.querySelector('#card-pin-btn');
   if (pinBtn) {
@@ -171,7 +171,7 @@ export function renderCardsPanel(container) {
   const items = (APP_DATA[currentEntity] || []);
   container.innerHTML = '<div class="panel active"><div class="cards-grid" id="cards-grid"></div></div>';
   const grid = container.querySelector('#cards-grid');
-  
+
   items.slice(0, 100).forEach(it => {
     const card = document.createElement('div');
     card.className = 'mini-card';

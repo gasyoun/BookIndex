@@ -58,4 +58,14 @@ export default defineConfig({
     target: 'es2019',
     sourcemap: false,
   },
+  server: {
+    host: '127.0.0.1',
+    allowedHosts: ['localhost', '127.0.0.1'],
+    cors: false,
+  },
+  preview: {
+    host: '127.0.0.1',
+    allowedHosts: ['localhost', '127.0.0.1'],
+    cors: false,
+  },
 });

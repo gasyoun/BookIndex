@@ -3,20 +3,20 @@
  * @description Renderers for the core book materials (Lectures, Glossary, Reading)
  */
 
-import { 
-  APP_DATA, 
-  currentTab, 
-  currentEntity, 
-  currentLecture, 
+import {
+  APP_DATA,
+  currentTab,
+  currentEntity,
+  currentLecture,
   currentGlossaryTerm,
   trendsRangeStart,
-  trendsRangeEnd 
+  trendsRangeEnd
 } from '../core/state.js';
 import { escapeHtml, bindActionWithKeyboard } from '../utils/dom.js';
 import { clampPageInBook } from '../utils/linguistics.js';
 
 // --- External References ---
-/* global getTotalBookPages, wireReadingNowWidget, openLecturePage, 
+/* global getTotalBookPages, wireReadingNowWidget, openLecturePage,
    buildLectureTermHash, openLectureTerm, openGlossaryTerm, buildItemHash,
    buildLecturePageHash, switchTab, collectFurtherReadingBibEntries,
    downloadBibtexFile, announceUiMessage, persistViewState, getItemsForChapter,
@@ -26,11 +26,11 @@ import { clampPageInBook } from '../utils/linguistics.js';
 export function renderLecturesPanel(container) {
   const lectures = APP_DATA.lectures || [];
   const totalPages = typeof getTotalBookPages === 'function' ? getTotalBookPages() : 424;
-  
+
   let html = '<div class="panel active lectures-panel"><div class="lectures-inner">';
   html += '<h2 class="lectures-title">Все лекции книги — за пять минут</h2>';
   html += '<div class="lectures-intro">Краткие резюме лекций. Нажмите карточку для подробностей.</div>';
-  
+
   // Reading Now Widget
   html += `<div class="reading-now-box">
     <div class="reading-now-title">Режим «Читаю сейчас»</div>
@@ -52,13 +52,13 @@ export function renderLecturesPanel(container) {
     </div>`;
   });
   html += '</div></div></div>';
-  
+
   container.innerHTML = html;
-  
+
   if (typeof wireReadingNowWidget === 'function') {
     wireReadingNowWidget(container, totalPages);
   }
-  
+
   container.querySelectorAll('.lecture-card').forEach(card => {
     card.onclick = () => {
       if (typeof openLecturePage === 'function') {

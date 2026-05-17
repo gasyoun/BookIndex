@@ -16,7 +16,7 @@ import { announceAchievement } from './utils/dom.js';
 
 function initApp() {
   console.log('🚀 Zalizniakiada v13.0 initializing...');
-  
+
   try {
     // 1. Hydrate Data
     const data = typeof parseAppData === 'function' ? parseAppData() : null;
@@ -24,14 +24,14 @@ function initApp() {
       setAppData(data);
       migrateAppDataSchema(data);
     }
-    
+
     // 2. Initialize Core Systems
     initSearchWorker();
     if (typeof initScholarWorkspace === 'function') initScholarWorkspace();
     if (typeof initCardNotes === 'function') initCardNotes();
     if (typeof initPremiumIntro === 'function') initPremiumIntro();
     if (typeof injectSemanticStyles === 'function') injectSemanticStyles();
-    
+
     // 3. Routing & Gamification
     window.addEventListener('hashchange', () => {
       if (applyHash(window.location.hash)) {
@@ -55,13 +55,13 @@ function initApp() {
         });
       };
     }
-    
+
     // 4. Initial Render
     applyHash(window.location.hash || '#v4/home/home');
     renderEntitySwitcher();
     renderTabs();
     renderContent();
-    
+
     console.log('✅ Zalizniakiada v13.0 ready.');
   } catch (e) {
     console.error('❌ App initialization failed:', e);

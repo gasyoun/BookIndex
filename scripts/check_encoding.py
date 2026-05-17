@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard against accidental mojibake in core project files."""
+"""Guard against invalid UTF-8 and obvious mojibake in core project files."""
 
 from __future__ import annotations
 
@@ -16,15 +16,15 @@ DEFAULT_FILES = [
     "app_data.json",
 ]
 
-# Required phrases that should always exist in UTF-8 source files.
 REQUIRED_PHRASES = {
     "v3_template.html": [
-        "Зализнякиада (сопроводительный сайт-справочник)",
-        "А. А. Зализняк. Из жизни слов и языков",
+        "Content-Security-Policy",
+        "leaflet.css",
+        "__APP_DATA_JSON__",
     ],
     "v3_app.js": [
-        "Выберите свой путь по книге",
-        "Самая длинная лекция",
+        "Книга в цифрах",
+        "KWIC-конкорданс",
     ],
     "app_data.json": [
         '"schema_version"',
@@ -32,21 +32,20 @@ REQUIRED_PHRASES = {
     ],
 }
 
-# Common mojibake fragments (UTF-8 interpreted as cp1251/cp866 and similar).
 SUSPICIOUS_PATTERNS = [
-    re.compile(r"[РС][°±²³µ¶·ё—–•]"),
-    re.compile(r"вЂ[“”™љќў¦§¬°±·]"),
+    re.compile(r"[Р РЎ][В°В±ВІВіВµВ¶В·С‘вЂ”вЂ“вЂў]"),
+    re.compile(r"РІР‚[вЂњвЂќв„ўС™СњСћВ¦В§В¬В°В±В·]"),
 ]
 
 
 def iter_targets(raw_files: Iterable[str]) -> list[pathlib.Path]:
     targets: list[pathlib.Path] = []
     for raw in raw_files:
-        p = pathlib.Path(raw)
-        if p.exists() and p.is_file():
-            targets.append(p)
+        path = pathlib.Path(raw)
+        if path.exists() and path.is_file():
+            targets.append(path)
             continue
-        print(f"[ERROR] File not found: {p}")
+        print(f"[ERROR] File not found: {path}")
     return targets
 
 
@@ -60,8 +59,7 @@ def check_utf8(path: pathlib.Path) -> tuple[bool, str]:
     if "\x00" in text:
         return False, "contains NUL bytes"
 
-    required = REQUIRED_PHRASES.get(path.name, [])
-    for phrase in required:
+    for phrase in REQUIRED_PHRASES.get(path.name, []):
         if phrase not in text:
             return False, f"missing required phrase: {phrase!r}"
 
