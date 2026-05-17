@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Added
+- Live GitHub Pages health checks plus Lighthouse and axe accessibility quality gates.
+
+### Changed
+- Opted GitHub workflows into the Node 24 JavaScript action runtime ahead of the June 2026 migration.
+
 ## [2.2.0] - 2026-05-17
 ### Added
 - Open Graph, Twitter Card and JSON-LD metadata for `index.html` and `aaz-index.html`.

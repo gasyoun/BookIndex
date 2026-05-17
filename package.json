@@ -11,10 +11,13 @@
     "import:status": "python scripts/import_source.py --book-id",
     "content:audit": "python scripts/content_report.py app_data.json --write-quality-queue tests/index-audit-queue.json --write-context-pack tests/context-entry-pack.json --write-context-pack-md tests/context-entry-pack.md",
     "check": "npm run typecheck && npm run check:js && npm run check:ui && npm run check:e2e",
+    "check:a11y": "node scripts/check_lighthouse_a11y.mjs",
+    "check:deploy": "node scripts/check_live_deploy.mjs",
     "check:perf": "node scripts/check_performance_budget.mjs",
+    "check:postdeploy": "npm run check:deploy && npm run check:a11y",
     "check:security": "npm audit --audit-level=moderate",
     "check:security:static": "node scripts/check_security_policy.mjs",
-    "check:js": "node --check v3_app.js && node --check scripts/build_aaz_index.mjs && node --check scripts/dev/static-server.mjs && node --check scripts/viz/build-viz-cache.js && node --check scripts/viz/viz-state.js",
+    "check:js": "node --check v3_app.js && node --check scripts/build_aaz_index.mjs && node --check scripts/check_live_deploy.mjs && node --check scripts/check_lighthouse_a11y.mjs && node --check scripts/dev/static-server.mjs && node --check scripts/viz/build-viz-cache.js && node --check scripts/viz/viz-state.js",
     "check:ui": "node scripts/check_inline_styles.mjs",
     "check:e2e": "playwright test",
     "check:e2e:smoke": "playwright test tests/e2e/smoke.spec.js --grep \"PWA manifest|names graph|map tab\" --workers=1",
@@ -31,7 +34,10 @@
     "e2e:report": "playwright show-report"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
     "@playwright/test": "^1.60.0",
+    "chrome-launcher": "^1.2.1",
+    "lighthouse": "^13.3.0",
     "typescript": "^5.7.3",
     "vite": "^8.0.13",
     "vite-plugin-singlefile": "^2.3.3"
