@@ -50,14 +50,23 @@ function escapeJsonForHtmlScript(jsonText) {
 }
 
 function cspSha256(text) {
-  const browserScriptText = String(text || '').replace(/\r\n?/g, '\n');
-  return `'sha256-${createHash('sha256').update(browserScriptText, 'utf8').digest('base64')}'`;
+  const browserInlineText = String(text || '').replace(/\r\n?/g, '\n');
+  return `'sha256-${createHash('sha256').update(browserInlineText, 'utf8').digest('base64')}'`;
 }
 
 function inlineScriptHashes(html) {
   const hashes = [];
   const scriptRe = /<script\b(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi;
   for (const match of html.matchAll(scriptRe)) {
+    hashes.push(cspSha256(match[1]));
+  }
+  return hashes;
+}
+
+function inlineStyleHashes(html) {
+  const hashes = [];
+  const styleRe = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
+  for (const match of html.matchAll(styleRe)) {
     hashes.push(cspSha256(match[1]));
   }
   return hashes;
@@ -73,7 +82,9 @@ let html = templateText
   .split('__APP_DATA_JSON__').join(escapeJsonForHtmlScript(dataText))
   .split('__APP_SCRIPT__').join(jsText);
 const scriptHashes = inlineScriptHashes(html);
+const styleHashes = inlineStyleHashes(html);
 html = html.split('__CSP_SCRIPT_HASHES__').join(scriptHashes.join(' '));
+html = html.split('__CSP_STYLE_HASHES__').join(styleHashes.join(' '));
 
 writeFileSync(args.out, `\uFEFF${html}`, 'utf8');
 console.log(`OK: built ${join(process.cwd(), args.out)} (build_id=${buildId})`);
