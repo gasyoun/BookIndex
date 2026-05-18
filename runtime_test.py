@@ -32,7 +32,7 @@ TEXT_REQUIRED = {
     "index.html": [
         "Content-Security-Policy",
         "default-src 'self'",
-        "script-src 'self' 'unsafe-inline'",
+        "script-src 'self' 'sha256-",
         'rel="manifest" href="./manifest.webmanifest"',
         'rel="canonical" href="https://gasyoun.github.io/BookIndex/index.html"',
         'property="og:image"',
@@ -42,6 +42,7 @@ TEXT_REQUIRED = {
     "aaz-index.html": [
         "Content-Security-Policy",
         "default-src 'self'",
+        "script-src 'self' 'sha256-",
         'rel="manifest" href="./manifest.webmanifest"',
         '<script id="app-data-json" type="application/json">',
         "navigator.serviceWorker.register(swUrl",
@@ -81,16 +82,20 @@ TEXT_REQUIRED = {
 
 TEXT_FORBIDDEN = {
     "index.html": [
+        "script-src 'self' 'unsafe-inline'",
         "script-src 'self' 'unsafe-inline' https://unpkg.com",
         '<script type="module" src="/src/entry.js"></script>',
     ],
     "aaz-index.html": [
         "__APP_DATA_JSON__",
         "__APP_SCRIPT__",
+        "__CSP_SCRIPT_HASHES__",
+        "script-src 'self' 'unsafe-inline'",
         "script-src 'self' 'unsafe-inline' https://unpkg.com",
     ],
     "v3_template.html": [
         "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+        "script-src 'self' 'unsafe-inline'",
         "script-src 'self' 'unsafe-inline' https://unpkg.com",
     ],
     "sw.js": [
@@ -107,6 +112,8 @@ TEXT_FORBIDDEN = {
 NODE_CHECK_FILES = [
     "v3_app.js",
     "scripts/build_aaz_index.mjs",
+    "scripts/check_live_deploy.mjs",
+    "scripts/check_lighthouse_a11y.mjs",
     "scripts/dev/static-server.mjs",
     "scripts/viz/build-viz-cache.js",
     "scripts/viz/viz-state.js",

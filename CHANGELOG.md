@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Raised the axe accessibility gate to require zero critical and zero serious violations on audited routes.
 - Darkened muted helper text in the app shell so route metadata, index summary chips, chapter labels and KWIC controls meet contrast requirements.
+- Replaced script CSP `unsafe-inline` with build-generated SHA-256 hashes for the landing page and standalone app shell.
 - Opted GitHub workflows into the Node 24 JavaScript action runtime ahead of the June 2026 migration.
 
 ## [2.2.0] - 2026-05-17

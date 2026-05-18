@@ -66,6 +66,8 @@ async function runStaticChecks() {
     assert(text.includes('application/ld+json'), 'index.html is missing JSON-LD');
     assert(text.includes('rel="canonical"'), 'index.html is missing canonical link');
     assert(text.includes('href="./aaz-index.html#v4/home/home"'), 'index.html is missing app entry route');
+    assert(text.includes("script-src 'self' 'sha256-"), 'index.html script CSP is missing inline script hash');
+    assert(!text.includes("script-src 'self' 'unsafe-inline'"), 'index.html script CSP still allows unsafe-inline');
   });
 
   await checkText('aaz-index.html', (text) => {
@@ -73,7 +75,10 @@ async function runStaticChecks() {
     assert(text.includes('href="./vendor/leaflet.css"'), 'aaz-index.html is missing local Leaflet CSS');
     assert(text.includes('src="./vendor/leaflet.js"'), 'aaz-index.html is missing local Leaflet JS');
     assert(text.includes('navigator.serviceWorker.register(swUrl'), 'aaz-index.html is missing service-worker registration');
+    assert(text.includes("script-src 'self' 'sha256-"), 'aaz-index.html script CSP is missing inline script hashes');
     assert(!text.includes('__APP_DATA_JSON__'), 'aaz-index.html still contains an app data placeholder');
+    assert(!text.includes('__CSP_SCRIPT_HASHES__'), 'aaz-index.html still contains a CSP hash placeholder');
+    assert(!text.includes("script-src 'self' 'unsafe-inline'"), 'aaz-index.html script CSP still allows unsafe-inline');
   });
 
   await checkText('manifest.webmanifest', (text) => {
