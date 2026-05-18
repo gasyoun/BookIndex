@@ -58,6 +58,7 @@
 | `v3_template.html` | HTML-шаблон standalone-приложения. |
 | `v3_app.js` | Основной runtime приложения. |
 | `app_data.json` | База знаний в формате JSON (6 MB+). |
+| `data/modules/` | Lazy-loaded JSON chunks used by the standalone app and pre-cached for offline mode. |
 | `src/` | Модульные исходники для контролируемой пересборки `v3_app.js`. |
 | `public/` | Ассеты, копируемые Vite в `dist-vite/`. |
 | `vendor/` | Локально закрепленные runtime-библиотеки. |

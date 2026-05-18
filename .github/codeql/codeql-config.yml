@@ -1,0 +1,4 @@
+name: BookIndex CodeQL config
+
+paths-ignore:
+  - aaz-index.html

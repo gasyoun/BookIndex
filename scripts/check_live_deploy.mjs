@@ -76,7 +76,10 @@ async function runStaticChecks() {
   });
 
   await checkText('aaz-index.html', (text) => {
-    assert(text.includes('id="app-data-json"'), 'aaz-index.html is missing embedded app data');
+    assert(text.includes('id="app-data-json"'), 'aaz-index.html is missing app data module manifest');
+    assert(text.includes('"mode": "modules"'), 'aaz-index.html does not use lazy app data modules');
+    assert(text.includes('"base_url": "./data/modules/"'), 'aaz-index.html app data module base drifted');
+    assert(text.length < 1_200_000, 'aaz-index.html is too large; app data should stay lazy-loaded');
     assert(text.includes('href="./vendor/leaflet.css"'), 'aaz-index.html is missing local Leaflet CSS');
     assert(text.includes('src="./vendor/leaflet.js"'), 'aaz-index.html is missing local Leaflet JS');
     assert(text.includes('navigator.serviceWorker.register(swUrl'), 'aaz-index.html is missing service-worker registration');
@@ -122,11 +125,25 @@ async function runStaticChecks() {
   await checkText('sw.js', (text) => {
     assert(text.includes('./aaz-index.html'), 'sw.js is missing the standalone app shell');
     assert(text.includes('./vendor/leaflet.css'), 'sw.js is missing local Leaflet CSS');
+    assert(text.includes('./data/modules/14-lexicon.json'), 'sw.js is missing app data module precache');
   });
 
   await checkText('service-worker.js', (text) => {
     assert(text.includes('./aaz-index.html'), 'service-worker.js is missing the standalone app shell');
     assert(text.includes('./vendor/leaflet.css'), 'service-worker.js is missing local Leaflet CSS');
+    assert(text.includes('./data/modules/14-lexicon.json'), 'service-worker.js is missing app data module precache');
+  });
+
+  await checkText('data/modules/manifest.json', (text) => {
+    const manifest = JSON.parse(text);
+    assert(Array.isArray(manifest.modules) && manifest.modules.length >= 9, 'data module manifest is incomplete');
+    assert(manifest.modules.some((entry) => entry.file === '14-lexicon.json'), 'data module manifest is missing lexicon chunk');
+  });
+
+  await checkText('data/modules/14-lexicon.json', (text) => {
+    const chunk = JSON.parse(text);
+    assert(Array.isArray(chunk.lexicon), 'lexicon data module is missing lexicon array');
+    assert(Array.isArray(chunk.subject_index), 'lexicon data module is missing subject index');
   });
 
   await checkText('vendor/leaflet.css', (text) => {

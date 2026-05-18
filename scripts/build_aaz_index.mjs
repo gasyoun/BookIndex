@@ -9,6 +9,7 @@ function parseArgs(argv) {
     template: 'v3_template.html',
     out: 'aaz-index.html',
     buildId: '',
+    modulesDir: 'data/modules',
   };
   for (let i = 0; i < argv.length; i += 1) {
     const key = argv[i];
@@ -18,6 +19,7 @@ function parseArgs(argv) {
     if (key === '--template') args.template = value;
     if (key === '--out') args.out = value;
     if (key === '--build-id') args.buildId = value;
+    if (key === '--modules-dir') args.modulesDir = value;
     if (key.startsWith('--')) i += 1;
   }
   return args;
@@ -49,6 +51,37 @@ function escapeJsonForHtmlScript(jsonText) {
     .replaceAll('<!--', '<\\!--');
 }
 
+function appDataModuleManifestText(modulesDir, buildId) {
+  const manifest = JSON.parse(readFileSync(join(modulesDir, 'manifest.json'), 'utf8'));
+  if (!manifest || Array.isArray(manifest) || typeof manifest !== 'object') {
+    throw new Error(`JSON root must be object: ${join(modulesDir, 'manifest.json')}`);
+  }
+  const modules = Array.isArray(manifest.modules) ? manifest.modules : [];
+  if (!modules.length) {
+    throw new Error(`App data module manifest is empty: ${join(modulesDir, 'manifest.json')}`);
+  }
+  const enriched = modules.map((entry) => {
+    const file = String(entry && entry.file || '').trim();
+    if (!file) throw new Error('App data module entry is missing file');
+    const text = readFileSync(join(modulesDir, file), 'utf8').replace(/\r\n?/g, '\n');
+    const raw = Buffer.from(text, 'utf8');
+    return {
+      file,
+      keys: Array.isArray(entry.keys) ? entry.keys : [],
+      bytes: raw.length,
+      sha256: createHash('sha256').update(raw).digest('base64'),
+    };
+  });
+  return `${JSON.stringify({
+    mode: 'modules',
+    version: manifest.version || 1,
+    build_id: buildId,
+    base_url: './data/modules/',
+    modules: enriched,
+    key_order: Array.isArray(manifest.key_order) ? manifest.key_order : [],
+  }, null, 2)}\n`;
+}
+
 function cspSha256(text) {
   const browserInlineText = String(text || '').replace(/\r\n?/g, '\n');
   return `'sha256-${createHash('sha256').update(browserInlineText, 'utf8').digest('base64')}'`;
@@ -77,9 +110,10 @@ const dataText = canonicalJsonText(args.data);
 const templateText = readFileSync(args.template, 'utf8');
 let jsText = readFileSync(args.js, 'utf8');
 const buildId = args.buildId.trim() || computeBuildId(dataText, jsText, templateText);
+const appDataPayloadText = appDataModuleManifestText(args.modulesDir, buildId);
 jsText = jsText.replaceAll('__APP_BUILD_ID__', buildId);
 let html = templateText
-  .split('__APP_DATA_JSON__').join(escapeJsonForHtmlScript(dataText))
+  .split('__APP_DATA_JSON__').join(escapeJsonForHtmlScript(appDataPayloadText))
   .split('__APP_SCRIPT__').join(jsText);
 const scriptHashes = inlineScriptHashes(html);
 const styleHashes = inlineStyleHashes(html);

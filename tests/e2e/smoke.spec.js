@@ -36,6 +36,28 @@ test.describe('aaz-index smoke', () => {
     expect(siteMarkdown).toContain('book_id: mumintroll');
   });
 
+  test('loads app data from lazy JSON modules', async ({ page }) => {
+    const moduleResponses = [];
+    page.on('response', (response) => {
+      const url = new URL(response.url());
+      if (url.pathname.includes('/data/modules/') && url.pathname.endsWith('.json')) {
+        moduleResponses.push(response.url());
+      }
+    });
+
+    await page.goto('/aaz-index.html#v4/home/home');
+    await expect(page.locator('.home-panel')).toBeVisible();
+
+    const moduleManifest = await page.locator('#app-data-json').textContent();
+    const parsedManifest = JSON.parse(moduleManifest || '{}');
+    expect(parsedManifest.mode).toBe('modules');
+    expect(parsedManifest.base_url).toBe('./data/modules/');
+    expect((moduleManifest || '').length).toBeLessThan(6000);
+    expect(await page.evaluate(() => Array.isArray(window.APP_DATA?.names) && window.APP_DATA.names.length > 0)).toBe(true);
+    expect(moduleResponses.length).toBeGreaterThanOrEqual(9);
+    expect(moduleResponses.some((url) => url.includes('14-lexicon.json'))).toBe(true);
+  });
+
   test('single-item navigation sections do not render a duplicate second row', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/materials/tasks');
     await expect(page.locator('#entity-switcher .entity-btn.active')).toContainText(/Практикум/i);
@@ -173,6 +195,23 @@ test.describe('aaz-index smoke', () => {
       if (reg.installing && reg.installing.scriptURL) return reg.installing.scriptURL;
       return '';
     }), { timeout: 20000 }).toContain('/sw.js');
+
+    await expect.poll(() => page.evaluate(async () => {
+      if (!('caches' in window)) return false;
+      const keys = await caches.keys();
+      for (const key of keys) {
+        const cache = await caches.open(key);
+        const hit = await cache.match('./data/modules/14-lexicon.json', { ignoreSearch: true });
+        if (hit) return true;
+      }
+      return false;
+    }), { timeout: 20000 }).toBe(true);
+
+    await page.context().setOffline(true);
+    await page.goto('/aaz-index.html#v4/home/home', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('.home-panel')).toBeVisible();
+    await expect(page.evaluate(() => Array.isArray(window.APP_DATA?.lexicon) && window.APP_DATA.lexicon.length > 0)).resolves.toBe(true);
+    await page.context().setOffline(false);
   });
 
   test('desktop header keeps title, search and back button on the same row', async ({ page }) => {
@@ -875,6 +914,8 @@ test.describe('aaz-index smoke', () => {
   test('accented heads render as accent-safe spans in list and card', async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto('/aaz-index.html#v4/toponyms/list');
+    await expect(page.locator('#name-list .name-item').first()).toBeVisible();
+    await expect.poll(() => page.evaluate(() => Array.isArray(window.APP_DATA?.lexicon) && window.APP_DATA.lexicon.length > 0)).toBe(true);
 
     const target = await page.evaluate(() => {
       const hasAccent = (text) => /[\u0300-\u036f]/.test(String(text || ''));

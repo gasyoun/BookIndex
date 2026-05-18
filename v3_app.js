@@ -1,6 +1,7 @@
 // Данные парсятся из <script type="application/json"> (с fallback для тестов/legacy-сборки)
 const APP_DATA_SCRIPT_TAG_ID = 'app-data-json';
 const APP_DATA_GLOBAL_FALLBACK_KEY = '__APP_DATA_STRING__';
+const APP_DATA_MODULES_BASE_URL = './data/modules/';
 /** @typedef {import('./types/app-data').AppData} AppDataShape */
 /** @type {AppDataShape | null} */
 let APP_DATA = null;
@@ -41,14 +42,12 @@ function getEmbeddedAppDataText() {
 }
 
 /**
- * Parse embedded APP_DATA payload and hydrate global references.
+ * Hydrate global APP_DATA references from an already parsed payload.
  * @returns {AppDataShape}
  */
-function parseAppData() {
+function hydrateAppData(data) {
   clearGlobalSearchCaches();
-  const payload = getEmbeddedAppDataText();
-  if (!payload) throw new Error('Embedded app data not found');
-  APP_DATA = /** @type {AppDataShape} */ (JSON.parse(payload));
+  APP_DATA = /** @type {AppDataShape} */ (data);
   if (typeof window !== 'undefined') {
     window.APP_DATA = APP_DATA;
     window.__vizCache = {};
@@ -67,6 +66,90 @@ function parseAppData() {
   EPOCH_COLORS = APP_DATA.epoch_colors;
   FAMILY_COLORS = APP_DATA.family_colors;
   return APP_DATA;
+}
+
+function isAppDataModuleManifest(value) {
+  return !!(
+    value
+    && typeof value === 'object'
+    && !Array.isArray(value)
+    && value.mode === 'modules'
+    && Array.isArray(value.modules)
+  );
+}
+
+function appDataModuleUrl(manifest, file) {
+  const base = String((manifest && manifest.base_url) || APP_DATA_MODULES_BASE_URL);
+  const rootUrl = (typeof document !== 'undefined' && document.baseURI)
+    ? document.baseURI
+    : (typeof location !== 'undefined' && location.href ? location.href : 'http://localhost/');
+  const url = new URL(String(file || ''), new URL(base, rootUrl));
+  const buildId = String((manifest && manifest.build_id) || APP_BUILD_ID || '').trim();
+  const unresolvedBuildId = '__APP_' + 'BUILD_ID__';
+  if (buildId && buildId !== unresolvedBuildId) url.searchParams.set('v', buildId);
+  return url.href;
+}
+
+async function fetchAppDataModule(manifest, file) {
+  const url = appDataModuleUrl(manifest, file);
+  const response = await fetch(url, { cache: 'default' });
+  if (!response.ok) {
+    throw new Error(`Failed to load app data module ${file}: HTTP ${response.status}`);
+  }
+  const payload = await response.json();
+  if (!payload || Array.isArray(payload) || typeof payload !== 'object') {
+    throw new Error(`App data module must be a JSON object: ${file}`);
+  }
+  return payload;
+}
+
+async function loadAppDataFromModules(manifest) {
+  const modules = (manifest.modules || []).filter((entry) => entry && entry.file);
+  if (!modules.length) throw new Error('App data module manifest is empty');
+  const payloads = await Promise.all(modules.map((entry) => fetchAppDataModule(manifest, entry.file)));
+  const merged = {};
+  const seen = new Set();
+  for (const payload of payloads) {
+    for (const [key, value] of Object.entries(payload)) {
+      if (seen.has(key)) throw new Error(`Duplicate app data key in modules: ${key}`);
+      seen.add(key);
+      merged[key] = value;
+    }
+  }
+  const keyOrder = Array.isArray(manifest.key_order) ? manifest.key_order : [];
+  if (!keyOrder.length) return merged;
+  const ordered = {};
+  for (const key of keyOrder) {
+    if (Object.prototype.hasOwnProperty.call(merged, key)) ordered[key] = merged[key];
+  }
+  for (const [key, value] of Object.entries(merged)) {
+    if (!Object.prototype.hasOwnProperty.call(ordered, key)) ordered[key] = value;
+  }
+  return ordered;
+}
+
+/**
+ * Parse embedded APP_DATA payload and hydrate global references.
+ * @returns {AppDataShape}
+ */
+function parseAppData() {
+  const payload = getEmbeddedAppDataText();
+  if (!payload) throw new Error('Embedded app data not found');
+  const data = JSON.parse(payload);
+  if (isAppDataModuleManifest(data)) {
+    throw new Error('Embedded app data contains a module manifest; use loadAppData() instead');
+  }
+  return hydrateAppData(data);
+}
+
+async function loadAppData() {
+  const payload = getEmbeddedAppDataText();
+  if (!payload) throw new Error('Embedded app data not found');
+  const parsed = JSON.parse(payload);
+  const data = isAppDataModuleManifest(parsed)
+    ? await loadAppDataFromModules(parsed)
+    : parsed;
+  return hydrateAppData(data);
 }
 
 function migrateAppDataSchema(data) {
@@ -3628,7 +3711,8 @@ function registerAppServiceWorker() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   if (!('serviceWorker' in navigator)) return;
   const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const buildId = buildIdRaw && buildIdRaw !== '__APP_BUILD_ID__' ? buildIdRaw : 'dev';
+  const unresolvedBuildId = '__APP_' + 'BUILD_ID__';
+  const buildId = buildIdRaw && buildIdRaw !== unresolvedBuildId ? buildIdRaw : 'dev';
   const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
@@ -11714,26 +11798,37 @@ document.getElementById('content').innerHTML = '<div class="panel-empty-state">�
 registerAppServiceWorker();
 
 setTimeout(() => {
-  parseAppData();
-  normalizeAppData();
-  initEntityTypes();
-  wireGlobalUI();
-  initTheme();
-  initDensityMode();
-  const initialHash = (typeof window !== 'undefined' && window.location && typeof window.location.hash === 'string')
-    ? window.location.hash
-    : '';
-  const restored = applyHash(initialHash);
-  if (!restored) {
-    const saved = restoreViewState();
-    if (saved) {
-      applyViewState(saved);
-      syncNavigationState();
-    } else {
-      renderEntitySwitcher();
-      renderTabs();
-      renderContent();
-      syncNavigationState();
+  (async () => {
+    await loadAppData();
+    normalizeAppData();
+    initEntityTypes();
+    wireGlobalUI();
+    initTheme();
+    initDensityMode();
+    const initialHash = (typeof window !== 'undefined' && window.location && typeof window.location.hash === 'string')
+      ? window.location.hash
+      : '';
+    const restored = applyHash(initialHash);
+    if (!restored) {
+      const saved = restoreViewState();
+      if (saved) {
+        applyViewState(saved);
+        syncNavigationState();
+      } else {
+        renderEntitySwitcher();
+        renderTabs();
+        renderContent();
+        syncNavigationState();
+      }
     }
-  }
+  })().catch((error) => {
+    const message = error && error.message ? error.message : String(error || 'Unknown data loading error');
+    const content = document.getElementById('content');
+    if (content) {
+      content.innerHTML = `<div class="panel-empty-state">Не удалось загрузить данные справочника.<br><small>${escapeHtml(message)}</small></div>`;
+    }
+    if (typeof console !== 'undefined' && typeof console.error === 'function') {
+      console.error('[app-data]', error);
+    }
+  });
 }, 10);
