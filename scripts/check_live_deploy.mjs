@@ -68,6 +68,9 @@ async function runStaticChecks() {
     assert(text.includes('href="./aaz-index.html#v4/home/home"'), 'index.html is missing app entry route');
     assert(text.includes("script-src 'self' 'sha256-"), 'index.html script CSP is missing inline script hash');
     assert(!text.includes("script-src 'self' 'unsafe-inline'"), 'index.html script CSP still allows unsafe-inline');
+    assert(text.includes("style-src 'self' 'sha256-"), 'index.html style CSP is missing inline style hash');
+    assert(text.includes("style-src-elem 'self' 'sha256-"), 'index.html style-src-elem is missing inline style hash');
+    assert(!text.includes("style-src 'self' 'unsafe-inline'"), 'index.html style CSP still allows broad unsafe-inline');
   });
 
   await checkText('aaz-index.html', (text) => {
@@ -76,9 +79,13 @@ async function runStaticChecks() {
     assert(text.includes('src="./vendor/leaflet.js"'), 'aaz-index.html is missing local Leaflet JS');
     assert(text.includes('navigator.serviceWorker.register(swUrl'), 'aaz-index.html is missing service-worker registration');
     assert(text.includes("script-src 'self' 'sha256-"), 'aaz-index.html script CSP is missing inline script hashes');
+    assert(text.includes("style-src 'self' 'sha256-"), 'aaz-index.html style CSP is missing inline style hash');
+    assert(text.includes("style-src-elem 'self' 'sha256-"), 'aaz-index.html style-src-elem is missing inline style hash');
     assert(!text.includes('__APP_DATA_JSON__'), 'aaz-index.html still contains an app data placeholder');
     assert(!text.includes('__CSP_SCRIPT_HASHES__'), 'aaz-index.html still contains a CSP hash placeholder');
+    assert(!text.includes('__CSP_STYLE_HASHES__'), 'aaz-index.html still contains a CSP style hash placeholder');
     assert(!text.includes("script-src 'self' 'unsafe-inline'"), 'aaz-index.html script CSP still allows unsafe-inline');
+    assert(!text.includes("style-src 'self' 'unsafe-inline'"), 'aaz-index.html style CSP still allows broad unsafe-inline');
   });
 
   await checkText('manifest.webmanifest', (text) => {

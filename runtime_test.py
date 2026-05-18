@@ -33,6 +33,9 @@ TEXT_REQUIRED = {
         "Content-Security-Policy",
         "default-src 'self'",
         "script-src 'self' 'sha256-",
+        "style-src 'self' 'sha256-",
+        "style-src-elem 'self' 'sha256-",
+        "style-src-attr 'none'",
         'rel="manifest" href="./manifest.webmanifest"',
         'rel="canonical" href="https://gasyoun.github.io/BookIndex/index.html"',
         'property="og:image"',
@@ -43,6 +46,9 @@ TEXT_REQUIRED = {
         "Content-Security-Policy",
         "default-src 'self'",
         "script-src 'self' 'sha256-",
+        "style-src 'self' 'sha256-",
+        "style-src-elem 'self' 'sha256-",
+        "style-src-attr 'unsafe-inline'",
         'rel="manifest" href="./manifest.webmanifest"',
         '<script id="app-data-json" type="application/json">',
         "navigator.serviceWorker.register(swUrl",
@@ -83,6 +89,7 @@ TEXT_REQUIRED = {
 TEXT_FORBIDDEN = {
     "index.html": [
         "script-src 'self' 'unsafe-inline'",
+        "style-src 'self' 'unsafe-inline'",
         "script-src 'self' 'unsafe-inline' https://unpkg.com",
         '<script type="module" src="/src/entry.js"></script>',
     ],
@@ -90,12 +97,15 @@ TEXT_FORBIDDEN = {
         "__APP_DATA_JSON__",
         "__APP_SCRIPT__",
         "__CSP_SCRIPT_HASHES__",
+        "__CSP_STYLE_HASHES__",
         "script-src 'self' 'unsafe-inline'",
+        "style-src 'self' 'unsafe-inline'",
         "script-src 'self' 'unsafe-inline' https://unpkg.com",
     ],
     "v3_template.html": [
         "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
         "script-src 'self' 'unsafe-inline'",
+        "style-src 'self' 'unsafe-inline'",
         "script-src 'self' 'unsafe-inline' https://unpkg.com",
     ],
     "sw.js": [
