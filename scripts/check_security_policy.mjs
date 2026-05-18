@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
@@ -98,12 +98,16 @@ function assertStyleCspDoesNotAllowBroadUnsafeInline(file, text) {
   const csp = contentSecurityPolicy(text);
   const styleSrc = cspDirective(csp, 'style-src');
   const styleSrcElem = cspDirective(csp, 'style-src-elem');
+  const styleSrcAttr = cspDirective(csp, 'style-src-attr');
   if (!styleSrc) {
     fail(`${file} is missing style-src in CSP`);
     return;
   }
   if (!styleSrcElem) {
     fail(`${file} is missing style-src-elem in CSP`);
+  }
+  if (!styleSrcAttr) {
+    fail(`${file} is missing style-src-attr in CSP`);
   }
   for (const directive of [styleSrc, styleSrcElem].filter(Boolean)) {
     if (directive.includes("'unsafe-inline'")) {
@@ -112,6 +116,28 @@ function assertStyleCspDoesNotAllowBroadUnsafeInline(file, text) {
     if (!directive.includes("'self'")) {
       fail(`${file} ${directive.split(/\s+/)[0]} must include 'self' for local CSS assets`);
     }
+  }
+  if (styleSrcAttr && styleSrcAttr.includes("'unsafe-inline'")) {
+    fail(`${file} style-src-attr still allows 'unsafe-inline'`);
+  }
+  if (styleSrcAttr && !styleSrcAttr.includes("'none'")) {
+    fail(`${file} style-src-attr must be 'none'`);
+  }
+}
+
+function assertNoInlineStyleAttributes(file, text) {
+  const inlineStyles = [...text.matchAll(/\sstyle=["'][^"']*["']/gi)];
+  if (inlineStyles.length) {
+    fail(`${file} contains inline style attributes`);
+  }
+}
+
+function assertNoRuntimeStyleBlocks(file, text) {
+  if (/<style\b/i.test(text)) {
+    fail(`${file} injects runtime <style> blocks`);
+  }
+  if (/createElement\(["']style["']\)/i.test(text)) {
+    fail(`${file} creates runtime style elements`);
   }
 }
 
@@ -140,8 +166,21 @@ for (const file of htmlFiles) {
   assertBlankLinksAreIsolated(file, text);
   assertScriptCspDoesNotAllowUnsafeInline(file, text);
   assertStyleCspDoesNotAllowBroadUnsafeInline(file, text);
+  assertNoInlineStyleAttributes(file, text);
   assertExcludes(file, text, 'unpkg.com');
   assertExcludes(file, text, 'cdn.jsdelivr.net');
+}
+
+const scriptFiles = [
+  'v3_app.js',
+  ...readdirSync(path.join(root, 'scripts', 'viz'))
+    .filter((name) => name.endsWith('.js'))
+    .map((name) => path.join('scripts', 'viz', name)),
+];
+for (const file of scriptFiles) {
+  const text = read(file);
+  assertNoInlineStyleAttributes(file, text);
+  assertNoRuntimeStyleBlocks(file, text);
 }
 
 const template = read('v3_template.html');
@@ -149,7 +188,7 @@ assertIncludes('v3_template.html', template, "default-src 'self'");
 assertIncludes('v3_template.html', template, "script-src 'self' __CSP_SCRIPT_HASHES__");
 assertIncludes('v3_template.html', template, "style-src 'self' __CSP_STYLE_HASHES__");
 assertIncludes('v3_template.html', template, "style-src-elem 'self' __CSP_STYLE_HASHES__");
-assertIncludes('v3_template.html', template, "style-src-attr 'unsafe-inline'");
+assertIncludes('v3_template.html', template, "style-src-attr 'none'");
 assertIncludes('v3_template.html', template, "worker-src 'self' blob:");
 assertIncludes('v3_template.html', template, "object-src 'none'");
 assertIncludes('v3_template.html', template, "base-uri 'self'");
@@ -170,7 +209,7 @@ const appHtml = read('aaz-index.html');
 assertIncludes('aaz-index.html', appHtml, "script-src 'self' 'sha256-");
 assertIncludes('aaz-index.html', appHtml, "style-src 'self' 'sha256-");
 assertIncludes('aaz-index.html', appHtml, "style-src-elem 'self' 'sha256-");
-assertIncludes('aaz-index.html', appHtml, "style-src-attr 'unsafe-inline'");
+assertIncludes('aaz-index.html', appHtml, "style-src-attr 'none'");
 assertExcludes('aaz-index.html', appHtml, '__CSP_SCRIPT_HASHES__');
 assertExcludes('aaz-index.html', appHtml, '__CSP_STYLE_HASHES__');
 assertInlineScriptHashesAllowed('aaz-index.html', appHtml);

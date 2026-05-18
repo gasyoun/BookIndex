@@ -85,7 +85,7 @@
         const suffix = disabledByFreq ? ' (ниже порога)' : '';
         return [
           `<span class="viz-legend-item toggleable${inactive ? ' inactive' : ''}" data-lang="${lang}" title="${title}">`,
-          `  <span class="viz-legend-dot" style="background:${color(idx)};"></span>${lang}${suffix}`,
+          `  <span class="viz-legend-dot viz-legend-color-${idx % 22}"></span>${lang}${suffix}`,
           '</span>',
         ].join('');
       }).join('');

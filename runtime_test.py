@@ -48,7 +48,7 @@ TEXT_REQUIRED = {
         "script-src 'self' 'sha256-",
         "style-src 'self' 'sha256-",
         "style-src-elem 'self' 'sha256-",
-        "style-src-attr 'unsafe-inline'",
+        "style-src-attr 'none'",
         'rel="manifest" href="./manifest.webmanifest"',
         '<script id="app-data-json" type="application/json">',
         "navigator.serviceWorker.register(swUrl",
@@ -100,12 +100,14 @@ TEXT_FORBIDDEN = {
         "__CSP_STYLE_HASHES__",
         "script-src 'self' 'unsafe-inline'",
         "style-src 'self' 'unsafe-inline'",
+        "style-src-attr 'unsafe-inline'",
         "script-src 'self' 'unsafe-inline' https://unpkg.com",
     ],
     "v3_template.html": [
         "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
         "script-src 'self' 'unsafe-inline'",
         "style-src 'self' 'unsafe-inline'",
+        "style-src-attr 'unsafe-inline'",
         "script-src 'self' 'unsafe-inline' https://unpkg.com",
     ],
     "sw.js": [

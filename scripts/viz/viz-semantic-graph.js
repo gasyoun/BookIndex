@@ -26,24 +26,14 @@
 
     container.innerHTML = `
       <div class="viz-card viz-semantic-graph">
-        <style>
-          .viz-semantic-graph { background: #1a1a1a; color: #eee; border-radius: 12px; overflow: hidden; position: relative; }
-          .viz-toolbar { position: absolute; top: 20px; left: 20px; z-index: 10; display: flex; gap: 10px; align-items: center; }
-          .viz-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; transition: 0.2s; font-size: 0.85rem; }
-          .viz-btn:hover { background: rgba(128, 222, 234, 0.2); border-color: #80deea; }
-          .viz-legend { position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; font-size: 0.8rem; backdrop-filter: blur(5px); }
-          .node-glow { filter: drop-shadow(0 0 5px currentColor); }
-          .link-line { stroke-opacity: 0.2; }
-          .node-label { font-family: 'Inter', sans-serif; font-weight: 500; pointer-events: none; }
-        </style>
         <div class="viz-toolbar">
           <button class="viz-btn" id="viz-reset-zoom">Сбросить зум</button>
-          <span id="viz-graph-status" style="font-size: 0.8rem; opacity: 0.7;"></span>
+          <span id="viz-graph-status" class="viz-semantic-status"></span>
         </div>
-        <div class="viz-legend">
-          <div style="color:#80deea">● Имена</div>
-          <div style="color:#b388ff">● Языки</div>
-          <div style="color:#26a69a">● Лексика</div>
+        <div class="viz-legend viz-semantic-legend">
+          <div class="viz-semantic-legend-name">● Имена</div>
+          <div class="viz-semantic-legend-lang">● Языки</div>
+          <div class="viz-semantic-legend-lex">● Лексика</div>
         </div>
         <svg id="semantic-graph-svg" width="100%" height="700"></svg>
       </div>

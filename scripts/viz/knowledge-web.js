@@ -63,11 +63,11 @@
     const height = 600;
 
     container.innerHTML = `
-      <div class="viz-card" style="height:100%; display:flex; flex-direction:column; overflow:hidden;">
-        <div class="viz-toolbar" style="padding:10px; background:rgba(0,0,0,0.05);">
+      <div class="viz-card viz-card-fill">
+        <div class="viz-toolbar viz-toolbar-padded">
           <strong>Сеть знаний:</strong> Связи между главами, терминами и видеолекциями
         </div>
-        <svg id="knowledge-web-svg" width="100%" height="${height}" style="background:var(--bg);"></svg>
+        <svg id="knowledge-web-svg" class="viz-svg-bg" width="100%" height="${height}"></svg>
       </div>
     `;
 

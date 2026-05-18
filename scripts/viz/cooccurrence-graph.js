@@ -70,8 +70,8 @@
 
     if (legend) {
       legend.innerHTML = [
-        '<span class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--color-primary);"></span>имена</span>',
-        '<span class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--color-gold);"></span>языки</span>',
+        '<span class="viz-legend-item"><span class="viz-legend-dot viz-legend-dot-primary"></span>имена</span>',
+        '<span class="viz-legend-item"><span class="viz-legend-dot viz-legend-dot-gold"></span>языки</span>',
       ].join('');
     }
 
