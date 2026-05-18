@@ -1082,6 +1082,22 @@ function escapeHtml(s) {
   return text.replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
+function escapeYamlDoubleQuoted(value) {
+  return normalizeBibtexText(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"')
+    .replace(/\r/g, '\\r')
+    .replace(/\n/g, '\\n')
+    .replace(/\t/g, '\\t');
+}
+
+function escapeMarkdownTableCell(value) {
+  return String(value || '')
+    .replace(/\\/g, '\\\\')
+    .replace(/\|/g, '\\|')
+    .replace(/\r?\n/g, ' ');
+}
+
 function safeUrl(url, fallback = '#') {
   if (url === null || url === undefined) return fallback;
   const raw = String(url).trim();
@@ -3929,10 +3945,10 @@ function itemToMarkdown(it, type) {
   const bookLabel = getBookLabelForSearch(bookId);
   const yaml = [
     '---',
-    `title: "${String(it.head || '').replace(/"/g, '\\"')}"`,
-    `type: "${type}"`,
-    `source: "${String(bookLabel || '').replace(/"/g, '\\"')}"`,
-    `book_id: "${String(bookId || '').replace(/"/g, '\\"')}"`,
+    `title: "${escapeYamlDoubleQuoted(it.head)}"`,
+    `type: "${escapeYamlDoubleQuoted(type)}"`,
+    `source: "${escapeYamlDoubleQuoted(bookLabel)}"`,
+    `book_id: "${escapeYamlDoubleQuoted(bookId)}"`,
     `discussed: ${it.discussed ? 'true' : 'false'}`,
     `pages_count: ${pages.length}`,
     '---',
@@ -6319,18 +6335,38 @@ function renderChapterHistogramRows(host, entityKey, focusedItem = null) {
   const stats = getChapterHistogramStats(entityKey, focusedItem);
   const counts = stats.counts;
   const max = stats.max;
-  let html = '';
+  host.textContent = '';
   for (const ch of APP_DATA.chapters) {
     const c = counts[ch.name] || 0;
     const pct = c / max * 100;
-    html += `
-      <div class="bar-row">
-        <div class="bar-label">${escapeHtml(ch.name)}<br><small>стр. ${ch.start}–${ch.end}</small></div>
-        <div class="bar-bg"><div class="bar-fill" data-chapter="${escapeHtml(ch.name)}" data-bar-width-pct="${pct}"></div></div>
-        <div class="bar-count">${c}</div>
-      </div>`;
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+
+    const label = document.createElement('div');
+    label.className = 'bar-label';
+    label.appendChild(document.createTextNode(String(ch.name || '')));
+    label.appendChild(document.createElement('br'));
+    const small = document.createElement('small');
+    small.textContent = `стр. ${ch.start}–${ch.end}`;
+    label.appendChild(small);
+
+    const bg = document.createElement('div');
+    bg.className = 'bar-bg';
+    const fill = document.createElement('div');
+    fill.className = 'bar-fill';
+    fill.dataset.chapter = String(ch.name || '');
+    fill.dataset.barWidthPct = String(pct);
+    bg.appendChild(fill);
+
+    const count = document.createElement('div');
+    count.className = 'bar-count';
+    count.textContent = String(c);
+
+    row.appendChild(label);
+    row.appendChild(bg);
+    row.appendChild(count);
+    host.appendChild(row);
   }
-  host.innerHTML = html;
   applyDataDrivenStyles(host);
 }
 
@@ -6964,7 +7000,10 @@ function renderTimelinePanel(container) {
     if (!subsPresent.has(sub)) continue;
     const div = document.createElement('div');
     div.className = 'legend-item';
-    div.innerHTML = `<span class="legend-dot ${getCategoryColorClass(sub)}"></span>${LABELS[sub]}`;
+    const dot = document.createElement('span');
+    dot.className = `legend-dot ${getCategoryColorClass(sub)}`;
+    div.appendChild(dot);
+    div.appendChild(document.createTextNode(LABELS[sub] || sub));
     lg.appendChild(div);
   }
 }
@@ -9085,13 +9124,19 @@ function renderTasksPanel(container, options = {}) {
     const t = tasksShuffled[ti];
     const taskDiv = document.createElement('div');
     taskDiv.className = 'task-card';
-    taskDiv.innerHTML = `
-      <div class="task-card-question">\u0412\u043e\u043f\u0440\u043e\u0441 ${ti+1}. ${escapeHtml(t.question)}</div>
-      <div class="task-options" id="task-tab-${t._storageId}-opts"></div>
-      <div class="task-result" id="task-tab-${t._storageId}-res"></div>
-    `;
+    const question = document.createElement('div');
+    question.className = 'task-card-question';
+    question.textContent = `\u0412\u043e\u043f\u0440\u043e\u0441 ${ti + 1}. ${String(t.question || '')}`;
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'task-options';
+    optsDiv.id = `task-tab-${t._storageId}-opts`;
+    const resDiv = document.createElement('div');
+    resDiv.className = 'task-result';
+    resDiv.id = `task-tab-${t._storageId}-res`;
+    taskDiv.appendChild(question);
+    taskDiv.appendChild(optsDiv);
+    taskDiv.appendChild(resDiv);
     tc.appendChild(taskDiv);
-    const optsDiv = document.getElementById(`task-tab-${t._storageId}-opts`);
     const optionsShuffled = shuffleArray((t.options || []).map((text, idx) => ({ text, idx })));
     for (let oi = 0; oi < optionsShuffled.length; oi++) {
       const opt = optionsShuffled[oi];
@@ -10501,11 +10546,11 @@ function renderScholarChronologyPanel(container) {
     for (const row of chronologyMap) {
       if (!lower.includes(row.needle)) continue;
       const head = pickExistingHead(row.type, row.heads);
-      if (head) return { mode: 'item', type: row.type, head, href: buildItemHash(row.type, head) };
+      if (head) return { mode: 'item', type: row.type, head };
     }
     const firstToken = text.split(/[,\s]+/).filter(Boolean)[0] || '';
     const query = firstToken.length >= 3 ? firstToken : text.slice(0, 40);
-    return { mode: 'search', query, href: buildListSearchHash('all', query) };
+    return { mode: 'search', query };
   };
 
   const events = rawEvents.map((ev, idx) => {
@@ -10628,8 +10673,14 @@ function renderScholarChronologyPanel(container) {
     for (const ev of rows) {
       const target = ev._target || {};
       const link = document.createElement('a');
+      const targetMode = String(target.mode || '');
+      const href = targetMode === 'item'
+        ? buildItemHash(target.type, target.head)
+        : (targetMode === 'search'
+          ? buildListSearchHash('all', target.query)
+          : buildCanonicalHash(['scholar', 'chronology']));
       link.className = 'chronology-event-link';
-      link.href = target.href || buildCanonicalHash(['scholar', 'chronology']);
+      link.href = href;
       link.dataset.mode = String(target.mode || '');
       link.dataset.type = String(target.type || '');
       link.dataset.head = String(target.head || '');
@@ -11325,7 +11376,7 @@ function renderScholarPanel(container) {
       .replace(/[\u0300-\u036f]/g, '')
       .trim()
       .toLowerCase();
-    const mdEscapeCell = (text) => String(text || '').replace(/\|/g, '\\|');
+    const mdEscapeCell = escapeMarkdownTableCell;
     const parseIdx = (el, fallback) => {
       if (!el || typeof el.value !== 'string') return fallback;
       const n = parseInt(el.value, 10);
@@ -11552,26 +11603,70 @@ function renderTreePanel(container) {
   }
   const H = y + 30;
 
-  let svg = `<svg class="language-tree-svg" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">`;
+  const svgNs = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNs, 'svg');
+  svg.classList.add('language-tree-svg');
+  svg.setAttribute('width', String(W));
+  svg.setAttribute('height', String(H));
+  svg.setAttribute('xmlns', svgNs);
+  const addPath = (d, attrs = {}) => {
+    const path = document.createElementNS(svgNs, 'path');
+    path.setAttribute('d', d);
+    Object.entries(attrs).forEach(([key, value]) => path.setAttribute(key, String(value)));
+    svg.appendChild(path);
+  };
+  const addText = (x, y, textValue, attrs = {}) => {
+    const text = document.createElementNS(svgNs, 'text');
+    text.setAttribute('x', String(x));
+    text.setAttribute('y', String(y));
+    Object.entries(attrs).forEach(([key, value]) => text.setAttribute(key, String(value)));
+    text.textContent = String(textValue || '');
+    svg.appendChild(text);
+    return text;
+  };
   for (const fam of tree) {
     const famColor = safeColor(FAMILY_COLORS[fam.name], '#888');
-    svg += `<text x="${col1}" y="${fam.midY + 4}" fill="${famColor}" font-size="13" font-weight="bold">${escapeHtml(fam.name)}</text>`;
+    addText(col1, fam.midY + 4, fam.name, { fill: famColor, 'font-size': 13, 'font-weight': 'bold' });
     for (const grp of fam.children) {
-      svg += `<path d="M ${col1 + 180} ${fam.midY} C ${col2 - 20} ${fam.midY}, ${col2 - 20} ${grp.midY}, ${col2} ${grp.midY}" fill="none" stroke="${famColor}" stroke-width="1.5" opacity="0.6"/>`;
-      svg += `<text x="${col2}" y="${grp.midY + 4}" fill="#5a3818" font-size="11" font-style="italic">${escapeHtml(grp.name)}</text>`;
+      addPath(`M ${col1 + 180} ${fam.midY} C ${col2 - 20} ${fam.midY}, ${col2 - 20} ${grp.midY}, ${col2} ${grp.midY}`, {
+        fill: 'none',
+        stroke: famColor,
+        'stroke-width': 1.5,
+        opacity: 0.6,
+      });
+      addText(col2, grp.midY + 4, grp.name, { fill: '#5a3818', 'font-size': 11, 'font-style': 'italic' });
       for (const lang of grp.children) {
         const p = positioned.find(p => p.famName===fam.name && p.grpName===grp.name && p.langName===lang.name);
         if (!p) continue;
-        svg += `<path d="M ${col2 + 240} ${grp.midY} C ${col3 - 20} ${grp.midY}, ${col3 - 20} ${p.y}, ${col3} ${p.y}" fill="none" stroke="${famColor}" stroke-width="1" opacity="0.4"/>`;
-        svg += `<g class="language-tree-node" data-lang="${escapeHtml(lang.name)}">
-          <circle cx="${col3 - 6}" cy="${p.y}" r="3" fill="${famColor}"/>
-          <text x="${col3}" y="${p.y + 4}" fill="#1a1a1a" font-size="12"${lang.discussed?' font-weight="bold"':''}>${escapeHtml(lang.name)}</text>
-        </g>`;
+        addPath(`M ${col2 + 240} ${grp.midY} C ${col3 - 20} ${grp.midY}, ${col3 - 20} ${p.y}, ${col3} ${p.y}`, {
+          fill: 'none',
+          stroke: famColor,
+          'stroke-width': 1,
+          opacity: 0.4,
+        });
+        const group = document.createElementNS(svgNs, 'g');
+        group.classList.add('language-tree-node');
+        group.dataset.lang = String(lang.name || '');
+        const circle = document.createElementNS(svgNs, 'circle');
+        circle.setAttribute('cx', String(col3 - 6));
+        circle.setAttribute('cy', String(p.y));
+        circle.setAttribute('r', '3');
+        circle.setAttribute('fill', famColor);
+        const text = document.createElementNS(svgNs, 'text');
+        text.setAttribute('x', String(col3));
+        text.setAttribute('y', String(p.y + 4));
+        text.setAttribute('fill', '#1a1a1a');
+        text.setAttribute('font-size', '12');
+        if (lang.discussed) text.setAttribute('font-weight', 'bold');
+        text.textContent = String(lang.name || '');
+        group.appendChild(circle);
+        group.appendChild(text);
+        svg.appendChild(group);
       }
     }
   }
-  svg += '</svg>';
-  container_tree.innerHTML = svg;
+  container_tree.textContent = '';
+  container_tree.appendChild(svg);
   container_tree.querySelectorAll('g[data-lang]').forEach(g => {
     g.onclick = () => {
       selectedItem = g.dataset.lang;
