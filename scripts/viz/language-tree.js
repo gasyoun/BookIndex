@@ -32,11 +32,11 @@
     const height = 800;
     
     container.innerHTML = `
-      <div class="viz-card" style="height:100%; overflow:auto; background:var(--bg);">
-        <div class="viz-toolbar" style="padding:10px; background:rgba(0,0,0,0.05); position:sticky; top:0; z-index:10;">
+      <div class="viz-card viz-card-scroll">
+        <div class="viz-toolbar viz-toolbar-padded viz-toolbar-sticky">
           <strong>Древо языков:</strong> Генеалогическая иерархия по упоминаниям
         </div>
-        <div id="language-tree-svg-container" style="padding:20px;"></div>
+        <div id="language-tree-svg-container" class="viz-card-pad"></div>
       </div>
     `;
 

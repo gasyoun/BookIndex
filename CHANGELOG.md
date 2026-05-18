@@ -10,7 +10,8 @@ All notable changes to this project will be documented in this file.
 - Raised the axe accessibility gate to require zero critical and zero serious violations on audited routes.
 - Darkened muted helper text in the app shell so route metadata, index summary chips, chapter labels and KWIC controls meet contrast requirements.
 - Replaced script CSP `unsafe-inline` with build-generated SHA-256 hashes for the landing page and standalone app shell.
-- Replaced broad style CSP `unsafe-inline` with build-generated SHA-256 hashes for inline style blocks while isolating legacy dynamic style attributes under `style-src-attr`.
+- Replaced broad style CSP `unsafe-inline` with build-generated SHA-256 hashes for inline style blocks.
+- Removed the remaining `style-src-attr 'unsafe-inline'` exception by moving runtime style attributes to `data-*` driven DOM style updates.
 - Opted GitHub workflows into the Node 24 JavaScript action runtime ahead of the June 2026 migration.
 
 ## [2.2.0] - 2026-05-17

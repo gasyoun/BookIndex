@@ -75,7 +75,7 @@
       `    <label><input type="checkbox" data-type="linguist"${activeFilters.has('linguist') ? ' checked' : ''}> linguist</label>`,
       `    <label><input type="checkbox" data-type="historical"${activeFilters.has('historical') ? ' checked' : ''}> historical</label>`,
       '  </div>',
-      '  <div class="viz-empty-state" style="display:none;">',
+      '  <div class="viz-empty-state" hidden>',
       '    <strong>Ничего не выбрано.</strong><br>Включите хотя бы один фильтр (discovery, linguist, historical).',
       '  </div>',
       '  <div class="tl-wrap tl-grid">',
@@ -86,12 +86,6 @@
     const wrap = container.querySelector('.tl-wrap');
     const empty = container.querySelector('.viz-empty-state');
     const checkboxes = Array.from(container.querySelectorAll('.viz-toolbar input[type="checkbox"]'));
-    const colorByType = {
-      discovery: 'var(--primary)',
-      linguist: safeColor(colors.linguist, '#3a6ea5'),
-      historical: safeColor(colors.historical, '#c0392b'),
-    };
-
     let pendingOpenTimer = null;
     function clearPendingOpen() {
       if (!pendingOpenTimer) return;
@@ -102,9 +96,8 @@
     for (let i = 0; i < items.length; i += 1) {
       const item = items[i];
       const card = document.createElement('article');
-      card.className = 'tl-item';
+      card.className = `tl-item tl-item-${item.type}`;
       card.dataset.type = item.type;
-      card.style.borderLeft = `4px solid ${safeColor(colorByType[item.type], '#5a3818')}`;
       card.innerHTML = [
         `<div class="tl-year">${String(item.year)}</div>`,
         `<div class="tl-label">${String(item.label || '')}</div>`,
@@ -153,7 +146,7 @@
         card.hidden = !visible;
         if (visible) visibleCount += 1;
       }
-      if (empty) empty.style.display = visibleCount ? 'none' : '';
+      if (empty) empty.hidden = !!visibleCount;
       if (typeof root.writeVizParams === 'function') {
         const filter = Object.keys(enabled).filter((type) => enabled[type]).join(',');
         root.writeVizParams({ filter });

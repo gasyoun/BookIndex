@@ -18,15 +18,7 @@
 
     container.innerHTML = `
       <div class="viz-card viz-comparative-timeline">
-        <style>
-          .viz-comparative-timeline { background: #1c1b18; color: #eee; padding: 2rem; border-radius: 12px; }
-          .axis-line { stroke: rgba(255,255,255,0.2); }
-          .timeline-event { cursor: pointer; transition: 0.2s; }
-          .timeline-event:hover circle { r: 8; stroke: #80deea; }
-          .event-label { font-size: 10px; fill: #aaa; font-family: 'Inter', sans-serif; }
-          .lane-label { font-size: 12px; font-weight: 700; fill: #80deea; text-transform: uppercase; }
-        </style>
-        <h2 style="margin-top:0; color:#80deea;">Сравнительная хронология: Язык и История <span class="v-badge">v7.2</span></h2>
+        <h2 class="viz-comparative-title">Сравнительная хронология: Язык и История <span class="v-badge">v7.2</span></h2>
         <svg id="comparative-timeline-svg" width="100%" height="400"></svg>
       </div>
     `;

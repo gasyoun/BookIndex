@@ -1045,7 +1045,7 @@ function wireSafeImageFallback(root) {
     if (!img || img.dataset.fallbackWired === '1') return;
     img.dataset.fallbackWired = '1';
     img.addEventListener('error', () => {
-      img.style.display = 'none';
+      img.hidden = true;
     }, { once: true });
   });
 }
@@ -1059,6 +1059,41 @@ function safeColor(value, fallback = '#888') {
   if (/^hsla?\(\s*[-]?\d{1,3}\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%\s*(,\s*(0|1|0?\.\d+)\s*)?\)$/i.test(raw)) return raw;
   if (/^[a-z]{3,20}$/i.test(raw)) return raw;
   return fallback;
+}
+
+function applyDataDrivenStyles(root) {
+  const scope = root && typeof root.querySelectorAll === 'function' ? root : document;
+  if (!scope || typeof scope.querySelectorAll !== 'function') return;
+  const clamp = (value, min, max, fallback) => {
+    const number = Number.parseFloat(String(value || ''));
+    if (!Number.isFinite(number)) return fallback;
+    return Math.max(min, Math.min(max, number));
+  };
+  scope.querySelectorAll('[data-bar-width-pct]').forEach((el) => {
+    el.style.width = `${clamp(el.dataset.barWidthPct, 0, 100, 0)}%`;
+  });
+  scope.querySelectorAll('[data-epoch-color]').forEach((el) => {
+    el.style.setProperty('--epoch-color', safeColor(el.dataset.epochColor, '#8a7050'));
+  });
+  scope.querySelectorAll('[data-family-color]').forEach((el) => {
+    el.style.background = safeColor(el.dataset.familyColor, '#888');
+  });
+  scope.querySelectorAll('[data-home-decl-padding]').forEach((el) => {
+    el.style.setProperty('--home-decl-padding', el.dataset.homeDeclPadding || '14px 20px');
+  });
+  scope.querySelectorAll('[data-home-inner-padding]').forEach((el) => {
+    el.style.setProperty('--home-inner-padding', el.dataset.homeInnerPadding || '14px 20px');
+  });
+  scope.querySelectorAll('[data-home-facts-space]').forEach((el) => {
+    el.style.setProperty('--home-facts-space', `${clamp(el.dataset.homeFactsSpace, 0, 40, 14)}px`);
+    el.style.setProperty('--home-facts-line-height', String(clamp(el.dataset.homeFactsLineHeight, 1, 2.5, 1.7)));
+  });
+  scope.querySelectorAll('[data-home-featured-padding]').forEach((el) => {
+    el.style.setProperty('--home-featured-padding', `${clamp(el.dataset.homeFeaturedPadding, 0, 40, 10)}px`);
+  });
+  scope.querySelectorAll('[data-scholar-recon-columns]').forEach((el) => {
+    el.style.setProperty('--scholar-recon-columns', String(clamp(el.dataset.scholarReconColumns, 1, 6, 3)));
+  });
 }
 
 function getCategoryColorClass(subcategory) {
@@ -2049,7 +2084,7 @@ function pushHistoryState() {
 function updateBackButton() {
   const btn = document.getElementById('back-btn');
   if (!btn) return;
-  btn.style.display = historyStack.length > 1 ? 'inline-flex' : 'none';
+  btn.hidden = historyStack.length <= 1;
 }
 
 async function copyCurrentUrl() {
@@ -6090,13 +6125,9 @@ function setMobileSheetOpen(open) {
   if (!backdrop || !sheet || typeof document === 'undefined') return;
   if (backdrop.classList && typeof backdrop.classList.toggle === 'function') {
     backdrop.classList.toggle('open', !!open);
-  } else {
-    backdrop.style.display = open ? 'block' : 'none';
   }
   if (sheet.classList && typeof sheet.classList.toggle === 'function') {
     sheet.classList.toggle('open', !!open);
-  } else {
-    sheet.style.transform = open ? 'translateY(0)' : 'translateY(101%)';
   }
   if (document.body && document.body.classList && typeof document.body.classList.toggle === 'function') {
     document.body.classList.toggle('mobile-sheet-lock', !!open);
@@ -6211,11 +6242,12 @@ function renderChapterHistogramRows(host, entityKey, focusedItem = null) {
     html += `
       <div class="bar-row">
         <div class="bar-label">${escapeHtml(ch.name)}<br><small>стр. ${ch.start}–${ch.end}</small></div>
-        <div class="bar-bg"><div class="bar-fill" data-chapter="${escapeHtml(ch.name)}" style="width:${pct}%"></div></div>
+        <div class="bar-bg"><div class="bar-fill" data-chapter="${escapeHtml(ch.name)}" data-bar-width-pct="${pct}"></div></div>
         <div class="bar-count">${c}</div>
       </div>`;
   }
   host.innerHTML = html;
+  applyDataDrivenStyles(host);
 }
 
 function renderHistogramInRight() {
@@ -6882,7 +6914,7 @@ function renderEpochsPanel(container) {
     const list = grouped[ep.key];
     const epochColor = safeColor(EPOCH_COLORS[ep.key], '#8a7050');
     html += `<div class="epoch-card">
-      <div class="epoch-card-head" style="--epoch-color:${epochColor};">
+      <div class="epoch-card-head" data-epoch-color="${escapeHtml(epochColor)}">
         <div class="epoch-card-title">${ep.label}</div>
         <div class="epoch-card-meta">${ep.sub} · ${list.length}</div>
       </div>
@@ -6895,6 +6927,7 @@ function renderEpochsPanel(container) {
   }
   html += '</div>';
   grid.innerHTML = html;
+  applyDataDrivenStyles(grid);
   bindNavigateLinks(grid, '.related-link[data-head]', 'toponyms');
 }
 
@@ -7273,7 +7306,7 @@ function renderGraphPanel(container) {
 
   if (!stage || typeof d3 === 'undefined' || !d3 || typeof d3.select !== 'function') {
     if (status) {
-      status.style.display = 'block';
+      status.hidden = false;
       status.textContent = 'D3.js is unavailable, graph view is disabled.';
     }
     return;
@@ -7331,12 +7364,12 @@ function renderGraphPanel(container) {
         summary.textContent = `nodes: ${nodes.length} - edges: ${links.length}`;
       }
       if (status) {
-        status.style.display = 'none';
+        status.hidden = true;
         status.textContent = '';
       }
       if (!nodes.length || !links.length) {
         if (status) {
-          status.style.display = 'block';
+          status.hidden = false;
           status.textContent = 'No edges for the selected threshold.';
         }
         stage.innerHTML = '';
@@ -7473,7 +7506,7 @@ function renderGraphPanel(container) {
     .catch((error) => {
       if (renderToken !== nameGraphRenderToken) return;
       if (status) {
-        status.style.display = 'block';
+        status.hidden = false;
         status.textContent = 'Failed to build graph.';
       }
       if (typeof console !== 'undefined' && typeof console.warn === 'function') {
@@ -7835,7 +7868,7 @@ function renderFamiliesPanel(container) {
 
     if (status) {
       status.textContent = '';
-      status.style.display = 'none';
+      status.hidden = true;
     }
 
     function eventToCanvasPoint(e) {
@@ -7995,9 +8028,10 @@ function renderFamiliesPanel(container) {
       for (const fam of families) {
         const div = document.createElement('div');
         div.className = 'legend-item';
-        div.innerHTML = `<span class="legend-dot" style="background:${safeColor(FAMILY_COLORS[fam], '#888')}"></span>${fam} (${familyCounts[fam] || 0})`;
+        div.innerHTML = `<span class="legend-dot" data-family-color="${escapeHtml(safeColor(FAMILY_COLORS[fam], '#888'))}"></span>${escapeHtml(fam)} (${familyCounts[fam] || 0})`;
         lg.appendChild(div);
       }
+      applyDataDrivenStyles(lg);
     }
     perfDebug('render-graph-families', nowMs() - t0, graphStrongOnly ? 'strong' : 'all');
   }
@@ -8007,7 +8041,7 @@ function renderFamiliesPanel(container) {
     .catch((error) => {
       if (renderToken !== familiesGraphRenderToken) return;
       if (status) {
-        status.style.display = 'block';
+        status.hidden = false;
         status.textContent = 'Не удалось рассчитать граф.';
       }
       if (typeof console !== 'undefined' && typeof console.warn === 'function') {
@@ -8392,7 +8426,7 @@ function renderHomePanelDeclarative(container) {
   }
 
   container.innerHTML = `<div class="panel active home-panel home-panel-declarative">
-    <div id="home-declarative-root" class="home-declarative-root" x-data="${HOME_DECL_FACTORY_KEY}()" style="--home-decl-padding:${viewModel.homeInnerPadding};">
+    <div id="home-declarative-root" class="home-declarative-root" x-data="${HOME_DECL_FACTORY_KEY}()" data-home-decl-padding="${escapeHtml(viewModel.homeInnerPadding)}">
       <div class="home-stats-hero">
         <div class="home-stats-head">
           <h2 class="home-stats-title">Book stats (declarative mode)</h2>
@@ -8409,7 +8443,7 @@ function renderHomePanelDeclarative(container) {
           </template>
         </div>
 
-        <div class="home-facts" style="--home-facts-space:${viewModel.compactHome ? 10 : 14}px;--home-facts-line-height:${viewModel.compactHome ? 1.55 : 1.7};">
+        <div class="home-facts" data-home-facts-space="${viewModel.compactHome ? 10 : 14}" data-home-facts-line-height="${viewModel.compactHome ? 1.55 : 1.7}">
           <div id="home-fact-pair-decl" class="${viewModel.factPairClass}">
             <div>
               <template x-for="(fact, idx) in facts" :key="idx">
@@ -8418,7 +8452,7 @@ function renderHomePanelDeclarative(container) {
                 </button>
               </template>
             </div>
-            <div id="home-featured-quote-decl" class="${viewModel.quoteClass}" style="--home-featured-padding:${viewModel.compactHome ? 8 : 10}px;">
+            <div id="home-featured-quote-decl" class="${viewModel.quoteClass}" data-home-featured-padding="${viewModel.compactHome ? 8 : 10}">
               <div class="${viewModel.quoteTextClass}" x-text="'&quot;' + featuredText + '&quot;'"></div>
               <div class="home-featured-meta" x-text="'page ' + featuredPage + ', lecture &quot;' + featuredLecture + '&quot;'"></div>
               <div class="home-featured-hint">Choose a path through the book and jump directly to cards.</div>
@@ -8469,6 +8503,7 @@ function renderHomePanelDeclarative(container) {
     </div>
   </div>`;
 
+  applyDataDrivenStyles(container);
   alpine.initTree(container);
 }
 
@@ -8487,7 +8522,7 @@ function renderHomePanel(container) {
   const quoteTextClass = compactHome ? 'home-featured-quote-clamp' : '';
   const routeGridClass = (compactHome || isDesktop) ? 'home-routes-grid home-routes-grid-compact' : 'home-routes-grid';
 
-  let html = `<div class="panel active home-panel"><div class="home-panel-inner" style="--home-inner-padding:${homeInnerPadding};">`;
+  let html = `<div class="panel active home-panel"><div class="home-panel-inner" data-home-inner-padding="${escapeHtml(homeInnerPadding)}">`;
 
   // === БЛОК 1: КНИГА В ЦИФРАХ ===
   html += `<div class="home-stats-hero">
@@ -8517,7 +8552,7 @@ function renderHomePanel(container) {
   html += '</div>';
 
   // Изюминки
-  html += `<div class="home-facts" style="--home-facts-space:${compactHome ? 10 : 14}px;--home-facts-line-height:${compactHome ? 1.55 : 1.7};">
+  html += `<div class="home-facts" data-home-facts-space="${compactHome ? 10 : 14}" data-home-facts-line-height="${compactHome ? 1.55 : 1.7}">
     <div id="home-fact-pair" class="${factPairClass}">
       <div>
         <div class="home-fact-row">📖 Самая длинная лекция — <strong>«${escapeHtml(stats.longest_lecture.name)}»</strong> (${stats.longest_lecture.pages} страниц)</div>
@@ -8528,7 +8563,7 @@ function renderHomePanel(container) {
         <div class="home-fact-row">⏳ Самый ранний из упомянутых — <strong>${escapeHtml(stats.earliest_person.head)}</strong> (${Math.abs(stats.earliest_person.epoch)} ${stats.earliest_person.epoch < 0 ? 'до н.&nbsp;э.' : 'г.'})</div>
         <div class="home-fact-row">🌐 Самая представленная семья — <strong>${escapeHtml(stats.top_family[0])}</strong> (${stats.top_family[1]} языков)</div>
       </div>
-      <div id="home-featured-quote" class="${quoteClass}" style="--home-featured-padding:${compactHome ? 8 : 10}px;">
+      <div id="home-featured-quote" class="${quoteClass}" data-home-featured-padding="${compactHome ? 8 : 10}">
         <div id="home-featured-quote-text" class="${quoteTextClass}">«${escapeHtml(featured.text)}»</div>
         <div class="home-featured-meta">— ${renderTextWithPageLinks(`стр. ${featured.page}`, { className: 'material-page-link card-page-link related-link home-featured-page-link', rangeTarget: 'trends' })}, лекция «${escapeHtml(featured.lecture)}»</div>
         <div class="home-featured-hint">Выберите свой путь по книге — если не знаете, с чего начать, выберите тему, которая вас интересует.</div>
@@ -8574,6 +8609,7 @@ function renderHomePanel(container) {
   html += '</div></div>';
 
   container.innerHTML = html;
+  applyDataDrivenStyles(container);
   const homeFactPair = document.getElementById('home-fact-pair');
   if (homeFactPair) {
     const pairChildren = homeFactPair.children || [];
@@ -9982,7 +10018,7 @@ function renderGlossaryPanel(container) {
     const q = (value || '').trim().toLowerCase();
     container.querySelectorAll('.glossary-entry').forEach(el => {
       const t = el.dataset.term;
-      el.style.display = (!q || t.includes(q)) ? 'block' : 'none';
+      el.hidden = !!(q && !t.includes(q));
     });
   };
   const focusGlossaryEntry = (term) => {
@@ -11139,7 +11175,7 @@ function renderScholarPanel(container) {
   const recon = APP_DATA.lexicon_tech || [];
   html += '<h3 id="sch-reconstructions" class="scholar-section-title scholar-section-title-spaced">11. Реконструкции</h3>';
   html += `<div class="scholar-section-intro">${recon.length} реконструированных и иноязычных форм, вынесенных в подраздел профессионального аппарата.</div>`;
-  html += `<div class="scholar-recon-grid" style="--scholar-recon-columns:${reconstructionColumns};">`;
+  html += `<div class="scholar-recon-grid" data-scholar-recon-columns="${reconstructionColumns}">`;
   for (const item of recon) {
     html += `<a class="scholar-link scholar-recon-link" data-type="lexicon_tech" data-head="${escapeHtml(item.head)}" href="${escapeHtml(buildItemHash('lexicon_tech', item.head))}">
       <span class="scholar-recon-head">${escapeHtml(item.head)}</span>
@@ -11150,6 +11186,7 @@ function renderScholarPanel(container) {
 
   html += '</div></div>';
   container.innerHTML = html;
+  applyDataDrivenStyles(container);
 
   // Привязки кликов на имена
   const exportScholarBiblioBibBtn = container.querySelector('#export-scholar-biblio-bib');
@@ -11241,8 +11278,8 @@ function renderScholarPanel(container) {
         const norms = cells.map(stripAccents).filter(Boolean);
         const same = norms.length > 1 && norms.every((n) => n === norms[0]);
         const cellHtml = cells.map((cell) => {
-          const bg = !same && cell ? 'background:#fff3e4;' : '';
-          return `<td class="scholar-compare-cell" style="${bg}">${cell ? renderAccentSafe(cell) : '<span class="scholar-compare-missing">—</span>'}</td>`;
+          const compareClass = !same && cell ? ' scholar-compare-cell-mismatch' : '';
+          return `<td class="scholar-compare-cell${compareClass}">${cell ? renderAccentSafe(cell) : '<span class="scholar-compare-missing">—</span>'}</td>`;
         }).join('');
         htmlRows.push(`<tr><td class="scholar-compare-row-index">${i + 1}</td>${cellHtml}</tr>`);
         mdRows.push(`| ${i + 1} | ${cells.map(mdEscapeCell).join(' | ')} |`);
@@ -11307,7 +11344,7 @@ function renderScholarPanel(container) {
       const byLaw = !law || rowLaw === law;
       const byLang = !lang || langs.includes(lang);
       const visible = byFamily && byLaw && byLang;
-      row.style.display = visible ? '' : 'none';
+      row.hidden = !visible;
       if (visible) shown += 1;
     }
     if (!corrBody) return;
@@ -11368,7 +11405,7 @@ function renderScholarPanel(container) {
       const byCentury = !century || rowCentury === century;
       const byNum = !numNeedle || rowNum.includes(numNeedle);
       const visible = byCity && byCentury && byNum;
-      row.style.display = visible ? '' : 'none';
+      row.hidden = !visible;
       if (visible) shown += 1;
     }
     if (!birchBody) return;

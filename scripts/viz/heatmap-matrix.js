@@ -170,9 +170,9 @@
       '    </label>',
       '    <button type="button" id="viz-heatmap-export" class="related-link related-link-btn">Скачать SVG</button>',
       '  </div>',
-      '  <div class="viz-svg-wrap" style="position:relative;">',
+      '  <div class="viz-svg-wrap">',
       '    <svg id="viz-heatmap-svg" width="100%" height="760" viewBox="0 0 1260 760" preserveAspectRatio="xMidYMid meet"></svg>',
-      '    <div id="viz-heatmap-tooltip" class="viz-tooltip" style="display:none;position:absolute;"></div>',
+      '    <div id="viz-heatmap-tooltip" class="viz-tooltip viz-tooltip-floating" hidden></div>',
       '  </div>',
       '</div>',
     ].join('');
@@ -202,7 +202,7 @@
 
     function showTooltip(event, row) {
       if (!tooltip) return;
-      tooltip.style.display = 'block';
+      tooltip.hidden = false;
       tooltip.textContent = `Лекция ${row.chapterIndex + 1} · ${row.term} · Частота: ${row.value}`;
       const hostRect = container.getBoundingClientRect();
       const x = (event && Number.isFinite(event.clientX) ? event.clientX : hostRect.left) - hostRect.left + 8;
@@ -213,7 +213,7 @@
 
     function hideTooltip() {
       if (!tooltip) return;
-      tooltip.style.display = 'none';
+      tooltip.hidden = true;
     }
 
     function buildState(topNValue) {

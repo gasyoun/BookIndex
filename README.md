@@ -69,7 +69,7 @@
 *   **Проверка типов**: `npm run typecheck`
 *   **Полная E2E-проверка**: `npm run check`
 *   **Security guard**: `npm run check:security && npm run check:security:static`
-*   **CSP hardening**: inline scripts and style blocks use SHA-256 CSP hashes generated at build time; the static and post-deploy checks fail if `script-src` or broad `style-src` regress to `unsafe-inline`.
+*   **CSP hardening**: inline scripts and style blocks use SHA-256 CSP hashes generated at build time; inline style attributes are denied, and the static/post-deploy checks fail if CSP regresses to `unsafe-inline`.
 *   **Performance budget**: `npm run check:perf`
 *   **Post-deploy gates**: `npm run check:postdeploy` проверяет live GitHub Pages, Lighthouse и axe accessibility (`0` critical / `0` serious).
 

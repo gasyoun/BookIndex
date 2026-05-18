@@ -76,7 +76,7 @@
     const fallback = document.createElement('div');
     fallback.className = 'viz-empty-state';
     fallback.classList.add('viz-map-fallback');
-    fallback.style.display = 'none';
+    fallback.hidden = true;
     fallback.innerHTML = '<strong>Офлайн-режим карты</strong><br>Тайлы недоступны, но маркеры и навигация работают.';
     if (canvas) canvas.appendChild(fallback);
 
@@ -90,11 +90,11 @@
     tileLayer.on('load', () => {
       tileLoaded = true;
       tileErrors = 0;
-      fallback.style.display = 'none';
+      fallback.hidden = true;
     });
     tileLayer.on('tileerror', () => {
       tileErrors += 1;
-      if (!tileLoaded && tileErrors >= 6) fallback.style.display = '';
+      if (!tileLoaded && tileErrors >= 6) fallback.hidden = false;
     });
     tileLayer.addTo(map);
 

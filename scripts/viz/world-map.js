@@ -38,17 +38,17 @@
 
     const mapId = `viz-world-map-${Date.now()}`;
     container.innerHTML = `
-      <div class="viz-card viz-world-map-shell" style="height:100%; display:flex; flex-direction:column;">
-        <div class="viz-toolbar" style="padding:10px; display:flex; gap:10px; align-items:center; background:rgba(0,0,0,0.05);">
+      <div class="viz-card viz-world-map-shell">
+        <div class="viz-toolbar viz-toolbar-padded">
           <strong>Общая карта:</strong>
           <span class="viz-muted">${entities.length} объектов</span>
-          <div style="flex:1"></div>
-          <div class="map-legend" style="display:flex; gap:15px; font-size:0.8rem;">
-            <span><i style="background:var(--color-orange); width:10px; height:10px; display:inline-block; border-radius:50%"></i> Топонимы</span>
-            <span><i style="background:var(--color-gold); width:10px; height:10px; display:inline-block; border-radius:50%"></i> Языки</span>
+          <div class="viz-toolbar-spacer"></div>
+          <div class="map-legend viz-map-legend">
+            <span><i class="viz-map-marker viz-legend-dot-orange"></i> Топонимы</span>
+            <span><i class="viz-map-marker viz-legend-dot-gold"></i> Языки</span>
           </div>
         </div>
-        <div id="${mapId}" style="flex:1; width:100%; min-height:400px; background:#f0e8d8;"></div>
+        <div id="${mapId}" class="viz-world-map-leaflet"></div>
       </div>
     `;
 
