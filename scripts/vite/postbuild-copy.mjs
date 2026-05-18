@@ -37,6 +37,15 @@ function copyRecursive(sourcePath, targetPath) {
   copyFileSync(sourcePath, targetPath);
 }
 
+for (const relPath of ['data/modules']) {
+  const assetSource = path.resolve(rootDir, relPath);
+  const assetTarget = path.resolve(rootDir, 'dist-vite', relPath);
+  if (!existsSync(assetSource)) continue;
+  if (assetSource === assetTarget) continue;
+  copyRecursive(assetSource, assetTarget);
+  console.log(`Copied ${assetSource} -> ${assetTarget}`);
+}
+
 const deployAssets = [
   'manifest.webmanifest',
   'manifest.json',

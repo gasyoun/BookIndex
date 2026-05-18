@@ -1,5 +1,5 @@
 import { gzipSync } from 'node:zlib';
-import { readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
@@ -8,11 +8,11 @@ const budgets = [
   {
     label: 'standalone HTML',
     path: 'aaz-index.html',
-    maxBytes: 7_000_000,
-    maxGzipBytes: 760_000,
+    maxBytes: 1_200_000,
+    maxGzipBytes: 180_000,
   },
   {
-    label: 'embedded app data',
+    label: 'source app data',
     path: 'app_data.json',
     maxBytes: 6_300_000,
     maxGzipBytes: 600_000,
@@ -36,6 +36,13 @@ const vendorBudget = {
   ],
   maxBytes: 520_000,
   maxGzipBytes: 170_000,
+};
+
+const dataModuleBudget = {
+  label: 'lazy app data modules',
+  dir: 'data/modules',
+  maxBytes: 6_400_000,
+  maxGzipBytes: 650_000,
 };
 
 function bytesFor(filePath) {
@@ -80,6 +87,26 @@ if (vendorSize.raw > vendorBudget.maxBytes || vendorSize.gzip > vendorBudget.max
     `[perf] ${vendorBudget.label} exceeds budget: ` +
     `${formatBytes(vendorSize.raw)}/${formatBytes(vendorBudget.maxBytes)} raw, ` +
     `${formatBytes(vendorSize.gzip)}/${formatBytes(vendorBudget.maxGzipBytes)} gzip`
+  );
+}
+
+const dataModulePaths = readdirSync(path.join(root, dataModuleBudget.dir))
+  .filter((name) => name.endsWith('.json'))
+  .map((name) => path.join(dataModuleBudget.dir, name));
+const dataModuleSize = dataModulePaths
+  .map(bytesFor)
+  .reduce((total, size) => ({
+    raw: total.raw + size.raw,
+    gzip: total.gzip + size.gzip,
+  }), { raw: 0, gzip: 0 });
+
+console.log(`[perf] ${dataModuleBudget.label}: ${formatBytes(dataModuleSize.raw)} raw, ${formatBytes(dataModuleSize.gzip)} gzip`);
+if (dataModuleSize.raw > dataModuleBudget.maxBytes || dataModuleSize.gzip > dataModuleBudget.maxGzipBytes) {
+  failed = true;
+  console.error(
+    `[perf] ${dataModuleBudget.label} exceeds budget: ` +
+    `${formatBytes(dataModuleSize.raw)}/${formatBytes(dataModuleBudget.maxBytes)} raw, ` +
+    `${formatBytes(dataModuleSize.gzip)}/${formatBytes(dataModuleBudget.maxGzipBytes)} gzip`
   );
 }
 

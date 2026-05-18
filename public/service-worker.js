@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zalizniak-cache-v10.1';
+const CACHE_NAME = 'zalizniak-cache-v10.2';
 const ASSETS = [
   './index.html',
   './aaz-index.html',
@@ -13,7 +13,18 @@ const ASSETS = [
   './vendor/d3.v7.min.js',
   './vendor/leaflet.css',
   './vendor/alpinejs.cdn.min.js',
-  './vendor/leaflet.js'
+  './vendor/leaflet.js',
+  './data/modules/manifest.json',
+  './data/modules/00-metadata.json',
+  './data/modules/10-names.json',
+  './data/modules/11-toponyms.json',
+  './data/modules/12-ethnonyms.json',
+  './data/modules/13-languages.json',
+  './data/modules/14-lexicon.json',
+  './data/modules/20-lectures.json',
+  './data/modules/21-materials.json',
+  './data/modules/30-scholar.json',
+  './data/modules/99-extra.json'
 ];
 
 self.addEventListener('install', (event) => {

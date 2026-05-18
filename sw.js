@@ -33,6 +33,20 @@ const EXTERNAL_MEDIA_HOST_SUFFIXES = [
   'samskrtam.ru',
 ];
 
+const DATA_MODULE_ASSETS = [
+  './data/modules/manifest.json',
+  './data/modules/00-metadata.json',
+  './data/modules/10-names.json',
+  './data/modules/11-toponyms.json',
+  './data/modules/12-ethnonyms.json',
+  './data/modules/13-languages.json',
+  './data/modules/14-lexicon.json',
+  './data/modules/20-lectures.json',
+  './data/modules/21-materials.json',
+  './data/modules/30-scholar.json',
+  './data/modules/99-extra.json',
+].map((asset) => `${asset}?v=${SW_BUILD_ID}`);
+
 const SHELL_ASSETS = [
   './index.html',
   './aaz-index.html',
@@ -44,8 +58,10 @@ const SHELL_ASSETS = [
   './zaliznyak_portrait.png',
   './vendor/fuse.basic.min.js',
   './vendor/d3.v7.min.js',
+  './vendor/alpinejs.cdn.min.js',
   './vendor/leaflet.css',
   './vendor/leaflet.js',
+  ...DATA_MODULE_ASSETS,
 ];
 
 function isCacheableResponse(response) {
