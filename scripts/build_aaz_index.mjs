@@ -49,15 +49,31 @@ function escapeJsonForHtmlScript(jsonText) {
     .replaceAll('<!--', '<\\!--');
 }
 
+function cspSha256(text) {
+  const browserScriptText = String(text || '').replace(/\r\n?/g, '\n');
+  return `'sha256-${createHash('sha256').update(browserScriptText, 'utf8').digest('base64')}'`;
+}
+
+function inlineScriptHashes(html) {
+  const hashes = [];
+  const scriptRe = /<script\b(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi;
+  for (const match of html.matchAll(scriptRe)) {
+    hashes.push(cspSha256(match[1]));
+  }
+  return hashes;
+}
+
 const args = parseArgs(process.argv.slice(2));
 const dataText = canonicalJsonText(args.data);
 const templateText = readFileSync(args.template, 'utf8');
 let jsText = readFileSync(args.js, 'utf8');
 const buildId = args.buildId.trim() || computeBuildId(dataText, jsText, templateText);
 jsText = jsText.replaceAll('__APP_BUILD_ID__', buildId);
-const html = templateText
+let html = templateText
   .split('__APP_DATA_JSON__').join(escapeJsonForHtmlScript(dataText))
   .split('__APP_SCRIPT__').join(jsText);
+const scriptHashes = inlineScriptHashes(html);
+html = html.split('__CSP_SCRIPT_HASHES__').join(scriptHashes.join(' '));
 
 writeFileSync(args.out, `\uFEFF${html}`, 'utf8');
 console.log(`OK: built ${join(process.cwd(), args.out)} (build_id=${buildId})`);
