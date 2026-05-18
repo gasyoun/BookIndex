@@ -238,6 +238,8 @@ test.describe('navigation architecture contract', () => {
 
   test('materials keeps corpus as the final local tab only', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/materials/lectures');
+    await expect(page).toHaveURL(/#v4\/materials\/lectures$/);
+    await expect(page.locator('#tabs .tab')).toHaveCount(MATERIALS_TAB_LABELS.length);
     const tabs = await page.locator('#tabs .tab').allInnerTexts();
     expect(tabs.map((text) => text.trim())).toEqual(MATERIALS_TAB_LABELS);
     await expect(page.locator('#tabs .tab').last()).toContainText('Корпус');
