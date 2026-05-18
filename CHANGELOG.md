@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 - Live GitHub Pages health checks plus Lighthouse and axe accessibility quality gates.
 
 ### Changed
+- Raised the axe accessibility gate to require zero critical and zero serious violations on audited routes.
+- Darkened muted helper text in the app shell so route metadata, index summary chips, chapter labels and KWIC controls meet contrast requirements.
 - Opted GitHub workflows into the Node 24 JavaScript action runtime ahead of the June 2026 migration.
 
 ## [2.2.0] - 2026-05-17

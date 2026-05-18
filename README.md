@@ -70,7 +70,7 @@
 *   **Полная E2E-проверка**: `npm run check`
 *   **Security guard**: `npm run check:security && npm run check:security:static`
 *   **Performance budget**: `npm run check:perf`
-*   **Post-deploy gates**: `npm run check:postdeploy` проверяет live GitHub Pages, Lighthouse и axe accessibility.
+*   **Post-deploy gates**: `npm run check:postdeploy` проверяет live GitHub Pages, Lighthouse и axe accessibility (`0` critical / `0` serious).
 
 ## Audit Summary
 

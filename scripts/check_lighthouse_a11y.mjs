@@ -71,18 +71,18 @@ function fail(message) {
 }
 
 async function runLighthouse() {
-  const chrome = await chromeLauncher.launch({
-    chromePath: chromium.executablePath(),
-    chromeFlags: [
-      '--headless=new',
-      '--no-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-gpu',
-    ],
-  });
+  for (const target of lighthouseTargets) {
+    const chrome = await chromeLauncher.launch({
+      chromePath: chromium.executablePath(),
+      chromeFlags: [
+        '--headless=new',
+        '--no-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+      ],
+    });
 
-  try {
-    for (const target of lighthouseTargets) {
+    try {
       const result = await lighthouse(target.url.href, {
         port: chrome.port,
         logLevel: 'error',
@@ -109,19 +109,19 @@ async function runLighthouse() {
           console.log(`[lighthouse] OK ${target.label} ${category} ${readable}`);
         }
       }
-    }
-  } finally {
-    try {
-      await chrome.kill();
-    } catch (error) {
-      console.warn(`[lighthouse] Chrome cleanup warning: ${error.message}`);
+    } finally {
+      try {
+        await chrome.kill();
+      } catch (error) {
+        console.warn(`[lighthouse] Chrome cleanup warning: ${error.message}`);
+      }
     }
   }
 }
 
 async function runAxe() {
   const maxCritical = thresholdFromEnv('BOOKINDEX_A11Y_MAX_CRITICAL', 0);
-  const maxSerious = thresholdFromEnv('BOOKINDEX_A11Y_MAX_SERIOUS', 1);
+  const maxSerious = thresholdFromEnv('BOOKINDEX_A11Y_MAX_SERIOUS', 0);
   const browser = await chromium.launch();
 
   try {
