@@ -3,6 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Academic Citation Metadata -->
+  <meta name="citation_title" content="Из жизни слов и языков: интерактивный академический справочник и корпус" />
+  <meta name="citation_author" content="Зализняк, Андрей Анатольевич" />
+  <meta name="citation_publication_date" content="2026/05/17" />
+  <meta name="citation_language" content="ru" />
+  <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
+  <meta name="citation_technical_report_number" content="v2.2.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ZWmIY/3FP/2NF9G4n7qGWjNRrpHRKm0b5Qm4gQ6MhT8='; style-src 'self' 'sha256-Mqd5vXwiOvxQCPWYW9bBIKeb7VT6VpM6CZ2GzOOUwRI='; style-src-elem 'self' 'sha256-Mqd5vXwiOvxQCPWYW9bBIKeb7VT6VpM6CZ2GzOOUwRI='; style-src-attr 'none'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="description" content="Зализнякиада: вводная страница к BookIndex, сопроводительному сайту к книге А. А. Зализняка «Из жизни слов и языков»." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -256,6 +263,33 @@
       text-align: center;
     }
 
+    .scholar-features-card {
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+    .scholar-features-title {
+      margin-top: 0;
+      color: var(--accent-strong);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .scholar-features-list {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 20px;
+      margin: 8px 0 0;
+    }
+    .scholar-features-list li {
+      margin-bottom: 6px;
+    }
+    .scholar-features-list li:last-child {
+      margin-bottom: 0;
+    }
+
     @media (max-width: 760px) {
       .hero-inner { grid-template-columns: 1fr; }
       .hero-visual { justify-items: start; }
@@ -318,6 +352,17 @@
           <strong>Корпус источников</strong>
           <span>Книги, планируемый видеокаталог и редакторские очереди.</span>
         </a>
+      </div>
+
+      <div class="scholar-features-card">
+        <h2 class="scholar-features-title">🧪 Интерактивный лингвистический аппарат</h2>
+        <p>Для студентов, преподавателей и исследователей в BookIndex интегрированы научно-симуляционные модули:</p>
+        <ul class="scholar-features-list">
+          <li><strong>Симулятор звуковых законов:</strong> Пошаговая эволюция праславянских корней (<code>*gordъ</code>, <code>*melko</code>) в русское полногласие, чешскую спирантизацию и польскую метатезу.</li>
+          <li><strong>Реконструктор акцентологических парадигм:</strong> Интерактивное прослеживание именных парадигм A, B и C по всем падежам, числам (включая двойственное) и историческим эпохам развития.</li>
+          <li><strong>Гидратор древнерусской орфографии:</strong> Автоматическое воссоздание средневекового написания слов с использованием ятя (<code>ѣ</code>), еров (<code>ъ</code>/<code>ь</code>) и юсов (<code>ѫ</code>/<code>Ѧ</code>).</li>
+          <li><strong>Linked Open Data (LOD) совместимость:</strong> Ссылки на авторитетные международные лингвистические базы данных (Glottolog, WALS, Starling/словарь Фасмера и НКРЯ) непосредственно в карточках лексем.</li>
+        </ul>
       </div>
 
       <div class="note">

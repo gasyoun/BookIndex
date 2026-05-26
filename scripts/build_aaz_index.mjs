@@ -122,3 +122,7 @@ html = html.split('__CSP_STYLE_HASHES__').join(styleHashes.join(' '));
 
 writeFileSync(args.out, `\uFEFF${html}`, 'utf8');
 console.log(`OK: built ${join(process.cwd(), args.out)} (build_id=${buildId})`);
+
+console.log('Triggering static pre-rendering pipeline...');
+await import('./prerender.mjs');
+

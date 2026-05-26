@@ -15,6 +15,14 @@ All notable changes to this project will be documented in this file.
 - Removed the remaining `style-src-attr 'unsafe-inline'` exception by moving runtime style attributes to `data-*` driven DOM style updates.
 - Opted GitHub workflows into the Node 24 JavaScript action runtime ahead of the June 2026 migration.
 
+## [2.3.0] - 2026-05-26
+### Added
+- **Sound Law Simulator**: Interactive po-shagovaya historical phonology engine showing the evolution of Proto-Slavic reconstructed roots to modern Slavic descendants (Russian, Polish, Czech).
+- **Linguistic Database Interoperability (LOD)**: Direct Glottolog, WALS, Vasmer's Dictionary on Starling, and Russian National Corpus (RNC) connections integrated in Language and Lexicon SPA cards.
+- **Old Russian Accentology Paradigm Simulator**: Dynamic reconstructor for Accent Paradigms A (baritone), B (oxytone), and C (mobile) tracing nominal declensions across three historical stages.
+- **Old East Slavic Orthography Hydrator**: Real-time medieval grapheme processing engine translating modern Russian words to Old East Slavic spelling forms (`ѣ`, `ъ`/`ь`, `ѫ`/`Ѧ`, `ѡ`).
+- Complete E2E and visual check suite passing all 104 Playwright tests cleanly.
+
 ## [2.2.0] - 2026-05-17
 ### Added
 - Open Graph, Twitter Card and JSON-LD metadata for `index.html` and `aaz-index.html`.

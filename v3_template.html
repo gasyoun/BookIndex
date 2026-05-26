@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Academic Citation Metadata -->
+<meta name="citation_title" content="Из жизни слов и языков: интерактивный академический справочник и корпус" />
+<meta name="citation_author" content="Зализняк, Андрей Анатольевич" />
+<meta name="citation_publication_date" content="2026/05/17" />
+<meta name="citation_language" content="ru" />
+<meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
+<meta name="citation_technical_report_number" content="v2.2.0" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' __CSP_SCRIPT_HASHES__; worker-src 'self' blob:; style-src 'self' __CSP_STYLE_HASHES__; style-src-elem 'self' __CSP_STYLE_HASHES__; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
@@ -21,7 +28,7 @@
 <meta property="og:url" content="https://gasyoun.github.io/BookIndex/aaz-index.html">
 <meta property="og:title" content="Зализнякиада — интерактивный справочник">
 <meta property="og:description" content="Корпусная лаборатория по книге А. А. Зализняка «Из жизни слов и языков»: указатели, KWIC, карты, графы и научный аппарат.">
-<meta property="og:image" content="https://gasyoun.github.io/BookIndex/zaliznyak_portrait.png">
+<meta property="og:image" content="https://gasyoun.github.io/BookIndex/zaliznyak_portrait.webp">
 <meta property="og:image:width" content="1024">
 <meta property="og:image:height" content="1024">
 <meta property="og:image:alt" content="Портрет А. А. Зализняка">
@@ -30,7 +37,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Зализнякиада — интерактивный справочник">
 <meta name="twitter:description" content="Корпусная лаборатория по наследию А. А. Зализняка. Поиск, карты, графы и KWIC-конкорданс.">
-<meta name="twitter:image" content="https://gasyoun.github.io/BookIndex/zaliznyak_portrait.png">
+<meta name="twitter:image" content="https://gasyoun.github.io/BookIndex/zaliznyak_portrait.webp">
 <meta name="twitter:image:alt" content="Портрет А. А. Зализняка">
 <script type="application/ld+json">
 {
@@ -63,7 +70,9 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="./vendor/leaflet.css">
+<script id="schema-seo-dynamic" type="application/ld+json">{}</script>
+<link rel="stylesheet" href="./vendor/leaflet.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="./vendor/leaflet.css"></noscript>
 <script src="./vendor/leaflet.js"></script>
 <script src="./vendor/fuse.basic.min.js"></script>
 <script src="./vendor/d3.v7.min.js"></script>
@@ -71,30 +80,40 @@
 <style>
   :root {
     --bg: #faf8f3;
-    --text: #1a1a1a;
+    --text: #2b2621;
     --title: #5a3818;
-    --muted: #665f57;
+    --muted: #6d645a;
     --line-strong: #8a7050;
     --line: #d4c8b0;
-    --line-soft: #f0e8d8;
+    --line-soft: #eadecd;
     --surface: #fff;
-    --surface-soft: #fff8e8;
-    --surface-soft-2: #f0e8d8;
-    --panel: #fbf5ea;
+    --surface-soft: #fffbf2;
+    --surface-soft-2: #ebdcc9;
+    --panel: #fcf8f0;
     --color-primary: #5a3818;
     --color-gold: #b8860b;
     --color-orange: #cf7a2f;
     --color-success: #2e8b57;
-    --color-text-muted: #665f57;
+    --color-text-muted: #6d645a;
     --primary: var(--color-primary);
+    
+    /* Premium Typography: Sans-serif for Interface, Serif for reading content */
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-serif: 'Noto Serif', 'DejaVu Serif', Georgia, 'PT Serif', 'Times New Roman', serif;
+    
+    /* Design Tokens */
+    --shadow-sm: 0 1px 3px rgba(90, 56, 24, 0.04);
+    --shadow-md: 0 4px 16px rgba(90, 56, 24, 0.06);
+    --shadow-lg: 0 16px 36px rgba(90, 56, 24, 0.08);
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0;
-    font-family: 'Noto Serif', 'DejaVu Serif', Georgia, 'PT Serif', 'Times New Roman', serif;
-    color: #1a1a1a;
-    background: #faf8f3;
-    line-height: 1.45;
+    font-family: var(--font-sans);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
     height: 100%;
   }
   body {
@@ -115,12 +134,13 @@
   header h1 {
     margin: 0 0 2px 0;
     font-size: 20px;
-    font-weight: normal;
+    font-weight: 600;
     color: #5a3818;
     display: flex;
     align-items: center;
     gap: 14px;
     flex-wrap: nowrap;
+    font-family: var(--font-serif);
   }
   .title-group {
     display: flex;
@@ -511,86 +531,108 @@
 
   .entity-switcher {
     display: flex;
-    gap: 4px;
-    margin: 5px 0;
+    gap: 6px;
+    margin: 6px 0;
     flex-wrap: wrap;
     flex-shrink: 0;
   }
   .entity-btn {
-    padding: 5px 12px;
-    background: #f0e8d8;
-    border: 1px solid #c4b890;
-    border-radius: 14px;
+    padding: 6px 14px;
+    background: #f5eedf;
+    border: 1px solid #d4c8b0;
+    border-radius: 20px;
     cursor: pointer;
-    font-family: inherit;
+    font-family: var(--font-sans);
     font-size: 12px;
+    font-weight: 500;
     color: #5a3818;
-    transition: all 0.1s;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
   }
-  .entity-btn:hover { background: #fff8e8; }
+  .entity-btn:hover {
+    background: #fffbf2;
+    border-color: #8a7050;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
   .entity-btn.active {
     background: #5a3818;
     color: white;
     border-color: #5a3818;
     font-weight: bold;
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(90, 56, 24, 0.15);
   }
   .entity-btn .count {
     margin-left: 5px;
-    opacity: 0.7;
+    opacity: 0.8;
     font-size: 10px;
   }
 
   .tabs {
     display: flex;
-    gap: 0;
-    border-bottom: 1px solid #d4c8b0;
-    margin-bottom: 6px;
+    gap: 4px;
+    border-bottom: 2px solid #d4c8b0;
+    margin-bottom: 8px;
     flex-wrap: wrap;
     flex-shrink: 0;
   }
   .tabs:empty { display: none; }
   .view-tabs {
     display: flex;
-    gap: 3px;
-    margin: -2px 0 7px;
+    gap: 4px;
+    margin: -2px 0 8px;
     flex-wrap: wrap;
     flex-shrink: 0;
   }
   .view-tabs:empty { display: none; }
   .tab {
-    padding: 6px 12px;
+    padding: 8px 16px;
     cursor: pointer;
     border: none;
     background: transparent;
-    font-family: inherit;
+    font-family: var(--font-sans);
     font-size: 12px;
+    font-weight: 500;
     color: #6a5040;
     border-bottom: 3px solid transparent;
-    transition: all 0.15s;
+    transition: var(--transition-smooth);
+    margin-bottom: -2px;
   }
-  .tab:hover { background: #f0e8d8; }
+  .tab:hover {
+    background: #f5eedf;
+    color: #5a3818;
+    border-bottom-color: #d4c8b0;
+  }
   .tab.active {
     color: #5a3818;
     border-bottom-color: #8a7050;
     font-weight: bold;
   }
   .view-tab {
-    padding: 4px 9px;
+    padding: 6px 12px;
     cursor: pointer;
     border: 1px solid #d8ccb5;
-    border-radius: 12px;
+    border-radius: 16px;
     background: #faf5e8;
-    font-family: inherit;
+    font-family: var(--font-sans);
     font-size: 11px;
+    font-weight: 500;
     color: #6a5040;
-    transition: all 0.15s;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
   }
-  .view-tab:hover { background: #f0e8d8; }
+  .view-tab:hover {
+    background: #f5eedf;
+    border-color: #8a7050;
+    transform: translateY(-1px);
+  }
   .view-tab.active {
     color: #5a3818;
     border-color: #8a7050;
-    background: #efe3cc;
+    background: #ebdcc9;
     font-weight: bold;
+    box-shadow: var(--shadow-sm);
   }
   .index-section-summary {
     display: flex;
@@ -3947,11 +3989,461 @@
     color: #7a6048;
     text-decoration: underline dotted;
   }
-  .corr-lang-link,
-  .corr-law-link {
-    color: #5a3818;
-    text-decoration: underline dotted;
+  /* Sound Law Simulator Styles */
+  .sim-container {
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
   }
+  .sim-title {
+    color: var(--title);
+    font-size: 1.3rem;
+    font-family: var(--font-serif);
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sim-intro {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .sim-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .sim-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--title);
+  }
+  .sim-select {
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    background: var(--surface-soft);
+    color: var(--title);
+    cursor: pointer;
+  }
+  .sim-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--title);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+  }
+  .sim-btn:hover:not(:disabled) {
+    background: #f5eedf;
+    border-color: #8a7050;
+    transform: translateY(-1px);
+  }
+  .sim-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .sim-step-indicator {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .sim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .sim-branch-col {
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: var(--transition-smooth);
+  }
+  .sim-branch-col.highlighted {
+    border-color: var(--color-orange);
+    box-shadow: 0 0 8px rgba(207, 122, 47, 0.15);
+  }
+  .sim-branch-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--title);
+    border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 6px;
+    margin-bottom: 4px;
+  }
+  .sim-word-state {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    font-weight: bold;
+    text-align: center;
+    margin: 8px 0;
+    min-height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border-radius: 6px;
+    border: 1px dashed var(--line);
+  }
+  .sim-law-name {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--color-orange);
+    margin-bottom: 2px;
+  }
+  .sim-law-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.4;
+    min-height: 2.8rem;
+  }
+  .sim-word-meaning {
+    font-style: italic;
+    color: var(--color-gold);
+    font-size: 0.85rem;
+    margin-left: 8px;
+  }
+
+  /* LOD Section Styles */
+  .card-lod-section {
+    margin-top: 18px;
+    border-top: 1px solid var(--line-soft);
+    padding-top: 14px;
+  }
+  .card-lod-section h3 {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    color: var(--title);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: var(--font-sans);
+  }
+  .card-lod-grid {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .lod-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    font-family: var(--font-sans);
+  }
+  .lod-link.glottolog {
+    background: #f7f1e6;
+    color: #8c5215;
+    border-color: #e5d3b3;
+  }
+  .lod-link.glottolog:hover {
+    background: #ebdcc9;
+    border-color: var(--line-strong);
+  }
+  .lod-link.wals {
+    background: #e6f2f7;
+    color: #15628c;
+    border-color: #b3d7e5;
+  }
+  .lod-link.wals:hover {
+    background: #c9e2eb;
+    border-color: #70a4ba;
+  }
+  .lod-link.vasmer {
+    background: #f7e6f1;
+    color: #8c1562;
+    border-color: #e5b3d7;
+  }
+  .lod-link.vasmer:hover {
+    background: #ebc9e2;
+    border-color: #ba70a4;
+  }
+  .lod-link.rnc {
+    background: #e6f7eb;
+    color: #158c3f;
+    border-color: #b3e5c3;
+  }
+  .lod-link.rnc:hover {
+    background: #c9ebcf;
+    border-color: #70ba86;
+  }
+
+  /* Accent Paradigm Reconstructor Styles */
+  .accent-recon-container {
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 24px 0;
+    box-shadow: var(--shadow-md);
+  }
+  .accent-recon-title {
+    color: var(--title);
+    font-size: 1.3rem;
+    font-family: var(--font-serif);
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .accent-recon-intro {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .accent-recon-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .accent-recon-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .accent-recon-controls {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .accent-recon-stages {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .accent-recon-stage-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+  }
+  .accent-recon-stage-btn:hover {
+    background: #f5eedf;
+    border-color: #8a7050;
+  }
+  .accent-recon-stage-btn.active {
+    background: #8a7050;
+    color: white;
+    border-color: #8a7050;
+  }
+  .accent-recon-display {
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .accent-recon-badge-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  .accent-paradigm-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .accent-paradigm-badge.A {
+    background: #e3f2fd;
+    color: #0d47a1;
+  }
+  .accent-paradigm-badge.B {
+    background: #efebe9;
+    color: #4e342e;
+  }
+  .accent-paradigm-badge.C {
+    background: #e8f5e9;
+    color: #1b5e20;
+  }
+  .accent-recon-table-scroll {
+    overflow-x: auto;
+    margin-top: 12px;
+  }
+  .accent-recon-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    background: white;
+    border: 1px solid var(--line-soft);
+    border-radius: 4px;
+  }
+  .accent-recon-table th,
+  .accent-recon-table td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .accent-recon-table th {
+    background: var(--surface-soft);
+    color: var(--title);
+    font-weight: bold;
+  }
+  .accent-syllable-stressed {
+    color: #d35400;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  .accent-recon-note {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.45;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line);
+  }
+
+  /* Orthography Hydrator Styles */
+  .ortho-hydrator-container {
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 24px 0;
+    box-shadow: var(--shadow-md);
+  }
+  .ortho-hydrator-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .ortho-hydrator-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .ortho-input-area {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ortho-input-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+    box-sizing: border-box;
+  }
+  .ortho-presets-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .ortho-presets-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .ortho-preset-btn {
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: white;
+    font-size: 11px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+  }
+  .ortho-preset-btn:hover {
+    background: #f5eedf;
+    border-color: #8a7050;
+  }
+  .ortho-result-area {
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ortho-result-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--title);
+  }
+  .ortho-result-card {
+    background: white;
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    padding: 14px;
+    font-family: 'Noto Serif', 'DejaVu Serif', Georgia, serif;
+    font-size: 1.8rem;
+    color: #5a3818;
+    font-weight: bold;
+    text-align: center;
+    min-height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: break-all;
+  }
+  .ortho-rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ortho-rule-alert {
+    background: #fbf6e8;
+    border-left: 3px solid #8a7050;
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .ortho-rule-title {
+    font-weight: bold;
+    color: #5a3818;
+    margin-bottom: 2px;
+  }
+
+
   .phonetic-panel {
     height: 100%;
     overflow-y: auto;
@@ -4854,6 +5346,84 @@
     .name-item .head { font-size: 12px; }
     .mobile-card-sheet { max-height: 84vh; }
     .mobile-card-sheet-content { max-height: calc(84vh - 40px); }
+  }
+
+  /* Premium Citation Widget Styles */
+  .citation-widget {
+    margin-top: 24px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--panel);
+    font-family: Arial, sans-serif;
+  }
+  .citation-widget-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--title);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .citation-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+  }
+  .citation-tab-btn {
+    background: none;
+    border: none;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  .citation-tab-btn:hover {
+    background: var(--surface-soft-2);
+    color: var(--title);
+  }
+  .citation-tab-btn.active {
+    background: var(--primary);
+    color: var(--surface);
+  }
+  .citation-box-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .citation-box {
+    padding: 12px 14px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 4px;
+    background: var(--surface);
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--text);
+    word-break: break-word;
+    font-family: 'Noto Serif', Georgia, serif;
+    min-height: 52px;
+  }
+  .citation-copy-btn {
+    align-self: flex-end;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    color: var(--title);
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .citation-copy-btn:hover {
+    background: var(--primary);
+    color: var(--surface);
   }
 </style>
 </head>
