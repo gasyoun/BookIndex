@@ -6,3 +6,7 @@ scripts/__pycache__/
 dist-vite/
 scratch/
 *.bak
+
+# audit sidecars
+.contributing_old.md
+.contributing_audit.txt
