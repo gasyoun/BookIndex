@@ -13130,14 +13130,14 @@ var BookIndex = (function(exports) {
 			url = `https://gasyoun.github.io/BookIndex/aaz-index.html#v4/${itemType}/list/item/${itemType}/${encodedSlug}`;
 		}
 		style = style.toLowerCase();
-		if (style === "apa") if (type === "lecture") return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. BookIndex Digital Humanities Project. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank">${url}</a>`;
-		else return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank">${url}</a>`;
-		else if (style === "mla") if (type === "lecture") return `Зализняк, А. А. "${citationTitle}." <em>${citationBook}</em>, BookIndex Digital Humanities Project, 2026, <a href="${url}" target="_blank">${url}</a>. Доступ ${day} ${monthEn} ${year}.`;
-		else return `Зализняк, А. А. "${citationTitle}." <em>${citationBook}</em>, 2026, <a href="${url}" target="_blank">${url}</a>. Доступ ${day} ${monthEn} ${year}.`;
-		else if (style === "chicago") if (type === "lecture") return `Зализняк, А. А. 2026. "${citationTitle}." <em>${citationBook}</em>. BookIndex Digital Humanities Project. <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
-		else return `Зализняк, А. А. 2026. "${citationTitle}." <em>${citationBook}</em>. <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
-		else if (type === "lecture") return `Зализняк А. А. ${citationTitle} // ${citationBook}. — BookIndex Digital Humanities Project, 2026. — URL: <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
-		else return `Зализняк А. А. ${citationTitle} // ${citationBook}, 2026. — URL: <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
+		if (style === "apa") if (type === "lecture") return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. BookIndex Digital Humanities Project. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+		else return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+		else if (style === "mla") if (type === "lecture") return `Зализняк, А. А. "${citationTitle}." <em>${citationBook}</em>, BookIndex Digital Humanities Project, 2026, <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>. Доступ ${day} ${monthEn} ${year}.`;
+		else return `Зализняк, А. А. "${citationTitle}." <em>${citationBook}</em>, 2026, <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>. Доступ ${day} ${monthEn} ${year}.`;
+		else if (style === "chicago") if (type === "lecture") return `Зализняк, А. А. 2026. "${citationTitle}." <em>${citationBook}</em>. BookIndex Digital Humanities Project. <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a> (дата обращения: ${dateFormatted}).`;
+		else return `Зализняк, А. А. 2026. "${citationTitle}." <em>${citationBook}</em>. <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a> (дата обращения: ${dateFormatted}).`;
+		else if (type === "lecture") return `Зализняк А. А. ${citationTitle} // ${citationBook}. — BookIndex Digital Humanities Project, 2026. — URL: <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a> (дата обращения: ${dateFormatted}).`;
+		else return `Зализняк А. А. ${citationTitle} // ${citationBook}, 2026. — URL: <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a> (дата обращения: ${dateFormatted}).`;
 	}
 	function stripHtml(html) {
 		const tmp = document.createElement("DIV");
