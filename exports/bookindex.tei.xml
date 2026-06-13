@@ -1,0 +1,3025 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>BookIndex (Zalizniakiada) — authority lists (TEI standOff export)</title>
+        <author>Gasūns, Mārcis</author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>BookIndex (Zalizniakiada)</publisher>
+        <availability>
+          <licence target="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 (index data); see LICENSE-DATA.md</licence>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <bibl>Generated from app_data.json — https://github.com/gasyoun/BookIndex</bibl>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <standOff>
+    <listPerson>
+      <person xml:id="names-c56f5498-aff3-57f1-9586-8364d68af640">
+        <persName>Saloni Z.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/saloni-z/" />
+        <note type="occurrences">страницы: 157; источники: zametki</note>
+      </person>
+      <person xml:id="names-1d792b86-d1e5-5b74-88f7-744bca79aa30">
+        <persName>А. А. Алексеев</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/a-a-alekseev/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-a22b2d42-1b9f-59a4-86e3-7c4e55091ae7">
+        <persName>А. А. Зализняк</persName>
+        <idno type="wikidata">Q2371003</idno>
+        <idno type="VIAF">7453175</idno>
+        <idno type="GND">11926658X</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/a-a-zaliznyak/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-4d8a34ed-fb34-52bf-a738-0cc2bc88fb33">
+        <persName>А. И. Асов</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/a-i-asov/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-c07319d2-b2ba-590e-8650-34920b4318ba">
+        <persName>А. И. Солженицын</persName>
+        <idno type="wikidata">Q34474</idno>
+        <idno type="VIAF">95215697</idno>
+        <idno type="GND">118642464</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/a-i-solzhenitsyn/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-269dcf11-bfe9-5162-87e4-d6a2a87c18b3">
+        <persName>А. Кур (Куренков)</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/a-kur-kurenkov/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-42164893-cad9-5707-bae7-c51fea9dd8a0">
+        <persName>А. Т. Фоменко</persName>
+        <idno type="wikidata">Q158465</idno>
+        <idno type="VIAF">64142515</idno>
+        <idno type="GND">119092689</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/a-t-fomenko/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-fc9e8b91-3780-51ec-81cb-84c060726c63">
+        <persName>Аванесов Р. И.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/avanesov-r-i/" />
+        <note type="occurrences">страницы: 259; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-ff5922db-673a-53a2-aef6-cd636c3737ee">
+        <persName>Аввакум [Петров] (протопоп)</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/avvakum-petrov-protopop/" />
+        <note type="occurrences">страницы: 24; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-832397fb-4edc-52aa-9b82-236ed4b3b383">
+        <persName>Аврамов А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/avramov-a/" />
+        <note type="occurrences">страницы: 85; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-18e04696-88fc-5f02-865d-7be33e6d6a2b">
+        <persName>Александр Македонский</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/aleksandr-makedonskii/" />
+        <note type="occurrences">страницы: 141; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-b7891863-dd4e-50cf-a478-6e10bebd1c92">
+        <persName>Алексеевская О. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/alekseevskaya-o-a/" />
+        <note type="occurrences">страницы: 4, 13, 404; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-97edcc55-ae34-5199-9e16-d4c11dddc22e">
+        <persName>Али Изенбек</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ali-izenbek/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-7334e7b6-c6cc-5088-bd7d-3b023be57b04">
+        <persName>Ананьин Г. Г.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ananin-g-g/" />
+        <note type="occurrences">страницы: 204; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-a2e4cf54-6e0d-5c34-a076-04bdd5e79464">
+        <persName>Андроник</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/andronik/" />
+        <note type="occurrences">страницы: 141; источники: zametki</note>
+      </person>
+      <person xml:id="names-c4e00d0c-62f4-5796-9734-931e81c52e88">
+        <persName>Бажибин В.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/bazhibin-v/" />
+        <note type="occurrences">страницы: 267; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-a4169a75-2198-54f6-8eb9-0a0d60376362">
+        <persName>Барулин А. Н.</persName>
+        <idno type="wikidata">Q4078727</idno>
+        <idno type="VIAF">247999338</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/barulin-a-n/" />
+        <note type="occurrences">страницы: 337, 338, 352, 356, 358, 359; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-dce9025a-83e4-503e-8dfa-817eeb12c61d">
+        <persName>Батый</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/batyi/" />
+        <note type="occurrences">страницы: 53, 75, 101, 119, 141, 201; источники: zametki</note>
+      </person>
+      <person xml:id="names-dc84489f-d528-5f60-94ee-c6ac16b915f5">
+        <persName>Белькевич М. В.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/belkevich-m-v/" />
+        <note type="occurrences">страницы: 87; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-ef581e05-eb69-5a7f-8f9f-591fcf666854">
+        <persName>Бируни, Аль</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/biruni-al/" />
+        <note type="occurrences">страницы: 150; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-ec54df12-cc6d-5aae-a9b4-79d58560f464">
+        <persName>Бируни, Аль‑</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/biruni-al-2/" />
+        <note type="occurrences">страницы: 150; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-7c1b8d16-4144-5c5b-b0e4-d5f108e2c2fc">
+        <persName>Блеген К.</persName>
+        <idno type="wikidata">Q552469</idno>
+        <idno type="VIAF">47048210</idno>
+        <idno type="GND">133757463</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/blegen-k/" />
+        <note type="occurrences">страницы: 123; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-ccbd82f8-9f34-5ff5-8cd1-b02dce87891f">
+        <persName>Блок</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/blok/" />
+        <note type="occurrences">страницы: 25, 196, 215; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-f79d2f36-311b-536b-b7ee-f7dea4b9d150">
+        <persName>Боголюбский Андрей</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/bogolyubskii-andrei/" />
+        <note type="occurrences">страницы: 113, 141; источники: zametki</note>
+      </person>
+      <person xml:id="names-31817100-8ac5-5aa1-90f2-7338e004e558">
+        <persName>Богородица Мария</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/bogoroditsa-mariya/" />
+        <note type="occurrences">страницы: 141; источники: zametki</note>
+      </person>
+      <person xml:id="names-5358346d-2629-51af-8431-7d1c259d957b">
+        <persName>Болотов С. Г.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/bolotov-s-g/" />
+        <note type="occurrences">страницы: 381; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-91e30a13-6ef6-5e0b-ac0f-7c20ab91d4ac">
+        <persName>Бопп Фр.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/bopp-fr/" />
+        <note type="occurrences">страницы: 71; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-9a05da66-f6ac-5747-83cc-dfd64ccbe844">
+        <persName>Борис</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/boris/" />
+        <note type="occurrences">страницы: 101, 103; источники: zametki</note>
+      </person>
+      <person xml:id="names-f99d456e-1401-5658-bff0-f62f64ad9ca3">
+        <persName>Борунова С. Н.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/borunova-s-n/" />
+        <note type="occurrences">страницы: 392; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-22ef5b86-2951-5d64-96b9-38fa016e08b8">
+        <persName>Бродский Иосиф</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/brodskii-iosif/" />
+        <note type="occurrences">страницы: 21; источники: zametki</note>
+      </person>
+      <person xml:id="names-8261d230-fec5-516e-a096-879248c43cc9">
+        <persName>Брюллов К.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/bryullov-k/" />
+        <note type="occurrences">страницы: 274; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-caf0250a-d76e-578c-b642-f47ce80b7b48">
+        <persName>Бусбек</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/busbek/" />
+        <note type="occurrences">страницы: 184; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-b9f4a18d-d64f-5509-9592-26d969720856">
+        <persName>Бхарата</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/bkharata/" />
+        <note type="occurrences">страницы: 140, 141; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-950b3372-3185-5fb8-b3d5-bea53d9bbbca">
+        <persName>Вакернагель Я.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/vakernagel-ya/" />
+        <note type="occurrences">страницы: 21, 25, 29, 31, 35, 39, 41, 46; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-3b878ca4-767d-5259-bf39-0fac756c2fc2">
+        <persName>Варфоломей Юрьевич</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/varfolomei-yurevich/" />
+        <note type="occurrences">страницы: 101, 107; источники: zametki</note>
+      </person>
+      <person xml:id="names-54ba0aa6-5b89-5286-b24d-2a1b2c9034b7">
+        <persName>Василько Теребовльский</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/vasilko-terebovlskii/" />
+        <note type="occurrences">страницы: 71, 99, 111, 113, 115; источники: zametki</note>
+      </person>
+      <person xml:id="names-43dfb2f5-a529-5c39-8723-4aeafd44fdba">
+        <persName>Вентрис М.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ventris-m/" />
+        <note type="occurrences">страницы: 121, 123; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-6aac5d71-05d5-50ac-b87b-66317ee36902">
+        <persName>Вергилий</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/vergilii/" />
+        <note type="occurrences">страницы: 95, 103, 105; источники: zametki</note>
+      </person>
+      <person xml:id="names-6799681b-cf6b-513d-8d3f-205b9eb9ee66">
+        <persName>Вернер К.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/verner-k/" />
+        <note type="occurrences">страницы: 73, 74, 89; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-61c128d0-5998-500b-88a9-5948b266c21d">
+        <persName>Виноградов В. В.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/vinogradov-v-v/" />
+        <note type="occurrences">страницы: 274, 392; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-fe0c4f4b-369c-5491-a8c3-b1c21867ed15">
+        <persName>Владимир</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/vladimir/" />
+        <note type="occurrences">страницы: 24, 200, 250; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-b7b4b0b4-d9d1-5100-825e-040f27aafbad">
+        <persName>Воронцова В. Л.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/vorontsova-v-l/" />
+        <note type="occurrences">страницы: 392; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-9ae7b693-65ff-5a9d-9db0-76f13f5f4b97">
+        <persName>Вяземский П. А.</persName>
+        <idno type="wikidata">Q19425</idno>
+        <idno type="VIAF">88757062</idno>
+        <idno type="GND">118634437</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/vyazemskii-p-a/" />
+        <note type="occurrences">страницы: 274; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-c72d92bc-ef0d-5f2d-b692-fe6d6ad5b605">
+        <persName>Г. В. Носовский</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/g-v-nosovskii/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-9af09cb2-330d-5a8d-9bc9-a6aa475c0dfd">
+        <persName>Гаспаров М. Л.</persName>
+        <idno type="wikidata">Q1228472</idno>
+        <idno type="VIAF">51832912</idno>
+        <idno type="GND">103222855</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/gasparov-m-l/" />
+        <note type="occurrences">страницы: 77, 392; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-77c46ea3-79bc-53e7-846b-2a163154a801">
+        <persName>Гасунс М. Ю.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/gasuns-m-yu/" />
+        <note type="occurrences">страницы: 392; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-86ad2dbe-c180-5414-92bd-20c6960351c2">
+        <persName>Гиппиус А. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/gippius-a-a/" />
+        <note type="occurrences">страницы: 279, 288, 301, 306, 315; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-0faaf6cf-10c3-579a-a009-9050a7303202">
+        <persName>Голубцова Е. С.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/golubtsova-e-s/" />
+        <note type="occurrences">страницы: 57, 115, 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-3412e858-118d-564d-b5b7-2a42c6a1b9cd">
+        <persName>Гораций</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/goratsii/" />
+        <note type="occurrences">страницы: 95, 103; источники: zametki</note>
+      </person>
+      <person xml:id="names-7bd52c30-57e1-5db9-ae51-8b7a70ad9dea">
+        <persName>Гофман</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/gofman/" />
+        <note type="occurrences">страницы: 127, 129, 135, 137; источники: zametki</note>
+      </person>
+      <person xml:id="names-8dba118f-293d-52bd-a886-762aeda5d00e">
+        <persName>Гримм В. и Я. (братья)</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/grimm-v-i-ya-bratya/" />
+        <note type="occurrences">страницы: 73; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-53c69c8b-dfe8-53c1-a7df-b36eedf1c061">
+        <persName>Гримм Я.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/grimm-ya/" />
+        <note type="occurrences">страницы: 73, 74, 89; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-6ab5dde7-86cc-590f-a68a-7a32bdeff713">
+        <persName>Гутенберг И.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/gutenberg-i/" />
+        <note type="occurrences">страницы: 123; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-8f74c209-132a-580d-bd0c-cb5d103cb24a">
+        <persName>Гюргий Иванкович</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/gyurgii-ivankovich/" />
+        <note type="occurrences">страницы: 77; источники: zametki</note>
+      </person>
+      <person xml:id="names-8005fdbe-b452-5c54-b927-934f521e2528">
+        <persName>Даль В. И.</persName>
+        <idno type="wikidata">Q326499</idno>
+        <idno type="VIAF">73991311</idno>
+        <idno type="GND">118523430</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/dal-v-i/" />
+        <note type="occurrences">страницы: 357, 375; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-78a82329-9111-561e-adb7-bb59846f99df">
+        <persName>Данте Алигьери</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/dante-aligeri/" />
+        <note type="occurrences">страницы: 192; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-fb4b256d-57b1-582d-94a2-cc5979d63caf">
+        <persName>Дарвин</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/darvin/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-4d4e8f6e-7128-5863-9495-a13af5625abf">
+        <persName>Дарвин Ч.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/darvin-ch/" />
+        <note type="occurrences">страницы: 201; источники: zametki</note>
+      </person>
+      <person xml:id="names-08dac8e1-7f25-5ad0-b54f-39303730b554">
+        <persName>Дыбо В. А.</persName>
+        <idno type="wikidata">Q130117</idno>
+        <idno type="VIAF">20089987</idno>
+        <idno type="GND">103350160</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/dybo-v-a/" />
+        <note type="occurrences">страницы: 246; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-44b15eb0-4252-5683-a355-0628a39612df">
+        <persName>Ермольцев Д. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ermoltsev-d-a/" />
+        <note type="occurrences">страницы: 77; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-9e741da4-f260-5d0c-a1d0-02cfbbd47d1a">
+        <persName>Еськова Н. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/eskova-n-a/" />
+        <note type="occurrences">страницы: 127, 259, 262, 377, 385; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-16763228-b8e4-5033-97f2-fcf07efb8def">
+        <persName>Заболотская Т. В.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/zabolotskaya-t-v/" />
+        <note type="occurrences">страницы: 356, 389; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-d4df30b5-6406-5553-8882-aa627a5b4262">
+        <persName>Зализняк А. А.</persName>
+        <idno type="wikidata">Q2371003</idno>
+        <idno type="VIAF">7453175</idno>
+        <idno type="GND">11926658X</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/zaliznyak-a-a/" />
+        <note type="occurrences">страницы: 1, 7, 9, 11, 13, 18, 27, 80, 125, 127, 133, 169, 205, 250, 2025; источники: mumintroll, zametki, slovo</note>
+      </person>
+      <person xml:id="names-519404e8-a768-5fed-ab51-bdc7e7421532">
+        <persName>Заменгоф Л.</persName>
+        <idno type="wikidata">Q11758</idno>
+        <idno type="VIAF">73885295</idno>
+        <idno type="GND">118643495</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/zamengof-l/" />
+        <note type="occurrences">страницы: 128, 129; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-d5778648-7774-586b-8b28-49c42d22babf">
+        <persName>Иаков</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/iakov/" />
+        <note type="occurrences">страницы: 73; источники: zametki</note>
+      </person>
+      <person xml:id="names-8f47216c-b42a-5910-a001-b4daae23a08e">
+        <persName>Иван III</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ivan-iii/" />
+        <note type="occurrences">страницы: 113, 209; источники: mumintroll, zametki</note>
+      </person>
+      <person xml:id="names-b16c3223-68a2-539f-a2a1-2b9dab01740c">
+        <persName>Иван IV (//Грозный)</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ivan-iv-groznyi/" />
+        <note type="occurrences">страницы: 209, 332; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-816f9716-576d-560b-82fd-e7985c6086bc">
+        <persName>Иван Грозный</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ivan-groznyi/" />
+        <note type="occurrences">страницы: 71, 101, 113; источники: zametki</note>
+      </person>
+      <person xml:id="names-60da2103-5a71-57c9-8283-ab48bd8fc51d">
+        <persName>Иван Данилович</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ivan-danilovich/" />
+        <note type="occurrences">страницы: 141; источники: zametki</note>
+      </person>
+      <person xml:id="names-4bfa8fd5-0f26-510c-9618-4816b691b1ee">
+        <persName>Иван Калита</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ivan-kalita/" />
+        <note type="occurrences">страницы: 53, 119, 201; источники: zametki</note>
+      </person>
+      <person xml:id="names-0b029595-2733-5650-aa19-ce3f455670ef">
+        <persName>Иванко Захарьинич</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ivanko-zakharinich/" />
+        <note type="occurrences">страницы: 53, 71, 99, 101, 107, 113, 115, 119, 141, 201; источники: zametki</note>
+      </person>
+      <person xml:id="names-002d54c5-ffe0-5bf5-99bb-b2c780f00145">
+        <persName>Иванов</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ivanov/" />
+        <note type="occurrences">страницы: 259; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-e1f6bdfe-bd29-55c1-8cc9-fa670daecb59">
+        <persName>Иванов Вяч. Вс.</persName>
+        <idno type="wikidata">Q794031</idno>
+        <idno type="VIAF">108365230</idno>
+        <idno type="GND">119005964</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ivanov-vyach-vs/" />
+        <note type="occurrences">страницы: 53, 71, 99, 101, 107, 113, 115, 119, 141, 201; источники: zametki</note>
+      </person>
+      <person xml:id="names-1fa79779-7a4a-5e5c-9392-875e8414c852">
+        <persName>Изяслав</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/izyaslav/" />
+        <note type="occurrences">страницы: 89, 113; источники: zametki</note>
+      </person>
+      <person xml:id="names-4e323b82-48b3-5756-a62f-0cf29960efc1">
+        <persName>Изяслав Давыдович</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/izyaslav-davydovich/" />
+        <note type="occurrences">страницы: 113; источники: zametki</note>
+      </person>
+      <person xml:id="names-a55b6da2-b57a-5e3e-bb5d-5b4d6c238348">
+        <persName>Иисус Христос</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/iisus-khristos/" />
+        <note type="occurrences">страницы: 69, 141, 145, 157, 165; источники: zametki</note>
+      </person>
+      <person xml:id="names-42592d1b-fcc8-5146-8b12-bb003e036c81">
+        <persName>Иллич-Свитыч В. М.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/illich-svitych-v-m/" />
+        <note type="occurrences">страницы: 246; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-088ba2c1-f2c3-5e49-bf9c-49966c507619">
+        <persName>Иоанн Креститель</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ioann-krestitel/" />
+        <note type="occurrences">страницы: 71, 113, 141; источники: zametki</note>
+      </person>
+      <person xml:id="names-23b24e0e-54ac-55d0-9138-1014ec3b9784">
+        <persName>Иткин А. И.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/itkin-a-i/" />
+        <note type="occurrences">страницы: 290, 339, 340, 343, 347, 349, 353, 356, 358; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-f3d076c8-9fb3-511b-a313-36a725b8bbff">
+        <persName>Иткин И. Б.</persName>
+        <idno type="wikidata">Q4205292</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/itkin-i-b/" />
+        <note type="occurrences">страницы: 4, 12, 41, 48, 49, 76, 89, 90, 119, 124, 126, 128, 132, 161, 218, 222, 225, 226, 230, 234, 273, 290, 291, 297, 299, 301, 342, 346, 356, 358, 360, 377; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-68dc67fe-945c-5ddd-9a4e-dfd90e6384ae">
+        <persName>Калидаса</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/kalidasa/" />
+        <note type="occurrences">страницы: 173; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-8592e041-bc64-59fb-b4a6-d6b0025a64c3">
+        <persName>Карамзин Н. М.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/karamzin-n-m/" />
+        <note type="occurrences">страницы: 334; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-547c4930-dbf4-5c85-b080-2e37d92886fa">
+        <persName>Карл Великий</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/karl-velikii/" />
+        <note type="occurrences">страницы: 83; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-2fc1110d-a81f-5bc2-bb92-bbff2348d3c3">
+        <persName>Катулл</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/katull/" />
+        <note type="occurrences">страницы: 103; источники: zametki</note>
+      </person>
+      <person xml:id="names-59e49b21-22da-56d6-b6b0-9396f8c0cf15">
+        <persName>Кислов М. Н.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/kislov-m-n/" />
+        <note type="occurrences">страницы: 13; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-1438b530-f136-5225-bdb0-00e48fffc610">
+        <persName>Козлов Л.</persName>
+        <idno type="wikidata">Q18121462</idno>
+        <idno type="VIAF">38602925</idno>
+        <idno type="GND">1062520173</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/kozlov-l/" />
+        <note type="occurrences">страницы: 100; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-70c3c8f0-8e13-5219-b3b6-c63601cfefe4">
+        <persName>Козлов С. Л.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/kozlov-s-l/" />
+        <note type="occurrences">страницы: 45, 47; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-c9fe44ac-c3af-5c4b-b0a5-240463c511fd">
+        <persName>Кокорева А. Б.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/kokoreva-a-b/" />
+        <note type="occurrences">страницы: 208; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-a7adb04a-a6ce-57ae-821c-4c83560201a5">
+        <persName>Колмогоров А. Н.</persName>
+        <idno type="wikidata">Q153224</idno>
+        <idno type="VIAF">36980195</idno>
+        <idno type="GND">119056399</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/kolmogorov-a-n/" />
+        <note type="occurrences">страницы: 123; источники: zametki</note>
+      </person>
+      <person xml:id="names-6d37e316-12ff-56e0-a182-7e18d92aa4f5">
+        <persName>Кочергина В. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/kochergina-v-a/" />
+        <note type="occurrences">страницы: 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-46a541ca-106e-52f7-bd7c-d51e677b151f">
+        <persName>Красильников Ю. Д.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/krasilnikov-yu-d/" />
+        <note type="occurrences">страницы: 59, 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-b20591a1-1fed-5084-a68b-82ca8e8aaf9a">
+        <persName>Кручёных А. Е.</persName>
+        <idno type="wikidata">Q721962</idno>
+        <idno type="VIAF">71393129</idno>
+        <idno type="GND">118567306</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/kruchenykh-a-e/" />
+        <note type="occurrences">страницы: 376; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-3933dded-7523-53f6-93ed-a18e275bb4cf">
+        <persName>Лебедев И.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/lebedev-i/" />
+        <note type="occurrences">страницы: 86; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-356fd098-af2f-51d3-8af6-cd03b2780263">
+        <persName>Лебедева Е. И.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/lebedeva-e-i/" />
+        <note type="occurrences">страницы: 78, 175, 209, 321; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-be51fd15-1372-50db-884e-0a8805de6879">
+        <persName>Левонтина И. Б.</persName>
+        <idno type="wikidata">Q28498789</idno>
+        <idno type="VIAF">49152079</idno>
+        <idno type="GND">138051747</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/levontina-i-b/" />
+        <note type="occurrences">страницы: 333; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-a94a9c76-2e19-5ee6-ba24-9e10cebfc241">
+        <persName>Лотман Ю. М.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/lotman-yu-m/" />
+        <note type="occurrences">страницы: 59; источники: zametki</note>
+      </person>
+      <person xml:id="names-7971dc6c-635d-588a-bfd6-4e54e46dbbfa">
+        <persName>Луховицкий В. В.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/lukhovitskii-v-v/" />
+        <note type="occurrences">страницы: 78; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-59206820-ea47-56f5-bc4d-1720f26d96b7">
+        <persName>Мамай</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/mamai/" />
+        <note type="occurrences">страницы: 75; источники: zametki</note>
+      </person>
+      <person xml:id="names-e91b059e-6512-5ef8-b9b8-1a051a8a1902">
+        <persName>Мария Богородица</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/mariya-bogoroditsa/" />
+        <note type="occurrences">страницы: 141; источники: zametki</note>
+      </person>
+      <person xml:id="names-cc5a7bbb-803d-5500-8000-6df1e01cc23a">
+        <persName>Мартынов И. И.</persName>
+        <idno type="wikidata">Q2412021</idno>
+        <idno type="VIAF">179372210</idno>
+        <idno type="GND">1253778108</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/martynov-i-i/" />
+        <note type="occurrences">страницы: 274; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-bf21aa50-21f4-5161-b943-36a0bdcf5f0a">
+        <persName>Марциал</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/martsial/" />
+        <note type="occurrences">страницы: 103, 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-930bbda7-5291-5058-ab22-edeb209de4af">
+        <persName>Маяковский В. В.</persName>
+        <idno type="wikidata">Q132964</idno>
+        <idno type="VIAF">24611716</idno>
+        <idno type="GND">118640801</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/mayakovskii-v-v/" />
+        <note type="occurrences">страницы: 33; источники: zametki</note>
+      </person>
+      <person xml:id="names-f11516ef-44a8-5a35-bff3-04a83cda61eb">
+        <persName>Мейе А.</persName>
+        <idno type="wikidata">Q347001</idno>
+        <idno type="VIAF">27068538</idno>
+        <idno type="GND">118782878</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/meie-a/" />
+        <note type="occurrences">страницы: 11; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-21fa7466-2d75-5c20-8086-f0700414696a">
+        <persName>Менделеев Д. Н.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/mendeleev-d-n/" />
+        <note type="occurrences">страницы: 151; источники: zametki</note>
+      </person>
+      <person xml:id="names-cea28119-8c68-5c57-a9f2-ae5a0326230a">
+        <persName>Милославский Е.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/miloslavskii-e/" />
+        <note type="occurrences">страницы: 76; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-efe6aa5c-b496-5fdf-a983-034bd74145d3">
+        <persName>Михаил Тверской</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/mikhail-tverskoi/" />
+        <note type="occurrences">страницы: 312; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-9327d859-58fb-5389-a756-c6bdf4802337">
+        <persName>Михаил Юрьевич</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/mikhail-yurevich/" />
+        <note type="occurrences">страницы: 101; источники: zametki</note>
+      </person>
+      <person xml:id="names-db3941d3-406b-521a-b051-86994ae08929">
+        <persName>Морозов Н. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/morozov-n-a/" />
+        <note type="occurrences">страницы: 51, 57, 77, 87, 105; источники: zametki</note>
+      </person>
+      <person xml:id="names-bf355b62-4c40-50c3-8352-4890569e2d09">
+        <persName>Морозова Г. П.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/morozova-g-p/" />
+        <note type="occurrences">страницы: 43, 45, 116; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-9c754fb6-4c4f-50f5-87cc-2709e298d652">
+        <persName>Нестор Летописец Печерский Киевский</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/nestor-letopisets-pecherskii-kievskii/" />
+        <note type="occurrences">страницы: 47; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-a916e758-91d4-5fc3-a1df-f0fdbe95697c">
+        <persName>Николаев С. Л.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/nikolaev-s-l/" />
+        <note type="occurrences">страницы: 123; источники: zametki</note>
+      </person>
+      <person xml:id="names-78ee3583-4ed5-5acc-8aa5-8fabf6e3dba7">
+        <persName>Николаева T. М.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/nikolaeva-t-m/" />
+        <note type="occurrences">страницы: 123; источники: zametki</note>
+      </person>
+      <person xml:id="names-0202bd59-2146-5a4d-abfe-53a3b261cbbd">
+        <persName>Николов B.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/nikolov-b/" />
+        <note type="occurrences">страницы: 123; источники: zametki</note>
+      </person>
+      <person xml:id="names-5c963c4a-95e9-51ee-bae5-34d574b10c19">
+        <persName>Носков А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/noskov-a/" />
+        <note type="occurrences">страницы: 286; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-4214dfa4-07d2-5eb9-a392-2ae1fd6dd7b4">
+        <persName>Носов Е. Н.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/nosov-e-n/" />
+        <note type="occurrences">страницы: 39, 51, 53, 123, 137, 181, 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-41635ff9-b9ea-5ab7-873e-999f5a076aab">
+        <persName>Носовский Г. В.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/nosovskii-g-v/" />
+        <note type="occurrences">страницы: 51, 53, 123, 137, 181, 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-c5a71793-8616-5e38-bb6d-a42b5f786525">
+        <persName>О. В. Творогов</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/o-v-tvorogov/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-0ab0632e-cd7e-59f9-b290-d3b9ba073158">
+        <persName>Падучева Е. В.</persName>
+        <idno type="wikidata">Q4342113</idno>
+        <idno type="VIAF">30982677</idno>
+        <idno type="GND">143007602</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/paducheva-e-v/" />
+        <note type="occurrences">страницы: 89, 387; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-d5b1a29b-32d1-5a0b-9b4a-2767b50782de">
+        <persName>Переверзева С. И.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/pereverzeva-s-i/" />
+        <note type="occurrences">страницы: 173; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-71b1750b-66cf-5f3f-ac9d-9b04af5a1849">
+        <persName>Перцов Н. В.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/pertsov-n-v/" />
+        <note type="occurrences">страницы: 273, 347, 371; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-0ef9c67e-7f7a-5025-b8f4-4c0a49b3553d">
+        <persName>Пётр I</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/petr-i/" />
+        <note type="occurrences">страницы: 23, 190, 361; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-71e8bff6-d270-5fc9-a512-42a4df165422">
+        <persName>Пилецкий Я.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/piletskii-ya/" />
+        <note type="occurrences">страницы: 85; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-1dba999d-effb-5a84-aae4-476a527ed5e2">
+        <persName>Плавт</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/plavt/" />
+        <note type="occurrences">страницы: 95; источники: zametki</note>
+      </person>
+      <person xml:id="names-8a91d245-2677-5f76-b282-592859add5a1">
+        <persName>Плунгян В. А.</persName>
+        <idno type="wikidata">Q1345187</idno>
+        <idno type="VIAF">86313013</idno>
+        <idno type="GND">141607475</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/plungyan-v-a/" />
+        <note type="occurrences">страницы: 78; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-b48a6fa6-bbc5-5c0e-9510-6bd8e3b27be5">
+        <persName>Плутарх</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/plutarkh/" />
+        <note type="occurrences">страницы: 165; источники: zametki</note>
+      </person>
+      <person xml:id="names-d52c99cb-b88c-5d39-830c-fc44cea96243">
+        <persName>Поветкин В. И.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/povetkin-v-i/" />
+        <note type="occurrences">страницы: 13; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-3be4ba05-8f21-5f43-ab2c-dc44b57061c9">
+        <persName>Постникова T. Е.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/postnikova-t-e/" />
+        <note type="occurrences">страницы: 59; источники: zametki</note>
+      </person>
+      <person xml:id="names-f31ff1b3-e9b5-5fd7-bb9f-a757bc633280">
+        <persName>Пушкин А. С.</persName>
+        <idno type="wikidata">Q7200</idno>
+        <idno type="VIAF">66477450</idno>
+        <idno type="GND">118641816</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/pushkin-a-s/" />
+        <note type="occurrences">страницы: 81, 296, 389; источники: mumintroll, zametki</note>
+      </person>
+      <person xml:id="names-1672b9ee-7f71-5a34-9d01-01f3c38acaa3">
+        <persName>Раск Р. К.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/rask-r-k/" />
+        <note type="occurrences">страницы: 71, 73; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-06881e26-565b-57c6-a383-726dee0eae64">
+        <persName>Рем</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/rem/" />
+        <note type="occurrences">страницы: 141; источники: zametki</note>
+      </person>
+      <person xml:id="names-ef47d0b0-e693-57f3-8905-5858dc434313">
+        <persName>Романовы</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/romanovy/" />
+        <note type="occurrences">страницы: 11, 143, 145; источники: zametki</note>
+      </person>
+      <person xml:id="names-86cf02fc-69ec-5918-b201-4b3ddc498d11">
+        <persName>Ромул</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/romul/" />
+        <note type="occurrences">страницы: 141; источники: zametki</note>
+      </person>
+      <person xml:id="names-56e2322f-174c-5982-8e1e-535bae269e81">
+        <persName>Роулинсон Г.</persName>
+        <idno type="wikidata">Q309602</idno>
+        <idno type="VIAF">10149174</idno>
+        <idno type="GND">116367636</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/roulinson-g/" />
+        <note type="occurrences">страницы: 121; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-06e2e697-295f-51ac-bfa3-d20f437977a1">
+        <persName>Руссев Е. М.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/russev-e-m/" />
+        <note type="occurrences">страницы: 13, 15, 67, 69, 71, 81, 137, 155, 157, 165, 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-4d807f62-e8df-5281-ba6f-e2a6a761c11f">
+        <persName>Силинг Ю. М.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/siling-yu-m/" />
+        <note type="occurrences">страницы: 346; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-a6e65c9c-01d0-5166-90e0-f70f86773466">
+        <persName>Сичинава Д. В.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/sichinava-d-v/" />
+        <note type="occurrences">страницы: 392; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-033ab44f-6deb-59fb-bbba-20b42de78d7a">
+        <persName>Скалигер</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/skaliger/" />
+        <note type="occurrences">страницы: 87, 103, 107, 129; источники: zametki</note>
+      </person>
+      <person xml:id="names-d0dd6d80-c16a-5d86-88b8-8aa1904276fd">
+        <persName>Скалигер И. Ю. (= Ж. Ж.)</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/skaliger-i-yu-zh-zh/" />
+        <note type="occurrences">страницы: 87, 103, 107, 129; источники: zametki</note>
+      </person>
+      <person xml:id="names-dc68d13d-42b1-5f74-91f7-e84bc2c68c50">
+        <persName>Скопина М. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/skopina-m-a/" />
+        <note type="occurrences">страницы: 81; источники: zametki</note>
+      </person>
+      <person xml:id="names-41932b2d-a603-5c1b-b4c8-9cbcafb92c8d">
+        <persName>Слуцкий Б. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/slutskii-b-a/" />
+        <note type="occurrences">страницы: 376; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-7d410121-7683-580a-8f84-e92974f129e0">
+        <persName>Смирин В. М.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/smirin-v-m/" />
+        <note type="occurrences">страницы: 57, 115, 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-03e688c2-edce-5e0e-97a0-5b75411cb1eb">
+        <persName>Солженицын А. И.</persName>
+        <idno type="wikidata">Q34474</idno>
+        <idno type="VIAF">95215697</idno>
+        <idno type="GND">118642464</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/solzhenitsyn-a-i/" />
+        <note type="occurrences">страницы: 197; источники: zametki</note>
+      </person>
+      <person xml:id="names-2bb8ccc1-a303-5a2e-a2ff-ef388025cab5">
+        <persName>Солженицына Н. Д.</persName>
+        <idno type="wikidata">Q4427694</idno>
+        <idno type="VIAF">166053771</idno>
+        <idno type="GND">13847026X</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/solzhenitsyna-n-d/" />
+        <note type="occurrences">страницы: 197; источники: zametki</note>
+      </person>
+      <person xml:id="names-eafd05ad-972c-57ec-8f56-907854a5a9a1">
+        <persName>Срезневский И. И.</persName>
+        <idno type="wikidata">Q2992575</idno>
+        <idno type="VIAF">46802812</idno>
+        <idno type="GND">118798340</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/sreznevskii-i-i/" />
+        <note type="occurrences">страницы: 296; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-eeac0def-4f99-5a9a-8ce1-07998bf3d1ab">
+        <persName>Станг Хр.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/stang-khr/" />
+        <note type="occurrences">страницы: 246; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-4270923c-5466-56fa-85e6-73762660d39d">
+        <persName>Старец С. М.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/starets-s-m/" />
+        <note type="occurrences">страницы: 15, 27, 71, 137, 165, 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-6380ed8e-6c1c-55c5-85fb-e6045b36a582">
+        <persName>Старостин Г. С.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/starostin-g-s/" />
+        <note type="occurrences">страницы: 27; источники: zametki</note>
+      </person>
+      <person xml:id="names-51bf6d94-7f47-53a5-ac27-129643b5ed8f">
+        <persName>Старостин С. А.</persName>
+        <idno type="wikidata">Q705907</idno>
+        <idno type="VIAF">110115894</idno>
+        <idno type="GND">136040411</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/starostin-s-a/" />
+        <note type="occurrences">страницы: 27; источники: zametki</note>
+      </person>
+      <person xml:id="names-b5af9cfa-4fd0-5a90-8e4c-eb76c766ed0d">
+        <persName>Толстая М. Н.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/tolstaya-m-n/" />
+        <note type="occurrences">страницы: 205, 392, 2025; источники: mumintroll, zametki</note>
+      </person>
+      <person xml:id="names-51c741e1-2dff-527b-b661-36da53692135">
+        <persName>Толстая Р. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/tolstaya-r-a/" />
+        <note type="occurrences">страницы: 205, 2025; источники: zametki</note>
+      </person>
+      <person xml:id="names-3b2ea697-1d63-5c7e-840d-5c5caf0f3985">
+        <persName>Толстой И. В.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/tolstoi-i-v/" />
+        <note type="occurrences">страницы: 205, 2025; источники: zametki</note>
+      </person>
+      <person xml:id="names-86bcd6af-3641-5840-84e9-46b7aaf6ab60">
+        <persName>Улицкая Л. Е.</persName>
+        <idno type="wikidata">Q266661</idno>
+        <idno type="VIAF">87220182</idno>
+        <idno type="GND">11558871X</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/ulitskaya-l-e/" />
+        <note type="occurrences">страницы: 77; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-56318e57-524d-5563-a451-3f075e3d7436">
+        <persName>Успенский Б. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/uspenskii-b-a/" />
+        <note type="occurrences">страницы: 9; источники: zametki</note>
+      </person>
+      <person xml:id="names-dae62a6b-1dd8-5d7d-b66b-fa352202caf9">
+        <persName>Успенский В. А.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/uspenskii-v-a/" />
+        <note type="occurrences">страницы: 9; источники: zametki</note>
+      </person>
+      <person xml:id="names-15c44ef5-69c8-5998-af12-514c15ccacc1">
+        <persName>Фант Г. И.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/fant-g-i/" />
+        <note type="occurrences">страницы: 17, 35, 37, 47, 49, 165, 2025; источники: zametki</note>
+      </person>
+      <person xml:id="names-274ca584-ac3a-504f-b089-62bc5a10f578">
+        <persName>Фасмер М.</persName>
+        <idno type="wikidata">Q77420</idno>
+        <idno type="VIAF">97150111</idno>
+        <idno type="GND">118767356</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/fasmer-m/" />
+        <note type="occurrences">страницы: 11, 39, 41, 75, 205; источники: zametki</note>
+      </person>
+      <person xml:id="names-70d628a0-fa1a-586e-8eed-a283b8b8d07e">
+        <persName>Феклистова Е. Б.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/feklistova-e-b/" />
+        <note type="occurrences">страницы: 104, 126, 127, 358, 389; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-e16664a6-dfed-5018-b5d0-5d3effa86d1d">
+        <persName>Феодосий Печерский</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/feodosii-pecherskii/" />
+        <note type="occurrences">страницы: 47; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-f95f8db0-0f93-511e-9323-e83daa8fe8b6">
+        <persName>Фоменко А. Т.</persName>
+        <idno type="wikidata">Q158465</idno>
+        <idno type="VIAF">64142515</idno>
+        <idno type="GND">119092689</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/fomenko-a-t/" />
+        <note type="occurrences">страницы: 7, 9, 11, 13, 15, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 80, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99, 101, 103, 105, 107, 109, 111, 113, 115, 117, 119, 123, 125, 127, 129, 131, 133, 135, 137, 139, 141, 143, 145, 159, 165, 199, 205, 2025; источники: mumintroll, zametki</note>
+      </person>
+      <person xml:id="names-70b2bbe6-f605-5093-898e-f195b58659d6">
+        <persName>Фридрих И.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/fridrikh-i/" />
+        <note type="occurrences">страницы: 121; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-027bd7f3-f8c8-55b3-bb9f-34f42de5670c">
+        <persName>Фукидид</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/fukidid/" />
+        <note type="occurrences">страницы: 55, 57, 59, 61, 127, 129, 135, 137, 205, 2025; источники: zametki</note>
+      </person>
+      <person xml:id="names-2f4778f7-d318-585e-859b-43cf49b68195">
+        <persName>Хаустов Ф.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/khaustov-f/" />
+        <note type="occurrences">страницы: 113, 124, 132; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-313676f1-c4be-5f4b-842f-437e3c431b1b">
+        <persName>Хлебников Велимир</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/khlebnikov-velimir/" />
+        <note type="occurrences">страницы: 273; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-9ed77edb-f269-5322-b008-c4396f2bc6d8">
+        <persName>Холодова Е. Б.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/kholodova-e-b/" />
+        <note type="occurrences">страницы: 42; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-b5a728ac-8e9f-5f13-8c0e-b781486bd9ed">
+        <persName>Христос Иисус</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/khristos-iisus/" />
+        <note type="occurrences">страницы: 77, 141, 145, 165; источники: zametki</note>
+      </person>
+      <person xml:id="names-72edb261-ec35-5336-ac5b-ac34b09989cb">
+        <persName>Цезарь</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/tsezar/" />
+        <note type="occurrences">страницы: 95, 179; источники: zametki</note>
+      </person>
+      <person xml:id="names-f16e0376-31ae-54c8-ac4a-a3fdb895100a">
+        <persName>Цицерон</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/tsitseron/" />
+        <note type="occurrences">страницы: 103, 248, 287, 291; источники: zametki, mumintroll</note>
+      </person>
+      <person xml:id="names-b30993ed-172e-58f3-9e94-e852c1de0260">
+        <persName>Чедвик Дж.</persName>
+        <idno type="wikidata">Q51515</idno>
+        <idno type="VIAF">85160602</idno>
+        <idno type="GND">118888757</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/chedvik-dzh/" />
+        <note type="occurrences">страницы: 121; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-0ce26d14-b758-5a63-b4f6-6d5f1a1812ec">
+        <persName>Чернышева П.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/chernysheva-p/" />
+        <note type="occurrences">страницы: 127; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-fc1e4b98-1560-5679-ac1d-27f3105fae69">
+        <persName>Чингиз-хан</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/chingiz-khan/" />
+        <note type="occurrences">страницы: 77, 101, 141; источники: zametki</note>
+      </person>
+      <person xml:id="names-784480fb-cb5f-5f8d-9afb-97cc1e66dc8e">
+        <persName>Шампольон Ф.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/shampolon-f/" />
+        <note type="occurrences">страницы: 121; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-267cccaf-2470-555a-8456-9712feaf8fc6">
+        <persName>Щеголькова Е.</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/shchegolkova-e/" />
+        <note type="occurrences">страницы: 81, 89, 119, 203; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-22c2cb2b-4573-5447-99ff-ce8ba636096b">
+        <persName>Ю. П. Миролюбов</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/yu-p-mirolyubov/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </person>
+      <person xml:id="names-2d72f673-450c-542f-be97-8b2c578de357">
+        <persName>Юлий Цезарь</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/yulii-tsezar/" />
+        <note type="occurrences">страницы: 69; источники: mumintroll</note>
+      </person>
+      <person xml:id="names-d63fac7a-7442-5d6b-83ae-45048e4afaa0">
+        <persName>Янин В. Л.</persName>
+        <idno type="wikidata">Q1980377</idno>
+        <idno type="VIAF">45138852</idno>
+        <idno type="GND">120697742</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/yanin-v-l/" />
+        <note type="occurrences">страницы: 169, 277, 288, 306; источники: mumintroll, zametki</note>
+      </person>
+      <person xml:id="names-825ab60f-4ead-5a5b-a679-00fc7d64b9bd">
+        <persName>Ярослав</persName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/names/list/item/names/yaroslav/" />
+        <note type="occurrences">страницы: 85; источники: mumintroll</note>
+      </person>
+    </listPerson>
+    <listPlace>
+      <place xml:id="toponyms-960d462f-467e-5199-8384-1d46b2633951">
+        <placeName>Англия</placeName>
+        <idno type="wikidata">Q21</idno>
+        <idno type="VIAF">142995804</idno>
+        <idno type="GND">4014770-8</idno>
+        <idno type="geonames">6269131</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/angliya/" />
+        <note type="occurrences">страницы: 82; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-f09a3a8f-bf41-50f6-865b-fc838bb915b4">
+        <placeName>Апеннинский полуостров</placeName>
+        <idno type="wikidata">Q145694</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/apenninskii-poluostrov/" />
+        <note type="occurrences">страницы: 192; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-6eca804c-367a-5d6f-9c7f-a8a61be0f4f3">
+        <placeName>арабские страны</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/arabskie-strany/" />
+        <note type="occurrences">страницы: 192, 210, 211, 222, 223; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-0eafbc9c-dce8-54e7-a820-8d98ec33b15e">
+        <placeName>Архангельская область</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/arkhangelskaya-oblast/" />
+        <note type="occurrences">страницы: 199; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-c29631f7-4f5d-540f-8242-94d7d38f89ba">
+        <placeName>Африка</placeName>
+        <idno type="wikidata">Q15</idno>
+        <idno type="VIAF">127043766</idno>
+        <idno type="GND">4000695-5</idno>
+        <idno type="geonames">6255146</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/afrika/" />
+        <note type="occurrences">страницы: 210; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-34e82082-bebd-538e-9a79-1964165b77a2">
+        <placeName>Бавария</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/bavariya/" />
+        <note type="occurrences">страницы: 60; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-116fa4b7-d6b1-5af1-a920-29a77884dfe8">
+        <placeName>Балканы</placeName>
+        <idno type="wikidata">Q20870818</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/balkany/" />
+        <note type="occurrences">страницы: 184; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-9f1ae182-12e1-588a-ae62-4dcc7d5c834c">
+        <placeName>Балтийское море</placeName>
+        <idno type="wikidata">Q545</idno>
+        <idno type="VIAF">316431537</idno>
+        <idno type="GND">4044107-6</idno>
+        <idno type="geonames">2633321</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/baltiiskoe-more/" />
+        <note type="occurrences">страницы: 61; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-92510155-1662-56c3-8754-f4d9303a51a9">
+        <placeName>Белоруссия</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/belorussiya/" />
+        <note type="occurrences">страницы: 57, 196, 200, 201, 204, 206; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-77272b79-d2e2-5747-bf35-8da65ea8bf8b">
+        <placeName>Бенарес</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/benares/" />
+        <note type="occurrences">страницы: 124; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-4000b097-9469-5b18-85e2-62dd89e3b229">
+        <placeName>Бремен</placeName>
+        <idno type="wikidata">Q24879</idno>
+        <idno type="VIAF">137159715</idno>
+        <idno type="GND">4008135-7</idno>
+        <idno type="geonames">2944388</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/bremen/" />
+        <note type="occurrences">страницы: 61; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-6fdbefeb-7f12-5252-8c61-5f30a6cd0d6a">
+        <placeName>Британия</placeName>
+        <idno type="wikidata">Q185103</idno>
+        <idno type="GND">4069666-2</idno>
+        <idno type="geonames">8378485</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/britaniya/" />
+        <note type="occurrences">страницы: 82; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-f860da61-f5c8-50dd-bd70-3061ef18effb">
+        <placeName>Британские острова</placeName>
+        <idno type="wikidata">Q38272</idno>
+        <idno type="VIAF">237264765</idno>
+        <idno type="GND">4090131-2</idno>
+        <idno type="geonames">2654669</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/britanskie-ostrova/" />
+        <note type="occurrences">страницы: 60; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-05cef0ca-9a03-546a-be7c-6e56d003bdda">
+        <placeName>Бхарат</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/bkharat/" />
+        <note type="occurrences">страницы: 141; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-1102e670-1343-5951-b926-aa1bee3d5ab0">
+        <placeName>Варанаси</placeName>
+        <idno type="wikidata">Q79980</idno>
+        <idno type="VIAF">168498951</idno>
+        <idno type="GND">4062337-3</idno>
+        <idno type="geonames">1253405</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/varanasi/" />
+        <note type="occurrences">страницы: 124; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-5ae4de51-6510-5277-8522-8ce0972083a1">
+        <placeName>Великороссия</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/velikorossiya/" />
+        <note type="occurrences">страницы: 199, 200; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-f00f53c4-b84a-5d70-9b8c-d6be1ffdea62">
+        <placeName>Венгрия</placeName>
+        <idno type="wikidata">Q28</idno>
+        <idno type="VIAF">128544491</idno>
+        <idno type="GND">4078541-5</idno>
+        <idno type="geonames">719819</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/vengriya/" />
+        <note type="occurrences">страницы: 27, 135; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-4e91d042-2efb-5064-a534-e272c898dee9">
+        <placeName>Венеция</placeName>
+        <idno type="wikidata">Q641</idno>
+        <idno type="VIAF">8456155769103127880005</idno>
+        <idno type="GND">4062501-1</idno>
+        <idno type="geonames">6542284</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/venetsiya/" />
+        <note type="occurrences">страницы: 181; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-6a1587d1-8457-5882-9ddb-93adc3994fa4">
+        <placeName>Византия</placeName>
+        <idno type="wikidata">Q12544</idno>
+        <idno type="VIAF">144245245</idno>
+        <idno type="GND">4009256-2</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/vizantiya/" />
+        <note type="occurrences">страницы: 391; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-fe0c4f4b-369c-5491-a8c3-b1c21867ed15">
+        <placeName>Владимир</placeName>
+        <idno type="wikidata">Q2684</idno>
+        <idno type="VIAF">139562941</idno>
+        <idno type="GND">4108478-0</idno>
+        <idno type="geonames">473247</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/vladimir/" />
+        <note type="occurrences">страницы: 200; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-1b6a010c-35e4-5f09-a76b-ba46eeec35b4">
+        <placeName>Вятская губерния</placeName>
+        <idno type="wikidata">Q1540335</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/vyatskaya-guberniya/" />
+        <note type="occurrences">страницы: 199; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-bcfcdd39-ce8b-5915-a1d2-e83207105f89">
+        <placeName>Галич</placeName>
+        <idno type="wikidata">Q146450</idno>
+        <idno type="VIAF">138404920</idno>
+        <idno type="geonames">709034</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/galich/" />
+        <note type="occurrences">страницы: 27; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-8d792996-9f7a-5e2a-87de-baec282259cb">
+        <placeName>Галлия</placeName>
+        <idno type="wikidata">Q38060</idno>
+        <idno type="VIAF">242520115</idno>
+        <idno type="GND">4019150-3</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/galliya/" />
+        <note type="occurrences">страницы: 56, 126; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-a7d29db9-1892-5d72-8fdb-8eb82bd6979a">
+        <placeName>Гастингс</placeName>
+        <idno type="wikidata">Q29245</idno>
+        <idno type="VIAF">136080566</idno>
+        <idno type="GND">4023626-2</idno>
+        <idno type="geonames">2647356</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/gastings/" />
+        <note type="occurrences">страницы: 82; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-1e3123bc-ec36-5486-9448-27a00c474fec">
+        <placeName>ГДР</placeName>
+        <idno type="wikidata">Q16957</idno>
+        <idno type="VIAF">125035363</idno>
+        <idno type="GND">4011890-3</idno>
+        <idno type="geonames">8354410</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/gdr/" />
+        <note type="occurrences">страницы: 61; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-822cb45a-6005-588b-a80b-ea5706bf8fe4">
+        <placeName>Германия</placeName>
+        <idno type="wikidata">Q183</idno>
+        <idno type="VIAF">135446758</idno>
+        <idno type="GND">4011882-4</idno>
+        <idno type="geonames">2921044</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/germaniya/" />
+        <note type="occurrences">страницы: 12, 56, 59, 60; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-cd173c0a-21ae-56e6-a562-208d32b002a1">
+        <placeName>Голландия</placeName>
+        <idno type="wikidata">Q102911</idno>
+        <idno type="GND">4133959-9</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/gollandiya/" />
+        <note type="occurrences">страницы: 190; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-0a43c6a9-8be6-5d88-a7fa-11997c92afbe">
+        <placeName>Греция</placeName>
+        <idno type="wikidata">Q41</idno>
+        <idno type="VIAF">131265011</idno>
+        <idno type="GND">4022047-3</idno>
+        <idno type="geonames">390903</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/gretsiya/" />
+        <note type="occurrences">страницы: 77, 120; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-5d8961ab-3689-5971-8140-b202f9d7a397">
+        <placeName>Грецколань</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/gretskolan/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-f546ae3d-d62c-5e68-8ca6-eaa819cac193">
+        <placeName>Европа</placeName>
+        <idno type="wikidata">Q46</idno>
+        <idno type="VIAF">170298814</idno>
+        <idno type="GND">4015701-5</idno>
+        <idno type="geonames">6255148</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/evropa/" />
+        <note type="occurrences">страницы: 58, 81, 84, 135, 136, 139, 142, 147, 152, 180, 211; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-4b2db9c2-762c-5388-9850-d8c5eee2b734">
+        <placeName>Египет</placeName>
+        <idno type="wikidata">Q79</idno>
+        <idno type="VIAF">242059233</idno>
+        <idno type="GND">4000556-2</idno>
+        <idno type="geonames">357994</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/egipet/" />
+        <note type="occurrences">страницы: 81, 86, 192, 222, 223; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-1c425ad0-cccc-5b9d-bb5e-d3595c02bdec">
+        <placeName>западный мир</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/zapadnyi-mir/" />
+        <note type="occurrences">страницы: 189; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-fa477e79-360b-51f4-afa2-75144035939f">
+        <placeName>Индия</placeName>
+        <idno type="wikidata">Q668</idno>
+        <idno type="VIAF">135375457</idno>
+        <idno type="GND">4026722-2</idno>
+        <idno type="geonames">1269750</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/indiya/" />
+        <note type="occurrences">страницы: 6, 112, 133, 134, 135, 136, 138, 139, 140, 142, 144, 146, 152, 153, 155, 156, 158, 160, 162, 167, 172, 173, 174, 180, 192, 203; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-66946002-6134-56fc-9126-bd9cbe7934f4">
+        <placeName>Индостан</placeName>
+        <idno type="wikidata">Q853968</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/indostan/" />
+        <note type="occurrences">страницы: 133, 152; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-ef67cea3-45e5-5afc-9faa-62fca9f25708">
+        <placeName>Ирак</placeName>
+        <idno type="wikidata">Q796</idno>
+        <idno type="VIAF">8055148947783454950004</idno>
+        <idno type="GND">4072920-5</idno>
+        <idno type="geonames">99237</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/irak/" />
+        <note type="occurrences">страницы: 192; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-8a39e323-c80f-51fe-86b5-036db4c01611">
+        <placeName>Иран</placeName>
+        <idno type="wikidata">Q794</idno>
+        <idno type="VIAF">149669363</idno>
+        <idno type="GND">4027653-3</idno>
+        <idno type="geonames">130758</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/iran/" />
+        <note type="occurrences">страницы: 135, 139; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-a1f35106-b1df-576f-b860-3e9c9a798fe0">
+        <placeName>Исландия</placeName>
+        <idno type="wikidata">Q189</idno>
+        <idno type="VIAF">133608068</idno>
+        <idno type="GND">4027754-9</idno>
+        <idno type="geonames">2629691</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/islandiya/" />
+        <note type="occurrences">страницы: 65, 182; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-1ec53bd1-e8a3-5ce6-9fd9-7af2ec643935">
+        <placeName>Испания</placeName>
+        <idno type="wikidata">Q29</idno>
+        <idno type="VIAF">133609710</idno>
+        <idno type="GND">4055964-6</idno>
+        <idno type="geonames">2510769</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/ispaniya/" />
+        <note type="occurrences">страницы: 184; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-f1336cd1-6b40-535e-8308-6aa3e5cf5ca5">
+        <placeName>Италия</placeName>
+        <idno type="wikidata">Q38</idno>
+        <idno type="VIAF">152361066</idno>
+        <idno type="GND">4027833-5</idno>
+        <idno type="geonames">3175395</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/italiya/" />
+        <note type="occurrences">страницы: 181, 184, 192, 300; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-5f1ad71b-a89b-55da-9d7f-1a53a9813c4a">
+        <placeName>Кавказ</placeName>
+        <idno type="wikidata">Q18869</idno>
+        <idno type="VIAF">255510449</idno>
+        <idno type="geonames">615318</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kavkaz/" />
+        <note type="occurrences">страницы: 135; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-0935829a-38e2-5fde-ad2c-a377427ea5ec">
+        <placeName>Киев</placeName>
+        <idno type="wikidata">Q1899</idno>
+        <idno type="VIAF">150028026</idno>
+        <idno type="GND">4030522-3</idno>
+        <idno type="geonames">703448</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kiev/" />
+        <note type="occurrences">страницы: 57, 179, 199; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-14109847-322c-5d0d-9585-edf11c03a03b">
+        <placeName>киевская земля</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kievskaya-zemlya/" />
+        <note type="occurrences">страницы: 200; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-6266dc05-ee33-52d0-8ea7-0cfc4d1723a9">
+        <placeName>Киевская область</placeName>
+        <idno type="wikidata">Q170036</idno>
+        <idno type="GND">4506824-0</idno>
+        <idno type="geonames">703446</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kievskaya-oblast/" />
+        <note type="occurrences">страницы: 57; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-b289c2b1-ac57-520c-b628-ab540ef679a7">
+        <placeName>киевско-черниговская зона</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kievsko-chernigovskaya-zona/" />
+        <note type="occurrences">страницы: 202; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-6fce1aa1-0589-5729-afdc-77d48623ac92">
+        <placeName>Кировская область</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kirovskaya-oblast/" />
+        <note type="occurrences">страницы: 199; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-9eb89019-65f3-5237-9eef-e80e559e5002">
+        <placeName>Китай</placeName>
+        <idno type="wikidata">Q148</idno>
+        <idno type="VIAF">132441531</idno>
+        <idno type="GND">4009937-4</idno>
+        <idno type="geonames">1814991</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kitai/" />
+        <note type="occurrences">страницы: 142; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-d5642c98-da61-5dd7-9921-e33a36e0bc49">
+        <placeName>Кольский полуостров</placeName>
+        <idno type="wikidata">Q165608</idno>
+        <idno type="VIAF">234164748</idno>
+        <idno type="GND">4098030-3</idno>
+        <idno type="geonames">546085</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kolskii-poluostrov/" />
+        <note type="occurrences">страницы: 199; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-1313d156-0ce7-5aae-a97b-0c6ca15ead99">
+        <placeName>Кордова</placeName>
+        <idno type="wikidata">Q5818</idno>
+        <idno type="VIAF">137098626</idno>
+        <idno type="GND">4010558-1</idno>
+        <idno type="geonames">6357216</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kordova/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-6f5f100d-6524-5264-98c8-7026a666e1c0">
+        <placeName>Крит</placeName>
+        <idno type="wikidata">Q34374</idno>
+        <idno type="VIAF">237254468</idno>
+        <idno type="GND">4073791-3</idno>
+        <idno type="geonames">258763</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/krit/" />
+        <note type="occurrences">страницы: 121, 122; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-d89b0747-7d7d-5230-be3d-29b85b7a54c0">
+        <placeName>критские города</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/kritskie-goroda/" />
+        <note type="occurrences">страницы: 121; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-59fdc30f-ae9e-5e7a-9372-07268da16491">
+        <placeName>Крым</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/krym/" />
+        <note type="occurrences">страницы: 184; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-3b56f03c-a94e-518c-8b65-c95ea64eccd2">
+        <placeName>Литва</placeName>
+        <idno type="wikidata">Q37</idno>
+        <idno type="VIAF">125422022</idno>
+        <idno type="GND">4074266-0</idno>
+        <idno type="geonames">597427</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/litva/" />
+        <note type="occurrences">страницы: 200; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-9ef4a94c-4b52-5a3b-95fc-1a0a5ba20e59">
+        <placeName>Литовское княжество Великое</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/litovskoe-knyazhestvo-velikoe/" />
+        <note type="occurrences">страницы: 200, 206; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-8a52c321-b90c-5915-b786-fb06d6b86971">
+        <placeName>Малая Азия</placeName>
+        <idno type="wikidata">Q12824780</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/malaya-aziya/" />
+        <note type="occurrences">страницы: 122; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-e9f56df4-3944-51d6-8e66-307100528ca8">
+        <placeName>Марокко</placeName>
+        <idno type="wikidata">Q1028</idno>
+        <idno type="VIAF">140638492</idno>
+        <idno type="GND">4037680-1</idno>
+        <idno type="geonames">2542007</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/marokko/" />
+        <note type="occurrences">страницы: 132, 192; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-826f7d2c-bb74-54e9-a8f6-b899311af6ee">
+        <placeName>Новгород</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/novgorod/" />
+        <note type="occurrences">страницы: 28, 57, 96, 179, 196, 198, 199, 208, 209, 236, 279, 294, 301, 306, 312, 314, 316, 319; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-e5428441-b01e-5f75-a7fa-aaacb109b030">
+        <placeName>Падуя</placeName>
+        <idno type="wikidata">Q617</idno>
+        <idno type="VIAF">137588063</idno>
+        <idno type="GND">4044295-0</idno>
+        <idno type="geonames">6542281</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/paduya/" />
+        <note type="occurrences">страницы: 247; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-0453e0cf-f2d3-5746-ac77-1146d7e21ffe">
+        <placeName>Пакистан</placeName>
+        <idno type="wikidata">Q843</idno>
+        <idno type="VIAF">268930849</idno>
+        <idno type="GND">4075812-6</idno>
+        <idno type="geonames">1168579</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/pakistan/" />
+        <note type="occurrences">страницы: 141; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-c78a86f8-bb8f-508a-beb9-392970cd8c7d">
+        <placeName>Палестина</placeName>
+        <idno type="wikidata">Q23792</idno>
+        <idno type="VIAF">138926424</idno>
+        <idno type="GND">4044381-4</idno>
+        <idno type="geonames">12047392</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/palestina/" />
+        <note type="occurrences">страницы: 121; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-ae01f000-8da2-5044-9af4-30dc84b7d1e0">
+        <placeName>Пелопоннес</placeName>
+        <idno type="wikidata">Q78967</idno>
+        <idno type="VIAF">234133404</idno>
+        <idno type="GND">4045064-8</idno>
+        <idno type="geonames">9062330</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/peloponnes/" />
+        <note type="occurrences">страницы: 122; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-12dc3746-56ef-5567-a689-7fd797869b7c">
+        <placeName>Переяславль</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/pereyaslavl/" />
+        <note type="occurrences">страницы: 57; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-38aaf6e5-132b-5f56-956d-78fc1c60664d">
+        <placeName>Переяславская область</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/pereyaslavskaya-oblast/" />
+        <note type="occurrences">страницы: 57; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-9077330a-7128-508f-b253-d9fbbac2681c">
+        <placeName>Пилос</placeName>
+        <idno type="wikidata">Q7263152</idno>
+        <idno type="VIAF">137309960</idno>
+        <idno type="GND">4103392-9</idno>
+        <idno type="geonames">255293</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/pilos/" />
+        <note type="occurrences">страницы: 122; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-5b0c67b8-0f9d-5f8c-8cbd-5d7b3d38299b">
+        <placeName>Пруссия</placeName>
+        <idno type="wikidata">Q38872</idno>
+        <idno type="VIAF">137143200</idno>
+        <idno type="GND">4047194-9</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/prussiya/" />
+        <note type="occurrences">страницы: 56, 57; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-35cf5915-4f58-5062-a9c5-b2d98919e15a">
+        <placeName>Псков</placeName>
+        <idno type="wikidata">Q2214</idno>
+        <idno type="VIAF">136053884</idno>
+        <idno type="GND">4046355-2</idno>
+        <idno type="geonames">504341</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/pskov/" />
+        <note type="occurrences">страницы: 198, 208; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-b7f944b8-8c74-5f30-898f-35173fb15a9e">
+        <placeName>псковская зона</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/pskovskaya-zona/" />
+        <note type="occurrences">страницы: 209; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-bf05209f-2ce0-5282-b5e0-97c3d6950fe1">
+        <placeName>Рим</placeName>
+        <idno type="wikidata">Q220</idno>
+        <idno type="VIAF">251380480</idno>
+        <idno type="GND">4050471-2</idno>
+        <idno type="geonames">3169070</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/rim/" />
+        <note type="occurrences">страницы: 248; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-12fea81a-8901-569d-8ff6-2323e25089d6">
+        <placeName>Римская империя</placeName>
+        <idno type="wikidata">Q2277</idno>
+        <idno type="VIAF">28145424500486830493</idno>
+        <idno type="geonames">8354456</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/rimskaya-imperiya/" />
+        <note type="occurrences">страницы: 60, 134; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-9340299e-4a45-593e-bb05-ca56b549cf6d">
+        <placeName>Римский мир</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/rimskii-mir/" />
+        <note type="occurrences">страницы: 115, 272; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-c6afccc0-5672-53c3-bc49-136f8e834ea8">
+        <placeName>Российская Федерация</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/rossiiskaya-federatsiya/" />
+        <note type="occurrences">страницы: 201; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-8907d119-bf7a-51eb-b5ec-f9935bef9939">
+        <placeName>Россия</placeName>
+        <idno type="wikidata">Q159</idno>
+        <idno type="VIAF">140306806</idno>
+        <idno type="GND">4076899-5</idno>
+        <idno type="geonames">2017370</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/rossiya/" />
+        <note type="occurrences">страницы: 57, 80, 135, 246, 328; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-ce79fde5-29ce-5f33-b928-ba936710e5b3">
+        <placeName>Ростов</placeName>
+        <idno type="wikidata">Q4398444</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/rostov/" />
+        <note type="occurrences">страницы: 152, 199, 200, 392; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-d5e2072b-a862-5d2c-b8a6-05e43a28a76f">
+        <placeName>ростово-суздальская земля</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/rostovo-suzdalskaya-zemlya/" />
+        <note type="occurrences">страницы: 201; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-0a8d96ed-156b-55a3-8097-250bfe4a36ad">
+        <placeName>ростовско-суздальско- рязанская языковая зона</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/rostovsko-suzdalsko-ryazanskaya-yazykovaya-zona/" />
+        <note type="occurrences">страницы: 202; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-e2d4b047-fa05-531f-99c6-2e0ddcfd7bdc">
+        <placeName>Русколань</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/ruskolan/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-7c15526f-b19c-5577-830b-70df666df2e4">
+        <placeName>русские края</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/russkie-kraya/" />
+        <note type="occurrences">страницы: 186; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-e2aebd54-40f1-5284-bf45-87b0018f28d4">
+        <placeName>Русь [древняя]</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/rus-drevnyaya/" />
+        <note type="occurrences">страницы: 8, 57, 96, 178, 196, 197, 199, 279; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-61bc11cc-84cc-5d36-8b8a-aacb6976d240">
+        <placeName>север [Руси]</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/sever-rusi/" />
+        <note type="occurrences">страницы: 200; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-9d78577f-8da2-5b90-acfd-1cbb49e4f3f9">
+        <placeName>Северный Урал</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/severnyi-ural/" />
+        <note type="occurrences">страницы: 200; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-9a9680ed-6f77-53a9-be8c-3bad5df0ef9c">
+        <placeName>северо-запад [Руси]</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/severo-zapad-rusi/" />
+        <note type="occurrences">страницы: 199, 200, 202, 203; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-97a8b855-c040-52de-8e74-d9ac55617da9">
+        <placeName>Синдху</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/sindkhu/" />
+        <note type="occurrences">страницы: 141; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-995f000d-55b6-5052-9571-2fa37ae0cdfc">
+        <placeName>Средняя Азия</placeName>
+        <idno type="wikidata">Q1211919</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/srednyaya-aziya/" />
+        <note type="occurrences">страницы: 186; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-345175d3-150a-573e-a4e7-ebc6c9a2522f">
+        <placeName>Суздаль</placeName>
+        <idno type="wikidata">Q15757</idno>
+        <idno type="VIAF">141915943</idno>
+        <idno type="GND">4078090-9</idno>
+        <idno type="geonames">485824</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/suzdal/" />
+        <note type="occurrences">страницы: 199, 200, 313; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-56cb6402-810e-5aaa-9680-234a69b77c98">
+        <placeName>Украина</placeName>
+        <idno type="wikidata">Q212</idno>
+        <idno type="VIAF">134334037</idno>
+        <idno type="GND">4061496-7</idno>
+        <idno type="geonames">690791</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/ukraina/" />
+        <note type="occurrences">страницы: 57, 179, 184, 196, 200, 201, 203, 206; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-8a8211f3-d4c0-588c-a940-3f24901950b3">
+        <placeName>Фессалоники (Салоники)</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/fessaloniki-saloniki/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-e6e25995-353f-593a-a57b-16ea2cf6fc8d">
+        <placeName>Фест</placeName>
+        <idno type="wikidata">Q249707</idno>
+        <idno type="VIAF">315170181</idno>
+        <idno type="GND">4196656-9</idno>
+        <idno type="geonames">262531</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/fest/" />
+        <note type="occurrences">страницы: 122; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-457ed99f-9f87-5e9d-8f42-b1de4e086cc4">
+        <placeName>Финляндия</placeName>
+        <idno type="wikidata">Q33</idno>
+        <idno type="VIAF">132440532</idno>
+        <idno type="GND">4017243-0</idno>
+        <idno type="geonames">660013</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/finlyandiya/" />
+        <note type="occurrences">страницы: 135; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-8f8654be-bd11-51c3-8ca5-42b045b6327b">
+        <placeName>Флоренция</placeName>
+        <idno type="wikidata">Q2044</idno>
+        <idno type="VIAF">152981965</idno>
+        <idno type="GND">4017581-9</idno>
+        <idno type="geonames">6542285</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/florentsiya/" />
+        <note type="occurrences">страницы: 192; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-43681055-4246-5ce5-800c-694b4692e6b6">
+        <placeName>Франкфурт</placeName>
+        <idno type="wikidata">Q286577</idno>
+        <idno type="VIAF">139024269</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/frankfurt/" />
+        <note type="occurrences">страницы: 56; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-eff28ce8-01b5-5223-9774-f6358cb8b789">
+        <placeName>Франция</placeName>
+        <idno type="wikidata">Q142</idno>
+        <idno type="VIAF">264091107</idno>
+        <idno type="GND">4018145-5</idno>
+        <idno type="geonames">3017382</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/frantsiya/" />
+        <note type="occurrences">страницы: 56, 57, 68, 115, 184; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-e5e5371c-2bce-5725-aa33-d18d57ff27da">
+        <placeName>Цейлон</placeName>
+        <idno type="wikidata">Q2670092</idno>
+        <idno type="VIAF">137707668</idno>
+        <idno type="GND">19826-2</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/tseilon/" />
+        <note type="occurrences">страницы: 174; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-52597d61-c669-52a8-9a66-5176d62a7256">
+        <placeName>Центральная Африка</placeName>
+        <idno type="wikidata">Q27433</idno>
+        <idno type="GND">4079485-4</idno>
+        <idno type="geonames">7729886</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/tsentralnaya-afrika/" />
+        <note type="occurrences">страницы: 89; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-c1cf9e72-5f87-5340-b775-b305e3eda52d">
+        <placeName>Центральная часть [Руси]</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/tsentralnaya-chast-rusi/" />
+        <note type="occurrences">страницы: 199; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-af9cd53a-405f-51ac-8f58-2a77c71aeb76">
+        <placeName>Чернигов</placeName>
+        <idno type="wikidata">Q157053</idno>
+        <idno type="VIAF">235578017</idno>
+        <idno type="GND">4245594-7</idno>
+        <idno type="geonames">710735</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/chernigov/" />
+        <note type="occurrences">страницы: 57, 179; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-e7b8b443-e7b3-561d-8834-3b91db9fe923">
+        <placeName>Швеция</placeName>
+        <idno type="wikidata">Q34</idno>
+        <idno type="VIAF">159364209</idno>
+        <idno type="GND">4077258-5</idno>
+        <idno type="geonames">2661886</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/shvetsiya/" />
+        <note type="occurrences">страницы: 58, 248, 269; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-8e309e7d-112e-5b37-8c94-c11d4f2b12a7">
+        <placeName>Шлиссельбург</placeName>
+        <idno type="wikidata">Q15339</idno>
+        <idno type="VIAF">135017066</idno>
+        <idno type="GND">4287460-9</idno>
+        <idno type="geonames">493970</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/shlisselburg/" />
+        <note type="occurrences">страницы: 269; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-141c1b65-cbac-5eb7-b4e7-ec8c7eb906e8">
+        <placeName>Шри-Ланка</placeName>
+        <idno type="wikidata">Q854</idno>
+        <idno type="VIAF">126600002</idno>
+        <idno type="GND">4009696-8</idno>
+        <idno type="geonames">1227603</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/shri-lanka/" />
+        <note type="occurrences">страницы: 173; источники: mumintroll</note>
+      </place>
+      <place xml:id="toponyms-7a7e26eb-b198-5e11-9278-e80dfc59be94">
+        <placeName>Южный Переславль</placeName>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/yuzhnyi-pereslavl/" />
+        <note type="occurrences">страницы: 179; источники: mumintroll</note>
+      </place>
+    </listPlace>
+    <listNym>
+      <nym xml:id="ethnonyms-331aef31-e26e-5cee-bd52-72f12cc36558">
+        <form>австралийские аборигены</form>
+        <idno type="wikidata">Q12060728</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/avstraliiskie-aborigeny/" />
+        <note type="occurrences">страницы: 130; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-3c587df2-5be9-5ac1-8b35-3ad99c789be3">
+        <form>англичане</form>
+        <idno type="wikidata">Q42406</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/anglichane/" />
+        <note type="occurrences">страницы: 83, 84, 94, 147, 172, 173, 296; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-20b71ddc-dc08-5442-b73b-0862e320bb3f">
+        <form>арабы</form>
+        <idno type="wikidata">Q35323</idno>
+        <idno type="GND">4002528-7</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/araby/" />
+        <note type="occurrences">страницы: 58, 168, 211, 213, 220, 222, 223, 229, 296; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-1daa0566-129e-5f06-b65b-89d8c8fa3052">
+        <form>арии</form>
+        <idno type="wikidata">Q179733</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/arii/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-5a3ff469-5a7f-5a62-a92b-77920180d197">
+        <form>баски</form>
+        <idno type="wikidata">Q126756</idno>
+        <idno type="GND">4004644-8</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/baski/" />
+        <note type="occurrences">страницы: 135; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-347170ea-d970-5897-8195-7768d84558bd">
+        <form>белорусы</form>
+        <idno type="wikidata">Q483569</idno>
+        <idno type="GND">4119038-5</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/belorusy/" />
+        <note type="occurrences">страницы: 204, 206; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-ac87e08c-8f1c-5096-a020-b690641901dd">
+        <form>болгары</form>
+        <idno type="wikidata">Q133255</idno>
+        <idno type="GND">4088623-2</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/bolgary/" />
+        <note type="occurrences">страницы: 199; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-fb1b7a4f-8e19-5a66-9d15-037b7886244c">
+        <form>варяги</form>
+        <idno type="wikidata">Q48343</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/varyagi/" />
+        <note type="occurrences">страницы: 57, 178; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-b99aeffc-e8a2-5c59-a6c5-3e93d367eba9">
+        <form>венгры</form>
+        <idno type="wikidata">Q133032</idno>
+        <idno type="GND">4100008-0</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/vengry/" />
+        <note type="occurrences">страницы: 27; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-27d63ce6-1510-5e1c-adab-17b7a59c86fa">
+        <form>венеты</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/venety/" />
+        <note type="occurrences">страницы: 61; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-b42b46ae-511a-5ab0-8cf1-4e03d806b16a">
+        <form>вентичи</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/ventichi/" />
+        <note type="occurrences">страницы: 62; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-0f38bfd8-76a5-5e83-8aeb-48bf8afbb71c">
+        <form>вологодские</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/vologodskie/" />
+        <note type="occurrences">страницы: 204; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-91ae8459-57a6-5ccf-9240-a0906d8329d0">
+        <form>вятичи</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/vyatichi/" />
+        <note type="occurrences">страницы: 62; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-512a4aeb-b730-5d0d-b97d-422eb377d967">
+        <form>германцы</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/germantsy/" />
+        <note type="occurrences">страницы: 56, 59, 60, 184; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-a7241f76-df65-58ec-9602-62eb99f8bc5e">
+        <form>готы</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/goty/" />
+        <note type="occurrences">страницы: 184; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-7f8a4c21-ed22-5505-8d2f-c2854d649827">
+        <form>греки</form>
+        <idno type="wikidata">Q539051</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/greki/" />
+        <note type="occurrences">страницы: 141; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-5b1fae7d-febf-56ac-8a7d-d8e8fa1a4035">
+        <form>дасью</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/dasyu/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-f1846507-a3af-5e82-83f2-de3cbe7755ef">
+        <form>датчане</form>
+        <idno type="wikidata">Q164714</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/datchane/" />
+        <note type="occurrences">страницы: 59, 60; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-bc89eb4b-e856-5e7a-93a1-8a6d652ec7cc">
+        <form>европейцы</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/evropeitsy/" />
+        <note type="occurrences">страницы: 135, 145, 146; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-34ae4ea2-b665-5701-ae59-d5a4a1e73f27">
+        <form>индийцы</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/indiitsy/" />
+        <note type="occurrences">страницы: 136, 155, 167, 169, 173, 204; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-29665da3-2252-5716-957b-7e244e060e79">
+        <form>индийцы древние</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/indiitsy-drevnie/" />
+        <note type="occurrences">страницы: 147; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-91808446-c9ca-553e-b44a-d5f8548a23e5">
+        <form>индийцы современные</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/indiitsy-sovremennye/" />
+        <note type="occurrences">страницы: 145; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-f20950a5-b37b-581b-99d4-ba0d237f49e6">
+        <form>индоевропейцы</form>
+        <idno type="wikidata">Q475027</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/indoevropeitsy/" />
+        <note type="occurrences">страницы: 136, 137; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-43bf9c25-6fe3-5a89-befd-8b00c81473b5">
+        <form>кривичи</form>
+        <idno type="wikidata">Q48287</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/krivichi/" />
+        <note type="occurrences">страницы: 61; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-82882a85-0a1e-53e6-8120-3c01ce8de30a">
+        <form>кривичи древние</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/krivichi-drevnie/" />
+        <note type="occurrences">страницы: 61; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-102bab3d-c208-5b58-80aa-abfc258cd982">
+        <form>Крита население древнейшее</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/krita-naselenie-drevneishee/" />
+        <note type="occurrences">страницы: 121; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-d389b95e-6646-5521-912e-9b933c416da2">
+        <form>критяне древние</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/krityane-drevnie/" />
+        <note type="occurrences">страницы: 62; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-b19661c0-81e1-596f-b61c-6a1e91830d2c">
+        <form>кроманьонцы</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/kromanontsy/" />
+        <note type="occurrences">страницы: 90; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-bc6d6c06-0856-5dd3-9cc2-fc5b774a9b69">
+        <form>латыши</form>
+        <idno type="wikidata">Q49540</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/latyshi/" />
+        <note type="occurrences">страницы: 61, 146; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-db501ae5-a623-5948-993f-f342588ca1a9">
+        <form>латыши древние</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/latyshi-drevnie/" />
+        <note type="occurrences">страницы: 61; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-432cf338-3244-5d00-9aa5-1fbc805e37d2">
+        <form>литовцы</form>
+        <idno type="wikidata">Q186192</idno>
+        <idno type="GND">4035937-2</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/litovtsy/" />
+        <note type="occurrences">страницы: 56, 65, 206; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-6a4d64f0-af4b-525a-91a2-d4f02dc55963">
+        <form>немецкий народ</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/nemetskii-narod/" />
+        <note type="occurrences">страницы: 58; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-cf03b170-d588-5948-b3dd-ec60ada77cdc">
+        <form>немцы</form>
+        <idno type="wikidata">Q42884</idno>
+        <idno type="GND">4070334-4</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/nemtsy/" />
+        <note type="occurrences">страницы: 59, 61; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-13336e55-5855-54c7-bf66-36cc91df9cdb">
+        <form>новгородцы</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/novgorodtsy/" />
+        <note type="occurrences">страницы: 57, 179, 200, 204, 310, 311, 314; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-884a20f0-ed3d-5758-85da-3bc46a6deccc">
+        <form>новгорожане</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/novgorozhane/" />
+        <note type="occurrences">страницы: 310; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-3999e68b-3b38-5c68-a0af-fc5c40f7fba0">
+        <form>норвежцы</form>
+        <idno type="wikidata">Q188779</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/norvezhtsy/" />
+        <note type="occurrences">страницы: 59, 82; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-4c480d52-5c52-54e2-9d55-4a15fc21a9dc">
+        <form>норманны</form>
+        <idno type="wikidata">Q83418</idno>
+        <idno type="GND">4042620-8</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/normanny/" />
+        <note type="occurrences">страницы: 82, 178; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-b6a4a12f-d2b0-5309-ba6f-3022868a4a70">
+        <form>ордынцы</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/ordyntsy/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-f8cc5e9b-17a0-570c-9b67-10866c3cfee3">
+        <form>папуасы</form>
+        <idno type="wikidata">Q424129</idno>
+        <idno type="GND">4044567-7</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/papuasy/" />
+        <note type="occurrences">страницы: 90, 130; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-f9febee2-5102-5b95-9c24-33004bc97f47">
+        <form>печенеги</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/pechenegi/" />
+        <note type="occurrences">страницы: 187; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-4db8d17b-8103-564b-ada5-a318b0847fe3">
+        <form>половцы</form>
+        <idno type="wikidata">Q1035516</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/polovtsy/" />
+        <note type="occurrences">страницы: 186; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-9b4a6578-33cb-50ff-a553-b726f3c053dc">
+        <form>поляки</form>
+        <idno type="wikidata">Q1026</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/polyaki/" />
+        <note type="occurrences">страницы: 199; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-e13a484e-99da-5bf6-a1d5-3c8b40c5c50d">
+        <form>прусы</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/prusy/" />
+        <note type="occurrences">страницы: 56; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-c1ddbcc5-aa0a-59a1-a0ef-763c16e501b0">
+        <form>псковские</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/pskovskie/" />
+        <note type="occurrences">страницы: 204; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-bdb07aac-0107-5710-b6ec-0e721ed69ab3">
+        <form>римляне</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/rimlyane/" />
+        <note type="occurrences">страницы: 56, 60, 134; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-8b058ad1-4ae3-5dd9-a601-eb3596df6dab">
+        <form>русские</form>
+        <idno type="wikidata">Q49542</idno>
+        <idno type="GND">4051034-7</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/russkie/" />
+        <note type="occurrences">страницы: 55, 57, 60, 63, 145, 147, 179, 238, 241; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-d9121daa-9860-571c-9988-41aef5098062">
+        <form>русские vs. венеты</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/russkie-vs-venety/" />
+        <note type="occurrences">страницы: 61; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-9633a752-29b7-5b82-abbd-27421027f3f2">
+        <form>русские нынешние</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/russkie-nyneshnie/" />
+        <note type="occurrences">страницы: 178; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-b77048c5-af67-5f3f-8ec4-7329e37b7fcc">
+        <form>русский [люди]</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/russkii-lyudi/" />
+        <note type="occurrences">страницы: 328; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-8f4a40bf-98f6-52a0-815f-691fdb3bb744">
+        <form>русский [человек]</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/russkii-chelovek/" />
+        <note type="occurrences">страницы: 146, 151, 172, 238, 239; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-50034c45-bc97-50d3-b353-ba59adc54c95">
+        <form>русы (русские)</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/rusy-russkie/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-7cd560ea-92f3-5a28-b8c3-401d61b36abf">
+        <form>сербы</form>
+        <idno type="wikidata">Q127885</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/serby/" />
+        <note type="occurrences">страницы: 199; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-be153ad9-02e1-5aa0-9c12-94558f913aba">
+        <form>скифы</form>
+        <idno type="wikidata">Q131802</idno>
+        <idno type="GND">4055278-0</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/skify/" />
+        <note type="occurrences">страницы: 52; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-38043cab-760e-5e0d-a16a-4c5e28fddbd0">
+        <form>славяне</form>
+        <idno type="wikidata">Q40477</idno>
+        <idno type="GND">4077491-0</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/slavyane/" />
+        <note type="occurrences">страницы: 57, 60, 84, 145; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-3c27cb9c-76df-5bb4-a024-93439eea5e49">
+        <form>славяне восточные</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/slavyane-vostochnye/" />
+        <note type="occurrences">страницы: 200; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-fb35e2cb-fcf8-5782-9439-22fc03f3f885">
+        <form>славяне древние</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/slavyane-drevnie/" />
+        <note type="occurrences">страницы: 200; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-ecc6ddc6-4678-5e9f-aa15-01c278af88fc">
+        <form>татары</form>
+        <idno type="wikidata">Q35565</idno>
+        <idno type="GND">4078164-1</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/tatary/" />
+        <note type="occurrences">страницы: 204; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-24d0aba4-a868-53d9-8ebb-0c3b15dfbfc6">
+        <form>украинцы</form>
+        <idno type="wikidata">Q44806</idno>
+        <idno type="GND">4061497-9</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/ukraintsy/" />
+        <note type="occurrences">страницы: 206; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-fbbe25a5-e622-5bad-8f00-b08615659537">
+        <form>финны</form>
+        <idno type="wikidata">Q170284</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/finny/" />
+        <note type="occurrences">страницы: 59, 61, 62, 190; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-d045bd92-e47d-5e30-9e9e-9d4474527a29">
+        <form>франки</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/franki/" />
+        <note type="occurrences">страницы: 56, 57; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-3ba84ede-0939-5b2a-96a4-7d3864b4825e">
+        <form>французский народ</form>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/frantsuzskii-narod/" />
+        <note type="occurrences">страницы: 58; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-259f076f-edb8-5719-b981-888048a77141">
+        <form>французы</form>
+        <idno type="wikidata">Q120068720</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/frantsuzy/" />
+        <note type="occurrences">страницы: 56, 58, 60, 64, 82, 84, 125, 147, 204, 238, 296; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-b51fb8e2-8e99-56b0-91c8-f4e478bc6cf9">
+        <form>хазары</form>
+        <idno type="wikidata">Q173282</idno>
+        <idno type="GND">4009796-1</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/khazary/" />
+        <note type="occurrences">источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-6d177f65-9b59-588a-8251-afd848b3d800">
+        <form>чехи</form>
+        <idno type="wikidata">Q170217</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/chekhi/" />
+        <note type="occurrences">страницы: 146, 199; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-eac1d201-3d62-56fe-b0e6-56c6ac76e9b3">
+        <form>швабы</form>
+        <idno type="wikidata">Q1970302</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/shvaby/" />
+        <note type="occurrences">страницы: 58; источники: mumintroll</note>
+      </nym>
+      <nym xml:id="ethnonyms-c523ab0f-0015-5653-af67-2dea9c9537de">
+        <form>шведы</form>
+        <idno type="wikidata">Q165192</idno>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/ethnonyms/list/item/ethnonyms/shvedy/" />
+        <note type="occurrences">страницы: 59, 190; источники: mumintroll</note>
+      </nym>
+    </listNym>
+    <list type="language">
+      <item xml:id="languages-f00c559b-42f1-56f5-bf5e-a4cd95b4bf29">
+        <name type="language">австралийские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/avstraliiskie/" />
+      </item>
+      <item xml:id="languages-b8bbc2b1-c925-5a7a-87a6-e76d9258fe23">
+        <name type="language">албанский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/albanskii/" />
+      </item>
+      <item xml:id="languages-d33655c4-c735-5c2c-9923-7e57ff7f5a0a">
+        <name type="language">английский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/angliiskii/" />
+      </item>
+      <item xml:id="languages-3fc528ab-be13-52bb-8902-4881969a037b">
+        <name type="language">Английский язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/angliiskii-yazyk/" />
+      </item>
+      <item xml:id="languages-5225896b-904f-5eed-937f-47532361c2c2">
+        <name type="language">арабский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/arabskii/" />
+      </item>
+      <item xml:id="languages-18cf5b1d-d004-525b-ba1d-5369612101fe">
+        <name type="language">арабско-персидский [слово]</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/arabsko-persidskii-slovo/" />
+      </item>
+      <item xml:id="languages-2d94d19d-3eb3-5f05-b4f8-2dc633a9db23">
+        <name type="language">арамейский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/arameiskii/" />
+      </item>
+      <item xml:id="languages-f3546bca-34ca-5c24-b11b-9b243a4473dd">
+        <name type="language">армянский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/armyanskii/" />
+      </item>
+      <item xml:id="languages-1859ba72-a60e-5340-b3a1-3b656894bcd0">
+        <name type="language">архангельский говор</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/arkhangelskii-govor/" />
+      </item>
+      <item xml:id="languages-7041cd60-63dd-590a-917f-cdc3f95df006">
+        <name type="language">балтийские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/baltiiskie/" />
+      </item>
+      <item xml:id="languages-0814a442-559e-5740-ae15-91174ebaa68a">
+        <name type="language">балто-славянские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/balto-slavyanskie/" />
+      </item>
+      <item xml:id="languages-8748d830-d9f1-5765-937c-81ba57e80c8f">
+        <name type="language">баскский*</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/baskskii/" />
+      </item>
+      <item xml:id="languages-1ffb4bad-a535-5be2-a809-8d8c15052964">
+        <name type="language">башкирский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/bashkirskii/" />
+      </item>
+      <item xml:id="languages-370b121b-1835-5ba4-9c88-ea74d8f285df">
+        <name type="language">белорусский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/belorusskii/" />
+      </item>
+      <item xml:id="languages-b6b21428-b9d3-5e48-8bae-23b938a1886b">
+        <name type="language">библейский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/bibleiskii/" />
+      </item>
+      <item xml:id="languages-492b1743-d397-51bf-b76b-3416329840a9">
+        <name type="language">болгарский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/bolgarskii/" />
+      </item>
+      <item xml:id="languages-e4530aa5-2cec-5418-8ea1-e7da5b48afeb">
+        <name type="language">варягов язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/varyagov-yazyk/" />
+      </item>
+      <item xml:id="languages-38614e12-049e-5874-a63f-8983766b38d8">
+        <name type="language">вологодские говоры</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/vologodskie-govory/" />
+      </item>
+      <item xml:id="languages-c801e92f-556b-582e-87e6-50198f748909">
+        <name type="language">восточнославянские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/vostochnoslavyanskie/" />
+      </item>
+      <item xml:id="languages-fbcc7b4e-4eb0-556f-b61d-b887205666aa">
+        <name type="language">восточные</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/vostochnye/" />
+      </item>
+      <item xml:id="languages-c064dcb6-b2c3-5734-9a3a-36610c299331">
+        <name type="language">галльско-романские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/gallsko-romanskie/" />
+      </item>
+      <item xml:id="languages-e870a7ad-969e-59b1-871a-89a5db78b0e7">
+        <name type="language">германские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/germanskie/" />
+      </item>
+      <item xml:id="languages-86d1ccf1-86a3-53f2-8792-9d24fffcf970">
+        <name type="language">голландский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/gollandskii/" />
+      </item>
+      <item xml:id="languages-cf2e0082-ff1a-52da-9748-ef32ae7e8704">
+        <name type="language">готский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/gotskii/" />
+      </item>
+      <item xml:id="languages-c3da757f-26c4-503b-ac49-a7c5464582d9">
+        <name type="language">греческий</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/grecheskii/" />
+      </item>
+      <item xml:id="languages-68170b69-81a1-5928-b6d7-04521d1e8afc">
+        <name type="language">грузинский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/gruzinskii/" />
+      </item>
+      <item xml:id="languages-17515efe-71ce-562a-9660-f7965b489a94">
+        <name type="language">датский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/datskii/" />
+      </item>
+      <item xml:id="languages-25136a33-3297-5c13-bb37-766bd334631e">
+        <name type="language">дравидские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/dravidskie/" />
+      </item>
+      <item xml:id="languages-28d7d7e2-91df-55b8-b243-50bf26ec2187">
+        <name type="language">древнеанглийский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevneangliiskii/" />
+      </item>
+      <item xml:id="languages-be1d5d6c-3d37-5b47-b133-6353e14937df">
+        <name type="language">древнеарабский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevnearabskii/" />
+      </item>
+      <item xml:id="languages-91ad855e-8454-5c98-99eb-448a920d10fc">
+        <name type="language">древнеболгарский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevnebolgarskii/" />
+      </item>
+      <item xml:id="languages-4b0ed3c7-c670-5002-96f6-79d269875e17">
+        <name type="language">древневерхненемецкий</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevneverkhnenemetskii/" />
+      </item>
+      <item xml:id="languages-8b1910bd-bf87-524b-b40e-3f5e1bdcbdc6">
+        <name type="language">древнегерманские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevnegermanskie/" />
+      </item>
+      <item xml:id="languages-cdb42c19-b361-5b57-b728-b9c72eadb69f">
+        <name type="language">древнегреческий</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevnegrecheskii/" />
+      </item>
+      <item xml:id="languages-893a1b49-8b36-5a94-9cb5-f4177598970d">
+        <name type="language">древнеегипетский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevneegipetskii/" />
+      </item>
+      <item xml:id="languages-c6205426-0128-521f-b405-2cbc1c415051">
+        <name type="language">древнеиндийские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevneindiiskie/" />
+      </item>
+      <item xml:id="languages-a0a3ffb6-7362-5002-901c-f8ddf6095f1c">
+        <name type="language">древненовгородский диалект</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevnenovgorodskii-dialekt/" />
+      </item>
+      <item xml:id="languages-661a85e2-596f-598e-8c2b-6ebf52ea6b32">
+        <name type="language">древнеперсидский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevnepersidskii/" />
+      </item>
+      <item xml:id="languages-acbf7f43-46d4-568a-a935-6fa7140a3504">
+        <name type="language">древнепрусский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevneprusskii/" />
+      </item>
+      <item xml:id="languages-985fd59d-317c-515b-972f-06c4552c7887">
+        <name type="language">древнерусский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevnerusskii/" />
+      </item>
+      <item xml:id="languages-408adeb2-c534-5790-91c9-07e0c4ece8a1">
+        <name type="language">древнескандинавские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevneskandinavskie/" />
+      </item>
+      <item xml:id="languages-1c0160e5-d564-5018-98d5-abd150fa0371">
+        <name type="language">древнеукраинский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/drevneukrainskii/" />
+      </item>
+      <item xml:id="languages-d9890de7-29d9-57a0-b418-f5d568c95afb">
+        <name type="language">европейские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/evropeiskie/" />
+      </item>
+      <item xml:id="languages-b6580aed-d3b7-597a-8f15-97b78fceb87c">
+        <name type="language">египетский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/egipetskii/" />
+      </item>
+      <item xml:id="languages-9ec580ba-2741-5545-a024-0a0d6e26193c">
+        <name type="language">западногерманские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/zapadnogermanskie/" />
+      </item>
+      <item xml:id="languages-321d8f38-e636-5f8b-9baa-12a62dc8a600">
+        <name type="language">западноевропейские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/zapadnoevropeiskie/" />
+      </item>
+      <item xml:id="languages-72e55ad1-4899-5a8b-aa1c-2e1cea97bd53">
+        <name type="language">западнороманские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/zapadnoromanskie/" />
+      </item>
+      <item xml:id="languages-c380d0b2-ec14-54bf-aa6d-9de51fdf2e30">
+        <name type="language">западнорусский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/zapadnorusskii/" />
+      </item>
+      <item xml:id="languages-925b1848-3c42-5242-91e5-540d7c8f6d1d">
+        <name type="language">западнославянские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/zapadnoslavyanskie/" />
+      </item>
+      <item xml:id="languages-6aa71e05-3227-56d9-ad52-0be2310e4cbf">
+        <name type="language">западные языки</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/zapadnye-yazyki/" />
+      </item>
+      <item xml:id="languages-d5fd96ad-b5e7-5915-928b-a1e13579414d">
+        <name type="language">иврит</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/ivrit/" />
+      </item>
+      <item xml:id="languages-983bb44d-7b0c-59d3-be15-77d690c618f0">
+        <name type="language">индийские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/indiiskie/" />
+      </item>
+      <item xml:id="languages-feb03b56-8d40-5ee7-88e7-8bcf3a1f83c2">
+        <name type="language">индоевропейские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/indoevropeiskie/" />
+      </item>
+      <item xml:id="languages-e1224006-3897-5e49-8232-41f92a275e85">
+        <name type="language">индоиранские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/indoiranskie/" />
+      </item>
+      <item xml:id="languages-56f655e8-9135-5ae7-b53c-328b2d21721c">
+        <name type="language">иранские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/iranskie/" />
+      </item>
+      <item xml:id="languages-777d6061-0ab0-53af-bd63-16d10608c440">
+        <name type="language">исландский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/islandskii/" />
+      </item>
+      <item xml:id="languages-fdd6a013-d6b3-5288-9471-c878e5324f95">
+        <name type="language">испанский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/ispanskii/" />
+      </item>
+      <item xml:id="languages-81b90f1b-04ee-556d-a9a9-d68253066ae9">
+        <name type="language">Испанский язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/ispanskii-yazyk/" />
+      </item>
+      <item xml:id="languages-efb108c1-0033-5f26-88bb-1408e75f64e8">
+        <name type="language">итальянский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/italyanskii/" />
+      </item>
+      <item xml:id="languages-e4137f36-4d78-51a0-aaaf-61827497ca5f">
+        <name type="language">китайский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/kitaiskii/" />
+      </item>
+      <item xml:id="languages-78310160-98e4-5e45-8c13-22b01ed3e693">
+        <name type="language">коптский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/koptskii/" />
+      </item>
+      <item xml:id="languages-d43c00ac-336e-5737-8922-031e5e71ec88">
+        <name type="language">крымско-готский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/krymsko-gotskii/" />
+      </item>
+      <item xml:id="languages-f5e26a92-be80-54ba-b868-7a9435af9c74">
+        <name type="language">курский говор</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/kurskii-govor/" />
+      </item>
+      <item xml:id="languages-0ef837bf-6f2d-5c65-a690-1ffbb9fdbc09">
+        <name type="language">кыпчакский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/kypchakskii/" />
+      </item>
+      <item xml:id="languages-5a7821fa-9191-5d05-912b-185cb2a26eac">
+        <name type="language">латинский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/latinskii/" />
+      </item>
+      <item xml:id="languages-5ee78c22-546e-545d-809d-952741393994">
+        <name type="language">латынь</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/latyn/" />
+      </item>
+      <item xml:id="languages-819e82fb-4f0f-570d-8691-beb8abb5f5cf">
+        <name type="language">Латынь</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/latyn-2/" />
+      </item>
+      <item xml:id="languages-c85216ed-af4c-5f28-adfd-e84d77a09a83">
+        <name type="language">латышский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/latyshskii/" />
+      </item>
+      <item xml:id="languages-c3325444-0a4a-57d4-8029-9a774323c622">
+        <name type="language">литовский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/litovskii/" />
+      </item>
+      <item xml:id="languages-259ce2e5-72c5-5b83-97f2-d7e273af0ab0">
+        <name type="language">лужицкие</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/luzhitskie/" />
+      </item>
+      <item xml:id="languages-a2098443-efad-50d9-8b84-c3ace806aced">
+        <name type="language">македонский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/makedonskii/" />
+      </item>
+      <item xml:id="languages-6090fd2f-d36f-57ac-96cc-329f280fca93">
+        <name type="language">маори</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/maori/" />
+      </item>
+      <item xml:id="languages-1a08738b-740e-57af-9430-521d448befaf">
+        <name type="language">немецкий</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/nemetskii/" />
+      </item>
+      <item xml:id="languages-985bff8f-308e-5781-8a15-86616e9b2c6a">
+        <name type="language">Немецкий язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/nemetskii-yazyk/" />
+      </item>
+      <item xml:id="languages-abb7e9ea-9469-5e17-9793-2636fd65b0ea">
+        <name type="language">новгородский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/novgorodskii/" />
+      </item>
+      <item xml:id="languages-91f9e9ca-0169-5cda-a57b-bedd38a92264">
+        <name type="language">новгородско-псковский диалект</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/novgorodsko-pskovskii-dialekt/" />
+      </item>
+      <item xml:id="languages-c27d8274-b825-50fe-bdaf-6decfb1693f3">
+        <name type="language">новогреческий</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/novogrecheskii/" />
+      </item>
+      <item xml:id="languages-5fd5e09a-dd49-5b23-808c-6dcf31dfd026">
+        <name type="language">новозеландский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/novozelandskii/" />
+      </item>
+      <item xml:id="languages-65d92f25-e2a0-5f7c-9a68-7d8259d3768b">
+        <name type="language">новоиндийские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/novoindiiskie/" />
+      </item>
+      <item xml:id="languages-b08af3ee-bfa2-53ac-92ca-3d0ffec03386">
+        <name type="language">норвежский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/norvezhskii/" />
+      </item>
+      <item xml:id="languages-06d151d2-14f2-5cde-81da-50bb7804934b">
+        <name type="language">ностратические</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/nostraticheskie/" />
+      </item>
+      <item xml:id="languages-9fec3529-7194-59e5-9eaf-16df069ab3f1">
+        <name type="language">пали</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/pali/" />
+      </item>
+      <item xml:id="languages-15f473e2-8c63-53a4-b3e6-2e2de127747e">
+        <name type="language">папуасский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/papuasskii/" />
+      </item>
+      <item xml:id="languages-2b41131d-69cf-577d-b4fb-972c5cf80905">
+        <name type="language">персидский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/persidskii/" />
+      </item>
+      <item xml:id="languages-df257d12-8f9e-546c-a0d6-4c4e4fa03788">
+        <name type="language">позднелатинский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/pozdnelatinskii/" />
+      </item>
+      <item xml:id="languages-2fcafebe-e4de-59d3-93c5-8430b98fc65b">
+        <name type="language">половцев язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/polovtsev-yazyk/" />
+      </item>
+      <item xml:id="languages-79f83b48-6088-5c22-a223-f049ed2cfdc3">
+        <name type="language">польский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/polskii/" />
+      </item>
+      <item xml:id="languages-56fbbfc5-5af1-52bd-87b1-632cd6c94a5b">
+        <name type="language">Польский язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/polskii-yazyk/" />
+      </item>
+      <item xml:id="languages-2ca73d0b-a52d-50e3-bf37-7d8d7a7cd722">
+        <name type="language">португальский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/portugalskii/" />
+      </item>
+      <item xml:id="languages-0b78f167-2db5-5364-9fe1-c1fd0c82eb65">
+        <name type="language">прагерманский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/pragermanskii/" />
+      </item>
+      <item xml:id="languages-c63f90a7-339d-5db4-910d-a16f1d71e89a">
+        <name type="language">праиндоевропейский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/praindoevropeiskii/" />
+      </item>
+      <item xml:id="languages-d74da5f4-e8da-5c74-a912-f28ec3d4f7f3">
+        <name type="language">праславянский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/praslavyanskii/" />
+      </item>
+      <item xml:id="languages-0bed65c8-1343-5125-9a74-7ada5574eefb">
+        <name type="language">псковский говор</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/pskovskii-govor/" />
+      </item>
+      <item xml:id="languages-c0b59102-cf41-52bb-a7e1-f334b12b92c4">
+        <name type="language">раннероманские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/ranneromanskie/" />
+      </item>
+      <item xml:id="languages-593b6fad-fa89-5042-be96-2c8a2745a6f9">
+        <name type="language">раннефранцузский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/rannefrantsuzskii/" />
+      </item>
+      <item xml:id="languages-dad8c55a-b842-570b-95ff-e7a2c0c31617">
+        <name type="language">романские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/romanskie/" />
+      </item>
+      <item xml:id="languages-1886a9eb-3cbb-5e02-b75c-05bc15df1843">
+        <name type="language">ростово-суздальско- владимирско-московско-рязанский диалект</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/rostovo-suzdalsko-vladimirsko-moskovsko-ryazanskii-dialekt/" />
+      </item>
+      <item xml:id="languages-77d1bc88-187d-5eb3-a2fa-286d3b530507">
+        <name type="language">румынский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/rumynskii/" />
+      </item>
+      <item xml:id="languages-13d64fad-2529-596e-bade-9b98b9c6ef91">
+        <name type="language">русский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/russkii/" />
+      </item>
+      <item xml:id="languages-78a25a5a-9c00-5e6c-bba8-ef17b67136be">
+        <name type="language">санскрит</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/sanskrit/" />
+      </item>
+      <item xml:id="languages-262c7ae1-51c8-5a3a-b5d8-bdf62b794bc7">
+        <name type="language">семито-хамитские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/semito-khamitskie/" />
+      </item>
+      <item xml:id="languages-2e6a4203-2776-531c-ab24-d1b6408a58d5">
+        <name type="language">семитские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/semitskie/" />
+      </item>
+      <item xml:id="languages-e0957d2e-700e-5d4e-9066-ffeaa9ff11c4">
+        <name type="language">сербский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/serbskii/" />
+      </item>
+      <item xml:id="languages-a4a1a81e-cefb-5db6-a827-56222fe2587b">
+        <name type="language">Сербский язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/serbskii-yazyk/" />
+      </item>
+      <item xml:id="languages-6ace01d5-ab4b-5fb6-be75-8096bf115b60">
+        <name type="language">сибирский говоры</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/sibirskii-govory/" />
+      </item>
+      <item xml:id="languages-a82468cc-8e5f-5e52-9eea-565c2d04a9cf">
+        <name type="language">скифский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/skifskii/" />
+      </item>
+      <item xml:id="languages-6209b47a-eb2f-55d9-a952-ee95913f90a4">
+        <name type="language">славянские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/slavyanskie/" />
+      </item>
+      <item xml:id="languages-f704064b-d29a-54e7-8180-fb690e58ebeb">
+        <name type="language">словацкий</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/slovatskii/" />
+      </item>
+      <item xml:id="languages-2b24ecff-3f94-568b-9934-2e4ef0c0c602">
+        <name type="language">словенский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/slovenskii/" />
+      </item>
+      <item xml:id="languages-909b899a-ffdb-5943-9bc3-fca080a1b4b7">
+        <name type="language">среднеиндийские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/sredneindiiskie/" />
+      </item>
+      <item xml:id="languages-6b2afe7d-2050-5e96-84b1-6c2c7d392786">
+        <name type="language">среднерусский период</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/srednerusskii-period/" />
+      </item>
+      <item xml:id="languages-1a6428d7-9a82-5364-a723-2fd71f5aee77">
+        <name type="language">среднефранцузский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/srednefrantsuzskii/" />
+      </item>
+      <item xml:id="languages-b096bce1-5f29-59ca-b69e-dfeeaf2b9342">
+        <name type="language">старобелорусский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/starobelorusskii/" />
+      </item>
+      <item xml:id="languages-6d50c985-ff3a-5b49-a724-6bf91a16a4ab">
+        <name type="language">старорусский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/starorusskii/" />
+      </item>
+      <item xml:id="languages-80521167-e599-501c-a6ca-54fb6f873c75">
+        <name type="language">старославянский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/staroslavyanskii/" />
+      </item>
+      <item xml:id="languages-b1528c42-c756-518b-ad21-ca971a8cd9cb">
+        <name type="language">старофранцузский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/starofrantsuzskii/" />
+      </item>
+      <item xml:id="languages-94ed7815-7dac-56f6-b4e4-c02522a162d1">
+        <name type="language">татарский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/tatarskii/" />
+      </item>
+      <item xml:id="languages-0133b42b-2139-5940-906b-3893a2279fe5">
+        <name type="language">тосканский диалект</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/toskanskii-dialekt/" />
+      </item>
+      <item xml:id="languages-30a3d468-e08c-5af4-b579-2cc2207f5355">
+        <name type="language">турецкий</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/turetskii/" />
+      </item>
+      <item xml:id="languages-4313a6b8-6fff-55d5-be38-fc809f66ba41">
+        <name type="language">тюркские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/tyurkskie/" />
+      </item>
+      <item xml:id="languages-93fe3c6c-9e32-54e1-bf98-de31db0cb058">
+        <name type="language">украинский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/ukrainskii/" />
+      </item>
+      <item xml:id="languages-df4889e7-c61a-5d6f-a94a-ba4e306304fd">
+        <name type="language">финский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/finskii/" />
+      </item>
+      <item xml:id="languages-3da7be2b-962a-538a-845b-7e97e71d3be1">
+        <name type="language">французский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/frantsuzskii/" />
+      </item>
+      <item xml:id="languages-b4c8bf6a-29df-59e5-853f-e476cb09cadb">
+        <name type="language">Французский язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/frantsuzskii-yazyk/" />
+      </item>
+      <item xml:id="languages-01f352da-b79b-5f4c-b64c-77d293fbecbd">
+        <name type="language">хинди</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/khindi/" />
+      </item>
+      <item xml:id="languages-269f85a2-75d4-58cd-b9cf-16126d5e2cff">
+        <name type="language">церковнославянский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/tserkovnoslavyanskii/" />
+      </item>
+      <item xml:id="languages-d92ce8e3-2b6b-51f8-95db-fef84afa1f36">
+        <name type="language">Церковнославянский язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/tserkovnoslavyanskii-yazyk/" />
+      </item>
+      <item xml:id="languages-71d4798f-6d1a-5fc2-8a90-b65c3c38a1b4">
+        <name type="language">чагатайский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/chagataiskii/" />
+      </item>
+      <item xml:id="languages-dee4ed66-fd9c-5546-a34e-6e2c977e2d02">
+        <name type="language">чешский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/cheshskii/" />
+      </item>
+      <item xml:id="languages-de210365-088d-5907-bc5c-0656e3f3a518">
+        <name type="language">Чешский язык</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/cheshskii-yazyk/" />
+      </item>
+      <item xml:id="languages-d8e1b51b-7afb-5032-b181-0e9fe6d05ada">
+        <name type="language">чувашский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/chuvashskii/" />
+      </item>
+      <item xml:id="languages-c6b8ef07-03f6-50c5-9195-882a46fd0e85">
+        <name type="language">чукотский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/chukotskii/" />
+      </item>
+      <item xml:id="languages-5c73f83f-015f-55b5-9370-165bc8051a9c">
+        <name type="language">шведский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/shvedskii/" />
+      </item>
+      <item xml:id="languages-531903dd-6de1-59a1-98c9-656d252750e5">
+        <name type="language">эсперанто</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/esperanto/" />
+      </item>
+      <item xml:id="languages-d40db8df-9ec1-5d36-9210-b9c0e8676d68">
+        <name type="language">Эстонии языки</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/estonii-yazyki/" />
+      </item>
+      <item xml:id="languages-2f1ebe22-4057-5157-9da6-542083d23556">
+        <name type="language">эстонский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/estonskii/" />
+      </item>
+      <item xml:id="languages-feeab85b-db7c-50a0-8ce1-c059e136c56a">
+        <name type="language">этрусский</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/etrusskii/" />
+      </item>
+      <item xml:id="languages-6adb6aa6-ffac-500a-81fa-4121e650409a">
+        <name type="language">южновеликорусский говоры</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/yuzhnovelikorusskii-govory/" />
+      </item>
+      <item xml:id="languages-451d1bdd-c579-5191-af84-238d1bd4e8c7">
+        <name type="language">южнославянские</name>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/languages/list/item/languages/yuzhnoslavyanskie/" />
+      </item>
+    </list>
+    <list type="subject">
+      <item xml:id="subject_index-ff128d47-8e43-5f9f-9af1-31c87fd0fa03">
+        <term>«Велесова книга» (ВК)</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/velesova-kniga-vk/" />
+      </item>
+      <item xml:id="subject_index-920250e9-34bd-5a14-8618-ce6679eaedf0">
+        <term>аканье</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/akane/" />
+      </item>
+      <item xml:id="subject_index-c1291e64-e574-5c51-b5b5-4de4c20a9963">
+        <term>алфавит</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/alfavit/" />
+      </item>
+      <item xml:id="subject_index-cd8627db-c47e-5583-9be7-76c00521064f">
+        <term>арабские цифры</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/arabskie-tsifry/" />
+      </item>
+      <item xml:id="subject_index-e103cf70-aae8-5aec-968a-a5af18de72df">
+        <term>арабское письмо</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/arabskoe-pismo/" />
+      </item>
+      <item xml:id="subject_index-01cee36d-812a-5387-976d-fcbb92b904f4">
+        <term>артикль</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/artikl/" />
+      </item>
+      <item xml:id="subject_index-b0b7e80d-3c20-5094-b14b-47c5c2518151">
+        <term>артикль: ∼ постпозитивный</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/artikl-postpozitivnyi/" />
+      </item>
+      <item xml:id="subject_index-8406c2c5-5344-53a1-ab28-b714e7b5f9b1">
+        <term>архаизм</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/arkhaizm/" />
+      </item>
+      <item xml:id="subject_index-74b54e39-6c21-5ac4-86ca-da7d64d626c3">
+        <term>барьер [ритмико-синтаксический]</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/barer-ritmiko-sintaksicheskii/" />
+      </item>
+      <item xml:id="subject_index-6298284a-ad8f-57bc-88c4-f3d6e1763f23">
+        <term>беглая гласная, беглый гласный</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/beglaya-glasnaya-beglyi-glasnyi/" />
+      </item>
+      <item xml:id="subject_index-6192dc11-91fd-5e7d-9e05-e85bd18b94c9">
+        <term>безударные слова, безударность</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/bezudarnye-slova-bezudarnost/" />
+      </item>
+      <item xml:id="subject_index-3bd3f8d9-3699-5eda-a330-486e2a9a6359">
+        <term>берестяные грамоты</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/berestyanye-gramoty/" />
+      </item>
+      <item xml:id="subject_index-5e910cb3-bba6-58a1-9e6c-6ff27262ca67">
+        <term>Бхагавадгита</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/bkhagavadgita/" />
+      </item>
+      <item xml:id="subject_index-933591b2-5c80-5c33-ad77-915a76436a9b">
+        <term>бытовая (живая, устная, разговорная) речь</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/bytovaya-zhivaya-ustnaya-razgovornaya-rech/" />
+      </item>
+      <item xml:id="subject_index-b59fbb61-c232-5a53-82ef-b12a59bd9d87">
+        <term>бытовая система письма</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/bytovaya-sistema-pisma/" />
+      </item>
+      <item xml:id="subject_index-350fbbd5-6132-511f-9dff-fcebbf022ebb">
+        <term>Вакернагеля закон (механизм), вакернагелевский принцип</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/vakernagelya-zakon-mekhanizm-vakernagelevskii-printsip/" />
+      </item>
+      <item xml:id="subject_index-24fc276e-7b6d-5938-b2b3-dfeebb1935d6">
+        <term>Веды</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/vedy/" />
+      </item>
+      <item xml:id="subject_index-9adf5d54-0277-53ac-b6cb-321b9d985c4a">
+        <term>Велесова книга</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/velesova-kniga/" />
+      </item>
+      <item xml:id="subject_index-e656134b-322e-5ab2-b65a-9f2718c27e91">
+        <term>германское передвижение согласных</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/germanskoe-peredvizhenie-soglasnykh/" />
+      </item>
+      <item xml:id="subject_index-7859f9c1-d616-5cbe-bed0-59f820f2c59c">
+        <term>двойственное число</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/dvoistvennoe-chislo/" />
+      </item>
+      <item xml:id="subject_index-737afd1a-2b5c-50a5-9a77-e82af0586227">
+        <term>древний язык, древность языка</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/drevnii-yazyk-drevnost-yazyka/" />
+      </item>
+      <item xml:id="subject_index-71f16226-79e0-5084-a79a-35acd1d0336c">
+        <term>заимствование, заимствованные слова</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/zaimstvovanie-zaimstvovannye-slova/" />
+      </item>
+      <item xml:id="subject_index-ddcf1675-cdb1-5d08-82ce-cd301c698dba">
+        <term>иероглиф, иероглифический знак</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/ieroglif-ieroglificheskii-znak/" />
+      </item>
+      <item xml:id="subject_index-d0d4640f-cb1e-5f03-99dd-bc8fb5e0c25c">
+        <term>искусственные языки</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/iskusstvennye-yazyki/" />
+      </item>
+      <item xml:id="subject_index-d582ffc3-bccd-5392-89f4-830abb1abdc9">
+        <term>Истина в науке</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/istina-v-nauke/" />
+      </item>
+      <item xml:id="subject_index-8ac13147-c4c4-5ee8-aa54-e46d70f84e3e">
+        <term>калька, калькирование</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/kalka-kalkirovanie/" />
+      </item>
+      <item xml:id="subject_index-f4378796-0030-58c8-a383-95e0191e0dd2">
+        <term>Критика «Новой хронологии» А. Т. Фоменко</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/kritika-novoi-khronologii-a-t-fomenko/" />
+      </item>
+      <item xml:id="subject_index-b4593df7-c8c6-5eaf-a5b9-9814683f7219">
+        <term>лигатура</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/ligatura/" />
+      </item>
+      <item xml:id="subject_index-dfd0504f-6e0a-57b6-ad4e-b534aa7eba76">
+        <term>литературный язык, литературная форма языка</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/literaturnyi-yazyk-literaturnaya-forma-yazyka/" />
+      </item>
+      <item xml:id="subject_index-6789faea-e031-58f7-9000-8029bfae2de8">
+        <term>Любительская лингвистика</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/lyubitelskaya-lingvistika/" />
+      </item>
+      <item xml:id="subject_index-aa820e1c-c6fd-5b57-81a1-c51fbcfb61af">
+        <term>Махабхарата</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/makhabkharata/" />
+      </item>
+      <item xml:id="subject_index-38d77aad-4521-5851-bc0f-9e5df69049db">
+        <term>метод внутренней реконструкции</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/metod-vnutrennei-rekonstruktsii/" />
+      </item>
+      <item xml:id="subject_index-d00215a2-0d5b-556b-912b-fc32b76e7aa9">
+        <term>моногенез</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/monogenez/" />
+      </item>
+      <item xml:id="subject_index-27fca58b-20ef-565f-aa46-9ab64c298361">
+        <term>морфемы сильные vs. слабые</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/morfemy-silnye-vs-slabye/" />
+      </item>
+      <item xml:id="subject_index-e504fdcf-ca31-589d-919b-4164516a1a03">
+        <term>мягкость [согласного]</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/myagkost-soglasnogo/" />
+      </item>
+      <item xml:id="subject_index-abf2c3f7-374d-595e-b337-b082ef4717a5">
+        <term>название языка</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/nazvanie-yazyka/" />
+      </item>
+      <item xml:id="subject_index-ba17fe03-31f5-58cb-97a0-d6502edec3b5">
+        <term>народная этимология</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/narodnaya-etimologiya/" />
+      </item>
+      <item xml:id="subject_index-2081df81-beb2-59a5-a152-86d84519e04b">
+        <term>норма [языковая]</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/norma-yazykovaya/" />
+      </item>
+      <item xml:id="subject_index-0747cfa2-e1d3-579f-9c12-67a46503c4c8">
+        <term>огласовка</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/oglasovka/" />
+      </item>
+      <item xml:id="subject_index-7bc76922-9191-5ce7-b747-c1563c3b361f">
+        <term>оглушение согласных</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/oglushenie-soglasnykh/" />
+      </item>
+      <item xml:id="subject_index-a0dae0fb-2acf-5a94-8e12-a8c85184c680">
+        <term>оканье</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/okane/" />
+      </item>
+      <item xml:id="subject_index-4a4071a8-dbf6-5927-a484-837796061d32">
+        <term>определенность / неопределенность</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/opredelennost-neopredelennost/" />
+      </item>
+      <item xml:id="subject_index-7300bdc6-dcc8-5af9-84f7-ae7c64bdb22a">
+        <term>орфография</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/orfografiya/" />
+      </item>
+      <item xml:id="subject_index-2b9d7e0d-c18f-5e49-bbae-222a4e0beecb">
+        <term>отпадение конечных гласных</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/otpadenie-konechnykh-glasnykh/" />
+      </item>
+      <item xml:id="subject_index-bc026852-7674-5c4f-ae6d-889d8a92cd8b">
+        <term>отпадение конечных гласных: ∼ ~ согласных</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/otpadenie-konechnykh-glasnykh-soglasnykh/" />
+      </item>
+      <item xml:id="subject_index-f91e6e44-0f69-517c-8e15-a89f961f74b7">
+        <term>оттяжка ударения</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/ottyazhka-udareniya/" />
+      </item>
+      <item xml:id="subject_index-08754afc-829a-5fbb-b557-003727a3b97f">
+        <term>ошибка писца</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/oshibka-pistsa/" />
+      </item>
+      <item xml:id="subject_index-9ca03b4a-ad5e-5914-b8a3-53b7d67fe225">
+        <term>палатализация</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/palatalizatsiya/" />
+      </item>
+      <item xml:id="subject_index-57c174df-7e5e-5a3d-8329-f07dd1bee985">
+        <term>перфект</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/perfekt/" />
+      </item>
+      <item xml:id="subject_index-35cd7916-6b11-58b4-8756-32213d7e1f07">
+        <term>письменная традиция</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/pismennaya-traditsiya/" />
+      </item>
+      <item xml:id="subject_index-ce2086b2-e4b9-5725-9595-f8e49b44d3ba">
+        <term>письменность</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/pismennost/" />
+      </item>
+      <item xml:id="subject_index-497977a9-05cc-5109-afac-d89405e4808b">
+        <term>письменность: ∼ древнеперсидская</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/pismennost-drevnepersidskaya/" />
+      </item>
+      <item xml:id="subject_index-170651cb-c3bf-595a-94ef-532aa00e6204">
+        <term>письменность: ∼ египетская</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/pismennost-egipetskaya/" />
+      </item>
+      <item xml:id="subject_index-3cb3a97f-07ae-5174-8863-6b5f42f2f6ca">
+        <term>письмо [= графическая система]</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/pismo-graficheskaya-sistema/" />
+      </item>
+      <item xml:id="subject_index-806d6722-8268-5df4-a6b2-8a498a321bf5">
+        <term>письмо [= графическая система]: ∼ бытовое vs. книжное</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/pismo-graficheskaya-sistema-bytovoe-vs-knizhnoe/" />
+      </item>
+      <item xml:id="subject_index-ccf4057b-4958-5b70-827f-9da7189c27b9">
+        <term>полигенез</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/poligenez/" />
+      </item>
+      <item xml:id="subject_index-4458435b-648f-54ac-b075-21446a1dff37">
+        <term>полногласие</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/polnoglasie/" />
+      </item>
+      <item xml:id="subject_index-7a94db6d-db27-5d5b-b375-3393d5038ae1">
+        <term>порода [в арабской грамматике]</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/poroda-v-arabskoi-grammatike/" />
+      </item>
+      <item xml:id="subject_index-ae8ded39-61ce-5040-a306-eaf6b3fc171f">
+        <term>порядок слов</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/poryadok-slov/" />
+      </item>
+      <item xml:id="subject_index-f200cff7-af5b-59a1-9493-b8e41b75f154">
+        <term>правило [языковое]</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/pravilo-yazykovoe/" />
+      </item>
+      <item xml:id="subject_index-54484d75-7754-5764-b7ef-550c851b48ae">
+        <term>разговорный язык, разговорная речь</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/razgovornyi-yazyk-razgovornaya-rech/" />
+      </item>
+      <item xml:id="subject_index-1b6a28f4-8f0e-51e0-a3ca-6f1f4c7b7431">
+        <term>реконструкция [метод исторической лингвистики]</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/rekonstruktsiya-metod-istoricheskoi-lingvistiki/" />
+      </item>
+      <item xml:id="subject_index-d04a0460-7c73-54e3-9a45-2f3c841c9999">
+        <term>реконструкция [метод исторической лингвистики]: ∼ внутренняя, см. метод внутренней реконструкции Ригведа</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/rekonstruktsiya-metod-istoricheskoi-lingvistiki-vnutrennyaya/" />
+      </item>
+      <item xml:id="subject_index-4a73023b-0b13-508b-a7ca-8f4ef1698d21">
+        <term>родословное (генеалогическое) древо [языков]</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/rodoslovnoe-genealogicheskoe-drevo-yazykov/" />
+      </item>
+      <item xml:id="subject_index-cee12c47-520c-59ee-9b17-e92bd0baea6d">
+        <term>сдвиг [ударения]</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/sdvig-udareniya/" />
+      </item>
+      <item xml:id="subject_index-027699af-8fa4-576c-bd69-ba68e9f76459">
+        <term>сдвиг [ударения]: ∼ влево</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/sdvig-udareniya-vlevo/" />
+      </item>
+      <item xml:id="subject_index-398dd821-ea36-554d-a69f-f637067e6f41">
+        <term>сдвиг [ударения]: ∼ вправо</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/sdvig-udareniya-vpravo/" />
+      </item>
+      <item xml:id="subject_index-00b3d1d4-153f-5b16-ac88-9472a69c96c3">
+        <term>тактовая группа</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/taktovaya-gruppa/" />
+      </item>
+      <item xml:id="subject_index-90fac88c-9294-5339-aa16-4876b2585d5c">
+        <term>ударение</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarenie/" />
+      </item>
+      <item xml:id="subject_index-cce8ae13-79c0-599e-8da5-f0c67ae86d5e">
+        <term>ударение: ∼ в арабском языке</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarenie-v-arabskom-yazyke/" />
+      </item>
+      <item xml:id="subject_index-00dd4446-0065-504f-8b94-9012d5b982a5">
+        <term>ударение: ∼ в древнерусском языке</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarenie-v-drevnerusskom-yazyke/" />
+      </item>
+      <item xml:id="subject_index-cf86eb4d-5dee-5ffe-8675-043c27227029">
+        <term>ударение: ∼ в русском языке</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarenie-v-russkom-yazyke/" />
+      </item>
+      <item xml:id="subject_index-97ea2e15-cb86-501c-ae4e-9ea4d77ab7f6">
+        <term>ударение: ∼ в санскрите</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarenie-v-sanskrite/" />
+      </item>
+      <item xml:id="subject_index-e08d5e3b-86da-5065-8359-97cf9beee825">
+        <term>ударение: ∼ восходящее</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarenie-voskhodyashchee/" />
+      </item>
+      <item xml:id="subject_index-b33062de-b848-59ea-9a16-c0e1f8f68abb">
+        <term>ударение: ∼ второстепенное</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarenie-vtorostepennoe/" />
+      </item>
+      <item xml:id="subject_index-7ba80882-8cf4-55b8-a27b-4bee5fa929a0">
+        <term>ударение: ∼ нисходящее</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarenie-niskhodyashchee/" />
+      </item>
+      <item xml:id="subject_index-26997a1d-2ef1-5934-8a06-dcebdec8c8f4">
+        <term>ударение: ∼ свободное (разноместное)</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarenie-svobodnoe-raznomestnoe/" />
+      </item>
+      <item xml:id="subject_index-b8b3eddf-899a-553b-addc-818f3b4b9069">
+        <term>ударная vs. безударная форма местоимений</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/udarnaya-vs-bezudarnaya-forma-mestoimenii/" />
+      </item>
+      <item xml:id="subject_index-7f41f939-92e3-5d54-aaa3-28c5b4b4249c">
+        <term>фестский диск</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/festskii-disk/" />
+      </item>
+      <item xml:id="subject_index-61e1605e-6dce-5652-abc7-fab856cee4a8">
+        <term>фонетические изменения</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/foneticheskie-izmeneniya/" />
+      </item>
+      <item xml:id="subject_index-2d9b9420-837b-5d69-a080-8c41a5f82c7f">
+        <term>фонетические изменения: ∼ всеобщие vs. частные</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/foneticheskie-izmeneniya-vseobshchie-vs-chastnye/" />
+      </item>
+      <item xml:id="subject_index-92ed099a-e855-532a-b385-a41e27851dae">
+        <term>фонетическое слово</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/foneticheskoe-slovo/" />
+      </item>
+      <item xml:id="subject_index-d15e5b4f-6cb4-5d7f-9ccc-40eb14723935">
+        <term>фразовая энклитика</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/frazovaya-enklitika/" />
+      </item>
+      <item xml:id="subject_index-498a121a-c1da-5961-8be9-d6094c59c810">
+        <term>церковнославянизмы</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/tserkovnoslavyanizmy/" />
+      </item>
+      <item xml:id="subject_index-cef3ca37-7796-5fa5-9a2b-3ad92bdc3cbb">
+        <term>цифры</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/tsifry/" />
+      </item>
+      <item xml:id="subject_index-95bb985d-7085-5782-b32b-5f31d7a2c04e">
+        <term>цоканье</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/tsokane/" />
+      </item>
+      <item xml:id="subject_index-4c417d63-8a24-5b5e-8298-facfc842e08f">
+        <term>чудовский Новый завет</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/chudovskii-novyi-zavet/" />
+      </item>
+      <item xml:id="subject_index-0a833224-ba09-5673-9615-425a69439be5">
+        <term>чужая речь</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/chuzhaya-rech/" />
+      </item>
+      <item xml:id="subject_index-1fd3f825-c6b4-5133-847a-f30dfdcb13e1">
+        <term>эмфаза, экспрессивность</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/emfaza-ekspressivnost/" />
+      </item>
+      <item xml:id="subject_index-dda9d33a-c28c-57ad-b5a6-61e1e122c99b">
+        <term>энклитики</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/enklitiki/" />
+      </item>
+      <item xml:id="subject_index-fd14dae8-b84f-5d2b-919c-0ce8ee7cdfb5">
+        <term>энклитики: ∼ локальные</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/enklitiki-lokalnye/" />
+      </item>
+      <item xml:id="subject_index-f6434a03-5c6c-564e-a986-5ac45448576a">
+        <term>энклитики: ∼ фразовые</term>
+        <ptr type="canonical" target="https://gasyoun.github.io/BookIndex/subject/list/item/subject/enklitiki-frazovye/" />
+      </item>
+    </list>
+  </standOff>
+</TEI>
