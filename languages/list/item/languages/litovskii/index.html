@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-UngePtbDBiJgWTGaVb3wCXZEStYtacevZjp21FIQauQ=' 'sha256-OtWcLdoNzivOeEUE9FL7o4Na+DjTN9x9tsE/Epy/Ntg='; worker-src 'self' blob:; style-src 'self' 'sha256-SOW2PiF+hWPrR9c27IHM1UAmvOTiEu/GzNEWjcRvtYg='; style-src-elem 'self' 'sha256-SOW2PiF+hWPrR9c27IHM1UAmvOTiEu/GzNEWjcRvtYg='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-O+hxCvCFR8wvvyGBQ2c/7kHXX0fHgLmGKMzhPvWEn3w=' 'sha256-S4xh/2mJDs+yrDo8yNthiMP8Ix+NFMLoR2cdSZgdzgo='; worker-src 'self' blob:; style-src 'self' 'sha256-YqlhzqqK/IiboagB5i91lC8Lyeq6F7Ix5ShWq6N8bCQ='; style-src-elem 'self' 'sha256-YqlhzqqK/IiboagB5i91lC8Lyeq6F7Ix5ShWq6N8bCQ='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -2288,6 +2288,44 @@
     font-size: 12px;
     line-height: 1.6;
     margin-top: 10px;
+  }
+  .reading-chapter-ribbon {
+    display: flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 34px;
+    margin-top: 12px;
+  }
+  .reading-chapter-seg {
+    flex: 1 1 0;
+    min-width: 6px;
+    height: 100%;
+    padding: 0;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 3px;
+    background: #faf6ee;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .reading-chapter-fill {
+    display: block;
+    width: 100%;
+    height: calc(28% + 72% * var(--seg-intensity, 0));
+    background: #a9763c;
+    opacity: calc(0.35 + 0.6 * var(--seg-intensity, 0));
+  }
+  .reading-chapter-seg:hover {
+    border-color: var(--line-strong, #8a7050);
+  }
+  .reading-chapter-seg.active {
+    border-color: #8c3a15;
+    box-shadow: inset 0 0 0 1px #8c3a15;
+  }
+  .reading-chapter-seg.active .reading-chapter-fill {
+    background: #8c3a15;
+    opacity: calc(0.5 + 0.5 * var(--seg-intensity, 0));
   }
   .reading-now-box {
     background: #fff;
@@ -5655,7 +5693,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "331d84b9f5c8",
+  "build_id": "0cd1f21ad5aa",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -5963,7 +6001,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "331d84b9f5c8";
+	var APP_BUILD_ID$1 = "0cd1f21ad5aa";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6853,8 +6891,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "331d84b9f5c8").trim();
-		if (buildId && buildId !== "331d84b9f5c8") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "0cd1f21ad5aa").trim();
+		if (buildId && buildId !== "0cd1f21ad5aa") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10297,7 +10335,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "331d84b9f5c8" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "0cd1f21ad5aa" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -15251,6 +15289,31 @@ var BookIndex = (function(exports) {
 		renderContent();
 		syncNavigationState();
 	}
+	var CHAPTER_DENSITY_CACHE = null;
+	function getChapterDensities() {
+		if (CHAPTER_DENSITY_CACHE) return CHAPTER_DENSITY_CACHE;
+		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+		const types = ["names", "toponyms", "ethnonyms", "languages", "lexicon", "subject_index"];
+		const perPage = /* @__PURE__ */ new Map();
+		for (const t of types) for (const it of (APP_DATA[t] || [])) {
+			for (const p of (it.page_list || [])) {
+				const page = parseInt(p, 10);
+				if (Number.isFinite(page)) perPage.set(page, (perPage.get(page) || 0) + 1);
+			}
+		}
+		const rows = chapters.map((ch) => {
+			let total = 0;
+			const start = parseInt(ch.start, 10) || 1;
+			const end = parseInt(ch.end, 10) || start;
+			for (let p = start; p <= end; p++) total += perPage.get(p) || 0;
+			const span = Math.max(1, end - start + 1);
+			return { name: ch.name || "", start, end, span, total, perPage: total / span };
+		});
+		const maxPerPage = rows.reduce((m, r) => Math.max(m, r.perPage), 0) || 1;
+		for (const r of rows) r.intensity = r.perPage / maxPerPage;
+		CHAPTER_DENSITY_CACHE = rows;
+		return rows;
+	}
 	function wireReadingNowWidget(root, totalPages = DEFAULT_TOTAL_PAGES) {
 		if (!root || typeof root.querySelector !== "function") return;
 		const readingInput = root.querySelector("#reading-page-input");
@@ -15281,6 +15344,34 @@ var BookIndex = (function(exports) {
 				readingNext.style.cursor = disabled ? "default" : "pointer";
 			}
 		};
+		const ribbonEl = root.querySelector("#reading-chapter-ribbon");
+		const densities = getChapterDensities();
+		const buildRibbon = () => {
+			if (!ribbonEl || !densities.length) return;
+			ribbonEl.textContent = "";
+			densities.forEach((d, i) => {
+				const seg = document.createElement("button");
+				seg.type = "button";
+				seg.className = "reading-chapter-seg";
+				seg.dataset.idx = String(i);
+				seg.style.flexGrow = String(d.span);
+				seg.style.setProperty("--seg-intensity", d.intensity.toFixed(3));
+				safeSetAttr(seg, "title", `${d.name} · стр. ${d.start}–${d.end} · ${d.total} упоминаний`);
+				safeSetAttr(seg, "aria-label", `${d.name}, страницы ${d.start}–${d.end}`);
+				const fill = document.createElement("span");
+				fill.className = "reading-chapter-fill";
+				seg.appendChild(fill);
+				seg.onclick = () => renderReadingNow(d.start);
+				ribbonEl.appendChild(seg);
+			});
+		};
+		const highlightRibbon = (idx) => {
+			if (!ribbonEl) return;
+			ribbonEl.querySelectorAll(".reading-chapter-seg").forEach((el) => {
+				el.classList.toggle("active", Number(el.dataset.idx) === idx);
+			});
+		};
+		buildRibbon();
 		const renderReadingNow = (page) => {
 			const currentPage = clampReadingPage(page);
 			saveReadingPage(currentPage);
@@ -15288,6 +15379,7 @@ var BookIndex = (function(exports) {
 			readingInput.value = String(currentPage);
 			const chapters = APP_DATA.chapters || [];
 			const chapterIdx = chapters.findIndex((ch) => currentPage >= ch.start && currentPage <= ch.end);
+			highlightRibbon(chapterIdx);
 			const chapter = chapterIdx >= 0 ? chapters[chapterIdx] : null;
 			const groups = collectReadingNow(currentPage, 7);
 			let htmlOut = `<div class="reading-now-page-title"><strong>Страница ${currentPage}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ""}</div>`;
@@ -15601,6 +15693,7 @@ var BookIndex = (function(exports) {
       <button id="reading-page-go" class="reading-now-btn">Показать</button>
       <button id="reading-page-trends" class="reading-now-btn">Динамика страницы</button>
     </div>
+    <div id="reading-chapter-ribbon" class="reading-chapter-ribbon" role="navigation" aria-label="Главы книги — плотность упоминаний"></div>
     <div id="reading-now-results" class="reading-now-results"></div>
   </div>`;
 		html += "<div id=\"lectures-grid\" class=\"lectures-grid\">";

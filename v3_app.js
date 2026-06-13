@@ -9440,6 +9440,31 @@ var BookIndex = (function(exports) {
 		renderContent();
 		syncNavigationState();
 	}
+	var CHAPTER_DENSITY_CACHE = null;
+	function getChapterDensities() {
+		if (CHAPTER_DENSITY_CACHE) return CHAPTER_DENSITY_CACHE;
+		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+		const types = ["names", "toponyms", "ethnonyms", "languages", "lexicon", "subject_index"];
+		const perPage = /* @__PURE__ */ new Map();
+		for (const t of types) for (const it of (APP_DATA[t] || [])) {
+			for (const p of (it.page_list || [])) {
+				const page = parseInt(p, 10);
+				if (Number.isFinite(page)) perPage.set(page, (perPage.get(page) || 0) + 1);
+			}
+		}
+		const rows = chapters.map((ch) => {
+			let total = 0;
+			const start = parseInt(ch.start, 10) || 1;
+			const end = parseInt(ch.end, 10) || start;
+			for (let p = start; p <= end; p++) total += perPage.get(p) || 0;
+			const span = Math.max(1, end - start + 1);
+			return { name: ch.name || "", start, end, span, total, perPage: total / span };
+		});
+		const maxPerPage = rows.reduce((m, r) => Math.max(m, r.perPage), 0) || 1;
+		for (const r of rows) r.intensity = r.perPage / maxPerPage;
+		CHAPTER_DENSITY_CACHE = rows;
+		return rows;
+	}
 	function wireReadingNowWidget(root, totalPages = DEFAULT_TOTAL_PAGES) {
 		if (!root || typeof root.querySelector !== "function") return;
 		const readingInput = root.querySelector("#reading-page-input");
@@ -9470,6 +9495,34 @@ var BookIndex = (function(exports) {
 				readingNext.style.cursor = disabled ? "default" : "pointer";
 			}
 		};
+		const ribbonEl = root.querySelector("#reading-chapter-ribbon");
+		const densities = getChapterDensities();
+		const buildRibbon = () => {
+			if (!ribbonEl || !densities.length) return;
+			ribbonEl.textContent = "";
+			densities.forEach((d, i) => {
+				const seg = document.createElement("button");
+				seg.type = "button";
+				seg.className = "reading-chapter-seg";
+				seg.dataset.idx = String(i);
+				seg.style.flexGrow = String(d.span);
+				seg.style.setProperty("--seg-intensity", d.intensity.toFixed(3));
+				safeSetAttr(seg, "title", `${d.name} · стр. ${d.start}–${d.end} · ${d.total} упоминаний`);
+				safeSetAttr(seg, "aria-label", `${d.name}, страницы ${d.start}–${d.end}`);
+				const fill = document.createElement("span");
+				fill.className = "reading-chapter-fill";
+				seg.appendChild(fill);
+				seg.onclick = () => renderReadingNow(d.start);
+				ribbonEl.appendChild(seg);
+			});
+		};
+		const highlightRibbon = (idx) => {
+			if (!ribbonEl) return;
+			ribbonEl.querySelectorAll(".reading-chapter-seg").forEach((el) => {
+				el.classList.toggle("active", Number(el.dataset.idx) === idx);
+			});
+		};
+		buildRibbon();
 		const renderReadingNow = (page) => {
 			const currentPage = clampReadingPage(page);
 			saveReadingPage(currentPage);
@@ -9477,6 +9530,7 @@ var BookIndex = (function(exports) {
 			readingInput.value = String(currentPage);
 			const chapters = APP_DATA.chapters || [];
 			const chapterIdx = chapters.findIndex((ch) => currentPage >= ch.start && currentPage <= ch.end);
+			highlightRibbon(chapterIdx);
 			const chapter = chapterIdx >= 0 ? chapters[chapterIdx] : null;
 			const groups = collectReadingNow(currentPage, 7);
 			let htmlOut = `<div class="reading-now-page-title"><strong>Страница ${currentPage}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ""}</div>`;
@@ -9790,6 +9844,7 @@ var BookIndex = (function(exports) {
       <button id="reading-page-go" class="reading-now-btn">Показать</button>
       <button id="reading-page-trends" class="reading-now-btn">Динамика страницы</button>
     </div>
+    <div id="reading-chapter-ribbon" class="reading-chapter-ribbon" role="navigation" aria-label="Главы книги — плотность упоминаний"></div>
     <div id="reading-now-results" class="reading-now-results"></div>
   </div>`;
 		html += "<div id=\"lectures-grid\" class=\"lectures-grid\">";
