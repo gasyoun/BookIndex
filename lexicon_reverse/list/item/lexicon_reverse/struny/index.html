@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-X/cp3z3HlJXGejne26DCQo8y1AxM2eJp9DC+qyuosFw=' 'sha256-5uiGN8JkNGxdCDg8asmmJ6gBmE8ADbWoE6XBMeafac0='; worker-src 'self' blob:; style-src 'self' 'sha256-tenO4MYDiSv52Zb6g6FtUuU79IMvRemKJCyxioYk44Q='; style-src-elem 'self' 'sha256-tenO4MYDiSv52Zb6g6FtUuU79IMvRemKJCyxioYk44Q='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-/uXyqhPFPc3JT+wTsq3ubL4G+QvFet2oCbrGA+99X+8=' 'sha256-NqpFRNnUav/1raAx7U+YfzQUDdiOFILC1XTs3l9llxw='; worker-src 'self' blob:; style-src 'self' 'sha256-3aWWPxsKJxJ/gcI19flQh0Ui7nFU5bozZYl1GPiXVrY='; style-src-elem 'self' 'sha256-3aWWPxsKJxJ/gcI19flQh0Ui7nFU5bozZYl1GPiXVrY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -1841,6 +1841,32 @@
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 6px;
+    align-items: center;
+  }
+  .card-actions-more {
+    position: relative;
+    display: inline-block;
+  }
+  .card-actions-more-summary {
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .card-actions-more-summary::-webkit-details-marker { display: none; }
+  .card-actions-more-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    background: var(--surface, #fffdf8);
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(90, 56, 24, 0.12);
+    white-space: nowrap;
   }
   .card-inline-row-link {
     display: flex;
@@ -5923,7 +5949,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "dfd60b4216c9",
+  "build_id": "b33ee2c58cf9",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6231,7 +6257,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "dfd60b4216c9";
+	var APP_BUILD_ID$1 = "b33ee2c58cf9";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7121,8 +7147,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "dfd60b4216c9").trim();
-		if (buildId && buildId !== "dfd60b4216c9") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "b33ee2c58cf9").trim();
+		if (buildId && buildId !== "b33ee2c58cf9") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10597,7 +10623,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "dfd60b4216c9" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "b33ee2c58cf9" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -13390,9 +13416,14 @@ var BookIndex = (function(exports) {
             <button type="button" class="related-link related-link-btn card-action-link" id="card-prev" aria-label="Предыдущая карточка">◀</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="card-next" aria-label="Следующая карточка">▶</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="back-to-histo">← вернуться к гистограмме</button>
-            ${canOpenMapForCard ? "<button type=\"button\" class=\"related-link related-link-btn card-action-link\" id=\"open-on-map\">📍 показать на карте</button>" : ""}
-            <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
-            <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
+            <details class="card-actions-more">
+              <summary class="related-link related-link-btn card-action-link card-actions-more-summary">⋯ ещё</summary>
+              <div class="card-actions-more-menu">
+                ${canOpenMapForCard ? "<button type=\"button\" class=\"related-link related-link-btn card-action-link\" id=\"open-on-map\">📍 показать на карте</button>" : ""}
+                <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
+                <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
+              </div>
+            </details>
           </div>
         </div>
       </div>
@@ -16887,17 +16918,22 @@ var BookIndex = (function(exports) {
 		const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH).trim();
 		if (normalizeHeadForMatch(q).length < 2) return rows;
 		const ql = q.toLowerCase();
+		// accent-tolerant: allow an optional combining mark after each query char
+		// so "победа" also matches the stressed transcript form "побе́да".
+		const pat = new RegExp(ql.split("").map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[\\u0300-\\u036f]?").join(""), "g");
 		const W = 64;
 		for (const seg of cache.segments) {
 			const vi = seg[0];
 			const t = typeof seg[1] === "number" ? seg[1] : null;
 			const text = String(seg[2] || "");
 			const lower = text.toLowerCase();
-			let from = 0;
-			let idx = lower.indexOf(ql, from);
-			while (idx !== -1) {
+			pat.lastIndex = 0;
+			let m = pat.exec(lower);
+			while (m !== null) {
+				const idx = m.index;
+				const matchLen = m[0].length || 1;
 				const leftStart = Math.max(0, idx - W);
-				const rightEnd = Math.min(text.length, idx + ql.length + W);
+				const rightEnd = Math.min(text.length, idx + matchLen + W);
 				const v = cache.videos[vi] || {};
 				rows.push({
 					source: "lectures",
@@ -16907,11 +16943,11 @@ var BookIndex = (function(exports) {
 					page: t == null ? 0 : t,
 					leftPrefix: leftStart > 0 ? "…" : "",
 					leftText: text.slice(leftStart, idx),
-					keyText: text.slice(idx, idx + ql.length),
-					rightText: text.slice(idx + ql.length, rightEnd),
+					keyText: text.slice(idx, idx + matchLen),
+					rightText: text.slice(idx + matchLen, rightEnd),
 					rightSuffix: rightEnd < text.length ? "…" : "",
 					sortLeft: normalizeHeadForMatch(text.slice(Math.max(0, idx - 40), idx)),
-					sortRight: normalizeHeadForMatch(text.slice(idx + ql.length, idx + ql.length + 40)),
+					sortRight: normalizeHeadForMatch(text.slice(idx + matchLen, idx + matchLen + 40)),
 					videoId: v.id || v.url || "",
 					videoUrl: v.url || "",
 					videoTitle: v.title || "",
@@ -16921,8 +16957,8 @@ var BookIndex = (function(exports) {
 					rows._truncated = true;
 					return rows;
 				}
-				from = idx + ql.length;
-				idx = lower.indexOf(ql, from);
+				if (pat.lastIndex === idx) pat.lastIndex++; // guard against zero-width
+				m = pat.exec(lower);
 			}
 		}
 		return rows;
@@ -19755,7 +19791,13 @@ var BookIndex = (function(exports) {
 			const dataKey = itemType === "subject" ? "subject_index" : itemType;
 			const list = (window.APP_DATA && window.APP_DATA[dataKey]) || [];
 			const rec = Array.isArray(list) ? list.find((x) => x && x.head === itemHead) : null;
-			const pages = rec ? sortUniquePages(rec.page_list || []) : [];
+			let pages = rec ? sortUniquePages(rec.page_list || []) : [];
+			// fall back to per-book occurrence pages when page_list is empty
+			if (rec && !pages.length && rec.occurrences && typeof rec.occurrences === "object") {
+				const agg = [];
+				for (const occ of Object.values(rec.occurrences)) if (occ && Array.isArray(occ.pages)) agg.push(...occ.pages);
+				pages = sortUniquePages(agg);
+			}
 			const books = (window.APP_DATA && window.APP_DATA.corpus && window.APP_DATA.corpus.books) || [];
 			const bookId = rec && rec.book_id ? rec.book_id : (getActiveBook().book_id || "");
 			const book = books.find((b) => b && b.book_id === bookId) || {};

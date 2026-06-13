@@ -7311,9 +7311,14 @@ var BookIndex = (function(exports) {
             <button type="button" class="related-link related-link-btn card-action-link" id="card-prev" aria-label="Предыдущая карточка">◀</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="card-next" aria-label="Следующая карточка">▶</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="back-to-histo">← вернуться к гистограмме</button>
-            ${canOpenMapForCard ? "<button type=\"button\" class=\"related-link related-link-btn card-action-link\" id=\"open-on-map\">📍 показать на карте</button>" : ""}
-            <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
-            <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
+            <details class="card-actions-more">
+              <summary class="related-link related-link-btn card-action-link card-actions-more-summary">⋯ ещё</summary>
+              <div class="card-actions-more-menu">
+                ${canOpenMapForCard ? "<button type=\"button\" class=\"related-link related-link-btn card-action-link\" id=\"open-on-map\">📍 показать на карте</button>" : ""}
+                <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
+                <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
+              </div>
+            </details>
           </div>
         </div>
       </div>
@@ -10808,17 +10813,22 @@ var BookIndex = (function(exports) {
 		const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH).trim();
 		if (normalizeHeadForMatch(q).length < 2) return rows;
 		const ql = q.toLowerCase();
+		// accent-tolerant: allow an optional combining mark after each query char
+		// so "победа" also matches the stressed transcript form "побе́да".
+		const pat = new RegExp(ql.split("").map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[\\u0300-\\u036f]?").join(""), "g");
 		const W = 64;
 		for (const seg of cache.segments) {
 			const vi = seg[0];
 			const t = typeof seg[1] === "number" ? seg[1] : null;
 			const text = String(seg[2] || "");
 			const lower = text.toLowerCase();
-			let from = 0;
-			let idx = lower.indexOf(ql, from);
-			while (idx !== -1) {
+			pat.lastIndex = 0;
+			let m = pat.exec(lower);
+			while (m !== null) {
+				const idx = m.index;
+				const matchLen = m[0].length || 1;
 				const leftStart = Math.max(0, idx - W);
-				const rightEnd = Math.min(text.length, idx + ql.length + W);
+				const rightEnd = Math.min(text.length, idx + matchLen + W);
 				const v = cache.videos[vi] || {};
 				rows.push({
 					source: "lectures",
@@ -10828,11 +10838,11 @@ var BookIndex = (function(exports) {
 					page: t == null ? 0 : t,
 					leftPrefix: leftStart > 0 ? "…" : "",
 					leftText: text.slice(leftStart, idx),
-					keyText: text.slice(idx, idx + ql.length),
-					rightText: text.slice(idx + ql.length, rightEnd),
+					keyText: text.slice(idx, idx + matchLen),
+					rightText: text.slice(idx + matchLen, rightEnd),
 					rightSuffix: rightEnd < text.length ? "…" : "",
 					sortLeft: normalizeHeadForMatch(text.slice(Math.max(0, idx - 40), idx)),
-					sortRight: normalizeHeadForMatch(text.slice(idx + ql.length, idx + ql.length + 40)),
+					sortRight: normalizeHeadForMatch(text.slice(idx + matchLen, idx + matchLen + 40)),
 					videoId: v.id || v.url || "",
 					videoUrl: v.url || "",
 					videoTitle: v.title || "",
@@ -10842,8 +10852,8 @@ var BookIndex = (function(exports) {
 					rows._truncated = true;
 					return rows;
 				}
-				from = idx + ql.length;
-				idx = lower.indexOf(ql, from);
+				if (pat.lastIndex === idx) pat.lastIndex++; // guard against zero-width
+				m = pat.exec(lower);
 			}
 		}
 		return rows;
@@ -13676,7 +13686,13 @@ var BookIndex = (function(exports) {
 			const dataKey = itemType === "subject" ? "subject_index" : itemType;
 			const list = (window.APP_DATA && window.APP_DATA[dataKey]) || [];
 			const rec = Array.isArray(list) ? list.find((x) => x && x.head === itemHead) : null;
-			const pages = rec ? sortUniquePages(rec.page_list || []) : [];
+			let pages = rec ? sortUniquePages(rec.page_list || []) : [];
+			// fall back to per-book occurrence pages when page_list is empty
+			if (rec && !pages.length && rec.occurrences && typeof rec.occurrences === "object") {
+				const agg = [];
+				for (const occ of Object.values(rec.occurrences)) if (occ && Array.isArray(occ.pages)) agg.push(...occ.pages);
+				pages = sortUniquePages(agg);
+			}
 			const books = (window.APP_DATA && window.APP_DATA.corpus && window.APP_DATA.corpus.books) || [];
 			const bookId = rec && rec.book_id ? rec.book_id : (getActiveBook().book_id || "");
 			const book = books.find((b) => b && b.book_id === bookId) || {};
