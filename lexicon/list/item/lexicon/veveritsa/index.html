@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-VPRpCNXeyX05z29eDsPuPUY17qn9HGiCvOMaAvQlzvs=' 'sha256-bs2SNzIgvaKuOEYeHOI4jSPUs8HltLFAlifOiLxVdQA='; worker-src 'self' blob:; style-src 'self' 'sha256-lxANVI+Gu65giASOybH/72LvCPbkLqR1BCZgm71xdPY='; style-src-elem 'self' 'sha256-lxANVI+Gu65giASOybH/72LvCPbkLqR1BCZgm71xdPY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-4dm4ULZW1m8epUUO1BSjEY5Iq6bz4XmMeLxekJoU5S4=' 'sha256-MQiicXcSZijhv0u5IK0fvGs7eSPyFqjDy30h9AmVL0s='; worker-src 'self' blob:; style-src 'self' 'sha256-K4nS+P/S/5u9hfd3navJ4237CQ7w0kWFNFTrYrAPdOM='; style-src-elem 'self' 'sha256-K4nS+P/S/5u9hfd3navJ4237CQ7w0kWFNFTrYrAPdOM='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -4318,6 +4318,17 @@
     margin-bottom: 16px;
     line-height: 1.5;
   }
+  .sim-source {
+    margin: -6px 0 14px 0;
+    padding: 6px 10px;
+    border-left: 3px solid var(--line);
+    background: #faf6ee;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.45;
+    border-radius: 0 4px 4px 0;
+  }
+  .sim-source a, .sim-source-link { color: var(--accent, #7a5a3a); }
   .accent-recon-grid {
     display: grid;
     grid-template-columns: 240px 1fr;
@@ -5611,7 +5622,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "1516438acf3b",
+  "build_id": "a14da6d8b4b0",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -5919,7 +5930,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "1516438acf3b";
+	var APP_BUILD_ID$1 = "a14da6d8b4b0";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6805,8 +6816,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "1516438acf3b").trim();
-		if (buildId && buildId !== "1516438acf3b") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "a14da6d8b4b0").trim();
+		if (buildId && buildId !== "a14da6d8b4b0") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10249,7 +10260,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "1516438acf3b" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "a14da6d8b4b0" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -16661,7 +16672,7 @@ var BookIndex = (function(exports) {
 				<span class="sim-word-meaning">${escapeHtml(currentRoot.meaning)}</span>
 			</h3>
 			<div class="sim-intro">
-				Посмотрите в хронологическом разрезе, как праславянские реконструированные корни эволюционировали в современные славянские языки под воздействием фонетических законов, описанных Зализняком.
+				Посмотрите в хронологическом разрезе, как праславянские реконструированные корни эволюционировали в современные славянские языки под воздействием фонетических законов, описанных Зализняком. Учебно-иллюстративный инструмент: звуковые переходы (полногласие/неполногласие, спирантизация g → h, падение редуцированных) — стандартная сравнительная славистика; шаги с флексией показаны упрощённо. Разбор: <a class="sim-source-link" href="https://github.com/gasyoun/BookIndex/blob/main/docs/SIMULATOR_AUDIT_RU.md" target="_blank" rel="noopener noreferrer">SIMULATOR_AUDIT_RU.md</a>.
 			</div>
 			<div class="sim-controls">
 				<label for="sim-root-select" class="sim-label">Выберите праславянский корень:</label>
@@ -18096,7 +18107,8 @@ var BookIndex = (function(exports) {
 			</h3>
 			<div class="accent-recon-intro">
 				Интерактивный реконструктор древнерусских и праславянских именных акцентных парадигм. Выберите реконструированный праславянский корень и стадию эволюции, чтобы наглядно увидеть, как ударение перемещалось по падежным формам.
-			</div>
+				</div>
+				<p class="sim-source">Учебно-иллюстративный инструмент. Парадигмы A/B/C — по акцентологии А. А. Зализняка («От праславянской акцентуации к русской», 1985; «Древнерусские энклитики», 2008). Источники и оговорки: <a href="https://github.com/gasyoun/BookIndex/blob/main/docs/SIMULATOR_AUDIT_RU.md" target="_blank" rel="noopener noreferrer">SIMULATOR_AUDIT_RU.md</a>.</p>
 
 			<div class="accent-recon-grid">
 				<div class="accent-recon-controls">
@@ -18186,7 +18198,7 @@ var BookIndex = (function(exports) {
 				<span>✍️ Гидратор древнерусской орфографии</span>
 			</h3>
 			<div class="accent-recon-intro">
-				Интерактивный инструмент для автоматической реконструкции древнерусского написания (гидратации) на основе современных слов. Позволяет увидеть, как современные лексемы выглядели бы в новгородских берестяных грамотах и летописях XI-XIV веков.
+				Интерактивный инструмент для автоматической реконструкции древнерусского написания (гидратации) на основе современных слов. Позволяет увидеть, как современные лексемы выглядели бы в новгородских берестяных грамотах и летописях XI-XIV веков. Учебно-иллюстративный инструмент: корни ять/юс этимологически стандартны, но сопоставление по подстроке приблизительно и может ошибаться (не нормативный транскриптор). Разбор и источники: <a class="sim-source-link" href="https://github.com/gasyoun/BookIndex/blob/main/docs/SIMULATOR_AUDIT_RU.md" target="_blank" rel="noopener noreferrer">SIMULATOR_AUDIT_RU.md</a>.
 			</div>
 
 			<div class="ortho-hydrator-grid">
