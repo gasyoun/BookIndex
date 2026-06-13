@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-OpVekH7DbKipFE6skhJEo/iGm4Nex/Bw4+y1OJzXMpc=' 'sha256-e/WrCZo1+PxRcVakvRuHMb/Bb2skXKeOkBqSF2rgsqQ='; worker-src 'self' blob:; style-src 'self' 'sha256-tenO4MYDiSv52Zb6g6FtUuU79IMvRemKJCyxioYk44Q='; style-src-elem 'self' 'sha256-tenO4MYDiSv52Zb6g6FtUuU79IMvRemKJCyxioYk44Q='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-X/cp3z3HlJXGejne26DCQo8y1AxM2eJp9DC+qyuosFw=' 'sha256-5uiGN8JkNGxdCDg8asmmJ6gBmE8ADbWoE6XBMeafac0='; worker-src 'self' blob:; style-src 'self' 'sha256-tenO4MYDiSv52Zb6g6FtUuU79IMvRemKJCyxioYk44Q='; style-src-elem 'self' 'sha256-tenO4MYDiSv52Zb6g6FtUuU79IMvRemKJCyxioYk44Q='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -5926,7 +5926,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "7a97ce0a317e",
+  "build_id": "dfd60b4216c9",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6234,7 +6234,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "7a97ce0a317e";
+	var APP_BUILD_ID$1 = "dfd60b4216c9";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7124,8 +7124,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "7a97ce0a317e").trim();
-		if (buildId && buildId !== "7a97ce0a317e") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "dfd60b4216c9").trim();
+		if (buildId && buildId !== "dfd60b4216c9") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10600,7 +10600,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "7a97ce0a317e" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "dfd60b4216c9" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -12676,9 +12676,26 @@ var BookIndex = (function(exports) {
 		const t = type === "subject_index" ? "subject" : String(type || "");
 		return t + "\0" + String(head || "");
 	}
+	// video_catalog contains duplicate id entries; collapse to one per id (keeping
+	// the richest related_entities) so backlinks/counts are not inflated.
+	var DEDUPED_VIDEO_CATALOG = null;
+	function getDedupedVideoCatalog() {
+		if (DEDUPED_VIDEO_CATALOG) return DEDUPED_VIDEO_CATALOG;
+		const catalog = Array.isArray(APP_DATA && APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		if (!catalog.length) return [];
+		const byId = /* @__PURE__ */ new Map();
+		for (const v of catalog) {
+			if (!v || !v.url) continue;
+			const key = v.id || v.url;
+			const prev = byId.get(key);
+			if (!prev || (v.related_entities || []).length > (prev.related_entities || []).length) byId.set(key, v);
+		}
+		DEDUPED_VIDEO_CATALOG = Array.from(byId.values());
+		return DEDUPED_VIDEO_CATALOG;
+	}
 	function getVideoBacklinkIndex() {
 		if (VIDEO_BACKLINK_INDEX) return VIDEO_BACKLINK_INDEX;
-		const catalog = Array.isArray(APP_DATA && APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		const catalog = getDedupedVideoCatalog();
 		// Do not memoize before the catalog module (99-extra) is loaded, otherwise
 		// an empty index would be cached permanently. Return a transient empty map.
 		if (!catalog.length) return /* @__PURE__ */ new Map();
@@ -12724,7 +12741,7 @@ var BookIndex = (function(exports) {
 		if (CHAPTER_VIDEO_CACHE.has(chapterIdx)) return CHAPTER_VIDEO_CACHE.get(chapterIdx).slice(0, limit);
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
 		const ch = chapters[chapterIdx];
-		const catalog = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		const catalog = getDedupedVideoCatalog();
 		if (!ch || !catalog.length) {
 			CHAPTER_VIDEO_CACHE.set(chapterIdx, []);
 			return [];
@@ -16086,17 +16103,8 @@ var BookIndex = (function(exports) {
 		return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
 	}
 	function renderVideoGalleryPanel(container) {
-		const catalogRaw = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
-		// catalog has duplicate ids — dedupe, keep the entry with the most related entities
-		const byId = /* @__PURE__ */ new Map();
-		for (const v of catalogRaw) {
-			if (!v || !v.url) continue;
-			const key = v.id || v.url;
-			const prev = byId.get(key);
-			if (!prev || (v.related_entities || []).length > (prev.related_entities || []).length) byId.set(key, v);
-		}
-		const catalog = Array.from(byId.values());
+		const catalog = getDedupedVideoCatalog();
 		container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
     <h2 class="video-gallery-title">Видеогалерея</h2>
     <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; таймкоды на минуту — на карточках сущностей и в KWIC по лекциям.</div>
@@ -16907,6 +16915,7 @@ var BookIndex = (function(exports) {
 					rightSuffix: rightEnd < text.length ? "…" : "",
 					sortLeft: normalizeHeadForMatch(text.slice(Math.max(0, idx - 40), idx)),
 					sortRight: normalizeHeadForMatch(text.slice(idx + ql.length, idx + ql.length + 40)),
+					videoId: v.id || v.url || "",
 					videoUrl: v.url || "",
 					videoTitle: v.title || "",
 					t
@@ -17051,7 +17060,7 @@ var BookIndex = (function(exports) {
 			}
 			const terms = new Set(rows.map((r) => r.term));
 			const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : "";
-			const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoTitle)).size : 0;
+			const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoId)).size : 0;
 			metaEl.textContent = currentKwicSource === "lectures"
 				? `Найдено ${rows.length} контекстов в ${lecturesCount} лекциях, источник: лекции.${truncText}`
 				: `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${sourceLabel}.${truncText}`;
@@ -19739,7 +19748,7 @@ var BookIndex = (function(exports) {
 			const l = window.APP_DATA && window.APP_DATA.lectures ? window.APP_DATA.lectures[lectureId] : null;
 			const lName = l ? l.name || "" : "";
 			const lTitle = lectureId === 0 ? "Предисловие" : `Лекция ${lectureId}`;
-			citationTitle = lectureId === 0 ? `Предисловие: ${lName}` : `${lTitle}. ${lName}`;
+			citationTitle = lectureId === 0 ? `Предисловие: ${escapeHtml(lName)}` : `${lTitle}. ${escapeHtml(lName)}`;
 			citationBook = "Из жизни слов и языков";
 			url = `https://gasyoun.github.io/BookIndex/aaz-index.html#v4/materials/lecture_pages/${lectureId}`;
 		} else {
@@ -19753,13 +19762,14 @@ var BookIndex = (function(exports) {
 			const books = (window.APP_DATA && window.APP_DATA.corpus && window.APP_DATA.corpus.books) || [];
 			const bookId = rec && rec.book_id ? rec.book_id : (getActiveBook().book_id || "");
 			const book = books.find((b) => b && b.book_id === bookId) || {};
-			citationTitle = `Справочная статья «${itemHead}»` + (pages.length ? `. С. ${pages.join(", ")}` : "");
-			citationBook = book.title || "Из жизни слов и языков: интерактивный академический справочник и корпус";
+			citationTitle = `Справочная статья «${escapeHtml(itemHead)}»` + (pages.length ? `. С. ${pages.join(", ")}` : "");
+			citationBook = escapeHtml(book.title || "Из жизни слов и языков: интерактивный академический справочник и корпус");
 			let encodedSlug = "";
 			if (typeof window.encodeItemHeadForHash === "function") encodedSlug = window.encodeItemHeadForHash(itemType, itemHead);
 			else encodedSlug = encodeURIComponent(itemHead);
 			url = `https://gasyoun.github.io/BookIndex/${itemType}/list/item/${itemType}/${encodedSlug}/`;
 		}
+		url = escapeHtml(url);
 		style = style.toLowerCase();
 		if (style === "apa") if (type === "lecture") return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. BookIndex Digital Humanities Project. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
 		else return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;

@@ -176,11 +176,13 @@ function renderCitationWidget(type, id, title, book, url) {
   const year = d.getFullYear();
   const dateFormatted = `${String(day).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${year}`;
 
+  const tEsc = escapeHtml(title);
+  const uEsc = escapeHtml(url);
   let gostText = '';
   if (type === 'lecture') {
-    gostText = `Зализняк А. А. ${title} // Из жизни слов и языков. — BookIndex Digital Humanities Project, 2026. — URL: <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
+    gostText = `Зализняк А. А. ${tEsc} // Из жизни слов и языков. — BookIndex Digital Humanities Project, 2026. — URL: <a href="${uEsc}" target="_blank">${uEsc}</a> (дата обращения: ${dateFormatted}).`;
   } else {
-    gostText = `Зализняк А. А. ${title} // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
+    gostText = `Зализняк А. А. ${tEsc} // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="${uEsc}" target="_blank">${uEsc}</a> (дата обращения: ${dateFormatted}).`;
   }
 
   return `
@@ -591,7 +593,8 @@ function generateFile(filePath, title, metaDesc, canonicalUrl, schemaObj, conten
   pageHtml = pageHtml.replace(/<link rel="canonical" href=".*?">/, `<link rel="canonical" href="${escapeHtml(canonicalUrl)}">`);
 
   // Update Dynamic JSON-LD Schema
-  const schemaStr = schemaObj ? JSON.stringify(schemaObj, null, 2) : '{}';
+  // escape '<' so a value containing "</script>" cannot break out of the JSON-LD block
+  const schemaStr = (schemaObj ? JSON.stringify(schemaObj, null, 2) : '{}').replace(/</g, '\\u003c');
   pageHtml = pageHtml.replace('<script id="schema-seo-dynamic" type="application/ld+json">{}</script>', `<script id="schema-seo-dynamic" type="application/ld+json">\n${schemaStr}\n</script>`);
 
   // Inject content in <div id="content">

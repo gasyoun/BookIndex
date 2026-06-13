@@ -57,13 +57,16 @@ def head_pattern(head, aliases):
         if not tokens:
             continue
         if has_initials and len(tokens) >= 1:
-            # personal name: anchor on the longest token (surname)
+            # personal name: anchor on the longest token (surname); require >=4
+            # chars so a 2-3 letter surname stem can't match unrelated words
             surname = max(tokens, key=len)
+            if len(surname) < 4:
+                continue
             alts.append(r"\b" + re.escape(stem_token(surname)) + r"[а-яё]*")
         elif len(tokens) >= 2:
             # multiword term: all tokens in order, each a stemmed prefix
             alts.append(r"\b" + r"[\s\-]+".join(re.escape(stem_token(t)) + r"[а-яё]*" for t in tokens))
-        else:
+        elif len(tokens[0]) >= 4:
             alts.append(r"\b" + re.escape(stem_token(tokens[0])) + r"[а-яё]*")
     if not alts:
         return None

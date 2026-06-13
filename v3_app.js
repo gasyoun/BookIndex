@@ -6594,9 +6594,26 @@ var BookIndex = (function(exports) {
 		const t = type === "subject_index" ? "subject" : String(type || "");
 		return t + "\0" + String(head || "");
 	}
+	// video_catalog contains duplicate id entries; collapse to one per id (keeping
+	// the richest related_entities) so backlinks/counts are not inflated.
+	var DEDUPED_VIDEO_CATALOG = null;
+	function getDedupedVideoCatalog() {
+		if (DEDUPED_VIDEO_CATALOG) return DEDUPED_VIDEO_CATALOG;
+		const catalog = Array.isArray(APP_DATA && APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		if (!catalog.length) return [];
+		const byId = /* @__PURE__ */ new Map();
+		for (const v of catalog) {
+			if (!v || !v.url) continue;
+			const key = v.id || v.url;
+			const prev = byId.get(key);
+			if (!prev || (v.related_entities || []).length > (prev.related_entities || []).length) byId.set(key, v);
+		}
+		DEDUPED_VIDEO_CATALOG = Array.from(byId.values());
+		return DEDUPED_VIDEO_CATALOG;
+	}
 	function getVideoBacklinkIndex() {
 		if (VIDEO_BACKLINK_INDEX) return VIDEO_BACKLINK_INDEX;
-		const catalog = Array.isArray(APP_DATA && APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		const catalog = getDedupedVideoCatalog();
 		// Do not memoize before the catalog module (99-extra) is loaded, otherwise
 		// an empty index would be cached permanently. Return a transient empty map.
 		if (!catalog.length) return /* @__PURE__ */ new Map();
@@ -6642,7 +6659,7 @@ var BookIndex = (function(exports) {
 		if (CHAPTER_VIDEO_CACHE.has(chapterIdx)) return CHAPTER_VIDEO_CACHE.get(chapterIdx).slice(0, limit);
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
 		const ch = chapters[chapterIdx];
-		const catalog = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		const catalog = getDedupedVideoCatalog();
 		if (!ch || !catalog.length) {
 			CHAPTER_VIDEO_CACHE.set(chapterIdx, []);
 			return [];
@@ -10004,17 +10021,8 @@ var BookIndex = (function(exports) {
 		return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
 	}
 	function renderVideoGalleryPanel(container) {
-		const catalogRaw = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
-		// catalog has duplicate ids — dedupe, keep the entry with the most related entities
-		const byId = /* @__PURE__ */ new Map();
-		for (const v of catalogRaw) {
-			if (!v || !v.url) continue;
-			const key = v.id || v.url;
-			const prev = byId.get(key);
-			if (!prev || (v.related_entities || []).length > (prev.related_entities || []).length) byId.set(key, v);
-		}
-		const catalog = Array.from(byId.values());
+		const catalog = getDedupedVideoCatalog();
 		container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
     <h2 class="video-gallery-title">Видеогалерея</h2>
     <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; таймкоды на минуту — на карточках сущностей и в KWIC по лекциям.</div>
@@ -10825,6 +10833,7 @@ var BookIndex = (function(exports) {
 					rightSuffix: rightEnd < text.length ? "…" : "",
 					sortLeft: normalizeHeadForMatch(text.slice(Math.max(0, idx - 40), idx)),
 					sortRight: normalizeHeadForMatch(text.slice(idx + ql.length, idx + ql.length + 40)),
+					videoId: v.id || v.url || "",
 					videoUrl: v.url || "",
 					videoTitle: v.title || "",
 					t
@@ -10969,7 +10978,7 @@ var BookIndex = (function(exports) {
 			}
 			const terms = new Set(rows.map((r) => r.term));
 			const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : "";
-			const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoTitle)).size : 0;
+			const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoId)).size : 0;
 			metaEl.textContent = currentKwicSource === "lectures"
 				? `Найдено ${rows.length} контекстов в ${lecturesCount} лекциях, источник: лекции.${truncText}`
 				: `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${sourceLabel}.${truncText}`;
@@ -13657,7 +13666,7 @@ var BookIndex = (function(exports) {
 			const l = window.APP_DATA && window.APP_DATA.lectures ? window.APP_DATA.lectures[lectureId] : null;
 			const lName = l ? l.name || "" : "";
 			const lTitle = lectureId === 0 ? "Предисловие" : `Лекция ${lectureId}`;
-			citationTitle = lectureId === 0 ? `Предисловие: ${lName}` : `${lTitle}. ${lName}`;
+			citationTitle = lectureId === 0 ? `Предисловие: ${escapeHtml(lName)}` : `${lTitle}. ${escapeHtml(lName)}`;
 			citationBook = "Из жизни слов и языков";
 			url = `https://gasyoun.github.io/BookIndex/aaz-index.html#v4/materials/lecture_pages/${lectureId}`;
 		} else {
@@ -13671,13 +13680,14 @@ var BookIndex = (function(exports) {
 			const books = (window.APP_DATA && window.APP_DATA.corpus && window.APP_DATA.corpus.books) || [];
 			const bookId = rec && rec.book_id ? rec.book_id : (getActiveBook().book_id || "");
 			const book = books.find((b) => b && b.book_id === bookId) || {};
-			citationTitle = `Справочная статья «${itemHead}»` + (pages.length ? `. С. ${pages.join(", ")}` : "");
-			citationBook = book.title || "Из жизни слов и языков: интерактивный академический справочник и корпус";
+			citationTitle = `Справочная статья «${escapeHtml(itemHead)}»` + (pages.length ? `. С. ${pages.join(", ")}` : "");
+			citationBook = escapeHtml(book.title || "Из жизни слов и языков: интерактивный академический справочник и корпус");
 			let encodedSlug = "";
 			if (typeof window.encodeItemHeadForHash === "function") encodedSlug = window.encodeItemHeadForHash(itemType, itemHead);
 			else encodedSlug = encodeURIComponent(itemHead);
 			url = `https://gasyoun.github.io/BookIndex/${itemType}/list/item/${itemType}/${encodedSlug}/`;
 		}
+		url = escapeHtml(url);
 		style = style.toLowerCase();
 		if (style === "apa") if (type === "lecture") return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. BookIndex Digital Humanities Project. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
 		else return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;

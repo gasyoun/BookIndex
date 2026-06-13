@@ -171,8 +171,10 @@ def verify_person(head, entity):
     forms = [label_of(entity)]
     for al in (entity.get("aliases", {}) or {}).get("ru", []) or []:
         forms.append(al.get("value", ""))
-    blob = " ".join(forms).lower()
-    if surname.lower() not in blob:
+    # surname must match a WHOLE word in the label/aliases (not a substring,
+    # which would let a 2-3 letter surname match inside unrelated words)
+    blob_words = {w.lower() for w in re.findall(r"[А-Яа-яЁёA-Za-z]+", " ".join(forms))}
+    if surname.lower() not in blob_words:
         return False
     if not initials:
         return False  # mononym/no initials: too risky to auto-accept
