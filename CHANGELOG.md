@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Fixed
+- Reverse video links now de-duplicate by video id (`video_catalog` contains duplicate-id rows), so entity-card video counts and lists are no longer inflated; the chapter-related-videos and gallery views share the same deduped catalog.
+- Entity citations fall back to per-book `occurrences` pages when `page_list` is empty, so the «С. N» reference is no longer dropped (e.g. «Saloni Z.» → «С. 157»).
+- Security hardening (defensive, author-curated data): escape interpolated values in the app + prerender citation widgets and the prerendered JSON-LD (`</script>` guard); validate the 404 retired-slug redirect against `^[a-z0-9-]+$`; CSV formula-injection guard in the TEI exports; `</script>` guard in the pipeline dashboard.
+- Matcher precision: whole-word (not substring) surname matching in the authority aligner; a ≥4-char floor in the transcript timecoder.
+
+### Added
+- KWIC over lectures matches accent-tolerantly — «победа» also matches the stressed transcript form «побе́да».
+- Entity-card secondary actions (show on map, copy link, export .md) collapse into a «⋯ ещё» menu; prev/next/back stay visible (B5).
+- Regression E2E suite (`tests/e2e/session-features.spec.js`) covering the home task dashboard, chapter ribbon, lecture KWIC, video gallery, card order/dedup/actions, page citations and the lecture↔video link.
+- Authority review worklist: `scripts/retier_authority_candidates.py` (`npm run authority:retier`) emits `data/authority_review.{json,csv}` — the 209 unconfirmed Wikidata candidates tiered by decision effort (decide / research / none) with a suggested QID and a `decision` column.
+
 ## [1.0.0] - 2026-06-13
 ### Added
 - Entity-card content priority (B5): the card now orders sections by reader value — pages + contexts, then the «Видео» chips (moved up above the cross-link cluster), then cross-links with the «Авторитетные записи» chips grouped right after them, then external-DB (LOD) links and the citation widget.
