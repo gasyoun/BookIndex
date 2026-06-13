@@ -29,7 +29,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 52,
-      "lon": -1.5
+      "lon": -1.5,
+      "authority": {
+        "wikidata": "Q21",
+        "viaf": "142995804",
+        "gnd": "4014770-8",
+        "geonames": "6269131",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-f09a3a8f-bf41-50f6-865b-fc838bb915b4",
@@ -58,7 +65,11 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 42,
-      "lon": 13
+      "lon": 13,
+      "authority": {
+        "wikidata": "Q145694",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-6eca804c-367a-5d6f-9c7f-a8a61be0f4f3",
@@ -171,7 +182,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 0,
-      "lon": 20
+      "lon": 20,
+      "authority": {
+        "wikidata": "Q15",
+        "viaf": "127043766",
+        "gnd": "4000695-5",
+        "geonames": "6255146",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-34e82082-bebd-538e-9a79-1964165b77a2",
@@ -225,7 +243,11 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 43,
-      "lon": 22
+      "lon": 22,
+      "authority": {
+        "wikidata": "Q20870818",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-9f1ae182-12e1-588a-ae62-4dcc7d5c834c",
@@ -256,7 +278,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 58,
-      "lon": 20
+      "lon": 20,
+      "authority": {
+        "wikidata": "Q545",
+        "viaf": "316431537",
+        "gnd": "4044107-6",
+        "geonames": "2633321",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-92510155-1662-56c3-8754-f4d9303a51a9",
@@ -361,7 +390,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 53.08,
-      "lon": 8.8
+      "lon": 8.8,
+      "authority": {
+        "wikidata": "Q24879",
+        "viaf": "137159715",
+        "gnd": "4008135-7",
+        "geonames": "2944388",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-6fdbefeb-7f12-5252-8c61-5f30a6cd0d6a",
@@ -390,7 +426,13 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 54,
-      "lon": -2
+      "lon": -2,
+      "authority": {
+        "wikidata": "Q185103",
+        "gnd": "4069666-2",
+        "geonames": "8378485",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-f860da61-f5c8-50dd-bd70-3061ef18effb",
@@ -419,7 +461,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 54,
-      "lon": -4
+      "lon": -4,
+      "authority": {
+        "wikidata": "Q38272",
+        "viaf": "237264765",
+        "gnd": "4090131-2",
+        "geonames": "2654669",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-05cef0ca-9a03-546a-be7c-6e56d003bdda",
@@ -479,7 +528,14 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 25.32,
-      "lon": 83
+      "lon": 83,
+      "authority": {
+        "wikidata": "Q79980",
+        "viaf": "168498951",
+        "gnd": "4062337-3",
+        "geonames": "1253405",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-5ae4de51-6510-5277-8522-8ce0972083a1",
@@ -545,7 +601,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 47.16,
-      "lon": 19.5
+      "lon": 19.5,
+      "authority": {
+        "wikidata": "Q28",
+        "viaf": "128544491",
+        "gnd": "4078541-5",
+        "geonames": "719819",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-4e91d042-2efb-5064-a534-e272c898dee9",
@@ -574,7 +637,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 45.44,
-      "lon": 12.32
+      "lon": 12.32,
+      "authority": {
+        "wikidata": "Q641",
+        "viaf": "8456155769103127880005",
+        "gnd": "4062501-1",
+        "geonames": "6542284",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-6a1587d1-8457-5882-9ddb-93adc3994fa4",
@@ -603,7 +673,13 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 41,
-      "lon": 29
+      "lon": 29,
+      "authority": {
+        "wikidata": "Q12544",
+        "viaf": "144245245",
+        "gnd": "4009256-2",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-fe0c4f4b-369c-5491-a8c3-b1c21867ed15",
@@ -632,7 +708,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 56.13,
-      "lon": 40.4
+      "lon": 40.4,
+      "authority": {
+        "wikidata": "Q2684",
+        "viaf": "139562941",
+        "gnd": "4108478-0",
+        "geonames": "473247",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1b6a010c-35e4-5f09-a76b-ba46eeec35b4",
@@ -661,7 +744,11 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 58.6,
-      "lon": 49.66
+      "lon": 49.66,
+      "authority": {
+        "wikidata": "Q1540335",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-bcfcdd39-ce8b-5915-a1d2-e83207105f89",
@@ -686,7 +773,13 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 49.12,
-      "lon": 24.7
+      "lon": 24.7,
+      "authority": {
+        "wikidata": "Q146450",
+        "viaf": "138404920",
+        "geonames": "709034",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8d792996-9f7a-5e2a-87de-baec282259cb",
@@ -719,7 +812,13 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 47,
-      "lon": 2
+      "lon": 2,
+      "authority": {
+        "wikidata": "Q38060",
+        "viaf": "242520115",
+        "gnd": "4019150-3",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-a7d29db9-1892-5d72-8fdb-8eb82bd6979a",
@@ -748,7 +847,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 50.85,
-      "lon": 0.57
+      "lon": 0.57,
+      "authority": {
+        "wikidata": "Q29245",
+        "viaf": "136080566",
+        "gnd": "4023626-2",
+        "geonames": "2647356",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1e3123bc-ec36-5486-9448-27a00c474fec",
@@ -777,7 +883,14 @@
       "letter_change": false,
       "epoch_class": "contemporary",
       "lat": 52.5,
-      "lon": 13.4
+      "lon": 13.4,
+      "authority": {
+        "wikidata": "Q16957",
+        "viaf": "125035363",
+        "gnd": "4011890-3",
+        "geonames": "8354410",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-822cb45a-6005-588b-a80b-ea5706bf8fe4",
@@ -820,7 +933,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 51.16,
-      "lon": 10.45
+      "lon": 10.45,
+      "authority": {
+        "wikidata": "Q183",
+        "viaf": "135446758",
+        "gnd": "4011882-4",
+        "geonames": "2921044",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-cd173c0a-21ae-56e6-a562-208d32b002a1",
@@ -849,7 +969,12 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 52.13,
-      "lon": 5.29
+      "lon": 5.29,
+      "authority": {
+        "wikidata": "Q102911",
+        "gnd": "4133959-9",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-0a43c6a9-8be6-5d88-a7fa-11997c92afbe",
@@ -880,7 +1005,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 39.07,
-      "lon": 21.82
+      "lon": 21.82,
+      "authority": {
+        "wikidata": "Q41",
+        "viaf": "131265011",
+        "gnd": "4022047-3",
+        "geonames": "390903",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-5d8961ab-3689-5971-8140-b202f9d7a397",
@@ -979,7 +1111,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 54,
-      "lon": 15
+      "lon": 15,
+      "authority": {
+        "wikidata": "Q46",
+        "viaf": "170298814",
+        "gnd": "4015701-5",
+        "geonames": "6255148",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-4b2db9c2-762c-5388-9850-d8c5eee2b734",
@@ -1024,7 +1163,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 26.82,
-      "lon": 30.8
+      "lon": 30.8,
+      "authority": {
+        "wikidata": "Q79",
+        "viaf": "242059233",
+        "gnd": "4000556-2",
+        "geonames": "357994",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1c425ad0-cccc-5b9d-bb5e-d3595c02bdec",
@@ -1138,7 +1284,14 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 21,
-      "lon": 78
+      "lon": 78,
+      "authority": {
+        "wikidata": "Q668",
+        "viaf": "135375457",
+        "gnd": "4026722-2",
+        "geonames": "1269750",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-66946002-6134-56fc-9126-bd9cbe7934f4",
@@ -1171,7 +1324,11 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 22,
-      "lon": 79
+      "lon": 79,
+      "authority": {
+        "wikidata": "Q853968",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-ef67cea3-45e5-5afc-9faa-62fca9f25708",
@@ -1200,7 +1357,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 33.22,
-      "lon": 43.68
+      "lon": 43.68,
+      "authority": {
+        "wikidata": "Q796",
+        "viaf": "8055148947783454950004",
+        "gnd": "4072920-5",
+        "geonames": "99237",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8a39e323-c80f-51fe-86b5-036db4c01611",
@@ -1233,7 +1397,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 32.43,
-      "lon": 53.69
+      "lon": 53.69,
+      "authority": {
+        "wikidata": "Q794",
+        "viaf": "149669363",
+        "gnd": "4027653-3",
+        "geonames": "130758",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-a1f35106-b1df-576f-b860-3e9c9a798fe0",
@@ -1268,7 +1439,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 64.96,
-      "lon": -19
+      "lon": -19,
+      "authority": {
+        "wikidata": "Q189",
+        "viaf": "133608068",
+        "gnd": "4027754-9",
+        "geonames": "2629691",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1ec53bd1-e8a3-5ce6-9fd9-7af2ec643935",
@@ -1297,7 +1475,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 40.46,
-      "lon": -3.75
+      "lon": -3.75,
+      "authority": {
+        "wikidata": "Q29",
+        "viaf": "133609710",
+        "gnd": "4055964-6",
+        "geonames": "2510769",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-f1336cd1-6b40-535e-8308-6aa3e5cf5ca5",
@@ -1338,7 +1523,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 41.87,
-      "lon": 12.57
+      "lon": 12.57,
+      "authority": {
+        "wikidata": "Q38",
+        "viaf": "152361066",
+        "gnd": "4027833-5",
+        "geonames": "3175395",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-5f1ad71b-a89b-55da-9d7f-1a53a9813c4a",
@@ -1367,7 +1559,13 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 43,
-      "lon": 44
+      "lon": 44,
+      "authority": {
+        "wikidata": "Q18869",
+        "viaf": "255510449",
+        "geonames": "615318",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-0935829a-38e2-5fde-ad2c-a377427ea5ec",
@@ -1412,7 +1610,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 50.45,
-      "lon": 30.52
+      "lon": 30.52,
+      "authority": {
+        "wikidata": "Q1899",
+        "viaf": "150028026",
+        "gnd": "4030522-3",
+        "geonames": "703448",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-14109847-322c-5d0d-9585-edf11c03a03b",
@@ -1472,7 +1677,13 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 50.45,
-      "lon": 30.52
+      "lon": 30.52,
+      "authority": {
+        "wikidata": "Q170036",
+        "gnd": "4506824-0",
+        "geonames": "703446",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-b289c2b1-ac57-520c-b628-ab540ef679a7",
@@ -1555,7 +1766,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 35.86,
-      "lon": 104.2
+      "lon": 104.2,
+      "authority": {
+        "wikidata": "Q148",
+        "viaf": "132441531",
+        "gnd": "4009937-4",
+        "geonames": "1814991",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-d5642c98-da61-5dd7-9921-e33a36e0bc49",
@@ -1584,7 +1802,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 67.7,
-      "lon": 36
+      "lon": 36,
+      "authority": {
+        "wikidata": "Q165608",
+        "viaf": "234164748",
+        "gnd": "4098030-3",
+        "geonames": "546085",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1313d156-0ce7-5aae-a97b-0c6ca15ead99",
@@ -1604,7 +1829,14 @@
         "Географическое название, сопоставляемое Фоменко со словом 'Орда'."
       ],
       "letter_change": false,
-      "letter": "К"
+      "letter": "К",
+      "authority": {
+        "wikidata": "Q5818",
+        "viaf": "137098626",
+        "gnd": "4010558-1",
+        "geonames": "6357216",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-6f5f100d-6524-5264-98c8-7026a666e1c0",
@@ -1641,7 +1873,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 35.24,
-      "lon": 24.81
+      "lon": 24.81,
+      "authority": {
+        "wikidata": "Q34374",
+        "viaf": "237254468",
+        "gnd": "4073791-3",
+        "geonames": "258763",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-d89b0747-7d7d-5230-be3d-29b85b7a54c0",
@@ -1726,7 +1965,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 55.17,
-      "lon": 23.88
+      "lon": 23.88,
+      "authority": {
+        "wikidata": "Q37",
+        "viaf": "125422022",
+        "gnd": "4074266-0",
+        "geonames": "597427",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-9ef4a94c-4b52-5a3b-95fc-1a0a5ba20e59",
@@ -1786,7 +2032,11 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 39,
-      "lon": 35
+      "lon": 35,
+      "authority": {
+        "wikidata": "Q12824780",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-e9f56df4-3944-51d6-8e66-307100528ca8",
@@ -1819,7 +2069,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 31.79,
-      "lon": -7.09
+      "lon": -7.09,
+      "authority": {
+        "wikidata": "Q1028",
+        "viaf": "140638492",
+        "gnd": "4037680-1",
+        "geonames": "2542007",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-826f7d2c-bb74-54e9-a8f6-b899311af6ee",
@@ -1949,7 +2206,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 45.41,
-      "lon": 11.88
+      "lon": 11.88,
+      "authority": {
+        "wikidata": "Q617",
+        "viaf": "137588063",
+        "gnd": "4044295-0",
+        "geonames": "6542281",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-0453e0cf-f2d3-5746-ac77-1146d7e21ffe",
@@ -1978,7 +2242,14 @@
       "letter_change": false,
       "epoch_class": "contemporary",
       "lat": 30.37,
-      "lon": 69.34
+      "lon": 69.34,
+      "authority": {
+        "wikidata": "Q843",
+        "viaf": "268930849",
+        "gnd": "4075812-6",
+        "geonames": "1168579",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-c78a86f8-bb8f-508a-beb9-392970cd8c7d",
@@ -2007,7 +2278,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 31.95,
-      "lon": 35.23
+      "lon": 35.23,
+      "authority": {
+        "wikidata": "Q23792",
+        "viaf": "138926424",
+        "gnd": "4044381-4",
+        "geonames": "12047392",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-ae01f000-8da2-5044-9af4-30dc84b7d1e0",
@@ -2036,7 +2314,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 37.5,
-      "lon": 22
+      "lon": 22,
+      "authority": {
+        "wikidata": "Q78967",
+        "viaf": "234133404",
+        "gnd": "4045064-8",
+        "geonames": "9062330",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-12dc3746-56ef-5567-a689-7fd797869b7c",
@@ -2127,7 +2412,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 36.92,
-      "lon": 21.7
+      "lon": 21.7,
+      "authority": {
+        "wikidata": "Q7263152",
+        "viaf": "137309960",
+        "gnd": "4103392-9",
+        "geonames": "255293",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-5b0c67b8-0f9d-5f8c-8cbd-5d7b3d38299b",
@@ -2162,7 +2454,13 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 54,
-      "lon": 19
+      "lon": 19,
+      "authority": {
+        "wikidata": "Q38872",
+        "viaf": "137143200",
+        "gnd": "4047194-9",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-35cf5915-4f58-5062-a9c5-b2d98919e15a",
@@ -2197,7 +2495,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 57.82,
-      "lon": 28.33
+      "lon": 28.33,
+      "authority": {
+        "wikidata": "Q2214",
+        "viaf": "136053884",
+        "gnd": "4046355-2",
+        "geonames": "504341",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-b7f944b8-8c74-5f30-898f-35173fb15a9e",
@@ -2257,7 +2562,14 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 41.9,
-      "lon": 12.49
+      "lon": 12.49,
+      "authority": {
+        "wikidata": "Q220",
+        "viaf": "251380480",
+        "gnd": "4050471-2",
+        "geonames": "3169070",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-12fea81a-8901-569d-8ff6-2323e25089d6",
@@ -2290,7 +2602,13 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 41.9,
-      "lon": 12.49
+      "lon": 12.49,
+      "authority": {
+        "wikidata": "Q2277",
+        "viaf": "28145424500486830493",
+        "geonames": "8354456",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-9340299e-4a45-593e-bb05-ca56b549cf6d",
@@ -2395,7 +2713,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 61.52,
-      "lon": 105.32
+      "lon": 105.32,
+      "authority": {
+        "wikidata": "Q159",
+        "viaf": "140306806",
+        "gnd": "4076899-5",
+        "geonames": "2017370",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-ce79fde5-29ce-5f33-b928-ba936710e5b3",
@@ -2434,7 +2759,11 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 57.18,
-      "lon": 39.42
+      "lon": 39.42,
+      "authority": {
+        "wikidata": "Q4398444",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-d5e2072b-a862-5d2c-b8a6-05e43a28a76f",
@@ -2741,7 +3070,11 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 43,
-      "lon": 65
+      "lon": 65,
+      "authority": {
+        "wikidata": "Q1211919",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-345175d3-150a-573e-a4e7-ebc6c9a2522f",
@@ -2780,7 +3113,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 56.42,
-      "lon": 40.45
+      "lon": 40.45,
+      "authority": {
+        "wikidata": "Q15757",
+        "viaf": "141915943",
+        "gnd": "4078090-9",
+        "geonames": "485824",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-56cb6402-810e-5aaa-9680-234a69b77c98",
@@ -2843,7 +3183,14 @@
       "letter_change": true,
       "epoch_class": "modern",
       "lat": 48.38,
-      "lon": 31.17
+      "lon": 31.17,
+      "authority": {
+        "wikidata": "Q212",
+        "viaf": "134334037",
+        "gnd": "4061496-7",
+        "geonames": "690791",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8a8211f3-d4c0-588c-a940-3f24901950b3",
@@ -2894,7 +3241,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 35.05,
-      "lon": 24.81
+      "lon": 24.81,
+      "authority": {
+        "wikidata": "Q249707",
+        "viaf": "315170181",
+        "gnd": "4196656-9",
+        "geonames": "262531",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-457ed99f-9f87-5e9d-8f42-b1de4e086cc4",
@@ -2923,7 +3277,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 61.92,
-      "lon": 25.75
+      "lon": 25.75,
+      "authority": {
+        "wikidata": "Q33",
+        "viaf": "132440532",
+        "gnd": "4017243-0",
+        "geonames": "660013",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8f8654be-bd11-51c3-8ca5-42b045b6327b",
@@ -2952,7 +3313,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 43.77,
-      "lon": 11.25
+      "lon": 11.25,
+      "authority": {
+        "wikidata": "Q2044",
+        "viaf": "152981965",
+        "gnd": "4017581-9",
+        "geonames": "6542285",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-43681055-4246-5ce5-800c-694b4692e6b6",
@@ -2981,7 +3349,12 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 50.11,
-      "lon": 8.68
+      "lon": 8.68,
+      "authority": {
+        "wikidata": "Q286577",
+        "viaf": "139024269",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-eff28ce8-01b5-5223-9774-f6358cb8b789",
@@ -3028,7 +3401,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 46.23,
-      "lon": 2.21
+      "lon": 2.21,
+      "authority": {
+        "wikidata": "Q142",
+        "viaf": "264091107",
+        "gnd": "4018145-5",
+        "geonames": "3017382",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-e5e5371c-2bce-5725-aa33-d18d57ff27da",
@@ -3057,7 +3437,13 @@
       "letter_change": true,
       "epoch_class": "modern",
       "lat": 7.87,
-      "lon": 80.77
+      "lon": 80.77,
+      "authority": {
+        "wikidata": "Q2670092",
+        "viaf": "137707668",
+        "gnd": "19826-2",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-52597d61-c669-52a8-9a66-5176d62a7256",
@@ -3086,7 +3472,13 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 6.6,
-      "lon": 20.93
+      "lon": 20.93,
+      "authority": {
+        "wikidata": "Q27433",
+        "gnd": "4079485-4",
+        "geonames": "7729886",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-c1cf9e72-5f87-5340-b775-b305e3eda52d",
@@ -3146,7 +3538,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 51.5,
-      "lon": 31.3
+      "lon": 31.3,
+      "authority": {
+        "wikidata": "Q157053",
+        "viaf": "235578017",
+        "gnd": "4245594-7",
+        "geonames": "710735",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-e7b8b443-e7b3-561d-8834-3b91db9fe923",
@@ -3181,7 +3580,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 60.13,
-      "lon": 18.64
+      "lon": 18.64,
+      "authority": {
+        "wikidata": "Q34",
+        "viaf": "159364209",
+        "gnd": "4077258-5",
+        "geonames": "2661886",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8e309e7d-112e-5b37-8c94-c11d4f2b12a7",
@@ -3212,7 +3618,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 59.95,
-      "lon": 31.04
+      "lon": 31.04,
+      "authority": {
+        "wikidata": "Q15339",
+        "viaf": "135017066",
+        "gnd": "4287460-9",
+        "geonames": "493970",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-141c1b65-cbac-5eb7-b4e7-ec8c7eb906e8",
@@ -3237,7 +3650,14 @@
       "letter_change": false,
       "epoch_class": "contemporary",
       "lat": 7.87,
-      "lon": 80.77
+      "lon": 80.77,
+      "authority": {
+        "wikidata": "Q854",
+        "viaf": "126600002",
+        "gnd": "4009696-8",
+        "geonames": "1227603",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-7a7e26eb-b198-5e11-9278-e80dfc59be94",

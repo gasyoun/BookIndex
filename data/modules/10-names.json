@@ -62,7 +62,13 @@
         "Автор книги, лингвист."
       ],
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q2371003",
+        "viaf": "7453175",
+        "gnd": "11926658X",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-4d8a34ed-fb34-52bf-a738-0cc2bc88fb33",
@@ -102,7 +108,13 @@
         "Упомянут в связи с вручением Литературной премии его имени."
       ],
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q34474",
+        "viaf": "95215697",
+        "gnd": "118642464",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-269dcf11-bfe9-5162-87e4-d6a2a87c18b3",
@@ -142,7 +154,13 @@
         "Автор «Новой хронологии», математик, академик РАН."
       ],
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q158465",
+        "viaf": "64142515",
+        "gnd": "119092689",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-fc9e8b91-3780-51ec-81cb-84c060726c63",
@@ -476,7 +494,12 @@
       "chapters": [
         "О жизни слов"
       ],
-      "wiki": "https://ru.wikipedia.org/wiki/Барулин,_Александр_Николаевич"
+      "wiki": "https://ru.wikipedia.org/wiki/Барулин,_Александр_Николаевич",
+      "authority": {
+        "wikidata": "Q4078727",
+        "viaf": "247999338",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-dce9025a-83e4-503e-8dfa-817eeb12c61d",
@@ -631,7 +654,13 @@
       "chapters": [
         "Историческая лингвистика (продолж.)"
       ],
-      "wiki": "https://ru.wikipedia.org/wiki/Блеген,_Карл"
+      "wiki": "https://ru.wikipedia.org/wiki/Блеген,_Карл",
+      "authority": {
+        "wikidata": "Q552469",
+        "viaf": "47048210",
+        "gnd": "133757463",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-ccbd82f8-9f34-5ff5-8cd1-b02dce87891f",
@@ -1342,7 +1371,13 @@
         "Берестяные грамоты"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Вяземский,_Пётр_Андреевич",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Vyazemsky.jpg/220px-Vyazemsky.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Vyazemsky.jpg/220px-Vyazemsky.jpg",
+      "authority": {
+        "wikidata": "Q19425",
+        "viaf": "88757062",
+        "gnd": "118634437",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-c72d92bc-ef0d-5f2d-b692-fe6d6ad5b605",
@@ -1395,7 +1430,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Гаспаров,_Михаил_Леонович",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Gasparov_M_L_2004_2.jpg/220px-Gasparov_M_L_2004_2.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Gasparov_M_L_2004_2.jpg/220px-Gasparov_M_L_2004_2.jpg",
+      "authority": {
+        "wikidata": "Q1228472",
+        "viaf": "51832912",
+        "gnd": "103222855",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-77c46ea3-79bc-53e7-846b-2a163154a801",
@@ -1740,7 +1781,13 @@
         "О жизни слов"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Даль,_Владимир_Иванович",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg/220px-Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg/220px-Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg",
+      "authority": {
+        "wikidata": "Q326499",
+        "viaf": "73991311",
+        "gnd": "118523430",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-78a82329-9111-561e-adb7-bb59846f99df",
@@ -1848,7 +1895,13 @@
         "Из русского ударения"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Дыбо,_Владимир_Антонович",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q130117",
+        "viaf": "20089987",
+        "gnd": "103350160",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-44b15eb0-4252-5683-a355-0628a39612df",
@@ -2041,7 +2094,13 @@
       "note": "Автор книги (упоминания в предисловии и косвенно в тексте); по Мильчину обычно не индексируется",
       "needs_review": true,
       "letter_change": false,
-      "letter": "З"
+      "letter": "З",
+      "authority": {
+        "wikidata": "Q2371003",
+        "viaf": "7453175",
+        "gnd": "11926658X",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-519404e8-a768-5fed-ab51-bdc7e7421532",
@@ -2079,7 +2138,13 @@
         "Историческая лингвистика (продолж.)"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Заменгоф,_Людвик",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/L._L._Zamenhof.jpg/220px-L._L._Zamenhof.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/L._L._Zamenhof.jpg/220px-L._L._Zamenhof.jpg",
+      "authority": {
+        "wikidata": "Q11758",
+        "viaf": "73885295",
+        "gnd": "118643495",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-d5778648-7774-586b-8b28-49c42d22babf",
@@ -2377,7 +2442,13 @@
         "лингвист"
       ],
       "letter_change": false,
-      "letter": "И"
+      "letter": "И",
+      "authority": {
+        "wikidata": "Q794031",
+        "viaf": "108365230",
+        "gnd": "119005964",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-1fa79779-7a4a-5e5c-9392-875e8414c852",
@@ -2766,7 +2837,11 @@
         "Порядок слов"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Иткин,_Илья_Борисович",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q4205292",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-68dc67fe-945c-5ddd-9a4e-dfd90e6384ae",
@@ -2952,7 +3027,13 @@
       "epoch": null,
       "chapters": [
         "Историческая лингвистика (продолж.)"
-      ]
+      ],
+      "authority": {
+        "wikidata": "Q18121462",
+        "viaf": "38602925",
+        "gnd": "1062520173",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-70c3c8f0-8e13-5219-b3b6-c63601cfefe4",
@@ -3048,7 +3129,13 @@
         "математик"
       ],
       "letter_change": false,
-      "letter": "К"
+      "letter": "К",
+      "authority": {
+        "wikidata": "Q153224",
+        "viaf": "36980195",
+        "gnd": "119056399",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-6d37e316-12ff-56e0-a182-7e18d92aa4f5",
@@ -3134,7 +3221,13 @@
         "Или и уже"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Кручёных,_Алексей_Елисеевич",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Kruchenykh.jpg/220px-Kruchenykh.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Kruchenykh.jpg/220px-Kruchenykh.jpg",
+      "authority": {
+        "wikidata": "Q721962",
+        "viaf": "71393129",
+        "gnd": "118567306",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-3933dded-7523-53f6-93ed-a18e275bb4cf",
@@ -3247,7 +3340,13 @@
         "О жизни слов"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Левонтина,_Ирина_Борисовна",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q28498789",
+        "viaf": "49152079",
+        "gnd": "138051747",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-a94a9c76-2e19-5ee6-ba24-9e10cebfc241",
@@ -3380,7 +3479,13 @@
       "chapters": [
         "Берестяные грамоты"
       ],
-      "wiki": "https://ru.wikipedia.org/wiki/Мартынов,_Иван_Иванович_(филолог)"
+      "wiki": "https://ru.wikipedia.org/wiki/Мартынов,_Иван_Иванович_(филолог)",
+      "authority": {
+        "wikidata": "Q2412021",
+        "viaf": "179372210",
+        "gnd": "1253778108",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-bf21aa50-21f4-5161-b943-36a0bdcf5f0a",
@@ -3430,7 +3535,13 @@
         "поэт"
       ],
       "letter_change": false,
-      "letter": "М"
+      "letter": "М",
+      "authority": {
+        "wikidata": "Q132964",
+        "viaf": "24611716",
+        "gnd": "118640801",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-f11516ef-44a8-5a35-bff3-04a83cda61eb",
@@ -3460,7 +3571,13 @@
         "От редколлегии и предисловие"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Мейе,_Антуан",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Antoine_Meillet.jpg/220px-Antoine_Meillet.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Antoine_Meillet.jpg/220px-Antoine_Meillet.jpg",
+      "authority": {
+        "wikidata": "Q347001",
+        "viaf": "27068538",
+        "gnd": "118782878",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-21fa7466-2d75-5c20-8086-f0700414696a",
@@ -3914,7 +4031,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Падучева,_Елена_Викторовна",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q4342113",
+        "viaf": "30982677",
+        "gnd": "143007602",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-d5b1a29b-32d1-5a0b-9b4a-2767b50782de",
@@ -4113,7 +4236,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Плунгян,_Владимир_Александрович",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q1345187",
+        "viaf": "86313013",
+        "gnd": "141607475",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-b48a6fa6-bbc5-5c0e-9510-6bd8e3b27be5",
@@ -4236,7 +4365,13 @@
         "Или и уже"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Пушкин,_Александр_Сергеевич",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Alexander_Pushkin_1827.jpg/220px-Alexander_Pushkin_1827.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Alexander_Pushkin_1827.jpg/220px-Alexander_Pushkin_1827.jpg",
+      "authority": {
+        "wikidata": "Q7200",
+        "viaf": "66477450",
+        "gnd": "118641816",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-1672b9ee-7f71-5a34-9d01-01f3c38acaa3",
@@ -4374,7 +4509,13 @@
         "Историческая лингвистика (продолж.)"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Роулинсон,_Генри",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Henry_Creswicke_Rawlinson.jpg/220px-Henry_Creswicke_Rawlinson.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Henry_Creswicke_Rawlinson.jpg/220px-Henry_Creswicke_Rawlinson.jpg",
+      "authority": {
+        "wikidata": "Q309602",
+        "viaf": "10149174",
+        "gnd": "116367636",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-06e2e697-295f-51ac-bfa3-d20f437977a1",
@@ -4652,7 +4793,13 @@
         "писатель"
       ],
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q34474",
+        "viaf": "95215697",
+        "gnd": "118642464",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-2bb8ccc1-a303-5a2e-a2ff-ef388025cab5",
@@ -4676,7 +4823,13 @@
         "общественный деятель"
       ],
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q4427694",
+        "viaf": "166053771",
+        "gnd": "13847026X",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-eafd05ad-972c-57ec-8f56-907854a5a9a1",
@@ -4710,7 +4863,13 @@
         "Берестяные грамоты"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Срезневский,_Измаил_Иванович",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Sreznevsky_Izmail_Ivanovich.jpg/220px-Sreznevsky_Izmail_Ivanovich.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Sreznevsky_Izmail_Ivanovich.jpg/220px-Sreznevsky_Izmail_Ivanovich.jpg",
+      "authority": {
+        "wikidata": "Q2992575",
+        "viaf": "46802812",
+        "gnd": "118798340",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-eeac0def-4f99-5a9a-8ce1-07998bf3d1ab",
@@ -4820,7 +4979,13 @@
         "лингвист"
       ],
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q705907",
+        "viaf": "110115894",
+        "gnd": "136040411",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-b5af9cfa-4fd0-5a90-8e4c-eb76c766ed0d",
@@ -4942,7 +5107,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Улицкая,_Людмила_Евгеньевна",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lyudmila_Ulitskaya.jpg/220px-Lyudmila_Ulitskaya.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lyudmila_Ulitskaya.jpg/220px-Lyudmila_Ulitskaya.jpg",
+      "authority": {
+        "wikidata": "Q266661",
+        "viaf": "87220182",
+        "gnd": "11558871X",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-56318e57-524d-5563-a451-3f075e3d7436",
@@ -5058,7 +5229,13 @@
         "лингвист"
       ],
       "letter_change": false,
-      "letter": "Ф"
+      "letter": "Ф",
+      "authority": {
+        "wikidata": "Q77420",
+        "viaf": "97150111",
+        "gnd": "118767356",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-70d628a0-fa1a-586e-8eed-a283b8b8d07e",
@@ -5301,7 +5478,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Фоменко,_Анатолий_Тимофеевич",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q158465",
+        "viaf": "64142515",
+        "gnd": "119092689",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-70b2bbe6-f605-5093-898e-f195b58659d6",
@@ -5590,7 +5773,13 @@
         "Историческая лингвистика (продолж.)"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Чедвик,_Джон",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q51515",
+        "viaf": "85160602",
+        "gnd": "118888757",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-0ce26d14-b758-5a63-b4f6-6d5f1a1812ec",
@@ -5819,7 +6008,13 @@
         "Берестяные грамоты"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Янин,_Валентин_Лаврентьевич",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Valentin_Yanin.jpg/220px-Valentin_Yanin.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Valentin_Yanin.jpg/220px-Valentin_Yanin.jpg",
+      "authority": {
+        "wikidata": "Q1980377",
+        "viaf": "45138852",
+        "gnd": "120697742",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-825ab60f-4ead-5a5b-a679-00fc7d64b9bd",

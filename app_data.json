@@ -144,7 +144,13 @@
         "Автор книги, лингвист."
       ],
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q2371003",
+        "viaf": "7453175",
+        "gnd": "11926658X",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-4d8a34ed-fb34-52bf-a738-0cc2bc88fb33",
@@ -184,7 +190,13 @@
         "Упомянут в связи с вручением Литературной премии его имени."
       ],
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q34474",
+        "viaf": "95215697",
+        "gnd": "118642464",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-269dcf11-bfe9-5162-87e4-d6a2a87c18b3",
@@ -224,7 +236,13 @@
         "Автор «Новой хронологии», математик, академик РАН."
       ],
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q158465",
+        "viaf": "64142515",
+        "gnd": "119092689",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-fc9e8b91-3780-51ec-81cb-84c060726c63",
@@ -558,7 +576,12 @@
       "chapters": [
         "О жизни слов"
       ],
-      "wiki": "https://ru.wikipedia.org/wiki/Барулин,_Александр_Николаевич"
+      "wiki": "https://ru.wikipedia.org/wiki/Барулин,_Александр_Николаевич",
+      "authority": {
+        "wikidata": "Q4078727",
+        "viaf": "247999338",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-dce9025a-83e4-503e-8dfa-817eeb12c61d",
@@ -713,7 +736,13 @@
       "chapters": [
         "Историческая лингвистика (продолж.)"
       ],
-      "wiki": "https://ru.wikipedia.org/wiki/Блеген,_Карл"
+      "wiki": "https://ru.wikipedia.org/wiki/Блеген,_Карл",
+      "authority": {
+        "wikidata": "Q552469",
+        "viaf": "47048210",
+        "gnd": "133757463",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-ccbd82f8-9f34-5ff5-8cd1-b02dce87891f",
@@ -1424,7 +1453,13 @@
         "Берестяные грамоты"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Вяземский,_Пётр_Андреевич",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Vyazemsky.jpg/220px-Vyazemsky.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Vyazemsky.jpg/220px-Vyazemsky.jpg",
+      "authority": {
+        "wikidata": "Q19425",
+        "viaf": "88757062",
+        "gnd": "118634437",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-c72d92bc-ef0d-5f2d-b692-fe6d6ad5b605",
@@ -1477,7 +1512,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Гаспаров,_Михаил_Леонович",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Gasparov_M_L_2004_2.jpg/220px-Gasparov_M_L_2004_2.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Gasparov_M_L_2004_2.jpg/220px-Gasparov_M_L_2004_2.jpg",
+      "authority": {
+        "wikidata": "Q1228472",
+        "viaf": "51832912",
+        "gnd": "103222855",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-77c46ea3-79bc-53e7-846b-2a163154a801",
@@ -1822,7 +1863,13 @@
         "О жизни слов"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Даль,_Владимир_Иванович",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg/220px-Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg/220px-Vasily_Perov_-_Портрет_В.И.Даля_-_Google_Art_Project.jpg",
+      "authority": {
+        "wikidata": "Q326499",
+        "viaf": "73991311",
+        "gnd": "118523430",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-78a82329-9111-561e-adb7-bb59846f99df",
@@ -1930,7 +1977,13 @@
         "Из русского ударения"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Дыбо,_Владимир_Антонович",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q130117",
+        "viaf": "20089987",
+        "gnd": "103350160",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-44b15eb0-4252-5683-a355-0628a39612df",
@@ -2123,7 +2176,13 @@
       "note": "Автор книги (упоминания в предисловии и косвенно в тексте); по Мильчину обычно не индексируется",
       "needs_review": true,
       "letter_change": false,
-      "letter": "З"
+      "letter": "З",
+      "authority": {
+        "wikidata": "Q2371003",
+        "viaf": "7453175",
+        "gnd": "11926658X",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-519404e8-a768-5fed-ab51-bdc7e7421532",
@@ -2161,7 +2220,13 @@
         "Историческая лингвистика (продолж.)"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Заменгоф,_Людвик",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/L._L._Zamenhof.jpg/220px-L._L._Zamenhof.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/L._L._Zamenhof.jpg/220px-L._L._Zamenhof.jpg",
+      "authority": {
+        "wikidata": "Q11758",
+        "viaf": "73885295",
+        "gnd": "118643495",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-d5778648-7774-586b-8b28-49c42d22babf",
@@ -2459,7 +2524,13 @@
         "лингвист"
       ],
       "letter_change": false,
-      "letter": "И"
+      "letter": "И",
+      "authority": {
+        "wikidata": "Q794031",
+        "viaf": "108365230",
+        "gnd": "119005964",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-1fa79779-7a4a-5e5c-9392-875e8414c852",
@@ -2848,7 +2919,11 @@
         "Порядок слов"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Иткин,_Илья_Борисович",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q4205292",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-68dc67fe-945c-5ddd-9a4e-dfd90e6384ae",
@@ -3034,7 +3109,13 @@
       "epoch": null,
       "chapters": [
         "Историческая лингвистика (продолж.)"
-      ]
+      ],
+      "authority": {
+        "wikidata": "Q18121462",
+        "viaf": "38602925",
+        "gnd": "1062520173",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-70c3c8f0-8e13-5219-b3b6-c63601cfefe4",
@@ -3130,7 +3211,13 @@
         "математик"
       ],
       "letter_change": false,
-      "letter": "К"
+      "letter": "К",
+      "authority": {
+        "wikidata": "Q153224",
+        "viaf": "36980195",
+        "gnd": "119056399",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-6d37e316-12ff-56e0-a182-7e18d92aa4f5",
@@ -3216,7 +3303,13 @@
         "Или и уже"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Кручёных,_Алексей_Елисеевич",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Kruchenykh.jpg/220px-Kruchenykh.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Kruchenykh.jpg/220px-Kruchenykh.jpg",
+      "authority": {
+        "wikidata": "Q721962",
+        "viaf": "71393129",
+        "gnd": "118567306",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-3933dded-7523-53f6-93ed-a18e275bb4cf",
@@ -3329,7 +3422,13 @@
         "О жизни слов"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Левонтина,_Ирина_Борисовна",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q28498789",
+        "viaf": "49152079",
+        "gnd": "138051747",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-a94a9c76-2e19-5ee6-ba24-9e10cebfc241",
@@ -3462,7 +3561,13 @@
       "chapters": [
         "Берестяные грамоты"
       ],
-      "wiki": "https://ru.wikipedia.org/wiki/Мартынов,_Иван_Иванович_(филолог)"
+      "wiki": "https://ru.wikipedia.org/wiki/Мартынов,_Иван_Иванович_(филолог)",
+      "authority": {
+        "wikidata": "Q2412021",
+        "viaf": "179372210",
+        "gnd": "1253778108",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-bf21aa50-21f4-5161-b943-36a0bdcf5f0a",
@@ -3512,7 +3617,13 @@
         "поэт"
       ],
       "letter_change": false,
-      "letter": "М"
+      "letter": "М",
+      "authority": {
+        "wikidata": "Q132964",
+        "viaf": "24611716",
+        "gnd": "118640801",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-f11516ef-44a8-5a35-bff3-04a83cda61eb",
@@ -3542,7 +3653,13 @@
         "От редколлегии и предисловие"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Мейе,_Антуан",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Antoine_Meillet.jpg/220px-Antoine_Meillet.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Antoine_Meillet.jpg/220px-Antoine_Meillet.jpg",
+      "authority": {
+        "wikidata": "Q347001",
+        "viaf": "27068538",
+        "gnd": "118782878",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-21fa7466-2d75-5c20-8086-f0700414696a",
@@ -3996,7 +4113,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Падучева,_Елена_Викторовна",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q4342113",
+        "viaf": "30982677",
+        "gnd": "143007602",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-d5b1a29b-32d1-5a0b-9b4a-2767b50782de",
@@ -4195,7 +4318,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Плунгян,_Владимир_Александрович",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q1345187",
+        "viaf": "86313013",
+        "gnd": "141607475",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-b48a6fa6-bbc5-5c0e-9510-6bd8e3b27be5",
@@ -4318,7 +4447,13 @@
         "Или и уже"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Пушкин,_Александр_Сергеевич",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Alexander_Pushkin_1827.jpg/220px-Alexander_Pushkin_1827.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Alexander_Pushkin_1827.jpg/220px-Alexander_Pushkin_1827.jpg",
+      "authority": {
+        "wikidata": "Q7200",
+        "viaf": "66477450",
+        "gnd": "118641816",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-1672b9ee-7f71-5a34-9d01-01f3c38acaa3",
@@ -4456,7 +4591,13 @@
         "Историческая лингвистика (продолж.)"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Роулинсон,_Генри",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Henry_Creswicke_Rawlinson.jpg/220px-Henry_Creswicke_Rawlinson.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Henry_Creswicke_Rawlinson.jpg/220px-Henry_Creswicke_Rawlinson.jpg",
+      "authority": {
+        "wikidata": "Q309602",
+        "viaf": "10149174",
+        "gnd": "116367636",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-06e2e697-295f-51ac-bfa3-d20f437977a1",
@@ -4734,7 +4875,13 @@
         "писатель"
       ],
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q34474",
+        "viaf": "95215697",
+        "gnd": "118642464",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-2bb8ccc1-a303-5a2e-a2ff-ef388025cab5",
@@ -4758,7 +4905,13 @@
         "общественный деятель"
       ],
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q4427694",
+        "viaf": "166053771",
+        "gnd": "13847026X",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-eafd05ad-972c-57ec-8f56-907854a5a9a1",
@@ -4792,7 +4945,13 @@
         "Берестяные грамоты"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Срезневский,_Измаил_Иванович",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Sreznevsky_Izmail_Ivanovich.jpg/220px-Sreznevsky_Izmail_Ivanovich.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Sreznevsky_Izmail_Ivanovich.jpg/220px-Sreznevsky_Izmail_Ivanovich.jpg",
+      "authority": {
+        "wikidata": "Q2992575",
+        "viaf": "46802812",
+        "gnd": "118798340",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-eeac0def-4f99-5a9a-8ce1-07998bf3d1ab",
@@ -4902,7 +5061,13 @@
         "лингвист"
       ],
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q705907",
+        "viaf": "110115894",
+        "gnd": "136040411",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-b5af9cfa-4fd0-5a90-8e4c-eb76c766ed0d",
@@ -5024,7 +5189,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Улицкая,_Людмила_Евгеньевна",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lyudmila_Ulitskaya.jpg/220px-Lyudmila_Ulitskaya.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lyudmila_Ulitskaya.jpg/220px-Lyudmila_Ulitskaya.jpg",
+      "authority": {
+        "wikidata": "Q266661",
+        "viaf": "87220182",
+        "gnd": "11558871X",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-56318e57-524d-5563-a451-3f075e3d7436",
@@ -5140,7 +5311,13 @@
         "лингвист"
       ],
       "letter_change": false,
-      "letter": "Ф"
+      "letter": "Ф",
+      "authority": {
+        "wikidata": "Q77420",
+        "viaf": "97150111",
+        "gnd": "118767356",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-70d628a0-fa1a-586e-8eed-a283b8b8d07e",
@@ -5383,7 +5560,13 @@
         "Историческая лингвистика"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Фоменко,_Анатолий_Тимофеевич",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q158465",
+        "viaf": "64142515",
+        "gnd": "119092689",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-70b2bbe6-f605-5093-898e-f195b58659d6",
@@ -5672,7 +5855,13 @@
         "Историческая лингвистика (продолж.)"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Чедвик,_Джон",
-      "img": null
+      "img": null,
+      "authority": {
+        "wikidata": "Q51515",
+        "viaf": "85160602",
+        "gnd": "118888757",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-0ce26d14-b758-5a63-b4f6-6d5f1a1812ec",
@@ -5901,7 +6090,13 @@
         "Берестяные грамоты"
       ],
       "wiki": "https://ru.wikipedia.org/wiki/Янин,_Валентин_Лаврентьевич",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Valentin_Yanin.jpg/220px-Valentin_Yanin.jpg"
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Valentin_Yanin.jpg/220px-Valentin_Yanin.jpg",
+      "authority": {
+        "wikidata": "Q1980377",
+        "viaf": "45138852",
+        "gnd": "120697742",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "names-825ab60f-4ead-5a5b-a679-00fc7d64b9bd",
@@ -6330,7 +6525,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 52,
-      "lon": -1.5
+      "lon": -1.5,
+      "authority": {
+        "wikidata": "Q21",
+        "viaf": "142995804",
+        "gnd": "4014770-8",
+        "geonames": "6269131",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-f09a3a8f-bf41-50f6-865b-fc838bb915b4",
@@ -6359,7 +6561,11 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 42,
-      "lon": 13
+      "lon": 13,
+      "authority": {
+        "wikidata": "Q145694",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-6eca804c-367a-5d6f-9c7f-a8a61be0f4f3",
@@ -6472,7 +6678,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 0,
-      "lon": 20
+      "lon": 20,
+      "authority": {
+        "wikidata": "Q15",
+        "viaf": "127043766",
+        "gnd": "4000695-5",
+        "geonames": "6255146",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-34e82082-bebd-538e-9a79-1964165b77a2",
@@ -6526,7 +6739,11 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 43,
-      "lon": 22
+      "lon": 22,
+      "authority": {
+        "wikidata": "Q20870818",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-9f1ae182-12e1-588a-ae62-4dcc7d5c834c",
@@ -6557,7 +6774,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 58,
-      "lon": 20
+      "lon": 20,
+      "authority": {
+        "wikidata": "Q545",
+        "viaf": "316431537",
+        "gnd": "4044107-6",
+        "geonames": "2633321",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-92510155-1662-56c3-8754-f4d9303a51a9",
@@ -6662,7 +6886,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 53.08,
-      "lon": 8.8
+      "lon": 8.8,
+      "authority": {
+        "wikidata": "Q24879",
+        "viaf": "137159715",
+        "gnd": "4008135-7",
+        "geonames": "2944388",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-6fdbefeb-7f12-5252-8c61-5f30a6cd0d6a",
@@ -6691,7 +6922,13 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 54,
-      "lon": -2
+      "lon": -2,
+      "authority": {
+        "wikidata": "Q185103",
+        "gnd": "4069666-2",
+        "geonames": "8378485",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-f860da61-f5c8-50dd-bd70-3061ef18effb",
@@ -6720,7 +6957,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 54,
-      "lon": -4
+      "lon": -4,
+      "authority": {
+        "wikidata": "Q38272",
+        "viaf": "237264765",
+        "gnd": "4090131-2",
+        "geonames": "2654669",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-05cef0ca-9a03-546a-be7c-6e56d003bdda",
@@ -6780,7 +7024,14 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 25.32,
-      "lon": 83
+      "lon": 83,
+      "authority": {
+        "wikidata": "Q79980",
+        "viaf": "168498951",
+        "gnd": "4062337-3",
+        "geonames": "1253405",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-5ae4de51-6510-5277-8522-8ce0972083a1",
@@ -6846,7 +7097,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 47.16,
-      "lon": 19.5
+      "lon": 19.5,
+      "authority": {
+        "wikidata": "Q28",
+        "viaf": "128544491",
+        "gnd": "4078541-5",
+        "geonames": "719819",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-4e91d042-2efb-5064-a534-e272c898dee9",
@@ -6875,7 +7133,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 45.44,
-      "lon": 12.32
+      "lon": 12.32,
+      "authority": {
+        "wikidata": "Q641",
+        "viaf": "8456155769103127880005",
+        "gnd": "4062501-1",
+        "geonames": "6542284",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-6a1587d1-8457-5882-9ddb-93adc3994fa4",
@@ -6904,7 +7169,13 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 41,
-      "lon": 29
+      "lon": 29,
+      "authority": {
+        "wikidata": "Q12544",
+        "viaf": "144245245",
+        "gnd": "4009256-2",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-fe0c4f4b-369c-5491-a8c3-b1c21867ed15",
@@ -6933,7 +7204,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 56.13,
-      "lon": 40.4
+      "lon": 40.4,
+      "authority": {
+        "wikidata": "Q2684",
+        "viaf": "139562941",
+        "gnd": "4108478-0",
+        "geonames": "473247",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1b6a010c-35e4-5f09-a76b-ba46eeec35b4",
@@ -6962,7 +7240,11 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 58.6,
-      "lon": 49.66
+      "lon": 49.66,
+      "authority": {
+        "wikidata": "Q1540335",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-bcfcdd39-ce8b-5915-a1d2-e83207105f89",
@@ -6987,7 +7269,13 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 49.12,
-      "lon": 24.7
+      "lon": 24.7,
+      "authority": {
+        "wikidata": "Q146450",
+        "viaf": "138404920",
+        "geonames": "709034",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8d792996-9f7a-5e2a-87de-baec282259cb",
@@ -7020,7 +7308,13 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 47,
-      "lon": 2
+      "lon": 2,
+      "authority": {
+        "wikidata": "Q38060",
+        "viaf": "242520115",
+        "gnd": "4019150-3",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-a7d29db9-1892-5d72-8fdb-8eb82bd6979a",
@@ -7049,7 +7343,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 50.85,
-      "lon": 0.57
+      "lon": 0.57,
+      "authority": {
+        "wikidata": "Q29245",
+        "viaf": "136080566",
+        "gnd": "4023626-2",
+        "geonames": "2647356",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1e3123bc-ec36-5486-9448-27a00c474fec",
@@ -7078,7 +7379,14 @@
       "letter_change": false,
       "epoch_class": "contemporary",
       "lat": 52.5,
-      "lon": 13.4
+      "lon": 13.4,
+      "authority": {
+        "wikidata": "Q16957",
+        "viaf": "125035363",
+        "gnd": "4011890-3",
+        "geonames": "8354410",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-822cb45a-6005-588b-a80b-ea5706bf8fe4",
@@ -7121,7 +7429,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 51.16,
-      "lon": 10.45
+      "lon": 10.45,
+      "authority": {
+        "wikidata": "Q183",
+        "viaf": "135446758",
+        "gnd": "4011882-4",
+        "geonames": "2921044",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-cd173c0a-21ae-56e6-a562-208d32b002a1",
@@ -7150,7 +7465,12 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 52.13,
-      "lon": 5.29
+      "lon": 5.29,
+      "authority": {
+        "wikidata": "Q102911",
+        "gnd": "4133959-9",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-0a43c6a9-8be6-5d88-a7fa-11997c92afbe",
@@ -7181,7 +7501,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 39.07,
-      "lon": 21.82
+      "lon": 21.82,
+      "authority": {
+        "wikidata": "Q41",
+        "viaf": "131265011",
+        "gnd": "4022047-3",
+        "geonames": "390903",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-5d8961ab-3689-5971-8140-b202f9d7a397",
@@ -7280,7 +7607,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 54,
-      "lon": 15
+      "lon": 15,
+      "authority": {
+        "wikidata": "Q46",
+        "viaf": "170298814",
+        "gnd": "4015701-5",
+        "geonames": "6255148",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-4b2db9c2-762c-5388-9850-d8c5eee2b734",
@@ -7325,7 +7659,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 26.82,
-      "lon": 30.8
+      "lon": 30.8,
+      "authority": {
+        "wikidata": "Q79",
+        "viaf": "242059233",
+        "gnd": "4000556-2",
+        "geonames": "357994",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1c425ad0-cccc-5b9d-bb5e-d3595c02bdec",
@@ -7439,7 +7780,14 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 21,
-      "lon": 78
+      "lon": 78,
+      "authority": {
+        "wikidata": "Q668",
+        "viaf": "135375457",
+        "gnd": "4026722-2",
+        "geonames": "1269750",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-66946002-6134-56fc-9126-bd9cbe7934f4",
@@ -7472,7 +7820,11 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 22,
-      "lon": 79
+      "lon": 79,
+      "authority": {
+        "wikidata": "Q853968",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-ef67cea3-45e5-5afc-9faa-62fca9f25708",
@@ -7501,7 +7853,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 33.22,
-      "lon": 43.68
+      "lon": 43.68,
+      "authority": {
+        "wikidata": "Q796",
+        "viaf": "8055148947783454950004",
+        "gnd": "4072920-5",
+        "geonames": "99237",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8a39e323-c80f-51fe-86b5-036db4c01611",
@@ -7534,7 +7893,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 32.43,
-      "lon": 53.69
+      "lon": 53.69,
+      "authority": {
+        "wikidata": "Q794",
+        "viaf": "149669363",
+        "gnd": "4027653-3",
+        "geonames": "130758",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-a1f35106-b1df-576f-b860-3e9c9a798fe0",
@@ -7569,7 +7935,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 64.96,
-      "lon": -19
+      "lon": -19,
+      "authority": {
+        "wikidata": "Q189",
+        "viaf": "133608068",
+        "gnd": "4027754-9",
+        "geonames": "2629691",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1ec53bd1-e8a3-5ce6-9fd9-7af2ec643935",
@@ -7598,7 +7971,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 40.46,
-      "lon": -3.75
+      "lon": -3.75,
+      "authority": {
+        "wikidata": "Q29",
+        "viaf": "133609710",
+        "gnd": "4055964-6",
+        "geonames": "2510769",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-f1336cd1-6b40-535e-8308-6aa3e5cf5ca5",
@@ -7639,7 +8019,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 41.87,
-      "lon": 12.57
+      "lon": 12.57,
+      "authority": {
+        "wikidata": "Q38",
+        "viaf": "152361066",
+        "gnd": "4027833-5",
+        "geonames": "3175395",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-5f1ad71b-a89b-55da-9d7f-1a53a9813c4a",
@@ -7668,7 +8055,13 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 43,
-      "lon": 44
+      "lon": 44,
+      "authority": {
+        "wikidata": "Q18869",
+        "viaf": "255510449",
+        "geonames": "615318",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-0935829a-38e2-5fde-ad2c-a377427ea5ec",
@@ -7713,7 +8106,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 50.45,
-      "lon": 30.52
+      "lon": 30.52,
+      "authority": {
+        "wikidata": "Q1899",
+        "viaf": "150028026",
+        "gnd": "4030522-3",
+        "geonames": "703448",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-14109847-322c-5d0d-9585-edf11c03a03b",
@@ -7773,7 +8173,13 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 50.45,
-      "lon": 30.52
+      "lon": 30.52,
+      "authority": {
+        "wikidata": "Q170036",
+        "gnd": "4506824-0",
+        "geonames": "703446",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-b289c2b1-ac57-520c-b628-ab540ef679a7",
@@ -7856,7 +8262,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 35.86,
-      "lon": 104.2
+      "lon": 104.2,
+      "authority": {
+        "wikidata": "Q148",
+        "viaf": "132441531",
+        "gnd": "4009937-4",
+        "geonames": "1814991",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-d5642c98-da61-5dd7-9921-e33a36e0bc49",
@@ -7885,7 +8298,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 67.7,
-      "lon": 36
+      "lon": 36,
+      "authority": {
+        "wikidata": "Q165608",
+        "viaf": "234164748",
+        "gnd": "4098030-3",
+        "geonames": "546085",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-1313d156-0ce7-5aae-a97b-0c6ca15ead99",
@@ -7905,7 +8325,14 @@
         "Географическое название, сопоставляемое Фоменко со словом 'Орда'."
       ],
       "letter_change": false,
-      "letter": "К"
+      "letter": "К",
+      "authority": {
+        "wikidata": "Q5818",
+        "viaf": "137098626",
+        "gnd": "4010558-1",
+        "geonames": "6357216",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-6f5f100d-6524-5264-98c8-7026a666e1c0",
@@ -7942,7 +8369,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 35.24,
-      "lon": 24.81
+      "lon": 24.81,
+      "authority": {
+        "wikidata": "Q34374",
+        "viaf": "237254468",
+        "gnd": "4073791-3",
+        "geonames": "258763",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-d89b0747-7d7d-5230-be3d-29b85b7a54c0",
@@ -8027,7 +8461,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 55.17,
-      "lon": 23.88
+      "lon": 23.88,
+      "authority": {
+        "wikidata": "Q37",
+        "viaf": "125422022",
+        "gnd": "4074266-0",
+        "geonames": "597427",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-9ef4a94c-4b52-5a3b-95fc-1a0a5ba20e59",
@@ -8087,7 +8528,11 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 39,
-      "lon": 35
+      "lon": 35,
+      "authority": {
+        "wikidata": "Q12824780",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-e9f56df4-3944-51d6-8e66-307100528ca8",
@@ -8120,7 +8565,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 31.79,
-      "lon": -7.09
+      "lon": -7.09,
+      "authority": {
+        "wikidata": "Q1028",
+        "viaf": "140638492",
+        "gnd": "4037680-1",
+        "geonames": "2542007",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-826f7d2c-bb74-54e9-a8f6-b899311af6ee",
@@ -8250,7 +8702,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 45.41,
-      "lon": 11.88
+      "lon": 11.88,
+      "authority": {
+        "wikidata": "Q617",
+        "viaf": "137588063",
+        "gnd": "4044295-0",
+        "geonames": "6542281",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-0453e0cf-f2d3-5746-ac77-1146d7e21ffe",
@@ -8279,7 +8738,14 @@
       "letter_change": false,
       "epoch_class": "contemporary",
       "lat": 30.37,
-      "lon": 69.34
+      "lon": 69.34,
+      "authority": {
+        "wikidata": "Q843",
+        "viaf": "268930849",
+        "gnd": "4075812-6",
+        "geonames": "1168579",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-c78a86f8-bb8f-508a-beb9-392970cd8c7d",
@@ -8308,7 +8774,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 31.95,
-      "lon": 35.23
+      "lon": 35.23,
+      "authority": {
+        "wikidata": "Q23792",
+        "viaf": "138926424",
+        "gnd": "4044381-4",
+        "geonames": "12047392",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-ae01f000-8da2-5044-9af4-30dc84b7d1e0",
@@ -8337,7 +8810,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 37.5,
-      "lon": 22
+      "lon": 22,
+      "authority": {
+        "wikidata": "Q78967",
+        "viaf": "234133404",
+        "gnd": "4045064-8",
+        "geonames": "9062330",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-12dc3746-56ef-5567-a689-7fd797869b7c",
@@ -8428,7 +8908,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 36.92,
-      "lon": 21.7
+      "lon": 21.7,
+      "authority": {
+        "wikidata": "Q7263152",
+        "viaf": "137309960",
+        "gnd": "4103392-9",
+        "geonames": "255293",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-5b0c67b8-0f9d-5f8c-8cbd-5d7b3d38299b",
@@ -8463,7 +8950,13 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 54,
-      "lon": 19
+      "lon": 19,
+      "authority": {
+        "wikidata": "Q38872",
+        "viaf": "137143200",
+        "gnd": "4047194-9",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-35cf5915-4f58-5062-a9c5-b2d98919e15a",
@@ -8498,7 +8991,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 57.82,
-      "lon": 28.33
+      "lon": 28.33,
+      "authority": {
+        "wikidata": "Q2214",
+        "viaf": "136053884",
+        "gnd": "4046355-2",
+        "geonames": "504341",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-b7f944b8-8c74-5f30-898f-35173fb15a9e",
@@ -8558,7 +9058,14 @@
       "letter_change": true,
       "epoch_class": "ancient",
       "lat": 41.9,
-      "lon": 12.49
+      "lon": 12.49,
+      "authority": {
+        "wikidata": "Q220",
+        "viaf": "251380480",
+        "gnd": "4050471-2",
+        "geonames": "3169070",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-12fea81a-8901-569d-8ff6-2323e25089d6",
@@ -8591,7 +9098,13 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 41.9,
-      "lon": 12.49
+      "lon": 12.49,
+      "authority": {
+        "wikidata": "Q2277",
+        "viaf": "28145424500486830493",
+        "geonames": "8354456",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-9340299e-4a45-593e-bb05-ca56b549cf6d",
@@ -8696,7 +9209,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 61.52,
-      "lon": 105.32
+      "lon": 105.32,
+      "authority": {
+        "wikidata": "Q159",
+        "viaf": "140306806",
+        "gnd": "4076899-5",
+        "geonames": "2017370",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-ce79fde5-29ce-5f33-b928-ba936710e5b3",
@@ -8735,7 +9255,11 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 57.18,
-      "lon": 39.42
+      "lon": 39.42,
+      "authority": {
+        "wikidata": "Q4398444",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-d5e2072b-a862-5d2c-b8a6-05e43a28a76f",
@@ -9042,7 +9566,11 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 43,
-      "lon": 65
+      "lon": 65,
+      "authority": {
+        "wikidata": "Q1211919",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-345175d3-150a-573e-a4e7-ebc6c9a2522f",
@@ -9081,7 +9609,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 56.42,
-      "lon": 40.45
+      "lon": 40.45,
+      "authority": {
+        "wikidata": "Q15757",
+        "viaf": "141915943",
+        "gnd": "4078090-9",
+        "geonames": "485824",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-56cb6402-810e-5aaa-9680-234a69b77c98",
@@ -9144,7 +9679,14 @@
       "letter_change": true,
       "epoch_class": "modern",
       "lat": 48.38,
-      "lon": 31.17
+      "lon": 31.17,
+      "authority": {
+        "wikidata": "Q212",
+        "viaf": "134334037",
+        "gnd": "4061496-7",
+        "geonames": "690791",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8a8211f3-d4c0-588c-a940-3f24901950b3",
@@ -9195,7 +9737,14 @@
       "letter_change": false,
       "epoch_class": "ancient",
       "lat": 35.05,
-      "lon": 24.81
+      "lon": 24.81,
+      "authority": {
+        "wikidata": "Q249707",
+        "viaf": "315170181",
+        "gnd": "4196656-9",
+        "geonames": "262531",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-457ed99f-9f87-5e9d-8f42-b1de4e086cc4",
@@ -9224,7 +9773,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 61.92,
-      "lon": 25.75
+      "lon": 25.75,
+      "authority": {
+        "wikidata": "Q33",
+        "viaf": "132440532",
+        "gnd": "4017243-0",
+        "geonames": "660013",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8f8654be-bd11-51c3-8ca5-42b045b6327b",
@@ -9253,7 +9809,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 43.77,
-      "lon": 11.25
+      "lon": 11.25,
+      "authority": {
+        "wikidata": "Q2044",
+        "viaf": "152981965",
+        "gnd": "4017581-9",
+        "geonames": "6542285",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-43681055-4246-5ce5-800c-694b4692e6b6",
@@ -9282,7 +9845,12 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 50.11,
-      "lon": 8.68
+      "lon": 8.68,
+      "authority": {
+        "wikidata": "Q286577",
+        "viaf": "139024269",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-eff28ce8-01b5-5223-9774-f6358cb8b789",
@@ -9329,7 +9897,14 @@
       "letter_change": false,
       "epoch_class": "medieval",
       "lat": 46.23,
-      "lon": 2.21
+      "lon": 2.21,
+      "authority": {
+        "wikidata": "Q142",
+        "viaf": "264091107",
+        "gnd": "4018145-5",
+        "geonames": "3017382",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-e5e5371c-2bce-5725-aa33-d18d57ff27da",
@@ -9358,7 +9933,13 @@
       "letter_change": true,
       "epoch_class": "modern",
       "lat": 7.87,
-      "lon": 80.77
+      "lon": 80.77,
+      "authority": {
+        "wikidata": "Q2670092",
+        "viaf": "137707668",
+        "gnd": "19826-2",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-52597d61-c669-52a8-9a66-5176d62a7256",
@@ -9387,7 +9968,13 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 6.6,
-      "lon": 20.93
+      "lon": 20.93,
+      "authority": {
+        "wikidata": "Q27433",
+        "gnd": "4079485-4",
+        "geonames": "7729886",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-c1cf9e72-5f87-5340-b775-b305e3eda52d",
@@ -9447,7 +10034,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 51.5,
-      "lon": 31.3
+      "lon": 31.3,
+      "authority": {
+        "wikidata": "Q157053",
+        "viaf": "235578017",
+        "gnd": "4245594-7",
+        "geonames": "710735",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-e7b8b443-e7b3-561d-8834-3b91db9fe923",
@@ -9482,7 +10076,14 @@
       "letter_change": true,
       "epoch_class": "medieval",
       "lat": 60.13,
-      "lon": 18.64
+      "lon": 18.64,
+      "authority": {
+        "wikidata": "Q34",
+        "viaf": "159364209",
+        "gnd": "4077258-5",
+        "geonames": "2661886",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-8e309e7d-112e-5b37-8c94-c11d4f2b12a7",
@@ -9513,7 +10114,14 @@
       "letter_change": false,
       "epoch_class": "modern",
       "lat": 59.95,
-      "lon": 31.04
+      "lon": 31.04,
+      "authority": {
+        "wikidata": "Q15339",
+        "viaf": "135017066",
+        "gnd": "4287460-9",
+        "geonames": "493970",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-141c1b65-cbac-5eb7-b4e7-ec8c7eb906e8",
@@ -9538,7 +10146,14 @@
       "letter_change": false,
       "epoch_class": "contemporary",
       "lat": 7.87,
-      "lon": 80.77
+      "lon": 80.77,
+      "authority": {
+        "wikidata": "Q854",
+        "viaf": "126600002",
+        "gnd": "4009696-8",
+        "geonames": "1227603",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "toponyms-7a7e26eb-b198-5e11-9278-e80dfc59be94",
@@ -9595,7 +10210,11 @@
       "lat": -25,
       "lon": 135,
       "letter_change": true,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q12060728",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-3c587df2-5be9-5ac1-8b35-3ad99c789be3",
@@ -9645,7 +10264,11 @@
       "lat": 52,
       "lon": -1,
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q42406",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-20b71ddc-dc08-5442-b73b-0862e320bb3f",
@@ -9693,7 +10316,12 @@
       "lat": 25,
       "lon": 45,
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q35323",
+        "gnd": "4002528-7",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-1daa0566-129e-5f06-b65b-89d8c8fa3052",
@@ -9713,7 +10341,11 @@
         "Племена, фигурирующие в «Велесовой книге»."
       ],
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q179733",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-5a3ff469-5a7f-5a62-a92b-77920180d197",
@@ -9737,7 +10369,12 @@
       "lat": 43,
       "lon": -2,
       "letter_change": true,
-      "letter": "Б"
+      "letter": "Б",
+      "authority": {
+        "wikidata": "Q126756",
+        "gnd": "4004644-8",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-347170ea-d970-5897-8195-7768d84558bd",
@@ -9773,7 +10410,12 @@
       "lat": 53.7,
       "lon": 27.95,
       "letter_change": false,
-      "letter": "Б"
+      "letter": "Б",
+      "authority": {
+        "wikidata": "Q483569",
+        "gnd": "4119038-5",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-ac87e08c-8f1c-5096-a020-b690641901dd",
@@ -9801,7 +10443,12 @@
       "lat": 42.7,
       "lon": 25.5,
       "letter_change": false,
-      "letter": "Б"
+      "letter": "Б",
+      "authority": {
+        "wikidata": "Q133255",
+        "gnd": "4088623-2",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-fb1b7a4f-8e19-5a66-9d15-037b7886244c",
@@ -9837,7 +10484,11 @@
       "lat": 60,
       "lon": 18,
       "letter_change": true,
-      "letter": "В"
+      "letter": "В",
+      "authority": {
+        "wikidata": "Q48343",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-b99aeffc-e8a2-5c59-a6c5-3e93d367eba9",
@@ -9861,7 +10512,12 @@
       "lat": 47.2,
       "lon": 19.5,
       "letter_change": false,
-      "letter": "В"
+      "letter": "В",
+      "authority": {
+        "wikidata": "Q133032",
+        "gnd": "4100008-0",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-27d63ce6-1510-5e1c-adab-17b7a59c86fa",
@@ -10075,7 +10731,11 @@
       "lat": 39,
       "lon": 22,
       "letter_change": false,
-      "letter": "Г"
+      "letter": "Г",
+      "authority": {
+        "wikidata": "Q539051",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-5b1fae7d-febf-56ac-8a7d-d8e8fa1a4035",
@@ -10127,7 +10787,11 @@
       "lat": 56,
       "lon": 10,
       "letter_change": false,
-      "letter": "Д"
+      "letter": "Д",
+      "authority": {
+        "wikidata": "Q164714",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-bc89eb4b-e856-5e7a-93a1-8a6d652ec7cc",
@@ -10307,7 +10971,11 @@
       "lat": 50,
       "lon": 50,
       "letter_change": false,
-      "letter": "И"
+      "letter": "И",
+      "authority": {
+        "wikidata": "Q475027",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-43bf9c25-6fe3-5a89-befd-8b00c81473b5",
@@ -10337,7 +11005,11 @@
       "lat": 55,
       "lon": 30,
       "letter_change": true,
-      "letter": "К"
+      "letter": "К",
+      "authority": {
+        "wikidata": "Q48287",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-82882a85-0a1e-53e6-8120-3c01ce8de30a",
@@ -10485,7 +11157,11 @@
       "lat": 56.9,
       "lon": 24.1,
       "letter_change": true,
-      "letter": "Л"
+      "letter": "Л",
+      "authority": {
+        "wikidata": "Q49540",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-db501ae5-a623-5948-993f-f342588ca1a9",
@@ -10555,7 +11231,12 @@
       "lat": 55.2,
       "lon": 24,
       "letter_change": false,
-      "letter": "Л"
+      "letter": "Л",
+      "authority": {
+        "wikidata": "Q186192",
+        "gnd": "4035937-2",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-6a4d64f0-af4b-525a-91a2-d4f02dc55963",
@@ -10617,7 +11298,12 @@
       "lat": 51.2,
       "lon": 10.5,
       "letter_change": false,
-      "letter": "Н"
+      "letter": "Н",
+      "authority": {
+        "wikidata": "Q42884",
+        "gnd": "4070334-4",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-13336e55-5855-54c7-bf66-36cc91df9cdb",
@@ -10741,7 +11427,11 @@
       "lat": 60.5,
       "lon": 8.5,
       "letter_change": false,
-      "letter": "Н"
+      "letter": "Н",
+      "authority": {
+        "wikidata": "Q188779",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-4c480d52-5c52-54e2-9d55-4a15fc21a9dc",
@@ -10775,7 +11465,12 @@
       "lat": 60,
       "lon": 5,
       "letter_change": false,
-      "letter": "Н"
+      "letter": "Н",
+      "authority": {
+        "wikidata": "Q83418",
+        "gnd": "4042620-8",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-b6a4a12f-d2b0-5309-ba6f-3022868a4a70",
@@ -10831,7 +11526,12 @@
       "lat": -6,
       "lon": 145,
       "letter_change": true,
-      "letter": "П"
+      "letter": "П",
+      "authority": {
+        "wikidata": "Q424129",
+        "gnd": "4044567-7",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-f9febee2-5102-5b95-9c24-33004bc97f47",
@@ -10887,7 +11587,11 @@
       "lat": 48,
       "lon": 38,
       "letter_change": false,
-      "letter": "П"
+      "letter": "П",
+      "authority": {
+        "wikidata": "Q1035516",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-9b4a6578-33cb-50ff-a553-b726f3c053dc",
@@ -10915,7 +11619,11 @@
       "lat": 51.9,
       "lon": 19.1,
       "letter_change": false,
-      "letter": "П"
+      "letter": "П",
+      "authority": {
+        "wikidata": "Q1026",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-e13a484e-99da-5bf6-a1d5-3c8b40c5c50d",
@@ -11077,7 +11785,12 @@
       "lat": 55,
       "lon": 38,
       "letter_change": false,
-      "letter": "Р"
+      "letter": "Р",
+      "authority": {
+        "wikidata": "Q49542",
+        "gnd": "4051034-7",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-d9121daa-9860-571c-9988-41aef5098062",
@@ -11269,7 +11982,11 @@
       "lat": 44,
       "lon": 21,
       "letter_change": true,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q127885",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-be153ad9-02e1-5aa0-9c12-94558f913aba",
@@ -11297,7 +12014,12 @@
       "lat": 47,
       "lon": 35,
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q131802",
+        "gnd": "4055278-0",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-38043cab-760e-5e0d-a16a-4c5e28fddbd0",
@@ -11339,7 +12061,12 @@
       "lat": 50,
       "lon": 30,
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q40477",
+        "gnd": "4077491-0",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-3c27cb9c-76df-5bb4-a024-93439eea5e49",
@@ -11427,7 +12154,12 @@
       "lat": 55,
       "lon": 50,
       "letter_change": true,
-      "letter": "Т"
+      "letter": "Т",
+      "authority": {
+        "wikidata": "Q35565",
+        "gnd": "4078164-1",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-24d0aba4-a868-53d9-8ebb-0c3b15dfbfc6",
@@ -11457,7 +12189,12 @@
       "lat": 49,
       "lon": 32,
       "letter_change": true,
-      "letter": "У"
+      "letter": "У",
+      "authority": {
+        "wikidata": "Q44806",
+        "gnd": "4061497-9",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-fbbe25a5-e622-5bad-8f00-b08615659537",
@@ -11499,7 +12236,11 @@
       "lat": 62,
       "lon": 26,
       "letter_change": true,
-      "letter": "Ф"
+      "letter": "Ф",
+      "authority": {
+        "wikidata": "Q170284",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-d045bd92-e47d-5e30-9e9e-9d4474527a29",
@@ -11641,7 +12382,11 @@
       "lat": 46,
       "lon": 2,
       "letter_change": false,
-      "letter": "Ф"
+      "letter": "Ф",
+      "authority": {
+        "wikidata": "Q120068720",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-b51fb8e2-8e99-56b0-91c8-f4e478bc6cf9",
@@ -11661,7 +12406,12 @@
         "Племя, упоминаемое в «Велесовой книге»."
       ],
       "letter_change": true,
-      "letter": "Х"
+      "letter": "Х",
+      "authority": {
+        "wikidata": "Q173282",
+        "gnd": "4009796-1",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-6d177f65-9b59-588a-8251-afd848b3d800",
@@ -11691,7 +12441,11 @@
       "lat": 49.8,
       "lon": 15.5,
       "letter_change": true,
-      "letter": "Ч"
+      "letter": "Ч",
+      "authority": {
+        "wikidata": "Q170217",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-eac1d201-3d62-56fe-b0e6-56c6ac76e9b3",
@@ -11715,7 +12469,11 @@
       "lat": 48.5,
       "lon": 9.5,
       "letter_change": true,
-      "letter": "Ш"
+      "letter": "Ш",
+      "authority": {
+        "wikidata": "Q1970302",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-c523ab0f-0015-5653-af67-2dea9c9537de",
@@ -11745,7 +12503,11 @@
       "lat": 60,
       "lon": 18,
       "letter_change": false,
-      "letter": "Ш"
+      "letter": "Ш",
+      "authority": {
+        "wikidata": "Q165192",
+        "src": "wikidata-auto"
+      }
     }
   ],
   "languages": [

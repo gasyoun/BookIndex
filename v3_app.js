@@ -7426,6 +7426,19 @@ var BookIndex = (function(exports) {
 		if (lodHtml) {
 			html += lodHtml;
 		}
+		// Authority records (A3): Wikidata + cross-IDs for names/toponyms/ethnonyms.
+		const auth = it && it.authority;
+		if (auth && auth.wikidata) {
+			const authLinks = [];
+			authLinks.push(`<a class="lod-link wikidata" href="https://www.wikidata.org/wiki/${escapeHtml(auth.wikidata)}" target="_blank" rel="noopener noreferrer">Wikidata (${escapeHtml(auth.wikidata)}) ↗</a>`);
+			if (auth.viaf) authLinks.push(`<a class="lod-link viaf" href="https://viaf.org/viaf/${escapeHtml(auth.viaf)}" target="_blank" rel="noopener noreferrer">VIAF ↗</a>`);
+			if (auth.gnd) authLinks.push(`<a class="lod-link gnd" href="https://d-nb.info/gnd/${escapeHtml(auth.gnd)}" target="_blank" rel="noopener noreferrer">GND ↗</a>`);
+			if (auth.geonames) authLinks.push(`<a class="lod-link geonames" href="https://www.geonames.org/${escapeHtml(auth.geonames)}" target="_blank" rel="noopener noreferrer">GeoNames ↗</a>`);
+			html += `<div class="card-lod-section">
+						<h3>Авторитетные записи</h3>
+						<div class="card-lod-grid">${authLinks.join("")}</div>
+					</div>`;
+		}
 		if (useTwoColumnCardLayout) html += "</div>";
 		html += buildCitationWidgetHtml("card");
 		html += "</div>";

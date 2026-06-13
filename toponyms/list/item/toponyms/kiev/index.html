@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-sCWnImAjLq/He0eY//WVFDx/97xkEqPSQ7OtIgXQ6Bk=' 'sha256-S3Yo4vn7uKRnscDel7eL+4+yHBtNd/8g4QdU2Z3fxyw='; worker-src 'self' blob:; style-src 'self' 'sha256-F2HXfn6ZG+IA/zDLNilHYVgdJ0e7GOUEjWQrdD7xDxQ='; style-src-elem 'self' 'sha256-F2HXfn6ZG+IA/zDLNilHYVgdJ0e7GOUEjWQrdD7xDxQ='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-IdKk3YM1l1yBuhz/MPXAN5Wa91twRee10Cf0NU00iak=' 'sha256-twmBpi3L9nyzltJCroJJGsgolcC/KGfU6pe7voU/r6Q='; worker-src 'self' blob:; style-src 'self' 'sha256-QrUDe7BiGuKAeZNmcWxGCZwW47Qb8uIB4JOdxY34sb8='; style-src-elem 'self' 'sha256-QrUDe7BiGuKAeZNmcWxGCZwW47Qb8uIB4JOdxY34sb8='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -88,7 +88,13 @@
     "@type": "DefinedTermSet",
     "@id": "https://gasyoun.github.io/BookIndex/aaz-index.html#dataset",
     "name": "Сводный указатель терминов, имен, языков и лексем BookIndex"
-  }
+  },
+  "sameAs": [
+    "https://www.wikidata.org/wiki/Q1899",
+    "https://viaf.org/viaf/150028026",
+    "https://d-nb.info/gnd/4030522-3",
+    "https://www.geonames.org/703448"
+  ]
 }
 </script>
 <link rel="stylesheet" href="../../../../../vendor/leaflet.css" media="print" onload="this.media='all'">
@@ -4210,6 +4216,24 @@
     background: #c9ebcf;
     border-color: #70ba86;
   }
+  .lod-link.wikidata {
+    background: #eef0f4;
+    color: #2d4470;
+    border-color: #c2cbe0;
+  }
+  .lod-link.wikidata:hover {
+    background: #dde2ec;
+    border-color: #8a99c0;
+  }
+  .lod-link.viaf, .lod-link.gnd, .lod-link.geonames {
+    background: #f3eef4;
+    color: #5a3870;
+    border-color: #d8c7e0;
+  }
+  .lod-link.viaf:hover, .lod-link.gnd:hover, .lod-link.geonames:hover {
+    background: #e7dcec;
+    border-color: #a98ac0;
+  }
 
   /* Reverse video links on entity cards */
   .card-video-count {
@@ -5595,7 +5619,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "7d57a39cf785",
+  "build_id": "7891e063225c",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -5621,24 +5645,24 @@
         "names",
         "edges"
       ],
-      "bytes": 240780,
-      "sha256": "tA7AQfK1uN3ZhkdE3JmoQGVOHpZef5BmZ1qa84grmMA="
+      "bytes": 245592,
+      "sha256": "tfFFJQP5flcm+/ul2hGvDFIGSXrbqhHKEuJYQ13RmAA="
     },
     {
       "file": "11-toponyms.json",
       "keys": [
         "toponyms"
       ],
-      "bytes": 181753,
-      "sha256": "b/kWnL2jDv3rguRiJYNPoFJhsQcem1MWJNGmy4wWW4Y="
+      "bytes": 192328,
+      "sha256": "XShwhLOm/qFs0c/cOxm1BEHMtcygNfYzc63mP8oFyZw="
     },
     {
       "file": "12-ethnonyms.json",
       "keys": [
         "ethnonyms"
       ],
-      "bytes": 138314,
-      "sha256": "HhSA5VhymARBv080TJyeOJH73P42qoqoIHG37j6RFEA="
+      "bytes": 141764,
+      "sha256": "AmCm5Ehg6DlfEzvMfG0YPbU7V+rhVy4X1NkBcX+PHsI="
     },
     {
       "file": "13-languages.json",
@@ -5903,7 +5927,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "7d57a39cf785";
+	var APP_BUILD_ID$1 = "7891e063225c";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6789,8 +6813,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "7d57a39cf785").trim();
-		if (buildId && buildId !== "7d57a39cf785") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "7891e063225c").trim();
+		if (buildId && buildId !== "7891e063225c") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10233,7 +10257,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "7d57a39cf785" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "7891e063225c" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -13176,6 +13200,19 @@ var BookIndex = (function(exports) {
 		}
 		if (lodHtml) {
 			html += lodHtml;
+		}
+		// Authority records (A3): Wikidata + cross-IDs for names/toponyms/ethnonyms.
+		const auth = it && it.authority;
+		if (auth && auth.wikidata) {
+			const authLinks = [];
+			authLinks.push(`<a class="lod-link wikidata" href="https://www.wikidata.org/wiki/${escapeHtml(auth.wikidata)}" target="_blank" rel="noopener noreferrer">Wikidata (${escapeHtml(auth.wikidata)}) ↗</a>`);
+			if (auth.viaf) authLinks.push(`<a class="lod-link viaf" href="https://viaf.org/viaf/${escapeHtml(auth.viaf)}" target="_blank" rel="noopener noreferrer">VIAF ↗</a>`);
+			if (auth.gnd) authLinks.push(`<a class="lod-link gnd" href="https://d-nb.info/gnd/${escapeHtml(auth.gnd)}" target="_blank" rel="noopener noreferrer">GND ↗</a>`);
+			if (auth.geonames) authLinks.push(`<a class="lod-link geonames" href="https://www.geonames.org/${escapeHtml(auth.geonames)}" target="_blank" rel="noopener noreferrer">GeoNames ↗</a>`);
+			html += `<div class="card-lod-section">
+						<h3>Авторитетные записи</h3>
+						<div class="card-lod-grid">${authLinks.join("")}</div>
+					</div>`;
 		}
 		if (useTwoColumnCardLayout) html += "</div>";
 		html += buildCitationWidgetHtml("card");

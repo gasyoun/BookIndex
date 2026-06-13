@@ -364,6 +364,33 @@
             }
           },
           "additionalProperties": true
+        },
+        "authority": {
+          "type": "object",
+          "description": "External authority identifiers (A3). Wikidata QID plus any cross-IDs pulled from it; src records how the link was established.",
+          "properties": {
+            "wikidata": {
+              "type": "string",
+              "pattern": "^Q[0-9]+$"
+            },
+            "viaf": {
+              "type": "string"
+            },
+            "gnd": {
+              "type": "string"
+            },
+            "geonames": {
+              "type": "string"
+            },
+            "glottolog": {
+              "type": "string"
+            },
+            "src": {
+              "type": "string",
+              "enum": ["wikidata-auto", "manual"]
+            }
+          },
+          "additionalProperties": true
         }
       },
       "additionalProperties": true

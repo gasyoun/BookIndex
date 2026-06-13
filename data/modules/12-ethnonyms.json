@@ -28,7 +28,11 @@
       "lat": -25,
       "lon": 135,
       "letter_change": true,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q12060728",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-3c587df2-5be9-5ac1-8b35-3ad99c789be3",
@@ -78,7 +82,11 @@
       "lat": 52,
       "lon": -1,
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q42406",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-20b71ddc-dc08-5442-b73b-0862e320bb3f",
@@ -126,7 +134,12 @@
       "lat": 25,
       "lon": 45,
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q35323",
+        "gnd": "4002528-7",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-1daa0566-129e-5f06-b65b-89d8c8fa3052",
@@ -146,7 +159,11 @@
         "Племена, фигурирующие в «Велесовой книге»."
       ],
       "letter_change": false,
-      "letter": "А"
+      "letter": "А",
+      "authority": {
+        "wikidata": "Q179733",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-5a3ff469-5a7f-5a62-a92b-77920180d197",
@@ -170,7 +187,12 @@
       "lat": 43,
       "lon": -2,
       "letter_change": true,
-      "letter": "Б"
+      "letter": "Б",
+      "authority": {
+        "wikidata": "Q126756",
+        "gnd": "4004644-8",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-347170ea-d970-5897-8195-7768d84558bd",
@@ -206,7 +228,12 @@
       "lat": 53.7,
       "lon": 27.95,
       "letter_change": false,
-      "letter": "Б"
+      "letter": "Б",
+      "authority": {
+        "wikidata": "Q483569",
+        "gnd": "4119038-5",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-ac87e08c-8f1c-5096-a020-b690641901dd",
@@ -234,7 +261,12 @@
       "lat": 42.7,
       "lon": 25.5,
       "letter_change": false,
-      "letter": "Б"
+      "letter": "Б",
+      "authority": {
+        "wikidata": "Q133255",
+        "gnd": "4088623-2",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-fb1b7a4f-8e19-5a66-9d15-037b7886244c",
@@ -270,7 +302,11 @@
       "lat": 60,
       "lon": 18,
       "letter_change": true,
-      "letter": "В"
+      "letter": "В",
+      "authority": {
+        "wikidata": "Q48343",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-b99aeffc-e8a2-5c59-a6c5-3e93d367eba9",
@@ -294,7 +330,12 @@
       "lat": 47.2,
       "lon": 19.5,
       "letter_change": false,
-      "letter": "В"
+      "letter": "В",
+      "authority": {
+        "wikidata": "Q133032",
+        "gnd": "4100008-0",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-27d63ce6-1510-5e1c-adab-17b7a59c86fa",
@@ -508,7 +549,11 @@
       "lat": 39,
       "lon": 22,
       "letter_change": false,
-      "letter": "Г"
+      "letter": "Г",
+      "authority": {
+        "wikidata": "Q539051",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-5b1fae7d-febf-56ac-8a7d-d8e8fa1a4035",
@@ -560,7 +605,11 @@
       "lat": 56,
       "lon": 10,
       "letter_change": false,
-      "letter": "Д"
+      "letter": "Д",
+      "authority": {
+        "wikidata": "Q164714",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-bc89eb4b-e856-5e7a-93a1-8a6d652ec7cc",
@@ -740,7 +789,11 @@
       "lat": 50,
       "lon": 50,
       "letter_change": false,
-      "letter": "И"
+      "letter": "И",
+      "authority": {
+        "wikidata": "Q475027",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-43bf9c25-6fe3-5a89-befd-8b00c81473b5",
@@ -770,7 +823,11 @@
       "lat": 55,
       "lon": 30,
       "letter_change": true,
-      "letter": "К"
+      "letter": "К",
+      "authority": {
+        "wikidata": "Q48287",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-82882a85-0a1e-53e6-8120-3c01ce8de30a",
@@ -918,7 +975,11 @@
       "lat": 56.9,
       "lon": 24.1,
       "letter_change": true,
-      "letter": "Л"
+      "letter": "Л",
+      "authority": {
+        "wikidata": "Q49540",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-db501ae5-a623-5948-993f-f342588ca1a9",
@@ -988,7 +1049,12 @@
       "lat": 55.2,
       "lon": 24,
       "letter_change": false,
-      "letter": "Л"
+      "letter": "Л",
+      "authority": {
+        "wikidata": "Q186192",
+        "gnd": "4035937-2",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-6a4d64f0-af4b-525a-91a2-d4f02dc55963",
@@ -1050,7 +1116,12 @@
       "lat": 51.2,
       "lon": 10.5,
       "letter_change": false,
-      "letter": "Н"
+      "letter": "Н",
+      "authority": {
+        "wikidata": "Q42884",
+        "gnd": "4070334-4",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-13336e55-5855-54c7-bf66-36cc91df9cdb",
@@ -1174,7 +1245,11 @@
       "lat": 60.5,
       "lon": 8.5,
       "letter_change": false,
-      "letter": "Н"
+      "letter": "Н",
+      "authority": {
+        "wikidata": "Q188779",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-4c480d52-5c52-54e2-9d55-4a15fc21a9dc",
@@ -1208,7 +1283,12 @@
       "lat": 60,
       "lon": 5,
       "letter_change": false,
-      "letter": "Н"
+      "letter": "Н",
+      "authority": {
+        "wikidata": "Q83418",
+        "gnd": "4042620-8",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-b6a4a12f-d2b0-5309-ba6f-3022868a4a70",
@@ -1264,7 +1344,12 @@
       "lat": -6,
       "lon": 145,
       "letter_change": true,
-      "letter": "П"
+      "letter": "П",
+      "authority": {
+        "wikidata": "Q424129",
+        "gnd": "4044567-7",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-f9febee2-5102-5b95-9c24-33004bc97f47",
@@ -1320,7 +1405,11 @@
       "lat": 48,
       "lon": 38,
       "letter_change": false,
-      "letter": "П"
+      "letter": "П",
+      "authority": {
+        "wikidata": "Q1035516",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-9b4a6578-33cb-50ff-a553-b726f3c053dc",
@@ -1348,7 +1437,11 @@
       "lat": 51.9,
       "lon": 19.1,
       "letter_change": false,
-      "letter": "П"
+      "letter": "П",
+      "authority": {
+        "wikidata": "Q1026",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-e13a484e-99da-5bf6-a1d5-3c8b40c5c50d",
@@ -1510,7 +1603,12 @@
       "lat": 55,
       "lon": 38,
       "letter_change": false,
-      "letter": "Р"
+      "letter": "Р",
+      "authority": {
+        "wikidata": "Q49542",
+        "gnd": "4051034-7",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-d9121daa-9860-571c-9988-41aef5098062",
@@ -1702,7 +1800,11 @@
       "lat": 44,
       "lon": 21,
       "letter_change": true,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q127885",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-be153ad9-02e1-5aa0-9c12-94558f913aba",
@@ -1730,7 +1832,12 @@
       "lat": 47,
       "lon": 35,
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q131802",
+        "gnd": "4055278-0",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-38043cab-760e-5e0d-a16a-4c5e28fddbd0",
@@ -1772,7 +1879,12 @@
       "lat": 50,
       "lon": 30,
       "letter_change": false,
-      "letter": "С"
+      "letter": "С",
+      "authority": {
+        "wikidata": "Q40477",
+        "gnd": "4077491-0",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-3c27cb9c-76df-5bb4-a024-93439eea5e49",
@@ -1860,7 +1972,12 @@
       "lat": 55,
       "lon": 50,
       "letter_change": true,
-      "letter": "Т"
+      "letter": "Т",
+      "authority": {
+        "wikidata": "Q35565",
+        "gnd": "4078164-1",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-24d0aba4-a868-53d9-8ebb-0c3b15dfbfc6",
@@ -1890,7 +2007,12 @@
       "lat": 49,
       "lon": 32,
       "letter_change": true,
-      "letter": "У"
+      "letter": "У",
+      "authority": {
+        "wikidata": "Q44806",
+        "gnd": "4061497-9",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-fbbe25a5-e622-5bad-8f00-b08615659537",
@@ -1932,7 +2054,11 @@
       "lat": 62,
       "lon": 26,
       "letter_change": true,
-      "letter": "Ф"
+      "letter": "Ф",
+      "authority": {
+        "wikidata": "Q170284",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-d045bd92-e47d-5e30-9e9e-9d4474527a29",
@@ -2074,7 +2200,11 @@
       "lat": 46,
       "lon": 2,
       "letter_change": false,
-      "letter": "Ф"
+      "letter": "Ф",
+      "authority": {
+        "wikidata": "Q120068720",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-b51fb8e2-8e99-56b0-91c8-f4e478bc6cf9",
@@ -2094,7 +2224,12 @@
         "Племя, упоминаемое в «Велесовой книге»."
       ],
       "letter_change": true,
-      "letter": "Х"
+      "letter": "Х",
+      "authority": {
+        "wikidata": "Q173282",
+        "gnd": "4009796-1",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-6d177f65-9b59-588a-8251-afd848b3d800",
@@ -2124,7 +2259,11 @@
       "lat": 49.8,
       "lon": 15.5,
       "letter_change": true,
-      "letter": "Ч"
+      "letter": "Ч",
+      "authority": {
+        "wikidata": "Q170217",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-eac1d201-3d62-56fe-b0e6-56c6ac76e9b3",
@@ -2148,7 +2287,11 @@
       "lat": 48.5,
       "lon": 9.5,
       "letter_change": true,
-      "letter": "Ш"
+      "letter": "Ш",
+      "authority": {
+        "wikidata": "Q1970302",
+        "src": "wikidata-auto"
+      }
     },
     {
       "canonical_id": "ethnonyms-c523ab0f-0015-5653-af67-2dea9c9537de",
@@ -2178,7 +2321,11 @@
       "lat": 60,
       "lon": 18,
       "letter_change": false,
-      "letter": "Ш"
+      "letter": "Ш",
+      "authority": {
+        "wikidata": "Q165192",
+        "src": "wikidata-auto"
+      }
     }
   ]
 }

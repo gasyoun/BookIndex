@@ -80,6 +80,7 @@
 ### Команды разработки
 *   **Сборка приложения**: `npm run build` (генерирует `aaz-index.html` в корне)
 *   **Заморозка слагов**: `npm run slug:freeze` (обновляет `data/slug_registry.json` при добавлении/переименовании сущностей; слаги канонических URI стабильны и не меняются между релизами). Проверка: `npm run slug:check`.
+*   **Авторитетные ID**: `python scripts/align_authorities.py --report` (поиск Wikidata/VIAF/GND/GeoNames), `--write` (запись высокоуверенных + review-файл `data/authority_candidates.json` на ручную проверку).
 *   **Vite smoke/deploy copy**: `npm run build:vite`
 *   **Проверка типов**: `npm run typecheck`
 *   **Полная E2E-проверка**: `npm run check`

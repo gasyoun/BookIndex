@@ -543,7 +543,7 @@ function buildItemSchema(type, it, canonicalUrl) {
   else if (type === 'lexicon') category = 'Лексема';
   else if (type === 'subject') category = 'Понятие / термин';
 
-  return {
+  const schema = {
     "@context": "https://schema.org",
     "@type": "DefinedTerm",
     "@id": canonicalUrl,
@@ -556,6 +556,16 @@ function buildItemSchema(type, it, canonicalUrl) {
       "name": "Сводный указатель терминов, имен, языков и лексем BookIndex"
     }
   };
+  // A3: link to external authority records via schema.org sameAs.
+  const a = it.authority;
+  if (a && a.wikidata) {
+    const sameAs = [`https://www.wikidata.org/wiki/${a.wikidata}`];
+    if (a.viaf) sameAs.push(`https://viaf.org/viaf/${a.viaf}`);
+    if (a.gnd) sameAs.push(`https://d-nb.info/gnd/${a.gnd}`);
+    if (a.geonames) sameAs.push(`https://www.geonames.org/${a.geonames}`);
+    schema.sameAs = sameAs;
+  }
+  return schema;
 }
 
 // Keep track of all pre-rendered paths for sitemap
