@@ -735,8 +735,12 @@ var BookIndex = (function(exports) {
 		return Math.max(1, parseInt(APP_DATA$1?.book_stats?.total_pages || 424, 10) || 424);
 	}
 	function normalizeKwicSource$1(source) {
-		return source === "glossary" ? "glossary" : "lexicon";
+		if (source === "glossary") return "glossary";
+		if (source === "lectures") return "lectures";
+		return "lexicon";
 	}
+	var LECTURES_KWIC_CACHE = null;
+	var lecturesKwicLoadPromise = null;
 	function normalizeKwicSort$1(mode) {
 		return [
 			"left",
@@ -10434,6 +10438,64 @@ var BookIndex = (function(exports) {
 		}
 		return rows;
 	}
+	function loadLecturesKwic() {
+		if (LECTURES_KWIC_CACHE) return Promise.resolve(LECTURES_KWIC_CACHE);
+		if (lecturesKwicLoadPromise) return lecturesKwicLoadPromise;
+		const base = typeof document !== "undefined" && document.baseURI ? document.baseURI : (typeof location !== "undefined" ? location.href : "");
+		const url = new URL("./data/lectures_kwic.json", base).href;
+		lecturesKwicLoadPromise = fetch(url, { cache: "default" })
+			.then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+			.then((d) => { LECTURES_KWIC_CACHE = d && Array.isArray(d.segments) ? d : { videos: [], segments: [] }; return LECTURES_KWIC_CACHE; })
+			.catch((e) => { lecturesKwicLoadPromise = null; throw e; });
+		return lecturesKwicLoadPromise;
+	}
+	function collectLecturesKwicRows(query) {
+		const rows = [];
+		rows._truncated = false;
+		const cache = LECTURES_KWIC_CACHE;
+		if (!cache) return rows;
+		const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH).trim();
+		if (normalizeHeadForMatch(q).length < 2) return rows;
+		const ql = q.toLowerCase();
+		const W = 64;
+		for (const seg of cache.segments) {
+			const vi = seg[0];
+			const t = typeof seg[1] === "number" ? seg[1] : null;
+			const text = String(seg[2] || "");
+			const lower = text.toLowerCase();
+			let from = 0;
+			let idx = lower.indexOf(ql, from);
+			while (idx !== -1) {
+				const leftStart = Math.max(0, idx - W);
+				const rightEnd = Math.min(text.length, idx + ql.length + W);
+				const v = cache.videos[vi] || {};
+				rows.push({
+					source: "lectures",
+					term: q,
+					itemType: "",
+					itemHead: v.title || "",
+					page: t == null ? 0 : t,
+					leftPrefix: leftStart > 0 ? "…" : "",
+					leftText: text.slice(leftStart, idx),
+					keyText: text.slice(idx, idx + ql.length),
+					rightText: text.slice(idx + ql.length, rightEnd),
+					rightSuffix: rightEnd < text.length ? "…" : "",
+					sortLeft: normalizeHeadForMatch(text.slice(Math.max(0, idx - 40), idx)),
+					sortRight: normalizeHeadForMatch(text.slice(idx + ql.length, idx + ql.length + 40)),
+					videoUrl: v.url || "",
+					videoTitle: v.title || "",
+					t
+				});
+				if (rows.length >= KWIC_MAX_ROWS) {
+					rows._truncated = true;
+					return rows;
+				}
+				from = idx + ql.length;
+				idx = lower.indexOf(ql, from);
+			}
+		}
+		return rows;
+	}
 	function sortKwicRows(rows, mode) {
 		const sortMode = normalizeKwicSort(mode);
 		rows.sort((a, b) => {
@@ -10478,6 +10540,7 @@ var BookIndex = (function(exports) {
           <select id="kwic-source" class="kwic-input">
             <option value="lexicon"${currentKwicSource === "lexicon" ? " selected" : ""}>Лексика (статьи)</option>
             <option value="glossary"${currentKwicSource === "glossary" ? " selected" : ""}>Глоссарий (термины)</option>
+            <option value="lectures"${currentKwicSource === "lectures" ? " selected" : ""}>Лекции (видео)</option>
           </select>
         </label>
         <label class="kwic-field">
@@ -10519,6 +10582,10 @@ var BookIndex = (function(exports) {
 				sourceHintEl.innerHTML = "<strong>Глоссарий:</strong> учебные определения терминов (например, энклитика, аблаут).";
 				return;
 			}
+			if (currentKwicSource === "lectures") {
+				sourceHintEl.innerHTML = "<strong>Лекции:</strong> расшифровки 27 видеолекций (≈240 тыс. слов); ссылка ведёт на минуту в видео. Диапазон страниц не применяется.";
+				return;
+			}
 			sourceHintEl.innerHTML = "<strong>Лексика:</strong> словарные карточки слов/форм и их контексты в книге.";
 		};
 		const renderRows = () => {
@@ -10538,24 +10605,68 @@ var BookIndex = (function(exports) {
 				persistViewState();
 				return;
 			}
-			const rows = currentKwicSource === "glossary" ? collectGlossaryKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd) : collectLexiconKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd);
+			const sourceLabel = currentKwicSource === "glossary" ? "глоссарий" : currentKwicSource === "lectures" ? "лекции" : "лексика";
+			if (currentKwicSource === "lectures" && !LECTURES_KWIC_CACHE) {
+				metaEl.textContent = "Загрузка корпуса лекций…";
+				resultsEl.innerHTML = "<div class=\"kwic-empty\">Один раз загружается ~3 МБ расшифровок.</div>";
+				loadLecturesKwic().then(() => renderRows()).catch(() => {
+					metaEl.textContent = "Не удалось загрузить корпус лекций.";
+					resultsEl.innerHTML = "<div class=\"kwic-empty\">Проверьте соединение и повторите.</div>";
+				});
+				return;
+			}
+			const rows = currentKwicSource === "glossary" ? collectGlossaryKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd) : currentKwicSource === "lectures" ? collectLecturesKwicRows(currentKwicQuery) : collectLexiconKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd);
 			sortKwicRows(rows, currentKwicSort);
 			const kwicTruncated = rows && rows._truncated === true;
 			if (!rows.length) {
-				metaEl.textContent = `Совпадений не найдено: ${currentKwicSource === "glossary" ? "глоссарий" : "лексика"}, стр. ${currentKwicPageStart}-${currentKwicPageEnd}.`;
-				resultsEl.innerHTML = "<div class=\"kwic-empty\">Попробуйте расширить диапазон страниц или изменить запрос.</div>";
+				metaEl.textContent = `Совпадений не найдено: ${sourceLabel}${currentKwicSource === "lectures" ? "" : `, стр. ${currentKwicPageStart}-${currentKwicPageEnd}`}.`;
+				resultsEl.innerHTML = `<div class="kwic-empty">${currentKwicSource === "lectures" ? "Попробуйте другой запрос (например: «ударение», «грамота», «санскрит»)." : "Попробуйте расширить диапазон страниц или изменить запрос."}</div>`;
 				persistViewState();
 				return;
 			}
 			const terms = new Set(rows.map((r) => r.term));
 			const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : "";
-			metaEl.textContent = `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${currentKwicSource === "glossary" ? "глоссарий" : "лексика"}.${truncText}`;
+			const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoTitle)).size : 0;
+			metaEl.textContent = currentKwicSource === "lectures"
+				? `Найдено ${rows.length} контекстов в ${lecturesCount} лекциях, источник: лекции.${truncText}`
+				: `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${sourceLabel}.${truncText}`;
 			resultsEl.textContent = "";
 			for (const r of rows) {
 				const row = document.createElement("div");
 				row.className = "kwic-row";
 				const head = document.createElement("div");
 				head.className = "kwic-row-head";
+				if (r.source === "lectures") {
+					const hasT = Number.isFinite(r.t) && r.t > 0;
+					const vlink = document.createElement("a");
+					vlink.className = "kwic-video-link kwic-pill";
+					vlink.target = "_blank";
+					vlink.rel = "noopener noreferrer";
+					vlink.href = hasT ? r.videoUrl + (r.videoUrl.includes("?") ? "&" : "?") + "t=" + r.t + "s" : r.videoUrl;
+					vlink.textContent = hasT ? `▸ ${formatVideoDuration(r.t)}` : "▸ видео";
+					head.appendChild(vlink);
+					const titleChip = document.createElement("span");
+					titleChip.className = "kwic-source-chip";
+					titleChip.textContent = r.videoTitle || "";
+					titleChip.title = r.videoTitle || "";
+					head.appendChild(titleChip);
+					const context = document.createElement("div");
+					context.className = "kwic-context";
+					const left = document.createElement("span");
+					left.className = "kwic-muted";
+					left.textContent = String(r.leftPrefix || "") + String(r.leftText || "");
+					const mark = document.createElement("mark");
+					mark.textContent = String(r.keyText || "");
+					const right = document.createElement("span");
+					right.textContent = String(r.rightText || "") + String(r.rightSuffix || "");
+					context.appendChild(left);
+					context.appendChild(mark);
+					context.appendChild(right);
+					row.appendChild(head);
+					row.appendChild(context);
+					resultsEl.appendChild(row);
+					continue;
+				}
 				const cardBtn = document.createElement("button");
 				cardBtn.type = "button";
 				cardBtn.className = "kwic-open-card kwic-pill";

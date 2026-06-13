@@ -15,6 +15,7 @@
     "slug:check": "node scripts/build_slug_registry.mjs --check",
     "export:tei": "python scripts/export_tei.py",
     "export:tei:check": "python scripts/export_tei.py --check",
+    "kwic:build": "python scripts/build_lectures_kwic.py",
     "check": "npm run typecheck && npm run check:js && npm run check:ui && npm run check:e2e",
     "check:a11y": "node scripts/check_lighthouse_a11y.mjs",
     "check:deploy": "node scripts/check_live_deploy.mjs",

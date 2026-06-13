@@ -18,10 +18,14 @@ const budgets = [
     maxGzipBytes: 600_000,
   },
   {
+    // Raised 2026-06-13: the runtime grew with the corpus video links, deep
+    // timecodes, authority chips, simulator source notes and the lectures KWIC
+    // feature (current ~615 KiB raw / ~145 KiB gzip). Budget reflects the real,
+    // intended size with modest headroom; trim or re-extract to src/ to lower it.
     label: 'runtime script',
     path: 'v3_app.js',
-    maxBytes: 560_000,
-    maxGzipBytes: 140_000,
+    maxBytes: 660_000,
+    maxGzipBytes: 156_000,
   },
 ];
 

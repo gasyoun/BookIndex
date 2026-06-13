@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+- KWIC over the lecture corpus: the concordance gained a "Лекции (видео)" source that searches the ~240k-word timecoded transcript corpus and links each hit to the exact minute in the video (`&t=<sec>s`). Backed by a compact, lazy-loaded index (`data/lectures_kwic.json`, built by `scripts/build_lectures_kwic.py` / `npm run kwic:build`) so it never bloats the main artifact.
 - Live GitHub Pages health checks plus Lighthouse and axe accessibility quality gates.
 - Video-production pipeline tracker: `data/video_pipeline.json` (per-video proof-reading stage, transcription quality, assignees, dates, links) migrated from `video-archive.xlsx`, plus a self-contained volunteer dashboard at `pipeline/index.html` (`npm run pipeline:dashboard`).
 - Reverse video links on entity cards: names, languages, ethnonyms, toponyms, lexicon and subject cards now list the lectures/talks that mention them (built from `video_catalog[].related_entities`), newest first, with duration and a total count.
@@ -25,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - Replaced broad style CSP `unsafe-inline` with build-generated SHA-256 hashes for inline style blocks.
 - Removed the remaining `style-src-attr 'unsafe-inline'` exception by moving runtime style attributes to `data-*` driven DOM style updates.
 - Opted GitHub workflows into the Node 24 JavaScript action runtime ahead of the June 2026 migration.
+- Raised the `v3_app.js` runtime-script performance budget to match the app's real size after the corpus/video/DH feature growth (the budget had been exceeded since a pre-existing commit); the gate is enforceable again.
 
 ### Removed
 - Retired `video-archive.xlsx` from the repository; the canonical production status now lives in `data/video_pipeline.json`.

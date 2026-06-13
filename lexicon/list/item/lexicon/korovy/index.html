@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-4dm4ULZW1m8epUUO1BSjEY5Iq6bz4XmMeLxekJoU5S4=' 'sha256-MQiicXcSZijhv0u5IK0fvGs7eSPyFqjDy30h9AmVL0s='; worker-src 'self' blob:; style-src 'self' 'sha256-K4nS+P/S/5u9hfd3navJ4237CQ7w0kWFNFTrYrAPdOM='; style-src-elem 'self' 'sha256-K4nS+P/S/5u9hfd3navJ4237CQ7w0kWFNFTrYrAPdOM='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-UngePtbDBiJgWTGaVb3wCXZEStYtacevZjp21FIQauQ=' 'sha256-OtWcLdoNzivOeEUE9FL7o4Na+DjTN9x9tsE/Epy/Ntg='; worker-src 'self' blob:; style-src 'self' 'sha256-SOW2PiF+hWPrR9c27IHM1UAmvOTiEu/GzNEWjcRvtYg='; style-src-elem 'self' 'sha256-SOW2PiF+hWPrR9c27IHM1UAmvOTiEu/GzNEWjcRvtYg='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -3251,6 +3251,21 @@
     font-size: 11px;
     text-decoration: underline dotted;
   }
+  .kwic-video-link {
+    background: #f7f1e6;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: #8c3a15;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 9px;
+    text-decoration: none;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .kwic-video-link:hover {
+    background: #ebdcc9;
+  }
   .kwic-source-chip {
     background: var(--surface-soft);
     border: 1px solid var(--line);
@@ -5625,7 +5640,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "a14da6d8b4b0",
+  "build_id": "331d84b9f5c8",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -5933,7 +5948,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "a14da6d8b4b0";
+	var APP_BUILD_ID$1 = "331d84b9f5c8";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6516,8 +6531,12 @@ var BookIndex = (function(exports) {
 		return Math.max(1, parseInt(APP_DATA$1?.book_stats?.total_pages || 424, 10) || 424);
 	}
 	function normalizeKwicSource$1(source) {
-		return source === "glossary" ? "glossary" : "lexicon";
+		if (source === "glossary") return "glossary";
+		if (source === "lectures") return "lectures";
+		return "lexicon";
 	}
+	var LECTURES_KWIC_CACHE = null;
+	var lecturesKwicLoadPromise = null;
 	function normalizeKwicSort$1(mode) {
 		return [
 			"left",
@@ -6819,8 +6838,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "a14da6d8b4b0").trim();
-		if (buildId && buildId !== "a14da6d8b4b0") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "331d84b9f5c8").trim();
+		if (buildId && buildId !== "331d84b9f5c8") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10263,7 +10282,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "a14da6d8b4b0" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "331d84b9f5c8" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -16215,6 +16234,64 @@ var BookIndex = (function(exports) {
 		}
 		return rows;
 	}
+	function loadLecturesKwic() {
+		if (LECTURES_KWIC_CACHE) return Promise.resolve(LECTURES_KWIC_CACHE);
+		if (lecturesKwicLoadPromise) return lecturesKwicLoadPromise;
+		const base = typeof document !== "undefined" && document.baseURI ? document.baseURI : (typeof location !== "undefined" ? location.href : "");
+		const url = new URL("./data/lectures_kwic.json", base).href;
+		lecturesKwicLoadPromise = fetch(url, { cache: "default" })
+			.then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+			.then((d) => { LECTURES_KWIC_CACHE = d && Array.isArray(d.segments) ? d : { videos: [], segments: [] }; return LECTURES_KWIC_CACHE; })
+			.catch((e) => { lecturesKwicLoadPromise = null; throw e; });
+		return lecturesKwicLoadPromise;
+	}
+	function collectLecturesKwicRows(query) {
+		const rows = [];
+		rows._truncated = false;
+		const cache = LECTURES_KWIC_CACHE;
+		if (!cache) return rows;
+		const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH).trim();
+		if (normalizeHeadForMatch(q).length < 2) return rows;
+		const ql = q.toLowerCase();
+		const W = 64;
+		for (const seg of cache.segments) {
+			const vi = seg[0];
+			const t = typeof seg[1] === "number" ? seg[1] : null;
+			const text = String(seg[2] || "");
+			const lower = text.toLowerCase();
+			let from = 0;
+			let idx = lower.indexOf(ql, from);
+			while (idx !== -1) {
+				const leftStart = Math.max(0, idx - W);
+				const rightEnd = Math.min(text.length, idx + ql.length + W);
+				const v = cache.videos[vi] || {};
+				rows.push({
+					source: "lectures",
+					term: q,
+					itemType: "",
+					itemHead: v.title || "",
+					page: t == null ? 0 : t,
+					leftPrefix: leftStart > 0 ? "…" : "",
+					leftText: text.slice(leftStart, idx),
+					keyText: text.slice(idx, idx + ql.length),
+					rightText: text.slice(idx + ql.length, rightEnd),
+					rightSuffix: rightEnd < text.length ? "…" : "",
+					sortLeft: normalizeHeadForMatch(text.slice(Math.max(0, idx - 40), idx)),
+					sortRight: normalizeHeadForMatch(text.slice(idx + ql.length, idx + ql.length + 40)),
+					videoUrl: v.url || "",
+					videoTitle: v.title || "",
+					t
+				});
+				if (rows.length >= KWIC_MAX_ROWS) {
+					rows._truncated = true;
+					return rows;
+				}
+				from = idx + ql.length;
+				idx = lower.indexOf(ql, from);
+			}
+		}
+		return rows;
+	}
 	function sortKwicRows(rows, mode) {
 		const sortMode = normalizeKwicSort(mode);
 		rows.sort((a, b) => {
@@ -16259,6 +16336,7 @@ var BookIndex = (function(exports) {
           <select id="kwic-source" class="kwic-input">
             <option value="lexicon"${currentKwicSource === "lexicon" ? " selected" : ""}>Лексика (статьи)</option>
             <option value="glossary"${currentKwicSource === "glossary" ? " selected" : ""}>Глоссарий (термины)</option>
+            <option value="lectures"${currentKwicSource === "lectures" ? " selected" : ""}>Лекции (видео)</option>
           </select>
         </label>
         <label class="kwic-field">
@@ -16300,6 +16378,10 @@ var BookIndex = (function(exports) {
 				sourceHintEl.innerHTML = "<strong>Глоссарий:</strong> учебные определения терминов (например, энклитика, аблаут).";
 				return;
 			}
+			if (currentKwicSource === "lectures") {
+				sourceHintEl.innerHTML = "<strong>Лекции:</strong> расшифровки 27 видеолекций (≈240 тыс. слов); ссылка ведёт на минуту в видео. Диапазон страниц не применяется.";
+				return;
+			}
 			sourceHintEl.innerHTML = "<strong>Лексика:</strong> словарные карточки слов/форм и их контексты в книге.";
 		};
 		const renderRows = () => {
@@ -16319,24 +16401,68 @@ var BookIndex = (function(exports) {
 				persistViewState();
 				return;
 			}
-			const rows = currentKwicSource === "glossary" ? collectGlossaryKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd) : collectLexiconKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd);
+			const sourceLabel = currentKwicSource === "glossary" ? "глоссарий" : currentKwicSource === "lectures" ? "лекции" : "лексика";
+			if (currentKwicSource === "lectures" && !LECTURES_KWIC_CACHE) {
+				metaEl.textContent = "Загрузка корпуса лекций…";
+				resultsEl.innerHTML = "<div class=\"kwic-empty\">Один раз загружается ~3 МБ расшифровок.</div>";
+				loadLecturesKwic().then(() => renderRows()).catch(() => {
+					metaEl.textContent = "Не удалось загрузить корпус лекций.";
+					resultsEl.innerHTML = "<div class=\"kwic-empty\">Проверьте соединение и повторите.</div>";
+				});
+				return;
+			}
+			const rows = currentKwicSource === "glossary" ? collectGlossaryKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd) : currentKwicSource === "lectures" ? collectLecturesKwicRows(currentKwicQuery) : collectLexiconKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd);
 			sortKwicRows(rows, currentKwicSort);
 			const kwicTruncated = rows && rows._truncated === true;
 			if (!rows.length) {
-				metaEl.textContent = `Совпадений не найдено: ${currentKwicSource === "glossary" ? "глоссарий" : "лексика"}, стр. ${currentKwicPageStart}-${currentKwicPageEnd}.`;
-				resultsEl.innerHTML = "<div class=\"kwic-empty\">Попробуйте расширить диапазон страниц или изменить запрос.</div>";
+				metaEl.textContent = `Совпадений не найдено: ${sourceLabel}${currentKwicSource === "lectures" ? "" : `, стр. ${currentKwicPageStart}-${currentKwicPageEnd}`}.`;
+				resultsEl.innerHTML = `<div class="kwic-empty">${currentKwicSource === "lectures" ? "Попробуйте другой запрос (например: «ударение», «грамота», «санскрит»)." : "Попробуйте расширить диапазон страниц или изменить запрос."}</div>`;
 				persistViewState();
 				return;
 			}
 			const terms = new Set(rows.map((r) => r.term));
 			const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : "";
-			metaEl.textContent = `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${currentKwicSource === "glossary" ? "глоссарий" : "лексика"}.${truncText}`;
+			const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoTitle)).size : 0;
+			metaEl.textContent = currentKwicSource === "lectures"
+				? `Найдено ${rows.length} контекстов в ${lecturesCount} лекциях, источник: лекции.${truncText}`
+				: `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${sourceLabel}.${truncText}`;
 			resultsEl.textContent = "";
 			for (const r of rows) {
 				const row = document.createElement("div");
 				row.className = "kwic-row";
 				const head = document.createElement("div");
 				head.className = "kwic-row-head";
+				if (r.source === "lectures") {
+					const hasT = Number.isFinite(r.t) && r.t > 0;
+					const vlink = document.createElement("a");
+					vlink.className = "kwic-video-link kwic-pill";
+					vlink.target = "_blank";
+					vlink.rel = "noopener noreferrer";
+					vlink.href = hasT ? r.videoUrl + (r.videoUrl.includes("?") ? "&" : "?") + "t=" + r.t + "s" : r.videoUrl;
+					vlink.textContent = hasT ? `▸ ${formatVideoDuration(r.t)}` : "▸ видео";
+					head.appendChild(vlink);
+					const titleChip = document.createElement("span");
+					titleChip.className = "kwic-source-chip";
+					titleChip.textContent = r.videoTitle || "";
+					titleChip.title = r.videoTitle || "";
+					head.appendChild(titleChip);
+					const context = document.createElement("div");
+					context.className = "kwic-context";
+					const left = document.createElement("span");
+					left.className = "kwic-muted";
+					left.textContent = String(r.leftPrefix || "") + String(r.leftText || "");
+					const mark = document.createElement("mark");
+					mark.textContent = String(r.keyText || "");
+					const right = document.createElement("span");
+					right.textContent = String(r.rightText || "") + String(r.rightSuffix || "");
+					context.appendChild(left);
+					context.appendChild(mark);
+					context.appendChild(right);
+					row.appendChild(head);
+					row.appendChild(context);
+					resultsEl.appendChild(row);
+					continue;
+				}
 				const cardBtn = document.createElement("button");
 				cardBtn.type = "button";
 				cardBtn.className = "kwic-open-card kwic-pill";
