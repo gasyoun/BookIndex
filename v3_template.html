@@ -2323,6 +2323,99 @@
     max-width: 1200px;
     padding: 16px 22px;
   }
+  .video-gallery-inner {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 16px 22px;
+  }
+  .video-gallery-title {
+    color: var(--title, #5a3818);
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 4px 0;
+  }
+  .video-gallery-intro {
+    color: var(--muted, #6d645a);
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .video-gallery-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .vg-input {
+    padding: 7px 10px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    background: #fff;
+    color: inherit;
+  }
+  .vg-search {
+    flex: 1 1 240px;
+    min-width: 180px;
+  }
+  .video-gallery-meta {
+    color: var(--muted, #6d645a);
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .video-gallery-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .vg-card {
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 8px;
+    background: var(--surface, #fffdf8);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .vg-card-title {
+    color: #8c3a15;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    line-height: 1.35;
+  }
+  .vg-card-title:hover {
+    text-decoration: underline;
+  }
+  .vg-card-title::before {
+    content: "▶ ";
+    color: #c0392b;
+    font-size: 11px;
+  }
+  .vg-card-meta {
+    color: var(--muted, #6d645a);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .vg-card-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .vg-chip {
+    font-size: 11px;
+    padding: 2px 8px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 999px;
+    background: #faf6ee;
+    color: var(--title, #5a3818);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .vg-chip:hover {
+    background: #ebdcc9;
+    border-color: var(--line-strong, #8a7050);
+  }
   .lectures-title {
     color: #5a3818;
     font-size: 20px;

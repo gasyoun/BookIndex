@@ -1391,6 +1391,7 @@ var BookIndex = (function(exports) {
 					"glossary",
 					"kwic",
 					"gallery",
+					"video",
 					"russian_evolution",
 					"phonetic_laws",
 					"tasks",
@@ -1514,6 +1515,7 @@ var BookIndex = (function(exports) {
 		glossary: "Глоссарий",
 		kwic: "KWIC",
 		gallery: "Галерея лингвистов",
+		video: "Видеогалерея",
 		russian_evolution: "Русский во времени",
 		phonetic_laws: "Фонетические законы",
 		scholar: "Профессиональный аппарат",
@@ -2121,6 +2123,7 @@ var BookIndex = (function(exports) {
 		glossary: "Глоссарий",
 		kwic: "KWIC",
 		gallery: "Галерея лингвистов",
+		video: "Видеогалерея",
 		russian_evolution: "Русский во времени",
 		phonetic_laws: "Фонетические законы",
 		scholar: "Профессиональный аппарат",
@@ -5410,6 +5413,7 @@ var BookIndex = (function(exports) {
 		glossary: renderGlossaryPanel,
 		kwic: renderKwicPanel,
 		gallery: renderGalleryPanel,
+		video: renderVideoGalleryPanel,
 		russian_evolution: renderRussianEvolutionPanel,
 		phonetic_laws: renderPhoneticLawsPanel,
 		scholar: renderScholarPanel,
@@ -9995,6 +9999,105 @@ var BookIndex = (function(exports) {
 			renderProgressPanels();
 			announceUiMessage("Статистика и история сброшены");
 		};
+	}
+	function formatVideoDate(s) {
+		const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || ""));
+		return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
+	}
+	function renderVideoGalleryPanel(container) {
+		const catalogRaw = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+		// catalog has duplicate ids — dedupe, keep the entry with the most related entities
+		const byId = /* @__PURE__ */ new Map();
+		for (const v of catalogRaw) {
+			if (!v || !v.url) continue;
+			const key = v.id || v.url;
+			const prev = byId.get(key);
+			if (!prev || (v.related_entities || []).length > (prev.related_entities || []).length) byId.set(key, v);
+		}
+		const catalog = Array.from(byId.values());
+		container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
+    <h2 class="video-gallery-title">Видеогалерея</h2>
+    <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; таймкоды на минуту — на карточках сущностей и в KWIC по лекциям.</div>
+    <div class="video-gallery-controls">
+      <input id="vg-search" class="vg-input vg-search" type="search" placeholder="поиск по названию или упомянутой сущности" autocomplete="off">
+      <select id="vg-chapter" class="vg-input"><option value="-1">все главы книги</option>${chapters.map((c, i) => `<option value="${i}">${escapeHtml(c.name)}</option>`).join("")}</select>
+      <select id="vg-sort" class="vg-input">
+        <option value="date-desc">сначала новые</option>
+        <option value="date-asc">сначала старые</option>
+        <option value="dur-desc">сначала длинные</option>
+        <option value="dur-asc">сначала короткие</option>
+      </select>
+    </div>
+    <div id="vg-meta" class="video-gallery-meta"></div>
+    <div id="vg-list" class="video-gallery-list"></div>
+  </div></div>`;
+		const searchEl = container.querySelector("#vg-search");
+		const chapterEl = container.querySelector("#vg-chapter");
+		const sortEl = container.querySelector("#vg-sort");
+		const metaEl = container.querySelector("#vg-meta");
+		const listEl = container.querySelector("#vg-list");
+		const render = () => {
+			const q = clampUiInput(searchEl.value || "", MAX_LIST_QUERY_LENGTH).trim().toLowerCase();
+			const chapterIdx = parseInt(chapterEl.value, 10);
+			const sort = sortEl.value;
+			let vids = catalog.slice();
+			if (Number.isFinite(chapterIdx) && chapterIdx >= 0) {
+				const ids = new Set(getChapterRelatedVideos(chapterIdx, 9999).map((e) => e.v.id));
+				vids = vids.filter((v) => ids.has(v.id));
+			}
+			if (q) vids = vids.filter((v) => String(v.title || "").toLowerCase().includes(q)
+				|| (v.related_entities || []).some((r) => String(r && r.head || "").toLowerCase().includes(q)));
+			vids.sort((a, b) => {
+				if (sort === "dur-desc") return (Number(b.duration) || 0) - (Number(a.duration) || 0);
+				if (sort === "dur-asc") return (Number(a.duration) || 0) - (Number(b.duration) || 0);
+				if (sort === "date-asc") return String(a.date || "").localeCompare(String(b.date || ""));
+				return String(b.date || "").localeCompare(String(a.date || ""));
+			});
+			metaEl.textContent = `Показано ${vids.length} из ${catalog.length} видео.`;
+			listEl.textContent = "";
+			for (const v of vids) {
+				const card = document.createElement("div");
+				card.className = "vg-card";
+				const link = document.createElement("a");
+				link.className = "vg-card-title";
+				link.href = String(v.url || "");
+				link.target = "_blank";
+				link.rel = "noopener noreferrer";
+				link.textContent = String(v.title || "");
+				card.appendChild(link);
+				const meta = document.createElement("div");
+				meta.className = "vg-card-meta";
+				const dur = formatVideoDuration(v.duration);
+				meta.textContent = [formatVideoDate(v.date), dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
+				card.appendChild(meta);
+				const rels = (v.related_entities || []).slice(0, 6);
+				if (rels.length) {
+					const chips = document.createElement("div");
+					chips.className = "vg-card-chips";
+					for (const r of rels) {
+						if (!r || !r.head) continue;
+						const t = r.type === "subject_index" ? "subject" : r.type;
+						const chip = document.createElement("a");
+						chip.className = "vg-chip";
+						chip.dataset.type = String(t || "");
+						chip.dataset.head = String(r.head || "");
+						chip.href = buildItemHash(t || "all", r.head);
+						chip.textContent = r.head;
+						chips.appendChild(chip);
+					}
+					card.appendChild(chips);
+				}
+				listEl.appendChild(card);
+			}
+			listEl.querySelectorAll(".vg-chip").forEach((chip) => {
+				bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
+			});
+		};
+		searchEl.oninput = render;
+		chapterEl.onchange = render;
+		sortEl.onchange = render;
+		render();
 	}
 	function renderLecturesPanel(container) {
 		const lectures = APP_DATA.lectures || [];

@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-VmXRlDeKlBltP5VLoJ6erKKwvOiCLQCtnUheKOf/2Kc=' 'sha256-qjBq0tUAFae8CcMli93kUVBnajZppSXekzA8qpDeAUI='; worker-src 'self' blob:; style-src 'self' 'sha256-u4f7WFoJYUrqDxTf71hpzOU0FshGBzyY8IIwgpLT1Yc='; style-src-elem 'self' 'sha256-u4f7WFoJYUrqDxTf71hpzOU0FshGBzyY8IIwgpLT1Yc='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-IoUxVQRAdzLgE2Q0SJYnWtpNt/sTMUBFSPJ1PxKXOik=' 'sha256-0XGfcDSyPGcOyns/wRZBRpyU/2qfLsYQvHAqy9kFxRY='; worker-src 'self' blob:; style-src 'self' 'sha256-tenO4MYDiSv52Zb6g6FtUuU79IMvRemKJCyxioYk44Q='; style-src-elem 'self' 'sha256-tenO4MYDiSv52Zb6g6FtUuU79IMvRemKJCyxioYk44Q='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -2345,6 +2345,99 @@
     margin: 0 auto;
     max-width: 1200px;
     padding: 16px 22px;
+  }
+  .video-gallery-inner {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 16px 22px;
+  }
+  .video-gallery-title {
+    color: var(--title, #5a3818);
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 4px 0;
+  }
+  .video-gallery-intro {
+    color: var(--muted, #6d645a);
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .video-gallery-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .vg-input {
+    padding: 7px 10px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    background: #fff;
+    color: inherit;
+  }
+  .vg-search {
+    flex: 1 1 240px;
+    min-width: 180px;
+  }
+  .video-gallery-meta {
+    color: var(--muted, #6d645a);
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .video-gallery-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .vg-card {
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 8px;
+    background: var(--surface, #fffdf8);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .vg-card-title {
+    color: #8c3a15;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    line-height: 1.35;
+  }
+  .vg-card-title:hover {
+    text-decoration: underline;
+  }
+  .vg-card-title::before {
+    content: "▶ ";
+    color: #c0392b;
+    font-size: 11px;
+  }
+  .vg-card-meta {
+    color: var(--muted, #6d645a);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .vg-card-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .vg-chip {
+    font-size: 11px;
+    padding: 2px 8px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 999px;
+    background: #faf6ee;
+    color: var(--title, #5a3818);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .vg-chip:hover {
+    background: #ebdcc9;
+    border-color: var(--line-strong, #8a7050);
   }
   .lectures-title {
     color: #5a3818;
@@ -5863,7 +5956,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "97397f6435f7",
+  "build_id": "42a2b547e6a0",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6171,7 +6264,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "97397f6435f7";
+	var APP_BUILD_ID$1 = "42a2b547e6a0";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7061,8 +7154,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "97397f6435f7").trim();
-		if (buildId && buildId !== "97397f6435f7") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "42a2b547e6a0").trim();
+		if (buildId && buildId !== "42a2b547e6a0") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -7410,6 +7503,7 @@ var BookIndex = (function(exports) {
 					"glossary",
 					"kwic",
 					"gallery",
+					"video",
 					"russian_evolution",
 					"phonetic_laws",
 					"tasks",
@@ -7533,6 +7627,7 @@ var BookIndex = (function(exports) {
 		glossary: "Глоссарий",
 		kwic: "KWIC",
 		gallery: "Галерея лингвистов",
+		video: "Видеогалерея",
 		russian_evolution: "Русский во времени",
 		phonetic_laws: "Фонетические законы",
 		scholar: "Профессиональный аппарат",
@@ -8140,6 +8235,7 @@ var BookIndex = (function(exports) {
 		glossary: "Глоссарий",
 		kwic: "KWIC",
 		gallery: "Галерея лингвистов",
+		video: "Видеогалерея",
 		russian_evolution: "Русский во времени",
 		phonetic_laws: "Фонетические законы",
 		scholar: "Профессиональный аппарат",
@@ -10534,7 +10630,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "97397f6435f7" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "42a2b547e6a0" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -11429,6 +11525,7 @@ var BookIndex = (function(exports) {
 		glossary: renderGlossaryPanel,
 		kwic: renderKwicPanel,
 		gallery: renderGalleryPanel,
+		video: renderVideoGalleryPanel,
 		russian_evolution: renderRussianEvolutionPanel,
 		phonetic_laws: renderPhoneticLawsPanel,
 		scholar: renderScholarPanel,
@@ -16014,6 +16111,105 @@ var BookIndex = (function(exports) {
 			renderProgressPanels();
 			announceUiMessage("Статистика и история сброшены");
 		};
+	}
+	function formatVideoDate(s) {
+		const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || ""));
+		return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
+	}
+	function renderVideoGalleryPanel(container) {
+		const catalogRaw = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+		// catalog has duplicate ids — dedupe, keep the entry with the most related entities
+		const byId = /* @__PURE__ */ new Map();
+		for (const v of catalogRaw) {
+			if (!v || !v.url) continue;
+			const key = v.id || v.url;
+			const prev = byId.get(key);
+			if (!prev || (v.related_entities || []).length > (prev.related_entities || []).length) byId.set(key, v);
+		}
+		const catalog = Array.from(byId.values());
+		container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
+    <h2 class="video-gallery-title">Видеогалерея</h2>
+    <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; таймкоды на минуту — на карточках сущностей и в KWIC по лекциям.</div>
+    <div class="video-gallery-controls">
+      <input id="vg-search" class="vg-input vg-search" type="search" placeholder="поиск по названию или упомянутой сущности" autocomplete="off">
+      <select id="vg-chapter" class="vg-input"><option value="-1">все главы книги</option>${chapters.map((c, i) => `<option value="${i}">${escapeHtml(c.name)}</option>`).join("")}</select>
+      <select id="vg-sort" class="vg-input">
+        <option value="date-desc">сначала новые</option>
+        <option value="date-asc">сначала старые</option>
+        <option value="dur-desc">сначала длинные</option>
+        <option value="dur-asc">сначала короткие</option>
+      </select>
+    </div>
+    <div id="vg-meta" class="video-gallery-meta"></div>
+    <div id="vg-list" class="video-gallery-list"></div>
+  </div></div>`;
+		const searchEl = container.querySelector("#vg-search");
+		const chapterEl = container.querySelector("#vg-chapter");
+		const sortEl = container.querySelector("#vg-sort");
+		const metaEl = container.querySelector("#vg-meta");
+		const listEl = container.querySelector("#vg-list");
+		const render = () => {
+			const q = clampUiInput(searchEl.value || "", MAX_LIST_QUERY_LENGTH).trim().toLowerCase();
+			const chapterIdx = parseInt(chapterEl.value, 10);
+			const sort = sortEl.value;
+			let vids = catalog.slice();
+			if (Number.isFinite(chapterIdx) && chapterIdx >= 0) {
+				const ids = new Set(getChapterRelatedVideos(chapterIdx, 9999).map((e) => e.v.id));
+				vids = vids.filter((v) => ids.has(v.id));
+			}
+			if (q) vids = vids.filter((v) => String(v.title || "").toLowerCase().includes(q)
+				|| (v.related_entities || []).some((r) => String(r && r.head || "").toLowerCase().includes(q)));
+			vids.sort((a, b) => {
+				if (sort === "dur-desc") return (Number(b.duration) || 0) - (Number(a.duration) || 0);
+				if (sort === "dur-asc") return (Number(a.duration) || 0) - (Number(b.duration) || 0);
+				if (sort === "date-asc") return String(a.date || "").localeCompare(String(b.date || ""));
+				return String(b.date || "").localeCompare(String(a.date || ""));
+			});
+			metaEl.textContent = `Показано ${vids.length} из ${catalog.length} видео.`;
+			listEl.textContent = "";
+			for (const v of vids) {
+				const card = document.createElement("div");
+				card.className = "vg-card";
+				const link = document.createElement("a");
+				link.className = "vg-card-title";
+				link.href = String(v.url || "");
+				link.target = "_blank";
+				link.rel = "noopener noreferrer";
+				link.textContent = String(v.title || "");
+				card.appendChild(link);
+				const meta = document.createElement("div");
+				meta.className = "vg-card-meta";
+				const dur = formatVideoDuration(v.duration);
+				meta.textContent = [formatVideoDate(v.date), dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
+				card.appendChild(meta);
+				const rels = (v.related_entities || []).slice(0, 6);
+				if (rels.length) {
+					const chips = document.createElement("div");
+					chips.className = "vg-card-chips";
+					for (const r of rels) {
+						if (!r || !r.head) continue;
+						const t = r.type === "subject_index" ? "subject" : r.type;
+						const chip = document.createElement("a");
+						chip.className = "vg-chip";
+						chip.dataset.type = String(t || "");
+						chip.dataset.head = String(r.head || "");
+						chip.href = buildItemHash(t || "all", r.head);
+						chip.textContent = r.head;
+						chips.appendChild(chip);
+					}
+					card.appendChild(chips);
+				}
+				listEl.appendChild(card);
+			}
+			listEl.querySelectorAll(".vg-chip").forEach((chip) => {
+				bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
+			});
+		};
+		searchEl.oninput = render;
+		chapterEl.onchange = render;
+		sortEl.onchange = render;
+		render();
 	}
 	function renderLecturesPanel(container) {
 		const lectures = APP_DATA.lectures || [];
