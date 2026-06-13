@@ -7366,6 +7366,28 @@ var BookIndex = (function(exports) {
 				}
 			}
 		}
+		// B5: reverse video links sit right after contexts, above the cross-link cluster.
+		const videoBacklinks = getVideoBacklinkIndex().get(videoBacklinkKey(eType, it.head)) || [];
+		if (videoBacklinks.length) {
+			const VIDEO_CARD_LIMIT = 8;
+			const shown = videoBacklinks.slice(0, VIDEO_CARD_LIMIT);
+			const rest = videoBacklinks.length - shown.length;
+			html += `<h3>Видео <span class="card-video-count">${videoBacklinks.length}</span></h3><div class="card-video-links">`;
+			for (const entry of shown) {
+				const v = entry.v;
+				const hasT = Number.isFinite(entry.t) && entry.t > 0;
+				const url = hasT ? v.url + (v.url.includes("?") ? "&" : "?") + "t=" + entry.t + "s" : v.url;
+				const meta = hasT
+					? `<span class="card-video-dur card-video-at" title="упоминание на ${escapeHtml(formatVideoDuration(entry.t))}">▸ ${escapeHtml(formatVideoDuration(entry.t))}</span>`
+					: (formatVideoDuration(v.duration) ? `<span class="card-video-dur">${escapeHtml(formatVideoDuration(v.duration))}</span>` : "");
+				html += `<a class="card-video-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
+        <span class="card-video-title">${escapeHtml(v.title)}</span>
+        ${meta}
+      </a>`;
+			}
+			if (rest > 0) html += `<span class="card-video-more">и ещё ${rest}</span>`;
+			html += "</div>";
+		}
 		if (it.chapters && it.chapters.length > 0) {
 			html += "<h3>Лекции</h3><ul class=\"card-lecture-list\">";
 			for (const ch of it.chapters) {
@@ -7442,28 +7464,18 @@ var BookIndex = (function(exports) {
       </a>`;
 			html += "</div>";
 		}
-		// Reverse video links: lectures/talks that reference this entity.
-		const videoBacklinks = getVideoBacklinkIndex().get(videoBacklinkKey(eType, it.head)) || [];
-		if (videoBacklinks.length) {
-			const VIDEO_CARD_LIMIT = 8;
-			const shown = videoBacklinks.slice(0, VIDEO_CARD_LIMIT);
-			const rest = videoBacklinks.length - shown.length;
-			html += `<h3>Видео <span class="card-video-count">${videoBacklinks.length}</span></h3><div class="card-video-links">`;
-			for (const entry of shown) {
-				const v = entry.v;
-				const hasT = Number.isFinite(entry.t) && entry.t > 0;
-				const url = hasT ? v.url + (v.url.includes("?") ? "&" : "?") + "t=" + entry.t + "s" : v.url;
-				// timecoded mention -> show the minute; otherwise show total duration
-				const meta = hasT
-					? `<span class="card-video-dur card-video-at" title="упоминание на ${escapeHtml(formatVideoDuration(entry.t))}">▸ ${escapeHtml(formatVideoDuration(entry.t))}</span>`
-					: (formatVideoDuration(v.duration) ? `<span class="card-video-dur">${escapeHtml(formatVideoDuration(v.duration))}</span>` : "");
-				html += `<a class="card-video-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
-        <span class="card-video-title">${escapeHtml(v.title)}</span>
-        ${meta}
-      </a>`;
-			}
-			if (rest > 0) html += `<span class="card-video-more">и ещё ${rest}</span>`;
-			html += "</div>";
+		// Authority records (A3) — grouped right after cross-links per B5.
+		const auth = it && it.authority;
+		if (auth && auth.wikidata) {
+			const authLinks = [];
+			authLinks.push(`<a class="lod-link wikidata" href="https://www.wikidata.org/wiki/${escapeHtml(auth.wikidata)}" target="_blank" rel="noopener noreferrer">Wikidata (${escapeHtml(auth.wikidata)}) ↗</a>`);
+			if (auth.viaf) authLinks.push(`<a class="lod-link viaf" href="https://viaf.org/viaf/${escapeHtml(auth.viaf)}" target="_blank" rel="noopener noreferrer">VIAF ↗</a>`);
+			if (auth.gnd) authLinks.push(`<a class="lod-link gnd" href="https://d-nb.info/gnd/${escapeHtml(auth.gnd)}" target="_blank" rel="noopener noreferrer">GND ↗</a>`);
+			if (auth.geonames) authLinks.push(`<a class="lod-link geonames" href="https://www.geonames.org/${escapeHtml(auth.geonames)}" target="_blank" rel="noopener noreferrer">GeoNames ↗</a>`);
+			html += `<div class="card-lod-section">
+						<h3>Авторитетные записи</h3>
+						<div class="card-lod-grid">${authLinks.join("")}</div>
+					</div>`;
 		}
 		// Linguistic Database Interoperability (Linked Open Data)
 		let lodHtml = "";
@@ -7504,19 +7516,6 @@ var BookIndex = (function(exports) {
 		}
 		if (lodHtml) {
 			html += lodHtml;
-		}
-		// Authority records (A3): Wikidata + cross-IDs for names/toponyms/ethnonyms.
-		const auth = it && it.authority;
-		if (auth && auth.wikidata) {
-			const authLinks = [];
-			authLinks.push(`<a class="lod-link wikidata" href="https://www.wikidata.org/wiki/${escapeHtml(auth.wikidata)}" target="_blank" rel="noopener noreferrer">Wikidata (${escapeHtml(auth.wikidata)}) ↗</a>`);
-			if (auth.viaf) authLinks.push(`<a class="lod-link viaf" href="https://viaf.org/viaf/${escapeHtml(auth.viaf)}" target="_blank" rel="noopener noreferrer">VIAF ↗</a>`);
-			if (auth.gnd) authLinks.push(`<a class="lod-link gnd" href="https://d-nb.info/gnd/${escapeHtml(auth.gnd)}" target="_blank" rel="noopener noreferrer">GND ↗</a>`);
-			if (auth.geonames) authLinks.push(`<a class="lod-link geonames" href="https://www.geonames.org/${escapeHtml(auth.geonames)}" target="_blank" rel="noopener noreferrer">GeoNames ↗</a>`);
-			html += `<div class="card-lod-section">
-						<h3>Авторитетные записи</h3>
-						<div class="card-lod-grid">${authLinks.join("")}</div>
-					</div>`;
 		}
 		if (useTwoColumnCardLayout) html += "</div>";
 		html += buildCitationWidgetHtml("card");
