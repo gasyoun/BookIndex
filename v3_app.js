@@ -3120,6 +3120,35 @@ var BookIndex = (function(exports) {
 		const raw = String(value || "");
 		return /^\d+$/.test(raw) ? parseInt(raw, 10) : null;
 	}
+	async function copyTextToClipboard(text) {
+		const value = String(text == null ? "" : text);
+		if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) try {
+			await navigator.clipboard.writeText(value);
+			return true;
+		} catch (e) {}
+		try {
+			const ta = document.createElement("textarea");
+			ta.value = value;
+			ta.setAttribute("readonly", "");
+			ta.style.position = "fixed";
+			ta.style.left = "-9999px";
+			document.body.appendChild(ta);
+			ta.select();
+			const ok = document.execCommand("copy");
+			document.body.removeChild(ta);
+			return !!ok;
+		} catch (e) {
+			return false;
+		}
+	}
+	// A2/B2: stable clean canonical URL for an entity (the prerendered page),
+	// derived from the same slug the app routes to.
+	function buildCanonicalEntityUrl(type, head) {
+		const hash = buildItemHash(type, head);
+		const m = /list\/item\/([a-z_]+)\/(.+)$/.exec(String(hash || ""));
+		if (!m) return null;
+		return `https://gasyoun.github.io/BookIndex/${m[1]}/list/item/${m[1]}/${m[2]}/`;
+	}
 	async function copyCurrentUrl() {
 		const canonicalHash = buildHashFromState();
 		const activeBookId = getActiveBook().book_id || "";
@@ -7481,7 +7510,9 @@ var BookIndex = (function(exports) {
 		if (exportCardBtn) exportCardBtn.onclick = () => exportCurrentCardMarkdown();
 		const copyLinkBtn = document.getElementById("copy-card-link");
 		if (copyLinkBtn) copyLinkBtn.onclick = async () => {
-			const ok = await copyCurrentUrl();
+			// B2/A2: copy the stable clean canonical URL of this entity, not the hash route.
+			const canonicalUrl = buildCanonicalEntityUrl(eType, it.head);
+			const ok = canonicalUrl ? await copyTextToClipboard(canonicalUrl) : await copyCurrentUrl();
 			const prev = copyLinkBtn.textContent;
 			copyLinkBtn.textContent = ok ? "ссылка скопирована" : "не удалось скопировать";
 			announceUiMessage(ok ? "Link copied" : "Failed to copy link");
@@ -13471,12 +13502,20 @@ var BookIndex = (function(exports) {
 		} else {
 			const itemHead = window.selectedItem || "";
 			const itemType = window.selectedItemType || window.currentEntity || "";
-			citationTitle = `Справочная статья «${itemHead}»`;
-			citationBook = "Из жизни слов и языков: интерактивный академический справочник и корпус";
+			// B2: page reference + correct book/edition + clean canonical URL (A2).
+			const dataKey = itemType === "subject" ? "subject_index" : itemType;
+			const list = (window.APP_DATA && window.APP_DATA[dataKey]) || [];
+			const rec = Array.isArray(list) ? list.find((x) => x && x.head === itemHead) : null;
+			const pages = rec ? sortUniquePages(rec.page_list || []) : [];
+			const books = (window.APP_DATA && window.APP_DATA.corpus && window.APP_DATA.corpus.books) || [];
+			const bookId = rec && rec.book_id ? rec.book_id : (getActiveBook().book_id || "");
+			const book = books.find((b) => b && b.book_id === bookId) || {};
+			citationTitle = `Справочная статья «${itemHead}»` + (pages.length ? `. С. ${pages.join(", ")}` : "");
+			citationBook = book.title || "Из жизни слов и языков: интерактивный академический справочник и корпус";
 			let encodedSlug = "";
 			if (typeof window.encodeItemHeadForHash === "function") encodedSlug = window.encodeItemHeadForHash(itemType, itemHead);
 			else encodedSlug = encodeURIComponent(itemHead);
-			url = `https://gasyoun.github.io/BookIndex/aaz-index.html#v4/${itemType}/list/item/${itemType}/${encodedSlug}`;
+			url = `https://gasyoun.github.io/BookIndex/${itemType}/list/item/${itemType}/${encodedSlug}/`;
 		}
 		style = style.toLowerCase();
 		if (style === "apa") if (type === "lecture") return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. BookIndex Digital Humanities Project. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
