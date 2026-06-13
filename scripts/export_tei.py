@@ -167,6 +167,12 @@ def build_tei(app, slugs, generated):
     return root
 
 
+def csv_safe(value):
+    """Neutralise CSV formula injection — these dumps are opened in spreadsheets."""
+    s = str(value if value is not None else "")
+    return "'" + s if s[:1] in ("=", "+", "-", "@", "\t", "\r") else s
+
+
 def write_csv(path, rtype, items, slugs):
     cols = ["head", "slug", "canonical_url", "discussed", "books", "pages",
             "wikidata", "viaf", "gnd", "geonames"]
@@ -179,7 +185,7 @@ def write_csv(path, rtype, items, slugs):
             pages, books = aggregate_pages(it)
             auth = it.get("authority") or {}
             w.writerow({
-                "head": it.get("head", ""),
+                "head": csv_safe(it.get("head", "")),
                 "slug": slug or "",
                 "canonical_url": canonical_url(rtype, slug) or "",
                 "discussed": "1" if it.get("discussed") else "",

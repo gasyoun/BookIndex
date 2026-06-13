@@ -1821,6 +1821,32 @@
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 6px;
+    align-items: center;
+  }
+  .card-actions-more {
+    position: relative;
+    display: inline-block;
+  }
+  .card-actions-more-summary {
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .card-actions-more-summary::-webkit-details-marker { display: none; }
+  .card-actions-more-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    background: var(--surface, #fffdf8);
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(90, 56, 24, 0.12);
+    white-space: nowrap;
   }
   .card-inline-row-link {
     display: flex;

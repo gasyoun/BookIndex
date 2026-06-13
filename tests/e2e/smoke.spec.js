@@ -398,6 +398,8 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('#name-list .name-item').first()).toBeVisible();
     await page.locator('#name-list .name-item').first().click();
     await expect(page.locator('#right-content .card h2')).toBeVisible();
+    // secondary actions now live in a «⋯ ещё» menu (B5) — open it before using them
+    await page.locator('#right-content .card-actions-more > summary').click();
     await expect(page.locator('#right-content button#copy-card-link')).toBeVisible();
     await expect(page.locator('#right-content button#export-card-md')).toBeVisible();
     const cardDownloadPromise = page.waitForEvent('download');

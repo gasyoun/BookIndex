@@ -74,7 +74,7 @@
       if (itemMatch) {
         fetch(repoPrefix + 'data/slug_redirects.json').then(r => r.ok ? r.json() : null).then(data => {
           const to = data && data.redirects && data.redirects[itemMatch[1]] && data.redirects[itemMatch[1]][itemMatch[2]];
-          if (to) {
+          if (to && /^[a-z0-9-]+$/.test(to)) {
             window.location.replace(window.location.origin + repoPrefix + itemMatch[1] + '/list/item/' + itemMatch[1] + '/' + to + '/');
           } else {
             spaFallback();

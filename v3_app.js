@@ -6594,9 +6594,26 @@ var BookIndex = (function(exports) {
 		const t = type === "subject_index" ? "subject" : String(type || "");
 		return t + "\0" + String(head || "");
 	}
+	// video_catalog contains duplicate id entries; collapse to one per id (keeping
+	// the richest related_entities) so backlinks/counts are not inflated.
+	var DEDUPED_VIDEO_CATALOG = null;
+	function getDedupedVideoCatalog() {
+		if (DEDUPED_VIDEO_CATALOG) return DEDUPED_VIDEO_CATALOG;
+		const catalog = Array.isArray(APP_DATA && APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		if (!catalog.length) return [];
+		const byId = /* @__PURE__ */ new Map();
+		for (const v of catalog) {
+			if (!v || !v.url) continue;
+			const key = v.id || v.url;
+			const prev = byId.get(key);
+			if (!prev || (v.related_entities || []).length > (prev.related_entities || []).length) byId.set(key, v);
+		}
+		DEDUPED_VIDEO_CATALOG = Array.from(byId.values());
+		return DEDUPED_VIDEO_CATALOG;
+	}
 	function getVideoBacklinkIndex() {
 		if (VIDEO_BACKLINK_INDEX) return VIDEO_BACKLINK_INDEX;
-		const catalog = Array.isArray(APP_DATA && APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		const catalog = getDedupedVideoCatalog();
 		// Do not memoize before the catalog module (99-extra) is loaded, otherwise
 		// an empty index would be cached permanently. Return a transient empty map.
 		if (!catalog.length) return /* @__PURE__ */ new Map();
@@ -6642,7 +6659,7 @@ var BookIndex = (function(exports) {
 		if (CHAPTER_VIDEO_CACHE.has(chapterIdx)) return CHAPTER_VIDEO_CACHE.get(chapterIdx).slice(0, limit);
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
 		const ch = chapters[chapterIdx];
-		const catalog = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		const catalog = getDedupedVideoCatalog();
 		if (!ch || !catalog.length) {
 			CHAPTER_VIDEO_CACHE.set(chapterIdx, []);
 			return [];
@@ -7294,9 +7311,14 @@ var BookIndex = (function(exports) {
             <button type="button" class="related-link related-link-btn card-action-link" id="card-prev" aria-label="Предыдущая карточка">◀</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="card-next" aria-label="Следующая карточка">▶</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="back-to-histo">← вернуться к гистограмме</button>
-            ${canOpenMapForCard ? "<button type=\"button\" class=\"related-link related-link-btn card-action-link\" id=\"open-on-map\">📍 показать на карте</button>" : ""}
-            <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
-            <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
+            <details class="card-actions-more">
+              <summary class="related-link related-link-btn card-action-link card-actions-more-summary">⋯ ещё</summary>
+              <div class="card-actions-more-menu">
+                ${canOpenMapForCard ? "<button type=\"button\" class=\"related-link related-link-btn card-action-link\" id=\"open-on-map\">📍 показать на карте</button>" : ""}
+                <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
+                <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
+              </div>
+            </details>
           </div>
         </div>
       </div>
@@ -10004,17 +10026,8 @@ var BookIndex = (function(exports) {
 		return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
 	}
 	function renderVideoGalleryPanel(container) {
-		const catalogRaw = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
-		// catalog has duplicate ids — dedupe, keep the entry with the most related entities
-		const byId = /* @__PURE__ */ new Map();
-		for (const v of catalogRaw) {
-			if (!v || !v.url) continue;
-			const key = v.id || v.url;
-			const prev = byId.get(key);
-			if (!prev || (v.related_entities || []).length > (prev.related_entities || []).length) byId.set(key, v);
-		}
-		const catalog = Array.from(byId.values());
+		const catalog = getDedupedVideoCatalog();
 		container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
     <h2 class="video-gallery-title">Видеогалерея</h2>
     <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; таймкоды на минуту — на карточках сущностей и в KWIC по лекциям.</div>
@@ -10800,17 +10813,22 @@ var BookIndex = (function(exports) {
 		const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH).trim();
 		if (normalizeHeadForMatch(q).length < 2) return rows;
 		const ql = q.toLowerCase();
+		// accent-tolerant: allow an optional combining mark after each query char
+		// so "победа" also matches the stressed transcript form "побе́да".
+		const pat = new RegExp(ql.split("").map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[\\u0300-\\u036f]?").join(""), "g");
 		const W = 64;
 		for (const seg of cache.segments) {
 			const vi = seg[0];
 			const t = typeof seg[1] === "number" ? seg[1] : null;
 			const text = String(seg[2] || "");
 			const lower = text.toLowerCase();
-			let from = 0;
-			let idx = lower.indexOf(ql, from);
-			while (idx !== -1) {
+			pat.lastIndex = 0;
+			let m = pat.exec(lower);
+			while (m !== null) {
+				const idx = m.index;
+				const matchLen = m[0].length || 1;
 				const leftStart = Math.max(0, idx - W);
-				const rightEnd = Math.min(text.length, idx + ql.length + W);
+				const rightEnd = Math.min(text.length, idx + matchLen + W);
 				const v = cache.videos[vi] || {};
 				rows.push({
 					source: "lectures",
@@ -10820,11 +10838,12 @@ var BookIndex = (function(exports) {
 					page: t == null ? 0 : t,
 					leftPrefix: leftStart > 0 ? "…" : "",
 					leftText: text.slice(leftStart, idx),
-					keyText: text.slice(idx, idx + ql.length),
-					rightText: text.slice(idx + ql.length, rightEnd),
+					keyText: text.slice(idx, idx + matchLen),
+					rightText: text.slice(idx + matchLen, rightEnd),
 					rightSuffix: rightEnd < text.length ? "…" : "",
 					sortLeft: normalizeHeadForMatch(text.slice(Math.max(0, idx - 40), idx)),
-					sortRight: normalizeHeadForMatch(text.slice(idx + ql.length, idx + ql.length + 40)),
+					sortRight: normalizeHeadForMatch(text.slice(idx + matchLen, idx + matchLen + 40)),
+					videoId: v.id || v.url || "",
 					videoUrl: v.url || "",
 					videoTitle: v.title || "",
 					t
@@ -10833,8 +10852,8 @@ var BookIndex = (function(exports) {
 					rows._truncated = true;
 					return rows;
 				}
-				from = idx + ql.length;
-				idx = lower.indexOf(ql, from);
+				if (pat.lastIndex === idx) pat.lastIndex++; // guard against zero-width
+				m = pat.exec(lower);
 			}
 		}
 		return rows;
@@ -10969,7 +10988,7 @@ var BookIndex = (function(exports) {
 			}
 			const terms = new Set(rows.map((r) => r.term));
 			const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : "";
-			const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoTitle)).size : 0;
+			const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoId)).size : 0;
 			metaEl.textContent = currentKwicSource === "lectures"
 				? `Найдено ${rows.length} контекстов в ${lecturesCount} лекциях, источник: лекции.${truncText}`
 				: `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${sourceLabel}.${truncText}`;
@@ -13657,7 +13676,7 @@ var BookIndex = (function(exports) {
 			const l = window.APP_DATA && window.APP_DATA.lectures ? window.APP_DATA.lectures[lectureId] : null;
 			const lName = l ? l.name || "" : "";
 			const lTitle = lectureId === 0 ? "Предисловие" : `Лекция ${lectureId}`;
-			citationTitle = lectureId === 0 ? `Предисловие: ${lName}` : `${lTitle}. ${lName}`;
+			citationTitle = lectureId === 0 ? `Предисловие: ${escapeHtml(lName)}` : `${lTitle}. ${escapeHtml(lName)}`;
 			citationBook = "Из жизни слов и языков";
 			url = `https://gasyoun.github.io/BookIndex/aaz-index.html#v4/materials/lecture_pages/${lectureId}`;
 		} else {
@@ -13667,17 +13686,24 @@ var BookIndex = (function(exports) {
 			const dataKey = itemType === "subject" ? "subject_index" : itemType;
 			const list = (window.APP_DATA && window.APP_DATA[dataKey]) || [];
 			const rec = Array.isArray(list) ? list.find((x) => x && x.head === itemHead) : null;
-			const pages = rec ? sortUniquePages(rec.page_list || []) : [];
+			let pages = rec ? sortUniquePages(rec.page_list || []) : [];
+			// fall back to per-book occurrence pages when page_list is empty
+			if (rec && !pages.length && rec.occurrences && typeof rec.occurrences === "object") {
+				const agg = [];
+				for (const occ of Object.values(rec.occurrences)) if (occ && Array.isArray(occ.pages)) agg.push(...occ.pages);
+				pages = sortUniquePages(agg);
+			}
 			const books = (window.APP_DATA && window.APP_DATA.corpus && window.APP_DATA.corpus.books) || [];
 			const bookId = rec && rec.book_id ? rec.book_id : (getActiveBook().book_id || "");
 			const book = books.find((b) => b && b.book_id === bookId) || {};
-			citationTitle = `Справочная статья «${itemHead}»` + (pages.length ? `. С. ${pages.join(", ")}` : "");
-			citationBook = book.title || "Из жизни слов и языков: интерактивный академический справочник и корпус";
+			citationTitle = `Справочная статья «${escapeHtml(itemHead)}»` + (pages.length ? `. С. ${pages.join(", ")}` : "");
+			citationBook = escapeHtml(book.title || "Из жизни слов и языков: интерактивный академический справочник и корпус");
 			let encodedSlug = "";
 			if (typeof window.encodeItemHeadForHash === "function") encodedSlug = window.encodeItemHeadForHash(itemType, itemHead);
 			else encodedSlug = encodeURIComponent(itemHead);
 			url = `https://gasyoun.github.io/BookIndex/${itemType}/list/item/${itemType}/${encodedSlug}/`;
 		}
+		url = escapeHtml(url);
 		style = style.toLowerCase();
 		if (style === "apa") if (type === "lecture") return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. BookIndex Digital Humanities Project. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
 		else return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;

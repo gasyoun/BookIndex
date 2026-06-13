@@ -287,7 +287,7 @@ def main():
         tq_legend=tq_legend,
         stage_opts=stage_opts,
         theme_opts=theme_opts,
-        data_json=json.dumps(data, ensure_ascii=False),
+        data_json=json.dumps(data, ensure_ascii=False).replace("</", "<\\/"),
     )
 
     os.makedirs(OUT_DIR, exist_ok=True)
