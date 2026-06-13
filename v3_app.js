@@ -6574,15 +6574,16 @@ var BookIndex = (function(exports) {
 				if (seen.has(key)) continue; // one video counts once per entity
 				seen.add(key);
 				if (!idx.has(key)) idx.set(key, []);
-				idx.get(key).push(v);
+				// carry the per-entity transcript timecode (B3.2), if any
+				idx.get(key).push({ v, t: Number.isFinite(rel.t) ? rel.t : null });
 			}
 		}
 		// Newest first; stable tiebreak by title.
 		for (const list of idx.values()) {
 			list.sort((a, b) => {
-				const da = String(a.date || ""), db = String(b.date || "");
+				const da = String(a.v.date || ""), db = String(b.v.date || "");
 				if (da !== db) return da < db ? 1 : -1;
-				return String(a.title || "").localeCompare(String(b.title || ""), "ru");
+				return String(a.v.title || "").localeCompare(String(b.v.title || ""), "ru");
 			});
 		}
 		VIDEO_BACKLINK_INDEX = idx;
@@ -7369,12 +7370,17 @@ var BookIndex = (function(exports) {
 			const shown = videoBacklinks.slice(0, VIDEO_CARD_LIMIT);
 			const rest = videoBacklinks.length - shown.length;
 			html += `<h3>Видео <span class="card-video-count">${videoBacklinks.length}</span></h3><div class="card-video-links">`;
-			for (const v of shown) {
-				const dur = formatVideoDuration(v.duration);
-				const durHtml = dur ? `<span class="card-video-dur">${escapeHtml(dur)}</span>` : "";
-				html += `<a class="card-video-link" href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
+			for (const entry of shown) {
+				const v = entry.v;
+				const hasT = Number.isFinite(entry.t) && entry.t > 0;
+				const url = hasT ? v.url + (v.url.includes("?") ? "&" : "?") + "t=" + entry.t + "s" : v.url;
+				// timecoded mention -> show the minute; otherwise show total duration
+				const meta = hasT
+					? `<span class="card-video-dur card-video-at" title="упоминание на ${escapeHtml(formatVideoDuration(entry.t))}">▸ ${escapeHtml(formatVideoDuration(entry.t))}</span>`
+					: (formatVideoDuration(v.duration) ? `<span class="card-video-dur">${escapeHtml(formatVideoDuration(v.duration))}</span>` : "");
+				html += `<a class="card-video-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
         <span class="card-video-title">${escapeHtml(v.title)}</span>
-        ${durHtml}
+        ${meta}
       </a>`;
 			}
 			if (rest > 0) html += `<span class="card-video-more">и ещё ${rest}</span>`;

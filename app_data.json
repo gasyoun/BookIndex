@@ -207938,7 +207938,8 @@
         },
         {
           "head": "арабский",
-          "type": "languages"
+          "type": "languages",
+          "t": 58
         }
       ]
     },
@@ -207952,19 +207953,23 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 557
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 557
         },
         {
           "head": "русские",
-          "type": "ethnonyms"
+          "type": "ethnonyms",
+          "t": 3124
         },
         {
           "head": "русский",
-          "type": "languages"
+          "type": "languages",
+          "t": 3439
         },
         {
           "head": "истора",
@@ -207972,11 +207977,13 @@
         },
         {
           "head": "русский",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 3439
         },
         {
           "head": "ударение",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 1
         }
       ]
     },
@@ -207998,11 +208005,13 @@
         },
         {
           "head": "русские",
-          "type": "ethnonyms"
+          "type": "ethnonyms",
+          "t": 318
         },
         {
           "head": "русский",
-          "type": "languages"
+          "type": "languages",
+          "t": 318
         },
         {
           "head": "истора",
@@ -208010,11 +208019,13 @@
         },
         {
           "head": "русский",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 318
         },
         {
           "head": "ударение",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 1
         }
       ]
     },
@@ -208028,11 +208039,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 3915
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 3915
         },
         {
           "head": "сторона",
@@ -208050,19 +208063,23 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 667
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 667
         },
         {
           "head": "новгородский",
-          "type": "languages"
+          "type": "languages",
+          "t": 4799
         },
         {
           "head": "берестяные грамоты",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 0
         }
       ]
     },
@@ -208076,19 +208093,23 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 3020
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 3020
         },
         {
           "head": "русские",
-          "type": "ethnonyms"
+          "type": "ethnonyms",
+          "t": 61
         },
         {
           "head": "русский",
-          "type": "languages"
+          "type": "languages",
+          "t": 61
         },
         {
           "head": "истора",
@@ -208096,7 +208117,8 @@
         },
         {
           "head": "русский",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 61
         }
       ]
     },
@@ -208110,11 +208132,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 2779
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 2779
         },
         {
           "head": "«Велесова книга» (ВК)",
@@ -208122,7 +208146,8 @@
         },
         {
           "head": "Велесова книга",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 80
         }
       ]
     },
@@ -208136,19 +208161,23 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 25
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 25
         },
         {
           "head": "русские",
-          "type": "ethnonyms"
+          "type": "ethnonyms",
+          "t": 980
         },
         {
           "head": "русский",
-          "type": "languages"
+          "type": "languages",
+          "t": 1763
         },
         {
           "head": "Андрей",
@@ -208156,7 +208185,8 @@
         },
         {
           "head": "русский",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 1763
         }
       ]
     },
@@ -208170,11 +208200,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 27
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 27
         },
         {
           "head": "Андрей",
@@ -208182,7 +208214,8 @@
         },
         {
           "head": "полк",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 67
         }
       ]
     },
@@ -208196,11 +208229,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 288
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 288
         },
         {
           "head": "Андрей",
@@ -208208,7 +208243,8 @@
         },
         {
           "head": "берестяные грамоты",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 360
         }
       ]
     },
@@ -208222,11 +208258,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 25
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 25
         },
         {
           "head": "Андрей",
@@ -208234,7 +208272,8 @@
         },
         {
           "head": "берестяные грамоты",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 25
         }
       ]
     },
@@ -208248,19 +208287,23 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 2385
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 2385
         },
         {
           "head": "русские",
-          "type": "ethnonyms"
+          "type": "ethnonyms",
+          "t": 67
         },
         {
           "head": "русский",
-          "type": "languages"
+          "type": "languages",
+          "t": 67
         },
         {
           "head": "Андрей",
@@ -208268,7 +208311,8 @@
         },
         {
           "head": "русский",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 67
         }
       ]
     },
@@ -208282,11 +208326,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 26
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 26
         },
         {
           "head": "Андрей",
@@ -208294,7 +208340,8 @@
         },
         {
           "head": "полк",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 26
         }
       ]
     },
@@ -208308,23 +208355,28 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 56
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 56
         },
         {
           "head": "русские",
-          "type": "ethnonyms"
+          "type": "ethnonyms",
+          "t": 590
         },
         {
           "head": "русский",
-          "type": "languages"
+          "type": "languages",
+          "t": 590
         },
         {
           "head": "русский",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 590
         }
       ]
     },
@@ -208338,11 +208390,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 16
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 16
         }
       ]
     },
@@ -208356,11 +208410,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 46
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 46
         }
       ]
     },
@@ -208374,19 +208430,23 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 1
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 1
         },
         {
           "head": "русские",
-          "type": "ethnonyms"
+          "type": "ethnonyms",
+          "t": 39
         },
         {
           "head": "русский",
-          "type": "languages"
+          "type": "languages",
+          "t": 106
         },
         {
           "head": "Андрей",
@@ -208398,7 +208458,8 @@
         },
         {
           "head": "русский",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 106
         }
       ]
     },
@@ -208412,19 +208473,23 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 10
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 10
         },
         {
           "head": "русские",
-          "type": "ethnonyms"
+          "type": "ethnonyms",
+          "t": 48
         },
         {
           "head": "русский",
-          "type": "languages"
+          "type": "languages",
+          "t": 90
         },
         {
           "head": "Андрей",
@@ -208436,7 +208501,8 @@
         },
         {
           "head": "русский",
-          "type": "lexicon"
+          "type": "lexicon",
+          "t": 90
         }
       ]
     },
@@ -208450,11 +208516,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 348
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 348
         }
       ]
     },
@@ -208490,15 +208558,18 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 50
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 50
         },
         {
           "head": "санскрит",
-          "type": "languages"
+          "type": "languages",
+          "t": 50
         }
       ]
     },
@@ -208512,11 +208583,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 18
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 18
         },
         {
           "head": "Андрей",
@@ -208524,7 +208597,8 @@
         },
         {
           "head": "берестяные грамоты",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 18
         }
       ]
     },
@@ -208565,11 +208639,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 70
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 70
         },
         {
           "head": "Пётр I",
@@ -208591,15 +208667,18 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 190
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 190
         },
         {
           "head": "берестяные грамоты",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 0
         }
       ]
     },
@@ -208697,11 +208776,13 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 109
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 109
         },
         {
           "head": "Андрей",
@@ -208755,15 +208836,18 @@
       "related_entities": [
         {
           "head": "А. А. Зализняк",
-          "type": "names"
+          "type": "names",
+          "t": 4375
         },
         {
           "head": "Зализняк А. А.",
-          "type": "names"
+          "type": "names",
+          "t": 4375
         },
         {
           "head": "берестяные грамоты",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 286
         }
       ]
     },
@@ -213008,7 +213092,8 @@
         },
         {
           "head": "берестяные грамоты",
-          "type": "subject_index"
+          "type": "subject_index",
+          "t": 1
         }
       ]
     },

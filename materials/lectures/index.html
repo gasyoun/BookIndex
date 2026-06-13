@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-047TRc33tSQsFEKX1Ne+KYPHhc10+pWhWAcW7KlIaLo=' 'sha256-YKSAP40b0mBTf3D0BLt84hY/YkpzmHA8cT2b/2MSSPg='; worker-src 'self' blob:; style-src 'self' 'sha256-ciPqJDV9M5775CKbOGjRC4bRpqvv2USIXeb+DptwUL0='; style-src-elem 'self' 'sha256-ciPqJDV9M5775CKbOGjRC4bRpqvv2USIXeb+DptwUL0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-tTYqXv+AT+b4Xn0F+8yjbwbB85fVsWRqOGQu4nFuRHc=' 'sha256-Dpu2QWnXYMQuFR33akzbepj4UtEno+j95mJqhtvzT/w='; worker-src 'self' blob:; style-src 'self' 'sha256-F2HXfn6ZG+IA/zDLNilHYVgdJ0e7GOUEjWQrdD7xDxQ='; style-src-elem 'self' 'sha256-F2HXfn6ZG+IA/zDLNilHYVgdJ0e7GOUEjWQrdD7xDxQ='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -4254,6 +4254,10 @@
     font-variant-numeric: tabular-nums;
     font-size: 12px;
   }
+  .card-video-at {
+    color: #8c3a15;
+    font-weight: 600;
+  }
   .card-video-more {
     color: var(--muted);
     font-size: 12px;
@@ -5573,7 +5577,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "155d728b9649",
+  "build_id": "8d3f8c41c251",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -5680,8 +5684,8 @@
         "historical_context",
         "video_catalog"
       ],
-      "bytes": 1858726,
-      "sha256": "3tsjwhfwClD36PVuSn2NNjYhH/x3JHWfKOQoQP5Fu9s="
+      "bytes": 1860389,
+      "sha256": "b/3mLrgn6PolKrWnC3QefQiuBJXW5AaPtSg1+no3B4g="
     }
   ],
   "key_order": [
@@ -5881,7 +5885,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "155d728b9649";
+	var APP_BUILD_ID$1 = "8d3f8c41c251";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6767,8 +6771,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "155d728b9649").trim();
-		if (buildId && buildId !== "155d728b9649") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "8d3f8c41c251").trim();
+		if (buildId && buildId !== "8d3f8c41c251") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10211,7 +10215,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "155d728b9649" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "8d3f8c41c251" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -12303,15 +12307,16 @@ var BookIndex = (function(exports) {
 				if (seen.has(key)) continue; // one video counts once per entity
 				seen.add(key);
 				if (!idx.has(key)) idx.set(key, []);
-				idx.get(key).push(v);
+				// carry the per-entity transcript timecode (B3.2), if any
+				idx.get(key).push({ v, t: Number.isFinite(rel.t) ? rel.t : null });
 			}
 		}
 		// Newest first; stable tiebreak by title.
 		for (const list of idx.values()) {
 			list.sort((a, b) => {
-				const da = String(a.date || ""), db = String(b.date || "");
+				const da = String(a.v.date || ""), db = String(b.v.date || "");
 				if (da !== db) return da < db ? 1 : -1;
-				return String(a.title || "").localeCompare(String(b.title || ""), "ru");
+				return String(a.v.title || "").localeCompare(String(b.v.title || ""), "ru");
 			});
 		}
 		VIDEO_BACKLINK_INDEX = idx;
@@ -13098,12 +13103,17 @@ var BookIndex = (function(exports) {
 			const shown = videoBacklinks.slice(0, VIDEO_CARD_LIMIT);
 			const rest = videoBacklinks.length - shown.length;
 			html += `<h3>Видео <span class="card-video-count">${videoBacklinks.length}</span></h3><div class="card-video-links">`;
-			for (const v of shown) {
-				const dur = formatVideoDuration(v.duration);
-				const durHtml = dur ? `<span class="card-video-dur">${escapeHtml(dur)}</span>` : "";
-				html += `<a class="card-video-link" href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
+			for (const entry of shown) {
+				const v = entry.v;
+				const hasT = Number.isFinite(entry.t) && entry.t > 0;
+				const url = hasT ? v.url + (v.url.includes("?") ? "&" : "?") + "t=" + entry.t + "s" : v.url;
+				// timecoded mention -> show the minute; otherwise show total duration
+				const meta = hasT
+					? `<span class="card-video-dur card-video-at" title="упоминание на ${escapeHtml(formatVideoDuration(entry.t))}">▸ ${escapeHtml(formatVideoDuration(entry.t))}</span>`
+					: (formatVideoDuration(v.duration) ? `<span class="card-video-dur">${escapeHtml(formatVideoDuration(v.duration))}</span>` : "");
+				html += `<a class="card-video-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
         <span class="card-video-title">${escapeHtml(v.title)}</span>
-        ${durHtml}
+        ${meta}
       </a>`;
 			}
 			if (rest > 0) html += `<span class="card-video-more">и ещё ${rest}</span>`;
