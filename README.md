@@ -7,7 +7,8 @@
 - **Демо**: [gasyoun.github.io/BookIndex/index.html](https://gasyoun.github.io/BookIndex/index.html)
 - **Статус**: v2.2.0 «SEO, security & CI hardening» (обновлено 2026-05-17).
 - **Руководство для детей**: [KIDS_GUIDE_RU.md](KIDS_GUIDE_RU.md)
-- **Лицензия**: [Apache License 2.0](LICENSE)
+- **Лицензии**: код — [Apache License 2.0](LICENSE); данные указателя — CC BY 4.0; цитаты из книг — с разрешения правообладателей ([LICENSE-DATA.md](LICENSE-DATA.md))
+- **Как цитировать**: см. [CITATION.cff](CITATION.cff) (кнопка «Cite this repository» на GitHub) и раздел [«Как цитировать»](#как-цитировать) ниже
 
 ---
 
@@ -103,6 +104,40 @@
 - найдено 11 из 11 терминов
 
 ---
+
+## Как цитировать
+
+BookIndex — цитируемый ресурс цифровых гуманитарных наук. Машиночитаемые
+метаданные — в [CITATION.cff](CITATION.cff) (GitHub показывает кнопку «Cite
+this repository»).
+
+Предварительная форма цитирования (DOI добавится после депонирования на
+Zenodo):
+
+> Gasūns, M. (2026). *BookIndex (Zalizniakiada): an interactive reference and
+> corpus laboratory for the scholarly legacy of A. A. Zaliznyak* (version 2.2.0)
+> [Software]. https://github.com/gasyoun/BookIndex
+
+Для цитирования **конкретной справочной статьи или лекции** используйте виджет
+цитирования в самом приложении (стили APA / MLA / Chicago / ГОСТ) — он
+оформляет ссылку на А. А. Зализняка как автора содержания.
+
+<!-- После релиза на Zenodo подставить бейдж и DOI:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+> Gasūns, M. (2026). BookIndex (Zalizniakiada) … https://doi.org/10.5281/zenodo.XXXXXXX
+-->
+
+Порядок депонирования и присвоения DOI — [docs/ZENODO_RU.md](docs/ZENODO_RU.md).
+
+## Лицензии
+
+| Слой | Лицензия |
+|---|---|
+| Код (рантайм, скрипты, шаблоны, тесты) | [Apache-2.0](LICENSE) |
+| Данные указателя (структура, id, связи, LOD, таймкоды) | CC BY 4.0 |
+| Цитаты и расшифровки из книг/лекций | © правообладатели, с разрешения |
+
+Подробнее — [LICENSE-DATA.md](LICENSE-DATA.md).
 
 ## История версий (Major Milestones)
 *   **v2.2.0**: SEO, PWA, security, CI, full E2E and performance hardening.

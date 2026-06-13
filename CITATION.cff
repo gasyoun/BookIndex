@@ -1,0 +1,67 @@
+cff-version: 1.2.0
+message: "If you use BookIndex (Zalizniakiada), please cite it using the metadata below."
+title: >-
+  BookIndex (Zalizniakiada): an interactive reference and corpus
+  laboratory for the scholarly legacy of A. A. Zaliznyak
+abstract: >-
+  BookIndex is a self-contained, offline-capable web reference and
+  digital-humanities workspace built around the books and public lectures of
+  the Russian linguist A. A. Zaliznyak (1935–2017). It provides a corpus index
+  (names, toponyms, ethnonyms, languages, lexicon and subject terms), a KWIC
+  concordance, network and geospatial visualisations, a timecoded transcript
+  corpus of the lecture videos, and Linked Open Data alignment (Glottolog,
+  WALS, Wikidata, Starling). The dataset and software are compiled and
+  maintained by Mārcis Gasūns; quoted excerpts and contexts from Zaliznyak's
+  books and lectures are cited with permission of the rights holders.
+type: software
+authors:
+  - family-names: Gasūns
+    given-names: Mārcis
+    # orcid: "https://orcid.org/0000-0000-0000-0000"  # TODO: вставить реальный ORCID и раскомментировать
+version: "2.2.0"
+date-released: "2026-05-17"
+repository-code: "https://github.com/gasyoun/BookIndex"
+url: "https://gasyoun.github.io/BookIndex/index.html"
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+keywords:
+  - Zaliznyak
+  - Russian historical linguistics
+  - digital humanities
+  - lexicography
+  - corpus linguistics
+  - KWIC concordance
+  - Linked Open Data
+  - birchbark manuscripts
+# После первого релиза на Zenodo раскомментировать и подставить concept DOI:
+# identifiers:
+#   - type: doi
+#     value: "10.5281/zenodo.XXXXXXX"
+#     description: "Concept DOI — все версии (Zenodo)"
+references:
+  - type: book
+    title: "Из жизни слов и языков"
+    authors:
+      - family-names: Зализняк
+        given-names: А. А.
+    year: 2026
+    notes: "Исходная книга (корпусное издание) — цитируется с разрешения правообладателей."
+  - type: book
+    title: "Из заметок о любительской лингвистике"
+    authors:
+      - family-names: Зализняк
+        given-names: А. А.
+    publisher:
+      name: "Альпина нон-фикшн"
+    year: 2025
+    edition: "2-е изд., испр. и доп."
+  - type: book
+    title: "«Слово о полку Игореве»: взгляд лингвиста"
+    authors:
+      - family-names: Зализняк
+        given-names: А. А.
+    publisher:
+      name: "Альпина нон-фикшн"
+    year: 2024
+    edition: "4-е изд., испр."
