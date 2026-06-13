@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-wVnXCjCFLNERoWntBCDynnATZNwlmLNwNC7qyUTl1JY=' 'sha256-PkTEIRg2WpxMbrjxQPciTmIdChZ+aHAH87FWVMKNjyg='; worker-src 'self' blob:; style-src 'self' 'sha256-pfx0AcgxILo8ke7Jee0Y2vYT+k+fNi1zDOSbhCAQsmY='; style-src-elem 'self' 'sha256-pfx0AcgxILo8ke7Jee0Y2vYT+k+fNi1zDOSbhCAQsmY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-VmXRlDeKlBltP5VLoJ6erKKwvOiCLQCtnUheKOf/2Kc=' 'sha256-qjBq0tUAFae8CcMli93kUVBnajZppSXekzA8qpDeAUI='; worker-src 'self' blob:; style-src 'self' 'sha256-u4f7WFoJYUrqDxTf71hpzOU0FshGBzyY8IIwgpLT1Yc='; style-src-elem 'self' 'sha256-u4f7WFoJYUrqDxTf71hpzOU0FshGBzyY8IIwgpLT1Yc='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -2509,6 +2509,63 @@
     font-style: italic;
     margin-top: 12px;
     padding-top: 12px;
+  }
+  .lecture-page-video-count {
+    display: inline-block;
+    min-width: 18px;
+    padding: 0 6px;
+    margin-left: 6px;
+    border-radius: 9px;
+    background: var(--line, #d4c8b0);
+    color: var(--title, #5a3818);
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .lecture-page-video-note {
+    color: var(--muted, #6d645a);
+    font-size: 11px;
+    margin: 4px 0 8px;
+  }
+  .lecture-page-videos {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .lecture-page-video {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 10px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 6px;
+    background: #f7f1e6;
+    color: #8c3a15;
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .lecture-page-video:hover {
+    background: #ebdcc9;
+  }
+  .lecture-page-video::before {
+    content: "▶";
+    color: #c0392b;
+    font-size: 10px;
+    flex: 0 0 auto;
+  }
+  .lecture-page-video-title {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .lecture-page-video-dur {
+    flex: 0 0 auto;
+    color: var(--muted, #6d645a);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
   }
   .lecture-page-further {
     background: #fff;
@@ -5789,7 +5846,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "a34795b18a34",
+  "build_id": "97397f6435f7",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6097,7 +6154,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "a34795b18a34";
+	var APP_BUILD_ID$1 = "97397f6435f7";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6987,8 +7044,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "a34795b18a34").trim();
-		if (buildId && buildId !== "a34795b18a34") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "97397f6435f7").trim();
+		if (buildId && buildId !== "97397f6435f7") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10460,7 +10517,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "a34795b18a34" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "97397f6435f7" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -12575,6 +12632,48 @@ var BookIndex = (function(exports) {
 		const s = Math.floor(total % 60);
 		const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
 		return (h > 0 ? h + ":" : "") + mm + ":" + String(s).padStart(2, "0");
+	}
+	// B3.4: videos whose discussed entities overlap a book chapter's pages.
+	// These are TOPICALLY related public lectures, not recordings of this chapter.
+	var CHAPTER_VIDEO_CACHE = /* @__PURE__ */ new Map();
+	function getChapterRelatedVideos(chapterIdx, limit = 6) {
+		if (CHAPTER_VIDEO_CACHE.has(chapterIdx)) return CHAPTER_VIDEO_CACHE.get(chapterIdx).slice(0, limit);
+		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+		const ch = chapters[chapterIdx];
+		const catalog = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		if (!ch || !catalog.length) {
+			CHAPTER_VIDEO_CACHE.set(chapterIdx, []);
+			return [];
+		}
+		const start = parseInt(ch.start, 10) || 1;
+		const end = parseInt(ch.end, 10) || start;
+		const types = ["names", "toponyms", "ethnonyms", "languages", "subject_index"];
+		const heads = /* @__PURE__ */ new Set();
+		for (const t of types) for (const it of (APP_DATA[t] || [])) {
+			for (const p of (it.page_list || [])) {
+				const pg = parseInt(p, 10);
+				if (Number.isFinite(pg) && pg >= start && pg <= end) {
+					heads.add(it.head);
+					break;
+				}
+			}
+		}
+		const scored = [];
+		for (const v of catalog) {
+			if (!v || !v.url) continue;
+			const seen = /* @__PURE__ */ new Set();
+			let score = 0;
+			for (const rel of (v.related_entities || [])) {
+				if (rel && heads.has(rel.head) && !seen.has(rel.head)) {
+					seen.add(rel.head);
+					score += 1;
+				}
+			}
+			if (score > 0) scored.push({ v, score });
+		}
+		scored.sort((a, b) => b.score - a.score || String(b.v.date || "").localeCompare(String(a.v.date || "")));
+		CHAPTER_VIDEO_CACHE.set(chapterIdx, scored);
+		return scored.slice(0, limit);
 	}
 	function appendListItemContent(item, it, itemType, showTypeLabel) {
 		if (!item || !it) return;
@@ -16164,7 +16263,24 @@ var BookIndex = (function(exports) {
     <div class="lecture-page-terms">`;
 		for (const t of l.terms || []) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}">${escapeHtml(t)}</a>`;
 		html += `</div>
-    <div class="lecture-page-why">${escapeHtml(l.why_read || "")}</div>
+    <div class="lecture-page-why">${escapeHtml(l.why_read || "")}</div>`;
+		const chapterVideos = getChapterRelatedVideos(currentLecture, 6);
+		if (chapterVideos.length) {
+			html += `<h3 class="lecture-page-section">Видео по теме главы <span class="lecture-page-video-count">${chapterVideos.length}</span></h3>
+    <div class="lecture-page-video-note">Похожие публичные лекции А. А. Зализняка на YouTube — по тем же темам, что и эта глава (не записи самой лекции из книги).</div>
+    <div class="lecture-page-videos">`;
+			for (const entry of chapterVideos) {
+				const v = entry.v;
+				const dur = formatVideoDuration(v.duration);
+				const durHtml = dur ? `<span class="lecture-page-video-dur">${escapeHtml(dur)}</span>` : "";
+				html += `<a class="lecture-page-video" href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title || "")}">
+        <span class="lecture-page-video-title">${escapeHtml(v.title || "")}</span>
+        ${durHtml}
+      </a>`;
+			}
+			html += `</div>`;
+		}
+		html += `
     ${buildCitationWidgetHtml("lecture", currentLecture)}
   </div>`;
 		if (currentLecture === 0 && Array.isArray(APP_DATA.further_reading) && APP_DATA.further_reading.length) {

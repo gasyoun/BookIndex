@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+- Video ↔ chapter linkage (B3.4): each lecture/chapter page now lists topically related videos — public lectures whose discussed entities overlap that chapter's pages — under «Видео по теме главы», with an explicit note that they are related lectures, not recordings of the book chapter. The chapter ↔ page-range mapping was already shown («стр. X–Y»).
 - Page-level citations + canonical links (B2): the entity card's «скопировать ссылку» now copies the stable clean canonical URL (the prerendered page) instead of the app hash route, and the on-card citation widget (ГОСТ/APA/MLA/Chicago) now includes the page reference («С. 157») and the correct book title from `corpus.books`, citing the clean canonical URL.
 - Home as a task dashboard (B4): the home page now leads with a "С чего начать?" band of three reader tasks — «Я читаю страницу книги» (page number → page view), «Я смотрю видео» (inline title search over the 191-video catalog), «Найти слово, имя, термин» (→ global index search). The stats/showcase moved below.
 - Book-spine chapter ribbon (B1): the «Читаю сейчас» page view gained a navigable density mini-map of the 11 chapters — each segment is sized by page span and shaded by mention density, the current page's chapter is highlighted, and clicking a segment jumps the page view to that chapter.

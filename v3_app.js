@@ -6631,6 +6631,48 @@ var BookIndex = (function(exports) {
 		const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
 		return (h > 0 ? h + ":" : "") + mm + ":" + String(s).padStart(2, "0");
 	}
+	// B3.4: videos whose discussed entities overlap a book chapter's pages.
+	// These are TOPICALLY related public lectures, not recordings of this chapter.
+	var CHAPTER_VIDEO_CACHE = /* @__PURE__ */ new Map();
+	function getChapterRelatedVideos(chapterIdx, limit = 6) {
+		if (CHAPTER_VIDEO_CACHE.has(chapterIdx)) return CHAPTER_VIDEO_CACHE.get(chapterIdx).slice(0, limit);
+		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+		const ch = chapters[chapterIdx];
+		const catalog = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		if (!ch || !catalog.length) {
+			CHAPTER_VIDEO_CACHE.set(chapterIdx, []);
+			return [];
+		}
+		const start = parseInt(ch.start, 10) || 1;
+		const end = parseInt(ch.end, 10) || start;
+		const types = ["names", "toponyms", "ethnonyms", "languages", "subject_index"];
+		const heads = /* @__PURE__ */ new Set();
+		for (const t of types) for (const it of (APP_DATA[t] || [])) {
+			for (const p of (it.page_list || [])) {
+				const pg = parseInt(p, 10);
+				if (Number.isFinite(pg) && pg >= start && pg <= end) {
+					heads.add(it.head);
+					break;
+				}
+			}
+		}
+		const scored = [];
+		for (const v of catalog) {
+			if (!v || !v.url) continue;
+			const seen = /* @__PURE__ */ new Set();
+			let score = 0;
+			for (const rel of (v.related_entities || [])) {
+				if (rel && heads.has(rel.head) && !seen.has(rel.head)) {
+					seen.add(rel.head);
+					score += 1;
+				}
+			}
+			if (score > 0) scored.push({ v, score });
+		}
+		scored.sort((a, b) => b.score - a.score || String(b.v.date || "").localeCompare(String(a.v.date || "")));
+		CHAPTER_VIDEO_CACHE.set(chapterIdx, scored);
+		return scored.slice(0, limit);
+	}
 	function appendListItemContent(item, it, itemType, showTypeLabel) {
 		if (!item || !it) return;
 		if ((itemType === "names" || currentEntity === "all" && itemType === "names") && it.subcategory) {
@@ -10219,7 +10261,24 @@ var BookIndex = (function(exports) {
     <div class="lecture-page-terms">`;
 		for (const t of l.terms || []) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}">${escapeHtml(t)}</a>`;
 		html += `</div>
-    <div class="lecture-page-why">${escapeHtml(l.why_read || "")}</div>
+    <div class="lecture-page-why">${escapeHtml(l.why_read || "")}</div>`;
+		const chapterVideos = getChapterRelatedVideos(currentLecture, 6);
+		if (chapterVideos.length) {
+			html += `<h3 class="lecture-page-section">Видео по теме главы <span class="lecture-page-video-count">${chapterVideos.length}</span></h3>
+    <div class="lecture-page-video-note">Похожие публичные лекции А. А. Зализняка на YouTube — по тем же темам, что и эта глава (не записи самой лекции из книги).</div>
+    <div class="lecture-page-videos">`;
+			for (const entry of chapterVideos) {
+				const v = entry.v;
+				const dur = formatVideoDuration(v.duration);
+				const durHtml = dur ? `<span class="lecture-page-video-dur">${escapeHtml(dur)}</span>` : "";
+				html += `<a class="lecture-page-video" href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title || "")}">
+        <span class="lecture-page-video-title">${escapeHtml(v.title || "")}</span>
+        ${durHtml}
+      </a>`;
+			}
+			html += `</div>`;
+		}
+		html += `
     ${buildCitationWidgetHtml("lecture", currentLecture)}
   </div>`;
 		if (currentLecture === 0 && Array.isArray(APP_DATA.further_reading) && APP_DATA.further_reading.length) {

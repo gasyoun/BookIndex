@@ -2486,6 +2486,63 @@
     margin-top: 12px;
     padding-top: 12px;
   }
+  .lecture-page-video-count {
+    display: inline-block;
+    min-width: 18px;
+    padding: 0 6px;
+    margin-left: 6px;
+    border-radius: 9px;
+    background: var(--line, #d4c8b0);
+    color: var(--title, #5a3818);
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .lecture-page-video-note {
+    color: var(--muted, #6d645a);
+    font-size: 11px;
+    margin: 4px 0 8px;
+  }
+  .lecture-page-videos {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .lecture-page-video {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 10px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 6px;
+    background: #f7f1e6;
+    color: #8c3a15;
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .lecture-page-video:hover {
+    background: #ebdcc9;
+  }
+  .lecture-page-video::before {
+    content: "▶";
+    color: #c0392b;
+    font-size: 10px;
+    flex: 0 0 auto;
+  }
+  .lecture-page-video-title {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .lecture-page-video-dur {
+    flex: 0 0 auto;
+    color: var(--muted, #6d645a);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
   .lecture-page-further {
     background: #fff;
     border: 1px solid #d4c8b0;
