@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.0.0] - 2026-06-13
 ### Added
 - Entity-card content priority (B5): the card now orders sections by reader value — pages + contexts, then the «Видео» chips (moved up above the cross-link cluster), then cross-links with the «Авторитетные записи» chips grouped right after them, then external-DB (LOD) links and the citation widget.
 - Video gallery (B3.5): a new «Видеогалерея» tab under Материалы lists all 175 (deduplicated) videos with title, date, duration and clickable entity chips, plus search (by title or mentioned entity), a book-chapter filter, and sort by date or duration.
