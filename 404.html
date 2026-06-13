@@ -64,9 +64,27 @@
       } else if (cleanPath.startsWith('/')) {
         cleanPath = cleanPath.substring(1);
       }
-      
+
       cleanPath = cleanPath.replace(/index\.html$/, '').replace(/\/+$/, '');
-      
+      const repoPrefix = window.location.pathname.startsWith('/BookIndex/') ? '/BookIndex/' : '/';
+
+      // A2: retired-slug redirects. Slugs are frozen by canonical_id, so this is
+      // normally empty; when a slug is retired, send old citations to the new URL.
+      const itemMatch = cleanPath.match(/^([a-z_]+)\/list\/item\/[a-z_]+\/([^\/]+)$/);
+      if (itemMatch) {
+        fetch(repoPrefix + 'data/slug_redirects.json').then(r => r.ok ? r.json() : null).then(data => {
+          const to = data && data.redirects && data.redirects[itemMatch[1]] && data.redirects[itemMatch[1]][itemMatch[2]];
+          if (to) {
+            window.location.replace(window.location.origin + repoPrefix + itemMatch[1] + '/list/item/' + itemMatch[1] + '/' + to + '/');
+          } else {
+            spaFallback();
+          }
+        }).catch(spaFallback);
+        return;
+      }
+      spaFallback();
+
+      function spaFallback() {
       if (cleanPath && (
         cleanPath.startsWith('materials') || 
         cleanPath.startsWith('names') || 
@@ -78,12 +96,12 @@
         cleanPath.startsWith('all') ||
         cleanPath.startsWith('scholar')
       )) {
-        const repoPrefix = window.location.pathname.startsWith('/BookIndex/') ? '/BookIndex/' : '/';
         const spaUrl = window.location.origin + repoPrefix + 'aaz-index.html#v4/' + cleanPath;
         document.write('<div class="redirect-msg" style="color: #cf7a2f; margin-top: 15px; font-style: italic; font-family: sans-serif; font-size: 14px;">Перенаправление в интерактивный справочник... / Redirecting to interactive version...</div>');
         setTimeout(function() {
           window.location.href = spaUrl;
         }, 1200);
+      }
       }
     })();
   </script>

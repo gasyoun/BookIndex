@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "note": "Old→new slug redirects per entity type. Slugs are frozen by canonical_id in slug_registry.json and normally never change, so this is usually empty. Populate ONLY when a slug must be retired (e.g. a manual cleanup); 404.html reads this to redirect old citations to the new clean URL. Never reuse a retired slug for a different entity.",
+  "redirects": {
+    "names": {},
+    "toponyms": {},
+    "ethnonyms": {},
+    "languages": {},
+    "lexicon": {},
+    "lexicon_reverse": {},
+    "lexicon_tech": {},
+    "subject": {}
+  }
+}

@@ -11,6 +11,8 @@
     "import:status": "python scripts/import_source.py --book-id",
     "content:audit": "python scripts/content_report.py app_data.json --write-quality-queue tests/index-audit-queue.json --write-context-pack tests/context-entry-pack.json --write-context-pack-md tests/context-entry-pack.md",
     "pipeline:dashboard": "python scripts/build_pipeline_dashboard.py",
+    "slug:freeze": "node scripts/build_slug_registry.mjs",
+    "slug:check": "node scripts/build_slug_registry.mjs --check",
     "check": "npm run typecheck && npm run check:js && npm run check:ui && npm run check:e2e",
     "check:a11y": "node scripts/check_lighthouse_a11y.mjs",
     "check:deploy": "node scripts/check_live_deploy.mjs",

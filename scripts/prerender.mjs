@@ -15,6 +15,20 @@ function ensureDirectoryExistence(filePath) {
 console.log('Loading app_data.json...');
 const appData = JSON.parse(fs.readFileSync('app_data.json', 'utf8'));
 
+// A2: frozen slug registry (data/slug_registry.json) keyed by canonical_id.
+// Slugs here are authoritative and stable across releases. If missing, the
+// builder below falls back to computing slugs on the fly (and warns).
+const SLUG_REGISTRY = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join('data', 'slug_registry.json'), 'utf8')).types || {}; }
+  catch { console.warn('[slugs] data/slug_registry.json missing — run `npm run slug:freeze`; using computed slugs'); return {}; }
+})();
+function registrySlugFor(type, it) {
+  const reg = SLUG_REGISTRY[type];
+  if (!reg) return null;
+  const key = (typeof it.canonical_id === 'string' && it.canonical_id) ? it.canonical_id : `head:${it.head}`;
+  return reg[key] ? reg[key].slug : null;
+}
+
 console.log('Loading aaz-index.html...');
 const baseTemplate = fs.readFileSync('aaz-index.html', 'utf8');
 
@@ -79,7 +93,7 @@ function normalizeHashSlug(value) {
   return out;
 }
 
-function buildHashSlugIndexesForItems(items) {
+function buildHashSlugIndexesForItems(items, type) {
   const byHead = new Map();
   const bySlug = new Map();
   if (!Array.isArray(items)) return { byHead, bySlug };
@@ -88,16 +102,19 @@ function buildHashSlugIndexesForItems(items) {
     const head = String(it && it.head ? it.head : '').trim();
     if (!head || byHead.has(head)) continue;
 
-    const baseRaw = normalizeHashSlug(head);
-    const base = baseRaw || 'item';
-    let slug = base;
-    let suffix = 2;
-    while (bySlug.has(slug) && bySlug.get(slug) !== head) {
-      const suffixToken = `-${suffix}`;
-      const keep = Math.max(1, MAX_HASH_SLUG_LENGTH - suffixToken.length);
-      const trimmedBase = (base.slice(0, keep).replace(/-+$/g, '') || 'item');
-      slug = `${trimmedBase}${suffixToken}`;
-      suffix += 1;
+    // Prefer the frozen registry slug (URL stability); else compute on the fly.
+    let slug = type ? registrySlugFor(type, it) : null;
+    if (!slug) {
+      const base = normalizeHashSlug(head) || 'item';
+      slug = base;
+      let suffix = 2;
+      while (bySlug.has(slug) && bySlug.get(slug) !== head) {
+        const suffixToken = `-${suffix}`;
+        const keep = Math.max(1, MAX_HASH_SLUG_LENGTH - suffixToken.length);
+        const trimmedBase = (base.slice(0, keep).replace(/-+$/g, '') || 'item');
+        slug = `${trimmedBase}${suffixToken}`;
+        suffix += 1;
+      }
     }
     byHead.set(head, slug);
     if (!bySlug.has(slug)) bySlug.set(slug, head);
@@ -117,14 +134,14 @@ const lexicon_tech = appData.lexicon_tech || [];
 const subject = appData.subject_index || [];
 
 const slugIndexes = {
-  names: buildHashSlugIndexesForItems(names),
-  toponyms: buildHashSlugIndexesForItems(toponyms),
-  ethnonyms: buildHashSlugIndexesForItems(ethnonyms),
-  languages: buildHashSlugIndexesForItems(languages),
-  lexicon: buildHashSlugIndexesForItems(lexicon),
-  lexicon_reverse: buildHashSlugIndexesForItems(lexicon_reverse),
-  lexicon_tech: buildHashSlugIndexesForItems(lexicon_tech),
-  subject: buildHashSlugIndexesForItems(subject)
+  names: buildHashSlugIndexesForItems(names, 'names'),
+  toponyms: buildHashSlugIndexesForItems(toponyms, 'toponyms'),
+  ethnonyms: buildHashSlugIndexesForItems(ethnonyms, 'ethnonyms'),
+  languages: buildHashSlugIndexesForItems(languages, 'languages'),
+  lexicon: buildHashSlugIndexesForItems(lexicon, 'lexicon'),
+  lexicon_reverse: buildHashSlugIndexesForItems(lexicon_reverse, 'lexicon_reverse'),
+  lexicon_tech: buildHashSlugIndexesForItems(lexicon_tech, 'lexicon_tech'),
+  subject: buildHashSlugIndexesForItems(subject, 'subject')
 };
 
 function getItemsByType(type) {
@@ -481,7 +498,7 @@ function renderItemHtml(type, it) {
 
   // Citation
   const slug = slugIndexes[type].byHead.get(it.head);
-  const itemUrl = `https://gasyoun.github.io/BookIndex/aaz-index.html#v4/${type}/list/item/${type}/${slug}`;
+  const itemUrl = `https://gasyoun.github.io/BookIndex/${type}/list/item/${type}/${slug}/`;
   html += `<hr style="border: 0; border-top: 1px solid var(--line-soft); margin: 24px 0;">`;
   html += renderCitationWidget(
     'card',
@@ -517,7 +534,7 @@ function buildLectureSchema(lectureId, l) {
   };
 }
 
-function buildItemSchema(type, it) {
+function buildItemSchema(type, it, canonicalUrl) {
   let category = 'Указатель';
   if (type === 'names') category = 'Имя';
   else if (type === 'toponyms') category = 'Топоним';
@@ -529,6 +546,8 @@ function buildItemSchema(type, it) {
   return {
     "@context": "https://schema.org",
     "@type": "DefinedTerm",
+    "@id": canonicalUrl,
+    "url": canonicalUrl,
     "name": it.head,
     "description": `Справочная статья об объекте «${it.head}» в интерактивном академическом справочнике по книге А. А. Зализняка «Из жизни слов и языков». Раздел: ${category}.`,
     "inDefinedTermSet": {
@@ -701,10 +720,11 @@ for (const cat of categories) {
 
       const displayTitle = `${it.head} (${catLabel})`;
       const desc = `Справочная статья об объекте «${it.head}» в интерактивном академическом справочнике по книге А. А. Зализняка «Из жизни слов и языков». Раздел: ${catLabel}.`;
-      const schema = buildItemSchema(cat, it);
-      const content = renderItemHtml(cat, it);
       const hydrationHash = `#v4/${cat}/list/item/${cat}/${slug}`;
-      const canonical = `https://gasyoun.github.io/BookIndex/aaz-index.html${hydrationHash}`;
+      // A2: canonical is the clean prerendered path (not the app hash route).
+      const canonical = `https://gasyoun.github.io/BookIndex/${cat}/list/item/${cat}/${slug}/`;
+      const schema = buildItemSchema(cat, it, canonical);
+      const content = renderItemHtml(cat, it);
 
       generateFile(filePath, displayTitle, desc, canonical, schema, content, hydrationHash);
       entityCount++;
