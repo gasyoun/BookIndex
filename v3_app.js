@@ -8095,7 +8095,8 @@ var BookIndex = (function(exports) {
 		nameGraphMinEdgeWeight = Math.min(nameGraphMinEdgeWeight, sliderMax);
 		const minWeightLabel = (Math.round(nameGraphMinEdgeWeight * 10) / 10).toFixed(1);
 		container.innerHTML = `<div class="panel active"><div class="graph-container">
-    <p class="chart-intro">Person-to-person co-mention graph. Nodes are people and weighted links reflect how close their mentions are in the text.</p>
+    <p class="chart-intro">Граф со-упоминаний лиц: узлы — люди, вес связи отражает близость их упоминаний в тексте.</p>
+    <p class="chart-provenance">Связи вычислены автоматически по со-встречаемости — поисковый сигнал, не нормативное утверждение. Метод и провенанс: <a href="https://github.com/gasyoun/BookIndex/blob/main/docs/METHODS_RU.md" target="_blank" rel="noopener noreferrer">METHODS_RU.md</a>.</p>
     <div class="graph-toolbar">
       <label class="graph-range">min edge weight
         <input id="graph-min-weight" type="range" min="0" max="${sliderMax.toFixed(1)}" step="0.1" value="${minWeightLabel}">
@@ -8568,6 +8569,7 @@ var BookIndex = (function(exports) {
 		const t0 = nowMs();
 		container.innerHTML = `<div class="panel active"><div class="graph-container">
     <p class="chart-intro">Граф языков: соединены языки, упоминаемые в книге близко друг к другу в тексте. Алгоритм позиционного взвешивания учитывает место упоминания на странице, а не только её номер — разрыв страницы между близкими упоминаниями не наказывается. Цвет узла — языковая семья. По умолчанию показаны только сильные связи (вес ≥ 10).</p>
+    <p class="chart-provenance">Связи вычислены автоматически по со-встречаемости — поисковый сигнал, не нормативное утверждение. Метод и провенанс: <a href="https://github.com/gasyoun/BookIndex/blob/main/docs/METHODS_RU.md" target="_blank" rel="noopener noreferrer">METHODS_RU.md</a>.</p>
     <div class="graph-filter-row"><button class="filter-chip ${graphStrongOnly ? "active" : ""}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
     <div id="families-status" class="graph-status">Рассчитываю расположение узлов…</div>
     <canvas id="graph-canvas" width="1300" height="650"></canvas>

@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-IdKk3YM1l1yBuhz/MPXAN5Wa91twRee10Cf0NU00iak=' 'sha256-twmBpi3L9nyzltJCroJJGsgolcC/KGfU6pe7voU/r6Q='; worker-src 'self' blob:; style-src 'self' 'sha256-QrUDe7BiGuKAeZNmcWxGCZwW47Qb8uIB4JOdxY34sb8='; style-src-elem 'self' 'sha256-QrUDe7BiGuKAeZNmcWxGCZwW47Qb8uIB4JOdxY34sb8='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-VPRpCNXeyX05z29eDsPuPUY17qn9HGiCvOMaAvQlzvs=' 'sha256-bs2SNzIgvaKuOEYeHOI4jSPUs8HltLFAlifOiLxVdQA='; worker-src 'self' blob:; style-src 'self' 'sha256-lxANVI+Gu65giASOybH/72LvCPbkLqR1BCZgm71xdPY='; style-src-elem 'self' 'sha256-lxANVI+Gu65giASOybH/72LvCPbkLqR1BCZgm71xdPY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -4731,6 +4731,16 @@
     font-style: italic;
     font-size: 12px;
   }
+  .chart-provenance {
+    margin: -4px 0 12px 0;
+    padding: 6px 10px;
+    border-left: 3px solid var(--line);
+    background: #faf6ee;
+    color: var(--muted);
+    font-size: 11px;
+    border-radius: 0 4px 4px 0;
+  }
+  .chart-provenance a { color: var(--accent, #7a5a3a); }
   .bar-row {
     display: grid;
     grid-template-columns: 260px 1fr 50px;
@@ -5601,7 +5611,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "7891e063225c",
+  "build_id": "1516438acf3b",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -5909,7 +5919,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "7891e063225c";
+	var APP_BUILD_ID$1 = "1516438acf3b";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6795,8 +6805,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "7891e063225c").trim();
-		if (buildId && buildId !== "7891e063225c") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "1516438acf3b").trim();
+		if (buildId && buildId !== "1516438acf3b") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10239,7 +10249,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "7891e063225c" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "1516438acf3b" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -13852,7 +13862,8 @@ var BookIndex = (function(exports) {
 		nameGraphMinEdgeWeight = Math.min(nameGraphMinEdgeWeight, sliderMax);
 		const minWeightLabel = (Math.round(nameGraphMinEdgeWeight * 10) / 10).toFixed(1);
 		container.innerHTML = `<div class="panel active"><div class="graph-container">
-    <p class="chart-intro">Person-to-person co-mention graph. Nodes are people and weighted links reflect how close their mentions are in the text.</p>
+    <p class="chart-intro">Граф со-упоминаний лиц: узлы — люди, вес связи отражает близость их упоминаний в тексте.</p>
+    <p class="chart-provenance">Связи вычислены автоматически по со-встречаемости — поисковый сигнал, не нормативное утверждение. Метод и провенанс: <a href="https://github.com/gasyoun/BookIndex/blob/main/docs/METHODS_RU.md" target="_blank" rel="noopener noreferrer">METHODS_RU.md</a>.</p>
     <div class="graph-toolbar">
       <label class="graph-range">min edge weight
         <input id="graph-min-weight" type="range" min="0" max="${sliderMax.toFixed(1)}" step="0.1" value="${minWeightLabel}">
@@ -14325,6 +14336,7 @@ var BookIndex = (function(exports) {
 		const t0 = nowMs();
 		container.innerHTML = `<div class="panel active"><div class="graph-container">
     <p class="chart-intro">Граф языков: соединены языки, упоминаемые в книге близко друг к другу в тексте. Алгоритм позиционного взвешивания учитывает место упоминания на странице, а не только её номер — разрыв страницы между близкими упоминаниями не наказывается. Цвет узла — языковая семья. По умолчанию показаны только сильные связи (вес ≥ 10).</p>
+    <p class="chart-provenance">Связи вычислены автоматически по со-встречаемости — поисковый сигнал, не нормативное утверждение. Метод и провенанс: <a href="https://github.com/gasyoun/BookIndex/blob/main/docs/METHODS_RU.md" target="_blank" rel="noopener noreferrer">METHODS_RU.md</a>.</p>
     <div class="graph-filter-row"><button class="filter-chip ${graphStrongOnly ? "active" : ""}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
     <div id="families-status" class="graph-status">Рассчитываю расположение узлов…</div>
     <canvas id="graph-canvas" width="1300" height="650"></canvas>

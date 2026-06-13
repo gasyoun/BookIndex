@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "note": "Machine-readable provenance of app_data.json layers (A4). Human narrative: docs/METHODS_RU.md. 'reproducible' = whether a committed script regenerates the layer; derived co-occurrence layers were produced upstream and are NOT reproducible from this repo.",
+  "layers": {
+    "names": {"origin": "book", "kind": "index", "method": "extracted from the book (pages, contexts)", "reproducible": true, "override": "editorial_flags"},
+    "toponyms": {"origin": "book", "kind": "index", "reproducible": true, "override": "editorial_flags"},
+    "ethnonyms": {"origin": "book", "kind": "index", "reproducible": true, "override": "editorial_flags"},
+    "languages": {"origin": "book", "kind": "index", "reproducible": true, "override": "editorial_flags"},
+    "lexicon": {"origin": "book", "kind": "index", "reproducible": true},
+    "subject_index": {"origin": "book", "kind": "index", "reproducible": true},
+    "edges": {
+      "origin": "derived", "kind": "co-mention-graph", "status": "heuristic",
+      "method": "person-to-person co-mention; weight = proximity-weighted association strength (PMI-like, not a raw count)",
+      "reproducible": false, "reason": "no generator committed; decay function and normalization not recoverable",
+      "fields": {"source": "head", "target": "head", "weight": "number"}
+    },
+    "language_edges": {
+      "origin": "derived", "kind": "co-mention-graph", "status": "heuristic",
+      "method": "language co-mention with positional weighting (in-page location, page breaks not penalized); strong links weight >= 10",
+      "reproducible": false, "reason": "no generator committed; exact positional formula not recoverable",
+      "fields": {"source": "head", "target": "head", "weight": "number"}
+    },
+    "cross_links": {
+      "origin": "derived", "kind": "co-mention-cross-type", "status": "heuristic",
+      "method": "cross-type co-mention (name<->place/people/language)",
+      "reproducible": false,
+      "shape": "{ sourceType: { head: [ {head, weight} ] } }"
+    },
+    "semantic_links": {
+      "origin": "derived", "kind": "similarity", "status": "heuristic",
+      "method": "normalized similarity (score 0..1) over shared features; 'shared' = count of shared co-occurring items",
+      "reproducible": false, "reason": "exact similarity metric and normalization not recoverable",
+      "fields": {"head": "head", "score": "0..1", "shared": "integer"}
+    },
+    "video_catalog.related_entities": {
+      "origin": "mixed", "kind": "entity-link", "status": "curated + auto",
+      "method": "curated edges plus transcript-linked edges (src='transcript') with first-mention timecode t",
+      "reproducible": true, "generator": "scripts/extract_entities_from_transcripts.py"
+    },
+    "authority": {
+      "origin": "external", "kind": "authority-id", "status": "auto + manual",
+      "method": "Wikidata alignment with VIAF/GND/GeoNames; src='wikidata-auto' (auto) or 'manual'",
+      "reproducible": true, "generator": "scripts/align_authorities.py", "review_file": "data/authority_candidates.json"
+    }
+  }
+}
