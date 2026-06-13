@@ -91932,6 +91932,192 @@
           "head": "арабский",
           "type": "languages",
           "t": 58
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 682
+        },
+        {
+          "head": "Африка",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 240
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 248
+        },
+        {
+          "head": "Иран",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 196
+        },
+        {
+          "head": "Кавказ",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 783
+        },
+        {
+          "head": "Китай",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 165
+        },
+        {
+          "head": "Марокко",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 294
+        },
+        {
+          "head": "арабы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2343
+        },
+        {
+          "head": "немцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 4598
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 454
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1480
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 566
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1346
+        },
+        {
+          "head": "восточные",
+          "type": "languages",
+          "src": "transcript",
+          "t": 4905
+        },
+        {
+          "head": "греческий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 254
+        },
+        {
+          "head": "европейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 254
+        },
+        {
+          "head": "западноевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 558
+        },
+        {
+          "head": "иврит",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7406
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 248
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 248
+        },
+        {
+          "head": "немецкий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1225
+        },
+        {
+          "head": "персидский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 261
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 454
+        },
+        {
+          "head": "санскрит",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2665
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1480
+        },
+        {
+          "head": "турецкий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 261
+        },
+        {
+          "head": "тюркские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7190
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3695
+        },
+        {
+          "head": "артикль",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1294
+        },
+        {
+          "head": "перфект",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1529
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 4357
         }
       ]
     },
@@ -91976,6 +92162,114 @@
           "head": "ударение",
           "type": "subject_index",
           "t": 1
+        },
+        {
+          "head": "Аввакум [Петров] (протопоп)",
+          "type": "names",
+          "src": "transcript",
+          "t": 2243
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 2760
+        },
+        {
+          "head": "Еськова Н. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2512
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3372
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3010
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2760
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3010
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 3010
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 3372
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3372
+        },
+        {
+          "head": "белорусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3065
+        },
+        {
+          "head": "украинский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3065
+        },
+        {
+          "head": "финский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2760
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3372
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 4602
+        },
+        {
+          "head": "сдвиг [ударения]",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2942
+        },
+        {
+          "head": "фонетические изменения",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2319
+        },
+        {
+          "head": "цифры",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2116
         }
       ]
     },
@@ -92018,6 +92312,126 @@
           "head": "ударение",
           "type": "subject_index",
           "t": 1
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 5783
+        },
+        {
+          "head": "Иллич-Свитыч В. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1013
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 5195
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 5783
+        },
+        {
+          "head": "Крит",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 5562
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1616
+        },
+        {
+          "head": "латыши",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 436
+        },
+        {
+          "head": "русский [человек]",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 318
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 930
+        },
+        {
+          "head": "татары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 436
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 436
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1013
+        },
+        {
+          "head": "западнославянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 5501
+        },
+        {
+          "head": "индоевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 930
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 497
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 497
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 930
+        },
+        {
+          "head": "аканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 3327
+        },
+        {
+          "head": "чудовский Новый завет",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 972
+        },
+        {
+          "head": "энклитики",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 4019
         }
       ]
     },
@@ -92042,6 +92456,228 @@
         {
           "head": "сторона",
           "type": "lexicon"
+        },
+        {
+          "head": "А. Т. Фоменко",
+          "type": "names",
+          "src": "transcript",
+          "t": 50
+        },
+        {
+          "head": "Фоменко А. Т.",
+          "type": "names",
+          "src": "transcript",
+          "t": 50
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 738
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 6099
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2606
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3223
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1132
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 484
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 535
+        },
+        {
+          "head": "русский [человек]",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 535
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 253
+        },
+        {
+          "head": "украинцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1132
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1515
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1220
+        },
+        {
+          "head": "Английский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1220
+        },
+        {
+          "head": "германские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 6563
+        },
+        {
+          "head": "голландский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 738
+        },
+        {
+          "head": "греческий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 774
+        },
+        {
+          "head": "западноевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3129
+        },
+        {
+          "head": "индоевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 253
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 774
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 774
+        },
+        {
+          "head": "польский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1539
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 535
+        },
+        {
+          "head": "санскрит",
+          "type": "languages",
+          "src": "transcript",
+          "t": 817
+        },
+        {
+          "head": "сербский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2358
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 253
+        },
+        {
+          "head": "турецкий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2970
+        },
+        {
+          "head": "украинский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2358
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 6958
+        },
+        {
+          "head": "Французский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 6958
+        },
+        {
+          "head": "шведский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 738
+        },
+        {
+          "head": "аканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2153
+        },
+        {
+          "head": "название языка",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 6497
+        },
+        {
+          "head": "народная этимология",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 6497
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2019
+        },
+        {
+          "head": "фонетические изменения",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 152
         }
       ]
     },
@@ -92072,6 +92708,282 @@
           "head": "берестяные грамоты",
           "type": "subject_index",
           "t": 0
+        },
+        {
+          "head": "А. А. Алексеев",
+          "type": "names",
+          "src": "transcript",
+          "t": 8105
+        },
+        {
+          "head": "А. Т. Фоменко",
+          "type": "names",
+          "src": "transcript",
+          "t": 6751
+        },
+        {
+          "head": "Богородица Мария",
+          "type": "names",
+          "src": "transcript",
+          "t": 1565
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 4109
+        },
+        {
+          "head": "Гиппиус А. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 8105
+        },
+        {
+          "head": "Иванов",
+          "type": "names",
+          "src": "transcript",
+          "t": 4109
+        },
+        {
+          "head": "Иванов Вяч. Вс.",
+          "type": "names",
+          "src": "transcript",
+          "t": 4109
+        },
+        {
+          "head": "Мария Богородица",
+          "type": "names",
+          "src": "transcript",
+          "t": 1565
+        },
+        {
+          "head": "Поветкин В. И.",
+          "type": "names",
+          "src": "transcript",
+          "t": 4109
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2288
+        },
+        {
+          "head": "Толстая М. Н.",
+          "type": "names",
+          "src": "transcript",
+          "t": 5635
+        },
+        {
+          "head": "Толстая Р. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 5635
+        },
+        {
+          "head": "Фоменко А. Т.",
+          "type": "names",
+          "src": "transcript",
+          "t": 6751
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3510
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 308
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 4109
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3510
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1385
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 0
+        },
+        {
+          "head": "Псков",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 308
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2226
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 308
+        },
+        {
+          "head": "Франция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 8009
+        },
+        {
+          "head": "Швеция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 7935
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 308
+        },
+        {
+          "head": "латыши",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 7137
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 540
+        },
+        {
+          "head": "римляне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 6675
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2110
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 667
+        },
+        {
+          "head": "татары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 6443
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 4219
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3510
+        },
+        {
+          "head": "Английский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3510
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7137
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7137
+        },
+        {
+          "head": "латышский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7137
+        },
+        {
+          "head": "литовский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7137
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2110
+        },
+        {
+          "head": "старославянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7137
+        },
+        {
+          "head": "эстонский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7137
+        },
+        {
+          "head": "алфавит",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 3510
+        },
+        {
+          "head": "архаизм",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2529
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1151
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 308
+        },
+        {
+          "head": "цоканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2226
         }
       ]
     },
@@ -92111,6 +93023,504 @@
           "head": "русский",
           "type": "lexicon",
           "t": 61
+        },
+        {
+          "head": "Александр Македонский",
+          "type": "names",
+          "src": "transcript",
+          "t": 3876
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 61
+        },
+        {
+          "head": "Успенский Б. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2188
+        },
+        {
+          "head": "Успенский В. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2188
+        },
+        {
+          "head": "Фасмер М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 330
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 688
+        },
+        {
+          "head": "Балтийское море",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3076
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3076
+        },
+        {
+          "head": "Великороссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 506
+        },
+        {
+          "head": "Галлия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 6894
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 285
+        },
+        {
+          "head": "Испания",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2034
+        },
+        {
+          "head": "Италия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2034
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 506
+        },
+        {
+          "head": "Крит",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3748
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 506
+        },
+        {
+          "head": "Псков",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 4355
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3120
+        },
+        {
+          "head": "Ростов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 4355
+        },
+        {
+          "head": "ростово-суздальская земля",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 4355
+        },
+        {
+          "head": "Суздаль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 4355
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 453
+        },
+        {
+          "head": "Франция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2034
+        },
+        {
+          "head": "Чернигов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 506
+        },
+        {
+          "head": "Швеция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 506
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 453
+        },
+        {
+          "head": "болгары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1509
+        },
+        {
+          "head": "кривичи",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 6773
+        },
+        {
+          "head": "латыши",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 7125
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 506
+        },
+        {
+          "head": "норманны",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 285
+        },
+        {
+          "head": "псковские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 5525
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 179
+        },
+        {
+          "head": "татары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 4300
+        },
+        {
+          "head": "финны",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 6232
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 688
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 688
+        },
+        {
+          "head": "Английский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 688
+        },
+        {
+          "head": "арабский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 744
+        },
+        {
+          "head": "белорусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 565
+        },
+        {
+          "head": "болгарский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1509
+        },
+        {
+          "head": "восточнославянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 993
+        },
+        {
+          "head": "восточные",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1610
+        },
+        {
+          "head": "древнеанглийский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 688
+        },
+        {
+          "head": "древненовгородский диалект",
+          "type": "languages",
+          "src": "transcript",
+          "t": 4247
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 4809
+        },
+        {
+          "head": "европейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2787
+        },
+        {
+          "head": "индоевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 179
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2034
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2034
+        },
+        {
+          "head": "латышский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7125
+        },
+        {
+          "head": "литовский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 744
+        },
+        {
+          "head": "македонский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3876
+        },
+        {
+          "head": "новгородский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 4405
+        },
+        {
+          "head": "новоиндийские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2034
+        },
+        {
+          "head": "польский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3876
+        },
+        {
+          "head": "праславянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2787
+        },
+        {
+          "head": "романские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2679
+        },
+        {
+          "head": "санскрит",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2034
+        },
+        {
+          "head": "сербский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3876
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 179
+        },
+        {
+          "head": "словацкий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3816
+        },
+        {
+          "head": "словенский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3876
+        },
+        {
+          "head": "старофранцузский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 688
+        },
+        {
+          "head": "тюркские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1655
+        },
+        {
+          "head": "украинский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 623
+        },
+        {
+          "head": "финский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 6585
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 688
+        },
+        {
+          "head": "Французский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 688
+        },
+        {
+          "head": "церковнославянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2093
+        },
+        {
+          "head": "Церковнославянский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2155
+        },
+        {
+          "head": "чешский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3816
+        },
+        {
+          "head": "южнославянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3876
+        },
+        {
+          "head": "аканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1561
+        },
+        {
+          "head": "алфавит",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 6172
+        },
+        {
+          "head": "архаизм",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 3876
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1279
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 3583
+        },
+        {
+          "head": "палатализация",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 4625
+        },
+        {
+          "head": "перфект",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1509
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 7481
+        },
+        {
+          "head": "полногласие",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2302
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1332
         }
       ]
     },
@@ -92140,6 +93550,312 @@
           "head": "Велесова книга",
           "type": "subject_index",
           "t": 80
+        },
+        {
+          "head": "А. А. Алексеев",
+          "type": "names",
+          "src": "transcript",
+          "t": 740
+        },
+        {
+          "head": "Али Изенбек",
+          "type": "names",
+          "src": "transcript",
+          "t": 128
+        },
+        {
+          "head": "О. В. Творогов",
+          "type": "names",
+          "src": "transcript",
+          "t": 308
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 308
+        },
+        {
+          "head": "Цезарь",
+          "type": "names",
+          "src": "transcript",
+          "t": 2657
+        },
+        {
+          "head": "Ю. П. Миролюбов",
+          "type": "names",
+          "src": "transcript",
+          "t": 128
+        },
+        {
+          "head": "Юлий Цезарь",
+          "type": "names",
+          "src": "transcript",
+          "t": 2657
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 491
+        },
+        {
+          "head": "Византия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1829
+        },
+        {
+          "head": "Греция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2243
+        },
+        {
+          "head": "Грецколань",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2243
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 199
+        },
+        {
+          "head": "Иран",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2243
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1995
+        },
+        {
+          "head": "Крит",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 792
+        },
+        {
+          "head": "Литва",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1933
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 80
+        },
+        {
+          "head": "Переяславль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2027
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 308
+        },
+        {
+          "head": "Русколань",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2243
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 128
+        },
+        {
+          "head": "Чернигов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1995
+        },
+        {
+          "head": "болгары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2635
+        },
+        {
+          "head": "варяги",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1530
+        },
+        {
+          "head": "датчане",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1749
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2071
+        },
+        {
+          "head": "норманны",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1749
+        },
+        {
+          "head": "поляки",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 3923
+        },
+        {
+          "head": "римляне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 3322
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 491
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1749
+        },
+        {
+          "head": "татары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2071
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2657
+        },
+        {
+          "head": "хазары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1530
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 491
+        },
+        {
+          "head": "индоиранские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1311
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1829
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1829
+        },
+        {
+          "head": "новгородский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2027
+        },
+        {
+          "head": "польский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2189
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 491
+        },
+        {
+          "head": "санскрит",
+          "type": "languages",
+          "src": "transcript",
+          "t": 4598
+        },
+        {
+          "head": "сербский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 491
+        },
+        {
+          "head": "Сербский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3097
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1873
+        },
+        {
+          "head": "украинский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 491
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 4095
+        },
+        {
+          "head": "двойственное число",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2613
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 3755
+        },
+        {
+          "head": "церковнославянизмы",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 3023
+        },
+        {
+          "head": "цифры",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 3613
         }
       ]
     },
@@ -92179,6 +93895,84 @@
           "head": "русский",
           "type": "lexicon",
           "t": 1763
+        },
+        {
+          "head": "А. И. Солженицын",
+          "type": "names",
+          "src": "transcript",
+          "t": 25
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 158
+        },
+        {
+          "head": "Иллич-Свитыч В. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 158
+        },
+        {
+          "head": "Солженицын А. И.",
+          "type": "names",
+          "src": "transcript",
+          "t": 25
+        },
+        {
+          "head": "Солженицына Н. Д.",
+          "type": "names",
+          "src": "transcript",
+          "t": 25
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1887
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 158
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 25
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 158
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2140
+        },
+        {
+          "head": "немецкий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2045
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 158
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 69
         }
       ]
     },
@@ -92208,6 +94002,126 @@
           "head": "полк",
           "type": "lexicon",
           "t": 67
+        },
+        {
+          "head": "Карамзин Н. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 224
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 122
+        },
+        {
+          "head": "Ярослав",
+          "type": "names",
+          "src": "transcript",
+          "t": 224
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 814
+        },
+        {
+          "head": "Германия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2289
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 814
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 27
+        },
+        {
+          "head": "половцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1349
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1696
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 269
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 412
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 814
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1696
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 412
+        },
+        {
+          "head": "аканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1696
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 27
+        },
+        {
+          "head": "Любительская лингвистика",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1169
+        },
+        {
+          "head": "оканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1815
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 27
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1873
         }
       ]
     },
@@ -92237,6 +94151,102 @@
           "head": "берестяные грамоты",
           "type": "subject_index",
           "t": 360
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2209
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1828
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 133
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2209
+        },
+        {
+          "head": "Ростов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1828
+        },
+        {
+          "head": "Суздаль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1828
+        },
+        {
+          "head": "Флоренция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2209
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1298
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 360
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 360
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1915
+        },
+        {
+          "head": "индоевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1644
+        },
+        {
+          "head": "новгородский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 133
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1644
+        },
+        {
+          "head": "старославянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1915
+        },
+        {
+          "head": "палатализация",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1704
         }
       ]
     },
@@ -92266,6 +94276,108 @@
           "head": "берестяные грамоты",
           "type": "subject_index",
           "t": 25
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2120
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2528
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 871
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 65
+        },
+        {
+          "head": "Псков",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 65
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 25
+        },
+        {
+          "head": "Суздаль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 871
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 65
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2528
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1156
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 706
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2120
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 871
+        },
+        {
+          "head": "лигатура",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1226
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 25
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 706
+        },
+        {
+          "head": "цоканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2030
         }
       ]
     },
@@ -92305,6 +94417,72 @@
           "head": "русский",
           "type": "lexicon",
           "t": 67
+        },
+        {
+          "head": "Аванесов Р. И.",
+          "type": "names",
+          "src": "transcript",
+          "t": 406
+        },
+        {
+          "head": "Еськова Н. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 406
+        },
+        {
+          "head": "Иванов",
+          "type": "names",
+          "src": "transcript",
+          "t": 406
+        },
+        {
+          "head": "Иванов Вяч. Вс.",
+          "type": "names",
+          "src": "transcript",
+          "t": 406
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1513
+        },
+        {
+          "head": "латыши",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 67
+        },
+        {
+          "head": "татары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 67
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 67
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 67
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 67
+        },
+        {
+          "head": "ударение: ∼ свободное (разноместное)",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 67
         }
       ]
     },
@@ -92334,6 +94512,60 @@
           "head": "полк",
           "type": "lexicon",
           "t": 26
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 845
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 26
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1676
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1518
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1676
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 26
+        },
+        {
+          "head": "двойственное число",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 435
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 26
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 83
         }
       ]
     },
@@ -92369,6 +94601,216 @@
           "head": "русский",
           "type": "lexicon",
           "t": 590
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 1115
+        },
+        {
+          "head": "Иванов",
+          "type": "names",
+          "src": "transcript",
+          "t": 997
+        },
+        {
+          "head": "Иванов Вяч. Вс.",
+          "type": "names",
+          "src": "transcript",
+          "t": 997
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 227
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1115
+        },
+        {
+          "head": "Германия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 423
+        },
+        {
+          "head": "Голландия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 611
+        },
+        {
+          "head": "Греция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 227
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "Китай",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 590
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 116
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 654
+        },
+        {
+          "head": "Ростов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "Суздаль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "Франция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 611
+        },
+        {
+          "head": "англичане",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 850
+        },
+        {
+          "head": "болгары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 590
+        },
+        {
+          "head": "Английский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 611
+        },
+        {
+          "head": "болгарский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "древненовгородский диалект",
+          "type": "languages",
+          "src": "transcript",
+          "t": 850
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 850
+        },
+        {
+          "head": "китайский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 590
+        },
+        {
+          "head": "польский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "сербский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "словенский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "чешский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1428
+        },
+        {
+          "head": "эсперанто",
+          "type": "languages",
+          "src": "transcript",
+          "t": 730
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 116
+        },
+        {
+          "head": "искусственные языки",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 730
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 172
+        },
+        {
+          "head": "энклитики",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 966
         }
       ]
     },
@@ -92389,6 +94831,180 @@
           "head": "Зализняк А. А.",
           "type": "names",
           "t": 16
+        },
+        {
+          "head": "А. И. Солженицын",
+          "type": "names",
+          "src": "transcript",
+          "t": 66
+        },
+        {
+          "head": "Иванов",
+          "type": "names",
+          "src": "transcript",
+          "t": 710
+        },
+        {
+          "head": "Иванов Вяч. Вс.",
+          "type": "names",
+          "src": "transcript",
+          "t": 710
+        },
+        {
+          "head": "Лотман Ю. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2116
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 635
+        },
+        {
+          "head": "Солженицын А. И.",
+          "type": "names",
+          "src": "transcript",
+          "t": 66
+        },
+        {
+          "head": "Солженицына Н. Д.",
+          "type": "names",
+          "src": "transcript",
+          "t": 66
+        },
+        {
+          "head": "Успенский Б. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 16
+        },
+        {
+          "head": "Успенский В. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 16
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 500
+        },
+        {
+          "head": "Франция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1130
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 376
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 475
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1178
+        },
+        {
+          "head": "арабский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 16
+        },
+        {
+          "head": "белорусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 376
+        },
+        {
+          "head": "древнегреческий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1015
+        },
+        {
+          "head": "древнеперсидский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 16
+        },
+        {
+          "head": "новогреческий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1015
+        },
+        {
+          "head": "польский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 500
+        },
+        {
+          "head": "Польский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 500
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 500
+        },
+        {
+          "head": "санскрит",
+          "type": "languages",
+          "src": "transcript",
+          "t": 16
+        },
+        {
+          "head": "старославянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 16
+        },
+        {
+          "head": "украинский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 500
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1178
+        },
+        {
+          "head": "алфавит",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1548
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1909
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1833
         }
       ]
     },
@@ -92409,6 +95025,132 @@
           "head": "Зализняк А. А.",
           "type": "names",
           "t": 46
+        },
+        {
+          "head": "Александр Македонский",
+          "type": "names",
+          "src": "transcript",
+          "t": 1608
+        },
+        {
+          "head": "Иллич-Свитыч В. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2039
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 882
+        },
+        {
+          "head": "Иран",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1885
+        },
+        {
+          "head": "европейцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2170
+        },
+        {
+          "head": "индийцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1608
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 882
+        },
+        {
+          "head": "восточные",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1678
+        },
+        {
+          "head": "древнеиндийские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 486
+        },
+        {
+          "head": "европейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 882
+        },
+        {
+          "head": "индийские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2084
+        },
+        {
+          "head": "индоевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 837
+        },
+        {
+          "head": "иранские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1885
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 882
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 882
+        },
+        {
+          "head": "македонский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1608
+        },
+        {
+          "head": "новоиндийские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 622
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 882
+        },
+        {
+          "head": "санскрит",
+          "type": "languages",
+          "src": "transcript",
+          "t": 112
+        },
+        {
+          "head": "среднеиндийские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1200
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 961
         }
       ]
     },
@@ -92452,6 +95194,324 @@
           "head": "русский",
           "type": "lexicon",
           "t": 106
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 2438
+        },
+        {
+          "head": "Карамзин Н. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1129
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1129
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2643
+        },
+        {
+          "head": "Византия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 285
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2438
+        },
+        {
+          "head": "Германия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1662
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1248
+        },
+        {
+          "head": "Италия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 610
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 485
+        },
+        {
+          "head": "Китай",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1552
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 485
+        },
+        {
+          "head": "Псков",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2084
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1
+        },
+        {
+          "head": "Ростов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3370
+        },
+        {
+          "head": "Суздаль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3081
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 485
+        },
+        {
+          "head": "Флоренция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 610
+        },
+        {
+          "head": "Чернигов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 485
+        },
+        {
+          "head": "Швеция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 265
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 545
+        },
+        {
+          "head": "варяги",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 265
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 485
+        },
+        {
+          "head": "псковские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 3418
+        },
+        {
+          "head": "русский [человек]",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 793
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 234
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1258
+        },
+        {
+          "head": "белорусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 545
+        },
+        {
+          "head": "восточнославянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 485
+        },
+        {
+          "head": "восточные",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1728
+        },
+        {
+          "head": "древненовгородский диалект",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2373
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 670
+        },
+        {
+          "head": "древнескандинавские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 364
+        },
+        {
+          "head": "европейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1248
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1258
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1258
+        },
+        {
+          "head": "литовский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3727
+        },
+        {
+          "head": "новгородский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2503
+        },
+        {
+          "head": "псковский говор",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3418
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 424
+        },
+        {
+          "head": "старобелорусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3727
+        },
+        {
+          "head": "старославянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 730
+        },
+        {
+          "head": "украинский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 545
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1320
+        },
+        {
+          "head": "Французский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1320
+        },
+        {
+          "head": "церковнославянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 670
+        },
+        {
+          "head": "Церковнославянский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 730
+        },
+        {
+          "head": "аканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1788
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 485
+        },
+        {
+          "head": "оканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1788
+        },
+        {
+          "head": "полногласие",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 825
+        },
+        {
+          "head": "церковнославянизмы",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 814
+        },
+        {
+          "head": "цифры",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 39
         }
       ]
     },
@@ -92495,6 +95555,336 @@
           "head": "русский",
           "type": "lexicon",
           "t": 90
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 2393
+        },
+        {
+          "head": "Карамзин Н. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1138
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1138
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2652
+        },
+        {
+          "head": "Византия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 292
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2393
+        },
+        {
+          "head": "Германия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1674
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1257
+        },
+        {
+          "head": "Италия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 656
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 495
+        },
+        {
+          "head": "Китай",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1563
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 495
+        },
+        {
+          "head": "Переяславль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 495
+        },
+        {
+          "head": "Псков",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2091
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 10
+        },
+        {
+          "head": "Ростов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3381
+        },
+        {
+          "head": "Суздаль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3132
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 495
+        },
+        {
+          "head": "Флоренция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 656
+        },
+        {
+          "head": "Чернигов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 495
+        },
+        {
+          "head": "Швеция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 276
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 575
+        },
+        {
+          "head": "варяги",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 276
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 495
+        },
+        {
+          "head": "норманны",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 274
+        },
+        {
+          "head": "псковские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2974
+        },
+        {
+          "head": "русский [человек]",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 806
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 247
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1268
+        },
+        {
+          "head": "белорусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 575
+        },
+        {
+          "head": "восточнославянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 495
+        },
+        {
+          "head": "восточные",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1740
+        },
+        {
+          "head": "древненовгородский диалект",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2393
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 698
+        },
+        {
+          "head": "древнескандинавские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 333
+        },
+        {
+          "head": "европейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1257
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1268
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1268
+        },
+        {
+          "head": "литовский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3736
+        },
+        {
+          "head": "новгородский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2518
+        },
+        {
+          "head": "псковский говор",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3433
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 439
+        },
+        {
+          "head": "старобелорусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3727
+        },
+        {
+          "head": "старославянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 741
+        },
+        {
+          "head": "украинский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 575
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1348
+        },
+        {
+          "head": "Французский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1348
+        },
+        {
+          "head": "церковнославянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 698
+        },
+        {
+          "head": "Церковнославянский язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 741
+        },
+        {
+          "head": "аканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1760
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 495
+        },
+        {
+          "head": "оканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1760
+        },
+        {
+          "head": "полногласие",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 835
+        },
+        {
+          "head": "церковнославянизмы",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 825
+        },
+        {
+          "head": "цифры",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 48
         }
       ]
     },
@@ -92514,6 +95904,114 @@
         {
           "head": "Зализняк А. А.",
           "type": "names",
+          "t": 348
+        },
+        {
+          "head": "А. И. Солженицын",
+          "type": "names",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "Солженицын А. И.",
+          "type": "names",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "Солженицына Н. Д.",
+          "type": "names",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "Франция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "английский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "греческий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "древненовгородский диалект",
+          "type": "languages",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "европейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "французский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 348
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
           "t": 348
         }
       ]
@@ -92537,6 +96035,114 @@
         {
           "head": "новгородский",
           "type": "languages"
+        },
+        {
+          "head": "Иисус Христос",
+          "type": "names",
+          "src": "transcript",
+          "t": 497
+        },
+        {
+          "head": "Христос Иисус",
+          "type": "names",
+          "src": "transcript",
+          "t": 497
+        },
+        {
+          "head": "Греция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1769
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1769
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1086
+        },
+        {
+          "head": "Крит",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2592
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 32
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 340
+        },
+        {
+          "head": "болгары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1305
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1709
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1551
+        },
+        {
+          "head": "западноевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 0
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2561
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2683
+        },
+        {
+          "head": "алфавит",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1334
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 94
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 230
+        },
+        {
+          "head": "цифры",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 860
         }
       ]
     },
@@ -92562,6 +96168,342 @@
           "head": "санскрит",
           "type": "languages",
           "t": 50
+        },
+        {
+          "head": "А. А. Алексеев",
+          "type": "names",
+          "src": "transcript",
+          "t": 219
+        },
+        {
+          "head": "А. Т. Фоменко",
+          "type": "names",
+          "src": "transcript",
+          "t": 8630
+        },
+        {
+          "head": "Барулин А. Н.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2700
+        },
+        {
+          "head": "Болотов С. Г.",
+          "type": "names",
+          "src": "transcript",
+          "t": 3954
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 833
+        },
+        {
+          "head": "Гасунс М. Ю.",
+          "type": "names",
+          "src": "transcript",
+          "t": 50
+        },
+        {
+          "head": "Иванов",
+          "type": "names",
+          "src": "transcript",
+          "t": 6547
+        },
+        {
+          "head": "Иванов Вяч. Вс.",
+          "type": "names",
+          "src": "transcript",
+          "t": 6547
+        },
+        {
+          "head": "Кочергина В. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 482
+        },
+        {
+          "head": "Лебедева Е. И.",
+          "type": "names",
+          "src": "transcript",
+          "t": 7176
+        },
+        {
+          "head": "Левонтина И. Б.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1195
+        },
+        {
+          "head": "Николаев С. Л.",
+          "type": "names",
+          "src": "transcript",
+          "t": 95
+        },
+        {
+          "head": "Николаева T. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 95
+        },
+        {
+          "head": "Падучева Е. В.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1773
+        },
+        {
+          "head": "Перцов Н. В.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1773
+        },
+        {
+          "head": "Плунгян В. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 5815
+        },
+        {
+          "head": "Поветкин В. И.",
+          "type": "names",
+          "src": "transcript",
+          "t": 8541
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 945
+        },
+        {
+          "head": "Старостин Г. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 8179
+        },
+        {
+          "head": "Старостин С. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 8179
+        },
+        {
+          "head": "Успенский Б. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 4907
+        },
+        {
+          "head": "Успенский В. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 4907
+        },
+        {
+          "head": "Фоменко А. Т.",
+          "type": "names",
+          "src": "transcript",
+          "t": 8630
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2328
+        },
+        {
+          "head": "Балканы",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 219
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 833
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1261
+        },
+        {
+          "head": "Иран",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 5683
+        },
+        {
+          "head": "Италия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 11
+        },
+        {
+          "head": "Крит",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 5530
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 604
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 6112
+        },
+        {
+          "head": "англичане",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2328
+        },
+        {
+          "head": "латыши",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 50
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2150
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 219
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2220
+        },
+        {
+          "head": "арабский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 6912
+        },
+        {
+          "head": "древнеиндийские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 328
+        },
+        {
+          "head": "древненовгородский диалект",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1049
+        },
+        {
+          "head": "древнеперсидский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 4021
+        },
+        {
+          "head": "индийские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 8295
+        },
+        {
+          "head": "индоевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 5183
+        },
+        {
+          "head": "немецкий",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2220
+        },
+        {
+          "head": "Немецкий язык",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2220
+        },
+        {
+          "head": "персидский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 6912
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3722
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 50
+        },
+        {
+          "head": "Бхагавадгита",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 8416
+        },
+        {
+          "head": "лигатура",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 6855
+        },
+        {
+          "head": "Махабхарата",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 7822
+        },
+        {
+          "head": "огласовка",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2700
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 5683
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 6912
+        },
+        {
+          "head": "цифры",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2510
+        },
+        {
+          "head": "энклитики",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 7317
         }
       ]
     },
@@ -92591,6 +96533,282 @@
           "head": "берестяные грамоты",
           "type": "subject_index",
           "t": 18
+        },
+        {
+          "head": "А. А. Алексеев",
+          "type": "names",
+          "src": "transcript",
+          "t": 2046
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 18
+        },
+        {
+          "head": "Гиппиус А. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2046
+        },
+        {
+          "head": "Иванов",
+          "type": "names",
+          "src": "transcript",
+          "t": 2046
+        },
+        {
+          "head": "Иванов Вяч. Вс.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2046
+        },
+        {
+          "head": "Николаев С. Л.",
+          "type": "names",
+          "src": "transcript",
+          "t": 273
+        },
+        {
+          "head": "Николаева T. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 273
+        },
+        {
+          "head": "Романовы",
+          "type": "names",
+          "src": "transcript",
+          "t": 1014
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 833
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 18
+        },
+        {
+          "head": "Германия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2398
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1535
+        },
+        {
+          "head": "Италия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2398
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "Крит",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1014
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 18
+        },
+        {
+          "head": "Псков",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 18
+        },
+        {
+          "head": "Ростов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "Суздаль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 833
+        },
+        {
+          "head": "Франция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2398
+        },
+        {
+          "head": "Чернигов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1890
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 833
+        },
+        {
+          "head": "болгары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "греки",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "немцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1755
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 136
+        },
+        {
+          "head": "поляки",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "псковские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 671
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "татары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1798
+        },
+        {
+          "head": "шведы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1755
+        },
+        {
+          "head": "белорусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1014
+        },
+        {
+          "head": "восточные",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2398
+        },
+        {
+          "head": "древненовгородский диалект",
+          "type": "languages",
+          "src": "transcript",
+          "t": 833
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1637
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1637
+        },
+        {
+          "head": "новгородский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 833
+        },
+        {
+          "head": "праславянский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 671
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1199
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 367
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1535
+        },
+        {
+          "head": "цоканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2227
         }
       ]
     },
@@ -92646,6 +96864,126 @@
         {
           "head": "Андрей",
           "type": "lexicon"
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 2777
+        },
+        {
+          "head": "Пушкин А. С.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2944
+        },
+        {
+          "head": "Толстая М. Н.",
+          "type": "names",
+          "src": "transcript",
+          "t": 15
+        },
+        {
+          "head": "Толстая Р. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 15
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2777
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 446
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1980
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 15
+        },
+        {
+          "head": "Переяславль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3070
+        },
+        {
+          "head": "Псков",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1557
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 121
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 482
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 833
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 121
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 833
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1016
+        },
+        {
+          "head": "алфавит",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1016
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 15
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2109
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 690
         }
       ]
     },
@@ -92671,6 +97009,198 @@
           "head": "берестяные грамоты",
           "type": "subject_index",
           "t": 0
+        },
+        {
+          "head": "А. А. Алексеев",
+          "type": "names",
+          "src": "transcript",
+          "t": 2051
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 6757
+        },
+        {
+          "head": "Гиппиус А. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2051
+        },
+        {
+          "head": "Карамзин Н. М.",
+          "type": "names",
+          "src": "transcript",
+          "t": 4001
+        },
+        {
+          "head": "Англия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 730
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 6757
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 3676
+        },
+        {
+          "head": "Крит",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 7883
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 70
+        },
+        {
+          "head": "Россия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2881
+        },
+        {
+          "head": "север [Руси]",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 4509
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 4815
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 7589
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1009
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1009
+        },
+        {
+          "head": "татары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1477
+        },
+        {
+          "head": "восточные",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2532
+        },
+        {
+          "head": "древненовгородский диалект",
+          "type": "languages",
+          "src": "transcript",
+          "t": 4143
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1506
+        },
+        {
+          "head": "европейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3676
+        },
+        {
+          "head": "индоевропейские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7461
+        },
+        {
+          "head": "латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7111
+        },
+        {
+          "head": "Латынь",
+          "type": "languages",
+          "src": "transcript",
+          "t": 7111
+        },
+        {
+          "head": "новгородский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2970
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 4815
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 2624
+        },
+        {
+          "head": "алфавит",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2371
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 844
+        },
+        {
+          "head": "порядок слов",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 5231
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 3919
+        },
+        {
+          "head": "цифры",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 730
+        },
+        {
+          "head": "цоканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 4405
         }
       ]
     },
@@ -92779,6 +97309,162 @@
         {
           "head": "Андрей",
           "type": "lexicon"
+        },
+        {
+          "head": "Владимир",
+          "type": "names",
+          "src": "transcript",
+          "t": 2170
+        },
+        {
+          "head": "Гиппиус А. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 28
+        },
+        {
+          "head": "Иванов",
+          "type": "names",
+          "src": "transcript",
+          "t": 2170
+        },
+        {
+          "head": "Иванов Вяч. Вс.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2170
+        },
+        {
+          "head": "Колмогоров А. Н.",
+          "type": "names",
+          "src": "transcript",
+          "t": 1670
+        },
+        {
+          "head": "Поветкин В. И.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2170
+        },
+        {
+          "head": "Ярослав",
+          "type": "names",
+          "src": "transcript",
+          "t": 2501
+        },
+        {
+          "head": "Владимир",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 2170
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1370
+        },
+        {
+          "head": "Киев",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 623
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1
+        },
+        {
+          "head": "Ростов",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 623
+        },
+        {
+          "head": "Суздаль",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 623
+        },
+        {
+          "head": "Франция",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1354
+        },
+        {
+          "head": "болгары",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1969
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 109
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 613
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 557
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 28
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1202
+        },
+        {
+          "head": "санскрит",
+          "type": "languages",
+          "src": "transcript",
+          "t": 277
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 557
+        },
+        {
+          "head": "берестяные грамоты",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 109
+        },
+        {
+          "head": "письменность",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2361
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1397
+        },
+        {
+          "head": "энклитики",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 863
         }
       ]
     },
@@ -92840,6 +97526,120 @@
           "head": "берестяные грамоты",
           "type": "subject_index",
           "t": 286
+        },
+        {
+          "head": "А. А. Алексеев",
+          "type": "names",
+          "src": "transcript",
+          "t": 117
+        },
+        {
+          "head": "Гиппиус А. А.",
+          "type": "names",
+          "src": "transcript",
+          "t": 117
+        },
+        {
+          "head": "Белоруссия",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 4865
+        },
+        {
+          "head": "Европа",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1586
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 97
+        },
+        {
+          "head": "Украина",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 4865
+        },
+        {
+          "head": "белорусы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 4865
+        },
+        {
+          "head": "русские",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 1520
+        },
+        {
+          "head": "славяне",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 5641
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 3363
+        },
+        {
+          "head": "древнерусский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3410
+        },
+        {
+          "head": "новгородский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 6747
+        },
+        {
+          "head": "русский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 3167
+        },
+        {
+          "head": "славянские",
+          "type": "languages",
+          "src": "transcript",
+          "t": 5641
+        },
+        {
+          "head": "алфавит",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 2819
+        },
+        {
+          "head": "оглушение согласных",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 4122
+        },
+        {
+          "head": "орфография",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 5412
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 3080
+        },
+        {
+          "head": "цоканье",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 1005
         }
       ]
     },
@@ -97086,6 +101886,48 @@
           "head": "берестяные грамоты",
           "type": "subject_index",
           "t": 1
+        },
+        {
+          "head": "А. Т. Фоменко",
+          "type": "names",
+          "src": "transcript",
+          "t": 2520
+        },
+        {
+          "head": "Фоменко А. Т.",
+          "type": "names",
+          "src": "transcript",
+          "t": 2520
+        },
+        {
+          "head": "Новгород",
+          "type": "toponyms",
+          "src": "transcript",
+          "t": 1
+        },
+        {
+          "head": "новгородцы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 960
+        },
+        {
+          "head": "французы",
+          "type": "ethnonyms",
+          "src": "transcript",
+          "t": 2610
+        },
+        {
+          "head": "новгородский",
+          "type": "languages",
+          "src": "transcript",
+          "t": 1
+        },
+        {
+          "head": "цифры",
+          "type": "subject_index",
+          "src": "transcript",
+          "t": 375
         }
       ]
     },
