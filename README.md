@@ -73,6 +73,8 @@
 | `public/` | Ассеты, копируемые Vite в `dist-vite/`. |
 | `vendor/` | Локально закрепленные runtime-библиотеки. |
 | `scripts/` | Сборка, проверки, импорт данных и CI-guards. |
+| `data/video_pipeline.json` | Статус расшифровки и вычитки 191 видео (источник правды; мигрирован из `video-archive.xlsx`). |
+| `pipeline/index.html` | Генерируемый дашборд конвейера видео для волонтёров (`npm run pipeline:dashboard`). |
 
 ### Команды разработки
 *   **Сборка приложения**: `npm run build` (генерирует `aaz-index.html` в корне)
@@ -83,6 +85,14 @@
 *   **CSP hardening**: inline scripts and style blocks use SHA-256 CSP hashes generated at build time; inline style attributes are denied, and the static/post-deploy checks fail if CSP regresses to `unsafe-inline`.
 *   **Performance budget**: `npm run check:perf`
 *   **Post-deploy gates**: `npm run check:postdeploy` проверяет live GitHub Pages, Lighthouse и axe accessibility (`0` critical / `0` serious).
+
+## Конвейер видео (производство II тома)
+
+Статус расшифровки и многостадийной вычитки 191 лекции (≈213 ч) ведётся в репозитории:
+
+*   **Источник правды**: [`data/video_pipeline.json`](data/video_pipeline.json) — по видео: стадия вычитки, качество автотранскрибации, исполнители, даты, ссылки. Заменил `video-archive.xlsx` (выведена из обращения).
+*   **Дашборд**: [`pipeline/index.html`](pipeline/index.html) — самодостаточная страница (данные встроены, работает офлайн); фильтры по стадии/теме, подсветка висящих заданий и проблем транскрибации. Регенерация: `npm run pipeline:dashboard`.
+*   **Стадии**: `в очереди → автотранскрибация → сверка → 1/2/3-я читка → предвёрстка → вёрстка → готово`.
 
 ## Audit Summary
 

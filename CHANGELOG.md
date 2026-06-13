@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 - Live GitHub Pages health checks plus Lighthouse and axe accessibility quality gates.
+- Video-production pipeline tracker: `data/video_pipeline.json` (per-video proof-reading stage, transcription quality, assignees, dates, links) migrated from `video-archive.xlsx`, plus a self-contained volunteer dashboard at `pipeline/index.html` (`npm run pipeline:dashboard`).
 
 ### Changed
 - Raised the axe accessibility gate to require zero critical and zero serious violations on audited routes.
@@ -14,6 +15,9 @@ All notable changes to this project will be documented in this file.
 - Replaced broad style CSP `unsafe-inline` with build-generated SHA-256 hashes for inline style blocks.
 - Removed the remaining `style-src-attr 'unsafe-inline'` exception by moving runtime style attributes to `data-*` driven DOM style updates.
 - Opted GitHub workflows into the Node 24 JavaScript action runtime ahead of the June 2026 migration.
+
+### Removed
+- Retired `video-archive.xlsx` from the repository; the canonical production status now lives in `data/video_pipeline.json`.
 
 ## [2.3.0] - 2026-05-26
 ### Added

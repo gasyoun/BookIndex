@@ -1,0 +1,5511 @@
+{
+  "schema": "video_pipeline/1",
+  "source": "video-archive.xlsx (sheet video_info_new), retired after migration",
+  "stages": [
+    {
+      "key": "queued",
+      "order": 0,
+      "label": "в очереди"
+    },
+    {
+      "key": "transcribed",
+      "order": 1,
+      "label": "автотранскрибация"
+    },
+    {
+      "key": "review",
+      "order": 2,
+      "label": "сверка"
+    },
+    {
+      "key": "read1",
+      "order": 3,
+      "label": "первая читка"
+    },
+    {
+      "key": "read2",
+      "order": 4,
+      "label": "вторая читка"
+    },
+    {
+      "key": "read3",
+      "order": 5,
+      "label": "третья читка"
+    },
+    {
+      "key": "prelayout",
+      "order": 6,
+      "label": "предвёрстка"
+    },
+    {
+      "key": "layout",
+      "order": 7,
+      "label": "вёрстка"
+    },
+    {
+      "key": "done",
+      "order": 8,
+      "label": "готово"
+    }
+  ],
+  "stats": {
+    "videos": 176,
+    "videos_in_catalog": 175,
+    "total_seconds": 766146,
+    "total_hours": 212.82,
+    "by_stage": {
+      "transcribed": 98,
+      "queued": 53,
+      "read1": 5,
+      "prelayout": 3,
+      "review": 12,
+      "read3": 3,
+      "layout": 1,
+      "read2": 1
+    },
+    "by_theme": {
+      "русистика": 49,
+      "санскрит": 32,
+      "ЛЛШ": 10,
+      "береста": 8,
+      "интервью": 1
+    },
+    "by_transcription_quality": {
+      "ok": 119,
+      "partial": 42,
+      "unknown": 11,
+      "no_audio": 4
+    }
+  },
+  "videos": [
+    {
+      "id": "XBQRU_n1yfU",
+      "title": "21.07.2010, Новгород, берестяная грамота № 1000",
+      "purpose": null,
+      "theme": "береста",
+      "type": null,
+      "priority": null,
+      "duration_sec": 1239,
+      "duration_hms": "00:20:39",
+      "youtube_url": "https://youtube.com/watch?v=XBQRU_n1yfU",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "ojpwd2eR4d0",
+      "title": "60-летие Е.В.Падучевой застолье, песни… 1995 год",
+      "purpose": null,
+      "theme": null,
+      "type": "личное",
+      "priority": "не приоритетно",
+      "duration_sec": 2368,
+      "duration_hms": "00:39:28",
+      "youtube_url": "https://youtube.com/watch?v=ojpwd2eR4d0",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознано плохо, но нужно ли"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "LJlxadWkzPc",
+      "title": "ACADEMIA. Андрей Зализняк. Берестяные грамоты. 1 лекция. Канал Культура",
+      "purpose": "Культура",
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 2634,
+      "duration_hms": "00:43:54",
+      "youtube_url": "https://youtube.com/watch?v=LJlxadWkzPc",
+      "status_raw": "первая читка",
+      "stage": "read1",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "21.05.25",
+        "submitted": "20.05.25"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Max B",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "Анастасия Ц",
+          "dates": [
+            "25.02.26"
+          ]
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/cp40MPxMZp7F9w",
+        "disk_video": "https://disk.yandex.ru/i/j43HfY99m6njkA"
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "sjTVG_aUtl4",
+      "title": "ACADEMIA. Андрей Зализняк. Берестяные грамоты. 2 лекция. Канал Культура",
+      "purpose": "Культура",
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 2627,
+      "duration_hms": "00:43:47",
+      "youtube_url": "https://youtube.com/watch?v=sjTVG_aUtl4",
+      "status_raw": "готово для второй читки",
+      "stage": "read1",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "30.04.24",
+        "submitted": "08.01.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "zhuzhu27",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "kotik123a",
+          "dates": [
+            "18.09.25",
+            "09.10.25"
+          ]
+        },
+        "read2": {
+          "assignee": "Анастасия Ц",
+          "dates": [
+            "19.01.25",
+            "02.01.2026"
+          ]
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/MPDof9jUozrLNg",
+        "disk_video": "https://disk.yandex.ru/i/RgBjcySuXTZIQA"
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "Hf1kFHCFb4E",
+      "title": "ACADEMIA. Андрей Зализняк. Русский устный. 1 лекция. Канал Культура",
+      "purpose": "Культура",
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 2638,
+      "duration_hms": "00:43:58",
+      "youtube_url": "https://youtube.com/watch?v=Hf1kFHCFb4E",
+      "status_raw": "готово к первой читке",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": "25.11.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "HayatMetyolkina",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/Ll_4ugGZ66CWFw",
+        "disk_video": "https://disk.yandex.ru/i/ITfWZIE4NbxWkg"
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "H6RAja4HOzs",
+      "title": "ACADEMIA. Андрей Зализняк. Русский устный. 2 лекция. Канал Культура",
+      "purpose": "Культура",
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 2638,
+      "duration_hms": "00:43:58",
+      "youtube_url": "https://youtube.com/watch?v=H6RAja4HOzs",
+      "status_raw": "готово к вёрстке",
+      "stage": "prelayout",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "08.05.2025",
+        "submitted": "14.05.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Victoriakaisina",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "закончена (Анастасия Ц.)",
+          "dates": []
+        },
+        "read2": {
+          "assignee": "artturiign",
+          "dates": []
+        },
+        "read3": {
+          "assignee": "Max B",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/pKi5DaFCgw9uXg",
+        "disk_video": null
+      },
+      "notes": "https://disk.yandex.ru/d/j6bwYjC1NGpIMw",
+      "in_catalog": true
+    },
+    {
+      "id": "hkaJuyLERgE",
+      "title": "ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 1 лекция. Канал Культура",
+      "purpose": "Культура",
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 2362,
+      "duration_hms": "00:39:22",
+      "youtube_url": "https://youtube.com/watch?v=hkaJuyLERgE",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "05.05.24",
+        "submitted": "09.05.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "zloi_zverek",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "Анастасия Ц.",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/n839IXJsuGxNGg",
+        "disk_video": null
+      },
+      "notes": "https://disk.yandex.ru/d/n839IXJsuGxNGg",
+      "in_catalog": true
+    },
+    {
+      "id": "fo10NKM_0JM",
+      "title": "ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 2 лекция. Канал Культура",
+      "purpose": "Культура",
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 2447,
+      "duration_hms": "00:40:47",
+      "youtube_url": "https://youtube.com/watch?v=fo10NKM_0JM",
+      "status_raw": "готов к первой читке",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "22.05.25",
+        "submitted": "23.05.25"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Max B",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/fktFURVuEWw41A",
+        "disk_video": "https://disk.yandex.ru/i/9PC46KdHY_qlSA"
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "i45QJcuQPcU",
+      "title": "Andrei Zaliznyak lecture 01 Oct 2015",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 9807,
+      "duration_hms": "02:43:27",
+      "youtube_url": "https://youtube.com/watch?v=i45QJcuQPcU",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": "вырезана 1 мин 40 сек в начале, для соответствия таймингов ютубу см. файл Andrei-Zaliznyak-lecture-01-Oct-2015-delayed.srt",
+      "in_catalog": true
+    },
+    {
+      "id": "ABqHj9_jPec",
+      "title": "Andrey Zaliznyak presents a book, 24 Dec 2015",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 6431,
+      "duration_hms": "01:47:11",
+      "youtube_url": "https://youtube.com/watch?v=ABqHj9_jPec",
+      "status_raw": "сверка",
+      "stage": "review",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "partial",
+        "note": "плохой фрагмент в 10 мин"
+      },
+      "assigned": {
+        "issued": "06.05.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "Курская Вера",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": "см. файлы с \"ВЕРСИЯ-2\" в названии",
+      "in_catalog": true
+    },
+    {
+      "id": "id8M_2hIQ9U",
+      "title": "Igor Melchuk to Andrey Zaliznyak birthday",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 277,
+      "duration_hms": "00:04:37",
+      "youtube_url": "https://youtube.com/watch?v=id8M_2hIQ9U",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "S9rK-o9hQxo",
+      "title": "zaliznyak answers 261012",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 651,
+      "duration_hms": "00:10:51",
+      "youtube_url": "https://youtube.com/watch?v=S9rK-o9hQxo",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "XkzmxzvwAVQ",
+      "title": "А-А-Зализняк-Грамматический-строй-санскрита-2014-2015-гг-Лекция--3-27092014",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5326,
+      "duration_hms": "01:28:46",
+      "youtube_url": "https://youtube.com/watch?v=XkzmxzvwAVQ",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "zjOVQqgwc1g",
+      "title": "А-А-Зализняк-Грамматический-строй-санскрита-Лекция-1-13-09-2014-МГУ",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5116,
+      "duration_hms": "01:25:16",
+      "youtube_url": "https://youtube.com/watch?v=zjOVQqgwc1g",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "lo2wxrH6U9s",
+      "title": "А-А-Зализняк-Из-лекции-26-декабря-2011-г-Разбор-RV-10135",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 273,
+      "duration_hms": "00:04:33",
+      "youtube_url": "https://youtube.com/watch?v=lo2wxrH6U9s",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "96yszA1N9r8",
+      "title": "А-А-Зализняк-Из-лекции-27-ноября-2010-г-Разбор-RV-1034",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 271,
+      "duration_hms": "00:04:31",
+      "youtube_url": "https://youtube.com/watch?v=96yszA1N9r8",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "9hz2kCabk5k",
+      "title": "А-А-Зализняк-Из-лекции-4-декабря-2010-г-Разбор-RV-1034",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 280,
+      "duration_hms": "00:04:40",
+      "youtube_url": "https://youtube.com/watch?v=9hz2kCabk5k",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "6tPUfz8My4Y",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Аудиозапись-лекции-1-100916",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5113,
+      "duration_hms": "01:25:13",
+      "youtube_url": "https://youtube.com/watch?v=6tPUfz8My4Y",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "vs85X7hqFJs",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Аудиозапись-лекции-11-19112016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4965,
+      "duration_hms": "01:22:45",
+      "youtube_url": "https://youtube.com/watch?v=vs85X7hqFJs",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "l2TB7AY5Tus",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Аудиозапись-лекции-7--22102016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5434,
+      "duration_hms": "01:30:34",
+      "youtube_url": "https://youtube.com/watch?v=l2TB7AY5Tus",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "транскрибирована половина"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "zBNyMMom0MQ",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-10-12112016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5201,
+      "duration_hms": "01:26:41",
+      "youtube_url": "https://youtube.com/watch?v=zBNyMMom0MQ",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "DZ_-gKx1kAE",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-12-26112016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5210,
+      "duration_hms": "01:26:50",
+      "youtube_url": "https://youtube.com/watch?v=DZ_-gKx1kAE",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны первые 13 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "VKDg5GQdzkw",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-13-03122016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5489,
+      "duration_hms": "01:31:29",
+      "youtube_url": "https://youtube.com/watch?v=VKDg5GQdzkw",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны 30 мин в начале и 5 мин в конце"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "7ODUHMh-4-o",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-14-10122016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4857,
+      "duration_hms": "01:20:57",
+      "youtube_url": "https://youtube.com/watch?v=7ODUHMh-4-o",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "ATtkvTx6_4o",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-15-17122016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 3998,
+      "duration_hms": "01:06:38",
+      "youtube_url": "https://youtube.com/watch?v=ATtkvTx6_4o",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны первые 30 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "qWzBIm7x1Xc",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-16-11022017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5204,
+      "duration_hms": "01:26:44",
+      "youtube_url": "https://youtube.com/watch?v=qWzBIm7x1Xc",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "g8SdQX2JyCA",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-17-18022017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4984,
+      "duration_hms": "01:23:04",
+      "youtube_url": "https://youtube.com/watch?v=g8SdQX2JyCA",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "_qtOnaehHOc",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-19-04032017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5608,
+      "duration_hms": "01:33:28",
+      "youtube_url": "https://youtube.com/watch?v=_qtOnaehHOc",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "последние 24 мин зациклены"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "yIMk-x5LVUs",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-2-17092016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5359,
+      "duration_hms": "01:29:19",
+      "youtube_url": "https://youtube.com/watch?v=yIMk-x5LVUs",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "последние 15 минут зациклены"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "MiICdcfRCv0",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-20-11032017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5358,
+      "duration_hms": "01:29:18",
+      "youtube_url": "https://youtube.com/watch?v=MiICdcfRCv0",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "ursat5v2zqY",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-21-18032017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5154,
+      "duration_hms": "01:25:54",
+      "youtube_url": "https://youtube.com/watch?v=ursat5v2zqY",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "YBsxqGK7jlg",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-22-25032017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5300,
+      "duration_hms": "01:28:20",
+      "youtube_url": "https://youtube.com/watch?v=YBsxqGK7jlg",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "tnUBy-ULHcM",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-23-01042017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4785,
+      "duration_hms": "01:19:45",
+      "youtube_url": "https://youtube.com/watch?v=tnUBy-ULHcM",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "есть зацикленный фрагмент 5 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "lhd8aa6f4ng",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-24-24042017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5350,
+      "duration_hms": "01:29:10",
+      "youtube_url": "https://youtube.com/watch?v=lhd8aa6f4ng",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "Z7ffIHNqvnU",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-25-29042017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5073,
+      "duration_hms": "01:24:33",
+      "youtube_url": "https://youtube.com/watch?v=Z7ffIHNqvnU",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "есть зацикленные фрагменты 5-7 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "E5jSUrve0Ps",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-27-13052017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5096,
+      "duration_hms": "01:24:56",
+      "youtube_url": "https://youtube.com/watch?v=E5jSUrve0Ps",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны первые 30 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "O4f_h2YVx64",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-3-24092016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5016,
+      "duration_hms": "01:23:36",
+      "youtube_url": "https://youtube.com/watch?v=O4f_h2YVx64",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны первые 20 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "t5mpQaotzS0",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-4-01102016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5200,
+      "duration_hms": "01:26:40",
+      "youtube_url": "https://youtube.com/watch?v=t5mpQaotzS0",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "59hxvoyQ7QA",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-5-08102016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5338,
+      "duration_hms": "01:28:58",
+      "youtube_url": "https://youtube.com/watch?v=59hxvoyQ7QA",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "n-Td297bXfc",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-8-29102016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5439,
+      "duration_hms": "01:30:39",
+      "youtube_url": "https://youtube.com/watch?v=n-Td297bXfc",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "зацикленные фрагменты 10, 10 и 5 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "q-_9DQqHCho",
+      "title": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-9-05112016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5631,
+      "duration_hms": "01:33:51",
+      "youtube_url": "https://youtube.com/watch?v=q-_9DQqHCho",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "зациклены 30 мин ближе к началу"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "s77yjzvyFD0",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Аудиозапись-лекции-2-23092017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5129,
+      "duration_hms": "01:25:29",
+      "youtube_url": "https://youtube.com/watch?v=s77yjzvyFD0",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "9A1ULx6Fgeg",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-1-16092017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4973,
+      "duration_hms": "01:22:53",
+      "youtube_url": "https://youtube.com/watch?v=9A1ULx6Fgeg",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "FaJu6mWgGyw",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-10-18112017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4952,
+      "duration_hms": "01:22:32",
+      "youtube_url": "https://youtube.com/watch?v=FaJu6mWgGyw",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "зациклены последние 5 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "2KfoHYELQbs",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-11-25112017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5249,
+      "duration_hms": "01:27:29",
+      "youtube_url": "https://youtube.com/watch?v=2KfoHYELQbs",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "en2CCm5Zolk",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-12-02122017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5250,
+      "duration_hms": "01:27:30",
+      "youtube_url": "https://youtube.com/watch?v=en2CCm5Zolk",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "TNbu8fhFRcM",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-13-09122017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5495,
+      "duration_hms": "01:31:35",
+      "youtube_url": "https://youtube.com/watch?v=TNbu8fhFRcM",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны первые 22 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "6nFkEysA3XU",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-14-последняя-16122017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 3929,
+      "duration_hms": "01:05:29",
+      "youtube_url": "https://youtube.com/watch?v=6nFkEysA3XU",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны первые 30 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "TBuor2fBzRs",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-3-30092017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4707,
+      "duration_hms": "01:18:27",
+      "youtube_url": "https://youtube.com/watch?v=TBuor2fBzRs",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "зациклены 30 мин по середине"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "2SJRCTaEyQM",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-4-07102017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5183,
+      "duration_hms": "01:26:23",
+      "youtube_url": "https://youtube.com/watch?v=2SJRCTaEyQM",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "BkvqayCnNK4",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-5-14102017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5386,
+      "duration_hms": "01:29:46",
+      "youtube_url": "https://youtube.com/watch?v=BkvqayCnNK4",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "p_frWa3r22o",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-6-21102017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5302,
+      "duration_hms": "01:28:22",
+      "youtube_url": "https://youtube.com/watch?v=p_frWa3r22o",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны 30 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "lAais7xEHEA",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-7-28102017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5320,
+      "duration_hms": "01:28:40",
+      "youtube_url": "https://youtube.com/watch?v=lAais7xEHEA",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "kDjo6BgqIu4",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-8-06112017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5374,
+      "duration_hms": "01:29:34",
+      "youtube_url": "https://youtube.com/watch?v=kDjo6BgqIu4",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознана половина"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "X_KpSp0AlxM",
+      "title": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-9-11112017",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4805,
+      "duration_hms": "01:20:05",
+      "youtube_url": "https://youtube.com/watch?v=X_KpSp0AlxM",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны первые 25 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "xJepf-YTRmE",
+      "title": "А-А-Зализняк-Начало-лекции-11-декабря-2010-г-МГУ",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 304,
+      "duration_hms": "00:05:04",
+      "youtube_url": "https://youtube.com/watch?v=xJepf-YTRmE",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "8pF86C0qoOs",
+      "title": "А-А-Зализняк-Начало-лекции-по-санскриту-18-декабря-2010-г",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 272,
+      "duration_hms": "00:04:32",
+      "youtube_url": "https://youtube.com/watch?v=8pF86C0qoOs",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "fHEpCOpieBg",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-10-21112015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5106,
+      "duration_hms": "01:25:06",
+      "youtube_url": "https://youtube.com/watch?v=fHEpCOpieBg",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "6 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "p_2gPOxRzNQ",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-11-28112015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4780,
+      "duration_hms": "01:19:40",
+      "youtube_url": "https://youtube.com/watch?v=p_2gPOxRzNQ",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознано 40 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "b2iEGo1zJaY",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-12-05122015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5387,
+      "duration_hms": "01:29:47",
+      "youtube_url": "https://youtube.com/watch?v=b2iEGo1zJaY",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "x7QR2a8bCOI",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-13-12122015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5129,
+      "duration_hms": "01:25:29",
+      "youtube_url": "https://youtube.com/watch?v=x7QR2a8bCOI",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны 42 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "USk4wmZK-8U",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-13-30042016",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5484,
+      "duration_hms": "01:31:24",
+      "youtube_url": "https://youtube.com/watch?v=USk4wmZK-8U",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны первые 15 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "NRd6Aua4CKo",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-14-19122015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4674,
+      "duration_hms": "01:17:54",
+      "youtube_url": "https://youtube.com/watch?v=NRd6Aua4CKo",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознано около 20 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "BVi1hQPY-cQ",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-15-13022016",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 3919,
+      "duration_hms": "01:05:19",
+      "youtube_url": "https://youtube.com/watch?v=BVi1hQPY-cQ",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознана первая половина"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "sFNo06IsUAE",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-16-22022016",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5142,
+      "duration_hms": "01:25:42",
+      "youtube_url": "https://youtube.com/watch?v=sFNo06IsUAE",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны первые 20 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "0zMwn0H95Ks",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-17-27022016",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5039,
+      "duration_hms": "01:23:59",
+      "youtube_url": "https://youtube.com/watch?v=0zMwn0H95Ks",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознано 5 мин в начале и в конце"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "pjd_mKDoJuA",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-18-05032016",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5157,
+      "duration_hms": "01:25:57",
+      "youtube_url": "https://youtube.com/watch?v=pjd_mKDoJuA",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "5G_x7XwWmgo",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-20-19032016",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5046,
+      "duration_hms": "01:24:06",
+      "youtube_url": "https://youtube.com/watch?v=5G_x7XwWmgo",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "пара зацикленных фрагментов по 10 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "GgIxLPPC7uA",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-22-230416",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4743,
+      "duration_hms": "01:19:03",
+      "youtube_url": "https://youtube.com/watch?v=GgIxLPPC7uA",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "есть зацикленный фрагмент 5 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "k3XJBG7jgzk",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-3-260915",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4922,
+      "duration_hms": "01:22:02",
+      "youtube_url": "https://youtube.com/watch?v=k3XJBG7jgzk",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "x2HbNS8OCqY",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-6-17102015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4602,
+      "duration_hms": "01:16:42",
+      "youtube_url": "https://youtube.com/watch?v=x2HbNS8OCqY",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "зациклены последние 7 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "L3b1APWXOws",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-7-311015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5192,
+      "duration_hms": "01:26:32",
+      "youtube_url": "https://youtube.com/watch?v=L3b1APWXOws",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "G2Dj7e8HHeo",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-8-07112015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4852,
+      "duration_hms": "01:20:52",
+      "youtube_url": "https://youtube.com/watch?v=G2Dj7e8HHeo",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "плохой фрагмент 6 мин в конце"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "DiH4bfrKlk0",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-9-13112015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4525,
+      "duration_hms": "01:15:25",
+      "youtube_url": "https://youtube.com/watch?v=DiH4bfrKlk0",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознано 7 мин в начале и 15 в конце"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "Zj7fSZFSaBU",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-Лекция-1-12092015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "приоритетно",
+      "duration_sec": 4436,
+      "duration_hms": "01:13:56",
+      "youtube_url": "https://youtube.com/watch?v=Zj7fSZFSaBU",
+      "status_raw": "готово для второй читки",
+      "stage": "read1",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "partial",
+        "note": "фрагмент в конце зациклен"
+      },
+      "assigned": {
+        "issued": "02.05.24",
+        "submitted": "27.05.25"
+      },
+      "proof": {
+        "review": {
+          "assignee": "holamgadol",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "Max B",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/qCh-3UscovKnTA",
+        "disk_video": null
+      },
+      "notes": "https://disk.yandex.ru/d/s0RdDi9ezZ9e0w",
+      "in_catalog": true
+    },
+    {
+      "id": "_NdGtIy1cMw",
+      "title": "А. А. Зализняк. 1-я лекция в Падуе (Италия), 07.04.2008",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "лекция",
+      "priority": "не приоритетно",
+      "duration_sec": 7143,
+      "duration_hms": "01:59:03",
+      "youtube_url": "https://youtube.com/watch?v=_NdGtIy1cMw",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "HaXuLBxSXFU",
+      "title": "А. А. Зализняк. 2-я лекция в Падуе (Италия), 08.04.2008",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "лекция",
+      "priority": "не приоритетно",
+      "duration_sec": 6787,
+      "duration_hms": "01:53:07",
+      "youtube_url": "https://youtube.com/watch?v=HaXuLBxSXFU",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "0TJuwGFJ5Do",
+      "title": "А. А. Зализняк. 3-я лекция в Падуе (Италия), 09.04.2008",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "лекция",
+      "priority": "не приоритетно",
+      "duration_sec": 7413,
+      "duration_hms": "02:03:33",
+      "youtube_url": "https://youtube.com/watch?v=0TJuwGFJ5Do",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "f7SGO82khJo",
+      "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 2. 19.09.2015",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 4690,
+      "duration_hms": "01:18:10",
+      "youtube_url": "https://youtube.com/watch?v=f7SGO82khJo",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "nQFa7kiguMc",
+      "title": "А.А. Гиппиус. Берестяные грамоты как живая речь",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 4324,
+      "duration_hms": "01:12:04",
+      "youtube_url": "https://youtube.com/watch?v=nQFa7kiguMc",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "wffaqW_Fr9Y",
+      "title": "А.А. Гиппиус. О берестяных грамотах из раскопок сезона 2019 года",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 7342,
+      "duration_hms": "02:02:22",
+      "youtube_url": "https://youtube.com/watch?v=wffaqW_Fr9Y",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "1WEidNo2Ymw",
+      "title": "А.А. Зализняк в МГУ, 07.11.2015",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": null,
+      "priority": null,
+      "duration_sec": 4852,
+      "duration_hms": "01:20:52",
+      "youtube_url": "https://youtube.com/watch?v=1WEidNo2Ymw",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "YOOXGdLdUPc",
+      "title": "А.А. Зализняк. Берестяные грамоты сезона 2014",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 3791,
+      "duration_hms": "01:03:11",
+      "youtube_url": "https://youtube.com/watch?v=YOOXGdLdUPc",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "Y8-LcHSreTE",
+      "title": "А.А. Зализняк. Ещё раз о жизни слов",
+      "purpose": null,
+      "theme": null,
+      "type": "совпадает ли с https://elementy.ru/nauchno-populyarnaya_biblioteka/433260/O_zhizni_slov ?",
+      "priority": "приоритетно",
+      "duration_sec": 8123,
+      "duration_hms": "02:15:23",
+      "youtube_url": "https://youtube.com/watch?v=Y8-LcHSreTE",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "cdowOJcJ9_c",
+      "title": "А.А. Зализняк. Живые механизмы современного русского ударения",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 6003,
+      "duration_hms": "01:40:03",
+      "youtube_url": "https://youtube.com/watch?v=cdowOJcJ9_c",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "qrzM9kqAD40",
+      "title": "А.А. Зализняк. Как изменяется внешняя сторона слова",
+      "purpose": "II том Популярных лекций для юношества",
+      "theme": "ЛЛШ",
+      "type": "лекция",
+      "priority": "приоритетно",
+      "duration_sec": 7486,
+      "duration_hms": "02:04:46",
+      "youtube_url": "https://youtube.com/watch?v=qrzM9kqAD40",
+      "status_raw": "готово к предвёрстке",
+      "stage": "read3",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "23.10.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "holamgadol, r_andrey",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "leraeville, Анастасия Ц",
+          "dates": [
+            "23.12.2025",
+            "02.04.2026"
+          ]
+        },
+        "read2": {
+          "assignee": "nastya_brooklyn",
+          "dates": []
+        },
+        "read3": {
+          "assignee": "Max B",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/3qTj5ewUjBEwbw Вычитано, начиная с 01:01:53: https://disk.yandex.ru/d/LEoAItNKvntgDg",
+        "disk_video": "https://disk.yandex.ru/d/bt5FCdq9y11fJg/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB-%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9-%D0%93%D0%BE%D0%BB%D0%BE%D0%B2%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2/%D0%90.%D0%90.%20%D0%97%D0%B0%D0%BB%D0%B8%D0%B7%D0%BD%D1%8F%D0%BA.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D1%8F%D0%B5%D1%82%D1%81%D1%8F%20%D0%B2%D0%BD%D0%B5%D1%88%D0%BD%D1%8F%D1%8F%20%D1%81%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D0%B0%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0.mp4"
+      },
+      "notes": "две сверки примерно в одинаковом состоянии, нужно из двух сделать одну",
+      "in_catalog": true
+    },
+    {
+      "id": "DT2grBrX7u4",
+      "title": "А.А. Зализняк. Контуры истории русского ударения",
+      "purpose": "II том Популярных лекций для юношества",
+      "theme": "ЛЛШ",
+      "type": "лекция",
+      "priority": "приоритетно",
+      "duration_sec": 6134,
+      "duration_hms": "01:42:14",
+      "youtube_url": "https://youtube.com/watch?v=DT2grBrX7u4",
+      "status_raw": "третья читка",
+      "stage": "read3",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "Elizaveta Zimont",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "ninzello",
+          "dates": []
+        },
+        "read2": {
+          "assignee": "mariyagorech",
+          "dates": []
+        },
+        "read3": {
+          "assignee": "olga_mirskova, sofiabespamiatnykh",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/wVCPumx4AHKqpQ",
+        "disk_video": "https://disk.yandex.ru/d/bt5FCdq9y11fJg/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB-%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9-%D0%93%D0%BE%D0%BB%D0%BE%D0%B2%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2/%D0%90.%D0%90.%20%D0%97%D0%B0%D0%BB%D0%B8%D0%B7%D0%BD%D1%8F%D0%BA.%20%D0%9A%D0%BE%D0%BD%D1%82%D1%83%D1%80%D1%8B%20%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8%20%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%20%D1%83%D0%B4%D0%B0%D1%80%D0%B5%D0%BD%D0%B8%D1%8F.mp4"
+      },
+      "notes": "https://disk.yandex.ru/d/YE9D-LuSu9jO4A",
+      "in_catalog": true
+    },
+    {
+      "id": "tv87ggs0yq4",
+      "title": "А.А. Зализняк. Коротко об арабском языке",
+      "purpose": "II том Популярных лекций для юношества",
+      "theme": "ЛЛШ",
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 7464,
+      "duration_hms": "02:04:24",
+      "youtube_url": "https://youtube.com/watch?v=tv87ggs0yq4",
+      "status_raw": "верстка",
+      "stage": "layout",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "11.05.24",
+        "submitted": null
+      },
+      "proof": {
+        "layout": {
+          "assignee": "salmoose",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/bt5FCdq9y11fJg/%D1%82%D0%B5%D0%BA%D1%81%D1%82-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB-%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9-%D0%93%D0%BE%D0%BB%D0%BE%D0%B2%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2/%D0%90.%D0%90.-%D0%97%D0%B0%D0%BB%D0%B8%D0%B7%D0%BD%D1%8F%D0%BA.-%D0%9A%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%BE-%D0%BE%D0%B1-%D0%B0%D1%80%D0%B0%D0%B1%D1%81%D0%BA%D0%BE%D0%BC-%D1%8F%D0%B7%D1%8B%D0%BA%D0%B5.srt",
+        "disk_video": "https://disk.yandex.ru/d/bt5FCdq9y11fJg/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB-%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9-%D0%93%D0%BE%D0%BB%D0%BE%D0%B2%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2/%D0%90.%D0%90.%20%D0%97%D0%B0%D0%BB%D0%B8%D0%B7%D0%BD%D1%8F%D0%BA.%20%D0%9A%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%BE%20%D0%BE%D0%B1%20%D0%B0%D1%80%D0%B0%D0%B1%D1%81%D0%BA%D0%BE%D0%BC%20%D1%8F%D0%B7%D1%8B%D0%BA%D0%B5.mp4"
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "Xf2GBzzKb_0",
+      "title": "А.А. Зализняк. Новгородские берестяные грамоты",
+      "purpose": "II том Популярных лекций для юношества",
+      "theme": "ЛЛШ",
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 8340,
+      "duration_hms": "02:19:00",
+      "youtube_url": "https://youtube.com/watch?v=Xf2GBzzKb_0",
+      "status_raw": "готово к третьей читке / готово к третьей читке",
+      "stage": "read2",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "01.05.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "Villanelle_Anais /, olga_mirskova",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "Анастасия Ц",
+          "dates": []
+        },
+        "read2": {
+          "assignee": "Max B, /, artturiign",
+          "dates": [
+            "04.10.2025",
+            "24.03.2026",
+            "11.03.2026",
+            "20.04.2026"
+          ]
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/MhANsBr4JgMOsg https://disk.yandex.ru/d/o6KHX41JG1xLKA",
+        "disk_video": "https://disk.yandex.ru/i/CvYwcvlqLWI7vQ"
+      },
+      "notes": "сверка разделена на две половины на двух людей",
+      "in_catalog": true
+    },
+    {
+      "id": "JNI6DtX65dg",
+      "title": "А.А. Зализняк. О берестяных грамотах из раскопок 2010 г., лекция 1",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 6999,
+      "duration_hms": "01:56:39",
+      "youtube_url": "https://youtube.com/watch?v=JNI6DtX65dg",
+      "status_raw": "сверена первая часть",
+      "stage": "review",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово (новая модель)"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": "17.01.25"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Леонид",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "Расшифровка первого часа: https://disk.yandex.ru/i/zxt5GXbEL30m1g",
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "d7ouQkP9npk",
+      "title": "А.А. Зализняк. О берестяных грамотах из раскопок 2010 г., лекция 2",
+      "purpose": null,
+      "theme": "береста",
+      "type": null,
+      "priority": null,
+      "duration_sec": 7941,
+      "duration_hms": "02:12:21",
+      "youtube_url": "https://youtube.com/watch?v=d7ouQkP9npk",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": "см. файлы с \"ВЕРСИЯ-2\" в названии",
+      "in_catalog": true
+    },
+    {
+      "id": "-bU8oAgIbus",
+      "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2008 года",
+      "purpose": null,
+      "theme": "береста",
+      "type": null,
+      "priority": null,
+      "duration_sec": 7835,
+      "duration_hms": "02:10:35",
+      "youtube_url": "https://youtube.com/watch?v=-bU8oAgIbus",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "Ul_bSPexOxY",
+      "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2012 года. Лекция 2",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 6416,
+      "duration_hms": "01:46:56",
+      "youtube_url": "https://youtube.com/watch?v=Ul_bSPexOxY",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "ooagDfPUMFs",
+      "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2014 года",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 8703,
+      "duration_hms": "02:25:03",
+      "youtube_url": "https://youtube.com/watch?v=ooagDfPUMFs",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "mKLASVnEaFU",
+      "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2015 года",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 9635,
+      "duration_hms": "02:40:35",
+      "youtube_url": "https://youtube.com/watch?v=mKLASVnEaFU",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "_POKhgnDwRg",
+      "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2016 года. Лекция 1",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 7145,
+      "duration_hms": "01:59:05",
+      "youtube_url": "https://youtube.com/watch?v=_POKhgnDwRg",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "CDYSBAyl4lM",
+      "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2016 года. Лекция 2",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 7391,
+      "duration_hms": "02:03:11",
+      "youtube_url": "https://youtube.com/watch?v=CDYSBAyl4lM",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "i6hQFsIrMXA",
+      "title": "А.А. Зализняк. О происхождении слов",
+      "purpose": null,
+      "theme": "ЛЛШ",
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 6731,
+      "duration_hms": "01:52:11",
+      "youtube_url": "https://youtube.com/watch?v=i6hQFsIrMXA",
+      "status_raw": null,
+      "stage": "review",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "уже авториозован",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "qIVmupl5ZjU",
+      "title": "А.А. Зализняк. Эпизод из истории русского ударения",
+      "purpose": "II том Популярных лекций для юношества",
+      "theme": "ЛЛШ",
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 5572,
+      "duration_hms": "01:32:52",
+      "youtube_url": "https://youtube.com/watch?v=qIVmupl5ZjU",
+      "status_raw": "готово к вёрстке",
+      "stage": "prelayout",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "11.05.24",
+        "submitted": "09.08.25"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Villanelle_Anais",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "Анастасия Ц,, закончена",
+          "dates": []
+        },
+        "read2": {
+          "assignee": "leraeville",
+          "dates": []
+        },
+        "read3": {
+          "assignee": "Max B",
+          "dates": [
+            "18.09.2025",
+            "04.12.2025"
+          ]
+        },
+        "prelayout": {
+          "assignee": "sofiabespamiatnykh",
+          "dates": [
+            "04.12.2025",
+            "04.02.2026"
+          ]
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/jtgVgqdDGdS0Fg",
+        "disk_video": "https://disk.yandex.ru/d/bt5FCdq9y11fJg/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB-%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9-%D0%93%D0%BE%D0%BB%D0%BE%D0%B2%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2/%D0%90.%D0%90.%20%D0%97%D0%B0%D0%BB%D0%B8%D0%B7%D0%BD%D1%8F%D0%BA.%20%D0%AD%D0%BF%D0%B8%D0%B7%D0%BE%D0%B4%20%D0%B8%D0%B7%20%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8%20%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%20%D1%83%D0%B4%D0%B0%D1%80%D0%B5%D0%BD%D0%B8%D1%8F.mkv"
+      },
+      "notes": "https://disk.yandex.ru/i/s6_WaOQ005JaGQ",
+      "in_catalog": true
+    },
+    {
+      "id": "7OsDZ7EdQAc",
+      "title": "А.А.Зализняк беседует с В.А.Успенским. Часть 1, 28.06.2010",
+      "purpose": null,
+      "theme": null,
+      "type": "интервью",
+      "priority": "в первую очередь",
+      "duration_sec": 9479,
+      "duration_hms": "02:37:59",
+      "youtube_url": "https://youtube.com/watch?v=7OsDZ7EdQAc",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "opnFL2yL04Y",
+      "title": "А.А.Зализняк в 1964-67 годах, 2 минуты любительской киносъёмки",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 142,
+      "duration_hms": "00:02:22",
+      "youtube_url": "https://youtube.com/watch?v=opnFL2yL04Y",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "no_audio",
+        "note": "видео без звука"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "_l0L4ToJNWM",
+      "title": "А.А.Зализняк в 1995 году, 60-летие Е.В.Падучевой, застолье",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 476,
+      "duration_hms": "00:07:56",
+      "youtube_url": "https://youtube.com/watch?v=_l0L4ToJNWM",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "F3uD8Eniirw",
+      "title": "А.А.Зализняк и А.А.Гиппиус о находках Новгородской экспедиции, август 2017",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 5027,
+      "duration_hms": "01:23:47",
+      "youtube_url": "https://youtube.com/watch?v=F3uD8Eniirw",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "nz7uTZ67VWM",
+      "title": "А.А.Зализняк и другие участники новгородской экспедиции, 21.07.2010",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 98,
+      "duration_hms": "00:01:38",
+      "youtube_url": "https://youtube.com/watch?v=nz7uTZ67VWM",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "no_audio",
+        "note": "видео без каких-то осмысленных разговоров"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "H9Ul5qcniS8",
+      "title": "А.А.Зализняк Или и Уже (2017) ч.1",
+      "purpose": null,
+      "theme": null,
+      "type": "https://elementy.ru/nauchno-populyarnaya_biblioteka/433894/Ili_i_uzhe",
+      "priority": null,
+      "duration_sec": 2879,
+      "duration_hms": "00:47:59",
+      "youtube_url": "https://youtube.com/watch?v=H9Ul5qcniS8",
+      "status_raw": null,
+      "stage": "review",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "уже авториозован",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "r7ep0PXICkk",
+      "title": "А.А.Зализняк Или и Уже (2017) ч.2",
+      "purpose": null,
+      "theme": null,
+      "type": "https://elementy.ru/nauchno-populyarnaya_biblioteka/433894/Ili_i_uzhe",
+      "priority": null,
+      "duration_sec": 2475,
+      "duration_hms": "00:41:15",
+      "youtube_url": "https://youtube.com/watch?v=r7ep0PXICkk",
+      "status_raw": null,
+      "stage": "review",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "уже авториозован",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "VqTAn9-VAac",
+      "title": "А.А.Зализняк о находках Новгородской экспедиции, август 2014",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 3876,
+      "duration_hms": "01:04:36",
+      "youtube_url": "https://youtube.com/watch?v=VqTAn9-VAac",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "UOFiR1ZUpZE",
+      "title": "А.А.Зализняк отвечает на вопросы В.А.Успенского. Часть II, 02.07.2010",
+      "purpose": null,
+      "theme": "интервью",
+      "type": "личное",
+      "priority": "приоритетно",
+      "duration_sec": 11047,
+      "duration_hms": "03:04:07",
+      "youtube_url": "https://youtube.com/watch?v=UOFiR1ZUpZE",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "X61tcCI0qXQ",
+      "title": "А.А.Зализняк получает Госпремию, 12.06.2008",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": null,
+      "duration_sec": 230,
+      "duration_hms": "00:03:50",
+      "youtube_url": "https://youtube.com/watch?v=X61tcCI0qXQ",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "eXu5l4WAGt4",
+      "title": "А.А.Зализняк читает берестяную грамоту. Новгород, 2016",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": null,
+      "duration_sec": 137,
+      "duration_hms": "00:02:17",
+      "youtube_url": "https://youtube.com/watch?v=eXu5l4WAGt4",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "uwdJRBZMmn0",
+      "title": "А.А.Зализняк читает лекцию о берестяных грамотах студентам-историкам, 08.08.2017",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 8293,
+      "duration_hms": "02:18:13",
+      "youtube_url": "https://youtube.com/watch?v=uwdJRBZMmn0",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "02.06.25",
+        "submitted": "09.06.25"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Max B",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/JV3YNcC1HG9xXA",
+        "disk_video": "https://disk.yandex.ru/i/g05X-tWUhtBorA"
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "RZW_tDZnvJo",
+      "title": "Академик-А-А-Зализняк-о-санскритском-корне-jR",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 266,
+      "duration_hms": "00:04:26",
+      "youtube_url": "https://youtube.com/watch?v=RZW_tDZnvJo",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "o1cqhfWRwaI",
+      "title": "Андрей Зализняк",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 86,
+      "duration_hms": "00:01:26",
+      "youtube_url": "https://youtube.com/watch?v=o1cqhfWRwaI",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "o5kPdoRitmw",
+      "title": "Андрей Зализняк и Александр Ужанков_ Слово о полку Игореве",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "не приоритетно",
+      "duration_sec": 3322,
+      "duration_hms": "00:55:22",
+      "youtube_url": "https://youtube.com/watch?v=o5kPdoRitmw",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "P0G948VmXtM",
+      "title": "Андрей Зализняк Интереснейшая история русского языка",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 3852,
+      "duration_hms": "01:04:12",
+      "youtube_url": "https://youtube.com/watch?v=P0G948VmXtM",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "02.05.24",
+        "submitted": "11.05.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Villanelle_Anais",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/0ecea_4vROR0kQ",
+        "disk_video": null
+      },
+      "notes": "https://disk.yandex.ru/d/0ecea_4vROR0kQ",
+      "in_catalog": true
+    },
+    {
+      "id": "qMatYmttb3c",
+      "title": "Андрей Зализняк Истина сушествует Солженицынская речь",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 853,
+      "duration_hms": "00:14:13",
+      "youtube_url": "https://youtube.com/watch?v=qMatYmttb3c",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "VJ6Yv7d8IDE",
+      "title": "Андрей Зализняк лингвист с абсолютной репутацией",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 296,
+      "duration_hms": "00:04:56",
+      "youtube_url": "https://youtube.com/watch?v=VJ6Yv7d8IDE",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "rP3UyDow5i4",
+      "title": "Андрей Зализняк О любительской лингвистике",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "не приоритетно",
+      "duration_sec": 4933,
+      "duration_hms": "01:22:13",
+      "youtube_url": "https://youtube.com/watch?v=rP3UyDow5i4",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "jaaRAyPlpQ0",
+      "title": "Андрей Зализняк ЧТО ТАКОЕ РУСЬ",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 413,
+      "duration_hms": "00:06:53",
+      "youtube_url": "https://youtube.com/watch?v=jaaRAyPlpQ0",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "uzzjnpPmEDQ",
+      "title": "Андрей Зализняк. История русского языка",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 3852,
+      "duration_hms": "01:04:12",
+      "youtube_url": "https://youtube.com/watch?v=uzzjnpPmEDQ",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": "05.05.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Курская Вера",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/InsIWOSEtgxAgg",
+        "disk_video": null
+      },
+      "notes": "https://disk.yandex.ru/d/InsIWOSEtgxAgg",
+      "in_catalog": true
+    },
+    {
+      "id": "v1Wmaxc5DN8",
+      "title": "Андрей Зализняк. Новгородская Русь по берестяным грамотам взгляд из 2012 года",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 4428,
+      "duration_hms": "01:13:48",
+      "youtube_url": "https://youtube.com/watch?v=v1Wmaxc5DN8",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "9boedQ15Xt8",
+      "title": "Андрей Зализняк. Прогулки по Европе",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 597,
+      "duration_hms": "00:09:57",
+      "youtube_url": "https://youtube.com/watch?v=9boedQ15Xt8",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "sXb-bqGknxw",
+      "title": "Андрей Зализняк_ Между прошлым и будущим",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 365,
+      "duration_hms": "00:06:05",
+      "youtube_url": "https://youtube.com/watch?v=sXb-bqGknxw",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "lcPSaAEANSQ",
+      "title": "Андрей_Зализняк__Русский__Украинский__Белорусский",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 522,
+      "duration_hms": "00:08:42",
+      "youtube_url": "https://youtube.com/watch?v=lcPSaAEANSQ",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "iXdt1k76ySM",
+      "title": "Венгрия 60-х годов глазами А. А. Зализняка",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "не приоритетно",
+      "duration_sec": 1352,
+      "duration_hms": "00:22:32",
+      "youtube_url": "https://youtube.com/watch?v=iXdt1k76ySM",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "no_audio",
+        "note": "видео без звука"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "F24pq3K1pH0",
+      "title": "Вы занимались раньше санскритом..., фрагменты занятия А.А. Зализняка Строем санскрита (3 из 3)",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": null,
+      "duration_sec": 48,
+      "duration_hms": "00:00:48",
+      "youtube_url": "https://youtube.com/watch?v=F24pq3K1pH0",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "3tHFUWKyR-o",
+      "title": "Грамматический строй санскрита. 2014-2015 гг. Лекция 6. 18 октября 2014 г.",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": null,
+      "priority": null,
+      "duration_sec": 4568,
+      "duration_hms": "01:16:08",
+      "youtube_url": "https://youtube.com/watch?v=3tHFUWKyR-o",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "EcpmjEdjzUY",
+      "title": "Грамматический-строй-санскрита-2014-2015-гг-Лекция-2-20-сентября-2014-г",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5324,
+      "duration_hms": "01:28:44",
+      "youtube_url": "https://youtube.com/watch?v=EcpmjEdjzUY",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "X3nZS4YoeT0",
+      "title": "Грамматический-строй-санскрита-2014-2015-гг-Лекция-4-04102014",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5222,
+      "duration_hms": "01:27:02",
+      "youtube_url": "https://youtube.com/watch?v=X3nZS4YoeT0",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "o4DFvnwjXyg",
+      "title": "Грамматический-строй-санскрита-2014-2015-гг-Лекция-5-11-10-2014",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 6247,
+      "duration_hms": "01:44:07",
+      "youtube_url": "https://youtube.com/watch?v=o4DFvnwjXyg",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "QWAJjDVBFA0",
+      "title": "День рождения А. А. Зализняка. Видеоконференция, слайд-шоу. 29.04.2023",
+      "purpose": null,
+      "theme": null,
+      "type": "интервью",
+      "priority": "приоритетно",
+      "duration_sec": 8244,
+      "duration_hms": "02:17:24",
+      "youtube_url": "https://youtube.com/watch?v=QWAJjDVBFA0",
+      "status_raw": null,
+      "stage": "review",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "один зацикленный фрагмент в начале (около 10 мин.)"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "KonovD",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "jKT-SFFdSp0",
+      "title": "Доклад А.А. Зализняка, 26 октября 2012 года Andrei Zaliznyak report",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 1928,
+      "duration_hms": "00:32:08",
+      "youtube_url": "https://youtube.com/watch?v=jKT-SFFdSp0",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "F3DthX6tsV0",
+      "title": "Зализняк о древнейшей грамоте и о Новгородском кодексе (цере). 04.08.2000",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "лекция",
+      "priority": "не приоритетно",
+      "duration_sec": 3288,
+      "duration_hms": "00:54:48",
+      "youtube_url": "https://youtube.com/watch?v=F3DthX6tsV0",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "leraeville",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/6hEydB1RqdGLNg",
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "Tz3T7IxsbLU",
+      "title": "Зализняк. История русского ударения 16 10 29 семинар 08",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5394,
+      "duration_hms": "01:29:54",
+      "youtube_url": "https://youtube.com/watch?v=Tz3T7IxsbLU",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "Erx4H-n8AUQ",
+      "title": "Зализняк. История русского ударения 16 11 12 семинар 10",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5527,
+      "duration_hms": "01:32:07",
+      "youtube_url": "https://www.youtube.com/watch?v=Erx4H-n8AUQ",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "xIoXVxahvDY",
+      "title": "Зализняк. История русского ударения. 06.05.2017. Семинар 26",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5303,
+      "duration_hms": "01:28:23",
+      "youtube_url": "https://youtube.com/watch?v=xIoXVxahvDY",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "зацикленные фрагменты 14 и 30 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "cJp5ZrnGivw",
+      "title": "Зализняк. История русского ударения. 19.11.2016",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 4962,
+      "duration_hms": "01:22:42",
+      "youtube_url": "https://youtube.com/watch?v=cJp5ZrnGivw",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "зациклены 20 мин в конце"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "kpClft2Lz2o",
+      "title": "Зализняк. История русского ударения. 26.11.2016 Семинар 12",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5056,
+      "duration_hms": "01:24:16",
+      "youtube_url": "https://www.youtube.com/watch?v=kpClft2Lz2o",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознана половина"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "YnFUfF18Pzk",
+      "title": "Зализняк. Контуры истории русского языка. 2012",
+      "purpose": "II том Популярных лекций для юношества",
+      "theme": "ЛЛШ",
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 7668,
+      "duration_hms": "02:07:48",
+      "youtube_url": "https://youtube.com/watch?v=YnFUfF18Pzk",
+      "status_raw": "готово к вёрстке",
+      "stage": "prelayout",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "11.05.24",
+        "submitted": "15.06.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "zloi_zverek",
+          "dates": []
+        },
+        "read3": {
+          "assignee": "leraeville, artturiign",
+          "dates": []
+        },
+        "prelayout": {
+          "assignee": "sofiabespamiatnykh",
+          "dates": [
+            "04.10.2025",
+            "30.11.2025"
+          ]
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/yrLTgX7i6afObA",
+        "disk_video": "https://disk.yandex.ru/i/6RiE40N2lMddIw"
+      },
+      "notes": "https://disk.yandex.ru/i/acBCaCw1kfovhQ",
+      "in_catalog": true
+    },
+    {
+      "id": "EftFImIKs3g",
+      "title": "Зализняк. Механизмы экспрессивности в языке. 2011",
+      "purpose": null,
+      "theme": "ЛЛШ",
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 7894,
+      "duration_hms": "02:11:34",
+      "youtube_url": "https://youtube.com/watch?v=EftFImIKs3g",
+      "status_raw": null,
+      "stage": "review",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "уже авториозован",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "gB99plDp70E",
+      "title": "Зализняк. Новгородская Русь по берестяным грамотам. 2012",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 4510,
+      "duration_hms": "01:15:10",
+      "youtube_url": "https://youtube.com/watch?v=gB99plDp70E",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "PXDA9rQAsx0",
+      "title": "Зализняк. Новгородские берестяные грамоты. 2007",
+      "purpose": null,
+      "theme": "ЛЛШ",
+      "type": "лекция",
+      "priority": "приоритетно",
+      "duration_sec": 8340,
+      "duration_hms": "02:19:00",
+      "youtube_url": "https://youtube.com/watch?v=PXDA9rQAsx0",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": "см. файлы с \"ВЕРСИЯ-2\" в названии",
+      "in_catalog": true
+    },
+    {
+      "id": "IuGMs_6G5a0",
+      "title": "Зализняк. О берестяных грамотах из раскопок 2017 года",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 9288,
+      "duration_hms": "02:34:48",
+      "youtube_url": "https://youtube.com/watch?v=IuGMs_6G5a0",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "24.05.25",
+        "submitted": "22.07.25"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Max B",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/wTOIi1yKig07RA",
+        "disk_video": "https://disk.yandex.ru/i/1S_squzyiX9OmA"
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "bHRD_IHAwQo",
+      "title": "Зализняк. О Велесовой книге. 2008",
+      "purpose": "II том Популярных лекций для юношества",
+      "theme": "ЛЛШ",
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 5303,
+      "duration_hms": "01:28:23",
+      "youtube_url": "https://youtube.com/watch?v=bHRD_IHAwQo",
+      "status_raw": "третья читка",
+      "stage": "read3",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "partial",
+        "note": "зациклен фрагмент в конце (около 10 мин.)"
+      },
+      "assigned": {
+        "issued": "10.06.25",
+        "submitted": "29.05.2025"
+      },
+      "proof": {
+        "review": {
+          "assignee": "olga_mirskova",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "sofiabespamiatnykh",
+          "dates": []
+        },
+        "read2": {
+          "assignee": "Max B",
+          "dates": []
+        },
+        "read3": {
+          "assignee": "mariyagorech",
+          "dates": [
+            "07.01.2026"
+          ]
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/ypjzYfaKWpKyyw",
+        "disk_video": "https://disk.yandex.ru/i/nHjWrgs6SbPPLQ"
+      },
+      "notes": "напечатанное отличается от наговоренного напечатанные материалы: - https://disk.yandex.ru/i/9ja_s7CpK58BaA - https://disk.yandex.ru/i/Z2Ja-p7x73_gQA - https://disk.yandex.ru/d/h20bBV3i9J3XUg",
+      "in_catalog": true
+    },
+    {
+      "id": "1fhpsEJE2GM",
+      "title": "Зализняк. О ложной лингвистике и квазиистории. 2011",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 6549,
+      "duration_hms": "01:49:09",
+      "youtube_url": "https://youtube.com/watch?v=1fhpsEJE2GM",
+      "status_raw": null,
+      "stage": "review",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "04.05.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "Maria_Ilmenskaya",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "CoJW_uv0UuM",
+      "title": "Зализняк. О профессиональной и любительской лингвистике. 2008",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "не приоритетно",
+      "duration_sec": 4986,
+      "duration_hms": "01:23:06",
+      "youtube_url": "https://youtube.com/watch?v=CoJW_uv0UuM",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "yBdll96bosQ",
+      "title": "Зализняк. О прошлом и будущем русского языка (Очевидное-невероятное, 2009)",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 1541,
+      "duration_hms": "00:25:41",
+      "youtube_url": "https://youtube.com/watch?v=yBdll96bosQ",
+      "status_raw": "первая читка",
+      "stage": "read1",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "01.05.24",
+        "submitted": "04.05.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Maria_Ilmenskaya",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "artturiign",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/QrcqOSSqi0PF7Q",
+        "disk_video": null
+      },
+      "notes": "https://disk.yandex.ru/d/QrcqOSSqi0PF7Q",
+      "in_catalog": true
+    },
+    {
+      "id": "20R1X8WplFo",
+      "title": "Зализняк. О псевдознаниях и лженауке. Угол зрения, 2011",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 1474,
+      "duration_hms": "00:24:34",
+      "youtube_url": "https://youtube.com/watch?v=20R1X8WplFo",
+      "status_raw": null,
+      "stage": "review",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "30.04.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "MarkKostrin",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "zqMvt5PiM40",
+      "title": "Зализняк. Что такое любительская лингвистика. 2010",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 7436,
+      "duration_hms": "02:03:56",
+      "youtube_url": "https://youtube.com/watch?v=zqMvt5PiM40",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "ty-_K_LFAps",
+      "title": "Из моих воспоминаний о А.А.Зализняке",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": null,
+      "duration_sec": 162,
+      "duration_hms": "00:02:42",
+      "youtube_url": "https://youtube.com/watch?v=ty-_K_LFAps",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "MH0O5Q3Nu-w",
+      "title": "Исконное ударение в слове «творог». Академик Андрей Зализняк",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": null,
+      "duration_sec": 50,
+      "duration_hms": "00:00:50",
+      "youtube_url": "https://youtube.com/watch?v=MH0O5Q3Nu-w",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "cC6tq36tgp0",
+      "title": "Истина существует. Жизнь Андрея Зализняка в рассказах ее участников",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 3377,
+      "duration_hms": "00:56:17",
+      "youtube_url": "https://youtube.com/watch?v=cC6tq36tgp0",
+      "status_raw": null,
+      "stage": "review",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "21.05.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "ekhoretonenko",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "eHe53c2u92I",
+      "title": "К 20-летию обретения Новгородской псалтыри история открытия, сохранения и изучения",
+      "purpose": null,
+      "theme": "русистика",
+      "type": null,
+      "priority": null,
+      "duration_sec": 2620,
+      "duration_hms": "00:43:40",
+      "youtube_url": "https://youtube.com/watch?v=eHe53c2u92I",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "zZgZGZOcMxI",
+      "title": "Лекция А.А. Гиппиуса о берестяных грамотах, 30 окт 2018",
+      "purpose": null,
+      "theme": "береста",
+      "type": null,
+      "priority": null,
+      "duration_sec": 8050,
+      "duration_hms": "02:14:10",
+      "youtube_url": "https://youtube.com/watch?v=zZgZGZOcMxI",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "rWKpzFMNvSQ",
+      "title": "Лекция А.А.Зализняка (12.2.16)",
+      "purpose": null,
+      "theme": "береста",
+      "type": null,
+      "priority": null,
+      "duration_sec": 6483,
+      "duration_hms": "01:48:03",
+      "youtube_url": "https://youtube.com/watch?v=rWKpzFMNvSQ",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "aISah4wJoBs",
+      "title": "Лекция академика Андрея Зализняка",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "лекция",
+      "priority": null,
+      "duration_sec": 9610,
+      "duration_hms": "02:40:10",
+      "youtube_url": "https://youtube.com/watch?v=aISah4wJoBs",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": "8 лет назад МГУ береста",
+      "in_catalog": true
+    },
+    {
+      "id": "FFyNqYgTWFs",
+      "title": "Лекция Какой народ изначально был Русью. Рассказывает Академик РАН Андрей Анатольевич Зализняк",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": null,
+      "duration_sec": 386,
+      "duration_hms": "00:06:26",
+      "youtube_url": "https://youtube.com/watch?v=FFyNqYgTWFs",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "Wa-UvJ1hD8Y",
+      "title": "Наблюдатель. Андрей Зализняк. Воспоминания жизни. Эфир 30.09.2019",
+      "purpose": null,
+      "theme": null,
+      "type": "интервью",
+      "priority": "приоритетно",
+      "duration_sec": 3275,
+      "duration_hms": "00:54:35",
+      "youtube_url": "https://youtube.com/watch?v=Wa-UvJ1hD8Y",
+      "status_raw": null,
+      "stage": "review",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "LifeLoveLime",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "5lUKwBvBe5g",
+      "title": "Наблюдатель. Елена Рыбина, Андрей Зализняк, Пётр Гайдуков и Савва Михеев. Эфир от 27.10.2015",
+      "purpose": null,
+      "theme": "береста",
+      "type": "лекция",
+      "priority": "приоритетно",
+      "duration_sec": 3312,
+      "duration_hms": "00:55:12",
+      "youtube_url": "https://youtube.com/watch?v=5lUKwBvBe5g",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "25.07.25",
+        "submitted": "09.09.25"
+      },
+      "proof": {
+        "review": {
+          "assignee": "Max B",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/MxNoQL3WwMU_XQ",
+        "disk_video": "https://disk.yandex.ru/i/NC_dW4VpgCPPUw"
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "iq1smB7AuxA",
+      "title": "Новгород Письма из средневековья",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": 3088,
+      "duration_hms": "00:51:28",
+      "youtube_url": "https://youtube.com/watch?v=iq1smB7AuxA",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "пара зацикленных фрагментов по 5 мин"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": "художественно, интересно, но нет ААЗ",
+      "in_catalog": true
+    },
+    {
+      "id": "eu9IB3-rfQw",
+      "title": "Новгородский семинар. Юбилей А.А. Зализняка",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 752,
+      "duration_hms": "00:12:32",
+      "youtube_url": "https://youtube.com/watch?v=eu9IB3-rfQw",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "nhDdTGqIROE",
+      "title": "Новые открытия академика Зализняка в 2017 году",
+      "purpose": null,
+      "theme": "береста",
+      "type": null,
+      "priority": "не приоритетно",
+      "duration_sec": 9288,
+      "duration_hms": "02:34:48",
+      "youtube_url": "https://youtube.com/watch?v=nhDdTGqIROE",
+      "status_raw": "сверка",
+      "stage": "review",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "artturiign",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "3xK_iAkr3rY",
+      "title": "Об Очерке, академике Зализняке и санскрите (презентация книги)",
+      "purpose": null,
+      "theme": null,
+      "type": "лекция",
+      "priority": "приоритетно",
+      "duration_sec": 9314,
+      "duration_hms": "02:35:14",
+      "youtube_url": "https://youtube.com/watch?v=3xK_iAkr3rY",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "sofiabespamiatnykh",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/Hr795tFZ3n5QCg",
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "lVb7gGCY89Y",
+      "title": "Они узнали ее нездоровую..., фрагменты занятия А.А. Зализняка Строй санскрита (1 из 3)",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 85,
+      "duration_hms": "00:01:25",
+      "youtube_url": "https://youtube.com/watch?v=lVb7gGCY89Y",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "_x0FFVA-QGw",
+      "title": "Перед-лекцией-академика-А-А-Зализняка-Октябрь-2017-г-ГЗ-МГУ",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 3,
+      "duration_hms": "00:00:03",
+      "youtube_url": "https://youtube.com/watch?v=_x0FFVA-QGw",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "no_audio",
+        "note": "без звука"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "u_12WkcPZXA",
+      "title": "Прощание с А.А.Зализняком. ТВ «Культура», 28.12.2017",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 159,
+      "duration_hms": "00:02:39",
+      "youtube_url": "https://youtube.com/watch?v=u_12WkcPZXA",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "zk4ZDa9Y5oQ",
+      "title": "Русь - скандинавское слово. Ведущий русский лингвист современности - академик Зализняк",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "приоритетно",
+      "duration_sec": 132,
+      "duration_hms": "00:02:12",
+      "youtube_url": "https://youtube.com/watch?v=zk4ZDa9Y5oQ",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "zpS2cuDta2g",
+      "title": "Спецкурс А.А. Зализняка Строй ведийского языка, 2015 г.",
+      "purpose": null,
+      "theme": "санскрит",
+      "type": "семинар",
+      "priority": "не приоритетно",
+      "duration_sec": 5146,
+      "duration_hms": "01:25:46",
+      "youtube_url": "https://youtube.com/watch?v=zpS2cuDta2g",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "partial",
+        "note": "распознаны только первые 14 мин."
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "FkvUb27xh5Y",
+      "title": "Украина родина древних Укров! А.А. Зализняк",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "приоритетно",
+      "duration_sec": 261,
+      "duration_hms": "00:04:21",
+      "youtube_url": "https://youtube.com/watch?v=FkvUb27xh5Y",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "wTXGgCxtpBA",
+      "title": "Умер Андрей Зализняк",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 141,
+      "duration_hms": "00:02:21",
+      "youtube_url": "https://youtube.com/watch?v=wTXGgCxtpBA",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "hl8rYnUDyZ4",
+      "title": "Университетская рецитация, фрагменты занятия А.А. Зализняка Строй санскрита (23)",
+      "purpose": null,
+      "theme": null,
+      "type": "фрагмент",
+      "priority": "не приоритетно",
+      "duration_sec": 63,
+      "duration_hms": "00:01:03",
+      "youtube_url": "https://youtube.com/watch?v=hl8rYnUDyZ4",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "GyKR4vwumwg",
+      "title": "Фильм «Андрей Зализняк. Лингвистический детектив». 2019",
+      "purpose": null,
+      "theme": null,
+      "type": "интервью",
+      "priority": "приоритетно",
+      "duration_sec": 2639,
+      "duration_hms": "00:43:59",
+      "youtube_url": "https://youtube.com/watch?v=GyKR4vwumwg",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": "21.11.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "airishee",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/PspeJ24om7DEcA",
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": true
+    },
+    {
+      "id": "BZQgfGBtCho",
+      "title": "Фильм о А.А.Зализняке «Коэффициент достоверности», 2019",
+      "purpose": null,
+      "theme": null,
+      "type": "интервью",
+      "priority": "приоритетно",
+      "duration_sec": 1576,
+      "duration_hms": "00:26:16",
+      "youtube_url": "https://youtube.com/watch?v=BZQgfGBtCho",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": null
+      },
+      "proof": {
+        "review": {
+          "assignee": "artturiign, sofiabespamiatnykh",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/5XotBmG_kOIQYA",
+        "disk_video": null
+      },
+      "notes": "https://disk.yandex.ru/d/5XotBmG_kOIQYA",
+      "in_catalog": true
+    },
+    {
+      "id": "IAMi0Lo7tMM",
+      "title": "Язык берестяных грамот (рассказывает лингвист Андрей Зализняк)",
+      "purpose": null,
+      "theme": "береста",
+      "type": null,
+      "priority": "приоритетно",
+      "duration_sec": 2873,
+      "duration_hms": "00:47:53",
+      "youtube_url": "https://youtube.com/watch?v=IAMi0Lo7tMM",
+      "status_raw": "готово для второй читки",
+      "stage": "read1",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "30.05.25",
+        "submitted": "30.05.25"
+      },
+      "proof": {
+        "review": {
+          "assignee": "kotik123a",
+          "dates": []
+        },
+        "read1": {
+          "assignee": "Max B",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/i/hkLXyENh_h839A",
+        "disk_video": "https://disk.yandex.ru/i/hjJhMl7xkpDFAQ"
+      },
+      "notes": "нужно дать обратную связь по сверке",
+      "in_catalog": true
+    },
+    {
+      "id": "mBKJLH0EU7M",
+      "title": "Яндекс Гугл и алгоритм Зализняка Острова Телеканал Культура",
+      "purpose": null,
+      "theme": null,
+      "type": "интервью",
+      "priority": "приоритетно",
+      "duration_sec": 2333,
+      "duration_hms": "00:38:53",
+      "youtube_url": "https://youtube.com/watch?v=mBKJLH0EU7M",
+      "status_raw": "готово для первой читки",
+      "stage": "transcribed",
+      "stage_inferred": false,
+      "transcription": {
+        "quality": "ok",
+        "note": "готово"
+      },
+      "assigned": {
+        "issued": "29.04.24",
+        "submitted": "08.05.24"
+      },
+      "proof": {
+        "review": {
+          "assignee": "YuliaMakkaveeva",
+          "dates": []
+        }
+      },
+      "links": {
+        "text": "https://disk.yandex.ru/d/wBYmuvIooFg-cA",
+        "disk_video": null
+      },
+      "notes": "https://disk.yandex.ru/d/wBYmuvIooFg-cA",
+      "in_catalog": true
+    },
+    {
+      "id": null,
+      "title": "Некоторые проблемы порядка слов в истории русского языка",
+      "purpose": null,
+      "theme": null,
+      "type": null,
+      "priority": null,
+      "duration_sec": null,
+      "duration_hms": null,
+      "youtube_url": "https://elementy.ru/nauchno-populyarnaya_biblioteka/431049/Nekotorye_problemy_poryadka_slov_v_istorii_russkogo_yazyka",
+      "status_raw": null,
+      "stage": "transcribed",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "ok",
+        "note": "не требуется (по ссылке текст)"
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
+      "in_catalog": false
+    }
+  ]
+}
