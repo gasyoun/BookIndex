@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-O+hxCvCFR8wvvyGBQ2c/7kHXX0fHgLmGKMzhPvWEn3w=' 'sha256-S4xh/2mJDs+yrDo8yNthiMP8Ix+NFMLoR2cdSZgdzgo='; worker-src 'self' blob:; style-src 'self' 'sha256-YqlhzqqK/IiboagB5i91lC8Lyeq6F7Ix5ShWq6N8bCQ='; style-src-elem 'self' 'sha256-YqlhzqqK/IiboagB5i91lC8Lyeq6F7Ix5ShWq6N8bCQ='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-MoKeXGh/1LCwM1teP3URXSlZceKU9s1V1Y1BBTzFWH8=' 'sha256-uO/ozm8CH34hr0CtVqKVjwzqOqlhr35FprzaLSGAuBk='; worker-src 'self' blob:; style-src 'self' 'sha256-pfx0AcgxILo8ke7Jee0Y2vYT+k+fNi1zDOSbhCAQsmY='; style-src-elem 'self' 'sha256-pfx0AcgxILo8ke7Jee0Y2vYT+k+fNi1zDOSbhCAQsmY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -2568,6 +2568,113 @@
     margin: 0 auto;
     max-width: 1200px;
     padding: var(--home-inner-padding, 16px 22px);
+  }
+  .home-tasks {
+    margin-bottom: 18px;
+  }
+  .home-tasks-title {
+    font-family: var(--font-serif, serif);
+    font-size: 1.15rem;
+    color: var(--title, #5a3818);
+    margin-bottom: 10px;
+  }
+  .home-tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .home-task {
+    background: var(--surface, #fffdf8);
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .home-task-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .home-task-icon {
+    font-size: 18px;
+  }
+  .home-task-label {
+    font-weight: 600;
+    color: var(--title, #5a3818);
+    font-size: 14px;
+  }
+  .home-task-row {
+    display: flex;
+    gap: 6px;
+  }
+  .home-task-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 7px 10px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    background: #fff;
+  }
+  .home-task-btn {
+    flex: 0 0 auto;
+    padding: 7px 14px;
+    border: 1px solid var(--accent, #7a5a3a);
+    border-radius: 6px;
+    background: var(--accent, #7a5a3a);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+  }
+  .home-task-btn:hover {
+    background: #5a3818;
+  }
+  .home-task-hint {
+    color: var(--muted, #6d645a);
+    font-size: 11px;
+  }
+  .home-task-results {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .home-task-video-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 5px 8px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 5px;
+    background: #f7f1e6;
+    color: #8c3a15;
+    text-decoration: none;
+    font-size: 12px;
+  }
+  .home-task-video-row:hover {
+    background: #ebdcc9;
+  }
+  .home-task-video-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .home-task-video-dur {
+    flex: 0 0 auto;
+    color: var(--muted, #6d645a);
+    font-variant-numeric: tabular-nums;
+  }
+  .home-task-empty {
+    color: var(--muted, #6d645a);
+    font-size: 11px;
+    padding: 2px 2px 0;
+  }
+  @media (max-width: 820px) {
+    .home-tasks-grid { grid-template-columns: 1fr; }
   }
   .home-stats-hero {
     background: linear-gradient(135deg, #5a3818, #8a7050);
@@ -5672,7 +5779,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "0cd1f21ad5aa",
+  "build_id": "513f8a12a2da",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -5980,7 +6087,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "0cd1f21ad5aa";
+	var APP_BUILD_ID$1 = "513f8a12a2da";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6870,8 +6977,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "0cd1f21ad5aa").trim();
-		if (buildId && buildId !== "0cd1f21ad5aa") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "513f8a12a2da").trim();
+		if (buildId && buildId !== "513f8a12a2da") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10314,7 +10421,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "0cd1f21ad5aa" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "513f8a12a2da" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -15093,6 +15200,72 @@ var BookIndex = (function(exports) {
 		applyDataDrivenStyles(container);
 		alpine.initTree(container);
 	}
+	function wireHomeTasks(container, totalPages) {
+		if (!container || typeof container.querySelector !== "function") return;
+		const maxPage = Math.max(1, Number(totalPages) || getTotalBookPages());
+		const pageForm = container.querySelector("#home-task-page");
+		if (pageForm) pageForm.onsubmit = (e) => {
+			e.preventDefault();
+			const raw = parseInt((container.querySelector("#home-task-page-input") || {}).value, 10);
+			if (Number.isFinite(raw)) applyHash(buildReadingNowHash(Math.max(1, Math.min(maxPage, raw))));
+		};
+		const termForm = container.querySelector("#home-task-term");
+		if (termForm) termForm.onsubmit = (e) => {
+			e.preventDefault();
+			const q = clampUiInput((container.querySelector("#home-task-term-input") || {}).value || "", MAX_LIST_QUERY_LENGTH).trim();
+			if (q) applyHash(buildListSearchHash("all", q));
+		};
+		const videoForm = container.querySelector("#home-task-video");
+		const videoInput = container.querySelector("#home-task-video-input");
+		const videoResults = container.querySelector("#home-task-video-results");
+		const runVideoSearch = () => {
+			if (!videoResults) return;
+			const q = clampUiInput((videoInput || {}).value || "", MAX_LIST_QUERY_LENGTH).trim().toLowerCase();
+			if (q.length < 2) {
+				videoResults.textContent = "";
+				return;
+			}
+			const cat = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+			const matches = cat.filter((v) => String(v && v.title || "").toLowerCase().includes(q));
+			matches.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+			const shown = matches.slice(0, 8);
+			videoResults.textContent = "";
+			if (!shown.length) {
+				const empty = document.createElement("div");
+				empty.className = "home-task-empty";
+				empty.textContent = "Ничего не найдено среди 191 видео.";
+				videoResults.appendChild(empty);
+				return;
+			}
+			for (const v of shown) {
+				const a = document.createElement("a");
+				a.className = "home-task-video-row";
+				a.href = String(v.url || "");
+				a.target = "_blank";
+				a.rel = "noopener noreferrer";
+				const title = document.createElement("span");
+				title.className = "home-task-video-title";
+				title.textContent = String(v.title || "");
+				a.appendChild(title);
+				const dur = formatVideoDuration(v.duration);
+				if (dur) {
+					const d = document.createElement("span");
+					d.className = "home-task-video-dur";
+					d.textContent = dur;
+					a.appendChild(d);
+				}
+				videoResults.appendChild(a);
+			}
+			if (matches.length > shown.length) {
+				const more = document.createElement("div");
+				more.className = "home-task-empty";
+				more.textContent = `и ещё ${matches.length - shown.length}`;
+				videoResults.appendChild(more);
+			}
+		};
+		if (videoForm) videoForm.onsubmit = (e) => { e.preventDefault(); runVideoSearch(); };
+		if (videoInput) videoInput.oninput = runVideoSearch;
+	}
 	function renderHomePanel(container) {
 		const stats = APP_DATA.book_stats;
 		const routes = APP_DATA.routes || [];
@@ -15112,6 +15285,35 @@ var BookIndex = (function(exports) {
 		const quoteTextClass = compactHome ? "home-featured-quote-clamp" : "";
 		const routeGridClass = compactHome || isDesktop ? "home-routes-grid home-routes-grid-compact" : "home-routes-grid";
 		let html = `<div class="panel active home-panel"><div class="home-panel-inner" data-home-inner-padding="${escapeHtml(homeInnerPadding)}">`;
+		html += `<div class="home-tasks">
+    <div class="home-tasks-title">С чего начать?</div>
+    <div class="home-tasks-grid">
+      <form class="home-task" id="home-task-page">
+        <div class="home-task-head"><span class="home-task-icon">📖</span><label class="home-task-label" for="home-task-page-input">Я читаю страницу книги</label></div>
+        <div class="home-task-row">
+          <input id="home-task-page-input" class="home-task-input" type="number" min="1" max="${escapeHtml(totalPages)}" step="1" placeholder="№ страницы" inputmode="numeric">
+          <button class="home-task-btn" type="submit">Открыть</button>
+        </div>
+        <div class="home-task-hint">Кто и что упоминается на этой странице.</div>
+      </form>
+      <form class="home-task" id="home-task-video">
+        <div class="home-task-head"><span class="home-task-icon">▶</span><label class="home-task-label" for="home-task-video-input">Я смотрю видео</label></div>
+        <div class="home-task-row">
+          <input id="home-task-video-input" class="home-task-input" type="search" placeholder="название лекции" autocomplete="off">
+          <button class="home-task-btn" type="submit">Найти</button>
+        </div>
+        <div id="home-task-video-results" class="home-task-results"></div>
+      </form>
+      <form class="home-task" id="home-task-term">
+        <div class="home-task-head"><span class="home-task-icon">🔎</span><label class="home-task-label" for="home-task-term-input">Найти слово, имя, термин</label></div>
+        <div class="home-task-row">
+          <input id="home-task-term-input" class="home-task-input" type="search" placeholder="например: ударение" autocomplete="off">
+          <button class="home-task-btn" type="submit">Искать</button>
+        </div>
+        <div class="home-task-hint">Поиск по всему указателю.</div>
+      </form>
+    </div>
+  </div>`;
 		html += `<div class="home-stats-hero">
     <div class="home-stats-head">
       <h2 class="home-stats-title">Книга в цифрах</h2>
@@ -15185,6 +15387,7 @@ var BookIndex = (function(exports) {
 		html += "</div></div>";
 		container.innerHTML = html;
 		applyDataDrivenStyles(container);
+		wireHomeTasks(container, totalPages);
 		const homeFactPair = document.getElementById("home-fact-pair");
 		if (homeFactPair) {
 			const factCol = (homeFactPair.children || [])[0] || null;

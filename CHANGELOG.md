@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+- Home as a task dashboard (B4): the home page now leads with a "С чего начать?" band of three reader tasks — «Я читаю страницу книги» (page number → page view), «Я смотрю видео» (inline title search over the 191-video catalog), «Найти слово, имя, термин» (→ global index search). The stats/showcase moved below.
 - Book-spine chapter ribbon (B1): the «Читаю сейчас» page view gained a navigable density mini-map of the 11 chapters — each segment is sized by page span and shaded by mention density, the current page's chapter is highlighted, and clicking a segment jumps the page view to that chapter.
 - KWIC over the lecture corpus: the concordance gained a "Лекции (видео)" source that searches the ~240k-word timecoded transcript corpus and links each hit to the exact minute in the video (`&t=<sec>s`). Backed by a compact, lazy-loaded index (`data/lectures_kwic.json`, built by `scripts/build_lectures_kwic.py` / `npm run kwic:build`) so it never bloats the main artifact.
 - Live GitHub Pages health checks plus Lighthouse and axe accessibility quality gates.

@@ -2546,6 +2546,113 @@
     max-width: 1200px;
     padding: var(--home-inner-padding, 16px 22px);
   }
+  .home-tasks {
+    margin-bottom: 18px;
+  }
+  .home-tasks-title {
+    font-family: var(--font-serif, serif);
+    font-size: 1.15rem;
+    color: var(--title, #5a3818);
+    margin-bottom: 10px;
+  }
+  .home-tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .home-task {
+    background: var(--surface, #fffdf8);
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .home-task-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .home-task-icon {
+    font-size: 18px;
+  }
+  .home-task-label {
+    font-weight: 600;
+    color: var(--title, #5a3818);
+    font-size: 14px;
+  }
+  .home-task-row {
+    display: flex;
+    gap: 6px;
+  }
+  .home-task-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 7px 10px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    background: #fff;
+  }
+  .home-task-btn {
+    flex: 0 0 auto;
+    padding: 7px 14px;
+    border: 1px solid var(--accent, #7a5a3a);
+    border-radius: 6px;
+    background: var(--accent, #7a5a3a);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+  }
+  .home-task-btn:hover {
+    background: #5a3818;
+  }
+  .home-task-hint {
+    color: var(--muted, #6d645a);
+    font-size: 11px;
+  }
+  .home-task-results {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .home-task-video-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 5px 8px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 5px;
+    background: #f7f1e6;
+    color: #8c3a15;
+    text-decoration: none;
+    font-size: 12px;
+  }
+  .home-task-video-row:hover {
+    background: #ebdcc9;
+  }
+  .home-task-video-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .home-task-video-dur {
+    flex: 0 0 auto;
+    color: var(--muted, #6d645a);
+    font-variant-numeric: tabular-nums;
+  }
+  .home-task-empty {
+    color: var(--muted, #6d645a);
+    font-size: 11px;
+    padding: 2px 2px 0;
+  }
+  @media (max-width: 820px) {
+    .home-tasks-grid { grid-template-columns: 1fr; }
+  }
   .home-stats-hero {
     background: linear-gradient(135deg, #5a3818, #8a7050);
     border-radius: 6px;

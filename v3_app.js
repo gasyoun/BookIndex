@@ -9265,6 +9265,72 @@ var BookIndex = (function(exports) {
 		applyDataDrivenStyles(container);
 		alpine.initTree(container);
 	}
+	function wireHomeTasks(container, totalPages) {
+		if (!container || typeof container.querySelector !== "function") return;
+		const maxPage = Math.max(1, Number(totalPages) || getTotalBookPages());
+		const pageForm = container.querySelector("#home-task-page");
+		if (pageForm) pageForm.onsubmit = (e) => {
+			e.preventDefault();
+			const raw = parseInt((container.querySelector("#home-task-page-input") || {}).value, 10);
+			if (Number.isFinite(raw)) applyHash(buildReadingNowHash(Math.max(1, Math.min(maxPage, raw))));
+		};
+		const termForm = container.querySelector("#home-task-term");
+		if (termForm) termForm.onsubmit = (e) => {
+			e.preventDefault();
+			const q = clampUiInput((container.querySelector("#home-task-term-input") || {}).value || "", MAX_LIST_QUERY_LENGTH).trim();
+			if (q) applyHash(buildListSearchHash("all", q));
+		};
+		const videoForm = container.querySelector("#home-task-video");
+		const videoInput = container.querySelector("#home-task-video-input");
+		const videoResults = container.querySelector("#home-task-video-results");
+		const runVideoSearch = () => {
+			if (!videoResults) return;
+			const q = clampUiInput((videoInput || {}).value || "", MAX_LIST_QUERY_LENGTH).trim().toLowerCase();
+			if (q.length < 2) {
+				videoResults.textContent = "";
+				return;
+			}
+			const cat = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+			const matches = cat.filter((v) => String(v && v.title || "").toLowerCase().includes(q));
+			matches.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+			const shown = matches.slice(0, 8);
+			videoResults.textContent = "";
+			if (!shown.length) {
+				const empty = document.createElement("div");
+				empty.className = "home-task-empty";
+				empty.textContent = "Ничего не найдено среди 191 видео.";
+				videoResults.appendChild(empty);
+				return;
+			}
+			for (const v of shown) {
+				const a = document.createElement("a");
+				a.className = "home-task-video-row";
+				a.href = String(v.url || "");
+				a.target = "_blank";
+				a.rel = "noopener noreferrer";
+				const title = document.createElement("span");
+				title.className = "home-task-video-title";
+				title.textContent = String(v.title || "");
+				a.appendChild(title);
+				const dur = formatVideoDuration(v.duration);
+				if (dur) {
+					const d = document.createElement("span");
+					d.className = "home-task-video-dur";
+					d.textContent = dur;
+					a.appendChild(d);
+				}
+				videoResults.appendChild(a);
+			}
+			if (matches.length > shown.length) {
+				const more = document.createElement("div");
+				more.className = "home-task-empty";
+				more.textContent = `и ещё ${matches.length - shown.length}`;
+				videoResults.appendChild(more);
+			}
+		};
+		if (videoForm) videoForm.onsubmit = (e) => { e.preventDefault(); runVideoSearch(); };
+		if (videoInput) videoInput.oninput = runVideoSearch;
+	}
 	function renderHomePanel(container) {
 		const stats = APP_DATA.book_stats;
 		const routes = APP_DATA.routes || [];
@@ -9284,6 +9350,35 @@ var BookIndex = (function(exports) {
 		const quoteTextClass = compactHome ? "home-featured-quote-clamp" : "";
 		const routeGridClass = compactHome || isDesktop ? "home-routes-grid home-routes-grid-compact" : "home-routes-grid";
 		let html = `<div class="panel active home-panel"><div class="home-panel-inner" data-home-inner-padding="${escapeHtml(homeInnerPadding)}">`;
+		html += `<div class="home-tasks">
+    <div class="home-tasks-title">С чего начать?</div>
+    <div class="home-tasks-grid">
+      <form class="home-task" id="home-task-page">
+        <div class="home-task-head"><span class="home-task-icon">📖</span><label class="home-task-label" for="home-task-page-input">Я читаю страницу книги</label></div>
+        <div class="home-task-row">
+          <input id="home-task-page-input" class="home-task-input" type="number" min="1" max="${escapeHtml(totalPages)}" step="1" placeholder="№ страницы" inputmode="numeric">
+          <button class="home-task-btn" type="submit">Открыть</button>
+        </div>
+        <div class="home-task-hint">Кто и что упоминается на этой странице.</div>
+      </form>
+      <form class="home-task" id="home-task-video">
+        <div class="home-task-head"><span class="home-task-icon">▶</span><label class="home-task-label" for="home-task-video-input">Я смотрю видео</label></div>
+        <div class="home-task-row">
+          <input id="home-task-video-input" class="home-task-input" type="search" placeholder="название лекции" autocomplete="off">
+          <button class="home-task-btn" type="submit">Найти</button>
+        </div>
+        <div id="home-task-video-results" class="home-task-results"></div>
+      </form>
+      <form class="home-task" id="home-task-term">
+        <div class="home-task-head"><span class="home-task-icon">🔎</span><label class="home-task-label" for="home-task-term-input">Найти слово, имя, термин</label></div>
+        <div class="home-task-row">
+          <input id="home-task-term-input" class="home-task-input" type="search" placeholder="например: ударение" autocomplete="off">
+          <button class="home-task-btn" type="submit">Искать</button>
+        </div>
+        <div class="home-task-hint">Поиск по всему указателю.</div>
+      </form>
+    </div>
+  </div>`;
 		html += `<div class="home-stats-hero">
     <div class="home-stats-head">
       <h2 class="home-stats-title">Книга в цифрах</h2>
@@ -9357,6 +9452,7 @@ var BookIndex = (function(exports) {
 		html += "</div></div>";
 		container.innerHTML = html;
 		applyDataDrivenStyles(container);
+		wireHomeTasks(container, totalPages);
 		const homeFactPair = document.getElementById("home-fact-pair");
 		if (homeFactPair) {
 			const factCol = (homeFactPair.children || [])[0] || null;
