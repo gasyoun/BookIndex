@@ -10,3 +10,6 @@ scratch/
 # audit sidecars
 .contributing_old.md
 .contributing_audit.txt
+
+# transcript ingest: raw downloaded .docx/.srt cache (re-fetchable, not reviewable)
+data/imports/lectures-v2/raw/

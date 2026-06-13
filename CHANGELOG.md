@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Live GitHub Pages health checks plus Lighthouse and axe accessibility quality gates.
 - Video-production pipeline tracker: `data/video_pipeline.json` (per-video proof-reading stage, transcription quality, assignees, dates, links) migrated from `video-archive.xlsx`, plus a self-contained volunteer dashboard at `pipeline/index.html` (`npm run pipeline:dashboard`).
 - Reverse video links on entity cards: names, languages, ethnonyms, toponyms, lexicon and subject cards now list the lectures/talks that mention them (built from `video_catalog[].related_entities`), newest first, with duration and a total count.
+- Lecture transcript corpus (`data/imports/lectures-v2/`): `scripts/ingest_transcripts.py` fetches edited transcripts from public Yandex.Disk links recorded in `data/video_pipeline.json`, extracts timecoded segments (`.docx`/`.srt`, stdlib only), and stores one reviewable JSON per lecture plus a corpus index. 27 lectures ingested (~240k words, ~3.7k timecoded segments) with proof-reading-stage provenance; feeds upcoming deep video links (B3.2), entity extraction (C3) and lecture KWIC.
 
 ### Changed
 - Raised the axe accessibility gate to require zero critical and zero serious violations on audited routes.

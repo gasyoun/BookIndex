@@ -1,0 +1,23 @@
+{
+  "corpus": "lectures-v2",
+  "kind": "lecture_transcripts",
+  "status": "ingested",
+  "note": "таймкодированный текстовый корпус; в app_data.json напрямую не вливается — сырьё для C3 (извлечение сущностей) и KWIC",
+  "transcripts": 27,
+  "total_words": 239895,
+  "total_timecoded_segments": 3697,
+  "by_stage": {
+    "read1": 5,
+    "transcribed": 13,
+    "prelayout": 3,
+    "read3": 3,
+    "layout": 1,
+    "read2": 1,
+    "review": 1
+  },
+  "feeds": [
+    "B3.2 deep video links",
+    "C3 entity extraction",
+    "KWIC over lectures"
+  ]
+}

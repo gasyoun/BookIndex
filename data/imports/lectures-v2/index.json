@@ -1,0 +1,264 @@
+{
+  "schema": "lecture_transcript_index/1",
+  "source": "data/video_pipeline.json links.text (public Yandex.Disk .docx)",
+  "fetched_at": "2026-06-13T07:15:43Z",
+  "stats": {
+    "transcripts": 27,
+    "total_words": 239895,
+    "total_timecoded_segments": 3697,
+    "by_stage": {
+      "read1": 5,
+      "transcribed": 13,
+      "prelayout": 3,
+      "read3": 3,
+      "layout": 1,
+      "read2": 1,
+      "review": 1
+    }
+  },
+  "transcripts": [
+    {
+      "video_id": "LJlxadWkzPc",
+      "title": "ACADEMIA. Андрей Зализняк. Берестяные грамоты. 1 лекция. Канал Культура",
+      "review_stage": "read1",
+      "segments": 48,
+      "timecoded": 48,
+      "words": 5146,
+      "file": "transcripts/LJlxadWkzPc.json"
+    },
+    {
+      "video_id": "sjTVG_aUtl4",
+      "title": "ACADEMIA. Андрей Зализняк. Берестяные грамоты. 2 лекция. Канал Культура",
+      "review_stage": "read1",
+      "segments": 40,
+      "timecoded": 39,
+      "words": 4906,
+      "file": "transcripts/sjTVG_aUtl4.json"
+    },
+    {
+      "video_id": "Hf1kFHCFb4E",
+      "title": "ACADEMIA. Андрей Зализняк. Русский устный. 1 лекция. Канал Культура",
+      "review_stage": "transcribed",
+      "segments": 44,
+      "timecoded": 43,
+      "words": 4643,
+      "file": "transcripts/Hf1kFHCFb4E.json"
+    },
+    {
+      "video_id": "H6RAja4HOzs",
+      "title": "ACADEMIA. Андрей Зализняк. Русский устный. 2 лекция. Канал Культура",
+      "review_stage": "prelayout",
+      "segments": 55,
+      "timecoded": 54,
+      "words": 5205,
+      "file": "transcripts/H6RAja4HOzs.json"
+    },
+    {
+      "video_id": "hkaJuyLERgE",
+      "title": "ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 1 лекция. Канал Культура",
+      "review_stage": "transcribed",
+      "segments": 48,
+      "timecoded": 47,
+      "words": 4501,
+      "file": "transcripts/hkaJuyLERgE.json"
+    },
+    {
+      "video_id": "fo10NKM_0JM",
+      "title": "ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 2 лекция. Канал Культура",
+      "review_stage": "transcribed",
+      "segments": 64,
+      "timecoded": 64,
+      "words": 5207,
+      "file": "transcripts/fo10NKM_0JM.json"
+    },
+    {
+      "video_id": "Zj7fSZFSaBU",
+      "title": "А-А-Зализняк-Строй-ведийского-языка-Лекция-1-12092015",
+      "review_stage": "read1",
+      "segments": 68,
+      "timecoded": 68,
+      "words": 6954,
+      "file": "transcripts/Zj7fSZFSaBU.json"
+    },
+    {
+      "video_id": "qrzM9kqAD40",
+      "title": "А.А. Зализняк. Как изменяется внешняя сторона слова",
+      "review_stage": "read3",
+      "segments": 256,
+      "timecoded": 256,
+      "words": 29236,
+      "file": "transcripts/qrzM9kqAD40.json"
+    },
+    {
+      "video_id": "DT2grBrX7u4",
+      "title": "А.А. Зализняк. Контуры истории русского ударения",
+      "review_stage": "read3",
+      "segments": 112,
+      "timecoded": 111,
+      "words": 12850,
+      "file": "transcripts/DT2grBrX7u4.json"
+    },
+    {
+      "video_id": "tv87ggs0yq4",
+      "title": "А.А. Зализняк. Коротко об арабском языке",
+      "review_stage": "layout",
+      "segments": 1096,
+      "timecoded": 1096,
+      "words": 11249,
+      "file": "transcripts/tv87ggs0yq4.json"
+    },
+    {
+      "video_id": "Xf2GBzzKb_0",
+      "title": "А.А. Зализняк. Новгородские берестяные грамоты",
+      "review_stage": "read2",
+      "segments": 108,
+      "timecoded": 108,
+      "words": 15802,
+      "file": "transcripts/Xf2GBzzKb_0.json"
+    },
+    {
+      "video_id": "JNI6DtX65dg",
+      "title": "А.А. Зализняк. О берестяных грамотах из раскопок 2010 г., лекция 1",
+      "review_stage": "review",
+      "segments": 45,
+      "timecoded": 44,
+      "words": 5696,
+      "file": "transcripts/JNI6DtX65dg.json"
+    },
+    {
+      "video_id": "qIVmupl5ZjU",
+      "title": "А.А. Зализняк. Эпизод из истории русского ударения",
+      "review_stage": "prelayout",
+      "segments": 123,
+      "timecoded": 122,
+      "words": 9715,
+      "file": "transcripts/qIVmupl5ZjU.json"
+    },
+    {
+      "video_id": "uwdJRBZMmn0",
+      "title": "А.А.Зализняк читает лекцию о берестяных грамотах студентам-историкам, 08.08.2017",
+      "review_stage": "transcribed",
+      "segments": 215,
+      "timecoded": 214,
+      "words": 15785,
+      "file": "transcripts/uwdJRBZMmn0.json"
+    },
+    {
+      "video_id": "P0G948VmXtM",
+      "title": "Андрей Зализняк Интереснейшая история русского языка",
+      "review_stage": "transcribed",
+      "segments": 120,
+      "timecoded": 120,
+      "words": 7359,
+      "file": "transcripts/P0G948VmXtM.json"
+    },
+    {
+      "video_id": "uzzjnpPmEDQ",
+      "title": "Андрей Зализняк. История русского языка",
+      "review_stage": "transcribed",
+      "segments": 171,
+      "timecoded": 170,
+      "words": 7713,
+      "file": "transcripts/uzzjnpPmEDQ.json"
+    },
+    {
+      "video_id": "F3DthX6tsV0",
+      "title": "Зализняк о древнейшей грамоте и о Новгородском кодексе (цере). 04.08.2000",
+      "review_stage": "transcribed",
+      "segments": 85,
+      "timecoded": 85,
+      "words": 5904,
+      "file": "transcripts/F3DthX6tsV0.json"
+    },
+    {
+      "video_id": "YnFUfF18Pzk",
+      "title": "Зализняк. Контуры истории русского языка. 2012",
+      "review_stage": "prelayout",
+      "segments": 139,
+      "timecoded": 138,
+      "words": 13348,
+      "file": "transcripts/YnFUfF18Pzk.json"
+    },
+    {
+      "video_id": "IuGMs_6G5a0",
+      "title": "Зализняк. О берестяных грамотах из раскопок 2017 года",
+      "review_stage": "transcribed",
+      "segments": 291,
+      "timecoded": 291,
+      "words": 14919,
+      "file": "transcripts/IuGMs_6G5a0.json"
+    },
+    {
+      "video_id": "bHRD_IHAwQo",
+      "title": "Зализняк. О Велесовой книге. 2008",
+      "review_stage": "read3",
+      "segments": 112,
+      "timecoded": 112,
+      "words": 9782,
+      "file": "transcripts/bHRD_IHAwQo.json"
+    },
+    {
+      "video_id": "yBdll96bosQ",
+      "title": "Зализняк. О прошлом и будущем русского языка (Очевидное-невероятное, 2009)",
+      "review_stage": "read1",
+      "segments": 33,
+      "timecoded": 33,
+      "words": 3560,
+      "file": "transcripts/yBdll96bosQ.json"
+    },
+    {
+      "video_id": "5lUKwBvBe5g",
+      "title": "Наблюдатель. Елена Рыбина, Андрей Зализняк, Пётр Гайдуков и Савва Михеев. Эфир от 27.10.2015",
+      "review_stage": "transcribed",
+      "segments": 116,
+      "timecoded": 116,
+      "words": 7275,
+      "file": "transcripts/5lUKwBvBe5g.json"
+    },
+    {
+      "video_id": "3xK_iAkr3rY",
+      "title": "Об Очерке, академике Зализняке и санскрите (презентация книги)",
+      "review_stage": "transcribed",
+      "segments": 114,
+      "timecoded": 114,
+      "words": 14790,
+      "file": "transcripts/3xK_iAkr3rY.json"
+    },
+    {
+      "video_id": "GyKR4vwumwg",
+      "title": "Фильм «Андрей Зализняк. Лингвистический детектив». 2019",
+      "review_stage": "transcribed",
+      "segments": 133,
+      "timecoded": 133,
+      "words": 4488,
+      "file": "transcripts/GyKR4vwumwg.json"
+    },
+    {
+      "video_id": "BZQgfGBtCho",
+      "title": "Фильм о А.А.Зализняке «Коэффициент достоверности», 2019",
+      "review_stage": "transcribed",
+      "segments": 2,
+      "timecoded": 1,
+      "words": 2776,
+      "file": "transcripts/BZQgfGBtCho.json"
+    },
+    {
+      "video_id": "IAMi0Lo7tMM",
+      "title": "Язык берестяных грамот (рассказывает лингвист Андрей Зализняк)",
+      "review_stage": "read1",
+      "segments": 26,
+      "timecoded": 26,
+      "words": 6558,
+      "file": "transcripts/IAMi0Lo7tMM.json"
+    },
+    {
+      "video_id": "mBKJLH0EU7M",
+      "title": "Яндекс Гугл и алгоритм Зализняка Острова Телеканал Культура",
+      "review_stage": "transcribed",
+      "segments": 44,
+      "timecoded": 44,
+      "words": 4528,
+      "file": "transcripts/mBKJLH0EU7M.json"
+    }
+  ]
+}
