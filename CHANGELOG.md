@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Live GitHub Pages health checks plus Lighthouse and axe accessibility quality gates.
 - Video-production pipeline tracker: `data/video_pipeline.json` (per-video proof-reading stage, transcription quality, assignees, dates, links) migrated from `video-archive.xlsx`, plus a self-contained volunteer dashboard at `pipeline/index.html` (`npm run pipeline:dashboard`).
+- Reverse video links on entity cards: names, languages, ethnonyms, toponyms, lexicon and subject cards now list the lectures/talks that mention them (built from `video_catalog[].related_entities`), newest first, with duration and a total count.
 
 ### Changed
 - Raised the axe accessibility gate to require zero critical and zero serious violations on audited routes.

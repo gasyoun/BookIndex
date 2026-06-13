@@ -2233,6 +2233,7 @@ var BookIndex = (function(exports) {
 	var subjectCrosslinksLookupCache = null;
 	var reverseEdgesCache = null;
 	var SUBJECT_BY_LEXICON_INDEX = null;
+	var VIDEO_BACKLINK_INDEX = null;
 	var vizCacheWarmPromise = null;
 	var currentVizCleanup = null;
 	var vizScriptLoadPromises = /* @__PURE__ */ new Map();
@@ -6550,6 +6551,52 @@ var BookIndex = (function(exports) {
 		};
 		return SUBJECT_BY_LEXICON_INDEX;
 	}
+	// Reverse video links: entity (type + head) -> videos that reference it.
+	// Built lazily from video_catalog[].related_entities (the forward direction).
+	function videoBacklinkKey(type, head) {
+		const t = type === "subject_index" ? "subject" : String(type || "");
+		return t + "\0" + String(head || "");
+	}
+	function getVideoBacklinkIndex() {
+		if (VIDEO_BACKLINK_INDEX) return VIDEO_BACKLINK_INDEX;
+		const catalog = Array.isArray(APP_DATA && APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		// Do not memoize before the catalog module (99-extra) is loaded, otherwise
+		// an empty index would be cached permanently. Return a transient empty map.
+		if (!catalog.length) return /* @__PURE__ */ new Map();
+		const idx = /* @__PURE__ */ new Map();
+		for (const v of catalog) {
+			if (!v || !v.url) continue;
+			const rels = Array.isArray(v.related_entities) ? v.related_entities : [];
+			const seen = /* @__PURE__ */ new Set();
+			for (const rel of rels) {
+				if (!rel || !rel.head || !rel.type) continue;
+				const key = videoBacklinkKey(rel.type, rel.head);
+				if (seen.has(key)) continue; // one video counts once per entity
+				seen.add(key);
+				if (!idx.has(key)) idx.set(key, []);
+				idx.get(key).push(v);
+			}
+		}
+		// Newest first; stable tiebreak by title.
+		for (const list of idx.values()) {
+			list.sort((a, b) => {
+				const da = String(a.date || ""), db = String(b.date || "");
+				if (da !== db) return da < db ? 1 : -1;
+				return String(a.title || "").localeCompare(String(b.title || ""), "ru");
+			});
+		}
+		VIDEO_BACKLINK_INDEX = idx;
+		return VIDEO_BACKLINK_INDEX;
+	}
+	function formatVideoDuration(sec) {
+		const total = Number(sec);
+		if (!Number.isFinite(total) || total <= 0) return "";
+		const h = Math.floor(total / 3600);
+		const m = Math.floor(total % 3600 / 60);
+		const s = Math.floor(total % 60);
+		const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
+		return (h > 0 ? h + ":" : "") + mm + ":" + String(s).padStart(2, "0");
+	}
 	function appendListItemContent(item, it, itemType, showTypeLabel) {
 		if (!item || !it) return;
 		if ((itemType === "names" || currentEntity === "all" && itemType === "names") && it.subcategory) {
@@ -7313,6 +7360,24 @@ var BookIndex = (function(exports) {
         <span>${escapeHtml(lnk.head)}</span>
         ${lnk.weight > 1 ? `<span class="card-inline-row-meta">· ${escapeHtml(lnk.weight)}</span>` : "<span></span>"}
       </a>`;
+			html += "</div>";
+		}
+		// Reverse video links: lectures/talks that reference this entity.
+		const videoBacklinks = getVideoBacklinkIndex().get(videoBacklinkKey(eType, it.head)) || [];
+		if (videoBacklinks.length) {
+			const VIDEO_CARD_LIMIT = 8;
+			const shown = videoBacklinks.slice(0, VIDEO_CARD_LIMIT);
+			const rest = videoBacklinks.length - shown.length;
+			html += `<h3>Видео <span class="card-video-count">${videoBacklinks.length}</span></h3><div class="card-video-links">`;
+			for (const v of shown) {
+				const dur = formatVideoDuration(v.duration);
+				const durHtml = dur ? `<span class="card-video-dur">${escapeHtml(dur)}</span>` : "";
+				html += `<a class="card-video-link" href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
+        <span class="card-video-title">${escapeHtml(v.title)}</span>
+        ${durHtml}
+      </a>`;
+			}
+			if (rest > 0) html += `<span class="card-video-more">и ещё ${rest}</span>`;
 			html += "</div>";
 		}
 		// Linguistic Database Interoperability (Linked Open Data)

@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-kEHB2cbRVlJNJfXCuq5oQlMi4ieJ8hJ7EFWcUrgGM1k=' 'sha256-YdUbFNRujMvCmk2kU7xW2tt1zrWifE2jrbX4HRcsrYg='; worker-src 'self' blob:; style-src 'self' 'sha256-LT06FAnMirhCIXFZiSY98qHzZf8m8V5QGTGFMyAQfe4='; style-src-elem 'self' 'sha256-LT06FAnMirhCIXFZiSY98qHzZf8m8V5QGTGFMyAQfe4='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-047TRc33tSQsFEKX1Ne+KYPHhc10+pWhWAcW7KlIaLo=' 'sha256-YKSAP40b0mBTf3D0BLt84hY/YkpzmHA8cT2b/2MSSPg='; worker-src 'self' blob:; style-src 'self' 'sha256-ciPqJDV9M5775CKbOGjRC4bRpqvv2USIXeb+DptwUL0='; style-src-elem 'self' 'sha256-ciPqJDV9M5775CKbOGjRC4bRpqvv2USIXeb+DptwUL0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -4209,6 +4209,67 @@
     border-color: #70ba86;
   }
 
+  /* Reverse video links on entity cards */
+  .card-video-count {
+    display: inline-block;
+    min-width: 18px;
+    padding: 0 6px;
+    margin-left: 6px;
+    border-radius: 9px;
+    background: var(--line);
+    color: var(--title);
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .card-video-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .card-video-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #f7f1e6;
+    color: #8c3a15;
+    text-decoration: none;
+    font-size: 13px;
+    transition: var(--transition-smooth);
+  }
+  .card-video-link:hover {
+    background: #ebdcc9;
+    border-color: var(--line-strong);
+  }
+  .card-video-link::before {
+    content: "▶";
+    color: #c0392b;
+    font-size: 10px;
+    flex: 0 0 auto;
+  }
+  .card-video-title {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card-video-dur {
+    flex: 0 0 auto;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
+  .card-video-more {
+    color: var(--muted);
+    font-size: 12px;
+    padding: 2px 2px 0;
+  }
+
   /* Accent Paradigm Reconstructor Styles */
   .accent-recon-container {
     background: var(--surface);
@@ -5496,7 +5557,7 @@
         <button type="button" class="citation-tab-btn" data-style="chicago">Chicago</button>
       </div>
       <div class="citation-box-container">
-        <div class="citation-box" id="citation-widget-card-ugrya-2-box" aria-live="polite">Зализняк А. А. Справочная статья «у́гря» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon_reverse/list/item/lexicon_reverse/ugrya-2" target="_blank">https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon_reverse/list/item/lexicon_reverse/ugrya-2</a> (дата обращения: 29.05.2026).</div>
+        <div class="citation-box" id="citation-widget-card-ugrya-2-box" aria-live="polite">Зализняк А. А. Справочная статья «у́гря» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon_reverse/list/item/lexicon_reverse/ugrya-2" target="_blank">https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon_reverse/list/item/lexicon_reverse/ugrya-2</a> (дата обращения: 13.06.2026).</div>
         <button type="button" class="citation-copy-btn" id="citation-widget-card-ugrya-2-copy-btn">Копировать</button>
       </div>
     </div>
@@ -5507,7 +5568,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "4da178b287c1",
+  "build_id": "155d728b9649",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -5815,7 +5876,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "4da178b287c1";
+	var APP_BUILD_ID$1 = "155d728b9649";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6701,8 +6762,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "4da178b287c1").trim();
-		if (buildId && buildId !== "4da178b287c1") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "155d728b9649").trim();
+		if (buildId && buildId !== "155d728b9649") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -7896,6 +7957,7 @@ var BookIndex = (function(exports) {
 	var subjectCrosslinksLookupCache = null;
 	var reverseEdgesCache = null;
 	var SUBJECT_BY_LEXICON_INDEX = null;
+	var VIDEO_BACKLINK_INDEX = null;
 	var vizCacheWarmPromise = null;
 	var currentVizCleanup = null;
 	var vizScriptLoadPromises = /* @__PURE__ */ new Map();
@@ -10144,7 +10206,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "4da178b287c1" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "155d728b9649" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -12213,6 +12275,52 @@ var BookIndex = (function(exports) {
 		};
 		return SUBJECT_BY_LEXICON_INDEX;
 	}
+	// Reverse video links: entity (type + head) -> videos that reference it.
+	// Built lazily from video_catalog[].related_entities (the forward direction).
+	function videoBacklinkKey(type, head) {
+		const t = type === "subject_index" ? "subject" : String(type || "");
+		return t + "\0" + String(head || "");
+	}
+	function getVideoBacklinkIndex() {
+		if (VIDEO_BACKLINK_INDEX) return VIDEO_BACKLINK_INDEX;
+		const catalog = Array.isArray(APP_DATA && APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+		// Do not memoize before the catalog module (99-extra) is loaded, otherwise
+		// an empty index would be cached permanently. Return a transient empty map.
+		if (!catalog.length) return /* @__PURE__ */ new Map();
+		const idx = /* @__PURE__ */ new Map();
+		for (const v of catalog) {
+			if (!v || !v.url) continue;
+			const rels = Array.isArray(v.related_entities) ? v.related_entities : [];
+			const seen = /* @__PURE__ */ new Set();
+			for (const rel of rels) {
+				if (!rel || !rel.head || !rel.type) continue;
+				const key = videoBacklinkKey(rel.type, rel.head);
+				if (seen.has(key)) continue; // one video counts once per entity
+				seen.add(key);
+				if (!idx.has(key)) idx.set(key, []);
+				idx.get(key).push(v);
+			}
+		}
+		// Newest first; stable tiebreak by title.
+		for (const list of idx.values()) {
+			list.sort((a, b) => {
+				const da = String(a.date || ""), db = String(b.date || "");
+				if (da !== db) return da < db ? 1 : -1;
+				return String(a.title || "").localeCompare(String(b.title || ""), "ru");
+			});
+		}
+		VIDEO_BACKLINK_INDEX = idx;
+		return VIDEO_BACKLINK_INDEX;
+	}
+	function formatVideoDuration(sec) {
+		const total = Number(sec);
+		if (!Number.isFinite(total) || total <= 0) return "";
+		const h = Math.floor(total / 3600);
+		const m = Math.floor(total % 3600 / 60);
+		const s = Math.floor(total % 60);
+		const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
+		return (h > 0 ? h + ":" : "") + mm + ":" + String(s).padStart(2, "0");
+	}
 	function appendListItemContent(item, it, itemType, showTypeLabel) {
 		if (!item || !it) return;
 		if ((itemType === "names" || currentEntity === "all" && itemType === "names") && it.subcategory) {
@@ -12976,6 +13084,24 @@ var BookIndex = (function(exports) {
         <span>${escapeHtml(lnk.head)}</span>
         ${lnk.weight > 1 ? `<span class="card-inline-row-meta">· ${escapeHtml(lnk.weight)}</span>` : "<span></span>"}
       </a>`;
+			html += "</div>";
+		}
+		// Reverse video links: lectures/talks that reference this entity.
+		const videoBacklinks = getVideoBacklinkIndex().get(videoBacklinkKey(eType, it.head)) || [];
+		if (videoBacklinks.length) {
+			const VIDEO_CARD_LIMIT = 8;
+			const shown = videoBacklinks.slice(0, VIDEO_CARD_LIMIT);
+			const rest = videoBacklinks.length - shown.length;
+			html += `<h3>Видео <span class="card-video-count">${videoBacklinks.length}</span></h3><div class="card-video-links">`;
+			for (const v of shown) {
+				const dur = formatVideoDuration(v.duration);
+				const durHtml = dur ? `<span class="card-video-dur">${escapeHtml(dur)}</span>` : "";
+				html += `<a class="card-video-link" href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
+        <span class="card-video-title">${escapeHtml(v.title)}</span>
+        ${durHtml}
+      </a>`;
+			}
+			if (rest > 0) html += `<span class="card-video-more">и ещё ${rest}</span>`;
 			html += "</div>";
 		}
 		// Linguistic Database Interoperability (Linked Open Data)
