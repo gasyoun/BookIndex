@@ -1,4 +1,26 @@
 name: BookIndex CodeQL config
 
+# CodeQL (javascript-typescript) extracts JS inlined in HTML. The standalone app
+# (aaz-index.html) and the ~700 prerendered index pages each inline the full
+# ~632 KiB app script, so extracting them overruns the 10-minute analysis budget
+# and the "Analyze JavaScript" job is cancelled on every commit. Those pages are
+# generated build artifacts (npm run build -> scripts/prerender.mjs); their JS is
+# identical to v3_app.js, which is scanned directly. Ignore generated output and
+# vendored/minified libraries so CodeQL scans only real source (index.html,
+# v3_app.js, src/, scripts/, tests/, configs).
 paths-ignore:
   - aaz-index.html
+  - all/**
+  - names/**
+  - toponyms/**
+  - ethnonyms/**
+  - languages/**
+  - lexicon/**
+  - lexicon_reverse/**
+  - lexicon_tech/**
+  - subject/**
+  - materials/**
+  - scholar/**
+  - vendor/**
+  - dist-runtime/**
+  - dist-vite/**
