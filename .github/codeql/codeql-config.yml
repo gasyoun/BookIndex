@@ -1,15 +1,18 @@
 name: BookIndex CodeQL config
 
-# CodeQL (javascript-typescript) extracts JS inlined in HTML. The standalone app
-# (aaz-index.html) and the ~700 prerendered index pages each inline the full
-# ~632 KiB app script, so extracting them overruns the 10-minute analysis budget
-# and the "Analyze JavaScript" job is cancelled on every commit. Those pages are
-# generated build artifacts (npm run build -> scripts/prerender.mjs); their JS is
-# identical to v3_app.js, which is scanned directly. Ignore generated output and
-# vendored/minified libraries so CodeQL scans only real source (index.html,
-# v3_app.js, src/, scripts/, tests/, configs).
+# CodeQL must analyse only hand-written JavaScript source (v3_app.js, scripts/, src/,
+# tests/, top-level configs). The directories below are committed BUILD ARTIFACTS, not
+# source: scripts/prerender.mjs (run by `npm run build`) emits ~700 prerendered
+# index.html pages, and EACH inlines the full ~632 KiB v3_app.js plus JSON-LD and a
+# redirect script. Extracting JS from all of them blows past the 10-minute job cap, so
+# every run on main was cancelled ("The operation was canceled"). Their JS is identical
+# to v3_app.js, which is already analysed on its own, so excluding them loses no coverage.
 paths-ignore:
   - aaz-index.html
+  # Prerendered category pages: <cat>/list/index.html and <cat>/list/item/**/index.html
+  # (all, names, toponyms, ethnonyms, languages, lexicon, lexicon_reverse, lexicon_tech,
+  # subject). Whole dirs are generated HTML — no JS source lives under them. If a new
+  # top-level category is ever added, add its dir here too.
   - all/**
   - names/**
   - toponyms/**
@@ -19,8 +22,11 @@ paths-ignore:
   - lexicon_reverse/**
   - lexicon_tech/**
   - subject/**
+  # Prerendered materials (lecture_pages/**, lectures, sources, tasks) and scholar/viz.
   - materials/**
   - scholar/**
+  # Vendored minified libraries (root + public copy) and the runtime build copy
+  # (duplicate of v3_app.js + vendor).
   - vendor/**
+  - public/vendor/**
   - dist-runtime/**
-  - dist-vite/**
