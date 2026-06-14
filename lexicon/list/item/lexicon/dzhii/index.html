@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-/uXyqhPFPc3JT+wTsq3ubL4G+QvFet2oCbrGA+99X+8=' 'sha256-NqpFRNnUav/1raAx7U+YfzQUDdiOFILC1XTs3l9llxw='; worker-src 'self' blob:; style-src 'self' 'sha256-3aWWPxsKJxJ/gcI19flQh0Ui7nFU5bozZYl1GPiXVrY='; style-src-elem 'self' 'sha256-3aWWPxsKJxJ/gcI19flQh0Ui7nFU5bozZYl1GPiXVrY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-5srB4TyDxtlFLdxJszwTUrg3NAsb7lij1Uit6yUbLDw=' 'sha256-EjC+yBVHWIuT/PM7wPednk3emeHBfMX1Mx+nKdTgPuc='; worker-src 'self' blob:; style-src 'self' 'sha256-3aWWPxsKJxJ/gcI19flQh0Ui7nFU5bozZYl1GPiXVrY='; style-src-elem 'self' 'sha256-3aWWPxsKJxJ/gcI19flQh0Ui7nFU5bozZYl1GPiXVrY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -91,8 +91,7 @@
   }
 }
 </script>
-<link rel="stylesheet" href="../../../../../vendor/leaflet.css" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="../../../../../vendor/leaflet.css"></noscript>
+<link rel="stylesheet" href="../../../../../vendor/leaflet.css">
 <script src="../../../../../vendor/leaflet.js"></script>
 <script src="../../../../../vendor/fuse.basic.min.js"></script>
 <script src="../../../../../vendor/d3.v7.min.js"></script>
@@ -5947,7 +5946,7 @@
         <button type="button" class="citation-tab-btn" data-style="chicago">Chicago</button>
       </div>
       <div class="citation-box-container">
-        <div class="citation-box" id="citation-widget-card-dzhii-box" aria-live="polite">Зализняк А. А. Справочная статья «джии» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon/list/item/lexicon/dzhii/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon/list/item/lexicon/dzhii/</a> (дата обращения: 13.06.2026).</div>
+        <div class="citation-box" id="citation-widget-card-dzhii-box" aria-live="polite">Зализняк А. А. Справочная статья «джии» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon/list/item/lexicon/dzhii/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon/list/item/lexicon/dzhii/</a> (дата обращения: 14.06.2026).</div>
         <button type="button" class="citation-copy-btn" id="citation-widget-card-dzhii-copy-btn">Копировать</button>
       </div>
     </div>
@@ -5958,7 +5957,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "b33ee2c58cf9",
+  "build_id": "ba25d58cd31f",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6266,7 +6265,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "b33ee2c58cf9";
+	var APP_BUILD_ID$1 = "ba25d58cd31f";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7156,8 +7155,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "b33ee2c58cf9").trim();
-		if (buildId && buildId !== "b33ee2c58cf9") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "ba25d58cd31f").trim();
+		if (buildId && buildId !== "ba25d58cd31f") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -10632,7 +10631,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "b33ee2c58cf9" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "ba25d58cd31f" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
