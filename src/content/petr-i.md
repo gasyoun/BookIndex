@@ -1,6 +1,6 @@
 ---
-id: "Пётр I"
-title: "Пётр I"
+id: "Петр I"
+title: "Петр I"
 source_key: "names"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "names-0ef9c67e-7f7a-5025-b8f4-4c0a49b3553d",
-  "head": "Пётр I",
+  "head": "Петр I",
   "aliases": [],
   "occurrences": {
     "mumintroll": {
@@ -46,7 +46,7 @@ _Основное текстовое поле не найдено; см. JSON н
     "История русского языка",
     "Порядок слов"
   ],
-  "wiki": "https://ru.wikipedia.org/wiki/Пётр_I",
+  "wiki": "https://ru.wikipedia.org/wiki/Петр_I",
   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Peter_der-Grosse_1838.jpg/220px-Peter_der-Grosse_1838.jpg"
 }
 ```

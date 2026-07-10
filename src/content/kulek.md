@@ -1,6 +1,6 @@
 ---
-id: "кулёк"
-title: "кулёк"
+id: "кулек"
+title: "кулек"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon-65dc0c87-87f3-5891-b463-65ab7f8b09c6",
-  "head": "кулёк",
+  "head": "кулек",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

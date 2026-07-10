@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - KWIC over lectures matches accent-tolerantly — «победа» also matches the stressed transcript form «побе́да».
-- Entity-card secondary actions (show on map, copy link, export .md) collapse into a «⋯ ещё» menu; prev/next/back stay visible (B5).
+- Entity-card secondary actions (show on map, copy link, export .md) collapse into a «⋯ еще» menu; prev/next/back stay visible (B5).
 - Regression E2E suite (`tests/e2e/session-features.spec.js`) covering the home task dashboard, chapter ribbon, lecture KWIC, video gallery, card order/dedup/actions, page citations and the lecture↔video link.
 - Authority review worklist: `scripts/retier_authority_candidates.py` (`npm run authority:retier`) emits `data/authority_review.{json,csv}` — the 209 unconfirmed Wikidata candidates tiered by decision effort (decide / research / none) with a suggested QID and a `decision` column.
 

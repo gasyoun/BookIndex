@@ -6,7 +6,7 @@
 
 README в целом актуален: версия `v4.3`, статус проекта, ключевые файлы и основные разделы соответствуют текущему состоянию репозитория. Но таблица структуры и список проектной документации неполные.
 
-### Что считать уже подтверждённым
+### Что считать уже подтвержденным
 - `README.md` уже корректно описывает `v4.3`, single-file SPA, `aaz-index.html`, `app_data.json`, `codex_instruction_v2.md`, `CODEX_WORKFLOW_RU.md`, `KIDS_GUIDE_RU.md`.
 - В репозитории реально существуют:
   - `CODEX_VISUALIZATIONS_RU.md`
@@ -101,11 +101,11 @@ README после правки должен:
 
 ## Definition of Done
 
-- [ ] Обновлён `README.md`
+- [ ] Обновлен `README.md`
 - [ ] В README появились ссылки на:
   - [ ] `CODEX_VISUALIZATIONS_RU.md`
   - [ ] `CODEX_VIZ_INSTRUCTIONS_RU.md`
   - [ ] `ISSUE_PUBLISH_CHECKLIST_RU.md`
 - [ ] README не стал заметно длиннее и тяжелее для чтения
 - [ ] Не изменены runtime/code/data файлы
-- [ ] Сохранён стиль текущего README
+- [ ] Сохранен стиль текущего README

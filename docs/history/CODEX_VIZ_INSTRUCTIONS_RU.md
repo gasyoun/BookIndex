@@ -30,7 +30,7 @@ function buildVizCache(appData) {
     });
   });
 
-  // 2. coGraph: рёбра совместных упоминаний имён по страницам
+  // 2. coGraph: ребра совместных упоминаний имен по страницам
   cache.coGraph = (appData.edges || []).map(e => ({
     source: e.source, target: e.target, weight: e.weight
   }));
@@ -90,7 +90,7 @@ function buildVizCache(appData) {
 function renderDiscoveryTimeline(container) {
   const cache = buildVizCache(APP_DATA);
 
-  // Объединить события хронологии + учёных с эпохой
+  // Объединить события хронологии + ученых с эпохой
   const items = [];
   (APP_DATA.scholar.chronology || []).forEach(e => {
     items.push({ year: e.year, label: e.event, type: 'discovery', page: e.page });
@@ -114,7 +114,7 @@ function renderDiscoveryTimeline(container) {
 ### Критерии готовности
 - [ ] Лента рендерится в порядке возрастания дат (−1500 → 2004)
 - [ ] Чекбоксы фильтруют через `display:none` без перестройки DOM
-- [ ] Клик на учёного → `navigateTo('names', 'card', head)`
+- [ ] Клик на ученого → `navigateTo('names', 'card', head)`
 - [ ] Пустое состояние если все фильтры сняты
 
 ---
@@ -162,7 +162,7 @@ function renderHeatmapMatrix(container, topN = 20) {
 **Коммит-prefix:** `feat(viz): cooccurrence-graph`
 
 ### Данные
-- `APP_DATA.edges` — 60 рёбер `{source, target, weight}`
+- `APP_DATA.edges` — 60 ребер `{source, target, weight}`
 - `APP_DATA.colors` — цвета по subcategory
 
 ### Что реализовать
@@ -310,7 +310,7 @@ Labels: `priority:P1` `area:analytics` `type:feature` `phase:v4`
 
 ## Definition of Done
 
-Модуль завершён если:
+Модуль завершен если:
 1. Файл `scripts/viz/viz-0N-*.js` запушен в `main`
 2. Корректно рендерится в Chrome, Firefox, Safari (desktop + mobile)
 3. Нет `console.error`

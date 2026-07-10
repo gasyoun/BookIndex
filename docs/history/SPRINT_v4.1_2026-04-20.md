@@ -10,10 +10,10 @@
 
 | Issue | Статус в GitHub | Фактический статус | Подтверждение |
 |---|---|---|---|
-| [#41](https://github.com/gasyoun/BookIndex/issues/41) Нечёткий поиск (Fuse.js) | CLOSED | Реализовано | `v3_app.js`: `ensureGlobalSearchFuse`, `buildGlobalSearchFuseRecords`; `v3_template.html`: локальный `vendor/fuse.basic.min.js`; e2e: `global search fuzzy-matches typo query` (pass) |
+| [#41](https://github.com/gasyoun/BookIndex/issues/41) Нечеткий поиск (Fuse.js) | CLOSED | Реализовано | `v3_app.js`: `ensureGlobalSearchFuse`, `buildGlobalSearchFuseRecords`; `v3_template.html`: локальный `vendor/fuse.basic.min.js`; e2e: `global search fuzzy-matches typo query` (pass) |
 | [#42](https://github.com/gasyoun/BookIndex/issues/42) Постоянные якорные ссылки | CLOSED | Реализовано | `v3_app.js`: `HASH_ROUTE_PREFIX = 'v4'`, `buildCanonicalHash`, `buildItemHash`, `buildScholarAnchorHash`; e2e: `canonical deep-link reload keeps card state...` (pass) |
 | [#43](https://github.com/gasyoun/BookIndex/issues/43) KWIC-конкордансный просмотрщик | CLOSED | Реализовано (MVP) | `v3_app.js`: таб `kwic`, контексты `lexicon/glossary`, сортировка, фильтр страниц, переходы; e2e: `materials KWIC panel filters contexts...` (pass) |
-| [#44](https://github.com/gasyoun/BookIndex/issues/44) Тёмная тема | OPEN | Локально выполнено, готово к закрытию в GitHub | `v3_template.html`: карточки/граф/карта переведены на theme vars + повышен контраст `chart-intro`; `v3_app.js`: `THEME_STORAGE_KEY`, `applyTheme`, `toggleTheme`; e2e: persistence + contrast smoke (pass) |
+| [#44](https://github.com/gasyoun/BookIndex/issues/44) Темная тема | OPEN | Локально выполнено, готово к закрытию в GitHub | `v3_template.html`: карточки/граф/карта переведены на theme vars + повышен контраст `chart-intro`; `v3_app.js`: `THEME_STORAGE_KEY`, `applyTheme`, `toggleTheme`; e2e: persistence + contrast smoke (pass) |
 
 ### QA baseline (2026-04-17)
 
@@ -55,7 +55,7 @@
 
 ### Day 6 (2026-04-25) - Perf pass + docs
 
-- [x] Профиль рендера KWIC на типичном объёме данных.
+- [x] Профиль рендера KWIC на типичном объеме данных.
 - [x] Ограничение/виртуализация списка при больших выдачах (при необходимости).
 - [x] Черновик release notes `v4.1.0`.
 
@@ -67,7 +67,7 @@
 
 ## Вне Плана v4.1 (Ранний Старт v4.2)
 
-- [x] `#45` D3 graph: `names/graph` переведён на D3 (`vendor/d3.v7.min.js`) с zoom/pan, фильтром минимального веса ребра, tooltip/legend и переходом в карточку; добавлен smoke `names graph supports weight filter, tooltip and navigation to card` (pass).
+- [x] `#45` D3 graph: `names/graph` переведен на D3 (`vendor/d3.v7.min.js`) с zoom/pan, фильтром минимального веса ребра, tooltip/legend и переходом в карточку; добавлен smoke `names graph supports weight filter, tooltip and navigation to card` (pass).
 - [x] `#46` PWA foundations: добавлены `manifest.webmanifest`, `sw.js`, иконки, регистрация service worker и smoke `PWA manifest and service worker are available` (pass).
 - [x] `#47` BibTeX export: реализован экспорт `.bib` для scholar bibliography, further reading и отдельных источников карточки; добавлен e2e smoke `BibTeX export works...` (pass).
 - [x] Синхронизировать статус `#45/#46/#47/#44` в GitHub: открыт PR [#48](https://github.com/gasyoun/BookIndex/pull/48), в issues добавлены комментарии со ссылкой на PR.
@@ -76,5 +76,5 @@
 
 - Все задачи `#41` и `#42` закрыты в GitHub и подтверждены тестами.
 - `#44` закрыт после smoke и контрастного pass.
-- `#43` доведён до MVP и покрыт минимум одним e2e smoke.
+- `#43` доведен до MVP и покрыт минимум одним e2e smoke.
 - CI green на `main`.

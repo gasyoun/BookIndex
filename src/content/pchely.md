@@ -1,6 +1,6 @@
 ---
-id: "пчёлы"
-title: "пчёлы"
+id: "пчелы"
+title: "пчелы"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon-193974ff-5080-5a6d-bb12-7c4bc696464f",
-  "head": "пчёлы",
+  "head": "пчелы",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

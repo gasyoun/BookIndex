@@ -1,6 +1,6 @@
 ---
-id: "сёстры"
-title: "сёстры"
+id: "сестры"
+title: "сестры"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon_reverse-b3c3444f-05fa-56e6-b495-e5c248dcc82e",
-  "head": "сёстры",
+  "head": "сестры",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

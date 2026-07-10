@@ -1,6 +1,6 @@
 ---
-id: "дёсны"
-title: "дёсны"
+id: "десны"
+title: "десны"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon-40522633-405d-5b2f-895a-7992881c61fa",
-  "head": "дёсны",
+  "head": "десны",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

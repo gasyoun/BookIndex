@@ -26,7 +26,7 @@ Hash-роутинг: `#v4/<entity>/<view>/item/<entity>/<slug>`
 | PWA (manifest + sw.js) | отдельные файлы | ✅ реализован |
 | D3-граф персоналий | функция `initD3Graph()` | ✅ реализован |
 | KWIC-панель + KWIC-jump из lexicon | `renderKwicPanel()`, `renderCardInRight()`, блок `.kwic-jump-btn` | ✅ реализована |
-| Двунаправленные рёбра в карточке names | `getReverseEdgesIndex()`, `collectNameRelationLinks()` | ✅ реализовано |
+| Двунаправленные ребра в карточке names | `getReverseEdgesIndex()`, `collectNameRelationLinks()` | ✅ реализовано |
 | Share deep link (копирование ссылки) | `copyCurrentUrl()`, кнопка `#copy-card-link` | ✅ реализовано |
 | Автолинк glossary в контекстах | `getContextEntityLinkEntries()`, блок glossary | ✅ реализовано |
 | Обратные ссылки lexicon → subject_index | `getSubjectByLexiconIndex()`, блок `.subject-crosslinks` в карточке lexicon | ✅ реализовано |
@@ -68,7 +68,7 @@ names→toponyms = 23/27, names→languages = 56/56.
 - [ ] `runtime_test.py` → `21/21` или больше (без регрессий)
 - [ ] `npx playwright test` → все pass
 - [ ] `aaz-index.html` пересобран через `build_aaz_index.py` и закоммичен
-- [ ] Нет регрессий: `autoLinkEntities`, crosslinks, breadcrumb, KWIC, KWIC-jump, D3-граф, share-кнопка, glossary autolink, lexicon→subject backlinks, тёмная тема
+- [ ] Нет регрессий: `autoLinkEntities`, crosslinks, breadcrumb, KWIC, KWIC-jump, D3-граф, share-кнопка, glossary autolink, lexicon→subject backlinks, темная тема
 - [ ] PR содержит описание изменений
 
 ---
