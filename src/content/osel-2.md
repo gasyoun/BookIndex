@@ -1,6 +1,6 @@
 ---
-id: "осёл"
-title: "осёл"
+id: "осел"
+title: "осел"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon_reverse-e5875a1f-dd0b-5d0d-8cf8-00f29b782cd5",
-  "head": "осёл",
+  "head": "осел",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

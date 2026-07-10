@@ -1,6 +1,6 @@
 ---
-id: "котёл"
-title: "котёл"
+id: "котел"
+title: "котел"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon-bd0d2d9d-0d27-5d20-8bf0-7f374f95cf4c",
-  "head": "котёл",
+  "head": "котел",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

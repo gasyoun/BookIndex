@@ -1,6 +1,6 @@
 ---
-id: "вёсны"
-title: "вёсны"
+id: "весны"
+title: "весны"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon-62bc8a1f-8c13-5bc8-8e16-cf6253dd26e1",
-  "head": "вёсны",
+  "head": "весны",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

@@ -1,6 +1,6 @@
 ---
-id: "зёрна"
-title: "зёрна"
+id: "зерна"
+title: "зерна"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon_reverse-0b5dfed1-dc09-5155-8d25-bebe36cff853",
-  "head": "зёрна",
+  "head": "зерна",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

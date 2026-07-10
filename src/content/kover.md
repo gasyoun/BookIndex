@@ -1,6 +1,6 @@
 ---
-id: "ковёр"
-title: "ковёр"
+id: "ковер"
+title: "ковер"
 source_key: "lexicon"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon-54408fd6-3448-51e2-bbfe-5788aa04dc1e",
-  "head": "ковёр",
+  "head": "ковер",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

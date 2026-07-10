@@ -1,6 +1,6 @@
 ---
-id: "жёны"
-title: "жёны"
+id: "жены"
+title: "жены"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon_reverse-c74eb368-e082-5c70-a48f-4524b851496d",
-  "head": "жёны",
+  "head": "жены",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

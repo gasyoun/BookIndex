@@ -5,9 +5,9 @@
 ## 0. Текущее подтверждение, 2026-05-01
 
 - GitHub: открытых PR нет; issue [#82](https://github.com/gasyoun/BookIndex/issues/82) по LICENSE получила owner decision — Apache License 2.0.
-- PR [#81](https://github.com/gasyoun/BookIndex/pull/81) остаётся последним крупным merge-scope: VIZ-00..VIZ-07 уже реализованы, в v4.4 по ним актуальны только стабилизация, smoke и polish.
+- PR [#81](https://github.com/gasyoun/BookIndex/pull/81) остается последним крупным merge-scope: VIZ-00..VIZ-07 уже реализованы, в v4.4 по ним актуальны только стабилизация, smoke и polish.
 - Локальная текущая волна UI hardening расширена: кроме gallery / Russian evolution / phonetic laws / tasks / lectures / page trends, вынесены в CSS повторяющиеся scholar intro, bibliography, controversy, original forms, birch filters/tables, chronology, isoglosses, slovo, accent paradigms, correspondence table и reconstruction styles.
-- После текущей волны source-level ` style="..."` в `v3_app.js` снижен с 172 до 11 и закреплён allowlist guard-командой `npm run check:ui`; production `home/home` и скрытый experimental `home/home_decl` переведены на общие CSS-классы/media-query, фиксированные category dots / moderator mark / timeline empty state / SVG cursor/root styles вынесены в CSS. Оставшиеся случаи — осознанные динамические custom properties, data-driven widths/colors и SVG text styling.
+- После текущей волны source-level ` style="..."` в `v3_app.js` снижен с 172 до 11 и закреплен allowlist guard-командой `npm run check:ui`; production `home/home` и скрытый experimental `home/home_decl` переведены на общие CSS-классы/media-query, фиксированные category dots / moderator mark / timeline empty state / SVG cursor/root styles вынесены в CSS. Оставшиеся случаи — осознанные динамические custom properties, data-driven widths/colors и SVG text styling.
 - Проверки после текущей волны: `npm ci --dry-run --ignore-scripts`, `npm run check`, `python scripts/check_encoding.py`, `python scripts/validate_content.py app_data.json`, `python runtime_test.py` (`21/21`) проходят; `npm run check` включает `typecheck`, `check:js`, `check:ui` и `check:e2e` (`66/66`), `aaz-index.html` пересобран через `npm run build`.
 
 ## 1. Статус по GitHub
@@ -32,7 +32,7 @@
 ## 3. Что остается актуальным в v4.4
 
 - Текущая v4.4 technical wave закрыта в рабочей копии: UI hardening, smoke, check layer и малый helper split прошли полный локальный gate.
-- До merge/PR остаётся только финальная human review диффа и упаковка изменений; новых feature-scope задач в этот цикл не добавлять.
+- До merge/PR остается только финальная human review диффа и упаковка изменений; новых feature-scope задач в этот цикл не добавлять.
 - После любых дополнительных runtime/template правок по-прежнему пересобирать `aaz-index.html` и запускать полный gate.
 - Не переписывать крупные static/container templates без отдельного будущего scope: оставшиеся `innerHTML` места в основном являются panel-shell/table templates, а не быстрыми data-bearing row builders.
 - LICENSE теперь выбран владельцем: Apache License 2.0. Открытая техническая часть — добавить файл лицензии, обновить README и закрыть #82 через PR.
@@ -97,7 +97,7 @@ Viewport:
 
 ### Пакет D — малый кодовый распил
 
-Статус: выполнено в текущей рабочей копии. Сделаны безопасные переносы layout из JS в CSS для production home, tasks, lectures, chronology, scholar shell, scholar headings/links, scholar content sections, scholar tables/forms/reconstruction cards и page trends controls/cards. В коде добавлены маленькие hash/router helpers для чтения route markers и числовых параметров, aggregate cache теперь использует общий bounded-cache helper вместо дублирующей eviction-логики, `renderContent()` использует общий frozen renderer map и guard на отсутствующий content host, VIZ status rendering переведён на DOM/textContent, global search dropdown, mini-card rows, list rows, graph tooltip/legend, chronology rows, KWIC results и tasks history rows собираются DOM API вместо data-bearing `innerHTML`.
+Статус: выполнено в текущей рабочей копии. Сделаны безопасные переносы layout из JS в CSS для production home, tasks, lectures, chronology, scholar shell, scholar headings/links, scholar content sections, scholar tables/forms/reconstruction cards и page trends controls/cards. В коде добавлены маленькие hash/router helpers для чтения route markers и числовых параметров, aggregate cache теперь использует общий bounded-cache helper вместо дублирующей eviction-логики, `renderContent()` использует общий frozen renderer map и guard на отсутствующий content host, VIZ status rendering переведен на DOM/textContent, global search dropdown, mini-card rows, list rows, graph tooltip/legend, chronology rows, KWIC results и tasks history rows собираются DOM API вместо data-bearing `innerHTML`.
 
 Без большого Svelte/Alpine-переезда:
 

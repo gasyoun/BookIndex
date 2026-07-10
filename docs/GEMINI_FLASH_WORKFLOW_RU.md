@@ -290,7 +290,7 @@ const NAV_SECTIONS = [
       { label: 'Лекции', hash: '#v4/materials/lectures' },
       { label: 'Страница лекции', hash: '#v4/materials/lecture_pages' },
       { label: 'Сравнение лекций', hash: '#v4/materials/lecture_compare' },
-      { label: 'Что почитать ещё', hash: '#v4/materials/further_reading' },
+      { label: 'Что почитать еще', hash: '#v4/materials/further_reading' },
       { label: 'Корпус', hash: '#v4/materials/sources' }
     ]
   },

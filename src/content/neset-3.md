@@ -1,6 +1,6 @@
 ---
-id: "несёт"
-title: "несёт"
+id: "несет"
+title: "несет"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon_reverse-2e1b3829-fd73-50f4-9dd3-c8f2861cba31",
-  "head": "несёт",
+  "head": "несет",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

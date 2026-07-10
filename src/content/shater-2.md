@@ -1,6 +1,6 @@
 ---
-id: "шатёр"
-title: "шатёр"
+id: "шатер"
+title: "шатер"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon_reverse-88fb69db-7262-510b-a003-bbe2dbb88da8",
-  "head": "шатёр",
+  "head": "шатер",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

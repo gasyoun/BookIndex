@@ -1,6 +1,6 @@
 ---
-id: "перёд"
-title: "перёд"
+id: "перед"
+title: "перед"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon_reverse-e67bd12d-f0fc-5b57-b6aa-ced802bf7c04",
-  "head": "перёд",
+  "head": "перед",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

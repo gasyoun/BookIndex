@@ -46,9 +46,9 @@
 
 | Раздел | Что там |
 |---|---|
-| [Имена](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/names/list) | Люди из книги — учёные, авторы, исторические персонажи |
+| [Имена](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/names/list) | Люди из книги — ученые, авторы, исторические персонажи |
 | [Топонимы](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/toponyms/list) | Города, страны и реки из книги |
-| [Этнонимы](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/ethnonyms/list) | Названия народов и племён |
+| [Этнонимы](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/ethnonyms/list) | Названия народов и племен |
 | [Языки](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/languages/list) | Языки мира — с деревом семейств и графом |
 | [Лексикон](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/lexicon/list) | Слова и термины из книги |
 | [Квизы и тесты](https://gasyoun.github.io/BookIndex/aaz-index.html#v4/scholar/quiz) | Интерактивный тренажер лингвиста |

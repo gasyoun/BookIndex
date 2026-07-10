@@ -1,6 +1,6 @@
 ---
-id: "сёла"
-title: "сёла"
+id: "села"
+title: "села"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon_reverse-89452442-e645-5039-981e-6478e4b84e7b",
-  "head": "сёла",
+  "head": "села",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

@@ -1,6 +1,6 @@
 ---
-id: "мётлы"
-title: "мётлы"
+id: "метлы"
+title: "метлы"
 source_key: "lexicon_reverse"
 source: "Из жизни слов и языков"
 book_id: "mumintroll"
@@ -15,7 +15,7 @@ _Основное текстовое поле не найдено; см. JSON н
 ```json
 {
   "canonical_id": "lexicon_reverse-2ee012b2-fd74-508f-8c72-4c8f844b0919",
-  "head": "мётлы",
+  "head": "метлы",
   "aliases": [],
   "occurrences": {
     "mumintroll": {

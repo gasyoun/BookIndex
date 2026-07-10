@@ -40,7 +40,7 @@ _Основное текстовое поле не найдено; см. JSON н
   "chapters": [
     "Берестяные грамоты"
   ],
-  "wiki": "https://ru.wikipedia.org/wiki/Вяземский,_Пётр_Андреевич",
+  "wiki": "https://ru.wikipedia.org/wiki/Вяземский,_Петр_Андреевич",
   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Vyazemsky.jpg/220px-Vyazemsky.jpg"
 }
 ```
