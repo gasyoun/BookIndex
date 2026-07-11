@@ -99,6 +99,16 @@ _Created: 14-04-2026 · Last updated: 11-07-2026_
 *   **Дашборд**: [`pipeline/index.html`](https://github.com/gasyoun/BookIndex/blob/main/pipeline/index.html) — самодостаточная страница (данные встроены, работает офлайн); фильтры по стадии/теме, подсветка висящих заданий и проблем транскрибации. Регенерация: `npm run pipeline:dashboard`.
 *   **Стадии**: `в очереди → автотранскрибация → сверка → 1/2/3-я читка → предверстка → верстка → готово`.
 
+## Audit Summary
+
+Сводка контроля качества указателя (источник: [`tests/index-audit-queue.json`](https://github.com/gasyoun/BookIndex/blob/main/tests/index-audit-queue.json), проверяется `scripts/validate_content.py`):
+
+- 0 suspicious heads
+- 0 без triage
+- 0 sort inversions
+- 0 duplicate-head groups
+- найдено 11 из 11 терминов
+
 ---
 
 ## Как цитировать
