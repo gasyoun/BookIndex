@@ -1,14 +1,16 @@
 # BookIndex (Zalizniakiada)
 
-**BookIndex** — автономный интерактивный веб-справочник, корпусная лаборатория и интеллектуальная база знаний по научному наследию **А. А. Зализняка**. 
+_Created: 14-04-2026 · Last updated: 11-07-2026_
+
+**BookIndex** — автономный интерактивный веб-справочник, корпусная лаборатория и интеллектуальная база знаний по научному наследию **А. А. Зализняка**.
 
 Проект эволюционировал из простого индекса в полноценную исследовательскую платформу для цифровых гуманитарных наук: единый автономный HTML-артефакт, корпусная навигация, KWIC-конкорданс, карты, графы и научный аппарат.
 
 - **Демо**: [gasyoun.github.io/BookIndex/index.html](https://gasyoun.github.io/BookIndex/index.html)
-- **Статус**: v2.2.0 «SEO, security & CI hardening» (обновлено 2026-05-17).
-- **Руководство для детей**: [KIDS_GUIDE_RU.md](KIDS_GUIDE_RU.md)
-- **Лицензии**: код — [Apache License 2.0](LICENSE); данные указателя — CC BY 4.0; цитаты из книг — с разрешения правообладателей ([LICENSE-DATA.md](LICENSE-DATA.md))
-- **Как цитировать**: см. [CITATION.cff](CITATION.cff) (кнопка «Cite this repository» на GitHub) и раздел [«Как цитировать»](#как-цитировать) ниже
+- **Текущая версия**: 2.2.0 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)). Крупный пласт доработок (треки A/B/C — авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) уже в дереве и ждет релиза — см. раздел `[Unreleased]` в [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
+- **Руководство для детей**: [KIDS_GUIDE_RU.md](https://github.com/gasyoun/BookIndex/blob/main/KIDS_GUIDE_RU.md)
+- **Лицензии**: код — [Apache License 2.0](https://github.com/gasyoun/BookIndex/blob/main/LICENSE); данные указателя — CC BY 4.0; цитаты из книг — с разрешения правообладателей ([LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md))
+- **Как цитировать**: см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (кнопка «Cite this repository» на GitHub) и раздел [«Как цитировать»](#как-цитировать) ниже
 
 ---
 
@@ -65,17 +67,17 @@
 ### Структура проекта
 | Файл / Папка | Роль |
 | :--- | :--- |
-| `index.html` | Публичная landing-страница и SEO-вход. |
-| `v3_template.html` | HTML-шаблон standalone-приложения. |
-| `v3_app.js` | Основной runtime приложения. |
-| `app_data.json` | База знаний в формате JSON (6 MB+). |
-| `data/modules/` | Lazy-loaded JSON chunks used by the standalone app and pre-cached for offline mode. |
-| `src/` | Модульные исходники для контролируемой пересборки `v3_app.js`. |
-| `public/` | Ассеты, копируемые Vite в `dist-vite/`. |
-| `vendor/` | Локально закрепленные runtime-библиотеки. |
-| `scripts/` | Сборка, проверки, импорт данных и CI-guards. |
-| `data/video_pipeline.json` | Статус расшифровки и вычитки 191 видео (источник правды; мигрирован из `video-archive.xlsx`). |
-| `pipeline/index.html` | Генерируемый дашборд конвейера видео для волонтеров (`npm run pipeline:dashboard`). |
+| [`index.html`](https://github.com/gasyoun/BookIndex/blob/main/index.html) | Публичная landing-страница и SEO-вход. |
+| [`v3_template.html`](https://github.com/gasyoun/BookIndex/blob/main/v3_template.html) | HTML-шаблон standalone-приложения. |
+| [`v3_app.js`](https://github.com/gasyoun/BookIndex/blob/main/v3_app.js) | Основной runtime приложения. |
+| [`app_data.json`](https://github.com/gasyoun/BookIndex/blob/main/app_data.json) | База знаний в формате JSON (6 MB+). |
+| [`data/modules/`](https://github.com/gasyoun/BookIndex/tree/main/data/modules) | Lazy-loaded JSON chunks used by the standalone app and pre-cached for offline mode. |
+| [`src/`](https://github.com/gasyoun/BookIndex/tree/main/src) | Модульные исходники для контролируемой пересборки `v3_app.js`. |
+| [`public/`](https://github.com/gasyoun/BookIndex/tree/main/public) | Ассеты, копируемые Vite в `dist-vite/`. |
+| [`vendor/`](https://github.com/gasyoun/BookIndex/tree/main/vendor) | Локально закрепленные runtime-библиотеки. |
+| [`scripts/`](https://github.com/gasyoun/BookIndex/tree/main/scripts) | Сборка, проверки, импорт данных и CI-guards. |
+| [`data/video_pipeline.json`](https://github.com/gasyoun/BookIndex/blob/main/data/video_pipeline.json) | Статус расшифровки и вычитки видео (источник правды; мигрирован из `video-archive.xlsx`). |
+| [`pipeline/index.html`](https://github.com/gasyoun/BookIndex/blob/main/pipeline/index.html) | Генерируемый дашборд конвейера видео для волонтеров (`npm run pipeline:dashboard`). |
 
 ### Команды разработки
 *   **Сборка приложения**: `npm run build` (генерирует `aaz-index.html` в корне)
@@ -91,26 +93,18 @@
 
 ## Конвейер видео (производство II тома)
 
-Статус расшифровки и многостадийной вычитки 191 лекции (≈213 ч) ведется в репозитории:
+Статус расшифровки и многостадийной вычитки лекций (≈213 ч) ведется в репозитории:
 
-*   **Источник правды**: [`data/video_pipeline.json`](data/video_pipeline.json) — по видео: стадия вычитки, качество автотранскрибации, исполнители, даты, ссылки. Заменил `video-archive.xlsx` (выведена из обращения).
-*   **Дашборд**: [`pipeline/index.html`](pipeline/index.html) — самодостаточная страница (данные встроены, работает офлайн); фильтры по стадии/теме, подсветка висящих заданий и проблем транскрибации. Регенерация: `npm run pipeline:dashboard`.
+*   **Источник правды**: [`data/video_pipeline.json`](https://github.com/gasyoun/BookIndex/blob/main/data/video_pipeline.json) — по видео: стадия вычитки, качество автотранскрибации, исполнители, даты, ссылки. Заменил `video-archive.xlsx` (выведена из обращения). На текущий момент расшифровано и вычитано 27 из ~191 видео; остальные еще в работе.
+*   **Дашборд**: [`pipeline/index.html`](https://github.com/gasyoun/BookIndex/blob/main/pipeline/index.html) — самодостаточная страница (данные встроены, работает офлайн); фильтры по стадии/теме, подсветка висящих заданий и проблем транскрибации. Регенерация: `npm run pipeline:dashboard`.
 *   **Стадии**: `в очереди → автотранскрибация → сверка → 1/2/3-я читка → предверстка → верстка → готово`.
-
-## Audit Summary
-
-- 0 suspicious heads
-- 0 без triage
-- 0 sort inversions
-- 0 duplicate-head groups
-- найдено 11 из 11 терминов
 
 ---
 
 ## Как цитировать
 
 BookIndex — цитируемый ресурс цифровых гуманитарных наук. Машиночитаемые
-метаданные — в [CITATION.cff](CITATION.cff) (GitHub показывает кнопку «Cite
+метаданные — в [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (GitHub показывает кнопку «Cite
 this repository»).
 
 Предварительная форма цитирования (DOI добавится после депонирования на
@@ -124,22 +118,19 @@ Zenodo):
 цитирования в самом приложении (стили APA / MLA / Chicago / ГОСТ) — он
 оформляет ссылку на А. А. Зализняка как автора содержания.
 
-<!-- После релиза на Zenodo подставить бейдж и DOI:
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
-> Gasūns, M. (2026). BookIndex (Zalizniakiada) … https://doi.org/10.5281/zenodo.XXXXXXX
--->
-
-Порядок депонирования и присвоения DOI — [docs/ZENODO_RU.md](docs/ZENODO_RU.md).
+> После релиза на Zenodo README и метаданные получат бейдж и DOI вида
+> `10.5281/zenodo.XXXXXXX`. Порядок депонирования и присвоения DOI —
+> [docs/ZENODO_RU.md](https://github.com/gasyoun/BookIndex/blob/main/docs/ZENODO_RU.md).
 
 ## Лицензии
 
 | Слой | Лицензия |
 |---|---|
-| Код (рантайм, скрипты, шаблоны, тесты) | [Apache-2.0](LICENSE) |
+| Код (рантайм, скрипты, шаблоны, тесты) | [Apache-2.0](https://github.com/gasyoun/BookIndex/blob/main/LICENSE) |
 | Данные указателя (структура, id, связи, LOD, таймкоды) | CC BY 4.0 |
 | Цитаты и расшифровки из книг/лекций | © правообладатели, с разрешения |
 
-Подробнее — [LICENSE-DATA.md](LICENSE-DATA.md).
+Подробнее — [LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md).
 
 ## История версий (Major Milestones)
 *   **v2.2.0**: SEO, PWA, security, CI, full E2E and performance hardening.
@@ -147,4 +138,6 @@ Zenodo):
 *   **v1.x - v2.x**: Expansion from book index to corpus laboratory and Digital Humanities workspace.
 
 ---
-👉 **Полная история изменений**: [CHANGELOG.md](CHANGELOG.md)
+👉 **Полная история изменений**: [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md)
+
+_Dr. Mārcis Gasūns_
