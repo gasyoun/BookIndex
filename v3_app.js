@@ -3152,6 +3152,20 @@ var BookIndex = (function(exports) {
 		if (!m) return null;
 		return `https://gasyoun.github.io/BookIndex/${m[1]}/list/item/${m[1]}/${m[2]}/`;
 	}
+	// C4: prefilled GitHub issue form for entity corrections («сообщить об ошибке»).
+	// Query params match the field ids in .github/ISSUE_TEMPLATE/entity_correction.yml.
+	function buildEntityIssueUrl(type, head) {
+		const canonicalUrl = buildCanonicalEntityUrl(type, head);
+		const slugMatch = canonicalUrl ? /\/item\/[a-z_]+\/([^/]+)\/$/.exec(canonicalUrl) : null;
+		const params = new URLSearchParams({
+			template: "entity_correction.yml",
+			title: `[правка] ${head}`,
+			slug: slugMatch ? slugMatch[1] : "",
+			entity_type: type,
+			url: canonicalUrl || `${location.origin}${location.pathname}#${buildItemHash(type, head)}`
+		});
+		return `https://github.com/gasyoun/BookIndex/issues/new?${params.toString()}`;
+	}
 	async function copyCurrentUrl() {
 		const canonicalHash = buildHashFromState();
 		const activeBookId = getActiveBook().book_id || "";
@@ -7317,6 +7331,7 @@ var BookIndex = (function(exports) {
                 ${canOpenMapForCard ? "<button type=\"button\" class=\"related-link related-link-btn card-action-link\" id=\"open-on-map\">📍 показать на карте</button>" : ""}
                 <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
                 <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
+                <a class="related-link related-link-btn card-action-link" id="report-card-issue" href="${escapeHtml(buildEntityIssueUrl(eType, it.head))}" target="_blank" rel="noopener noreferrer">🐞 сообщить об ошибке</a>
               </div>
             </details>
           </div>

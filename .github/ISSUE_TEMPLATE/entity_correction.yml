@@ -1,0 +1,42 @@
+name: Правка сущности указателя
+description: Сообщить об ошибке в карточке сущности (опечатка, неверная страница, лишняя или отсутствующая связь, неверный авторитетный ID).
+title: "[правка] "
+labels: ["type:correction", "area:data", "priority:P2", "phase:v4"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за внимательность! Поля «слаг», «тип» и «ссылка» заполняются автоматически кнопкой «сообщить об ошибке» на карточке — не меняйте их без необходимости.
+  - type: input
+    id: slug
+    attributes:
+      label: Слаг сущности
+      description: Стабильный идентификатор из канонического URL (заполняется автоматически).
+    validations:
+      required: true
+  - type: input
+    id: entity_type
+    attributes:
+      label: Тип сущности
+      description: names / toponyms / ethnonyms / languages / subject / lexicon и т. п. (заполняется автоматически).
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Ссылка на карточку
+      description: Канонический URL сущности (заполняется автоматически).
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Что не так?
+      description: Опишите ошибку — опечатка, неверная страница, лишняя или отсутствующая связь, неверный Wikidata/VIAF/GND/GeoNames и т. п.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Как должно быть (если знаете)
+      description: Необязательно — предложите исправление или укажите источник.
