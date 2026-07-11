@@ -4,12 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Fixed
+- Restored the README «Audit Summary» section (dropped by the H550 README refresh), un-reddening the `validate_content.py` CI gate that had failed on every push to `main` since.
 - Reverse video links now de-duplicate by video id (`video_catalog` contains duplicate-id rows), so entity-card video counts and lists are no longer inflated; the chapter-related-videos and gallery views share the same deduped catalog.
 - Entity citations fall back to per-book `occurrences` pages when `page_list` is empty, so the «С. N» reference is no longer dropped (e.g. «Saloni Z.» → «С. 157»).
 - Security hardening (defensive, author-curated data): escape interpolated values in the app + prerender citation widgets and the prerendered JSON-LD (`</script>` guard); validate the 404 retired-slug redirect against `^[a-z0-9-]+$`; CSV formula-injection guard in the TEI exports; `</script>` guard in the pipeline dashboard.
 - Matcher precision: whole-word (not substring) surname matching in the authority aligner; a ≥4-char floor in the transcript timecoder.
 
 ### Added
+- «Сообщить об ошибке» flow (DH roadmap C4): entity cards link to a prefilled GitHub issue form (`.github/ISSUE_TEMPLATE/entity_correction.yml`) carrying the entity's slug, type, canonical URL and a `[правка] <head>` title; new `type:correction` label completes the four-group taxonomy for reader-reported corrections.
 - KWIC over lectures matches accent-tolerantly — «победа» also matches the stressed transcript form «побе́да».
 - Entity-card secondary actions (show on map, copy link, export .md) collapse into a «⋯ еще» menu; prev/next/back stay visible (B5).
 - Regression E2E suite (`tests/e2e/session-features.spec.js`) covering the home task dashboard, chapter ribbon, lecture KWIC, video gallery, card order/dedup/actions, page citations and the lecture↔video link.
