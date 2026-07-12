@@ -99,6 +99,34 @@ test.describe('entity card (B5 order, dedup, actions, B2 citation)', () => {
     await expect(page.locator('.card-lod-section', { hasText: 'Авторитетные записи' })).toBeVisible();
     await expect(page.locator('.lod-link.wikidata').first()).toHaveAttribute('href', /wikidata\.org\/wiki\/Q\d+/);
   });
+
+  test('copy link carries the entity\'s own book scope now that the corpus spans several books (A2.4)', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/toponyms/list/item/toponyms/angliya');
+    await page.evaluate(() => {
+      window.__copiedCardUrl = '';
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: { writeText: async (value) => { window.__copiedCardUrl = String(value || ''); } },
+      });
+    });
+
+    // production corpus already merges mumintroll/zametki/slovo — the copied
+    // link for a mumintroll-only head carries that book's scope.
+    await page.locator('.card-actions-more > summary').click();
+    await page.locator('#copy-card-link').click();
+    await expect.poll(() => page.evaluate(() => window.__copiedCardUrl || ''))
+      .toBe('https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/angliya/?book=mumintroll');
+
+    // with a single-book corpus the scope is redundant and stays off the link.
+    await page.evaluate(() => {
+      window.APP_DATA.corpus.books = window.APP_DATA.corpus.books.filter((b) => b.book_id === 'mumintroll');
+      window.renderCardInRight();
+    });
+    await page.locator('.card-actions-more > summary').click();
+    await page.locator('#copy-card-link').click();
+    await expect.poll(() => page.evaluate(() => window.__copiedCardUrl || ''))
+      .toBe('https://gasyoun.github.io/BookIndex/toponyms/list/item/toponyms/angliya/');
+  });
 });
 
 test.describe('lecture ↔ video link (B3.4)', () => {
