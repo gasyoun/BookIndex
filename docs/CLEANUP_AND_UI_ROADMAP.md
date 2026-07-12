@@ -1,5 +1,7 @@
 # BookIndex cleanup and UI roadmap
 
+_Created: 16-05-2026 · Last updated: 16-05-2026_
+
 Date: 2026-05-16
 
 Purpose: capture the current repository analysis and convert it into a practical cleanup plan, followed by a visualisation and UI redesign roadmap. This document is intentionally scoped to planning. It does not rename files, delete artifacts, or change runtime behaviour.
@@ -330,3 +332,5 @@ For each route:
 2. Do not delete committed artifacts before GitHub Pages and offline needs are re-confirmed.
 3. Do not rebuild `v3_app.js` from the current `src/` tree until parity is proven.
 4. Do not mix data-normalisation, visual redesign, and module extraction in one PR.
+
+_Dr. Mārcis Gasūns_
