@@ -3146,11 +3146,18 @@ var BookIndex = (function(exports) {
 	}
 	// A2/B2: stable clean canonical URL for an entity (the prerendered page),
 	// derived from the same slug the app routes to.
-	function buildCanonicalEntityUrl(type, head) {
+	// A2.4: when a bookId is given and the corpus has more than one book,
+	// append an optional ?book= scope so the copied link reproduces the
+	// same book-scoped view of a head merged across multiple books.
+	function buildCanonicalEntityUrl(type, head, bookId) {
 		const hash = buildItemHash(type, head);
 		const m = /list\/item\/([a-z_]+)\/(.+)$/.exec(String(hash || ""));
 		if (!m) return null;
-		return `https://gasyoun.github.io/BookIndex/${m[1]}/list/item/${m[1]}/${m[2]}/`;
+		const base = `https://gasyoun.github.io/BookIndex/${m[1]}/list/item/${m[1]}/${m[2]}/`;
+		const scopeId = String(bookId || "").trim();
+		if (!scopeId || getCorpusBooks().length < 2) return base;
+		if (!getCorpusBooks().some((book) => book.book_id === scopeId)) return base;
+		return `${base}?book=${encodeURIComponent(scopeId)}`;
 	}
 	// C4: prefilled GitHub issue form for entity corrections («сообщить об ошибке»).
 	// Query params match the field ids in .github/ISSUE_TEMPLATE/entity_correction.yml.
@@ -7593,7 +7600,9 @@ var BookIndex = (function(exports) {
 		const copyLinkBtn = document.getElementById("copy-card-link");
 		if (copyLinkBtn) copyLinkBtn.onclick = async () => {
 			// B2/A2: copy the stable clean canonical URL of this entity, not the hash route.
-			const canonicalUrl = buildCanonicalEntityUrl(eType, it.head);
+			// A2.4: scope to the entity's own book when the corpus spans more than one.
+			const scopeBookId = String(it.book_id || it.bookId || getActiveBook().book_id || "");
+			const canonicalUrl = buildCanonicalEntityUrl(eType, it.head, scopeBookId);
 			const ok = canonicalUrl ? await copyTextToClipboard(canonicalUrl) : await copyCurrentUrl();
 			const prev = copyLinkBtn.textContent;
 			copyLinkBtn.textContent = ok ? "ссылка скопирована" : "не удалось скопировать";
