@@ -5,7 +5,7 @@ _Created: 11-07-2026 · Last updated: 11-07-2026_
 Неразрушающие дизайн-макеты по программе
 [H563](https://github.com/gasyoun/Uprava/blob/main/handoffs/H563-Fable_Uprava_dashboard-redesign-4-directions_11.07.26.md)
 (поверхность BookIndex —
-[H654](https://github.com/gasyoun/Uprava/blob/main/handoffs/H654-Fable_BookIndex_landing-sustainable-mockup_11.07.26.md)).
+[H654](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H654-Fable_BookIndex_landing-sustainable-mockup_11.07.26.md)).
 Рабочие страницы не изменяются, пока человек не выберет победителя.
 
 | Файл | Направление | Что внутри |
