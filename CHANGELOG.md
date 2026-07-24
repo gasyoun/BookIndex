@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+- H1602 context-coverage batch: **+88** direct contexts (stratified: lexicon 50, names 12, languages 6, toponyms 6, ethnonyms 5, lexicon_tech 5, lexicon_reverse 4). Direct coverage **24.2% → 26.8%** (816→904); effective **32.3% → 36.3%** (clears 35% target). Metrics in `RESULTS_LOG.md`; `validate_content.py` green.
 - Volume-II entity **candidates** from lectures-v2 (DH C3 residual, H1599):
   `scripts/extract_entities_from_transcripts.py --candidates` proposes heads
   *absent* from `app_data` (names with initials, languages, quoted subjects;
@@ -13,6 +14,7 @@ All notable changes to this project will be documented in this file.
   Never writes unreviewed heads into `app_data`.
 
 ### Changed
+- Regenerated `tests/index-audit-queue.json` + `tests/context-entry-pack.{json,md}` after H1602 context drain (missing_context 2285→2149).
 - H1598 lecture-transcript ingest re-check: still **27/176** videos with `links.text` — NO-OP documented in `docs/LECTURE_TRANSCRIPT_INGEST_H1598_NOOP_24.07.2026.md` (no corpus/KWIC regeneration).
 
 ### Fixed
