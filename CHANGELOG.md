@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Removed
+- Root runtime dead copies `v3_app.js.orig` (tracked) and ignore-policy for `*.orig` / existing `*.bak` (H1608) — large backup siblings of live `v3_app.js` that confused greps and inflated the tree; no package/docs references.
+
 ### Added
 - Volume-II entity **candidates** from lectures-v2 (DH C3 residual, H1599):
   `scripts/extract_entities_from_transcripts.py --candidates` proposes heads
