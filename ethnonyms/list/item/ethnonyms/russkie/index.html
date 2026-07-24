@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-VfGIZ8QJ0GW434Owwv04Hb6JFxWupM3LqXTWPWToARs=' 'sha256-jGcQR9/N7bTNU8T78apLiGj1ryNhdZhrHEUMk0zItXM='; worker-src 'self' blob:; style-src 'self' 'sha256-3aWWPxsKJxJ/gcI19flQh0Ui7nFU5bozZYl1GPiXVrY='; style-src-elem 'self' 'sha256-3aWWPxsKJxJ/gcI19flQh0Ui7nFU5bozZYl1GPiXVrY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-TB9jN3ADykp2seyaFFgKdqOCd9baZPrPUGVJc+mf1uU=' 'sha256-yDfEuVSn/hE8SnrHhpC64keCqsy9NEqf02MLkdy0NKg='; worker-src 'self' blob:; style-src 'self' 'sha256-zlN8tTmvH6X93M6Zrz54Bc6kIQ0WdGjy2akxdm6gEO8='; style-src-elem 'self' 'sha256-zlN8tTmvH6X93M6Zrz54Bc6kIQ0WdGjy2akxdm6gEO8='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -2464,6 +2464,140 @@
   .vg-chip:hover {
     background: #ebdcc9;
     border-color: var(--line-strong, #8a7050);
+  }
+  .vg-card-yt {
+    align-self: flex-start;
+    color: var(--muted, #6d645a);
+    font-size: 11px;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--line, #d4c8b0);
+  }
+  .vg-card-yt:hover {
+    color: #8c3a15;
+    border-bottom-color: #8c3a15;
+  }
+  .video-detail-inner {
+    margin: 0 auto;
+    max-width: 760px;
+    padding: 16px 22px;
+  }
+  .video-detail-back {
+    display: inline-block;
+    color: var(--muted, #6d645a);
+    font-size: 13px;
+    text-decoration: none;
+    margin-bottom: 12px;
+  }
+  .video-detail-back:hover {
+    color: #8c3a15;
+    text-decoration: underline;
+  }
+  .video-detail-title {
+    color: var(--title, #5a3818);
+    font-size: 22px;
+    font-weight: normal;
+    line-height: 1.3;
+    margin: 0 0 8px 0;
+  }
+  .video-detail-meta {
+    color: var(--muted, #6d645a);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 12px;
+  }
+  .video-detail-actions {
+    margin-bottom: 18px;
+  }
+  .video-detail-yt {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+  }
+  .video-detail-yt:hover {
+    background: #a93226;
+  }
+  .video-detail-section {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line, #d4c8b0);
+  }
+  .video-detail-section-title {
+    color: var(--title, #5a3818);
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+  .video-detail-count {
+    color: var(--muted, #6d645a);
+    font-weight: normal;
+    font-size: 13px;
+  }
+  .video-detail-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .video-detail-chip {
+    font-size: 12px;
+    padding: 3px 10px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 999px;
+    background: #faf6ee;
+    color: var(--title, #5a3818);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .video-detail-chip:hover {
+    background: #ebdcc9;
+    border-color: var(--line-strong, #8a7050);
+  }
+  .video-detail-chip-t {
+    margin-left: 4px;
+    color: var(--muted, #6d645a);
+    font-size: 11px;
+  }
+  .video-detail-chapter-note {
+    color: var(--muted, #6d645a);
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    background: #f7f2e8;
+    border-radius: 6px;
+    border-left: 3px solid #c4a574;
+  }
+  .video-detail-chapters {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .video-detail-chapter {
+    display: block;
+    color: #8c3a15;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+  }
+  .video-detail-chapter:hover {
+    background: #faf6ee;
+    border-color: var(--line, #d4c8b0);
+  }
+  .video-detail-chapter-pages,
+  .video-detail-chapter-score {
+    color: var(--muted, #6d645a);
+    font-size: 12px;
+  }
+  .video-detail-empty,
+  .video-detail-intro {
+    color: var(--muted, #6d645a);
+    font-size: 13px;
   }
   .lectures-title {
     color: #5a3818;
@@ -5982,7 +6116,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "e21b526cf36e",
+  "build_id": "a819cfc6a2f2",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6008,24 +6142,24 @@
         "names",
         "edges"
       ],
-      "bytes": 245592,
-      "sha256": "tfFFJQP5flcm+/ul2hGvDFIGSXrbqhHKEuJYQ13RmAA="
+      "bytes": 250280,
+      "sha256": "z+Dh+SKyAcdOUusfsSgc8GpjqnaiqBwzgnmEisWpIsY="
     },
     {
       "file": "11-toponyms.json",
       "keys": [
         "toponyms"
       ],
-      "bytes": 192328,
-      "sha256": "XShwhLOm/qFs0c/cOxm1BEHMtcygNfYzc63mP8oFyZw="
+      "bytes": 194384,
+      "sha256": "r/qKdDapTXYYSNVEWm6n+2S7OJ35ZOu64BIBnmQQNjM="
     },
     {
       "file": "12-ethnonyms.json",
       "keys": [
         "ethnonyms"
       ],
-      "bytes": 141764,
-      "sha256": "AmCm5Ehg6DlfEzvMfG0YPbU7V+rhVy4X1NkBcX+PHsI="
+      "bytes": 143508,
+      "sha256": "+IT+uHGfdH4J+uujKyDqMuQxVXbn63XlWv22wqobmrw="
     },
     {
       "file": "13-languages.json",
@@ -6034,8 +6168,8 @@
         "language_edges",
         "language_tree"
       ],
-      "bytes": 1059673,
-      "sha256": "L+8b8eyQkCoZRjx7kcDIbF/1Abc1zeI1tt1KhaNeklA="
+      "bytes": 1062043,
+      "sha256": "+BjEY7SdfVSSg0K346uRgYXoJkseO0fmQgBhwZOZV9g="
     },
     {
       "file": "14-lexicon.json",
@@ -6046,8 +6180,8 @@
         "subject_index",
         "cross_links"
       ],
-      "bytes": 2303150,
-      "sha256": "0WTYL3wvCYKGNjd1AEeffj5mrPC6mZFamlPdd5/ucfA="
+      "bytes": 2325706,
+      "sha256": "ehG2TJyRQkOQ93fndx1mCt30zg81nQB9zTgXc8RQTA8="
     },
     {
       "file": "20-lectures.json",
@@ -6290,7 +6424,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "e21b526cf36e";
+	var APP_BUILD_ID$1 = "a819cfc6a2f2";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -6318,6 +6452,7 @@ var BookIndex = (function(exports) {
 	var graphStrongOnly$1 = false;
 	var nameGraphMinEdgeWeight$1 = .1;
 	var currentLecture$1 = 0;
+	var currentVideoId$1 = "";
 	var lectureCompareA$1 = 1;
 	var lectureCompareB$1 = 2;
 	var trendsRangeStart$1 = 1;
@@ -6519,6 +6654,10 @@ var BookIndex = (function(exports) {
 		currentLecture$1 = val;
 		if (typeof window !== "undefined") window.currentLecture = val;
 	}
+	function setCurrentVideoId(val) {
+		currentVideoId$1 = String(val || "");
+		if (typeof window !== "undefined") window.currentVideoId = currentVideoId$1;
+	}
 	function setLectureCompareA(val) {
 		lectureCompareA$1 = val;
 		if (typeof window !== "undefined") window.lectureCompareA = val;
@@ -6577,6 +6716,7 @@ var BookIndex = (function(exports) {
 		window.selectedItemType = selectedItemType$1;
 		window.rightPaneMode = rightPaneMode$1;
 		window.currentLecture = currentLecture$1;
+		window.currentVideoId = currentVideoId$1;
 		window.lectureCompareA = lectureCompareA$1;
 		window.lectureCompareB = lectureCompareB$1;
 		window.trendsRangeStart = trendsRangeStart$1;
@@ -6616,6 +6756,7 @@ var BookIndex = (function(exports) {
 		if (window.selectedItemType !== void 0) selectedItemType$1 = window.selectedItemType;
 		if (window.rightPaneMode !== void 0) rightPaneMode$1 = window.rightPaneMode;
 		if (window.currentLecture !== void 0) currentLecture$1 = window.currentLecture;
+		if (window.currentVideoId !== void 0) currentVideoId$1 = String(window.currentVideoId || "");
 		if (window.lectureCompareA !== void 0) lectureCompareA$1 = window.lectureCompareA;
 		if (window.lectureCompareB !== void 0) lectureCompareB$1 = window.lectureCompareB;
 		if (window.trendsRangeStart !== void 0) trendsRangeStart$1 = window.trendsRangeStart;
@@ -6663,6 +6804,7 @@ var BookIndex = (function(exports) {
 		window.graphStrongOnly = graphStrongOnly$1;
 		window.nameGraphMinEdgeWeight = nameGraphMinEdgeWeight$1;
 		window.currentLecture = currentLecture$1;
+		window.currentVideoId = currentVideoId$1;
 		window.lectureCompareA = lectureCompareA$1;
 		window.lectureCompareB = lectureCompareB$1;
 		window.trendsRangeStart = trendsRangeStart$1;
@@ -7180,8 +7322,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "e21b526cf36e").trim();
-		if (buildId && buildId !== "e21b526cf36e") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "a819cfc6a2f2").trim();
+		if (buildId && buildId !== "a819cfc6a2f2") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -7928,6 +8070,7 @@ var BookIndex = (function(exports) {
 			if (Number.isFinite(readingPage)) parts.push("reading", String(clampPageInBook$1(readingPage)));
 		}
 		if (currentEntity$1 === "materials" && currentTab$1 === "lecture_pages") parts.push(String(Math.max(0, currentLecture$1)));
+		if (currentEntity$1 === "materials" && currentTab$1 === "video" && currentVideoId$1) parts.push(String(currentVideoId$1));
 		if (currentEntity$1 === "materials" && currentTab$1 === "glossary" && currentGlossaryTerm$1) parts.push("term", currentGlossaryTerm$1);
 		if (currentEntity$1 === "scholar" && currentTab$1 === "scholar" && currentScholarAnchor$1) parts.push("anchor", currentScholarAnchor$1);
 		if (currentEntity$1 === "scholar" && currentTab$1 === "page_trends") {
@@ -7961,6 +8104,7 @@ var BookIndex = (function(exports) {
 			selectedItemType: selectedItemType$1,
 			rightPaneMode: rightPaneMode$1,
 			currentLecture: currentLecture$1,
+			currentVideoId: currentVideoId$1,
 			lectureCompareA: lectureCompareA$1,
 			lectureCompareB: lectureCompareB$1,
 			trendsRangeStart: trendsRangeStart$1,
@@ -7985,7 +8129,7 @@ var BookIndex = (function(exports) {
 		if (!a || !b) return false;
 		const aFilters = Array.isArray(a.activeFilters) ? a.activeFilters.join("|") : "";
 		const bFilters = Array.isArray(b.activeFilters) ? b.activeFilters.join("|") : "";
-		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages$1()) === (b.currentKwicPageEnd || getTotalBookPages$1()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope$1(a.globalSearchScope) === normalizeGlobalSearchScope$1(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
+		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && (a.currentVideoId || "") === (b.currentVideoId || "") && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages$1()) === (b.currentKwicPageEnd || getTotalBookPages$1()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope$1(a.globalSearchScope) === normalizeGlobalSearchScope$1(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
 	}
 	function applyViewState$1(state) {
 		if (!state) return;
@@ -7998,6 +8142,7 @@ var BookIndex = (function(exports) {
 		setSelectedItemType(state.selectedItemType || null);
 		setRightPaneMode(state.rightPaneMode || "histogram");
 		setCurrentLecture(Number.isInteger(state.currentLecture) ? state.currentLecture : 0);
+		setCurrentVideoId(typeof state.currentVideoId === "string" ? state.currentVideoId : "");
 		setLectureCompareA(Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1);
 		setLectureCompareB(Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2);
 		setTrendsRangeStart(Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1);
@@ -8081,6 +8226,7 @@ var BookIndex = (function(exports) {
 			selectedItemType: null,
 			rightPaneMode: "histogram",
 			currentLecture: 0,
+			currentVideoId: "",
 			trendsRangeStart: 1,
 			trendsRangeEnd: clampPageInBook$1(424),
 			searchQuery: "",
@@ -8092,6 +8238,10 @@ var BookIndex = (function(exports) {
 		setCurrentScholarAnchor("");
 		const lecturePageIndex = parsePositiveRouteNumber$1(routedParts[2]);
 		if (entity === "materials" && tab === "lecture_pages" && lecturePageIndex !== null) state.currentLecture = lecturePageIndex;
+		if (entity === "materials" && tab === "video") {
+			const rawVideoId = routedParts[2] ? String(routedParts[2]) : "";
+			state.currentVideoId = /^[A-Za-z0-9_-]{6,32}$/.test(rawVideoId) ? rawVideoId : "";
+		}
 		if (entity === "materials" && tab === "lectures") {
 			const readingPage = parsePositiveRouteNumber$1(routeValueAfter$1(routedParts, "reading"));
 			if (readingPage !== null) {
@@ -8156,6 +8306,10 @@ var BookIndex = (function(exports) {
 			const lectureTitle = state.currentLecture === 0 ? "Предисловие" : `Лекция ${state.currentLecture}`;
 			if (l && l.name) displayTitle = `${lectureTitle}: ${l.name}`;
 			else displayTitle = lectureTitle;
+		} else if (state.currentEntity === "materials" && state.currentTab === "video" && state.currentVideoId) {
+			const catalog = APP_DATA$1 && Array.isArray(APP_DATA$1.video_catalog) ? APP_DATA$1.video_catalog : [];
+			const hit = catalog.find((v) => v && v.id === state.currentVideoId);
+			displayTitle = hit && hit.title ? String(hit.title) : `Видео ${state.currentVideoId}`;
 		}
 		updateSEOMetadata(routePath, displayTitle);
 		let schema = null;
@@ -9047,6 +9201,7 @@ var BookIndex = (function(exports) {
 			selectedItemType,
 			rightPaneMode,
 			currentLecture,
+			currentVideoId: typeof window !== "undefined" ? String(window.currentVideoId || "") : "",
 			lectureCompareA,
 			lectureCompareB,
 			trendsRangeStart,
@@ -9302,6 +9457,7 @@ var BookIndex = (function(exports) {
 		selectedItemType = state.selectedItemType || null;
 		rightPaneMode = state.rightPaneMode || "histogram";
 		currentLecture = Number.isInteger(state.currentLecture) ? state.currentLecture : 0;
+		if (typeof window !== "undefined") window.currentVideoId = typeof state.currentVideoId === "string" ? state.currentVideoId : "";
 		lectureCompareA = Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1;
 		lectureCompareB = Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2;
 		trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
@@ -9334,7 +9490,7 @@ var BookIndex = (function(exports) {
 		if (!a || !b) return false;
 		const aFilters = Array.isArray(a.activeFilters) ? a.activeFilters.join("|") : "";
 		const bFilters = Array.isArray(b.activeFilters) ? b.activeFilters.join("|") : "";
-		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages()) === (b.currentKwicPageEnd || getTotalBookPages()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope(a.globalSearchScope) === normalizeGlobalSearchScope(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
+		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && (a.currentVideoId || "") === (b.currentVideoId || "") && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages()) === (b.currentKwicPageEnd || getTotalBookPages()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope(a.globalSearchScope) === normalizeGlobalSearchScope(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
 	}
 	function closeCardView() {
 		if (currentTab !== "list" || rightPaneMode !== "card") return false;
@@ -10853,7 +11009,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "e21b526cf36e" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "a819cfc6a2f2" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -11731,6 +11887,7 @@ var BookIndex = (function(exports) {
 			currentScholarAnchor = "";
 			pendingScholarAnchor = "";
 		}
+		if (!(currentEntity === "materials" && tab === "video")) setUiCurrentVideoId("");
 		renderTabs();
 		renderContent();
 		if (currentEntity === "scholar" && currentTab === "viz") warmupVizCacheInWorker();
@@ -12987,6 +13144,159 @@ var BookIndex = (function(exports) {
 		const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
 		return (h > 0 ? h + ":" : "") + mm + ":" + String(s).padStart(2, "0");
 	}
+	function sanitizeVideoId(raw) {
+		const id = String(raw || "").trim();
+		return /^[A-Za-z0-9_-]{6,32}$/.test(id) ? id : "";
+	}
+	function getCurrentVideoId() {
+		if (typeof window !== "undefined" && window.currentVideoId != null) return String(window.currentVideoId || "");
+		return "";
+	}
+	function setUiCurrentVideoId(id) {
+		const safe = sanitizeVideoId(id);
+		if (typeof window !== "undefined") window.currentVideoId = safe;
+		return safe;
+	}
+	function findVideoById(id) {
+		const key = sanitizeVideoId(id);
+		if (!key) return null;
+		const catalog = getDedupedVideoCatalog();
+		for (const v of catalog) {
+			if (!v) continue;
+			if (v.id === key || v.url === key) return v;
+		}
+		return null;
+	}
+	function buildVideoDetailHash(id) {
+		const safe = sanitizeVideoId(id);
+		if (!safe) return buildCanonicalHash(["materials", "video"]);
+		return buildCanonicalHash(["materials", "video", safe]);
+	}
+	function youtubeUrlWithT(url, t) {
+		const base = String(url || "");
+		if (!base) return "";
+		if (!Number.isFinite(t) || t <= 0) return base;
+		return base + (base.includes("?") ? "&" : "?") + "t=" + Math.floor(t) + "s";
+	}
+	// Inverse of getChapterRelatedVideos: book chapters that topically overlap a video.
+	// Honesty frame: these are thematic overlaps with book chapters, not recordings of them.
+	function getVideoRelatedChapters(video, limit = 8) {
+		if (!video) return [];
+		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+		const out = [];
+		for (let i = 0; i < chapters.length; i++) {
+			const hits = getChapterRelatedVideos(i, 9999);
+			const found = hits.find((e) => e && e.v && (e.v.id === video.id || e.v.url === video.url));
+			if (found) out.push({ chapter: chapters[i], index: i, score: found.score });
+		}
+		out.sort((a, b) => b.score - a.score || a.index - b.index);
+		return out.slice(0, limit);
+	}
+	function openVideoDetail(id) {
+		closeGlobalSearchResults();
+		currentEntity = "materials";
+		currentTab = "video";
+		setUiCurrentVideoId(id);
+		selectedItem = null;
+		selectedItemType = null;
+		currentGlossaryTerm = "";
+		currentScholarAnchor = "";
+		pendingScholarAnchor = "";
+		rightPaneMode = "histogram";
+		renderEntitySwitcher();
+		renderTabs();
+		renderContent();
+		syncNavigationState();
+	}
+	function openVideoGallery() {
+		closeGlobalSearchResults();
+		currentEntity = "materials";
+		currentTab = "video";
+		setUiCurrentVideoId("");
+		selectedItem = null;
+		selectedItemType = null;
+		currentGlossaryTerm = "";
+		currentScholarAnchor = "";
+		pendingScholarAnchor = "";
+		rightPaneMode = "histogram";
+		renderEntitySwitcher();
+		renderTabs();
+		renderContent();
+		syncNavigationState();
+	}
+	function renderVideoDetailPanel(container, videoId) {
+		const safeId = sanitizeVideoId(videoId);
+		const video = findVideoById(safeId);
+		const galleryHash = buildCanonicalHash(["materials", "video"]);
+		if (!video) {
+			container.innerHTML = `<div class="panel active video-detail"><div class="video-detail-inner">
+    <a class="video-detail-back" href="${escapeHtml(galleryHash)}">← К видеогалерее</a>
+    <h2 class="video-detail-title">Видео не найдено</h2>
+    <div class="video-detail-intro">В каталоге нет записи с id «${escapeHtml(safeId || videoId || "")}».</div>
+  </div></div>`;
+			const back = container.querySelector(".video-detail-back");
+			if (back) bindActionWithKeyboard(back, () => openVideoGallery());
+			return;
+		}
+		const dur = formatVideoDuration(video.duration);
+		const dateStr = formatVideoDate(video.date);
+		const metaParts = [dateStr, dur ? `⏱ ${dur}` : ""].filter(Boolean);
+		const rels = Array.isArray(video.related_entities) ? video.related_entities : [];
+		const seenRel = new Set();
+		const uniqRels = [];
+		for (const r of rels) {
+			if (!r || !r.head || !r.type) continue;
+			const t = r.type === "subject_index" ? "subject" : r.type;
+			const key = t + "\0" + r.head;
+			if (seenRel.has(key)) continue;
+			seenRel.add(key);
+			uniqRels.push({ type: t, head: r.head, t: Number.isFinite(r.t) ? r.t : null });
+		}
+		const chapters = getVideoRelatedChapters(video, 8);
+		let chipsHtml = "";
+		for (const r of uniqRels.slice(0, 24)) {
+			const ytT = Number.isFinite(r.t) && r.t > 0 ? r.t : null;
+			const chipTitle = ytT != null ? `упоминание ≈ ${formatVideoDuration(ytT)}` : "";
+			chipsHtml += `<a class="video-detail-chip" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type || "all", r.head))}"${chipTitle ? ` title="${escapeHtml(chipTitle)}"` : ""}>${escapeHtml(r.head)}${ytT != null ? `<span class="video-detail-chip-t">▸ ${escapeHtml(formatVideoDuration(ytT))}</span>` : ""}</a>`;
+		}
+		let chaptersHtml = "";
+		if (chapters.length) {
+			for (const c of chapters) {
+				const name = c.chapter && c.chapter.name ? c.chapter.name : `Глава ${c.index}`;
+				const pages = c.chapter ? `${c.chapter.start || ""}–${c.chapter.end || ""}` : "";
+				chaptersHtml += `<a class="video-detail-chapter" data-lecture-idx="${c.index}" href="${escapeHtml(buildLecturePageHash(c.index))}">${escapeHtml(name)}${pages ? ` <span class="video-detail-chapter-pages">стр. ${escapeHtml(String(pages))}</span>` : ""} <span class="video-detail-chapter-score">· ${c.score} совп.</span></a>`;
+			}
+		} else {
+			chaptersHtml = `<div class="video-detail-empty">Тематическое пересечение с главами книги не найдено (по связанным сущностям).</div>`;
+		}
+		const ytUrl = String(video.url || "");
+		container.innerHTML = `<div class="panel active video-detail" data-video-id="${escapeHtml(safeId)}"><div class="video-detail-inner">
+    <a class="video-detail-back" href="${escapeHtml(galleryHash)}">← К видеогалерее</a>
+    <h2 class="video-detail-title">${escapeHtml(String(video.title || ""))}</h2>
+    <div class="video-detail-meta">${escapeHtml(metaParts.join(" · "))}</div>
+    <div class="video-detail-actions">
+      <a class="video-detail-yt" href="${escapeHtml(ytUrl)}" target="_blank" rel="noopener noreferrer">Смотреть на YouTube</a>
+    </div>
+    <div class="video-detail-section">
+      <h3 class="video-detail-section-title">Связанные сущности <span class="video-detail-count">${uniqRels.length}</span></h3>
+      <div class="video-detail-chips">${chipsHtml || `<div class="video-detail-empty">Связанные сущности не размечены.</div>`}</div>
+    </div>
+    <div class="video-detail-section">
+      <h3 class="video-detail-section-title">Пересечение с главами книги</h3>
+      <div class="video-detail-chapter-note">Публичная лекция на YouTube — не запись главы из книги «Из жизни слов и языков». Ниже главы книги, с которыми у видео есть тематическое пересечение по размеченным сущностям (урок Уитни: совпадение тем ≠ тождество текста).</div>
+      <div class="video-detail-chapters">${chaptersHtml}</div>
+    </div>
+  </div></div>`;
+		const back = container.querySelector(".video-detail-back");
+		if (back) bindActionWithKeyboard(back, () => openVideoGallery());
+		container.querySelectorAll(".video-detail-chip").forEach((chip) => {
+			bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
+		});
+		container.querySelectorAll(".video-detail-chapter").forEach((el) => {
+			bindActionWithKeyboard(el, () => openLecturePage(parseInt(el.dataset.lectureIdx || "0", 10) || 0));
+		});
+	}
+
 	// B3.4: videos whose discussed entities overlap a book chapter's pages.
 	// These are TOPICALLY related public lectures, not recordings of this chapter.
 	var CHAPTER_VIDEO_CACHE = /* @__PURE__ */ new Map();
@@ -15711,7 +16021,7 @@ var BookIndex = (function(exports) {
 				videoResults.textContent = "";
 				return;
 			}
-			const cat = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+			const cat = getDedupedVideoCatalog();
 			const matches = cat.filter((v) => String(v && v.title || "").toLowerCase().includes(q));
 			matches.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
 			const shown = matches.slice(0, 8);
@@ -15719,16 +16029,16 @@ var BookIndex = (function(exports) {
 			if (!shown.length) {
 				const empty = document.createElement("div");
 				empty.className = "home-task-empty";
-				empty.textContent = "Ничего не найдено среди 191 видео.";
+				empty.textContent = `Ничего не найдено среди ${cat.length} видео.`;
 				videoResults.appendChild(empty);
 				return;
 			}
 			for (const v of shown) {
 				const a = document.createElement("a");
 				a.className = "home-task-video-row";
-				a.href = String(v.url || "");
-				a.target = "_blank";
-				a.rel = "noopener noreferrer";
+				const vidId = sanitizeVideoId(v.id) || String(v.id || "");
+				a.href = buildVideoDetailHash(vidId);
+				a.dataset.videoId = vidId;
 				const title = document.createElement("span");
 				title.className = "home-task-video-title";
 				title.textContent = String(v.title || "");
@@ -15742,6 +16052,9 @@ var BookIndex = (function(exports) {
 				}
 				videoResults.appendChild(a);
 			}
+			videoResults.querySelectorAll(".home-task-video-row").forEach((row) => {
+				bindActionWithKeyboard(row, () => openVideoDetail(row.dataset.videoId || ""));
+			});
 			if (matches.length > shown.length) {
 				const more = document.createElement("div");
 				more.className = "home-task-empty";
@@ -16349,6 +16662,11 @@ var BookIndex = (function(exports) {
 		return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
 	}
 	function renderVideoGalleryPanel(container) {
+		const detailId = getCurrentVideoId();
+		if (detailId) {
+			renderVideoDetailPanel(container, detailId);
+			return;
+		}
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
 		const catalog = getDedupedVideoCatalog();
 		container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
@@ -16394,11 +16712,11 @@ var BookIndex = (function(exports) {
 			for (const v of vids) {
 				const card = document.createElement("div");
 				card.className = "vg-card";
+				const vidId = sanitizeVideoId(v.id) || String(v.id || "");
 				const link = document.createElement("a");
 				link.className = "vg-card-title";
-				link.href = String(v.url || "");
-				link.target = "_blank";
-				link.rel = "noopener noreferrer";
+				link.href = buildVideoDetailHash(vidId);
+				link.dataset.videoId = vidId;
 				link.textContent = String(v.title || "");
 				card.appendChild(link);
 				const meta = document.createElement("div");
@@ -16406,6 +16724,15 @@ var BookIndex = (function(exports) {
 				const dur = formatVideoDuration(v.duration);
 				meta.textContent = [formatVideoDate(v.date), dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
 				card.appendChild(meta);
+				if (v.url) {
+					const yt = document.createElement("a");
+					yt.className = "vg-card-yt";
+					yt.href = String(v.url || "");
+					yt.target = "_blank";
+					yt.rel = "noopener noreferrer";
+					yt.textContent = "YouTube";
+					card.appendChild(yt);
+				}
 				const rels = (v.related_entities || []).slice(0, 6);
 				if (rels.length) {
 					const chips = document.createElement("div");
@@ -16425,6 +16752,9 @@ var BookIndex = (function(exports) {
 				}
 				listEl.appendChild(card);
 			}
+			listEl.querySelectorAll(".vg-card-title").forEach((link) => {
+				bindActionWithKeyboard(link, () => openVideoDetail(link.dataset.videoId || ""));
+			});
 			listEl.querySelectorAll(".vg-chip").forEach((chip) => {
 				bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
 			});
@@ -20311,6 +20641,10 @@ var BookIndex = (function(exports) {
 		window.openGlossaryTerm = openGlossaryTerm;
 		window.openKwicTerm = openKwicTerm;
 		window.openLecturePage = openLecturePage;
+		window.openVideoDetail = openVideoDetail;
+		window.openVideoGallery = openVideoGallery;
+		window.buildVideoDetailHash = buildVideoDetailHash;
+		window.findVideoById = findVideoById;
 		window.openLectureTerm = openLectureTerm;
 		window.openMaterialsLectures = openMaterialsLectures;
 		window.openReadingNowPage = openReadingNowPage;

@@ -180,6 +180,7 @@ var BookIndex = (function(exports) {
 	var graphStrongOnly$1 = false;
 	var nameGraphMinEdgeWeight$1 = .1;
 	var currentLecture$1 = 0;
+	var currentVideoId$1 = "";
 	var lectureCompareA$1 = 1;
 	var lectureCompareB$1 = 2;
 	var trendsRangeStart$1 = 1;
@@ -381,6 +382,10 @@ var BookIndex = (function(exports) {
 		currentLecture$1 = val;
 		if (typeof window !== "undefined") window.currentLecture = val;
 	}
+	function setCurrentVideoId(val) {
+		currentVideoId$1 = String(val || "");
+		if (typeof window !== "undefined") window.currentVideoId = currentVideoId$1;
+	}
 	function setLectureCompareA(val) {
 		lectureCompareA$1 = val;
 		if (typeof window !== "undefined") window.lectureCompareA = val;
@@ -439,6 +444,7 @@ var BookIndex = (function(exports) {
 		window.selectedItemType = selectedItemType$1;
 		window.rightPaneMode = rightPaneMode$1;
 		window.currentLecture = currentLecture$1;
+		window.currentVideoId = currentVideoId$1;
 		window.lectureCompareA = lectureCompareA$1;
 		window.lectureCompareB = lectureCompareB$1;
 		window.trendsRangeStart = trendsRangeStart$1;
@@ -478,6 +484,7 @@ var BookIndex = (function(exports) {
 		if (window.selectedItemType !== void 0) selectedItemType$1 = window.selectedItemType;
 		if (window.rightPaneMode !== void 0) rightPaneMode$1 = window.rightPaneMode;
 		if (window.currentLecture !== void 0) currentLecture$1 = window.currentLecture;
+		if (window.currentVideoId !== void 0) currentVideoId$1 = String(window.currentVideoId || "");
 		if (window.lectureCompareA !== void 0) lectureCompareA$1 = window.lectureCompareA;
 		if (window.lectureCompareB !== void 0) lectureCompareB$1 = window.lectureCompareB;
 		if (window.trendsRangeStart !== void 0) trendsRangeStart$1 = window.trendsRangeStart;
@@ -525,6 +532,7 @@ var BookIndex = (function(exports) {
 		window.graphStrongOnly = graphStrongOnly$1;
 		window.nameGraphMinEdgeWeight = nameGraphMinEdgeWeight$1;
 		window.currentLecture = currentLecture$1;
+		window.currentVideoId = currentVideoId$1;
 		window.lectureCompareA = lectureCompareA$1;
 		window.lectureCompareB = lectureCompareB$1;
 		window.trendsRangeStart = trendsRangeStart$1;
@@ -1790,6 +1798,7 @@ var BookIndex = (function(exports) {
 			if (Number.isFinite(readingPage)) parts.push("reading", String(clampPageInBook$1(readingPage)));
 		}
 		if (currentEntity$1 === "materials" && currentTab$1 === "lecture_pages") parts.push(String(Math.max(0, currentLecture$1)));
+		if (currentEntity$1 === "materials" && currentTab$1 === "video" && currentVideoId$1) parts.push(String(currentVideoId$1));
 		if (currentEntity$1 === "materials" && currentTab$1 === "glossary" && currentGlossaryTerm$1) parts.push("term", currentGlossaryTerm$1);
 		if (currentEntity$1 === "scholar" && currentTab$1 === "scholar" && currentScholarAnchor$1) parts.push("anchor", currentScholarAnchor$1);
 		if (currentEntity$1 === "scholar" && currentTab$1 === "page_trends") {
@@ -1823,6 +1832,7 @@ var BookIndex = (function(exports) {
 			selectedItemType: selectedItemType$1,
 			rightPaneMode: rightPaneMode$1,
 			currentLecture: currentLecture$1,
+			currentVideoId: currentVideoId$1,
 			lectureCompareA: lectureCompareA$1,
 			lectureCompareB: lectureCompareB$1,
 			trendsRangeStart: trendsRangeStart$1,
@@ -1847,7 +1857,7 @@ var BookIndex = (function(exports) {
 		if (!a || !b) return false;
 		const aFilters = Array.isArray(a.activeFilters) ? a.activeFilters.join("|") : "";
 		const bFilters = Array.isArray(b.activeFilters) ? b.activeFilters.join("|") : "";
-		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages$1()) === (b.currentKwicPageEnd || getTotalBookPages$1()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope$1(a.globalSearchScope) === normalizeGlobalSearchScope$1(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
+		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && (a.currentVideoId || "") === (b.currentVideoId || "") && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages$1()) === (b.currentKwicPageEnd || getTotalBookPages$1()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope$1(a.globalSearchScope) === normalizeGlobalSearchScope$1(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
 	}
 	function applyViewState$1(state) {
 		if (!state) return;
@@ -1860,6 +1870,7 @@ var BookIndex = (function(exports) {
 		setSelectedItemType(state.selectedItemType || null);
 		setRightPaneMode(state.rightPaneMode || "histogram");
 		setCurrentLecture(Number.isInteger(state.currentLecture) ? state.currentLecture : 0);
+		setCurrentVideoId(typeof state.currentVideoId === "string" ? state.currentVideoId : "");
 		setLectureCompareA(Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1);
 		setLectureCompareB(Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2);
 		setTrendsRangeStart(Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1);
@@ -1943,6 +1954,7 @@ var BookIndex = (function(exports) {
 			selectedItemType: null,
 			rightPaneMode: "histogram",
 			currentLecture: 0,
+			currentVideoId: "",
 			trendsRangeStart: 1,
 			trendsRangeEnd: clampPageInBook$1(424),
 			searchQuery: "",
@@ -1954,6 +1966,10 @@ var BookIndex = (function(exports) {
 		setCurrentScholarAnchor("");
 		const lecturePageIndex = parsePositiveRouteNumber$1(routedParts[2]);
 		if (entity === "materials" && tab === "lecture_pages" && lecturePageIndex !== null) state.currentLecture = lecturePageIndex;
+		if (entity === "materials" && tab === "video") {
+			const rawVideoId = routedParts[2] ? String(routedParts[2]) : "";
+			state.currentVideoId = /^[A-Za-z0-9_-]{6,32}$/.test(rawVideoId) ? rawVideoId : "";
+		}
 		if (entity === "materials" && tab === "lectures") {
 			const readingPage = parsePositiveRouteNumber$1(routeValueAfter$1(routedParts, "reading"));
 			if (readingPage !== null) {
@@ -2018,6 +2034,10 @@ var BookIndex = (function(exports) {
 			const lectureTitle = state.currentLecture === 0 ? "Предисловие" : `Лекция ${state.currentLecture}`;
 			if (l && l.name) displayTitle = `${lectureTitle}: ${l.name}`;
 			else displayTitle = lectureTitle;
+		} else if (state.currentEntity === "materials" && state.currentTab === "video" && state.currentVideoId) {
+			const catalog = APP_DATA$1 && Array.isArray(APP_DATA$1.video_catalog) ? APP_DATA$1.video_catalog : [];
+			const hit = catalog.find((v) => v && v.id === state.currentVideoId);
+			displayTitle = hit && hit.title ? String(hit.title) : `Видео ${state.currentVideoId}`;
 		}
 		updateSEOMetadata(routePath, displayTitle);
 		let schema = null;
@@ -2909,6 +2929,7 @@ var BookIndex = (function(exports) {
 			selectedItemType,
 			rightPaneMode,
 			currentLecture,
+			currentVideoId: typeof window !== "undefined" ? String(window.currentVideoId || "") : "",
 			lectureCompareA,
 			lectureCompareB,
 			trendsRangeStart,
@@ -3164,6 +3185,7 @@ var BookIndex = (function(exports) {
 		selectedItemType = state.selectedItemType || null;
 		rightPaneMode = state.rightPaneMode || "histogram";
 		currentLecture = Number.isInteger(state.currentLecture) ? state.currentLecture : 0;
+		if (typeof window !== "undefined") window.currentVideoId = typeof state.currentVideoId === "string" ? state.currentVideoId : "";
 		lectureCompareA = Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1;
 		lectureCompareB = Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2;
 		trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
@@ -3196,7 +3218,7 @@ var BookIndex = (function(exports) {
 		if (!a || !b) return false;
 		const aFilters = Array.isArray(a.activeFilters) ? a.activeFilters.join("|") : "";
 		const bFilters = Array.isArray(b.activeFilters) ? b.activeFilters.join("|") : "";
-		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages()) === (b.currentKwicPageEnd || getTotalBookPages()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope(a.globalSearchScope) === normalizeGlobalSearchScope(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
+		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && (a.currentVideoId || "") === (b.currentVideoId || "") && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages()) === (b.currentKwicPageEnd || getTotalBookPages()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope(a.globalSearchScope) === normalizeGlobalSearchScope(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
 	}
 	function closeCardView() {
 		if (currentTab !== "list" || rightPaneMode !== "card") return false;
@@ -5593,6 +5615,7 @@ var BookIndex = (function(exports) {
 			currentScholarAnchor = "";
 			pendingScholarAnchor = "";
 		}
+		if (!(currentEntity === "materials" && tab === "video")) setUiCurrentVideoId("");
 		renderTabs();
 		renderContent();
 		if (currentEntity === "scholar" && currentTab === "viz") warmupVizCacheInWorker();
@@ -6849,6 +6872,159 @@ var BookIndex = (function(exports) {
 		const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
 		return (h > 0 ? h + ":" : "") + mm + ":" + String(s).padStart(2, "0");
 	}
+	function sanitizeVideoId(raw) {
+		const id = String(raw || "").trim();
+		return /^[A-Za-z0-9_-]{6,32}$/.test(id) ? id : "";
+	}
+	function getCurrentVideoId() {
+		if (typeof window !== "undefined" && window.currentVideoId != null) return String(window.currentVideoId || "");
+		return "";
+	}
+	function setUiCurrentVideoId(id) {
+		const safe = sanitizeVideoId(id);
+		if (typeof window !== "undefined") window.currentVideoId = safe;
+		return safe;
+	}
+	function findVideoById(id) {
+		const key = sanitizeVideoId(id);
+		if (!key) return null;
+		const catalog = getDedupedVideoCatalog();
+		for (const v of catalog) {
+			if (!v) continue;
+			if (v.id === key || v.url === key) return v;
+		}
+		return null;
+	}
+	function buildVideoDetailHash(id) {
+		const safe = sanitizeVideoId(id);
+		if (!safe) return buildCanonicalHash(["materials", "video"]);
+		return buildCanonicalHash(["materials", "video", safe]);
+	}
+	function youtubeUrlWithT(url, t) {
+		const base = String(url || "");
+		if (!base) return "";
+		if (!Number.isFinite(t) || t <= 0) return base;
+		return base + (base.includes("?") ? "&" : "?") + "t=" + Math.floor(t) + "s";
+	}
+	// Inverse of getChapterRelatedVideos: book chapters that topically overlap a video.
+	// Honesty frame: these are thematic overlaps with book chapters, not recordings of them.
+	function getVideoRelatedChapters(video, limit = 8) {
+		if (!video) return [];
+		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+		const out = [];
+		for (let i = 0; i < chapters.length; i++) {
+			const hits = getChapterRelatedVideos(i, 9999);
+			const found = hits.find((e) => e && e.v && (e.v.id === video.id || e.v.url === video.url));
+			if (found) out.push({ chapter: chapters[i], index: i, score: found.score });
+		}
+		out.sort((a, b) => b.score - a.score || a.index - b.index);
+		return out.slice(0, limit);
+	}
+	function openVideoDetail(id) {
+		closeGlobalSearchResults();
+		currentEntity = "materials";
+		currentTab = "video";
+		setUiCurrentVideoId(id);
+		selectedItem = null;
+		selectedItemType = null;
+		currentGlossaryTerm = "";
+		currentScholarAnchor = "";
+		pendingScholarAnchor = "";
+		rightPaneMode = "histogram";
+		renderEntitySwitcher();
+		renderTabs();
+		renderContent();
+		syncNavigationState();
+	}
+	function openVideoGallery() {
+		closeGlobalSearchResults();
+		currentEntity = "materials";
+		currentTab = "video";
+		setUiCurrentVideoId("");
+		selectedItem = null;
+		selectedItemType = null;
+		currentGlossaryTerm = "";
+		currentScholarAnchor = "";
+		pendingScholarAnchor = "";
+		rightPaneMode = "histogram";
+		renderEntitySwitcher();
+		renderTabs();
+		renderContent();
+		syncNavigationState();
+	}
+	function renderVideoDetailPanel(container, videoId) {
+		const safeId = sanitizeVideoId(videoId);
+		const video = findVideoById(safeId);
+		const galleryHash = buildCanonicalHash(["materials", "video"]);
+		if (!video) {
+			container.innerHTML = `<div class="panel active video-detail"><div class="video-detail-inner">
+    <a class="video-detail-back" href="${escapeHtml(galleryHash)}">← К видеогалерее</a>
+    <h2 class="video-detail-title">Видео не найдено</h2>
+    <div class="video-detail-intro">В каталоге нет записи с id «${escapeHtml(safeId || videoId || "")}».</div>
+  </div></div>`;
+			const back = container.querySelector(".video-detail-back");
+			if (back) bindActionWithKeyboard(back, () => openVideoGallery());
+			return;
+		}
+		const dur = formatVideoDuration(video.duration);
+		const dateStr = formatVideoDate(video.date);
+		const metaParts = [dateStr, dur ? `⏱ ${dur}` : ""].filter(Boolean);
+		const rels = Array.isArray(video.related_entities) ? video.related_entities : [];
+		const seenRel = new Set();
+		const uniqRels = [];
+		for (const r of rels) {
+			if (!r || !r.head || !r.type) continue;
+			const t = r.type === "subject_index" ? "subject" : r.type;
+			const key = t + "\0" + r.head;
+			if (seenRel.has(key)) continue;
+			seenRel.add(key);
+			uniqRels.push({ type: t, head: r.head, t: Number.isFinite(r.t) ? r.t : null });
+		}
+		const chapters = getVideoRelatedChapters(video, 8);
+		let chipsHtml = "";
+		for (const r of uniqRels.slice(0, 24)) {
+			const ytT = Number.isFinite(r.t) && r.t > 0 ? r.t : null;
+			const chipTitle = ytT != null ? `упоминание ≈ ${formatVideoDuration(ytT)}` : "";
+			chipsHtml += `<a class="video-detail-chip" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type || "all", r.head))}"${chipTitle ? ` title="${escapeHtml(chipTitle)}"` : ""}>${escapeHtml(r.head)}${ytT != null ? `<span class="video-detail-chip-t">▸ ${escapeHtml(formatVideoDuration(ytT))}</span>` : ""}</a>`;
+		}
+		let chaptersHtml = "";
+		if (chapters.length) {
+			for (const c of chapters) {
+				const name = c.chapter && c.chapter.name ? c.chapter.name : `Глава ${c.index}`;
+				const pages = c.chapter ? `${c.chapter.start || ""}–${c.chapter.end || ""}` : "";
+				chaptersHtml += `<a class="video-detail-chapter" data-lecture-idx="${c.index}" href="${escapeHtml(buildLecturePageHash(c.index))}">${escapeHtml(name)}${pages ? ` <span class="video-detail-chapter-pages">стр. ${escapeHtml(String(pages))}</span>` : ""} <span class="video-detail-chapter-score">· ${c.score} совп.</span></a>`;
+			}
+		} else {
+			chaptersHtml = `<div class="video-detail-empty">Тематическое пересечение с главами книги не найдено (по связанным сущностям).</div>`;
+		}
+		const ytUrl = String(video.url || "");
+		container.innerHTML = `<div class="panel active video-detail" data-video-id="${escapeHtml(safeId)}"><div class="video-detail-inner">
+    <a class="video-detail-back" href="${escapeHtml(galleryHash)}">← К видеогалерее</a>
+    <h2 class="video-detail-title">${escapeHtml(String(video.title || ""))}</h2>
+    <div class="video-detail-meta">${escapeHtml(metaParts.join(" · "))}</div>
+    <div class="video-detail-actions">
+      <a class="video-detail-yt" href="${escapeHtml(ytUrl)}" target="_blank" rel="noopener noreferrer">Смотреть на YouTube</a>
+    </div>
+    <div class="video-detail-section">
+      <h3 class="video-detail-section-title">Связанные сущности <span class="video-detail-count">${uniqRels.length}</span></h3>
+      <div class="video-detail-chips">${chipsHtml || `<div class="video-detail-empty">Связанные сущности не размечены.</div>`}</div>
+    </div>
+    <div class="video-detail-section">
+      <h3 class="video-detail-section-title">Пересечение с главами книги</h3>
+      <div class="video-detail-chapter-note">Публичная лекция на YouTube — не запись главы из книги «Из жизни слов и языков». Ниже главы книги, с которыми у видео есть тематическое пересечение по размеченным сущностям (урок Уитни: совпадение тем ≠ тождество текста).</div>
+      <div class="video-detail-chapters">${chaptersHtml}</div>
+    </div>
+  </div></div>`;
+		const back = container.querySelector(".video-detail-back");
+		if (back) bindActionWithKeyboard(back, () => openVideoGallery());
+		container.querySelectorAll(".video-detail-chip").forEach((chip) => {
+			bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
+		});
+		container.querySelectorAll(".video-detail-chapter").forEach((el) => {
+			bindActionWithKeyboard(el, () => openLecturePage(parseInt(el.dataset.lectureIdx || "0", 10) || 0));
+		});
+	}
+
 	// B3.4: videos whose discussed entities overlap a book chapter's pages.
 	// These are TOPICALLY related public lectures, not recordings of this chapter.
 	var CHAPTER_VIDEO_CACHE = /* @__PURE__ */ new Map();
@@ -9573,7 +9749,7 @@ var BookIndex = (function(exports) {
 				videoResults.textContent = "";
 				return;
 			}
-			const cat = Array.isArray(APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+			const cat = getDedupedVideoCatalog();
 			const matches = cat.filter((v) => String(v && v.title || "").toLowerCase().includes(q));
 			matches.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
 			const shown = matches.slice(0, 8);
@@ -9581,16 +9757,16 @@ var BookIndex = (function(exports) {
 			if (!shown.length) {
 				const empty = document.createElement("div");
 				empty.className = "home-task-empty";
-				empty.textContent = "Ничего не найдено среди 191 видео.";
+				empty.textContent = `Ничего не найдено среди ${cat.length} видео.`;
 				videoResults.appendChild(empty);
 				return;
 			}
 			for (const v of shown) {
 				const a = document.createElement("a");
 				a.className = "home-task-video-row";
-				a.href = String(v.url || "");
-				a.target = "_blank";
-				a.rel = "noopener noreferrer";
+				const vidId = sanitizeVideoId(v.id) || String(v.id || "");
+				a.href = buildVideoDetailHash(vidId);
+				a.dataset.videoId = vidId;
 				const title = document.createElement("span");
 				title.className = "home-task-video-title";
 				title.textContent = String(v.title || "");
@@ -9604,6 +9780,9 @@ var BookIndex = (function(exports) {
 				}
 				videoResults.appendChild(a);
 			}
+			videoResults.querySelectorAll(".home-task-video-row").forEach((row) => {
+				bindActionWithKeyboard(row, () => openVideoDetail(row.dataset.videoId || ""));
+			});
 			if (matches.length > shown.length) {
 				const more = document.createElement("div");
 				more.className = "home-task-empty";
@@ -10211,6 +10390,11 @@ var BookIndex = (function(exports) {
 		return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
 	}
 	function renderVideoGalleryPanel(container) {
+		const detailId = getCurrentVideoId();
+		if (detailId) {
+			renderVideoDetailPanel(container, detailId);
+			return;
+		}
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
 		const catalog = getDedupedVideoCatalog();
 		container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
@@ -10256,11 +10440,11 @@ var BookIndex = (function(exports) {
 			for (const v of vids) {
 				const card = document.createElement("div");
 				card.className = "vg-card";
+				const vidId = sanitizeVideoId(v.id) || String(v.id || "");
 				const link = document.createElement("a");
 				link.className = "vg-card-title";
-				link.href = String(v.url || "");
-				link.target = "_blank";
-				link.rel = "noopener noreferrer";
+				link.href = buildVideoDetailHash(vidId);
+				link.dataset.videoId = vidId;
 				link.textContent = String(v.title || "");
 				card.appendChild(link);
 				const meta = document.createElement("div");
@@ -10268,6 +10452,15 @@ var BookIndex = (function(exports) {
 				const dur = formatVideoDuration(v.duration);
 				meta.textContent = [formatVideoDate(v.date), dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
 				card.appendChild(meta);
+				if (v.url) {
+					const yt = document.createElement("a");
+					yt.className = "vg-card-yt";
+					yt.href = String(v.url || "");
+					yt.target = "_blank";
+					yt.rel = "noopener noreferrer";
+					yt.textContent = "YouTube";
+					card.appendChild(yt);
+				}
 				const rels = (v.related_entities || []).slice(0, 6);
 				if (rels.length) {
 					const chips = document.createElement("div");
@@ -10287,6 +10480,9 @@ var BookIndex = (function(exports) {
 				}
 				listEl.appendChild(card);
 			}
+			listEl.querySelectorAll(".vg-card-title").forEach((link) => {
+				bindActionWithKeyboard(link, () => openVideoDetail(link.dataset.videoId || ""));
+			});
 			listEl.querySelectorAll(".vg-chip").forEach((chip) => {
 				bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
 			});
@@ -14173,6 +14369,10 @@ var BookIndex = (function(exports) {
 		window.openGlossaryTerm = openGlossaryTerm;
 		window.openKwicTerm = openKwicTerm;
 		window.openLecturePage = openLecturePage;
+		window.openVideoDetail = openVideoDetail;
+		window.openVideoGallery = openVideoGallery;
+		window.buildVideoDetailHash = buildVideoDetailHash;
+		window.findVideoById = findVideoById;
 		window.openLectureTerm = openLectureTerm;
 		window.openMaterialsLectures = openMaterialsLectures;
 		window.openReadingNowPage = openReadingNowPage;

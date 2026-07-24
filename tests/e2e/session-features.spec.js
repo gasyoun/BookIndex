@@ -61,6 +61,41 @@ test.describe('video gallery (B3.5)', () => {
   });
 });
 
+test.describe('video detail card (H1604 / B4 residual)', () => {
+  test('hash route shows metadata, entity chips, and honesty note', async ({ page }) => {
+    // known catalog id: А.А. Зализняк. Коротко об арабском языке
+    await page.goto('/aaz-index.html#v4/materials/video/tv87ggs0yq4');
+    await expect(page.locator('.video-detail')).toBeVisible();
+    await expect(page.locator('.video-detail-title')).toContainText('арабск', { ignoreCase: true });
+    await expect(page.locator('.video-detail-meta')).toBeVisible();
+    await expect(page.locator('.video-detail-yt')).toHaveAttribute('href', /youtube\.com\/watch\?v=tv87ggs0yq4/);
+    await expect(page.locator('.video-detail-chip').first()).toBeVisible();
+    await expect(page.locator('.video-detail-chapter-note')).toContainText('не запись');
+
+    // entity chip navigates into the index
+    await page.locator('.video-detail-chip').first().click();
+    await expect(page).toHaveURL(/#v4\/.+\/list\/item\//);
+  });
+
+  test('gallery title and home search open the detail route', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/materials/video');
+    await expect(page.locator('#vg-list .vg-card-title').first()).toBeVisible();
+    await page.locator('#vg-list .vg-card-title').first().click();
+    await expect(page).toHaveURL(/#v4\/materials\/video\/[A-Za-z0-9_-]{6,}/);
+    await expect(page.locator('.video-detail')).toBeVisible();
+    await page.locator('.video-detail-back').click();
+    await expect(page).toHaveURL(/#v4\/materials\/video$/);
+    await expect(page.locator('#vg-list')).toBeVisible();
+
+    await page.goto('/aaz-index.html#v4/home/home');
+    await page.locator('#home-task-video-input').fill('берестян');
+    await expect(page.locator('#home-task-video-results .home-task-video-row').first()).toBeVisible();
+    await page.locator('#home-task-video-results .home-task-video-row').first().click();
+    await expect(page).toHaveURL(/#v4\/materials\/video\/[A-Za-z0-9_-]{6,}/);
+    await expect(page.locator('.video-detail')).toBeVisible();
+  });
+});
+
 test.describe('entity card (B5 order, dedup, actions, B2 citation)', () => {
   test('video chips are unique and ordered before cross-links; actions collapsed; citation canonical', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/languages/list/item/languages/russkii');
