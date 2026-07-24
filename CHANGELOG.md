@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Removed
+- Dead root build artifact `v13_app_test.js` archived to `docs/history/v13_app_test.js` (H1506) — May-2026 concatenated output of the old `bundle.js` pipeline; zero live references in package.json/CI; `npm run build`, `check:js`, and Playwright (127) still pass.
 - Root runtime dead copies `v3_app.js.orig` (tracked) and ignore-policy for `*.orig` / existing `*.bak` (H1608) — large backup siblings of live `v3_app.js` that confused greps and inflated the tree; no package/docs references.
 
 ### Added
