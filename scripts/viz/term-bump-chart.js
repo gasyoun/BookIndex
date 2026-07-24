@@ -26,9 +26,11 @@
 
   function renderTermBumpChart(container, topTerms) {
     if (!container) return;
+    const shell = root.VizShell;
     const d3 = root.d3;
     if (!d3 || typeof root.buildVizCache !== 'function') {
-      container.innerHTML = '<div class="viz-card">Bump chart unavailable: missing d3/buildVizCache.</div>';
+      if (shell) shell.showStatus(container, 'error', 'Bump-chart недоступен', 'Нужны d3 и buildVizCache.');
+      else container.innerHTML = '<div class="viz-status viz-status-error">Bump chart unavailable: missing d3/buildVizCache.</div>';
       return;
     }
 
@@ -38,29 +40,47 @@
     let currentTop = Number.isFinite(Number(topTerms)) ? Number(topTerms) : Number(params.get('top') || 15);
     if (currentTop < 5) currentTop = 5;
     if (currentTop > 30) currentTop = 30;
-    let searchNeedle = '';
+    let searchNeedle = String(params.get('filter') || '');
 
-    container.innerHTML = [
-      '<div class="viz-card viz-bump">',
-      '  <div class="viz-toolbar">',
-      '    <label>top terms:',
-      `      <input id="viz-bump-top" type="range" min="5" max="30" step="1" value="${String(currentTop)}">`,
-      `      <span id="viz-bump-top-label">${String(currentTop)}</span>`,
-      '    </label>',
-      '    <label>Поиск термина:',
-      '      <input id="viz-bump-search" type="text" placeholder="например: энклитика">',
-      '    </label>',
-      '  </div>',
-      '  <svg id="viz-bump-svg" width="100%" height="560" viewBox="0 0 1180 560" preserveAspectRatio="xMidYMid meet"></svg>',
-      '  <div id="viz-bump-detail" class="viz-detail viz-detail-spaced"></div>',
-      '</div>',
+    const filtersHtml = [
+      '<label>top terms:',
+      `  <input id="viz-bump-top" type="range" min="5" max="30" step="1" value="${String(currentTop)}">`,
+      `  <span id="viz-bump-top-label">${String(currentTop)}</span>`,
+      '</label>',
+      '<label>Поиск термина:',
+      `  <input id="viz-bump-search" type="text" placeholder="например: энклитика" value="${shell && shell.escapeHtml ? shell.escapeHtml(searchNeedle) : String(searchNeedle || '').replace(/"/g, '&quot;')}">`,
+      '</label>',
     ].join('');
+
+    if (shell && typeof shell.buildModuleCard === 'function') {
+      container.innerHTML = shell.buildModuleCard({
+        className: 'viz-bump',
+        title: 'VIZ-07 · Bump-chart рангов',
+        dataSource: 'termRankByLecture',
+        filtersHtml,
+        bodyHtml: [
+          '<div class="viz-empty-state" id="viz-bump-empty" hidden><strong>Нет данных.</strong><br>Выберите другой top-N или очистите поиск.</div>',
+          '<svg id="viz-bump-svg" width="100%" height="560" viewBox="0 0 1180 560" preserveAspectRatio="xMidYMid meet"></svg>',
+          '<div id="viz-bump-detail" class="viz-detail viz-detail-spaced"></div>',
+        ].join(''),
+      });
+    } else {
+      container.innerHTML = [
+        '<div class="viz-card viz-bump">',
+        `  <div class="viz-toolbar">${filtersHtml}</div>`,
+        '  <svg id="viz-bump-svg" width="100%" height="560" viewBox="0 0 1180 560" preserveAspectRatio="xMidYMid meet"></svg>',
+        '  <div id="viz-bump-detail" class="viz-detail viz-detail-spaced"></div>',
+        '</div>',
+      ].join('');
+    }
 
     const svg = d3.select(container).select('#viz-bump-svg');
     const topInput = container.querySelector('#viz-bump-top');
     const topLabel = container.querySelector('#viz-bump-top-label');
     const searchInput = container.querySelector('#viz-bump-search');
     const detail = container.querySelector('#viz-bump-detail');
+    const empty = container.querySelector('#viz-bump-empty');
+    searchNeedle = normalizeNeedle(searchNeedle);
     const width = 1180;
     const height = 560;
     const margin = { top: 20, right: 170, bottom: 80, left: 70 };
@@ -138,15 +158,17 @@
         if (values.length > 1) series.push({ term, values });
       }
       if (!series.length) {
+        if (empty) empty.hidden = false;
         g.append('text')
           .attr('x', innerW / 2)
           .attr('y', innerH / 2)
           .attr('text-anchor', 'middle')
           .attr('fill', 'var(--muted)')
           .text('Нет данных для отображения');
-        detail.innerHTML = '<p>Выберите другой top-N или очистите поиск.</p>';
+        if (detail) detail.innerHTML = '<p>Выберите другой top-N или очистите поиск.</p>';
         return;
       }
+      if (empty) empty.hidden = true;
 
       const x = d3.scalePoint().domain(d3.range(chapters.length)).range([0, innerW]);
       const y = d3.scaleLinear().domain([1, Math.max(2, maxRank)]).range([0, innerH]);
@@ -260,6 +282,22 @@
         if (typeof root.writeVizParams === 'function') root.writeVizParams({ filter: searchNeedle || null, top: currentTop });
         redraw(currentTop);
       };
+    }
+
+    if (shell && typeof shell.wireModuleChrome === 'function') {
+      shell.wireModuleChrome(container, {
+        exportFilename: 'viz-bump-chart.svg',
+        exportSelector: '#viz-bump-svg',
+        onReset: () => {
+          currentTop = 15;
+          searchNeedle = '';
+          if (topInput) topInput.value = '15';
+          if (topLabel) topLabel.textContent = '15';
+          if (searchInput) searchInput.value = '';
+          if (typeof root.writeVizParams === 'function') root.writeVizParams({ top: 15, filter: null });
+          redraw(currentTop);
+        },
+      });
     }
 
     const onVisibility = () => {

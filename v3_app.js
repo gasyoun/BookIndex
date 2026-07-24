@@ -2266,6 +2266,7 @@ var BookIndex = (function(exports) {
 	var vizScriptLoadPromises = /* @__PURE__ */ new Map();
 	var VIZ_CACHE_WORKER_PATH = "./scripts/viz/build-viz-cache-worker.js";
 	var VIZ_STATE_SCRIPT_PATH = "./scripts/viz/viz-state.js";
+	var VIZ_SHELL_SCRIPT_PATH = "./scripts/viz/viz-shell.js";
 	var VIZ_SCRIPT_BY_MODULE = Object.freeze({
 		viz01: "./scripts/viz/map-timeline.js",
 		viz02: "./scripts/viz/cooccurrence-graph.js",
@@ -3606,8 +3607,13 @@ var BookIndex = (function(exports) {
 		return loadVizScriptOnce("./scripts/viz/build-viz-cache.js");
 	}
 	function ensureVizStateLoaded() {
-		if (typeof window !== "undefined" && typeof window.readVizParams === "function" && typeof window.writeVizParams === "function") return Promise.resolve();
-		return loadVizScriptOnce(VIZ_STATE_SCRIPT_PATH);
+		const stateReady = typeof window !== "undefined" && typeof window.readVizParams === "function" && typeof window.writeVizParams === "function";
+		const shellReady = typeof window !== "undefined" && window.VizShell;
+		const statePromise = stateReady ? Promise.resolve() : loadVizScriptOnce(VIZ_STATE_SCRIPT_PATH);
+		return statePromise.then(() => {
+			if (shellReady || typeof window !== "undefined" && window.VizShell) return;
+			return loadVizScriptOnce(VIZ_SHELL_SCRIPT_PATH);
+		});
 	}
 	function ensureVizModuleLoaded(moduleId) {
 		const moduleKey = String(moduleId || "").trim();
@@ -11905,31 +11911,46 @@ var BookIndex = (function(exports) {
 			}
 		];
 	}
-	function setVizHostStatus(host, message, className = "viz-loading") {
+	function setVizHostStatus(host, message, kind = "loading") {
 		if (!host) return;
+		const statusKind = [
+			"loading",
+			"empty",
+			"error"
+		].includes(String(kind)) ? String(kind) : "loading";
+		const titleByKind = {
+			loading: "Загрузка",
+			empty: "Нет данных",
+			error: "Ошибка"
+		};
+		if (typeof window !== "undefined" && window.VizShell && typeof window.VizShell.showStatus === "function") {
+			window.VizShell.showStatus(host, statusKind, titleByKind[statusKind] || "Статус", message);
+			return;
+		}
 		host.textContent = "";
 		const status = document.createElement("div");
-		status.className = String(className || "viz-loading");
+		status.className = `viz-status viz-status-${statusKind}`;
+		status.setAttribute("role", statusKind === "error" ? "alert" : "status");
 		status.textContent = String(message || "");
 		host.appendChild(status);
 	}
 	function mountVizModule(host, moduleDef) {
 		if (!host || !moduleDef) return;
-		setVizHostStatus(host, "Загрузка модуля…");
+		setVizHostStatus(host, "Загрузка модуля…", "loading");
 		ensureVizStateLoaded().then(() => ensureVizModuleLoaded(moduleDef.id)).catch(() => null).then(() => warmupVizCacheInWorker().catch(() => null)).then(() => {
 			const renderFn = getVizRegistry()[moduleDef.renderKey] || moduleDef.render;
 			if (typeof renderFn !== "function") {
-				setVizHostStatus(host, "Модуль не подключён. Проверьте scripts/viz/*.js.", "viz-card");
+				setVizHostStatus(host, "Модуль не подключён. Проверьте scripts/viz/*.js.", "error");
 				return;
 			}
 			try {
 				renderFn(host);
 				currentVizCleanup = typeof host.__vizCleanup === "function" ? host.__vizCleanup : null;
 			} catch (e) {
-				setVizHostStatus(host, `Ошибка рендера: ${String(e && e.message ? e.message : e)}`, "viz-card");
+				setVizHostStatus(host, `Ошибка рендера: ${String(e && e.message ? e.message : e)}`, "error");
 			}
 		}).catch((e) => {
-			setVizHostStatus(host, `Ошибка загрузки модуля: ${String(e && e.message ? e.message : e)}`, "viz-card");
+			setVizHostStatus(host, `Ошибка загрузки модуля: ${String(e && e.message ? e.message : e)}`, "error");
 		});
 	}
 	function renderVizPanel(container) {
@@ -11942,13 +11963,13 @@ var BookIndex = (function(exports) {
     <div class="viz-header-row">
       <h2 class="viz-title">Визуализации</h2>
       <div class="viz-header-actions">
-        <span class="viz-source-chip">${escapeHtml(activeBookLabel)}</span>
+        <span class="viz-source-chip" title="Активная книга">${escapeHtml(activeBookLabel)}</span>
         <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический маршрут</a>
         <a class="related-link viz-corpus-link" href="${escapeHtml(buildCorpusVizHash(currentVizModule))}">маршрут корпуса</a>
       </div>
     </div>
-    <div class="viz-module-tabs" id="viz-module-tabs"></div>
-    <div id="viz-module-host" class="viz-module-host"><div class="viz-loading">Подготовка кэша…</div></div>
+    <div class="viz-module-tabs" id="viz-module-tabs" role="tablist" aria-label="Модули визуализации"></div>
+    <div id="viz-module-host" class="viz-module-host"><div class="viz-status viz-status-loading" role="status">Подготовка кэша…</div></div>
   </div>`;
 		const tabs = container.querySelector("#viz-module-tabs");
 		const host = container.querySelector("#viz-module-host");
@@ -11958,6 +11979,8 @@ var BookIndex = (function(exports) {
 			btn.type = "button";
 			btn.className = "viz-module-btn" + (item.id === currentVizModule ? " active" : "");
 			btn.dataset.module = item.id;
+			btn.setAttribute("role", "tab");
+			btn.setAttribute("aria-selected", item.id === currentVizModule ? "true" : "false");
 			btn.textContent = item.title;
 			bindActionWithKeyboard(btn, () => {
 				currentVizModule = item.id;

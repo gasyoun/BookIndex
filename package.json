@@ -24,7 +24,7 @@
     "check:postdeploy": "npm run check:deploy && npm run check:a11y",
     "check:security": "npm audit --audit-level=moderate",
     "check:security:static": "node scripts/check_security_policy.mjs",
-    "check:js": "node --check v3_app.js && node --check scripts/build_aaz_index.mjs && node --check scripts/check_live_deploy.mjs && node --check scripts/check_lighthouse_a11y.mjs && node --check scripts/dev/static-server.mjs && node --check scripts/viz/build-viz-cache.js && node --check scripts/viz/viz-state.js",
+    "check:js": "node --check v3_app.js && node --check scripts/build_aaz_index.mjs && node --check scripts/check_live_deploy.mjs && node --check scripts/check_lighthouse_a11y.mjs && node --check scripts/dev/static-server.mjs && node --check scripts/viz/build-viz-cache.js && node --check scripts/viz/viz-state.js && node --check scripts/viz/viz-shell.js && node --check scripts/viz/map-timeline.js && node --check scripts/viz/cooccurrence-graph.js && node --check scripts/viz/discovery-timeline.js && node --check scripts/viz/heatmap-matrix.js && node --check scripts/viz/narrative-sankey.js && node --check scripts/viz/lang-chord.js && node --check scripts/viz/term-bump-chart.js",
     "check:ui": "node scripts/check_inline_styles.mjs",
     "check:e2e": "playwright test",
     "check:e2e:smoke": "playwright test tests/e2e/smoke.spec.js --grep \"PWA manifest|names graph|map tab\" --workers=1",

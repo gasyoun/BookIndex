@@ -20,9 +20,11 @@
 
   function renderCooccurrenceGraph(container, minWeight) {
     if (!container) return;
+    const shell = root.VizShell;
     const d3 = root.d3;
     if (!d3 || typeof root.buildVizCache !== 'function') {
-      container.innerHTML = '<div class="viz-card">Graph unavailable: missing d3/buildVizCache.</div>';
+      if (shell) shell.showStatus(container, 'error', 'Граф недоступен', 'Нужны d3 и buildVizCache.');
+      else container.innerHTML = '<div class="viz-status viz-status-error">Graph unavailable: missing d3/buildVizCache.</div>';
       return;
     }
 
@@ -35,23 +37,41 @@
     let currentLectureId = String(params.get('lecture') || 'all');
     let simulation = null;
 
-    container.innerHTML = [
-      '<div class="viz-card viz-cograph">',
-      '  <div class="viz-toolbar">',
-      '    <label>Лекция:',
-      '      <select id="viz-cograph-lecture"></select>',
-      '    </label>',
-      '    <span id="viz-cograph-summary" class="viz-note"></span>',
-      '  </div>',
-      '  <div id="viz-cograph-legend" class="viz-legend"></div>',
-      '  <svg id="viz-cograph-svg" width="100%" height="620" viewBox="0 0 1180 620" preserveAspectRatio="xMidYMid meet"></svg>',
-      '</div>',
+    const filtersHtml = [
+      '<label>Лекция: <select id="viz-cograph-lecture"></select></label>',
+      `<label>min weight: <input id="viz-cograph-min" class="viz-input-narrow" type="number" min="1" step="1" value="${String(currentMinWeight)}"></label>`,
+      '<span id="viz-cograph-summary" class="viz-note"></span>',
     ].join('');
+
+    if (shell && typeof shell.buildModuleCard === 'function') {
+      container.innerHTML = shell.buildModuleCard({
+        className: 'viz-cograph',
+        title: 'VIZ-02 · Граф сосуществования',
+        dataSource: 'buildVizCache.coGraph',
+        filtersHtml,
+        exportFilename: 'viz-cograph.svg',
+        bodyHtml: [
+          '<div id="viz-cograph-legend" class="viz-legend"></div>',
+          '<div class="viz-empty-state" id="viz-cograph-empty" hidden><strong>Нет рёбер.</strong><br>Ослабьте фильтры (лекция / min weight).</div>',
+          '<svg id="viz-cograph-svg" width="100%" height="620" viewBox="0 0 1180 620" preserveAspectRatio="xMidYMid meet"></svg>',
+        ].join(''),
+      });
+    } else {
+      container.innerHTML = [
+        '<div class="viz-card viz-cograph">',
+        `  <div class="viz-toolbar">${filtersHtml}</div>`,
+        '  <div id="viz-cograph-legend" class="viz-legend"></div>',
+        '  <svg id="viz-cograph-svg" width="100%" height="620" viewBox="0 0 1180 620" preserveAspectRatio="xMidYMid meet"></svg>',
+        '</div>',
+      ].join('');
+    }
 
     const svg = d3.select(container).select('#viz-cograph-svg');
     const lectureSelect = container.querySelector('#viz-cograph-lecture');
+    const minInput = container.querySelector('#viz-cograph-min');
     const legend = container.querySelector('#viz-cograph-legend');
     const summary = container.querySelector('#viz-cograph-summary');
+    const empty = container.querySelector('#viz-cograph-empty');
     const width = 1180;
     const height = 620;
     const colorByType = {
@@ -117,6 +137,7 @@
       svg.selectAll('*').remove();
 
       if (summary) summary.textContent = `Узлов: ${graph.nodes.length} · Рёбер: ${graph.links.length}`;
+      if (empty) empty.hidden = !!(graph.nodes.length && graph.links.length);
 
       if (!graph.nodes.length || !graph.links.length) {
         svg.append('text')
@@ -199,14 +220,44 @@
       });
     }
 
+    function writeParams() {
+      if (typeof root.writeVizParams !== 'function') return;
+      root.writeVizParams({
+        lecture: currentLectureId === 'all' ? null : currentLectureId,
+        min: currentMinWeight > 1 ? currentMinWeight : null,
+      });
+    }
+
     if (lectureSelect) {
       lectureSelect.onchange = () => {
         currentLectureId = String(lectureSelect.value || 'all');
-        if (typeof root.writeVizParams === 'function') {
-          root.writeVizParams({ lecture: currentLectureId === 'all' ? null : currentLectureId });
-        }
+        writeParams();
         redraw();
       };
+    }
+    if (minInput) {
+      minInput.onchange = () => {
+        currentMinWeight = Number(minInput.value || 1);
+        if (!Number.isFinite(currentMinWeight) || currentMinWeight < 1) currentMinWeight = 1;
+        minInput.value = String(currentMinWeight);
+        writeParams();
+        redraw();
+      };
+    }
+
+    if (shell && typeof shell.wireModuleChrome === 'function') {
+      shell.wireModuleChrome(container, {
+        exportFilename: 'viz-cograph.svg',
+        exportSelector: '#viz-cograph-svg',
+        onReset: () => {
+          currentLectureId = 'all';
+          currentMinWeight = 1;
+          if (lectureSelect) lectureSelect.value = 'all';
+          if (minInput) minInput.value = '1';
+          writeParams();
+          redraw();
+        },
+      });
     }
 
     const onVisibility = () => {

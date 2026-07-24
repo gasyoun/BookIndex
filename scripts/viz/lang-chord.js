@@ -10,9 +10,11 @@
 
   function renderLangChord(container, minVal) {
     if (!container) return;
+    const shell = root.VizShell;
     const d3 = root.d3;
     if (!d3 || typeof root.buildVizCache !== 'function') {
-      container.innerHTML = '<div class="viz-card">Chord unavailable: missing d3/buildVizCache.</div>';
+      if (shell) shell.showStatus(container, 'error', 'Хорда недоступна', 'Нужны d3 и buildVizCache.');
+      else container.innerHTML = '<div class="viz-status viz-status-error">Chord unavailable: missing d3/buildVizCache.</div>';
       return;
     }
 
@@ -24,25 +26,42 @@
     if (currentMinFreq < 0) currentMinFreq = 0;
     const hidden = new Set();
 
-    container.innerHTML = [
-      '<div class="viz-card viz-chord">',
-      '  <div class="viz-toolbar">',
-      '    <label>min frequency:',
-      `      <input id="viz-chord-min" type="range" min="0" max="120" step="1" value="${String(currentMinFreq)}">`,
-      `      <span id="viz-chord-min-label">${String(currentMinFreq)}</span>`,
-      '    </label>',
-      '    <span id="viz-chord-summary" class="viz-note"></span>',
-      '  </div>',
-      '  <div id="viz-chord-legend" class="viz-legend"></div>',
-      '  <svg id="viz-chord-svg" width="100%" height="700" viewBox="0 0 980 700" preserveAspectRatio="xMidYMid meet"></svg>',
-      '</div>',
+    const filtersHtml = [
+      '<label>min frequency:',
+      `  <input id="viz-chord-min" type="range" min="0" max="120" step="1" value="${String(currentMinFreq)}">`,
+      `  <span id="viz-chord-min-label">${String(currentMinFreq)}</span>`,
+      '</label>',
+      '<span id="viz-chord-summary" class="viz-note"></span>',
     ].join('');
+
+    if (shell && typeof shell.buildModuleCard === 'function') {
+      container.innerHTML = shell.buildModuleCard({
+        className: 'viz-chord',
+        title: 'VIZ-06 · Хорда языков',
+        dataSource: 'buildVizCache.langCoMatrix',
+        filtersHtml,
+        bodyHtml: [
+          '<div id="viz-chord-legend" class="viz-legend"></div>',
+          '<div class="viz-empty-state" id="viz-chord-empty" hidden><strong>Недостаточно языков.</strong><br>Снизьте порог частоты или включите языки в легенде.</div>',
+          '<svg id="viz-chord-svg" width="100%" height="700" viewBox="0 0 980 700" preserveAspectRatio="xMidYMid meet"></svg>',
+        ].join(''),
+      });
+    } else {
+      container.innerHTML = [
+        '<div class="viz-card viz-chord">',
+        `  <div class="viz-toolbar">${filtersHtml}</div>`,
+        '  <div id="viz-chord-legend" class="viz-legend"></div>',
+        '  <svg id="viz-chord-svg" width="100%" height="700" viewBox="0 0 980 700" preserveAspectRatio="xMidYMid meet"></svg>',
+        '</div>',
+      ].join('');
+    }
 
     const svg = d3.select(container).select('#viz-chord-svg');
     const slider = container.querySelector('#viz-chord-min');
     const label = container.querySelector('#viz-chord-min-label');
     const summary = container.querySelector('#viz-chord-summary');
     const legend = container.querySelector('#viz-chord-legend');
+    const empty = container.querySelector('#viz-chord-empty');
     const width = 980;
     const height = 700;
     const outerRadius = Math.min(width, height) * 0.42;
@@ -109,6 +128,7 @@
       if (summary) summary.textContent = `Языков: ${langs.length}`;
 
       if (langs.length < 2) {
+        if (empty) empty.hidden = false;
         svg.append('text')
           .attr('x', width / 2)
           .attr('y', height / 2)
@@ -121,6 +141,7 @@
       const matrix = buildMatrix(langs);
       const total = matrix.reduce((acc, row) => acc + row.reduce((x, y) => x + y, 0), 0);
       if (!total) {
+        if (empty) empty.hidden = false;
         svg.append('text')
           .attr('x', width / 2)
           .attr('y', height / 2)
@@ -129,6 +150,7 @@
           .text('Нет связей между выбранными языками');
         return;
       }
+      if (empty) empty.hidden = true;
 
       const g = svg.append('g').attr('transform', `translate(${width / 2},${height / 2})`);
       const chord = d3.chord().padAngle(0.04).sortSubgroups(d3.descending)(matrix);
@@ -180,6 +202,20 @@
         if (label) label.textContent = String(currentMinFreq);
         redraw();
       };
+    }
+
+    if (shell && typeof shell.wireModuleChrome === 'function') {
+      shell.wireModuleChrome(container, {
+        exportFilename: 'viz-lang-chord.svg',
+        exportSelector: '#viz-chord-svg',
+        onReset: () => {
+          currentMinFreq = 20;
+          hidden.clear();
+          if (slider) slider.value = '20';
+          if (label) label.textContent = '20';
+          redraw();
+        },
+      });
     }
 
     const onVisibility = () => {

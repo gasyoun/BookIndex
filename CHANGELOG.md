@@ -7,6 +7,11 @@ All notable changes to this project will be documented in this file.
 - Root runtime dead copies `v3_app.js.orig` (tracked) and ignore-policy for `*.orig` / existing `*.bak` (H1608) — large backup siblings of live `v3_app.js` that confused greps and inflated the tree; no package/docs references.
 
 ### Added
+- VIZ Phase V1 shell (H1605): shared `scripts/viz/viz-shell.js` chrome for all seven
+  active modules — module header (title + data-source chip + Сброс/Ссылка/SVG),
+  toolbar grammar (filters left / view right), unified loading/empty/error states,
+  focus rings and max-width overflow guards. Exceptions documented in
+  `docs/VIZ_SHELL_EXCEPTIONS_H1605.md`.
 - Video **detail card** (H1604 / B4 residual): hash route `#v4/materials/video/<id>` shows title, date, duration, YouTube link, related-entity chips (`navigateToItem`), and an honesty note on book-chapter thematic overlap (not a recording of the chapter). Reachable from the video gallery titles and the home «Я смотрю видео» search; gallery keeps a separate YouTube deep link. Home search uses `getDedupedVideoCatalog` so counts are not inflated. E2E in `tests/e2e/session-features.spec.js`.
 - H1602 context-coverage batch: **+88** direct contexts (stratified: lexicon 50, names 12, languages 6, toponyms 6, ethnonyms 5, lexicon_tech 5, lexicon_reverse 4). Direct coverage **24.2% → 26.8%** (816→904); effective **32.3% → 36.3%** (clears 35% target). Metrics in `RESULTS_LOG.md`; `validate_content.py` green.
 - Volume-II entity **candidates** from lectures-v2 (DH C3 residual, H1599):
