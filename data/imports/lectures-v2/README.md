@@ -55,8 +55,14 @@ python scripts/ingest_transcripts.py --offline  # пере-извлечь из r
 
 1. **B3.2 — глубокие ссылки на видео** `?t=<сек>` строятся прямо из
    `segments[].t`. Ручная разметка глав YouTube не нужна.
-2. **C3 — извлечение сущностей**: имена/топонимы/языки/термины с привязкой к
-   минуте лекции; кандидаты идут в `app_data.json` через `import_source.py`.
+2. **C3 — извлечение сущностей**:
+   - **linking** known index heads → lecture minutes
+     (`scripts/extract_entities_from_transcripts.py --report` / `--write`);
+   - **new-head candidates** for volume II (heads *absent* from `app_data`) →
+     [`entity_candidates.json`](entity_candidates.json) /
+     [`entity_candidates.csv`](entity_candidates.csv) via `--candidates`
+     (review protocol: [`ENTITY_CANDIDATES_README.md`](ENTITY_CANDIDATES_README.md)).
+     Promotion only through a validated `import_source.py` draft — never auto-merge.
 3. **KWIC по корпусу лекций**: поиск термина → минута в лекции.
 
 ## Заметки по данным (на момент C1)

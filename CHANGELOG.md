@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Volume-II entity **candidates** from lectures-v2 (DH C3 residual, H1599):
+  `scripts/extract_entities_from_transcripts.py --candidates` proposes heads
+  *absent* from `app_data` (names with initials, languages, quoted subjects;
+  ethnonym hints) with type guess, first-mention timecode and frequency caps.
+  Emits `data/imports/lectures-v2/entity_candidates.{json,csv}` plus
+  `ENTITY_CANDIDATES_README.md` (review protocol + `import_source.py` promotion).
+  Never writes unreviewed heads into `app_data`.
+
 ### Changed
 - H1598 lecture-transcript ingest re-check: still **27/176** videos with `links.text` — NO-OP documented in `docs/LECTURE_TRANSCRIPT_INGEST_H1598_NOOP_24.07.2026.md` (no corpus/KWIC regeneration).
 
