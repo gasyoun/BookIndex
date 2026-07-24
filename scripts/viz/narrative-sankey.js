@@ -86,31 +86,49 @@
 
   function renderNarrativeSankey(container) {
     if (!container) return;
+    const shell = root.VizShell;
     const d3 = root.d3;
     if (!d3) {
-      container.innerHTML = '<div class="viz-card">Sankey unavailable: missing d3.</div>';
+      if (shell) shell.showStatus(container, 'error', 'Sankey недоступен', 'Нужен d3.');
+      else container.innerHTML = '<div class="viz-status viz-status-error">Sankey unavailable: missing d3.</div>';
       return;
     }
 
     const narratives = buildNarratives(root.APP_DATA || {});
     if (!narratives.length) {
-      container.innerHTML = '<div class="viz-card"><div class="viz-empty-state">Нет данных narrative для визуализации.</div></div>';
+      if (shell) shell.showStatus(container, 'empty', 'Нет narrative-данных', 'В APP_DATA.scholar нет сюжета «Слово» для визуализации.');
+      else container.innerHTML = '<div class="viz-card"><div class="viz-empty-state">Нет данных narrative для визуализации.</div></div>';
       return;
     }
 
     let activeId = narratives[0].id;
-    container.innerHTML = [
-      '<div class="viz-card viz-sankey">',
-      '  <div id="viz-sankey-tabs" class="viz-module-tabs"></div>',
-      '  <div class="viz-toolbar">',
-      '    <span id="viz-sankey-meta" class="viz-note"></span>',
-      '  </div>',
-      '  <div class="viz-grid">',
-      '    <svg id="viz-sankey-svg" width="100%" height="560" viewBox="0 0 980 560" preserveAspectRatio="xMidYMid meet"></svg>',
-      '    <aside id="viz-sankey-detail" class="viz-detail"></aside>',
-      '  </div>',
-      '</div>',
-    ].join('');
+    const filtersHtml = '<div id="viz-sankey-tabs" class="viz-module-tabs"></div><span id="viz-sankey-meta" class="viz-note"></span>';
+
+    if (shell && typeof shell.buildModuleCard === 'function') {
+      container.innerHTML = shell.buildModuleCard({
+        className: 'viz-sankey',
+        title: 'VIZ-05 · Sankey «Слово»',
+        dataSource: 'scholar.slovo',
+        filtersHtml,
+        bodyHtml: [
+          '<div class="viz-grid">',
+          '  <svg id="viz-sankey-svg" width="100%" height="560" viewBox="0 0 980 560" preserveAspectRatio="xMidYMid meet"></svg>',
+          '  <aside id="viz-sankey-detail" class="viz-detail"></aside>',
+          '</div>',
+        ].join(''),
+      });
+    } else {
+      container.innerHTML = [
+        '<div class="viz-card viz-sankey">',
+        '  <div id="viz-sankey-tabs" class="viz-module-tabs"></div>',
+        '  <div class="viz-toolbar"><span id="viz-sankey-meta" class="viz-note"></span></div>',
+        '  <div class="viz-grid">',
+        '    <svg id="viz-sankey-svg" width="100%" height="560" viewBox="0 0 980 560" preserveAspectRatio="xMidYMid meet"></svg>',
+        '    <aside id="viz-sankey-detail" class="viz-detail"></aside>',
+        '  </div>',
+        '</div>',
+      ].join('');
+    }
 
     const tabs = container.querySelector('#viz-sankey-tabs');
     const meta = container.querySelector('#viz-sankey-meta');
@@ -231,6 +249,18 @@
         .text((d) => d.label);
 
       renderDetail(diagram.nodes[0], diagram.detailsByNode);
+    }
+
+    if (shell && typeof shell.wireModuleChrome === 'function') {
+      shell.wireModuleChrome(container, {
+        exportFilename: 'viz-sankey-slovo.svg',
+        exportSelector: '#viz-sankey-svg',
+        onReset: () => {
+          activeId = narratives[0].id;
+          renderTabs();
+          redraw();
+        },
+      });
     }
 
     const onVisibility = () => {

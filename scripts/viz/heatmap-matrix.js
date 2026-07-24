@@ -147,9 +147,11 @@
 
   function renderHeatmapMatrix(container, topN) {
     if (!container) return;
+    const shell = root.VizShell;
     const d3 = root.d3;
     if (!d3 || typeof root.buildVizCache !== 'function') {
-      container.innerHTML = '<div class="viz-card">Heatmap unavailable: missing d3/buildVizCache.</div>';
+      if (shell) shell.showStatus(container, 'error', 'Матрица недоступна', 'Нужны d3 и buildVizCache.');
+      else container.innerHTML = '<div class="viz-status viz-status-error">Heatmap unavailable: missing d3/buildVizCache.</div>';
       return;
     }
     const cache = root.buildVizCache(root.APP_DATA || {});
@@ -161,27 +163,42 @@
     let currentTopIndex = topOptions.indexOf(currentTopN);
     if (currentTopIndex < 0) currentTopIndex = 0;
 
-    container.innerHTML = [
-      '<div class="viz-card viz-heatmap">',
-      '  <div class="viz-toolbar">',
-      '    <label>Top-N:',
-      `      <input type="range" id="viz-heatmap-topn" min="0" max="${String(topOptions.length - 1)}" step="1" value="${String(currentTopIndex)}">`,
-      `      <span id="viz-heatmap-topn-label">${String(currentTopN)}</span>`,
-      '    </label>',
-      '    <button type="button" id="viz-heatmap-export" class="related-link related-link-btn">Скачать SVG</button>',
-      '  </div>',
-      '  <div class="viz-svg-wrap">',
-      '    <svg id="viz-heatmap-svg" width="100%" height="760" viewBox="0 0 1260 760" preserveAspectRatio="xMidYMid meet"></svg>',
-      '    <div id="viz-heatmap-tooltip" class="viz-tooltip viz-tooltip-floating" hidden></div>',
-      '  </div>',
-      '</div>',
+    const filtersHtml = [
+      '<label>Top-N:',
+      `  <input type="range" id="viz-heatmap-topn" min="0" max="${String(topOptions.length - 1)}" step="1" value="${String(currentTopIndex)}">`,
+      `  <span id="viz-heatmap-topn-label">${String(currentTopN)}</span>`,
+      '</label>',
     ].join('');
+
+    if (shell && typeof shell.buildModuleCard === 'function') {
+      container.innerHTML = shell.buildModuleCard({
+        className: 'viz-heatmap',
+        title: 'VIZ-04 · Тепловая матрица',
+        dataSource: 'subject_index × chapters',
+        filtersHtml,
+        bodyHtml: [
+          '<div class="viz-svg-wrap">',
+          '  <svg id="viz-heatmap-svg" width="100%" height="760" viewBox="0 0 1260 760" preserveAspectRatio="xMidYMid meet"></svg>',
+          '  <div id="viz-heatmap-tooltip" class="viz-tooltip viz-tooltip-floating" hidden></div>',
+          '</div>',
+        ].join(''),
+      });
+    } else {
+      container.innerHTML = [
+        '<div class="viz-card viz-heatmap">',
+        `  <div class="viz-toolbar">${filtersHtml}</div>`,
+        '  <div class="viz-svg-wrap">',
+        '    <svg id="viz-heatmap-svg" width="100%" height="760" viewBox="0 0 1260 760" preserveAspectRatio="xMidYMid meet"></svg>',
+        '    <div id="viz-heatmap-tooltip" class="viz-tooltip viz-tooltip-floating" hidden></div>',
+        '  </div>',
+        '</div>',
+      ].join('');
+    }
 
     const svg = d3.select(container).select('#viz-heatmap-svg');
     const tooltip = container.querySelector('#viz-heatmap-tooltip');
     const topNInput = container.querySelector('#viz-heatmap-topn');
     const topNLabel = container.querySelector('#viz-heatmap-topn-label');
-    const exportBtn = container.querySelector('#viz-heatmap-export');
 
     const width = 1260;
     const height = 760;
@@ -400,11 +417,22 @@
         redraw(currentTopN);
       };
     }
-    if (exportBtn) {
-      exportBtn.onclick = () => {
-        const svgNode = container.querySelector('#viz-heatmap-svg');
-        downloadSvg(svgNode, 'viz-heatmap.svg');
-      };
+
+    if (shell && typeof shell.wireModuleChrome === 'function') {
+      shell.wireModuleChrome(container, {
+        exportFilename: 'viz-heatmap.svg',
+        exportSelector: '#viz-heatmap-svg',
+        onReset: () => {
+          currentTopIndex = 0;
+          currentTopN = topOptions[0];
+          if (topNInput) topNInput.value = '0';
+          if (topNLabel) topNLabel.textContent = String(currentTopN);
+          redraw(currentTopN);
+        },
+        onExport: () => {
+          downloadSvg(container.querySelector('#viz-heatmap-svg'), 'viz-heatmap.svg');
+        },
+      });
     }
 
     const onVisibility = () => {

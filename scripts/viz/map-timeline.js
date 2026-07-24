@@ -27,8 +27,10 @@
 
   function renderMapTimeline(container) {
     if (!container) return;
+    const shell = root.VizShell;
     if (!root.L || typeof root.buildVizCache !== 'function') {
-      container.innerHTML = '<div class="viz-card">Map timeline unavailable: missing Leaflet/buildVizCache.</div>';
+      if (shell) shell.showStatus(container, 'error', 'Карта недоступна', 'Нужны Leaflet и buildVizCache.');
+      else container.innerHTML = '<div class="viz-status viz-status-error">Map timeline unavailable: missing Leaflet/buildVizCache.</div>';
       return;
     }
 
@@ -52,19 +54,33 @@
     if (!Number.isFinite(currentCentury)) currentCentury = 21;
     currentCentury = Math.max(8, Math.min(21, currentCentury));
 
-    container.innerHTML = [
-      '<div class="viz-card viz-map-timeline">',
-      '  <div class="viz-toolbar">',
-      '    <label>Век:',
-      `      <input id="viz-century-range" type="range" min="8" max="21" step="1" value="${String(currentCentury)}">`,
-      `      <span id="viz-century-label">${String(currentCentury)}</span>`,
-      '    </label>',
-      '    <button type="button" id="viz-century-play" class="related-link related-link-btn" aria-pressed="false">Play</button>',
-      '    <span id="viz-century-count" class="viz-muted"></span>',
-      '  </div>',
-      `  <div class="viz-map-canvas"><div id="${mapId}" class="viz-map-leaflet"></div></div>`,
-      '</div>',
+    const filtersHtml = [
+      '<label>Век:',
+      `  <input id="viz-century-range" type="range" min="8" max="21" step="1" value="${String(currentCentury)}">`,
+      `  <span id="viz-century-label">${String(currentCentury)}</span>`,
+      '</label>',
+      '<span id="viz-century-count" class="viz-muted"></span>',
     ].join('');
+    const viewHtml = '<button type="button" id="viz-century-play" class="viz-action-btn" aria-pressed="false">Play</button>';
+
+    if (shell && typeof shell.buildModuleCard === 'function') {
+      container.innerHTML = shell.buildModuleCard({
+        className: 'viz-map-timeline',
+        title: 'VIZ-01 · Карта по векам',
+        dataSource: 'buildVizCache.geoEntities',
+        filtersHtml,
+        viewHtml,
+        showExport: false,
+        bodyHtml: `<div class="viz-map-canvas"><div id="${mapId}" class="viz-map-leaflet"></div></div>`,
+      });
+    } else {
+      container.innerHTML = [
+        '<div class="viz-card viz-map-timeline">',
+        `  <div class="viz-toolbar">${filtersHtml}${viewHtml}</div>`,
+        `  <div class="viz-map-canvas"><div id="${mapId}" class="viz-map-leaflet"></div></div>`,
+        '</div>',
+      ].join('');
+    }
 
     const slider = container.querySelector('#viz-century-range');
     const label = container.querySelector('#viz-century-label');
@@ -74,8 +90,7 @@
     const map = root.L.map(mapId, { preferCanvas: true }).setView([46, 28], 3);
     const layer = root.L.layerGroup().addTo(map);
     const fallback = document.createElement('div');
-    fallback.className = 'viz-empty-state';
-    fallback.classList.add('viz-map-fallback');
+    fallback.className = 'viz-empty-state viz-map-fallback';
     fallback.hidden = true;
     fallback.innerHTML = '<strong>Офлайн-режим карты</strong><br>Тайлы недоступны, но маркеры и навигация работают.';
     if (canvas) canvas.appendChild(fallback);
@@ -187,6 +202,19 @@
         if (autoplayTimer) stopAutoplay(true);
         else startAutoplay();
       };
+    }
+
+    if (shell && typeof shell.wireModuleChrome === 'function') {
+      shell.wireModuleChrome(container, {
+        onReset: () => {
+          stopAutoplay(false);
+          currentCentury = 21;
+          if (slider) slider.value = '21';
+          if (label) label.textContent = '21';
+          redraw(currentCentury);
+          writeCenturyParams(false);
+        },
+      });
     }
 
     redraw(currentCentury);

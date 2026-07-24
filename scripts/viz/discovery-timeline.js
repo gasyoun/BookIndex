@@ -8,11 +8,6 @@
     return Array.isArray(value) ? value : [];
   }
 
-  function safeColor(color, fallback) {
-    const raw = String(color || '').trim();
-    return raw || fallback;
-  }
-
   function openNameCard(head) {
     if (!head) return;
     if (typeof root.navigateTo === 'function') {
@@ -26,8 +21,8 @@
     if (!container) return;
     if (typeof root.buildVizCache === 'function' && root.APP_DATA) root.buildVizCache(root.APP_DATA);
 
+    const shell = root.VizShell;
     const data = root.APP_DATA || {};
-    const colors = data.colors || {};
     const chronology = asArray(data.scholar && data.scholar.chronology);
     const names = asArray(data.names);
     const items = [];
@@ -68,20 +63,34 @@
 
     items.sort((a, b) => a.year - b.year);
 
-    container.innerHTML = [
-      '<div class="viz-card viz-timeline">',
-      '  <div class="viz-toolbar">',
-      `    <label><input type="checkbox" data-type="discovery"${activeFilters.has('discovery') ? ' checked' : ''}> discovery</label>`,
-      `    <label><input type="checkbox" data-type="linguist"${activeFilters.has('linguist') ? ' checked' : ''}> linguist</label>`,
-      `    <label><input type="checkbox" data-type="historical"${activeFilters.has('historical') ? ' checked' : ''}> historical</label>`,
-      '  </div>',
-      '  <div class="viz-empty-state" hidden>',
-      '    <strong>Ничего не выбрано.</strong><br>Включите хотя бы один фильтр (discovery, linguist, historical).',
-      '  </div>',
-      '  <div class="tl-wrap tl-grid">',
-      '  </div>',
-      '</div>',
+    const filtersHtml = [
+      `<label><input type="checkbox" data-type="discovery"${activeFilters.has('discovery') ? ' checked' : ''}> discovery</label>`,
+      `<label><input type="checkbox" data-type="linguist"${activeFilters.has('linguist') ? ' checked' : ''}> linguist</label>`,
+      `<label><input type="checkbox" data-type="historical"${activeFilters.has('historical') ? ' checked' : ''}> historical</label>`,
     ].join('');
+
+    if (shell && typeof shell.buildModuleCard === 'function') {
+      container.innerHTML = shell.buildModuleCard({
+        className: 'viz-timeline',
+        title: 'VIZ-03 · Лента открытий',
+        dataSource: 'scholar.chronology + names',
+        filtersHtml,
+        showExport: false,
+        emptyHtml: shell.emptyStateHtml(
+          'Ничего не выбрано.',
+          'Включите хотя бы один фильтр (discovery, linguist, historical).'
+        ),
+        bodyHtml: '<div class="tl-wrap tl-grid"></div>',
+      });
+    } else {
+      container.innerHTML = [
+        '<div class="viz-card viz-timeline">',
+        `  <div class="viz-toolbar"><div class="viz-toolbar-filters">${filtersHtml}</div></div>`,
+        '  <div class="viz-empty-state" hidden><strong>Ничего не выбрано.</strong></div>',
+        '  <div class="tl-wrap tl-grid"></div>',
+        '</div>',
+      ].join('');
+    }
 
     const wrap = container.querySelector('.tl-wrap');
     const empty = container.querySelector('.viz-empty-state');
@@ -128,7 +137,7 @@
         };
       }
 
-      wrap.appendChild(card);
+      if (wrap) wrap.appendChild(card);
     }
 
     const applyFilter = () => {
@@ -137,7 +146,7 @@
         const cb = checkboxes[i];
         enabled[String(cb.dataset.type || '')] = !!cb.checked;
       }
-      const cards = Array.from(wrap.querySelectorAll('.tl-item'));
+      const cards = Array.from(wrap ? wrap.querySelectorAll('.tl-item') : []);
       let visibleCount = 0;
       for (let i = 0; i < cards.length; i += 1) {
         const card = cards[i];
@@ -156,6 +165,15 @@
       checkboxes[i].onchange = applyFilter;
     }
     applyFilter();
+
+    if (shell && typeof shell.wireModuleChrome === 'function') {
+      shell.wireModuleChrome(container, {
+        onReset: () => {
+          for (let i = 0; i < checkboxes.length; i += 1) checkboxes[i].checked = true;
+          applyFilter();
+        },
+      });
+    }
 
     const onVisibility = () => {
       if (!document.hidden) return;

@@ -190,6 +190,9 @@ The existing VIZ system is a good base: modules are lazy-loaded, use `APP_DATA`,
 
 ### Phase V1 - Make the VIZ shell feel like one product
 
+Status: **done (H1605)** — shared helpers in `scripts/viz/viz-shell.js`; exceptions in
+[`docs/VIZ_SHELL_EXCEPTIONS_H1605.md`](https://github.com/gasyoun/BookIndex/blob/main/docs/VIZ_SHELL_EXCEPTIONS_H1605.md).
+
 Routes:
 
 1. `#v4/scholar/viz/module/viz03`

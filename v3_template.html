@@ -716,7 +716,10 @@
   .viz-shell {
     padding: 14px 16px;
     overflow-y: auto;
+    overflow-x: hidden;
     height: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .viz-header-row {
     display: flex;
@@ -775,21 +778,85 @@
     border-color: var(--title);
     color: #fff;
   }
+  .viz-module-btn:focus-visible,
+  .viz-action-btn:focus-visible,
+  .viz-toolbar input:focus-visible,
+  .viz-toolbar select:focus-visible,
+  .viz-toolbar button:focus-visible {
+    outline: 2px solid var(--color-primary, #3a6ea5);
+    outline-offset: 2px;
+  }
   .viz-module-host {
     min-height: 520px;
+    max-width: 100%;
+    overflow-x: auto;
   }
-  .viz-loading {
+  .viz-loading,
+  .viz-status {
     padding: 16px;
     border: 1px dashed var(--line);
     border-radius: 8px;
     color: var(--muted);
     background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .viz-status-title {
+    color: var(--title);
+    font-size: 13px;
+  }
+  .viz-status-message {
+    font-size: 12px;
+  }
+  .viz-status-loading {
+    border-style: dashed;
+  }
+  .viz-status-empty {
+    background: var(--surface-soft);
+  }
+  .viz-status-error {
+    border-color: var(--color-orange, #c0392b);
+    color: var(--title);
   }
   .viz-card {
     border: 1px solid var(--line);
     border-radius: 8px;
     background: var(--surface);
     padding: 12px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .viz-card svg {
+    max-width: 100%;
+  }
+  .viz-module-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .viz-module-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .viz-module-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--title);
+  }
+  .viz-module-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
   }
   .viz-map-timeline {
     display: flex;
@@ -811,10 +878,45 @@
     font-size: 12px;
     color: var(--text);
   }
+  .viz-toolbar-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .viz-toolbar-view {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
   .viz-toolbar label {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+  }
+  .viz-input-narrow {
+    width: 4em;
+  }
+  .viz-action-btn {
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface-soft);
+    color: var(--title);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .viz-action-btn:hover {
+    border-color: var(--title);
+  }
+  .viz-action-btn:disabled {
+    opacity: 0.65;
+    cursor: default;
   }
   .viz-tooltip {
     pointer-events: none;
