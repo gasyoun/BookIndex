@@ -95,7 +95,7 @@ Tasks:
 1. Update README build instructions to prefer `npm run build`.
 2. Mark `scripts/bundle.js` as unsafe/stale in docs until parity is restored.
 3. Add a small guard test that fails if someone runs `scripts/bundle.js` and shrinks `v3_app.js` unexpectedly.
-4. Decide whether `v13_app_test.js` is still useful. If not, move it to `docs/history/` or delete it in a dedicated cleanup PR.
+4. ~~Decide whether `v13_app_test.js` is still useful.~~ **Done (H1506, 24-07-2026):** archived to [`docs/history/v13_app_test.js`](https://github.com/gasyoun/BookIndex/blob/main/docs/history/v13_app_test.js) (zero live references; not in package.json/CI).
 
 Acceptance checks:
 
