@@ -2392,6 +2392,75 @@ var BookIndex = (function(exports) {
 			return `${prefix}${wrapAccentSafeInEscapedText(textPart)}`;
 		});
 	}
+	/** Append untrusted text via textContent; wrap accented tokens in .accent-safe spans (no innerHTML). */
+	function appendAccentSafeText(parent, text) {
+		if (!parent) return;
+		const source = String(text || "");
+		if (!source) return;
+		const re = new RegExp(ACCENT_SAFE_TOKEN_RE.source, "g");
+		let last = 0;
+		let m;
+		let matched = false;
+		while ((m = re.exec(source)) !== null) {
+			matched = true;
+			if (m.index > last) parent.appendChild(document.createTextNode(source.slice(last, m.index)));
+			const span = document.createElement("span");
+			span.className = "accent-safe";
+			span.textContent = m[0] || "";
+			parent.appendChild(span);
+			last = m.index + (m[0] || "").length;
+		}
+		if (last < source.length) parent.appendChild(document.createTextNode(source.slice(last)));
+		if (!matched && /[\u0300-\u036f]/.test(source)) {
+			while (parent.firstChild) parent.removeChild(parent.firstChild);
+			const span = document.createElement("span");
+			span.className = "accent-safe";
+			span.textContent = source;
+			parent.appendChild(span);
+		}
+	}
+	/** Highlight query matches with <mark> via DOM; text always through textContent. */
+	function appendHighlightedSearchText(parent, text, query) {
+		if (!parent) return;
+		const source = String(text || "");
+		const q = String(query || "").trim();
+		if (!source) return;
+		if (!q) {
+			parent.appendChild(document.createTextNode(source));
+			return;
+		}
+		const esc = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+		let re;
+		try {
+			re = new RegExp(esc, "ig");
+		} catch (e) {
+			parent.appendChild(document.createTextNode(source));
+			return;
+		}
+		let last = 0;
+		let m;
+		while ((m = re.exec(source)) !== null) {
+			const idx = m.index;
+			const seg = m[0] || "";
+			if (idx > last) parent.appendChild(document.createTextNode(source.slice(last, idx)));
+			if (seg) {
+				const mark = document.createElement("mark");
+				mark.textContent = seg;
+				parent.appendChild(mark);
+			}
+			last = idx + seg.length;
+			if (!seg.length) re.lastIndex += 1;
+		}
+		if (last < source.length) parent.appendChild(document.createTextNode(source.slice(last)));
+	}
+	function setStaticEmptyMessage(host, className, message) {
+		if (!host) return;
+		host.textContent = "";
+		const div = document.createElement("div");
+		div.className = className;
+		div.textContent = message;
+		host.appendChild(div);
+	}
 	function escapeRegexLiteral(s) {
 		return String(s || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	}
@@ -2496,12 +2565,12 @@ var BookIndex = (function(exports) {
 		if (next && isContextLinkWordChar(next)) return false;
 		return true;
 	}
-	function autoLinkEntitiesPlain(rawText) {
-		const text = String(rawText || "");
-		if (!text) return "";
+	function collectContextLinkMatches(text) {
+		const source = String(text || "");
+		if (!source) return [];
 		const entries = getContextEntityLinkEntries();
-		if (!entries.length) return renderAccentSafe(text);
-		const occupied = new Array(text.length).fill(false);
+		if (!entries.length) return [];
+		const occupied = new Array(source.length).fill(false);
 		const matches = [];
 		for (const entry of entries) {
 			let re = null;
@@ -2511,13 +2580,13 @@ var BookIndex = (function(exports) {
 				continue;
 			}
 			let m = null;
-			while ((m = re.exec(text)) !== null) {
+			while ((m = re.exec(source)) !== null) {
 				const value = String(m[0] || "");
 				if (!value) break;
 				const start = m.index;
 				const end = start + value.length;
-				if (start < 0 || end <= start || end > text.length) continue;
-				if (!hasContextLinkBoundaries(text, start, end)) continue;
+				if (start < 0 || end <= start || end > source.length) continue;
+				if (!hasContextLinkBoundaries(source, start, end)) continue;
 				let overlap = false;
 				for (let i = start; i < end; i++) if (occupied[i]) {
 					overlap = true;
@@ -2533,8 +2602,14 @@ var BookIndex = (function(exports) {
 				});
 			}
 		}
-		if (!matches.length) return renderAccentSafe(text);
 		matches.sort((a, b) => a.start - b.start);
+		return matches;
+	}
+	function autoLinkEntitiesPlain(rawText) {
+		const text = String(rawText || "");
+		if (!text) return "";
+		const matches = collectContextLinkMatches(text);
+		if (!matches.length) return renderAccentSafe(text);
 		let html = "";
 		let cursor = 0;
 		for (const hit of matches) {
@@ -2545,6 +2620,31 @@ var BookIndex = (function(exports) {
 		}
 		if (cursor < text.length) html += renderAccentSafe(text.slice(cursor));
 		return html;
+	}
+	/** DOM twin of autoLinkEntitiesPlain — untrusted text via textContent only. */
+	function appendAutoLinkedEntitiesPlain(parent, rawText) {
+		if (!parent) return;
+		const text = String(rawText || "");
+		if (!text) return;
+		const matches = collectContextLinkMatches(text);
+		if (!matches.length) {
+			appendAccentSafeText(parent, text);
+			return;
+		}
+		let cursor = 0;
+		for (const hit of matches) {
+			if (hit.start > cursor) appendAccentSafeText(parent, text.slice(cursor, hit.start));
+			const href = hit.entry.href || (hit.entry.type === "glossary" ? buildGlossaryTermHash(hit.entry.head) : buildItemHash(hit.entry.type, hit.entry.head));
+			const link = document.createElement("a");
+			link.className = "ctx-link";
+			link.href = href;
+			link.dataset.type = String(hit.entry.type || "");
+			link.dataset.head = String(hit.entry.head || "");
+			appendAccentSafeText(link, hit.value);
+			parent.appendChild(link);
+			cursor = hit.end;
+		}
+		if (cursor < text.length) appendAccentSafeText(parent, text.slice(cursor));
 	}
 	function autoLinkEntities(text) {
 		const raw = String(text || "");
@@ -2562,6 +2662,18 @@ var BookIndex = (function(exports) {
 		}
 		if (cursor < raw.length) html += autoLinkEntitiesPlain(raw.slice(cursor));
 		return html;
+	}
+	/** DOM twin of autoLinkEntities for plain context strings (no pre-existing HTML anchors). */
+	function appendAutoLinkedEntities(parent, text) {
+		if (!parent) return;
+		const raw = String(text || "");
+		if (!raw) return;
+		// Context data is plain text; strip any accidental markup tags rather than trusting HTML.
+		if (/<[a-zA-Z!/?]/.test(raw)) {
+			appendAccentSafeText(parent, raw.replace(/<[^>]*>/g, ""));
+			return;
+		}
+		appendAutoLinkedEntitiesPlain(parent, raw);
 	}
 	function getPreferredContextSplitIndex(text) {
 		const raw = String(text || "").replace(/\s+/g, " ").trim();
@@ -2584,6 +2696,70 @@ var BookIndex = (function(exports) {
 		const right = raw.slice(splitIdx).trimStart();
 		if (!left || !right) return autoLinkEntities(raw);
 		return `${autoLinkEntities(left)}<br class="context-balance-break"><span class="context-line-two">${autoLinkEntities(right)}</span>`;
+	}
+	/** Priority path: card/KWIC-adjacent context text without data-bearing innerHTML. */
+	function appendContextTextWithLinks(parent, text) {
+		if (!parent) return;
+		const raw = String(text || "").replace(/\s+/g, " ").trim();
+		if (!raw) return;
+		const splitIdx = getPreferredContextSplitIndex(raw);
+		if (splitIdx < 1 || splitIdx >= raw.length) {
+			appendAutoLinkedEntities(parent, raw);
+			return;
+		}
+		const left = raw.slice(0, splitIdx).trimEnd();
+		const right = raw.slice(splitIdx).trimStart();
+		if (!left || !right) {
+			appendAutoLinkedEntities(parent, raw);
+			return;
+		}
+		appendAutoLinkedEntities(parent, left);
+		const br = document.createElement("br");
+		br.className = "context-balance-break";
+		parent.appendChild(br);
+		const lineTwo = document.createElement("span");
+		lineTwo.className = "context-line-two";
+		appendAutoLinkedEntities(lineTwo, right);
+		parent.appendChild(lineTwo);
+	}
+	function fillCardContextsMount(mount, it) {
+		if (!mount || !it) return;
+		mount.textContent = "";
+		const title = document.createElement("h3");
+		title.textContent = "Контексты упоминаний (KWIC)";
+		mount.appendChild(title);
+		if (Array.isArray(it.contexts) && it.contexts.length > 0) {
+			for (const ctx of it.contexts.slice(0, 10)) {
+				const item = document.createElement("div");
+				item.className = "context-item";
+				const text = document.createElement("div");
+				text.className = "context-text";
+				appendContextTextWithLinks(text, ctx);
+				item.appendChild(text);
+				mount.appendChild(item);
+			}
+			return;
+		}
+		if (it.contexts && typeof it.contexts === "object") {
+			const ctxKeys = Object.keys(it.contexts).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+			for (const pg of ctxKeys.slice(0, 10)) {
+				const ctxs = it.contexts[pg];
+				if (!Array.isArray(ctxs) || !ctxs.length) continue;
+				for (const ctx of ctxs.slice(0, 1)) {
+					const item = document.createElement("div");
+					item.className = "context-item";
+					const page = document.createElement("div");
+					page.className = "context-page";
+					page.textContent = `стр. ${pg}`;
+					item.appendChild(page);
+					const text = document.createElement("div");
+					text.className = "context-text";
+					appendContextTextWithLinks(text, ctx);
+					item.appendChild(text);
+					mount.appendChild(item);
+				}
+			}
+		}
 	}
 	function highlightInContext(text, head) {
 		if (!head) return renderAccentSafe(text);
@@ -4188,7 +4364,7 @@ var BookIndex = (function(exports) {
 		safeSetAttr(row, "role", "option");
 		safeSetAttr(row, "aria-selected", "false");
 		const head = document.createElement("span");
-		head.innerHTML = highlightSearchMatch(match.head, q);
+		appendHighlightedSearchText(head, match.head, q);
 		const kind = document.createElement("span");
 		kind.className = "kind";
 		kind.textContent = String(match.kind || "");
@@ -4207,7 +4383,7 @@ var BookIndex = (function(exports) {
 		if (match.snippet) {
 			const snippet = document.createElement("div");
 			snippet.className = "search-snippet";
-			snippet.innerHTML = highlightSearchMatch(match.snippet, q);
+			appendHighlightedSearchText(snippet, match.snippet, q);
 			row.appendChild(snippet);
 		}
 		box.appendChild(row);
@@ -6724,8 +6900,7 @@ var BookIndex = (function(exports) {
 		}
 		const head = document.createElement("span");
 		head.className = `head ${it.discussed ? "discussed" : ""}${itemType === "lexicon_reverse" ? " reverse-head" : ""}`;
-		head.innerHTML = renderAccentSafe(it.head);
-		if (/[\u0300-\u036f]/.test(String(it.head || "")) && !head.querySelector(".accent-safe")) head.innerHTML = `<span class="accent-safe">${escapeHtml(it.head)}</span>`;
+		appendAccentSafeText(head, it.head);
 		const typeLabel = document.createElement("span");
 		typeLabel.className = "entity-type-tag";
 		typeLabel.textContent = it._entityLabel || "";
@@ -7374,42 +7549,19 @@ var BookIndex = (function(exports) {
 				const isWikiSource = /wikipedia/i.test(String(src.label || "")) || /wikipedia\.org/i.test(String(src.url || ""));
 				const pageHint = src.page ? ` · p. ${escapeHtml(src.page)}` : "";
 				const link = src.url ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>` : `<span>${label}</span>`;
-				const quote = !isWikiSource && src.quote ? `<div class="card-source-quote">“${escapeHtml(src.quote)}”</div>` : "";
+				const quoteHost = !isWikiSource && src.quote ? `<div class="card-source-quote" data-source-quote-idx="${sourceIdx}"></div>` : "";
 				html += `<div class="card-source-row">
         ${link}
         <span class="card-source-page">${pageHint}</span>
         <button type="button" class="related-link related-link-btn source-export-bib card-source-row-bib" data-source-idx="${sourceIdx}">BibTeX</button>
-        ${quote}
+        ${quoteHost}
       </div>`;
 			}
 			html += useTwoColumnCardLayout ? "</div></section>" : "</div>";
 		}
-		if (Array.isArray(it.contexts) && it.contexts.length > 0) {
-			html += "<h3>Контексты упоминаний (KWIC)</h3>";
-			for (const ctx of it.contexts.slice(0, 10)) {
-				const ctxHtml = renderContextTextWithLinks(ctx);
-				html += `
-        <div class="context-item">
-          <div class="context-text">${ctxHtml}</div>
-        </div>`;
-			}
-		} else if (it.contexts && typeof it.contexts === "object" && !Array.isArray(it.contexts)) {
-			const ctxKeys = Object.keys(it.contexts).sort((a, b) => parseInt(a) - parseInt(b));
-			if (ctxKeys.length > 0) {
-				html += "<h3>Контексты упоминаний (KWIC)</h3>";
-				for (const pg of ctxKeys.slice(0, 10)) {
-					const ctxs = it.contexts[pg];
-					for (const ctx of ctxs.slice(0, 1)) {
-						const ctxHtml = renderContextTextWithLinks(ctx);
-						html += `
-            <div class="context-item">
-              <div class="context-page">стр. ${pg}</div>
-              <div class="context-text">${ctxHtml}</div>
-            </div>`;
-					}
-				}
-			}
-		}
+		const hasArrayContexts = Array.isArray(it.contexts) && it.contexts.length > 0;
+		const hasMapContexts = !hasArrayContexts && it.contexts && typeof it.contexts === "object" && !Array.isArray(it.contexts) && Object.keys(it.contexts).length > 0;
+		if (hasArrayContexts || hasMapContexts) html += "<div class=\"card-contexts-mount\" data-card-contexts-mount></div>";
 		// B5: reverse video links sit right after contexts, above the cross-link cluster.
 		const videoBacklinks = getVideoBacklinkIndex().get(videoBacklinkKey(eType, it.head)) || [];
 		if (videoBacklinks.length) {
@@ -7565,6 +7717,15 @@ var BookIndex = (function(exports) {
 		html += buildCitationWidgetHtml("card");
 		html += "</div>";
 		right.innerHTML = html;
+		right.querySelectorAll("[data-source-quote-idx]").forEach((el) => {
+			const idx = parseInt(el.dataset && el.dataset.sourceQuoteIdx || "-1", 10);
+			if (!Number.isInteger(idx) || idx < 0) return;
+			const src = itemSources[idx];
+			if (!src || !src.quote) return;
+			el.textContent = `\u201c${String(src.quote)}\u201d`;
+		});
+		const contextsMount = right.querySelector("[data-card-contexts-mount]");
+		if (contextsMount) fillCardContextsMount(contextsMount, it);
 		wireSafeImageFallback(right);
 		wireCitationWidget(right, "card");
 		const navState = getCardNavigationState();
@@ -10987,17 +11148,17 @@ var BookIndex = (function(exports) {
 			endInput.value = String(currentKwicPageEnd);
 			if (normalizeHeadForMatch(currentKwicQuery).length < 2) {
 				metaEl.textContent = "Введите минимум 2 символа для KWIC-поиска.";
-				resultsEl.innerHTML = "<div class=\"kwic-empty\">Например: «энклитика», «санскрит», «закон».</div>";
+				setStaticEmptyMessage(resultsEl, "kwic-empty", "Например: «энклитика», «санскрит», «закон».");
 				persistViewState();
 				return;
 			}
 			const sourceLabel = currentKwicSource === "glossary" ? "глоссарий" : currentKwicSource === "lectures" ? "лекции" : "лексика";
 			if (currentKwicSource === "lectures" && !LECTURES_KWIC_CACHE) {
 				metaEl.textContent = "Загрузка корпуса лекций…";
-				resultsEl.innerHTML = "<div class=\"kwic-empty\">Один раз загружается ~3 МБ расшифровок.</div>";
+				setStaticEmptyMessage(resultsEl, "kwic-empty", "Один раз загружается ~3 МБ расшифровок.");
 				loadLecturesKwic().then(() => renderRows()).catch(() => {
 					metaEl.textContent = "Не удалось загрузить корпус лекций.";
-					resultsEl.innerHTML = "<div class=\"kwic-empty\">Проверьте соединение и повторите.</div>";
+					setStaticEmptyMessage(resultsEl, "kwic-empty", "Проверьте соединение и повторите.");
 				});
 				return;
 			}
@@ -11006,7 +11167,7 @@ var BookIndex = (function(exports) {
 			const kwicTruncated = rows && rows._truncated === true;
 			if (!rows.length) {
 				metaEl.textContent = `Совпадений не найдено: ${sourceLabel}${currentKwicSource === "lectures" ? "" : `, стр. ${currentKwicPageStart}-${currentKwicPageEnd}`}.`;
-				resultsEl.innerHTML = `<div class="kwic-empty">${currentKwicSource === "lectures" ? "Попробуйте другой запрос (например: «ударение», «грамота», «санскрит»)." : "Попробуйте расширить диапазон страниц или изменить запрос."}</div>`;
+				setStaticEmptyMessage(resultsEl, "kwic-empty", currentKwicSource === "lectures" ? "Попробуйте другой запрос (например: «ударение», «грамота», «санскрит»)." : "Попробуйте расширить диапазон страниц или изменить запрос.");
 				persistViewState();
 				return;
 			}
@@ -13978,6 +14139,10 @@ var BookIndex = (function(exports) {
 		window.hashString32 = hashString32;
 		window.highlightInContext = highlightInContext;
 		window.highlightSearchMatch = highlightSearchMatch;
+		window.appendHighlightedSearchText = appendHighlightedSearchText;
+		window.appendAccentSafeText = appendAccentSafeText;
+		window.appendContextTextWithLinks = appendContextTextWithLinks;
+		window.fillCardContextsMount = fillCardContextsMount;
 		window.inflateOccurrences = inflateOccurrences;
 		window.initDensityMode = initDensityMode;
 		window.initTheme = initTheme;

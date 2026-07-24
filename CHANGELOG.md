@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - H1598 lecture-transcript ingest re-check: still **27/176** videos with `links.text` — NO-OP documented in `docs/LECTURE_TRANSCRIPT_INGEST_H1598_NOOP_24.07.2026.md` (no corpus/KWIC regeneration).
 
 ### Fixed
+- C3 / H1607: priority UI paths (global search rows, entity list heads, KWIC empty/result rows, card context + source-quote rows) render untrusted text via `textContent` / DOM APIs instead of data-bearing `innerHTML`; `escapeHtml` stays as defense-in-depth for residual template joins. Regression: `tests/e2e/dom-render-harden.spec.js`.
 - Restored the README «Audit Summary» section (dropped by the H550 README refresh), un-reddening the `validate_content.py` CI gate that had failed on every push to `main` since.
 - Reverse video links now de-duplicate by video id (`video_catalog` contains duplicate-id rows), so entity-card video counts and lists are no longer inflated; the chapter-related-videos and gallery views share the same deduped catalog.
 - Entity citations fall back to per-book `occurrences` pages when `page_list` is empty, so the «С. N» reference is no longer dropped (e.g. «Saloni Z.» → «С. 157»).
