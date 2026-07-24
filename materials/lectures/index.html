@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v2.2.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-TB9jN3ADykp2seyaFFgKdqOCd9baZPrPUGVJc+mf1uU=' 'sha256-yDfEuVSn/hE8SnrHhpC64keCqsy9NEqf02MLkdy0NKg='; worker-src 'self' blob:; style-src 'self' 'sha256-zlN8tTmvH6X93M6Zrz54Bc6kIQ0WdGjy2akxdm6gEO8='; style-src-elem 'self' 'sha256-zlN8tTmvH6X93M6Zrz54Bc6kIQ0WdGjy2akxdm6gEO8='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-tdvWRbnw+JWq/mpdLcToyP9GrlWc2aKmn5GfCqeWoMs=' 'sha256-a8/B45Y7qUG+rhH8/SNdyVWF7nDsOKZELqFmsuUtEr0='; worker-src 'self' blob:; style-src 'self' 'sha256-JeW2wiEbStC0lHJf7BegwaA3g4Hm5L2g7mvBvGoEguM='; style-src-elem 'self' 'sha256-JeW2wiEbStC0lHJf7BegwaA3g4Hm5L2g7mvBvGoEguM='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -724,7 +724,10 @@
   .viz-shell {
     padding: 14px 16px;
     overflow-y: auto;
+    overflow-x: hidden;
     height: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .viz-header-row {
     display: flex;
@@ -783,21 +786,85 @@
     border-color: var(--title);
     color: #fff;
   }
+  .viz-module-btn:focus-visible,
+  .viz-action-btn:focus-visible,
+  .viz-toolbar input:focus-visible,
+  .viz-toolbar select:focus-visible,
+  .viz-toolbar button:focus-visible {
+    outline: 2px solid var(--color-primary, #3a6ea5);
+    outline-offset: 2px;
+  }
   .viz-module-host {
     min-height: 520px;
+    max-width: 100%;
+    overflow-x: auto;
   }
-  .viz-loading {
+  .viz-loading,
+  .viz-status {
     padding: 16px;
     border: 1px dashed var(--line);
     border-radius: 8px;
     color: var(--muted);
     background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .viz-status-title {
+    color: var(--title);
+    font-size: 13px;
+  }
+  .viz-status-message {
+    font-size: 12px;
+  }
+  .viz-status-loading {
+    border-style: dashed;
+  }
+  .viz-status-empty {
+    background: var(--surface-soft);
+  }
+  .viz-status-error {
+    border-color: var(--color-orange, #c0392b);
+    color: var(--title);
   }
   .viz-card {
     border: 1px solid var(--line);
     border-radius: 8px;
     background: var(--surface);
     padding: 12px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .viz-card svg {
+    max-width: 100%;
+  }
+  .viz-module-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .viz-module-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .viz-module-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--title);
+  }
+  .viz-module-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
   }
   .viz-map-timeline {
     display: flex;
@@ -819,10 +886,45 @@
     font-size: 12px;
     color: var(--text);
   }
+  .viz-toolbar-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .viz-toolbar-view {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
   .viz-toolbar label {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+  }
+  .viz-input-narrow {
+    width: 4em;
+  }
+  .viz-action-btn {
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface-soft);
+    color: var(--title);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .viz-action-btn:hover {
+    border-color: var(--title);
+  }
+  .viz-action-btn:disabled {
+    opacity: 0.65;
+    cursor: default;
   }
   .viz-tooltip {
     pointer-events: none;
@@ -6085,7 +6187,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "a819cfc6a2f2",
+  "build_id": "41fa66e07e8b",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6393,7 +6495,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "a819cfc6a2f2";
+	var APP_BUILD_ID$1 = "41fa66e07e8b";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7291,8 +7393,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "a819cfc6a2f2").trim();
-		if (buildId && buildId !== "a819cfc6a2f2") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "41fa66e07e8b").trim();
+		if (buildId && buildId !== "41fa66e07e8b") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -8507,6 +8609,7 @@ var BookIndex = (function(exports) {
 	var vizScriptLoadPromises = /* @__PURE__ */ new Map();
 	var VIZ_CACHE_WORKER_PATH = "./scripts/viz/build-viz-cache-worker.js";
 	var VIZ_STATE_SCRIPT_PATH = "./scripts/viz/viz-state.js";
+	var VIZ_SHELL_SCRIPT_PATH = "./scripts/viz/viz-shell.js";
 	var VIZ_SCRIPT_BY_MODULE = Object.freeze({
 		viz01: "./scripts/viz/map-timeline.js",
 		viz02: "./scripts/viz/cooccurrence-graph.js",
@@ -9847,8 +9950,13 @@ var BookIndex = (function(exports) {
 		return loadVizScriptOnce("./scripts/viz/build-viz-cache.js");
 	}
 	function ensureVizStateLoaded() {
-		if (typeof window !== "undefined" && typeof window.readVizParams === "function" && typeof window.writeVizParams === "function") return Promise.resolve();
-		return loadVizScriptOnce(VIZ_STATE_SCRIPT_PATH);
+		const stateReady = typeof window !== "undefined" && typeof window.readVizParams === "function" && typeof window.writeVizParams === "function";
+		const shellReady = typeof window !== "undefined" && window.VizShell;
+		const statePromise = stateReady ? Promise.resolve() : loadVizScriptOnce(VIZ_STATE_SCRIPT_PATH);
+		return statePromise.then(() => {
+			if (shellReady || typeof window !== "undefined" && window.VizShell) return;
+			return loadVizScriptOnce(VIZ_SHELL_SCRIPT_PATH);
+		});
 	}
 	function ensureVizModuleLoaded(moduleId) {
 		const moduleKey = String(moduleId || "").trim();
@@ -10978,7 +11086,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "a819cfc6a2f2" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "41fa66e07e8b" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -18146,31 +18254,46 @@ var BookIndex = (function(exports) {
 			}
 		];
 	}
-	function setVizHostStatus(host, message, className = "viz-loading") {
+	function setVizHostStatus(host, message, kind = "loading") {
 		if (!host) return;
+		const statusKind = [
+			"loading",
+			"empty",
+			"error"
+		].includes(String(kind)) ? String(kind) : "loading";
+		const titleByKind = {
+			loading: "Загрузка",
+			empty: "Нет данных",
+			error: "Ошибка"
+		};
+		if (typeof window !== "undefined" && window.VizShell && typeof window.VizShell.showStatus === "function") {
+			window.VizShell.showStatus(host, statusKind, titleByKind[statusKind] || "Статус", message);
+			return;
+		}
 		host.textContent = "";
 		const status = document.createElement("div");
-		status.className = String(className || "viz-loading");
+		status.className = `viz-status viz-status-${statusKind}`;
+		status.setAttribute("role", statusKind === "error" ? "alert" : "status");
 		status.textContent = String(message || "");
 		host.appendChild(status);
 	}
 	function mountVizModule(host, moduleDef) {
 		if (!host || !moduleDef) return;
-		setVizHostStatus(host, "Загрузка модуля…");
+		setVizHostStatus(host, "Загрузка модуля…", "loading");
 		ensureVizStateLoaded().then(() => ensureVizModuleLoaded(moduleDef.id)).catch(() => null).then(() => warmupVizCacheInWorker().catch(() => null)).then(() => {
 			const renderFn = getVizRegistry()[moduleDef.renderKey] || moduleDef.render;
 			if (typeof renderFn !== "function") {
-				setVizHostStatus(host, "Модуль не подключён. Проверьте scripts/viz/*.js.", "viz-card");
+				setVizHostStatus(host, "Модуль не подключён. Проверьте scripts/viz/*.js.", "error");
 				return;
 			}
 			try {
 				renderFn(host);
 				currentVizCleanup = typeof host.__vizCleanup === "function" ? host.__vizCleanup : null;
 			} catch (e) {
-				setVizHostStatus(host, `Ошибка рендера: ${String(e && e.message ? e.message : e)}`, "viz-card");
+				setVizHostStatus(host, `Ошибка рендера: ${String(e && e.message ? e.message : e)}`, "error");
 			}
 		}).catch((e) => {
-			setVizHostStatus(host, `Ошибка загрузки модуля: ${String(e && e.message ? e.message : e)}`, "viz-card");
+			setVizHostStatus(host, `Ошибка загрузки модуля: ${String(e && e.message ? e.message : e)}`, "error");
 		});
 	}
 	function renderVizPanel(container) {
@@ -18183,13 +18306,13 @@ var BookIndex = (function(exports) {
     <div class="viz-header-row">
       <h2 class="viz-title">Визуализации</h2>
       <div class="viz-header-actions">
-        <span class="viz-source-chip">${escapeHtml(activeBookLabel)}</span>
+        <span class="viz-source-chip" title="Активная книга">${escapeHtml(activeBookLabel)}</span>
         <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический маршрут</a>
         <a class="related-link viz-corpus-link" href="${escapeHtml(buildCorpusVizHash(currentVizModule))}">маршрут корпуса</a>
       </div>
     </div>
-    <div class="viz-module-tabs" id="viz-module-tabs"></div>
-    <div id="viz-module-host" class="viz-module-host"><div class="viz-loading">Подготовка кэша…</div></div>
+    <div class="viz-module-tabs" id="viz-module-tabs" role="tablist" aria-label="Модули визуализации"></div>
+    <div id="viz-module-host" class="viz-module-host"><div class="viz-status viz-status-loading" role="status">Подготовка кэша…</div></div>
   </div>`;
 		const tabs = container.querySelector("#viz-module-tabs");
 		const host = container.querySelector("#viz-module-host");
@@ -18199,6 +18322,8 @@ var BookIndex = (function(exports) {
 			btn.type = "button";
 			btn.className = "viz-module-btn" + (item.id === currentVizModule ? " active" : "");
 			btn.dataset.module = item.id;
+			btn.setAttribute("role", "tab");
+			btn.setAttribute("aria-selected", item.id === currentVizModule ? "true" : "false");
 			btn.textContent = item.title;
 			bindActionWithKeyboard(btn, () => {
 				currentVizModule = item.id;
