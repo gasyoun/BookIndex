@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 - Root runtime dead copies `v3_app.js.orig` (tracked) and ignore-policy for `*.orig` / existing `*.bak` (H1608) — large backup siblings of live `v3_app.js` that confused greps and inflated the tree; no package/docs references.
 
 ### Added
+- Print-companion brief (H1609): `docs/PRINT_8PP_COMPANION_BACKMATTER_2026.md` — 8-page
+  endmatter signature for «Из жизни слов и языков» (mumintroll, 2026): fixed map for
+  pages 1–7 (Devanagari / Arabic / Old-Russian charts, video-archive spread with measured
+  176 lectures ≈213 h / 27 transcripts, two sibling-book cards), 10 ranked options for the
+  open page 8 with a recommendation (QR guide), fallback one-alphabet layout, typesetting
+  and rights notes. Page-8 pick is an open human `@DECIDE` (mirrored in Uprava GTD).
 - VIZ Phase V1 shell (H1605): shared `scripts/viz/viz-shell.js` chrome for all seven
   active modules — module header (title + data-source chip + Сброс/Ссылка/SVG),
   toolbar grammar (filters left / view right), unified loading/empty/error states,
