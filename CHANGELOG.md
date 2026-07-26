@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 - Root runtime dead copies `v3_app.js.orig` (tracked) and ignore-policy for `*.orig` / existing `*.bak` (H1608) — large backup siblings of live `v3_app.js` that confused greps and inflated the tree; no package/docs references.
 
 ### Added
+- Landing-promotion decision brief (H1603): `docs/LANDING_SUSTAINABLE_PROMOTION_DECIDE_2026.md` —
+  adopt/hybrid/reject brief for promoting `mockups/sustainable.html` (H654) to the live
+  `index.html`. No ruling was on record at launch, so per the handoff's own gate the session
+  stopped with this brief instead of force-adopting. Key facts: current landing is already
+  near-sustainable (15.6 KB, 0 webfonts/trackers, SVG-only); mockup's real delta is the dark
+  scheme (−2.7 KB cosmetic); the app it opens into is light-only parchment, so a moss-dark
+  front door creates a dark→light handoff. Recommendation: hybrid (dark scheme on the
+  existing parchment tokens), else reject. Human `@DECIDE` mirrored in Uprava GTD.
 - Print-companion brief (H1609): `docs/PRINT_8PP_COMPANION_BACKMATTER_2026.md` — 8-page
   endmatter signature for «Из жизни слов и языков» (mumintroll, 2026): fixed map for
   pages 1–7 (Devanagari / Arabic / Old-Russian charts, video-archive spread with measured
