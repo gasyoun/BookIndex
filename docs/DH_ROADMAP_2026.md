@@ -68,7 +68,9 @@
 3. ✅ JSON-LD `sameAs` на пререндеренных страницах; на карточке — блок «Авторитетные записи» (чипы Wikidata/VIAF/GND/GeoNames).
 4. **Точность важнее охвата** (научный ресурс): персоны проверяются по instance-of=человек + фамилия + инициалы + доменный фильтр (ученый/писатель/исторический; отсев актеров/спортсменов и т. п.) — пойман ложный матч «А. А. Алексеев» → кинорежиссер. Поэтому авто-охват ~38 %, а не 80 %; остальное — через review-файл.
 
-Осталось по A3: ручная верификация 209 кандидатов из `data/authority_candidates.json` (поле `src: manual` после подтверждения); затем — расширение на subject_index/lexicon при необходимости.
+5. ✅ (H1600, 2026-07-27) `scripts/retier_authority_candidates.py` разложил 209 неподтвержденных кандидатов на `data/authority_review.{json,csv}`: **decide** — 34 (кандидат с совпавшим типом, один клик accept/reject), **research** — 139 (кандидаты есть, но тип не совпал — нужен отдельный взгляд), **none** — 36 (Wikidata ничего не вернула). `scripts/build_authority_review_sheet.py` строит интерактивный `/review-sheet` (HTML, `review/` — не коммитится) по **decide**-уровню: контекст употребления из текста + до 5 кандидатов с бейджами `тип совпал`/`точное совпадение метки`. `scripts/apply_authority_decisions.py --decisions <sheet>_decisions.json [--apply]` читает голоса (`approve`/`reject`/`defer`), пишет `authority: {..., src: "manual"}` только для explicit-approve и только для decide-уровня (research/none никогда не продвигаются автоматически); без `--apply` — dry-run отчёт, файлы не трогает. QID всегда берётся из `suggested_qid` записи — свободный текст заметки не парсится в QID.
+
+Осталось по A3: **ручное голосование по 34 decide-строкам** (человеку — см. `@DO` в Uprava/GTD_NEXT_ACTIONS.md), затем `apply_authority_decisions.py --apply` → `npm run data:split && npm run build && npm run export:tei`. Research (139) и none (36) — отдельный проход при наличии времени, не в рамках H1600.
 
 ### A4. Провенанс производных данных — ✅ сделано (2026-06-13)
 
