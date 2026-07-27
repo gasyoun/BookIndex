@@ -1,5 +1,7 @@
 # BookIndex (Zalizniakiada)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21630473.svg)](https://doi.org/10.5281/zenodo.21630473)
+
 _Created: 14-04-2026 · Last updated: 27-07-2026_
 
 **BookIndex** — автономный интерактивный веб-справочник, корпусная лаборатория и интеллектуальная база знаний по научному наследию **А. А. Зализняка**.
@@ -7,7 +9,7 @@ _Created: 14-04-2026 · Last updated: 27-07-2026_
 Проект эволюционировал из простого индекса в полноценную исследовательскую платформу для цифровых гуманитарных наук: единый автономный HTML-артефакт, корпусная навигация, KWIC-конкорданс, карты, графы и научный аппарат.
 
 - **Демо**: [gasyoun.github.io/BookIndex/index.html](https://gasyoun.github.io/BookIndex/index.html)
-- **Текущая версия**: 4.3.0 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)) — первый тегированный релиз GitHub с `v4.2.0`, закрывающий треки A/B/C (авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) и цитируемую инфраструктуру (CITATION.cff/.zenodo.json). Подробности — [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
+- **Текущая версия**: 4.3.1 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)) — `v4.3.0` был первым тегированным релизом GitHub с `v4.2.0`, закрывающим треки A/B/C (авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) и цитируемую инфраструктуру (CITATION.cff/.zenodo.json); `v4.3.1` дописывает настоящий Zenodo DOI. Подробности — [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
 - **Руководство для детей**: [KIDS_GUIDE_RU.md](https://github.com/gasyoun/BookIndex/blob/main/KIDS_GUIDE_RU.md)
 - **Лицензии**: код — [Apache License 2.0](https://github.com/gasyoun/BookIndex/blob/main/LICENSE); данные указателя — CC BY 4.0; цитаты из книг — с разрешения правообладателей ([LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md))
 - **Как цитировать**: см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (кнопка «Cite this repository» на GitHub) и раздел [«Как цитировать»](#как-цитировать) ниже
@@ -115,24 +117,25 @@ _Created: 14-04-2026 · Last updated: 27-07-2026_
 
 ## Как цитировать
 
-BookIndex — цитируемый ресурс цифровых гуманитарных наук. Машиночитаемые
-метаданные — в [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (GitHub показывает кнопку «Cite
-this repository»).
-
-Предварительная форма цитирования (DOI добавится после депонирования на
-Zenodo):
+BookIndex — цитируемый ресурс цифровых гуманитарных наук с постоянным
+идентификатором на [Zenodo](https://doi.org/10.5281/zenodo.21630473)
+(DOI `10.5281/zenodo.21630473` — concept DOI, стабилен для всех версий; каждый
+GitHub Release чеканит свой отдельный version DOI, указан в его release notes).
+Машиночитаемые метаданные — в
+[CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff)
+(GitHub показывает кнопку «Cite this repository»).
 
 > Gasūns, M. (2026). *BookIndex (Zalizniakiada): an interactive reference and
-> corpus laboratory for the scholarly legacy of A. A. Zaliznyak* (version 4.3.0)
-> [Software]. https://github.com/gasyoun/BookIndex
+> corpus laboratory for the scholarly legacy of A. A. Zaliznyak* (version 4.3.1)
+> [Software]. Zenodo. https://doi.org/10.5281/zenodo.21630473
 
 Для цитирования **конкретной справочной статьи или лекции** используйте виджет
 цитирования в самом приложении (стили APA / MLA / Chicago / ГОСТ) — он
 оформляет ссылку на А. А. Зализняка как автора содержания.
 
-> После релиза на Zenodo README и метаданные получат бейдж и DOI вида
-> `10.5281/zenodo.XXXXXXX`. Порядок депонирования и присвоения DOI —
-> [docs/ZENODO_RU.md](https://github.com/gasyoun/BookIndex/blob/main/docs/ZENODO_RU.md).
+> ORCID автора пока не указан в `CITATION.cff`/`.zenodo.json` (плейсхолдер
+> закомментирован) — будет вписан, когда владелец его предоставит. Порядок
+> депонирования — [docs/ZENODO_RU.md](https://github.com/gasyoun/BookIndex/blob/main/docs/ZENODO_RU.md).
 
 ## Лицензии
 
@@ -145,6 +148,7 @@ Zenodo):
 Подробнее — [LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md).
 
 ## История версий (Major Milestones)
+*   **v4.3.1**: Real Zenodo DOI wired in — `10.5281/zenodo.21630473` (concept), backfilled into CITATION.cff/README/LICENSE-DATA.
 *   **v4.3.0**: Citability/Zenodo release cut (H1601) — first tagged GitHub release since `v4.2.0`; ships Tracks A/B/C (authority IDs, canonical URIs, TEI export, lecture KWIC/timecodes, video gallery/detail card, home task dashboard, chapter ribbon), VIZ shell unification, security hardening and CITATION.cff/.zenodo.json packaging.
 *   **v2.2.0**: SEO, PWA, security, CI, full E2E and performance hardening.
 *   **v2.1.0**: Navigation architecture, corpus routing and visualization smoke coverage.

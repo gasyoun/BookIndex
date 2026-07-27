@@ -13,7 +13,7 @@ BookIndex объединяет три юридически разных слоя
 Структурированные данные, составленные и вычисленные проектом, распространяются
 по [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 Атрибуция: «Mārcis Gasūns / проект BookIndex (Zalizniakiada)», со ссылкой на
-репозиторий и (после релиза) DOI.
+репозиторий и DOI [10.5281/zenodo.21630473](https://doi.org/10.5281/zenodo.21630473).
 
 Сюда входят:
 
@@ -46,7 +46,8 @@ BookIndex объединяет три юридически разных слоя
 ## Как цитировать
 
 См. [CITATION.cff](CITATION.cff) (GitHub показывает кнопку «Cite this
-repository»). После депонирования на Zenodo здесь и в README появится DOI.
+repository») и DOI [10.5281/zenodo.21630473](https://doi.org/10.5281/zenodo.21630473)
+(Zenodo, concept DOI — стабилен для всех версий).
 Если вы цитируете конкретную справочную статью или лекцию, используйте виджет
 цитирования в самом приложении (стили APA / MLA / Chicago / ГОСТ).
 
