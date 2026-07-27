@@ -1,13 +1,13 @@
 # BookIndex (Zalizniakiada)
 
-_Created: 14-04-2026 · Last updated: 11-07-2026_
+_Created: 14-04-2026 · Last updated: 27-07-2026_
 
 **BookIndex** — автономный интерактивный веб-справочник, корпусная лаборатория и интеллектуальная база знаний по научному наследию **А. А. Зализняка**.
 
 Проект эволюционировал из простого индекса в полноценную исследовательскую платформу для цифровых гуманитарных наук: единый автономный HTML-артефакт, корпусная навигация, KWIC-конкорданс, карты, графы и научный аппарат.
 
 - **Демо**: [gasyoun.github.io/BookIndex/index.html](https://gasyoun.github.io/BookIndex/index.html)
-- **Текущая версия**: 2.2.0 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)). Крупный пласт доработок (треки A/B/C — авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) уже в дереве и ждет релиза — см. раздел `[Unreleased]` в [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
+- **Текущая версия**: 4.3.0 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)) — первый тегированный релиз GitHub с `v4.2.0`, закрывающий треки A/B/C (авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) и цитируемую инфраструктуру (CITATION.cff/.zenodo.json). Подробности — [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
 - **Руководство для детей**: [KIDS_GUIDE_RU.md](https://github.com/gasyoun/BookIndex/blob/main/KIDS_GUIDE_RU.md)
 - **Лицензии**: код — [Apache License 2.0](https://github.com/gasyoun/BookIndex/blob/main/LICENSE); данные указателя — CC BY 4.0; цитаты из книг — с разрешения правообладателей ([LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md))
 - **Как цитировать**: см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (кнопка «Cite this repository» на GitHub) и раздел [«Как цитировать»](#как-цитировать) ниже
@@ -123,7 +123,7 @@ this repository»).
 Zenodo):
 
 > Gasūns, M. (2026). *BookIndex (Zalizniakiada): an interactive reference and
-> corpus laboratory for the scholarly legacy of A. A. Zaliznyak* (version 2.2.0)
+> corpus laboratory for the scholarly legacy of A. A. Zaliznyak* (version 4.3.0)
 > [Software]. https://github.com/gasyoun/BookIndex
 
 Для цитирования **конкретной справочной статьи или лекции** используйте виджет
@@ -145,6 +145,7 @@ Zenodo):
 Подробнее — [LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md).
 
 ## История версий (Major Milestones)
+*   **v4.3.0**: Citability/Zenodo release cut (H1601) — first tagged GitHub release since `v4.2.0`; ships Tracks A/B/C (authority IDs, canonical URIs, TEI export, lecture KWIC/timecodes, video gallery/detail card, home task dashboard, chapter ribbon), VIZ shell unification, security hardening and CITATION.cff/.zenodo.json packaging.
 *   **v2.2.0**: SEO, PWA, security, CI, full E2E and performance hardening.
 *   **v2.1.0**: Navigation architecture, corpus routing and visualization smoke coverage.
 *   **v1.x - v2.x**: Expansion from book index to corpus laboratory and Digital Humanities workspace.
