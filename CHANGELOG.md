@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.3.1] - 2026-07-27
+### Added
+- Real Zenodo DOI wired in (H1601 follow-up): the Zenodo↔GitHub webhook (configured 2026-07-09, previously undocumented) minted a concept DOI `10.5281/zenodo.21630473` and version DOI `10.5281/zenodo.21630474` from the `v4.3.0` release. Backfilled into `CITATION.cff` (`identifiers:` block), README (DOI badge + citation section), `LICENSE-DATA.md`, and `docs/ZENODO_RU.md` status note. ORCID is still the one open item — no human input yet, placeholder stays commented.
+
 ## [4.3.0] - 2026-07-27
 ### Note
 First tagged GitHub release since `v4.2.0` (2026-04-18). The sections previously

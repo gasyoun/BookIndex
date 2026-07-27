@@ -88,7 +88,7 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 
 - Python: 3.12 (CI). Ensure `sys.stdout.reconfigure(encoding='utf-8')` and `encoding='utf-8'` on subprocess calls per global rule.
 - Node: 24 (CI).
-- The platform version reflected in README/changelog is `v4.3.0` — the first tagged GitHub release since `v4.2.0`, closing DH-roadmap Tracks A/B/C plus citability/Zenodo packaging.
+- The platform version reflected in README/changelog is `v4.3.1` — `v4.3.0` was the first tagged GitHub release since `v4.2.0`, closing DH-roadmap Tracks A/B/C plus citability/Zenodo packaging; `v4.3.1` wired in the real Zenodo DOI.
 
 ## Issue conventions (Codex regulation)
 

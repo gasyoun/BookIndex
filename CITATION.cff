@@ -18,7 +18,7 @@ authors:
   - family-names: Gasūns
     given-names: Mārcis
     # orcid: "https://orcid.org/0000-0000-0000-0000"  # TODO: вставить реальный ORCID и раскомментировать
-version: "4.3.0"
+version: "4.3.1"
 date-released: "2026-07-27"
 repository-code: "https://github.com/gasyoun/BookIndex"
 url: "https://gasyoun.github.io/BookIndex/index.html"
@@ -34,11 +34,10 @@ keywords:
   - KWIC concordance
   - Linked Open Data
   - birchbark manuscripts
-# После первого релиза на Zenodo раскомментировать и подставить concept DOI:
-# identifiers:
-#   - type: doi
-#     value: "10.5281/zenodo.XXXXXXX"
-#     description: "Concept DOI — все версии (Zenodo)"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21630473"
+    description: "Concept DOI — все версии (Zenodo)"
 references:
   - type: book
     title: "Из жизни слов и языков"
