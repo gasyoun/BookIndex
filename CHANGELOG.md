@@ -3,9 +3,18 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-### Removed
-- Dead root build artifact `v13_app_test.js` archived to `docs/history/v13_app_test.js` (H1506) — May-2026 concatenated output of the old `bundle.js` pipeline; zero live references in package.json/CI; `npm run build`, `check:js`, and Playwright (127) still pass.
-- Root runtime dead copies `v3_app.js.orig` (tracked) and ignore-policy for `*.orig` / existing `*.bak` (H1608) — large backup siblings of live `v3_app.js` that confused greps and inflated the tree; no package/docs references.
+
+## [4.3.0] - 2026-07-27
+### Note
+First tagged GitHub release since `v4.2.0` (2026-04-18). The sections previously
+dated `[1.0.0] - 2026-06-13` and `[2.3.0] - 2026-05-26` below were drafted in this
+file but never actually tagged or released — `package.json`, `CITATION.cff` and
+the README all stayed at `2.2.0` the whole time, and no `v1.0.0`/`v2.2.0`/`v2.3.0`
+git tag was ever cut (only `v2.1.0`, `v4.1.0`, `v4.2.0` exist). This release folds
+that drafted-but-unshipped content together with everything accumulated under
+`[Unreleased]` since into one real release, and continues the actual git-tag
+sequence (`v4.2.0` → `v4.3.0`) rather than the changelog's separate internal
+numbering. It also lands the citability/Zenodo release packaging (H1601).
 
 ### Added
 - Landing-promotion decision brief (H1603): `docs/LANDING_SUSTAINABLE_PROMOTION_DECIDE_2026.md` —
@@ -36,29 +45,11 @@ All notable changes to this project will be documented in this file.
   Emits `data/imports/lectures-v2/entity_candidates.{json,csv}` plus
   `ENTITY_CANDIDATES_README.md` (review protocol + `import_source.py` promotion).
   Never writes unreviewed heads into `app_data`.
-
-### Changed
-- Regenerated `tests/index-audit-queue.json` + `tests/context-entry-pack.{json,md}` after H1602 context drain (missing_context 2285→2149).
-- H1598 lecture-transcript ingest re-check: still **27/176** videos with `links.text` — NO-OP documented in `docs/LECTURE_TRANSCRIPT_INGEST_H1598_NOOP_24.07.2026.md` (no corpus/KWIC regeneration).
-
-### Fixed
-- `npm audit` CI gate: bump transitive `brace-expansion` **2.1.0 → 2.1.2** (GHSA-3jxr-9vmj-r5cp high / DoS). Clears `check:security` (`npm audit --audit-level=moderate`) which had been failing every main push.
-- C3 / H1607: priority UI paths (global search rows, entity list heads, KWIC empty/result rows, card context + source-quote rows) render untrusted text via `textContent` / DOM APIs instead of data-bearing `innerHTML`; `escapeHtml` stays as defense-in-depth for residual template joins. Regression: `tests/e2e/dom-render-harden.spec.js`.
-- Restored the README «Audit Summary» section (dropped by the H550 README refresh), un-reddening the `validate_content.py` CI gate that had failed on every push to `main` since.
-- Reverse video links now de-duplicate by video id (`video_catalog` contains duplicate-id rows), so entity-card video counts and lists are no longer inflated; the chapter-related-videos and gallery views share the same deduped catalog.
-- Entity citations fall back to per-book `occurrences` pages when `page_list` is empty, so the «С. N» reference is no longer dropped (e.g. «Saloni Z.» → «С. 157»).
-- Security hardening (defensive, author-curated data): escape interpolated values in the app + prerender citation widgets and the prerendered JSON-LD (`</script>` guard); validate the 404 retired-slug redirect against `^[a-z0-9-]+$`; CSV formula-injection guard in the TEI exports; `</script>` guard in the pipeline dashboard.
-- Matcher precision: whole-word (not substring) surname matching in the authority aligner; a ≥4-char floor in the transcript timecoder.
-
-### Added
 - «Сообщить об ошибке» flow (DH roadmap C4): entity cards link to a prefilled GitHub issue form (`.github/ISSUE_TEMPLATE/entity_correction.yml`) carrying the entity's slug, type, canonical URL and a `[правка] <head>` title; new `type:correction` label completes the four-group taxonomy for reader-reported corrections.
 - KWIC over lectures matches accent-tolerantly — «победа» also matches the stressed transcript form «побе́да».
 - Entity-card secondary actions (show on map, copy link, export .md) collapse into a «⋯ еще» menu; prev/next/back stay visible (B5).
 - Regression E2E suite (`tests/e2e/session-features.spec.js`) covering the home task dashboard, chapter ribbon, lecture KWIC, video gallery, card order/dedup/actions, page citations and the lecture↔video link.
 - Authority review worklist: `scripts/retier_authority_candidates.py` (`npm run authority:retier`) emits `data/authority_review.{json,csv}` — the 209 unconfirmed Wikidata candidates tiered by decision effort (decide / research / none) with a suggested QID and a `decision` column.
-
-## [1.0.0] - 2026-06-13
-### Added
 - Entity-card content priority (B5): the card now orders sections by reader value — pages + contexts, then the «Видео» chips (moved up above the cross-link cluster), then cross-links with the «Авторитетные записи» chips grouped right after them, then external-DB (LOD) links and the citation widget.
 - Video gallery (B3.5): a new «Видеогалерея» tab under Материалы lists all 175 (deduplicated) videos with title, date, duration and clickable entity chips, plus search (by title or mentioned entity), a book-chapter filter, and sort by date or duration.
 - Video ↔ chapter linkage (B3.4): each lecture/chapter page now lists topically related videos — public lectures whose discussed entities overlap that chapter's pages — under «Видео по теме главы», with an explicit note that they are related lectures, not recordings of the book chapter. The chapter ↔ page-range mapping was already shown («стр. X–Y»).
@@ -78,8 +69,15 @@ All notable changes to this project will be documented in this file.
 - Stable canonical entity URIs (A2): a frozen slug registry (`data/slug_registry.json`, keyed by each entity's `canonical_id`) makes URL slugs stable across releases — a head rename never changes the URL. `scripts/build_slug_registry.mjs` (`npm run slug:freeze`) maintains it; `scripts/prerender.mjs` consumes it. Entity pages now declare the clean prerendered path as `<link rel="canonical">`, `og:url` and JSON-LD `@id` (was the app hash route). Added a retired-slug redirect table (`data/slug_redirects.json`) consulted by `404.html`. URIs stay global (one merged entity = one URI), matching the by-head identity model; introduced with zero change to existing slugs.
 - Citability / scholarly infrastructure (A1): `CITATION.cff` (CFF 1.2.0, GitHub "Cite this repository"), `.zenodo.json` for DOI minting on release, `LICENSE-DATA.md` separating code (Apache-2.0), index data (CC BY 4.0) and book quotes/transcripts (© rights holders, cited with permission), a "Как цитировать" + license section in the README, and `docs/ZENODO_RU.md` deposit guide.
 - Entity↔lecture linking from the corpus (C3): `scripts/extract_entities_from_transcripts.py` links known index entities (names, toponyms, ethnonyms, languages, subject terms — lexicon excluded as too noisy) to the lectures that mention them, with first-mention timecodes. Adds 807 `src:"transcript"` edges to `video_catalog[].related_entities`, raising the number of entities with a video section from ~48 to ~239. Russian matching uses stemmed prefixes, strict multiword phrases, and surname anchoring with epithet/patronymic/collision guards.
+- **Sound Law Simulator**: Interactive po-shagovaya historical phonology engine showing the evolution of Proto-Slavic reconstructed roots to modern Slavic descendants (Russian, Polish, Czech).
+- **Linguistic Database Interoperability (LOD)**: Direct Glottolog, WALS, Vasmer's Dictionary on Starling, and Russian National Corpus (RNC) connections integrated in Language and Lexicon SPA cards.
+- **Old Russian Accentology Paradigm Simulator**: Dynamic reconstructor for Accent Paradigms A (baritone), B (oxytone), and C (mobile) tracing nominal declensions across three historical stages.
+- **Old East Slavic Orthography Hydrator**: Real-time medieval grapheme processing engine translating modern Russian words to Old East Slavic spelling forms (`ѣ`, `ъ`/`ь`, `ѫ`/`Ѧ`, `ѡ`).
+- Complete E2E and visual check suite passing all 104 Playwright tests cleanly.
 
 ### Changed
+- Regenerated `tests/index-audit-queue.json` + `tests/context-entry-pack.{json,md}` after H1602 context drain (missing_context 2285→2149).
+- H1598 lecture-transcript ingest re-check: still **27/176** videos with `links.text` — NO-OP documented in `docs/LECTURE_TRANSCRIPT_INGEST_H1598_NOOP_24.07.2026.md` (no corpus/KWIC regeneration).
 - Raised the axe accessibility gate to require zero critical and zero serious violations on audited routes.
 - Switched the standalone app from embedding the full `app_data.json` payload to lazy-loaded `data/modules/*.json` chunks that are pre-cached for offline use.
 - Darkened muted helper text in the app shell so route metadata, index summary chips, chapter labels and KWIC controls meet contrast requirements.
@@ -89,16 +87,20 @@ All notable changes to this project will be documented in this file.
 - Opted GitHub workflows into the Node 24 JavaScript action runtime ahead of the June 2026 migration.
 - Raised the `v3_app.js` runtime-script performance budget to match the app's real size after the corpus/video/DH feature growth (the budget had been exceeded since a pre-existing commit); the gate is enforceable again.
 
-### Removed
-- Retired `video-archive.xlsx` from the repository; the canonical production status now lives in `data/video_pipeline.json`.
+### Fixed
+- Deploy-asset drift (found while running the `build:vite` step of this release): `public/sw.js` had silently fallen out of sync with the root `sw.js` since commit `ed2b7faa` (26-05-2026) — it was still precaching `zaliznyak_portrait.png` instead of `.webp` and missing `404.html`, so every `npm run build:vite` run regenerated a stale service worker. Synced `public/sw.js`, added the missing `public/zaliznyak_portrait.webp`, and added `zaliznyak_portrait.webp` to the `deployAssets` list in `scripts/vite/postbuild-copy.mjs` so the drift can't reoccur silently.
+- `npm audit` CI gate: bump transitive `brace-expansion` **2.1.0 → 2.1.2** (GHSA-3jxr-9vmj-r5cp high / DoS). Clears `check:security` (`npm audit --audit-level=moderate`) which had been failing every main push.
+- C3 / H1607: priority UI paths (global search rows, entity list heads, KWIC empty/result rows, card context + source-quote rows) render untrusted text via `textContent` / DOM APIs instead of data-bearing `innerHTML`; `escapeHtml` stays as defense-in-depth for residual template joins. Regression: `tests/e2e/dom-render-harden.spec.js`.
+- Restored the README «Audit Summary» section (dropped by the H550 README refresh), un-reddening the `validate_content.py` CI gate that had failed on every push to `main` since.
+- Reverse video links now de-duplicate by video id (`video_catalog` contains duplicate-id rows), so entity-card video counts and lists are no longer inflated; the chapter-related-videos and gallery views share the same deduped catalog.
+- Entity citations fall back to per-book `occurrences` pages when `page_list` is empty, so the «С. N» reference is no longer dropped (e.g. «Saloni Z.» → «С. 157»).
+- Security hardening (defensive, author-curated data): escape interpolated values in the app + prerender citation widgets and the prerendered JSON-LD (`</script>` guard); validate the 404 retired-slug redirect against `^[a-z0-9-]+$`; CSV formula-injection guard in the TEI exports; `</script>` guard in the pipeline dashboard.
+- Matcher precision: whole-word (not substring) surname matching in the authority aligner; a ≥4-char floor in the transcript timecoder.
 
-## [2.3.0] - 2026-05-26
-### Added
-- **Sound Law Simulator**: Interactive po-shagovaya historical phonology engine showing the evolution of Proto-Slavic reconstructed roots to modern Slavic descendants (Russian, Polish, Czech).
-- **Linguistic Database Interoperability (LOD)**: Direct Glottolog, WALS, Vasmer's Dictionary on Starling, and Russian National Corpus (RNC) connections integrated in Language and Lexicon SPA cards.
-- **Old Russian Accentology Paradigm Simulator**: Dynamic reconstructor for Accent Paradigms A (baritone), B (oxytone), and C (mobile) tracing nominal declensions across three historical stages.
-- **Old East Slavic Orthography Hydrator**: Real-time medieval grapheme processing engine translating modern Russian words to Old East Slavic spelling forms (`ѣ`, `ъ`/`ь`, `ѫ`/`Ѧ`, `ѡ`).
-- Complete E2E and visual check suite passing all 104 Playwright tests cleanly.
+### Removed
+- Dead root build artifact `v13_app_test.js` archived to `docs/history/v13_app_test.js` (H1506) — May-2026 concatenated output of the old `bundle.js` pipeline; zero live references in package.json/CI; `npm run build`, `check:js`, and Playwright (127) still pass.
+- Root runtime dead copies `v3_app.js.orig` (tracked) and ignore-policy for `*.orig` / existing `*.bak` (H1608) — large backup siblings of live `v3_app.js` that confused greps and inflated the tree; no package/docs references.
+- Retired `video-archive.xlsx` from the repository; the canonical production status now lives in `data/video_pipeline.json`.
 
 ## [2.2.0] - 2026-05-17
 ### Added
@@ -112,6 +114,3 @@ All notable changes to this project will be documented in this file.
 - Kept Vite as a standalone build smoke and deploy-asset copy path.
 - Updated Vite to the current 8.x line and kept dependency audit at zero vulnerabilities.
 - Normalized README, Codex workflow, Claude guidance, changelog and documentation archive notes.
-
-### Removed
-- Duplicate `landing.html` entry; `index.html` is the canonical public landing page.

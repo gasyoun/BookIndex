@@ -56,6 +56,7 @@ const deployAssets = [
   'icon-192.svg',
   'icon-512.svg',
   'zaliznyak_portrait.png',
+  'zaliznyak_portrait.webp',
   'vendor',
 ];
 
