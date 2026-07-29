@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- **Брейнсторм по восьми полосам печатного спутника (Opus 5 1M `claude-opus-5[1m]`, 29-07-2026, [PR #168](https://github.com/gasyoun/BookIndex/pull/168)):** ruling MG «я не решил что именно будет на 8 полосах, надо brainstorm» открыл всю тетрадь, а не только полосу 8, которую держал открытой бриф H1609. [`docs/BRAINSTORM_PRINT_8PP_SIGNATURE_CONCEPTS_2026.md`](https://github.com/gasyoun/BookIndex/blob/main/docs/BRAINSTORM_PRINT_8PP_SIGNATURE_CONCEPTS_2026.md) — шесть цельных концепций тетради, пул из 14 вариантов по отдельным полосам (4 новых, найдены в самих данных: указатель имён как «кто есть кто» на 176 персоналий, этнонимический разворот на 66, практикум поиска по 3 708 KWIC-сегментам, «слова-звёзды» из 1 403 обратных лексических входов) и замер того, что набирается из готовых массивов против того, что требует авторского текста.
+
+### Fixed
+- **Две поправки к производственному брифу, найденные при замере (тот же проход):** (1) вариант 3 «мини-словарь лингвистических терминов 30–40» вышел с оговоркой «не дублировать глоссарий, если он уже есть» — глоссарий **уже есть**, 36 статей в [`data/modules/21-materials.json`](https://github.com/gasyoun/BookIndex/blob/main/data/modules/21-materials.json), ровно тот объём, так что это не «написать словарь», а «отобрать и сверстать существующее»; (2) вариант 9 (колофон) помечен в брифе как слабый «пока не выпущен Zenodo-DOI» — **DOI выпущен**, concept `10.5281/zenodo.21630473` (см. [4.3.1] от 27-07-2026, на день позже брифа), поэтому колофон разблокирован и одно из четырёх решений человека снято за ненадобностью.
+
 ## [4.3.1] - 2026-07-27
 ### Added
 - Real Zenodo DOI wired in (H1601 follow-up): the Zenodo↔GitHub webhook (configured 2026-07-09, previously undocumented) minted a concept DOI `10.5281/zenodo.21630473` and version DOI `10.5281/zenodo.21630474` from the `v4.3.0` release. Backfilled into `CITATION.cff` (`identifiers:` block), README (DOI badge + citation section), `LICENSE-DATA.md`, and `docs/ZENODO_RU.md` status note. ORCID is still the one open item — no human input yet, placeholder stays commented.
