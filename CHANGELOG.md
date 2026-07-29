@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.4.0] - 2026-07-29
 ### Added
 - **Брейнсторм по восьми полосам печатного спутника (Opus 5 1M `claude-opus-5[1m]`, 29-07-2026, [PR #168](https://github.com/gasyoun/BookIndex/pull/168)):** ruling MG «я не решил что именно будет на 8 полосах, надо brainstorm» открыл всю тетрадь, а не только полосу 8, которую держал открытой бриф H1609. [`docs/BRAINSTORM_PRINT_8PP_SIGNATURE_CONCEPTS_2026.md`](https://github.com/gasyoun/BookIndex/blob/main/docs/BRAINSTORM_PRINT_8PP_SIGNATURE_CONCEPTS_2026.md) — шесть цельных концепций тетради, пул из 14 вариантов по отдельным полосам (4 новых, найдены в самих данных: указатель имён как «кто есть кто» на 176 персоналий, этнонимический разворот на 66, практикум поиска по 3 708 KWIC-сегментам, «слова-звёзды» из 1 403 обратных лексических входов) и замер того, что набирается из готовых массивов против того, что требует авторского текста.
 
