@@ -44,7 +44,7 @@ The repo has current docs, agent workflow docs, historical sprint docs, archived
 Specific drift:
 
 1. `README.md` says the project is fully modular and recommends `node scripts/bundle.js`.
-2. `stats.md` says v11.2 while `README.md` and `CLAUDE.md` say v17.6.
+2. ~~`stats.md` says v11.2 while `README.md` and `CLAUDE.md` say v17.6.~~ **Resolved** — as of this pass (29-07-2026) `stats.md`, `README.md`, and `CLAUDE.md` all report `v4.3.1`; the versioning scheme itself has changed underneath this diagnosis since it was written, so the v11.2/v17.6 comparison no longer applies to the current repo state.
 3. `docs/history/aaz-index.html` and `docs/history/SPRINT_v4.1_2026-04-20.md` are not valid UTF-8.
 4. Historical docs contain old build guidance that can look current during search.
 
