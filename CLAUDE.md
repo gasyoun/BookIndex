@@ -78,6 +78,7 @@ The optional Gemini Flash workflow is documented in `docs/GEMINI_FLASH_WORKFLOW_
 ```sh
 npm run e2e                # full Playwright suite against aaz-index.html
 npm run check:e2e:smoke    # fast local subset for focused smoke checks
+npm run check:redesign     # Phase U4 route harness (8 routes x desktop/mobile)
 npm run e2e:headed
 npx playwright test tests/e2e/smoke.spec.js -g "<test name>"   # single test
 ```
