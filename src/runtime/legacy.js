@@ -951,6 +951,7 @@ const VIZ_SCRIPT_BY_MODULE = Object.freeze({
   viz05: './scripts/viz/narrative-sankey.js',
   viz06: './scripts/viz/lang-chord.js',
   viz07: './scripts/viz/term-bump-chart.js',
+  viz08: './scripts/viz/research-map.js',
 });
 const VIZ_RENDERER_BY_MODULE = Object.freeze({
   viz01: 'renderMapTimeline',
@@ -960,6 +961,7 @@ const VIZ_RENDERER_BY_MODULE = Object.freeze({
   viz05: 'renderNarrativeSankey',
   viz06: 'renderLangChord',
   viz07: 'renderTermBumpChart',
+  viz08: 'renderResearchMap',
 });
 /* [modularized] CYRILLIC_TO_LATIN_MAP */
 
@@ -10324,6 +10326,7 @@ function countMentionsInRange(pageList, start, end) {
 function getVizModuleCatalog() {
   const registry = getVizRegistry();
   return [
+    { id: 'viz08', title: 'VIZ-08 · Исследовательская карта', renderKey: 'renderResearchMap', render: registry.renderResearchMap },
     { id: 'viz03', title: 'VIZ-03 · Лента открытий', renderKey: 'renderDiscoveryTimeline', render: registry.renderDiscoveryTimeline },
     { id: 'viz04', title: 'VIZ-04 · Тепловая матрица', renderKey: 'renderHeatmapMatrix', render: registry.renderHeatmapMatrix },
     { id: 'viz02', title: 'VIZ-02 · Граф сосуществования', renderKey: 'renderCooccurrenceGraph', render: registry.renderCooccurrenceGraph },

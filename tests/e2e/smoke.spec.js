@@ -1504,7 +1504,7 @@ test.describe('aaz-index smoke', () => {
     await page.goto('/aaz-index.html#viz');
     await expect(page).toHaveURL(/#v4\/scholar\/viz/);
     await expect(page.locator('.viz-shell')).toBeVisible();
-    await expect(page.locator('.viz-module-btn')).toHaveCount(7);
+    await expect(page.locator('.viz-module-btn')).toHaveCount(8);
   });
 
   test('corpus viz hash opens current-book visualization shell', async ({ page }) => {

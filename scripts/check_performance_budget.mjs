@@ -6,10 +6,13 @@ const root = process.cwd();
 
 const budgets = [
   {
+    // Gzip ceiling raised 2026-07-30 (H1821): the VIZ-08 research-map styles cost
+    // ~0.9 KiB gzip and the previous 180 KiB ceiling was already 99.7% full
+    // (179,435 B on the preceding main), leaving no room for any new panel.
     label: 'standalone HTML',
     path: 'aaz-index.html',
     maxBytes: 1_200_000,
-    maxGzipBytes: 180_000,
+    maxGzipBytes: 186_000,
   },
   {
     label: 'source app data',

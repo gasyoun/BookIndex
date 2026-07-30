@@ -1,6 +1,6 @@
 # VIZ shell exceptions (H1605 Phase V1)
 
-_Created: 24-07-2026 · Last updated: 24-07-2026_
+_Created: 24-07-2026 · Last updated: 30-07-2026_
 
 Shared chrome lives in [`scripts/viz/viz-shell.js`](https://github.com/gasyoun/BookIndex/blob/main/scripts/viz/viz-shell.js)
 (`VizShell.buildModuleCard` / `wireModuleChrome` / `showStatus`). Loaded after
@@ -17,6 +17,7 @@ Shared chrome lives in [`scripts/viz/viz-shell.js`](https://github.com/gasyoun/B
 | viz05 | `narrative-sankey.js` | `scholar.slovo` | yes | first narrative tab |
 | viz06 | `lang-chord.js` | `buildVizCache.langCoMatrix` | yes | min freq=20, clear hidden langs |
 | viz07 | `term-bump-chart.js` | `termRankByLecture` | yes | top=15, clear search |
+| viz08 | `research-map.js` | `scholar.* + chapters + сущности + video_catalog` | yes | направление=all, top=8, связи вкл. |
 
 ## Module-specific exceptions
 
@@ -26,7 +27,16 @@ Shared chrome lives in [`scripts/viz/viz-shell.js`](https://github.com/gasyoun/B
    (all unchecked), not data-missing.
 3. **VIZ-05 Sankey** — narrative tabs sit in the filters row; chart math is a custom
    node/link layout, not d3-sankey (unchanged by H1605).
-4. **Inactive modules** (`corpus-timeline.js`, `viz-semantic-graph.js`, `world-map.js`,
+4. **VIZ-08 исследовательская карта** (добавлен 30-07-2026, H1821) — единственный
+   интегративный модуль: узел = направление исследований, агрегирующее свидетельства из
+   `scholar.*`, границы глав, сущности указателя и `video_catalog`. Два режима в одном
+   хосте — обзор (концентратор + 7 направлений + пунктирные мостики по общим сущностям) и
+   раскрытое направление (спутники-сущности). Справа — панель `.rmap-detail` вместо
+   легенды; она же несет переходы в карточки, к главам, к видео и в профильный модуль
+   VIZ-01…07. Состояние в URL: `filter` = направление, `top` = число спутников.
+   «Всеобщие» головы (в ≥5 направлениях или в ≥30% видео) исключены из мостиков и
+   видеосвязей — иначе всё связано со всем через «русский».
+5. **Inactive modules** (`corpus-timeline.js`, `viz-semantic-graph.js`, `world-map.js`,
    `comparative-timeline.js`, `knowledge-web.js`, `language-tree.js`,
    `multimedia-bridge.js`) are **not** in `getVizModuleCatalog()` and were left alone —
    Phase V1 only unifies the seven active routes.

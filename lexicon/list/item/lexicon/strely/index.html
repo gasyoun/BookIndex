@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-SPWs4Mdsp84icSdKeeQhWc27Kw31/y2qC+Ebrt7D9qM=' 'sha256-/DUhHNpKZ30mXfA09SJAENIRsTmUMtAkwY1UpBg+BP8='; worker-src 'self' blob:; style-src 'self' 'sha256-JeW2wiEbStC0lHJf7BegwaA3g4Hm5L2g7mvBvGoEguM='; style-src-elem 'self' 'sha256-JeW2wiEbStC0lHJf7BegwaA3g4Hm5L2g7mvBvGoEguM='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-aluka1ljK/ZSieQ0jFereRbuhvG3F5L53cJ8ieUOfEQ=' 'sha256-8uqPLH93oiPZBIIodkTtWuNGYtvwEHIiOfQ8bgatq5k='; worker-src 'self' blob:; style-src 'self' 'sha256-O1iw2WXdhDh4WybfQusNddj/mlaZvw9ITYbsVDrkZcY='; style-src-elem 'self' 'sha256-O1iw2WXdhDh4WybfQusNddj/mlaZvw9ITYbsVDrkZcY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -1032,6 +1032,215 @@
   }
   .viz-tooltip-floating {
     position: absolute;
+  }
+  /* VIZ-08 · исследовательская карта */
+  .rmap-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+  }
+  .rmap-canvas {
+    min-width: 0;
+  }
+  .rmap-svg {
+    display: block;
+    max-width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .rmap-detail {
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-soft);
+    padding: 12px;
+    font-size: 12px;
+    color: var(--text);
+    max-height: 540px;
+    overflow-y: auto;
+  }
+  .rmap-detail-title {
+    margin: 0 0 6px;
+    font-size: 14px;
+    color: var(--title);
+  }
+  .rmap-detail-subtitle {
+    margin: 14px 0 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .rmap-detail-note {
+    margin: 0 0 8px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .rmap-muted {
+    color: var(--muted);
+  }
+  .rmap-kind {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 10px;
+  }
+  .rmap-metrics {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 0;
+    padding: 0;
+  }
+  .rmap-metrics li {
+    color: var(--muted);
+  }
+  .rmap-metrics strong {
+    color: var(--title);
+  }
+  .rmap-list {
+    margin: 0;
+    padding-left: 16px;
+    line-height: 1.5;
+  }
+  .rmap-list li {
+    margin-bottom: 7px;
+  }
+  .rmap-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .rmap-table th,
+  .rmap-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 4px 6px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .rmap-table th {
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .rmap-num {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .rmap-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .rmap-chip {
+    padding: 3px 8px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--title);
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .rmap-chip:hover,
+  .rmap-link:hover {
+    border-color: var(--title);
+  }
+  .rmap-chip-names { border-left: 3px solid var(--color-primary); }
+  .rmap-chip-languages { border-left: 3px solid var(--color-gold); }
+  .rmap-chip-toponyms { border-left: 3px solid #59a14f; }
+  .rmap-chip-ethnonyms { border-left: 3px solid #af7aa1; }
+  .rmap-chip-lexicon_tech { border-left: 3px solid #f28e2c; }
+  .rmap-chip-subject_index { border-left: 3px solid #76b7b2; }
+  .rmap-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-primary);
+    font-family: inherit;
+    font-size: inherit;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+  }
+  .rmap-viz-link {
+    margin: 14px 0 0;
+  }
+  .rmap-spoke {
+    stroke: var(--line-strong);
+    stroke-opacity: 0.55;
+  }
+  .rmap-bridge {
+    stroke: var(--color-gold);
+    stroke-opacity: 0.4;
+    stroke-dasharray: 4 4;
+  }
+  .rmap-dot {
+    stroke: var(--surface);
+    stroke-width: 1.5;
+  }
+  .rmap-dot-hub {
+    fill: var(--title);
+    fill-opacity: 0.12;
+    stroke: var(--line-strong);
+  }
+  .rmap-dot-domain {
+    fill: var(--color-primary);
+    fill-opacity: 0.85;
+  }
+  .rmap-dot-names { fill: var(--color-primary); }
+  .rmap-dot-languages { fill: var(--color-gold); }
+  .rmap-dot-toponyms { fill: #59a14f; }
+  .rmap-dot-ethnonyms { fill: #af7aa1; }
+  .rmap-dot-lexicon_tech { fill: #f28e2c; }
+  .rmap-dot-subject_index { fill: #76b7b2; }
+  .rmap-clickable {
+    cursor: pointer;
+  }
+  .rmap-clickable:hover .rmap-dot,
+  .rmap-clickable:focus-visible .rmap-dot {
+    stroke: var(--title);
+    stroke-width: 2.5;
+  }
+  .rmap-clickable:focus-visible {
+    outline: 2px solid var(--color-primary, #3a6ea5);
+    outline-offset: 2px;
+  }
+  .rmap-label {
+    font-size: 10px;
+    fill: var(--text);
+    pointer-events: none;
+  }
+  .rmap-dot-count {
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--surface);
+    pointer-events: none;
+  }
+  .rmap-hub-label {
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--title);
+    pointer-events: none;
+  }
+  .rmap-hub-label-small {
+    font-size: 10px;
+    font-weight: 500;
+  }
+  @media (max-width: 900px) {
+    .rmap-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .rmap-detail {
+      max-height: none;
+    }
   }
   .viz-map-legend {
     display: flex;
@@ -6182,7 +6391,7 @@
         <button type="button" class="citation-tab-btn" data-style="chicago">Chicago</button>
       </div>
       <div class="citation-box-container">
-        <div class="citation-box" id="citation-widget-card-strely-box" aria-live="polite">Зализняк А. А. Справочная статья «стре́лы» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon/list/item/lexicon/strely/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon/list/item/lexicon/strely/</a> (дата обращения: 27.07.2026).</div>
+        <div class="citation-box" id="citation-widget-card-strely-box" aria-live="polite">Зализняк А. А. Справочная статья «стре́лы» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon/list/item/lexicon/strely/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon/list/item/lexicon/strely/</a> (дата обращения: 30.07.2026).</div>
         <button type="button" class="citation-copy-btn" id="citation-widget-card-strely-copy-btn">Копировать</button>
       </div>
     </div>
@@ -6193,7 +6402,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "2a328a7823d7",
+  "build_id": "ab8f8d747d94",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6501,7 +6710,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "2a328a7823d7";
+	var APP_BUILD_ID$1 = "ab8f8d747d94";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7399,8 +7608,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "2a328a7823d7").trim();
-		if (buildId && buildId !== "2a328a7823d7") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "ab8f8d747d94").trim();
+		if (buildId && buildId !== "ab8f8d747d94") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -8623,7 +8832,8 @@ var BookIndex = (function(exports) {
 		viz04: "./scripts/viz/heatmap-matrix.js",
 		viz05: "./scripts/viz/narrative-sankey.js",
 		viz06: "./scripts/viz/lang-chord.js",
-		viz07: "./scripts/viz/term-bump-chart.js"
+		viz07: "./scripts/viz/term-bump-chart.js",
+		viz08: "./scripts/viz/research-map.js"
 	});
 	var VIZ_RENDERER_BY_MODULE = Object.freeze({
 		viz01: "renderMapTimeline",
@@ -8632,7 +8842,8 @@ var BookIndex = (function(exports) {
 		viz04: "renderHeatmapMatrix",
 		viz05: "renderNarrativeSankey",
 		viz06: "renderLangChord",
-		viz07: "renderTermBumpChart"
+		viz07: "renderTermBumpChart",
+		viz08: "renderResearchMap"
 	});
 	function safeUrl(url, fallback = "#") {
 		if (url === null || url === void 0) return fallback;
@@ -11092,7 +11303,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "2a328a7823d7" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "ab8f8d747d94" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -18216,6 +18427,12 @@ var BookIndex = (function(exports) {
 	function getVizModuleCatalog() {
 		const registry = getVizRegistry();
 		return [
+			{
+				id: "viz08",
+				title: "VIZ-08 · Исследовательская карта",
+				renderKey: "renderResearchMap",
+				render: registry.renderResearchMap
+			},
 			{
 				id: "viz03",
 				title: "VIZ-03 · Лента открытий",

@@ -8,6 +8,7 @@ const MODULES = [
   'viz05',
   'viz06',
   'viz07',
+  'viz08',
 ];
 
 async function noPageOverflow(page) {
