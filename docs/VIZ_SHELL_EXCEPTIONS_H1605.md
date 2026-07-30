@@ -17,7 +17,7 @@ Shared chrome lives in [`scripts/viz/viz-shell.js`](https://github.com/gasyoun/B
 | viz05 | `narrative-sankey.js` | `scholar.slovo` | yes | first narrative tab |
 | viz06 | `lang-chord.js` | `buildVizCache.langCoMatrix` | yes | min freq=20, clear hidden langs |
 | viz07 | `term-bump-chart.js` | `termRankByLecture` | yes | top=15, clear search |
-| viz08 | `research-map.js` | `scholar.* + chapters + сущности + video_catalog` | yes | направление=all, top=8, связи вкл. |
+| viz08 | `research-map.js` | `scholar.* + chapters + сущности + video_catalog` · `cross_links` / `semantic_links` в режиме сущности | yes | центр=направление, направление=all, top=8, связи вкл., rel=all, круг=1 |
 
 ## Module-specific exceptions
 
@@ -36,6 +36,16 @@ Shared chrome lives in [`scripts/viz/viz-shell.js`](https://github.com/gasyoun/B
    VIZ-01…07. Состояние в URL: `filter` = направление, `top` = число спутников.
    «Всеобщие» головы (в ≥5 направлениях или в ≥30% видео) исключены из мостиков и
    видеосвязей — иначе всё связано со всем через «русский».
+   **Два центра карты** (второй добавлен тем же H1821, 30-07-2026): переключатель
+   «Центр: направление / сущность». Режим сущности и есть спецификация Phase V3 из
+   `docs/CLEANUP_AND_UI_ROADMAP.md` — центр на выбранной сущности, первый круг связей по
+   умолчанию, второй по требованию, связи берутся из готовых индексов `cross_links`
+   (типизированные) и `semantic_links` (нетипизированные), рядом — страницы, лекции/главы,
+   термины глоссария и видео. Клик по узлу переносит центр (обход графа через URL), клик
+   по центру открывает карточку. Состояние: `mode`, `entity`, `rel`, `depth` — четыре ключа
+   добавлены в `ALLOWED_KEYS` в [`scripts/viz/viz-state.js`](https://github.com/gasyoun/BookIndex/blob/main/scripts/viz/viz-state.js).
+   Побочная находка: `.viz-toolbar label` ставит `display:inline-flex`, что перебивает
+   атрибут `[hidden]`, — поля режимов не скрывались без явного `label[hidden]{display:none}`.
 5. **Inactive modules** (`corpus-timeline.js`, `viz-semantic-graph.js`, `world-map.js`,
    `comparative-timeline.js`, `knowledge-web.js`, `language-tree.js`,
    `multimedia-bridge.js`) are **not** in `getVizModuleCatalog()` and were left alone —

@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.6.0] - 2026-07-30
+
+### Added
+- **VIZ-08, второй центр карты — режим «Центр: сущность» (Opus 5 (`claude-opus-5`), 30-07-2026, H1821, добор до полной спецификации):** `v4.5.0` выпустил карту с центром на *направлении исследований*, а Phase V3 в [`docs/CLEANUP_AND_UI_ROADMAP.md`](https://github.com/gasyoun/BookIndex/blob/main/docs/CLEANUP_AND_UI_ROADMAP.md) специфицирует центр на *выбранной сущности* с прогрессивным раскрытием и переиспользованием `cross_links`. Теперь есть оба: переключатель «Центр: направление / сущность». В режиме сущности — первый круг связей по умолчанию, второй по требованию, тип связей переключается между `cross_links` (типизированные, с весами) и `semantic_links` (нетипизированные, по общим страницам); рядом с картой — страницы книги, лекции/главы, термины глоссария и видео с таймкодом. Клик по узлу переносит центр карты (обход графа через URL), клик по центру открывает карточку. Ссылка воспроизводима: `mode`, `entity`, `rel`, `depth`.
+- Четыре ключа состояния (`mode`, `entity`, `depth`, `rel`) добавлены в `ALLOWED_KEYS` [`scripts/viz/viz-state.js`](https://github.com/gasyoun/BookIndex/blob/main/scripts/viz/viz-state.js) — совместимо со всеми остальными модулями.
+- Тесты режима сущности в [`tests/e2e/research-map.spec.js`](https://github.com/gasyoun/BookIndex/blob/main/tests/e2e/research-map.spec.js): 7 → 12 (первый круг + URL, второй круг с проверкой после reload, переключение `cross`/`semantic`, перенос центра кликом, видимость полей по режиму и сброс).
+
+### Fixed
+- `.viz-toolbar label` ставил `display:inline-flex`, перебивая атрибут `[hidden]`: поля, относящиеся только к одному режиму, не скрывались. Добавлено `.viz-toolbar label[hidden] { display: none; }` — правило общее для всех модулей, так что тот же класс дефектов закрыт и на будущее.
+
 ## [4.5.0] - 2026-07-30
 
 ### Added

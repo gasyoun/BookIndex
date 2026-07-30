@@ -2,7 +2,13 @@
   'use strict';
 
   const root = global || (typeof window !== 'undefined' ? window : globalThis);
-  const ALLOWED_KEYS = new Set(['century', 'top', 'min', 'lecture', 'filter', 'autoplay']);
+  // 'mode' / 'entity' / 'depth' / 'rel' added 30-07-2026 (H1821) for the VIZ-08
+  // research map: entity-centred traversal needs the centre, the disclosure depth
+  // and the active relation type to survive a reload and be shareable.
+  const ALLOWED_KEYS = new Set([
+    'century', 'top', 'min', 'lecture', 'filter', 'autoplay',
+    'mode', 'entity', 'depth', 'rel',
+  ]);
 
   function splitHash() {
     const raw = root.location && root.location.hash ? String(root.location.hash) : '';

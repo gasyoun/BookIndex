@@ -1014,6 +1014,11 @@
     position: absolute;
   }
   /* VIZ-08 · исследовательская карта */
+  /* `.viz-toolbar label` sets display:inline-flex, which outranks the [hidden]
+     attribute's display:none — mode-specific fields need this to actually hide. */
+  .viz-toolbar label[hidden] {
+    display: none;
+  }
   .rmap-layout {
     display: grid;
     grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
@@ -1161,6 +1166,21 @@
     stroke: var(--color-gold);
     stroke-opacity: 0.4;
     stroke-dasharray: 4 4;
+  }
+  .rmap-spoke-semantic {
+    stroke: var(--color-gold);
+    stroke-opacity: 0.5;
+    stroke-dasharray: 3 3;
+  }
+  .rmap-spoke-second {
+    stroke-opacity: 0.3;
+  }
+  .rmap-node-second .rmap-dot {
+    fill-opacity: 0.55;
+  }
+  .rmap-label-second {
+    font-size: 9px;
+    fill: var(--muted);
   }
   .rmap-dot {
     stroke: var(--surface);

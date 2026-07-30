@@ -92,6 +92,75 @@ test.describe('VIZ-08 · исследовательская карта (H1821)',
     await expect(page).not.toHaveURL(/module\/viz08/);
   });
 
+  test('центр-сущность: первый круг связей, метрики и состояние в URL', async ({ page }) => {
+    const pageErrors = [];
+    page.on('pageerror', (err) => pageErrors.push(String(err && err.message ? err.message : err)));
+
+    await openMap(page, '?mode=entity&entity=%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9');
+    await expect(page.locator('.rmap-detail-title')).toHaveText('русский');
+    await expect(page.locator('.rmap-node-domain')).toHaveCount(0);
+    const first = await page.locator('.rmap-node-entity:not(.rmap-node-second)').count();
+    expect(first).toBeGreaterThan(0);
+    await expect(page.locator('.rmap-node-second')).toHaveCount(0);
+    await expect(page.locator('.rmap-detail-note')).toContainText('круг: 1');
+
+    expect(pageErrors, pageErrors.join(' | ')).toEqual([]);
+  });
+
+  test('второй круг раскрывается по требованию и держится в URL', async ({ page }) => {
+    await openMap(page, '?mode=entity&entity=%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9');
+    await expect(page.locator('.rmap-node-second')).toHaveCount(0);
+    await page.locator('[data-role="rmap-depth"]').check();
+    await expect(page).toHaveURL(/depth=2/);
+    expect(await page.locator('.rmap-node-second').count()).toBeGreaterThan(0);
+
+    await page.reload();
+    await expect(page.locator('.viz-research-map')).toBeVisible({ timeout: 30000 });
+    expect(await page.locator('.rmap-node-second').count()).toBeGreaterThan(0);
+    await expect(page.locator('.rmap-detail-note')).toContainText('круг: 2');
+  });
+
+  test('тип связей переключается между cross_links и semantic_links', async ({ page }) => {
+    await openMap(page, '?mode=entity&entity=%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9');
+    await page.locator('[data-role="rmap-rel"]').selectOption('cross');
+    await expect(page).toHaveURL(/rel=cross/);
+    await expect(page.locator('.rmap-detail-note')).toContainText('cross_links');
+    const crossCount = await page.locator('.rmap-node-entity').count();
+    expect(crossCount).toBeGreaterThan(0);
+    await expect(page.locator('.rmap-spoke-semantic')).toHaveCount(0);
+
+    await page.locator('[data-role="rmap-rel"]').selectOption('semantic');
+    await expect(page).toHaveURL(/rel=semantic/);
+    expect(await page.locator('.rmap-spoke-semantic').count()).toBeGreaterThan(0);
+  });
+
+  test('клик по узлу переносит центр карты (обход графа через URL)', async ({ page }) => {
+    await openMap(page, '?mode=entity&entity=%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9');
+    const chip = page.locator('.rmap-chips [data-recentre]').first();
+    const nextHead = String(await chip.getAttribute('data-recentre') || '');
+    expect(nextHead.length).toBeGreaterThan(0);
+    await chip.click();
+    await expect(page.locator('.rmap-detail-title')).toHaveText(nextHead);
+    await expect(page).toHaveURL(/entity=/);
+    // Centre still opens the card rather than recentring on itself.
+    await page.locator('.rmap-detail [data-entity-head]').first().click();
+    await expect(page.locator('#content .card').first()).toBeVisible();
+  });
+
+  test('переключатель центра прячет и показывает свои поля', async ({ page }) => {
+    await openMap(page);
+    await expect(page.locator('[data-role="rmap-domain-field"]')).toBeVisible();
+    await expect(page.locator('[data-role="rmap-entity-field"]')).toBeHidden();
+    await page.locator('[data-role="rmap-mode"]').selectOption('entity');
+    await expect(page.locator('[data-role="rmap-entity-field"]')).toBeVisible();
+    await expect(page.locator('[data-role="rmap-rel-field"]')).toBeVisible();
+    await expect(page.locator('[data-role="rmap-domain-field"]')).toBeHidden();
+    await expect(page).toHaveURL(/mode=entity/);
+    await page.locator('.viz-module-actions [data-viz-action="reset"]').click();
+    await expect(page.locator('[data-role="rmap-domain-field"]')).toBeVisible();
+    await expect(page.locator('.rmap-node-domain')).toHaveCount(7);
+  });
+
   test('таблица обзора раскрывает направление по клику', async ({ page }) => {
     await openMap(page);
     await page.locator('.rmap-table tbody tr').first().locator('.rmap-link').click();

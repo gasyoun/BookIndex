@@ -9,7 +9,7 @@ _Created: 14-04-2026 · Last updated: 30-07-2026_
 Проект эволюционировал из простого индекса в полноценную исследовательскую платформу для цифровых гуманитарных наук: единый автономный HTML-артефакт, корпусная навигация, KWIC-конкорданс, карты, графы и научный аппарат.
 
 - **Демо**: [gasyoun.github.io/BookIndex/index.html](https://gasyoun.github.io/BookIndex/index.html)
-- **Текущая версия**: 4.5.0 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)) — `v4.3.0` был первым тегированным релизом GitHub с `v4.2.0`, закрывающим треки A/B/C (авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) и цитируемую инфраструктуру (CITATION.cff/.zenodo.json); `v4.3.1` дописывает настоящий Zenodo DOI; `v4.4.0` — брейнсторм печатного спутника; `v4.5.0` — VIZ-08 «Исследовательская карта». Подробности — [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
+- **Текущая версия**: 4.6.0 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)) — `v4.3.0` был первым тегированным релизом GitHub с `v4.2.0`, закрывающим треки A/B/C (авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) и цитируемую инфраструктуру (CITATION.cff/.zenodo.json); `v4.3.1` дописывает настоящий Zenodo DOI; `v4.4.0` — брейнсторм печатного спутника; `v4.5.0` — VIZ-08 «Исследовательская карта». Подробности — [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
 - **Руководство для детей**: [KIDS_GUIDE_RU.md](https://github.com/gasyoun/BookIndex/blob/main/KIDS_GUIDE_RU.md)
 - **Лицензии**: код — [Apache License 2.0](https://github.com/gasyoun/BookIndex/blob/main/LICENSE); данные указателя — CC BY 4.0; цитаты из книг — с разрешения правообладателей ([LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md))
 - **Как цитировать**: см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (кнопка «Cite this repository» на GitHub) и раздел [«Как цитировать»](#как-цитировать) ниже
@@ -126,7 +126,7 @@ GitHub Release чеканит свой отдельный version DOI, указ�
 (GitHub показывает кнопку «Cite this repository»).
 
 > Gasūns, M. (2026). *BookIndex (Zalizniakiada): an interactive reference and
-> corpus laboratory for the scholarly legacy of A. A. Zaliznyak* (version 4.5.0)
+> corpus laboratory for the scholarly legacy of A. A. Zaliznyak* (version 4.6.0)
 > [Software]. Zenodo. https://doi.org/10.5281/zenodo.21630473
 
 Для цитирования **конкретной справочной статьи или лекции** используйте виджет
@@ -148,6 +148,7 @@ GitHub Release чеканит свой отдельный version DOI, указ�
 Подробнее — [LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md).
 
 ## История версий (Major Milestones)
+*   **v4.6.0**: VIZ-08, второй центр карты — режим «Центр: сущность» (H1821): центр на любой сущности индекса, первый круг связей по умолчанию и второй по требованию, тип связей `cross_links` / `semantic_links`, обход графа кликом с воспроизводимой ссылкой (`mode`/`entity`/`rel`/`depth`).
 *   **v4.5.0**: VIZ-08 «Исследовательская карта» (H1821) — восьмой модуль визуализаций и первый интегративный: семь направлений исследовательской программы, каждое сводит свидетельства `scholar.*`, границы глав, сущности указателя и связанные видео; мостики по общим сущностям между направлениями. Версия синхронизирована по `package.json`/`CITATION.cff`/README.
 *   **v4.4.0**: Брейнсторм по восьми полосам печатного спутника — шесть концепций тетради, пул из 14 вариантов по полосам, две поправки к производственному брифу.
 *   **v4.3.1**: Real Zenodo DOI wired in — `10.5281/zenodo.21630473` (concept), backfilled into CITATION.cff/README/LICENSE-DATA.

@@ -88,7 +88,7 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 
 - Python: 3.12 (CI). Ensure `sys.stdout.reconfigure(encoding='utf-8')` and `encoding='utf-8'` on subprocess calls per global rule.
 - Node: 24 (CI).
-- The platform version reflected in README/changelog is `v4.5.0` — `v4.3.0` was the first tagged GitHub release since `v4.2.0`, closing DH-roadmap Tracks A/B/C plus citability/Zenodo packaging; `v4.3.1` wired in the real Zenodo DOI; `v4.4.0` shipped the print-companion brainstorm; `v4.5.0` added VIZ-08 «Исследовательская карта» (H1821). Note that `package.json`/`CITATION.cff` were left at `4.3.1` when `v4.4.0` was tagged — resynced at `v4.5.0`, so keep them in the release sweep.
+- The platform version reflected in README/changelog is `v4.5.0` — `v4.3.0` was the first tagged GitHub release since `v4.2.0`, closing DH-roadmap Tracks A/B/C plus citability/Zenodo packaging; `v4.3.1` wired in the real Zenodo DOI; `v4.4.0` shipped the print-companion brainstorm; `v4.5.0` added VIZ-08 «Исследовательская карта» and `v4.6.0` its entity-centred mode (both H1821). Note that `package.json`/`CITATION.cff` were left at `4.3.1` when `v4.4.0` was tagged — resynced at `v4.5.0`, so keep them in the release sweep.
 
 ## Issue conventions (Codex regulation)
 
