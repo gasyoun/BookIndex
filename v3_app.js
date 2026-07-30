@@ -2274,7 +2274,8 @@ var BookIndex = (function(exports) {
 		viz04: "./scripts/viz/heatmap-matrix.js",
 		viz05: "./scripts/viz/narrative-sankey.js",
 		viz06: "./scripts/viz/lang-chord.js",
-		viz07: "./scripts/viz/term-bump-chart.js"
+		viz07: "./scripts/viz/term-bump-chart.js",
+		viz08: "./scripts/viz/research-map.js"
 	});
 	var VIZ_RENDERER_BY_MODULE = Object.freeze({
 		viz01: "renderMapTimeline",
@@ -2283,7 +2284,8 @@ var BookIndex = (function(exports) {
 		viz04: "renderHeatmapMatrix",
 		viz05: "renderNarrativeSankey",
 		viz06: "renderLangChord",
-		viz07: "renderTermBumpChart"
+		viz07: "renderTermBumpChart",
+		viz08: "renderResearchMap"
 	});
 	function safeUrl(url, fallback = "#") {
 		if (url === null || url === void 0) return fallback;
@@ -11867,6 +11869,12 @@ var BookIndex = (function(exports) {
 	function getVizModuleCatalog() {
 		const registry = getVizRegistry();
 		return [
+			{
+				id: "viz08",
+				title: "VIZ-08 · Исследовательская карта",
+				renderKey: "renderResearchMap",
+				render: registry.renderResearchMap
+			},
 			{
 				id: "viz03",
 				title: "VIZ-03 · Лента открытий",
