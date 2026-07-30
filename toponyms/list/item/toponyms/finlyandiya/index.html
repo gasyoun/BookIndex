@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-aluka1ljK/ZSieQ0jFereRbuhvG3F5L53cJ8ieUOfEQ=' 'sha256-8uqPLH93oiPZBIIodkTtWuNGYtvwEHIiOfQ8bgatq5k='; worker-src 'self' blob:; style-src 'self' 'sha256-O1iw2WXdhDh4WybfQusNddj/mlaZvw9ITYbsVDrkZcY='; style-src-elem 'self' 'sha256-O1iw2WXdhDh4WybfQusNddj/mlaZvw9ITYbsVDrkZcY='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-cgSgMlrkjUo1eW0EwHYaRLBdZcwI65fSxer0wngZDP4=' 'sha256-gP57nALgE+ts738Ei+89NklDVHpHyt4HT+T3yzisQ9w='; worker-src 'self' blob:; style-src 'self' 'sha256-Su28JBxIjsn3g1MEVU3SdtX34W9rNU4dn0H8I7ByiDI='; style-src-elem 'self' 'sha256-Su28JBxIjsn3g1MEVU3SdtX34W9rNU4dn0H8I7ByiDI='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -1040,6 +1040,11 @@
     position: absolute;
   }
   /* VIZ-08 · исследовательская карта */
+  /* `.viz-toolbar label` sets display:inline-flex, which outranks the [hidden]
+     attribute's display:none — mode-specific fields need this to actually hide. */
+  .viz-toolbar label[hidden] {
+    display: none;
+  }
   .rmap-layout {
     display: grid;
     grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
@@ -1187,6 +1192,21 @@
     stroke: var(--color-gold);
     stroke-opacity: 0.4;
     stroke-dasharray: 4 4;
+  }
+  .rmap-spoke-semantic {
+    stroke: var(--color-gold);
+    stroke-opacity: 0.5;
+    stroke-dasharray: 3 3;
+  }
+  .rmap-spoke-second {
+    stroke-opacity: 0.3;
+  }
+  .rmap-node-second .rmap-dot {
+    fill-opacity: 0.55;
+  }
+  .rmap-label-second {
+    font-size: 9px;
+    fill: var(--muted);
   }
   .rmap-dot {
     stroke: var(--surface);
@@ -6402,7 +6422,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "ab8f8d747d94",
+  "build_id": "f75e60a498d8",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6710,7 +6730,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "ab8f8d747d94";
+	var APP_BUILD_ID$1 = "f75e60a498d8";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7608,8 +7628,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "ab8f8d747d94").trim();
-		if (buildId && buildId !== "ab8f8d747d94") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "f75e60a498d8").trim();
+		if (buildId && buildId !== "f75e60a498d8") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -11303,7 +11323,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "ab8f8d747d94" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "f75e60a498d8" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {

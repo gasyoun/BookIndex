@@ -445,6 +445,171 @@
     return model.shared.get(`${a}|${b}`) || model.shared.get(`${b}|${a}`) || null;
   }
 
+  // ---------------------------------------------------------------------------
+  // Entity-centred half of the map (Phase V3 of docs/CLEANUP_AND_UI_ROADMAP.md):
+  // centre on one entity, first-degree links by default, expand on demand.
+  // Link data is REUSED, not re-derived — `cross_links` for typed relations and
+  // `semantic_links` for untyped neighbours.
+  // ---------------------------------------------------------------------------
+
+  function buildEntityIndex(data, bookId) {
+    const byHead = new Map();
+    for (let k = 0; k < ENTITY_KEYS.length; k += 1) {
+      const type = ENTITY_KEYS[k];
+      const items = asArray(data[type]);
+      for (let i = 0; i < items.length; i += 1) {
+        const item = items[i] || {};
+        const head = text(item.head);
+        if (!head) continue;
+        if (bookId && item.book_id && item.book_id !== bookId) continue;
+        if (byHead.has(head)) continue;
+        byHead.set(head, {
+          head,
+          type,
+          pages: asArray(item.page_list).map(Number).filter(Number.isFinite),
+          contexts: asArray(item.contexts),
+        });
+      }
+    }
+    return byHead;
+  }
+
+  function crossNeighbours(data, entity) {
+    const out = [];
+    const links = data.cross_links && typeof data.cross_links === 'object' ? data.cross_links : {};
+    const bySource = links[entity.type];
+    if (!bySource || typeof bySource !== 'object') return out;
+    Object.keys(bySource).forEach((targetType) => {
+      const mapping = bySource[targetType];
+      if (!mapping || typeof mapping !== 'object') return;
+      const rows = asArray(mapping[entity.head]);
+      for (let i = 0; i < rows.length; i += 1) {
+        const head = text(rows[i] && rows[i].head);
+        if (!head) continue;
+        const weight = Number(rows[i].weight);
+        out.push({
+          head,
+          type: targetType,
+          relation: 'cross',
+          weight: Number.isFinite(weight) ? weight : 0,
+        });
+      }
+    });
+    return out;
+  }
+
+  function semanticNeighbours(data, entity, index) {
+    const out = [];
+    const links = data.semantic_links && typeof data.semantic_links === 'object' ? data.semantic_links : {};
+    const rows = asArray(links[entity.head]);
+    for (let i = 0; i < rows.length; i += 1) {
+      const head = text(rows[i] && rows[i].head);
+      if (!head) continue;
+      const score = Number(rows[i].score);
+      const known = index.get(head);
+      out.push({
+        head,
+        type: known ? known.type : 'subject_index',
+        relation: 'semantic',
+        weight: Number.isFinite(score) ? score * 5 : 0,
+        shared: Number(rows[i].shared) || 0,
+      });
+    }
+    return out;
+  }
+
+  function neighboursOf(data, index, head, relation) {
+    const entity = index.get(head);
+    if (!entity) return [];
+    const rows = [];
+    if (relation === 'cross' || relation === 'all') rows.push(...crossNeighbours(data, entity));
+    if (relation === 'semantic' || relation === 'all') rows.push(...semanticNeighbours(data, entity, index));
+
+    const byHead = new Map();
+    for (let i = 0; i < rows.length; i += 1) {
+      const row = rows[i];
+      if (row.head === head) continue;
+      const prev = byHead.get(row.head);
+      if (!prev || row.weight > prev.weight) byHead.set(row.head, row);
+    }
+    const merged = Array.from(byHead.values());
+    merged.sort((a, b) => (b.weight - a.weight) || a.head.localeCompare(b.head, 'ru'));
+    return merged;
+  }
+
+  function buildEntityMap(data, index, chapterIndex, centreHead, relation, depth, breadth) {
+    const centre = index.get(centreHead);
+    if (!centre) return null;
+
+    const first = neighboursOf(data, index, centreHead, relation).slice(0, breadth);
+    const seen = new Set([centreHead]);
+    first.forEach((row) => seen.add(row.head));
+
+    const second = [];
+    if (depth >= 2) {
+      const perParent = Math.max(2, Math.round(breadth / 2));
+      for (let i = 0; i < first.length; i += 1) {
+        const parent = first[i];
+        const kids = neighboursOf(data, index, parent.head, relation)
+          .filter((row) => !seen.has(row.head))
+          .slice(0, perParent);
+        for (let j = 0; j < kids.length; j += 1) {
+          seen.add(kids[j].head);
+          second.push({ ...kids[j], parent: parent.head });
+        }
+      }
+    }
+
+    const chapters = new Map();
+    for (let i = 0; i < centre.pages.length; i += 1) {
+      const chapter = chapterForPage(chapterIndex, centre.pages[i]);
+      if (chapter && !chapters.has(chapter.index)) chapters.set(chapter.index, chapter);
+    }
+
+    const glossary = [];
+    const haystack = `${centre.head} ${centre.contexts.join(' ')}`.toLowerCase();
+    const terms = asArray(data.glossary);
+    for (let i = 0; i < terms.length; i += 1) {
+      const term = text(terms[i] && terms[i].term);
+      if (!term) continue;
+      if (haystack.indexOf(term.toLowerCase()) < 0) continue;
+      glossary.push({ term, definition: text(terms[i].definition) });
+    }
+
+    const videos = [];
+    const catalogue = asArray(data.video_catalog);
+    const seenVideo = new Set();
+    for (let i = 0; i < catalogue.length; i += 1) {
+      const video = catalogue[i] || {};
+      const id = text(video.id);
+      if (!id || seenVideo.has(id)) continue;
+      const related = asArray(video.related_entities);
+      let hit = null;
+      for (let j = 0; j < related.length; j += 1) {
+        if (text(related[j] && related[j].head) !== centre.head) continue;
+        hit = related[j];
+        break;
+      }
+      if (!hit) continue;
+      seenVideo.add(id);
+      videos.push({
+        id,
+        title: text(video.title) || id,
+        t: Number(hit.t) || 0,
+      });
+    }
+
+    return {
+      centre,
+      first,
+      second,
+      chapters: Array.from(chapters.values()).sort((a, b) => a.index - b.index),
+      glossary,
+      videos,
+      pages: centre.pages.slice().sort((a, b) => a - b),
+    };
+  }
+
   function svgEl(name, attrs) {
     const node = document.createElementNS(SVG_NS, name);
     const map = attrs || {};
@@ -510,13 +675,54 @@
     currentTop = Math.max(MIN_TOP, Math.min(MAX_TOP, Math.round(currentTop)));
     let showBridges = true;
 
+    const entityIndex = buildEntityIndex(data, model.bookId);
+    const chapterIndex = buildChapterIndex(data);
+    let currentMode = text(params.get('mode')) === 'entity' ? 'entity' : 'domain';
+    let currentEntity = text(params.get('entity'));
+    if (currentEntity && !entityIndex.has(currentEntity)) currentEntity = '';
+    if (!currentEntity) {
+      // Default centre: the most-mentioned entity of the widest domain, so the
+      // entity mode is never an empty screen.
+      const seed = model.domains
+        .slice()
+        .sort((a, b) => b.entityCount - a.entityCount)[0];
+      const candidates = seed ? seed.entities : [];
+      for (let i = 0; i < candidates.length; i += 1) {
+        if (entityIndex.has(candidates[i].head)) {
+          currentEntity = candidates[i].head;
+          break;
+        }
+      }
+    }
+    if (currentMode === 'entity' && !currentEntity) currentMode = 'domain';
+    let currentRelation = text(params.get('rel'));
+    if (['cross', 'semantic', 'all'].indexOf(currentRelation) < 0) currentRelation = 'all';
+    let currentDepth = Number(params.get('depth') || 1);
+    if (!Number.isFinite(currentDepth) || currentDepth < 1 || currentDepth > 2) currentDepth = 1;
+
+    const entityOptions = Array.from(entityIndex.keys()).sort((a, b) => a.localeCompare(b, 'ru'));
+
     const filtersHtml = [
-      '<label>Направление: <select data-role="rmap-domain">',
+      '<label>Центр: <select data-role="rmap-mode">',
+      `<option value="domain"${currentMode === 'domain' ? ' selected' : ''}>направление</option>`,
+      `<option value="entity"${currentMode === 'entity' ? ' selected' : ''}>сущность</option>`,
+      '</select></label>',
+      '<label data-role="rmap-domain-field">Направление: <select data-role="rmap-domain">',
       '<option value="all">Все направления</option>',
       ...model.domains.map((domain) => `<option value="${escape(domain.id)}">${escape(domain.title)}</option>`),
       '</select></label>',
+      '<label data-role="rmap-entity-field" hidden>Сущность: ',
+      `<input data-role="rmap-entity" list="rmap-entity-list" value="${escape(currentEntity)}" size="22">`,
+      `<datalist id="rmap-entity-list">${entityOptions.slice(0, 900).map((head) => `<option value="${escape(head)}"></option>`).join('')}</datalist>`,
+      '</label>',
+      '<label data-role="rmap-rel-field" hidden>Связи: <select data-role="rmap-rel">',
+      `<option value="all"${currentRelation === 'all' ? ' selected' : ''}>все</option>`,
+      `<option value="cross"${currentRelation === 'cross' ? ' selected' : ''}>cross_links</option>`,
+      `<option value="semantic"${currentRelation === 'semantic' ? ' selected' : ''}>semantic_links</option>`,
+      '</select></label>',
+      '<label data-role="rmap-depth-field" hidden><input data-role="rmap-depth" type="checkbox"> второй круг связей</label>',
       `<label>Сущностей: <input data-role="rmap-top" class="viz-input-narrow" type="number" min="${MIN_TOP}" max="${MAX_TOP}" step="1" value="${String(currentTop)}"></label>`,
-      '<label><input data-role="rmap-bridges" type="checkbox" checked> связи направлений</label>',
+      '<label data-role="rmap-bridges-field"><input data-role="rmap-bridges" type="checkbox" checked> связи направлений</label>',
       '<span data-role="rmap-summary" class="viz-note"></span>',
     ].join('');
 
@@ -559,8 +765,29 @@
     const domainSelect = container.querySelector('[data-role="rmap-domain"]');
     const topInput = container.querySelector('[data-role="rmap-top"]');
     const bridgesInput = container.querySelector('[data-role="rmap-bridges"]');
+    const modeSelect = container.querySelector('[data-role="rmap-mode"]');
+    const entityInput = container.querySelector('[data-role="rmap-entity"]');
+    const relSelect = container.querySelector('[data-role="rmap-rel"]');
+    const depthInput = container.querySelector('[data-role="rmap-depth"]');
+    const fields = {
+      domain: container.querySelector('[data-role="rmap-domain-field"]'),
+      entity: container.querySelector('[data-role="rmap-entity-field"]'),
+      rel: container.querySelector('[data-role="rmap-rel-field"]'),
+      depth: container.querySelector('[data-role="rmap-depth-field"]'),
+      bridges: container.querySelector('[data-role="rmap-bridges-field"]'),
+    };
 
     if (domainSelect) domainSelect.value = currentDomain;
+    if (depthInput) depthInput.checked = currentDepth >= 2;
+
+    function syncFieldVisibility() {
+      const entityMode = currentMode === 'entity';
+      if (fields.domain) fields.domain.hidden = entityMode;
+      if (fields.bridges) fields.bridges.hidden = entityMode;
+      if (fields.entity) fields.entity.hidden = !entityMode;
+      if (fields.rel) fields.rel.hidden = !entityMode;
+      if (fields.depth) fields.depth.hidden = !entityMode;
+    }
 
     function domainById(id) {
       for (let i = 0; i < model.domains.length; i += 1) {
@@ -745,6 +972,148 @@
       svg.appendChild(hub);
     }
 
+    function drawEntityMap(map) {
+      const cx = VIEW_W / 2;
+      const cy = VIEW_H / 2;
+      const outerRadius = currentDepth >= 2 ? 236 : 172;
+      const innerRadius = currentDepth >= 2 ? 118 : 172;
+      const positions = ringPositions(map.first.length, cx, cy, innerRadius);
+      const links = svgEl('g', { class: 'rmap-spokes' });
+      const nodes = svgEl('g', { class: 'rmap-nodes' });
+      const positionByHead = new Map();
+
+      for (let i = 0; i < map.first.length; i += 1) {
+        positionByHead.set(map.first[i].head, positions[i]);
+      }
+
+      if (currentDepth >= 2 && map.second.length) {
+        const outer = ringPositions(map.second.length, cx, cy, outerRadius);
+        for (let i = 0; i < map.second.length; i += 1) {
+          const row = map.second[i];
+          const pos = outer[i];
+          const parentPos = positionByHead.get(row.parent);
+          if (parentPos) {
+            links.appendChild(svgEl('line', {
+              x1: parentPos.x,
+              y1: parentPos.y,
+              x2: pos.x,
+              y2: pos.y,
+              class: 'rmap-spoke rmap-spoke-second',
+              'stroke-width': 1,
+            }));
+          }
+          const group = svgEl('g', { class: `rmap-node rmap-node-entity rmap-node-second rmap-node-${row.type}` });
+          const circle = svgEl('circle', {
+            cx: pos.x,
+            cy: pos.y,
+            r: 6,
+            class: `rmap-dot rmap-dot-entity rmap-dot-${row.type}`,
+          });
+          const title = svgEl('title');
+          title.textContent = `${row.head} — второй круг, через «${row.parent}»`;
+          circle.appendChild(title);
+          group.appendChild(circle);
+          appendLabel(group, pos.x, pos.y, pos.angle, clip(row.head, 16), 'rmap-label rmap-label-second');
+          bindNode(group, `${row.head} — сделать центром карты`, () => recentre(row.head));
+          nodes.appendChild(group);
+        }
+      }
+
+      for (let i = 0; i < map.first.length; i += 1) {
+        const row = map.first[i];
+        const pos = positions[i];
+        links.appendChild(svgEl('line', {
+          x1: cx,
+          y1: cy,
+          x2: pos.x,
+          y2: pos.y,
+          class: `rmap-spoke rmap-spoke-${row.relation}`,
+          'stroke-width': Math.max(1, Math.min(5, 1 + (row.weight / 3))),
+        }));
+
+        const group = svgEl('g', { class: `rmap-node rmap-node-entity rmap-node-${row.type}` });
+        const circle = svgEl('circle', {
+          cx: pos.x,
+          cy: pos.y,
+          r: Math.round(8 + Math.min(9, Math.sqrt(Math.max(0, row.weight)) * 2.6)),
+          class: `rmap-dot rmap-dot-entity rmap-dot-${row.type}`,
+        });
+        const title = svgEl('title');
+        title.textContent = row.relation === 'cross'
+          ? `${row.head} (${row.type}) — cross_links, вес ${row.weight.toFixed(2)}`
+          : `${row.head} — semantic_links, общих страниц ${String(row.shared || 0)}`;
+        circle.appendChild(title);
+        group.appendChild(circle);
+        appendLabel(group, pos.x, pos.y, pos.angle, clip(row.head, 20), 'rmap-label');
+        bindNode(group, `${row.head} — сделать центром карты`, () => recentre(row.head));
+        nodes.appendChild(group);
+      }
+
+      const hub = svgEl('g', { class: 'rmap-node rmap-node-hub' });
+      hub.appendChild(svgEl('circle', { cx, cy, r: 46, class: `rmap-dot rmap-dot-hub rmap-dot-${map.centre.type}` }));
+      const label = svgEl('text', { x: cx, y: cy + 4, 'text-anchor': 'middle', class: 'rmap-hub-label rmap-hub-label-small' });
+      label.textContent = clip(map.centre.head, 18);
+      hub.appendChild(label);
+      bindNode(hub, `${map.centre.head} — открыть карточку`, () => openEntityCard(map.centre.type, map.centre.head));
+
+      svg.appendChild(links);
+      svg.appendChild(nodes);
+      svg.appendChild(hub);
+    }
+
+    function entityDetailHtml(map) {
+      const relLabel = { all: 'все', cross: 'cross_links', semantic: 'semantic_links' };
+      return [
+        `<h4 class="rmap-detail-title">${escape(map.centre.head)}</h4>`,
+        `<p class="rmap-detail-note">Тип: ${escape(map.centre.type)} · связи: ${escape(relLabel[currentRelation] || currentRelation)} · круг: ${String(currentDepth)}. Клик по узлу переносит центр карты, клик по центру открывает карточку.</p>`,
+        '<ul class="rmap-metrics">',
+        `<li>первый круг: <strong>${String(map.first.length)}</strong></li>`,
+        `<li>второй круг: <strong>${String(map.second.length)}</strong></li>`,
+        `<li>страниц: <strong>${String(map.pages.length)}</strong></li>`,
+        `<li>видео: <strong>${String(map.videos.length)}</strong></li>`,
+        '</ul>',
+        `<p class="rmap-viz-link"><button type="button" class="rmap-link" data-entity-head="${escape(map.centre.head)}" data-entity-type="${escape(map.centre.type)}">открыть карточку «${escape(clip(map.centre.head, 40))}» →</button></p>`,
+        map.pages.length
+          ? [
+            '<h5 class="rmap-detail-subtitle">Страницы книги</h5>',
+            `<p class="rmap-muted">${escape(map.pages.slice(0, 24).join(', '))}${map.pages.length > 24 ? ' …' : ''}</p>`,
+          ].join('')
+          : '',
+        map.chapters.length
+          ? [
+            '<h5 class="rmap-detail-subtitle">Лекции и главы</h5>',
+            '<div class="rmap-chips">',
+            map.chapters.map((chapter) => `<button type="button" class="rmap-chip" data-chapter="${String(chapter.index)}">${escape(chapter.name)} <span class="rmap-muted">${String(chapter.start)}–${String(chapter.end)}</span></button>`).join(''),
+            '</div>',
+          ].join('')
+          : '',
+        map.glossary.length
+          ? [
+            '<h5 class="rmap-detail-subtitle">Термины глоссария</h5>',
+            '<div class="rmap-chips">',
+            map.glossary.slice(0, 8).map((row) => `<button type="button" class="rmap-chip" data-glossary="${escape(row.term)}">${escape(row.term)}</button>`).join(''),
+            '</div>',
+          ].join('')
+          : '',
+        map.first.length
+          ? [
+            '<h5 class="rmap-detail-subtitle">Первый круг связей</h5>',
+            '<div class="rmap-chips">',
+            map.first.slice(0, 14).map((row) => `<button type="button" class="rmap-chip rmap-chip-${escape(row.type)}" data-recentre="${escape(row.head)}">${escape(row.head)} <span class="rmap-muted">${row.relation === 'cross' ? row.weight.toFixed(1) : `≈${String(row.shared || 0)}`}</span></button>`).join(''),
+            '</div>',
+          ].join('')
+          : '',
+        map.videos.length
+          ? [
+            '<h5 class="rmap-detail-subtitle">Видео</h5>',
+            '<ul class="rmap-list">',
+            map.videos.slice(0, 4).map((video) => `<button type="button" class="rmap-link" data-video="${escape(video.id)}">${escape(clip(video.title, 80))}</button>${video.t ? `<span class="rmap-muted"> ▸ ${String(Math.floor(video.t / 60))}:${String(video.t % 60).padStart(2, '0')}</span>` : ''}`).map((row) => `<li>${row}</li>`).join(''),
+            '</ul>',
+          ].join('')
+          : '',
+      ].join('');
+    }
+
     function overviewDetailHtml() {
       const rows = model.domains.map((domain) => [
         '<tr>',
@@ -886,12 +1255,39 @@
           if (typeof root.openVideoDetail === 'function') root.openVideoDetail(id);
         };
       });
+      Array.from(detail.querySelectorAll('[data-recentre]')).forEach((btn) => {
+        btn.onclick = () => recentre(text(btn.dataset.recentre));
+      });
+      Array.from(detail.querySelectorAll('[data-glossary]')).forEach((btn) => {
+        btn.onclick = () => {
+          const term = text(btn.dataset.glossary);
+          if (!term) return;
+          if (typeof root.openGlossaryTerm === 'function') root.openGlossaryTerm(term);
+        };
+      });
+    }
+
+    function recentre(head) {
+      const target = text(head);
+      if (!target || !entityIndex.has(target)) return;
+      currentEntity = target;
+      currentMode = 'entity';
+      if (modeSelect) modeSelect.value = 'entity';
+      if (entityInput) entityInput.value = target;
+      syncFieldVisibility();
+      writeParams();
+      redraw();
     }
 
     function writeParams() {
       if (typeof root.writeVizParams !== 'function') return;
+      const entityMode = currentMode === 'entity';
       root.writeVizParams({
-        filter: currentDomain === 'all' ? null : currentDomain,
+        mode: entityMode ? 'entity' : null,
+        entity: entityMode ? currentEntity : null,
+        rel: entityMode && currentRelation !== 'all' ? currentRelation : null,
+        depth: entityMode && currentDepth > 1 ? currentDepth : null,
+        filter: entityMode || currentDomain === 'all' ? null : currentDomain,
         top: currentTop === DEFAULT_TOP ? null : currentTop,
       });
     }
@@ -899,6 +1295,27 @@
     function redraw() {
       if (!svg) return;
       while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+      if (currentMode === 'entity') {
+        const map = buildEntityMap(data, entityIndex, chapterIndex, currentEntity, currentRelation, currentDepth, currentTop);
+        if (!map) {
+          if (empty) empty.hidden = false;
+          if (detail) detail.innerHTML = '';
+          if (summary) summary.textContent = 'Сущность не найдена';
+          return;
+        }
+        drawEntityMap(map);
+        if (detail) {
+          detail.innerHTML = entityDetailHtml(map);
+          wireDetailActions();
+        }
+        if (summary) {
+          summary.textContent = `${map.first.length} связей 1-го круга · ${map.second.length} 2-го · ${map.videos.length} видео`;
+        }
+        if (empty) empty.hidden = !!map.first.length;
+        return;
+      }
+
       const domain = currentDomain === 'all' ? null : domainById(currentDomain);
       if (currentDomain !== 'all' && !domain) currentDomain = 'all';
 
@@ -941,6 +1358,45 @@
         redraw();
       };
     }
+    if (modeSelect) {
+      modeSelect.onchange = () => {
+        currentMode = text(modeSelect.value) === 'entity' ? 'entity' : 'domain';
+        if (currentMode === 'entity' && !entityIndex.has(currentEntity)) {
+          currentMode = 'domain';
+          modeSelect.value = 'domain';
+        }
+        syncFieldVisibility();
+        writeParams();
+        redraw();
+      };
+    }
+    if (entityInput) {
+      entityInput.onchange = () => {
+        const next = text(entityInput.value);
+        if (!entityIndex.has(next)) {
+          entityInput.value = currentEntity;
+          return;
+        }
+        currentEntity = next;
+        writeParams();
+        redraw();
+      };
+    }
+    if (relSelect) {
+      relSelect.onchange = () => {
+        const next = text(relSelect.value);
+        currentRelation = ['cross', 'semantic', 'all'].indexOf(next) >= 0 ? next : 'all';
+        writeParams();
+        redraw();
+      };
+    }
+    if (depthInput) {
+      depthInput.onchange = () => {
+        currentDepth = depthInput.checked ? 2 : 1;
+        writeParams();
+        redraw();
+      };
+    }
 
     if (shell && typeof shell.wireModuleChrome === 'function') {
       shell.wireModuleChrome(container, {
@@ -950,9 +1406,16 @@
           currentDomain = 'all';
           currentTop = DEFAULT_TOP;
           showBridges = true;
+          currentMode = 'domain';
+          currentRelation = 'all';
+          currentDepth = 1;
           if (domainSelect) domainSelect.value = 'all';
           if (topInput) topInput.value = String(DEFAULT_TOP);
           if (bridgesInput) bridgesInput.checked = true;
+          if (modeSelect) modeSelect.value = 'domain';
+          if (relSelect) relSelect.value = 'all';
+          if (depthInput) depthInput.checked = false;
+          syncFieldVisibility();
           writeParams();
           redraw();
         },
@@ -963,6 +1426,7 @@
       if (detail) detail.innerHTML = '';
     };
 
+    syncFieldVisibility();
     redraw();
   }
 
