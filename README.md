@@ -9,7 +9,7 @@ _Created: 14-04-2026 · Last updated: 30-07-2026_
 Проект эволюционировал из простого индекса в полноценную исследовательскую платформу для цифровых гуманитарных наук: единый автономный HTML-артефакт, корпусная навигация, KWIC-конкорданс, карты, графы и научный аппарат.
 
 - **Демо**: [gasyoun.github.io/BookIndex/index.html](https://gasyoun.github.io/BookIndex/index.html)
-- **Текущая версия**: 4.7.0 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)) — `v4.3.0` был первым тегированным релизом GitHub с `v4.2.0`, закрывающим треки A/B/C (авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) и цитируемую инфраструктуру (CITATION.cff/.zenodo.json); `v4.3.1` дописывает настоящий Zenodo DOI; `v4.4.0` — брейнсторм печатного спутника; `v4.5.0` — VIZ-08 «Исследовательская карта»; `v4.6.0` — её режим «Центр: сущность»; `v4.7.0` — Phase U4, верификационная обвязка маршрутов перед редизайном. Подробности — [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
+- **Текущая версия**: 4.8.0 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)) — `v4.3.0` был первым тегированным релизом GitHub с `v4.2.0`, закрывающим треки A/B/C (авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) и цитируемую инфраструктуру (CITATION.cff/.zenodo.json); `v4.3.1` дописывает настоящий Zenodo DOI; `v4.4.0` — брейнсторм печатного спутника; `v4.5.0` — VIZ-08 «Исследовательская карта»; `v4.6.0` — её режим «Центр: сущность»; `v4.7.0` — Phase U4, верификационная обвязка маршрутов перед редизайном; `v4.8.0` — палитра команд Ctrl+K. Подробности — [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
 - **Руководство для детей**: [KIDS_GUIDE_RU.md](https://github.com/gasyoun/BookIndex/blob/main/KIDS_GUIDE_RU.md)
 - **Лицензии**: код — [Apache License 2.0](https://github.com/gasyoun/BookIndex/blob/main/LICENSE); данные указателя — CC BY 4.0; цитаты из книг — с разрешения правообладателей ([LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md))
 - **Как цитировать**: см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (кнопка «Cite this repository» на GitHub) и раздел [«Как цитировать»](#как-цитировать) ниже
@@ -23,6 +23,7 @@ _Created: 14-04-2026 · Last updated: 30-07-2026_
 *   **PWA support**: manifest, service worker, offline shell cache and local vendor assets.
 *   **Vite smoke build**: Vite проверяет standalone-сборку и копирует deploy assets, но production contract остается `v3_template.html` + `v3_app.js`.
 *   **Persistent state**: настройки интерфейса, фильтры и выбранные режимы сохраняются локально.
+*   **Палитра команд (Ctrl+K / ⌘K)**: одно окно поверх интерфейса, из которого доступны все 24 маршрута навигации и 5 действий, включая смену плотности, недавно открытые записи и содержание указателя — набор с опечатками (подпоследовательность), стрелки, Enter, Esc.
 
 ### Поиск и анализ
 *   **Intellectual Search**: Поиск с учетом морфологии и семантических связей.
@@ -148,6 +149,7 @@ GitHub Release чеканит свой отдельный version DOI, указ�
 Подробнее — [LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md).
 
 ## История версий (Major Milestones)
+*   **v4.8.0**: Палитра команд (Ctrl+K / ⌘K) и быстрый переключатель (H1824): 24 маршрута навигации и 5 действий в одном окне, недавно открытые записи без запроса, содержание указателя тем же полем ввода; поиск по подпоследовательности, полная клавиатурная обвязка и `role="dialog"`/`aria-activedescendant`. Кнопка «⌘K» в шапке даёт тот же вход без клавиатуры.
 *   **v4.7.0**: Phase U4 — верификационная обвязка маршрутов перед редизайном интерфейса (H1823): восемь маршрутов дорожной карты проверяются на ширинах 1366×900 и 390×844 на переполнение, видимость и непересечение основных элементов управления, непустые поверхности отрисовки и нулевой бюджет ошибок консоли; скриншоты — артефакты для сравнения «до/после», плюс контрактный тест против расхождения обвязки и дорожной карты.
 *   **v4.6.0**: VIZ-08, второй центр карты — режим «Центр: сущность» (H1821): центр на любой сущности индекса, первый круг связей по умолчанию и второй по требованию, тип связей `cross_links` / `semantic_links`, обход графа кликом с воспроизводимой ссылкой (`mode`/`entity`/`rel`/`depth`).
 *   **v4.5.0**: VIZ-08 «Исследовательская карта» (H1821) — восьмой модуль визуализаций и первый интегративный: семь направлений исследовательской программы, каждое сводит свидетельства `scholar.*`, границы глав, сущности указателя и связанные видео; мостики по общим сущностям между направлениями. Версия синхронизирована по `package.json`/`CITATION.cff`/README.

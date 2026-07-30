@@ -120,6 +120,9 @@ test.describe('navigation architecture contract', () => {
 
   test('density control keeps Russian labels with stable internal values', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/home/home');
+    // Wait for initDensityMode()/wireGlobalUI(): selecting an option before the
+    // app booted fires change with no handler bound (H1824 — full-suite flake).
+    await expect(page.locator('body')).toHaveClass(/\bdensity-/);
     const density = page.locator('#density-select');
     await expect(density).toHaveAttribute('aria-label', 'Плотность интерфейса');
 

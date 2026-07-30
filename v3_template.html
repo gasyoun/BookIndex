@@ -276,6 +276,100 @@
     line-height: 1.4;
     padding: 10px 12px;
   }
+  .command-palette-btn {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--title);
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-family: inherit;
+    font-size: 11px;
+    min-height: 28px;
+    padding: 4px 7px;
+  }
+  .command-palette {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: none;
+  }
+  .command-palette.open { display: block; }
+  .command-palette[hidden] { display: none; }
+  .command-palette-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(40, 28, 12, 0.34);
+  }
+  .command-palette-panel {
+    position: relative;
+    margin: 8vh auto 0;
+    max-width: 560px;
+    width: calc(100% - 32px);
+    background: var(--surface, #fff);
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 6px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+  }
+  .command-palette-input {
+    border: 0;
+    border-bottom: 1px solid var(--line, #d4c8b0);
+    box-sizing: border-box;
+    display: block;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 11px 14px;
+    width: 100%;
+    background: var(--surface, #fff);
+    color: var(--title, #3a2a12);
+  }
+  .command-palette-input:focus { outline: 2px solid #c4b890; outline-offset: -2px; }
+  .command-palette-list {
+    max-height: 52vh;
+    overflow-y: auto;
+  }
+  .command-palette-group {
+    background: var(--surface-soft);
+    border-bottom: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 6px 12px 5px;
+    text-transform: uppercase;
+  }
+  .command-palette-group:first-child { border-top: 0; }
+  .command-palette-item {
+    align-items: baseline;
+    border-bottom: 1px solid #f0e8d8;
+    cursor: pointer;
+    display: flex;
+    font-size: 13px;
+    gap: 8px;
+    justify-content: space-between;
+    padding: 8px 12px;
+  }
+  .command-palette-item.active { background: #fff2d6; }
+  .command-palette-item:hover { background: #fff8e8; }
+  .command-palette-item-label { min-width: 0; overflow-wrap: anywhere; }
+  .command-palette-item-group {
+    color: var(--muted);
+    flex: 0 0 auto;
+    font-size: 10px;
+  }
+  .command-palette-empty {
+    color: var(--muted);
+    font-size: 12px;
+    padding: 12px;
+  }
+  .command-palette-hint {
+    background: var(--surface-soft);
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 10px;
+    padding: 6px 12px;
+  }
   .corpus-panel {
     height: 100%;
     overflow-y: auto;
@@ -6113,7 +6207,8 @@
     color: #fff;
   }
   .content, .mobile-card-sheet { background: var(--panel); }
-  .name-list, .card, .header-search-results, .filters input[type="text"], .task-result {
+  .name-list, .card, .header-search-results, .filters input[type="text"], .task-result,
+  .command-palette-panel, .command-palette-input {
     background: var(--surface);
     border-color: var(--line);
     color: var(--text);
@@ -6130,6 +6225,8 @@
     .title-group .home-link { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
     .title-group .back-btn { flex: 0 0 auto; }
     .header-search.header-search-inline { flex: 1 1 100%; max-width: 100%; }
+    .command-palette-panel { margin-top: 4vh; width: calc(100% - 20px); }
+    .command-palette-list { max-height: 60vh; }
     .header-tools { flex-direction: column; align-items: stretch; }
     .back-btn { align-self: flex-start; }
 
@@ -6347,6 +6444,7 @@
     <div class="header-search header-search-inline">
       <div class="header-search-controls">
         <input id="global-search" type="text" placeholder="Поиск по сайту…" />
+        <button class="command-palette-btn" id="command-palette-btn" type="button" aria-label="Палитра команд (Ctrl+K)" title="Палитра команд (Ctrl+K)">⌘K</button>
       </div>
       <div class="header-search-results" id="global-search-results"></div>
     </div>
@@ -6357,6 +6455,15 @@
 </header>
 
 <div class="content" id="content"></div>
+
+<div class="command-palette" id="command-palette" role="dialog" aria-modal="true" aria-label="Палитра команд" aria-hidden="true" hidden>
+  <div class="command-palette-backdrop" id="command-palette-backdrop"></div>
+  <div class="command-palette-panel">
+    <input class="command-palette-input" id="command-palette-input" type="text" autocomplete="off" placeholder="Куда перейти или что сделать…" aria-label="Команда или запрос" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="command-palette-list" />
+    <div class="command-palette-list" id="command-palette-list" role="listbox" aria-label="Команды и результаты"></div>
+    <div class="command-palette-hint">↑↓ — выбор · Enter — переход · Esc — закрыть</div>
+  </div>
+</div>
 
 <script id="app-data-json" type="application/json">
 __APP_DATA_JSON__

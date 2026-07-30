@@ -22,11 +22,13 @@ const budgets = [
   },
   {
     // Raised 2026-06-13 for corpus video links / KWIC; 2026-07-24 for H1604
-    // video detail card (+ ~6 KiB raw). Intended size with modest headroom.
+    // video detail card (+ ~6 KiB raw); 2026-07-30 for H1824 command palette
+    // (+27.8 KiB raw / +1.9 KiB gzip — nav/action registry, fuzzy scorer,
+    // palette renderer). Intended size with modest headroom.
     label: 'runtime script',
     path: 'v3_app.js',
-    maxBytes: 670_000,
-    maxGzipBytes: 156_000,
+    maxBytes: 700_000,
+    maxGzipBytes: 162_000,
   },
 ];
 

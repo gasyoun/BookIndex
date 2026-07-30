@@ -8,6 +8,9 @@ const { test, expect } = require('@playwright/test');
 test.describe('DOM render harden (C3 / H1607)', () => {
   test('global search marks query hits without interpreting HTML in heads', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/home/home');
+    // Wait for wireGlobalUI(): filling the input before the app booted leaves
+    // oninput unwired and no results ever open (H1824 — full-suite flake).
+    await expect(page.locator('#entity-switcher .entity-btn').first()).toBeVisible();
     const input = page.locator('#global-search');
     await input.fill('санскрит');
     const first = page.locator('#global-search-results.open .header-search-item').first();
