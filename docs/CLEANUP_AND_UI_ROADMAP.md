@@ -310,6 +310,34 @@ For each route:
 5. No empty chart canvas when data exists.
 6. Console-error budget: zero unexpected errors.
 
+**Status: shipped (H1823).** The harness is [tests/e2e/redesign-baseline.spec.js](https://github.com/gasyoun/BookIndex/blob/main/tests/e2e/redesign-baseline.spec.js) —
+17 tests (8 routes × desktop 1366×900 / mobile 390×844, plus one contract test that re-reads
+the route list out of this section and fails if the spec and the roadmap drift apart). Run it
+alone with `npm run check:redesign`; it is also picked up by `npm run check:e2e` because that
+walks the whole `tests/e2e` directory.
+
+Notes on how the six checks are implemented:
+
+1. Screenshots are full-page review **artifacts** written to `test-results/redesign-baseline/<route>--<viewport>.png`
+   (gitignored). They are deliberately *not* `toHaveScreenshot` pixel baselines: font
+   rasterisation differs between local Windows and CI Linux, so a committed baseline would
+   fail on every machine except the one that produced it. The regression gates are the
+   structural checks (3-6); the images exist so a human can eyeball a redesign diff.
+2. Overflow uses the same 8px sub-pixel tolerance as
+   [tests/e2e/navigation-architecture.spec.js](https://github.com/gasyoun/BookIndex/blob/main/tests/e2e/navigation-architecture.spec.js).
+3. "Non-overlapping" is a pairwise bounding-box intersection test over each route's declared
+   control selectors, with nested pairs excluded (a child legitimately sits inside its parent)
+   and a 2px shared-edge tolerance.
+4. "No empty chart canvas" means: every visibly sized `svg` must have child marks, every
+   visibly sized `canvas` must have non-transparent pixels (a tainted canvas — e.g. Leaflet
+   tiles — is skipped rather than failed), and each route's declared data surfaces must be
+   present, visible, and populated. Declared surfaces are **strict**: a selector that no
+   longer matches fails the test instead of silently skipping, so the check cannot rot into a
+   no-op. VIZ-03 renders DOM cards rather than SVG, so its surfaces are `.viz-card` + `.tl-wrap`,
+   and its shell empty state is asserted collapsed while data is present.
+5. The error budget listens to both `pageerror` and `console` errors. Only ServiceWorker
+   registration and offline-plumbing noise from the static test server is filtered out.
+
 ## Recommended first three PRs
 
 1. Documentation truth pass:
