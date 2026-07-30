@@ -4,12 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.5.0] - 2026-07-30
+
 ### Added
 - **VIZ-08 «Исследовательская карта» — восьмой модуль визуализаций, первый интегративный (Opus 5 (`claude-opus-5`), 30-07-2026, H1821):** [`scripts/viz/research-map.js`](https://github.com/gasyoun/BookIndex/blob/main/scripts/viz/research-map.js) собирает исследовательскую программу А. А. Зализняка в один экран — семь направлений (сравнительно-историческое языкознание, акцентология, берестяные грамоты, «Слово о полку Игореве», диалектология, морфология, против любительской лингвистики), каждое агрегирует четыре слоя данных: свидетельства из `scholar.*`, границы глав и страниц, сущности указателя и связанные видео из `video_catalog`. Остальные семь модулей показывают по одному срезу; этот показывает, как срезы сходятся. Обзор — концентратор с семью узлами (размер ∝ числу свидетельств) и пунктирными мостиками по общим сущностям; раскрытое направление — спутники-сущности с переходом в карточку. Панель справа ведёт к главам (`openLecturePage`), к видео (`openVideoDetail`), в смежные направления и в профильный модуль VIZ-01…07. Состояние в URL (`filter`, `top`), SVG-экспорт, полная обвязка `VizShell`. Замеры охвата и мостиков: [`RESULTS_LOG.md`](https://github.com/gasyoun/BookIndex/blob/main/RESULTS_LOG.md) § H1821.
 - Регрессионный набор [`tests/e2e/research-map.spec.js`](https://github.com/gasyoun/BookIndex/blob/main/tests/e2e/research-map.spec.js) (7 тестов: обзор, мостики, раскрытие с состоянием в URL, глубокая ссылка, сброс, переход в карточку, клик по сводной таблице) плюс `viz08` в контрактном [`tests/e2e/viz-shell.spec.js`](https://github.com/gasyoun/BookIndex/blob/main/tests/e2e/viz-shell.spec.js).
 
 ### Changed
 - Потолок gzip для `aaz-index.html` в [`scripts/check_performance_budget.mjs`](https://github.com/gasyoun/BookIndex/blob/main/scripts/check_performance_budget.mjs) поднят 180 000 → 186 000 B: предыдущий `main` уже занимал 179 435 B (99,7%), из-за чего любая новая панель ломала гейт независимо от своей цены. Стили VIZ-08 — ~871 B gzip.
+- Из дорожных карт вычеркнуты два устаревших пункта дрейфа (H1878, [PR #171](https://github.com/gasyoun/BookIndex/pull/171)): [`docs/DH_ROADMAP_2026.md`](https://github.com/gasyoun/BookIndex/blob/main/docs/DH_ROADMAP_2026.md), [`docs/CLEANUP_AND_UI_ROADMAP.md`](https://github.com/gasyoun/BookIndex/blob/main/docs/CLEANUP_AND_UI_ROADMAP.md).
+
+### Fixed
+- Версия синхронизирована по всем файлам: релиз `v4.4.0` был тегирован, но `package.json`, `CITATION.cff` и README остались на `4.3.1`. Теперь все три несут `4.5.0`, а `date-released` в `CITATION.cff` — дату этого релиза.
 
 ## [4.4.0] - 2026-07-29
 ### Added
