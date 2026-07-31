@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.10.1] - 2026-07-31
+
 ### Fixed
 - **Восстановлены утерянные открывающие кавычки в цитатах книги (Opus 5 1M (`claude-opus-5[1m]`), 31-07-2026, H2031, issue [#187](https://github.com/gasyoun/BookIndex/issues/187)):**
   шесть символов U+FFFD в `occurrences.mumintroll.contexts` (языки 72 и 98) заменены на `‘`
