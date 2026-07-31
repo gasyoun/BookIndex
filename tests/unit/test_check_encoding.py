@@ -115,6 +115,25 @@ class LossySignalTests(unittest.TestCase):
         self.assertTrue(ok)
         self.assertTrue(any("U+FFFD" in w for w in warnings))
 
+    def test_marker_silences_a_deliberate_occurrence(self):
+        marked = (
+            'if (head.includes("' + REPLACEMENT_CHAR + '")) flag(head);'
+            "  // encoding-guard: allow-ufffd\n"
+        )
+        ok, _, warnings = check_text(marked)
+        self.assertTrue(ok)
+        self.assertEqual(warnings, [])
+
+    def test_marker_is_per_line_not_per_file(self):
+        text = (
+            'if (head.includes("' + REPLACEMENT_CHAR + '")) flag(head);'
+            "  // encoding-guard: allow-ufffd\n"
+            "иное слово: " + REPLACEMENT_CHAR + "доска\n"
+        )
+        _, _, warnings = check_text(text)
+        self.assertTrue(warnings[0].startswith("1 U+FFFD"))
+        self.assertIn("line 2", warnings[0])
+
     def test_replacement_character_counted(self):
         text = REPLACEMENT_CHAR.join(["Словарь", "Зализняка", "1980"])
         _, _, warnings = check_text(text)

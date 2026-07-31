@@ -2,6 +2,38 @@
 
 _Created: 24-07-2026 · Last updated: 31-07-2026_
 
+## H2031 — KWIC lost-quote repair, issue #187 (2026-07-31)
+
+Follow-up to [H1482](#h1482--encoding-guard-mojibake-detector-redesign-2026-07-31): repairing the data defect the new detector found, then tightening CI to `--strict`.
+
+**Model:** Opus 5 1M (`claude-opus-5[1m]`).
+
+### Provenance — the first hypothesis was wrong
+
+| Claim (issue #187 as filed) | Verdict | Evidence |
+|---|---|---|
+| Corruption comes from the transcript pipeline | **Refuted** | `Rauhbank`/`Bratpfanne` appear in no file under `data/imports/` or `pipeline/` |
+| Contexts are lecture snippets | **Refuted** | they sit at `languages/*/occurrences/**mumintroll**/contexts` — book text, not lectures |
+| A point fix would return on regeneration | **Refuted** | present in `app_data.json` at the corpus's first commit `964283105` (14-04-2026); no in-repo path recreates them |
+| `src/content/*.md` is an upstream source | **Refuted** | it is an *export* of `app_data.json` (`scripts/export_app_data_to_markdown.mjs`) |
+
+So the data repair is complete, not a patch over a live source.
+
+### Repair
+
+| Location | U+FFFD before | After |
+|---|---:|---:|
+| `data/modules/13-languages.json` → `app_data.json` | 6 | 0 |
+| `src/content/nemetskiy.md` (export) | 4 | 0 |
+| `src/content/russkiy.md` (export) | 2 | 0 |
+| `v3_app.js` (deliberate, quality-queue check) | 1 | 1, now marked `allow-ufffd` |
+
+All six data occurrences had the identical shape `— <U+FFFD>текст’`: the closing `’` survived, the opening `‘` was lost. The corpus writes glosses as `‘…’` (32 left vs 98 right single quotes in `app_data.json`), so the replacement is determined, not guessed — and the repair script refused to touch anything not matching that shape.
+
+### Result
+
+`python scripts/check_encoding.py --strict` exits 0 on core files and on all docs, so **both CI encoding steps now run `--strict`** — U+FFFD is a hard error again everywhere except explicitly marked lines. 27/27 unit fixtures pass (two new ones cover the marker, including that it is per-line and not per-file). `runtime_test.py`, `validate_content.py`, `check:js`, `check:security:static`, `check:perf`, `check:ui` all pass; the content audit queue is unchanged. Typecheck and Playwright were not run locally (no `node_modules` in this environment) and are covered by CI.
+
 ## H1482 — encoding-guard mojibake detector redesign (2026-07-31)
 
 `scripts/check_encoding.py`'s two hardcoded regexes replaced by a round-trip detector (re-encode through each candidate legacy codec, look for runs of well-formed UTF-8). Context: the guard CI-gates merges, and the project ingests external text through Wikidata API, `.docx`/`.srt` transcripts and GitHub issue forms.

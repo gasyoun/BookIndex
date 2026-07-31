@@ -143,6 +143,11 @@ _MARKDOWN_SUFFIXES = {".md", ".markdown"}
 # would make the guard flag its own source).
 REPLACEMENT_CHAR = chr(0xFFFD)
 
+# A line carrying this marker may hold U+FFFD on purpose — the app's own quality
+# queue tests for the character, and that is not a defect. Per line, never
+# per file, so an unmarked occurrence elsewhere in the same file still reports.
+ALLOW_UFFFD_MARKER = "encoding-guard: allow-ufffd"
+
 
 class Finding(NamedTuple):
     codec: str
@@ -241,14 +246,22 @@ def check_text(
     if REPLACEMENT_CHAR in text:
         # U+FFFD is a *warning*, not a failure: legitimate code quotes it (the
         # app's own quality queue tests for it), so hard-failing here would
-        # block merges on correct source. Promote with --strict.
-        index = text.index(REPLACEMENT_CHAR)
-        line = text.count("\n", 0, index) + 1
-        snippet = text[max(0, index - 20) : index + 20]
-        warnings.append(
-            f"{text.count(REPLACEMENT_CHAR)} U+FFFD replacement character(s); "
-            f"first at line {line} near: {snippet!r}"
-        )
+        # block merges on correct source. Promote with --strict; silence a
+        # deliberate occurrence with the per-line marker.
+        hits = [
+            (number, line)
+            for number, line in enumerate(text.split("\n"), start=1)
+            if REPLACEMENT_CHAR in line and ALLOW_UFFFD_MARKER not in line
+        ]
+        if hits:
+            count = sum(line.count(REPLACEMENT_CHAR) for _, line in hits)
+            number, line = hits[0]
+            index = line.index(REPLACEMENT_CHAR)
+            snippet = line[max(0, index - 20) : index + 20]
+            warnings.append(
+                f"{count} U+FFFD replacement character(s); "
+                f"first at line {number} near: {snippet!r}"
+            )
 
     if "\x00" in text:
         return False, "contains NUL bytes", warnings
