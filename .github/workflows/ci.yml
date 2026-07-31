@@ -68,10 +68,10 @@ jobs:
         run: npm run check:perf
 
       - name: Encoding / mojibake check
-        run: python scripts/check_encoding.py
+        run: python scripts/check_encoding.py --strict
 
       - name: Encoding / mojibake check (docs)
-        run: python scripts/check_encoding.py README.md CLAUDE.md CHANGELOG.md CONTRIBUTING.md KIDS_GUIDE_RU.md docs/*.md
+        run: python scripts/check_encoding.py --strict README.md CLAUDE.md CHANGELOG.md CONTRIBUTING.md KIDS_GUIDE_RU.md docs/*.md
 
       - name: Python unit tests
         run: python -m unittest discover -s tests/unit -t .

@@ -6405,7 +6405,7 @@ var BookIndex = (function(exports) {
 					if (!itemsByHead.has(rawHead)) itemsByHead.set(rawHead, []);
 					itemsByHead.get(rawHead).push(item);
 				}
-				if (rawHead.startsWith("?") || rawHead.includes("�")) queues.suspicious_heads.push(createQualityQueueRecord("suspicious_heads", typeKey, item, "Заголовок начинается с ? или содержит символ замены.", { needsReview: item.needs_review === true }));
+				if (rawHead.startsWith("?") || rawHead.includes("�")) queues.suspicious_heads.push(createQualityQueueRecord("suspicious_heads", typeKey, item, "Заголовок начинается с ? или содержит символ замены.", { needsReview: item.needs_review === true })); // encoding-guard: allow-ufffd: the app tests for the character on purpose
 			}
 			for (const count of heads.values()) if (count > 1) totals.duplicateGroups += 1;
 			for (const [head, duplicates] of itemsByHead.entries()) {
