@@ -12,9 +12,10 @@ import re
 import subprocess
 import sys
 from dataclasses import dataclass
-from typing import Iterable, List
+from typing import TYPE_CHECKING, Iterable, List
 
-import requests
+if TYPE_CHECKING:  # `requests` is only needed to talk to the GitHub API.
+    import requests
 
 
 CYR_RE = re.compile(r"[\u0400-\u04FF]")
@@ -183,6 +184,11 @@ def analyze_issue_payload(
 
 
 def build_session(token: str) -> requests.Session:
+    # Imported here, not at module scope: the text checks below are pure and
+    # must stay importable (unit tests, CI) without the API dependency, which
+    # is not in requirements.txt.
+    import requests
+
     s = requests.Session()
     s.headers.update(
         {
