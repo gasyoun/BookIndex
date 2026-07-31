@@ -38,8 +38,15 @@
     const chapters = asArray(root.APP_DATA && root.APP_DATA.chapters);
     const params = typeof root.readVizParams === 'function' ? root.readVizParams() : new URLSearchParams();
     let currentTop = Number.isFinite(Number(topTerms)) ? Number(topTerms) : Number(params.get('top') || 15);
+    if (!Number.isFinite(currentTop)) currentTop = 15;
     if (currentTop < 5) currentTop = 5;
     if (currentTop > 30) currentTop = 30;
+    // Keep the URL honest: if the shared link carried an out-of-range top,
+    // write the clamped value back so copy-link reproduces this exact view.
+    if (params.get('top') && String(currentTop) !== String(params.get('top'))
+      && typeof root.writeVizParams === 'function') {
+      root.writeVizParams({ top: currentTop });
+    }
     let searchNeedle = String(params.get('filter') || '');
 
     const filtersHtml = [
@@ -236,6 +243,35 @@
       }
       const labelYByTerm = new Map(labelRows.map((row) => [row.term, Math.max(8, Math.min(innerH, row.rawY))]));
 
+      // Leader lines tie a collision-displaced label back to its line ending,
+      // so the anti-collision shift never orphans a label from its series.
+      const leaderData = [];
+      for (let i = 0; i < series.length; i += 1) {
+        const d = series[i];
+        const last = d.values[d.values.length - 1];
+        const labelY = labelYByTerm.get(d.term);
+        if (!last || !Number.isFinite(labelY)) continue;
+        const endY = y(last.rank);
+        if (Math.abs(labelY - endY) <= 7) continue;
+        leaderData.push({
+          term: d.term,
+          x1: x(last.chapterIndex) + 6,
+          y1: endY,
+          y2: labelY,
+          color: color(i),
+        });
+      }
+      const leaderSel = g.append('g').selectAll('line')
+        .data(leaderData)
+        .join('line')
+        .attr('x1', (d) => d.x1)
+        .attr('y1', (d) => d.y1)
+        .attr('x2', innerW + 4)
+        .attr('y2', (d) => d.y2)
+        .attr('stroke', (d) => d.color)
+        .attr('stroke-width', 1)
+        .attr('stroke-dasharray', '2 3');
+
       const labels = g.append('g').selectAll('text')
         .data(series)
         .join('text')
@@ -250,11 +286,13 @@
         lineSel.style('opacity', (d) => d.term === term ? 1 : 0.1);
         pointsSel.style('opacity', (d) => d.term === term ? 1 : 0.1);
         labels.style('opacity', (d) => d.term === term ? 1 : 0.15);
+        leaderSel.style('opacity', (d) => d.term === term ? 0.9 : 0.06);
       }
       function clearHighlight() {
         lineSel.style('opacity', 0.88);
         pointsSel.style('opacity', 0.9);
         labels.style('opacity', 1);
+        leaderSel.style('opacity', 0.55);
       }
       lineSel
         .on('mouseenter', (_, d) => highlight(d.term))

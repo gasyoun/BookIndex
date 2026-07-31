@@ -102,11 +102,29 @@
       pendingOpenTimer = null;
     }
 
+    // Compact era lanes: a header row per half-century keeps the grid
+    // comparable on desktop instead of one undifferentiated card soup.
+    function eraOf(year) {
+      return Math.floor(year / 50) * 50;
+    }
+    let lastEra = null;
+
     for (let i = 0; i < items.length; i += 1) {
       const item = items[i];
+      const era = eraOf(item.year);
+      if (era !== lastEra) {
+        lastEra = era;
+        const header = document.createElement('h4');
+        header.className = 'tl-era';
+        header.dataset.era = String(era);
+        header.textContent = `${era}–${era + 49}`;
+        if (wrap) wrap.appendChild(header);
+      }
+      item.era = era;
       const card = document.createElement('article');
       card.className = `tl-item tl-item-${item.type}`;
       card.dataset.type = item.type;
+      card.dataset.era = String(era);
       card.innerHTML = [
         `<div class="tl-year">${String(item.year)}</div>`,
         `<div class="tl-label">${String(item.label || '')}</div>`,
@@ -121,7 +139,9 @@
           clearPendingOpen();
           card.classList.add('tl-focus');
           try {
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const reduceMotion = typeof root.matchMedia === 'function'
+              && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            card.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
           } catch (e) {}
           pendingOpenTimer = setTimeout(() => {
             card.classList.remove('tl-focus');
@@ -148,12 +168,21 @@
       }
       const cards = Array.from(wrap ? wrap.querySelectorAll('.tl-item') : []);
       let visibleCount = 0;
+      const visibleByEra = {};
       for (let i = 0; i < cards.length; i += 1) {
         const card = cards[i];
         const type = String(card.dataset.type || '');
         const visible = !!enabled[type];
         card.hidden = !visible;
-        if (visible) visibleCount += 1;
+        if (visible) {
+          visibleCount += 1;
+          visibleByEra[String(card.dataset.era || '')] = true;
+        }
+      }
+      const eraHeaders = Array.from(wrap ? wrap.querySelectorAll('.tl-era') : []);
+      for (let i = 0; i < eraHeaders.length; i += 1) {
+        const header = eraHeaders[i];
+        header.hidden = !visibleByEra[String(header.dataset.era || '')];
       }
       if (empty) empty.hidden = !!visibleCount;
       if (typeof root.writeVizParams === 'function') {

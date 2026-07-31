@@ -178,7 +178,10 @@
         filtersHtml,
         bodyHtml: [
           '<div class="viz-svg-wrap">',
-          '  <svg id="viz-heatmap-svg" width="100%" height="760" viewBox="0 0 1260 760" preserveAspectRatio="xMidYMid meet"></svg>',
+          '  <div class="viz-heatmap-scroll">',
+          '    <svg id="viz-heatmap-labels" class="viz-heatmap-labels" width="270" height="760"></svg>',
+          '    <svg id="viz-heatmap-svg" width="990" height="760"></svg>',
+          '  </div>',
           '  <div id="viz-heatmap-tooltip" class="viz-tooltip viz-tooltip-floating" hidden></div>',
           '</div>',
         ].join(''),
@@ -188,7 +191,10 @@
         '<div class="viz-card viz-heatmap">',
         `  <div class="viz-toolbar">${filtersHtml}</div>`,
         '  <div class="viz-svg-wrap">',
-        '    <svg id="viz-heatmap-svg" width="100%" height="760" viewBox="0 0 1260 760" preserveAspectRatio="xMidYMid meet"></svg>',
+        '    <div class="viz-heatmap-scroll">',
+        '      <svg id="viz-heatmap-labels" class="viz-heatmap-labels" width="270" height="760"></svg>',
+        '      <svg id="viz-heatmap-svg" width="990" height="760"></svg>',
+        '    </div>',
         '    <div id="viz-heatmap-tooltip" class="viz-tooltip viz-tooltip-floating" hidden></div>',
         '  </div>',
         '</div>',
@@ -196,34 +202,41 @@
     }
 
     const svg = d3.select(container).select('#viz-heatmap-svg');
+    const labelSvg = d3.select(container).select('#viz-heatmap-labels');
+    const svgWrap = container.querySelector('.viz-svg-wrap');
     const tooltip = container.querySelector('#viz-heatmap-tooltip');
     const topNInput = container.querySelector('#viz-heatmap-topn');
     const topNLabel = container.querySelector('#viz-heatmap-topn-label');
 
-    const width = 1260;
+    // Fixed-pixel layout inside a horizontally scrollable pane: the label svg
+    // is position:sticky, so row labels stay readable while the matrix scrolls.
     const height = 760;
-    const margin = { top: 170, right: 24, bottom: 210, left: 270 };
-    const innerW = width - margin.left - margin.right;
+    const labelW = 270;
+    const margin = { top: 170, right: 24, bottom: 210 };
     const innerH = height - margin.top - margin.bottom;
     const dendroTopH = 120;
     const dendroLeftW = 120;
+    const cellW = 16;
+    const minInnerW = 680;
 
-    const rootG = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const rootG = svg.append('g').attr('transform', `translate(0,${margin.top})`);
     const cellsG = rootG.append('g').attr('class', 'cells');
     const xAxisG = rootG.append('g').attr('class', 'x-axis').attr('transform', `translate(0,${innerH})`);
-    const yAxisG = rootG.append('g').attr('class', 'y-axis');
+    const yAxisG = labelSvg.append('g').attr('class', 'y-axis')
+      .attr('transform', `translate(${labelW - 1},${margin.top})`);
     const topDendroG = svg.append('g').attr('class', 'top-dendrogram')
-      .attr('transform', `translate(${margin.left},${margin.top - dendroTopH - 12})`);
-    const leftDendroG = svg.append('g').attr('class', 'left-dendrogram')
-      .attr('transform', `translate(${margin.left - dendroLeftW - 12},${margin.top})`);
+      .attr('transform', `translate(0,${margin.top - dendroTopH - 12})`);
+    const leftDendroG = labelSvg.append('g').attr('class', 'left-dendrogram')
+      .attr('transform', `translate(${labelW - dendroLeftW - 12},${margin.top})`);
 
     function showTooltip(event, row) {
       if (!tooltip) return;
       tooltip.hidden = false;
-      tooltip.textContent = `Лекция ${row.chapterIndex + 1} · ${row.term} · Частота: ${row.value}`;
-      const hostRect = container.getBoundingClientRect();
-      const x = (event && Number.isFinite(event.clientX) ? event.clientX : hostRect.left) - hostRect.left + 8;
-      const y = (event && Number.isFinite(event.clientY) ? event.clientY : hostRect.top) - hostRect.top + 8;
+      tooltip.textContent = `${row.chapterName} · ${row.term} · частота: ${row.value}`;
+      const host = svgWrap || container;
+      const hostRect = host.getBoundingClientRect();
+      const x = (event && Number.isFinite(event.clientX) ? event.clientX : hostRect.left) - hostRect.left + 10;
+      const y = (event && Number.isFinite(event.clientY) ? event.clientY : hostRect.top) - hostRect.top + 10;
       tooltip.style.left = `${x}px`;
       tooltip.style.top = `${y}px`;
     }
@@ -303,6 +316,11 @@
       const state = buildState(topNValue);
       const orderedTerms = state.colOrder.map((idx) => state.terms[idx]);
       const orderedChapters = state.rowOrder.map((idx) => state.chapterNames[idx]);
+
+      // Real cell width instead of squeezing everything into one fixed frame:
+      // dense top-N settings grow the svg and scroll under the sticky labels.
+      const innerW = Math.max(minInnerW, orderedTerms.length * cellW);
+      svg.attr('width', innerW + margin.right).attr('height', height);
 
       const x = d3.scaleBand().domain(d3.range(orderedTerms.length)).range([0, innerW]).padding(0.04);
       const y = d3.scaleBand().domain(d3.range(orderedChapters.length)).range([0, innerH]).padding(0.04);
@@ -430,7 +448,24 @@
           redraw(currentTopN);
         },
         onExport: () => {
-          downloadSvg(container.querySelector('#viz-heatmap-svg'), 'viz-heatmap.svg');
+          // Compose the sticky label pane and the scrollable matrix into one
+          // svg so the export matches what the user sees, labels included.
+          const labelsNode = container.querySelector('#viz-heatmap-labels');
+          const matrixNode = container.querySelector('#viz-heatmap-svg');
+          if (!labelsNode || !matrixNode) return;
+          const matrixW = Number(matrixNode.getAttribute('width')) || minInnerW;
+          const combined = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          combined.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+          combined.setAttribute('width', String(labelW + matrixW));
+          combined.setAttribute('height', String(height));
+          const labelsG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          const matrixG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          matrixG.setAttribute('transform', `translate(${labelW},0)`);
+          labelsG.innerHTML = labelsNode.innerHTML;
+          matrixG.innerHTML = matrixNode.innerHTML;
+          combined.appendChild(labelsG);
+          combined.appendChild(matrixG);
+          downloadSvg(combined, 'viz-heatmap.svg');
         },
       });
     }

@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-CIDBf9Si5vm48RbGk8l234qPsl1t3Bg1vp343Gf0YqE=' 'sha256-FSmjp//Y/rd0QOAV9dOgAxSoL6jQgX0d3U4mzYVa1Zk='; worker-src 'self' blob:; style-src 'self' 'sha256-d4Ms9j3mUZO3RQnxfgXpNBtHQoCS8QQ8LFyd7wd4kXE='; style-src-elem 'self' 'sha256-d4Ms9j3mUZO3RQnxfgXpNBtHQoCS8QQ8LFyd7wd4kXE='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-pRZ97RADdUiUbCJ0yX3YbOnfkevMM+paiQjnQRiF2iA=' 'sha256-ALJaqMiYM60PkWVkRto7IuX4fQEOKBggYTr1ksOBgg4='; worker-src 'self' blob:; style-src 'self' 'sha256-w6lZNNvrtDqnZ1sW8iMwPsgAQLq3JKjeajGISds0AyE='; style-src-elem 'self' 'sha256-w6lZNNvrtDqnZ1sW8iMwPsgAQLq3JKjeajGISds0AyE='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -1126,6 +1126,24 @@
   }
   .viz-tooltip-floating {
     position: absolute;
+    font-size: 12px;
+    line-height: 1.45;
+    padding: 6px 9px;
+  }
+  .viz-heatmap-scroll {
+    overflow-x: auto;
+    display: flex;
+    align-items: flex-start;
+  }
+  .viz-heatmap-labels {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: var(--bg);
+    flex: 0 0 auto;
+  }
+  .viz-heatmap-scroll #viz-heatmap-svg {
+    flex: 0 0 auto;
   }
   /* VIZ-08 · исследовательская карта */
   /* `.viz-toolbar label` sets display:inline-flex, which outranks the [hidden]
@@ -6133,6 +6151,16 @@
   .tl-grid .tl-item::before {
     display: none;
   }
+  .tl-grid .tl-era {
+    grid-column: 1 / -1;
+    margin: 6px 0 0;
+    padding: 4px 2px 3px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
 
   .footer-meta {
     flex-shrink: 0;
@@ -6500,7 +6528,7 @@
         <button type="button" class="citation-tab-btn" data-style="chicago">Chicago</button>
       </div>
       <div class="citation-box-container">
-        <div class="citation-box" id="citation-widget-card-sta-box" aria-live="polite">Зализняк А. А. Справочная статья «sta-» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/sta/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/sta/</a> (дата обращения: 30.07.2026).</div>
+        <div class="citation-box" id="citation-widget-card-sta-box" aria-live="polite">Зализняк А. А. Справочная статья «sta-» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/sta/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/sta/</a> (дата обращения: 31.07.2026).</div>
         <button type="button" class="citation-copy-btn" id="citation-widget-card-sta-copy-btn">Копировать</button>
       </div>
     </div>
@@ -6520,7 +6548,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "be21a0dfdc28",
+  "build_id": "45088e295053",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6828,7 +6856,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "be21a0dfdc28";
+	var APP_BUILD_ID$1 = "45088e295053";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7726,8 +7754,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "be21a0dfdc28").trim();
-		if (buildId && buildId !== "be21a0dfdc28") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "45088e295053").trim();
+		if (buildId && buildId !== "45088e295053") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -11779,7 +11807,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "be21a0dfdc28" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "45088e295053" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
