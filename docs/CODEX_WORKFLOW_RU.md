@@ -102,7 +102,9 @@ python runtime_test.py            # infra/artifact contracts
 npm run check:security            # npm audit
 npm run check:security:static     # CSP/vendor/service-worker guard
 npm run check:perf                # size budgets
-python scripts/check_encoding.py  # Защита от битой кодировки
+python scripts/check_encoding.py  # Защита от битой кодировки (см. docs/ENCODING_GUARD.md)
+python scripts/check_encoding.py README.md CLAUDE.md docs/*.md   # то же для документации
+python -m unittest discover -s tests/unit -t .                   # питоновские юнит-тесты
 python scripts/validate_content.py app_data.json
 npm run check                     # typecheck + JS/UI + full Playwright
 ```

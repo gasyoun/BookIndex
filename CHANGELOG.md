@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- **Переработан детектор моджибейка (Opus 5 1M (`claude-opus-5[1m]`), 31-07-2026, H1482):**
+  [`scripts/check_encoding.py`](https://github.com/gasyoun/BookIndex/blob/main/scripts/check_encoding.py)
+  больше не ищет две захардкоженные сигнатуры (одна цепочка порчи). Теперь текст
+  перекодируется обратно каждым кандидатом-кодеком, и в потоке ищутся серии корректных
+  многобайтовых UTF-8-последовательностей: покрыты UTF-8 как CP1252/Latin-1, CP1251,
+  KOI8-R, CP866, Mac Cyrillic и двойное UTF-8-кодирование, в отчёт попадает
+  восстановленный исходный текст. Ловится порча, спрятанная в одной строке чистого
+  файла, — старые сигнатуры её пропускали. U+FFFD понижен до предупреждения (легальный
+  код цитирует символ намеренно), `--strict` возвращает жёсткое падение, `--warn-only`
+  даёт неблокирующий прогон. Markdown сканируется с вырезанными код-спанами, поэтому
+  документация может приводить битый текст как пример — закрыт пункт 4 фазы D2 дорожной
+  карты. Калибровка: ноль ложных срабатываний на 5592 закоммиченных файлах. `ftfy`
+  рассмотрена и отклонена по замеру (пропускает KOI8-R, CP866, Mac Cyrillic).
+  Метод и пороги — [`docs/ENCODING_GUARD.md`](https://github.com/gasyoun/BookIndex/blob/main/docs/ENCODING_GUARD.md),
+  таблицы — [`RESULTS_LOG.md`](https://github.com/gasyoun/BookIndex/blob/main/RESULTS_LOG.md).
+- [`tests/unit/test_check_encoding.py`](https://github.com/gasyoun/BookIndex/blob/main/tests/unit/test_check_encoding.py) —
+  25 фикстур на каждый класс порчи плюс негативные примеры из реального текста проекта.
+  Добавлены `tests/__init__.py` и `tests/unit/__init__.py`: без них питоновские
+  юнит-тесты не запускались вовсе. Два новых шага CI — проверка кодировки документации и
+  `python -m unittest discover`.
+
 ## [4.9.0] - 2026-07-31
 
 ### Changed
