@@ -44,6 +44,11 @@
     });
     const mapId = `viz-century-map-${Date.now()}-${Math.floor(Math.random() * 1e5)}`;
 
+    const reduceMotionQuery = typeof root.matchMedia === 'function'
+      ? root.matchMedia('(prefers-reduced-motion: reduce)')
+      : null;
+    const prefersReducedMotion = () => !!(reduceMotionQuery && reduceMotionQuery.matches);
+
     const params = typeof root.readVizParams === 'function' ? root.readVizParams() : new URLSearchParams();
     let currentCentury = Number(params.get('century') || 21);
     if (!Number.isFinite(currentCentury) && entities.length) {
@@ -60,6 +65,7 @@
       `  <span id="viz-century-label">${String(currentCentury)}</span>`,
       '</label>',
       '<span id="viz-century-count" class="viz-muted"></span>',
+      '<span id="viz-century-motion-note" class="viz-muted" hidden>автопоказ выключен: включено уменьшение анимации</span>',
     ].join('');
     const viewHtml = '<button type="button" id="viz-century-play" class="viz-action-btn" aria-pressed="false">Play</button>';
 
@@ -86,6 +92,7 @@
     const label = container.querySelector('#viz-century-label');
     const playBtn = container.querySelector('#viz-century-play');
     const countEl = container.querySelector('#viz-century-count');
+    const motionNote = container.querySelector('#viz-century-motion-note');
     const canvas = container.querySelector('.viz-map-canvas');
     const map = root.L.map(mapId, { preferCanvas: true }).setView([46, 28], 3);
     const layer = root.L.layerGroup().addTo(map);
@@ -167,6 +174,7 @@
 
     function startAutoplay() {
       if (autoplayTimer) return;
+      if (motionNote) motionNote.hidden = true;
       if (playBtn) {
         playBtn.textContent = 'Pause';
         playBtn.setAttribute('aria-pressed', 'true');
@@ -218,11 +226,30 @@
     }
 
     redraw(currentCentury);
-    writeCenturyParams(params.get('autoplay') === '1');
-    if (params.get('autoplay') === '1') startAutoplay();
+    // Autoplay auto-resume from URL is a "surprise motion" under reduced motion:
+    // honour prefers-reduced-motion by never self-starting — only an explicit
+    // Play click starts the tour there.
+    const wantsAutoplay = params.get('autoplay') === '1';
+    if (wantsAutoplay && !prefersReducedMotion()) {
+      startAutoplay();
+    } else {
+      writeCenturyParams(false);
+      if (wantsAutoplay && motionNote) motionNote.hidden = false;
+    }
     setTimeout(() => {
       try { map.invalidateSize(); } catch (e) {}
     }, 0);
+
+    const onMotionChange = () => {
+      if (!prefersReducedMotion()) return;
+      if (autoplayTimer) {
+        stopAutoplay(true);
+        if (motionNote) motionNote.hidden = false;
+      }
+    };
+    if (reduceMotionQuery && typeof reduceMotionQuery.addEventListener === 'function') {
+      reduceMotionQuery.addEventListener('change', onMotionChange);
+    }
 
     const onVisibility = () => {
       if (document.hidden) {
@@ -234,6 +261,9 @@
     document.addEventListener('visibilitychange', onVisibility);
     container.__vizCleanup = () => {
       document.removeEventListener('visibilitychange', onVisibility);
+      if (reduceMotionQuery && typeof reduceMotionQuery.removeEventListener === 'function') {
+        reduceMotionQuery.removeEventListener('change', onMotionChange);
+      }
       stopAutoplay(false);
       try { map.remove(); } catch (e) {}
     };

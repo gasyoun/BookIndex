@@ -100,6 +100,31 @@
       return asArray(cache.coGraphByLecture && cache.coGraphByLecture[currentLectureId]);
     }
 
+    function maxEdgeWeight(raw) {
+      let max = 0;
+      for (let i = 0; i < raw.length; i += 1) {
+        const w = Number((raw[i] || {}).weight || 0);
+        if (Number.isFinite(w) && w > max) max = w;
+      }
+      return max;
+    }
+
+    // A min-weight above the heaviest edge of the current lecture can only
+    // produce an empty graph — clamp instead, so users always see real
+    // relationships first and refine from there.
+    let clampedNote = '';
+    function clampMinWeight() {
+      const maxW = maxEdgeWeight(getRawEdges());
+      clampedNote = '';
+      if (minInput && maxW >= 1) minInput.max = String(maxW);
+      if (maxW >= 1 && currentMinWeight > maxW) {
+        currentMinWeight = maxW;
+        if (minInput) minInput.value = String(maxW);
+        clampedNote = ` · порог снижен до ${maxW}, выше граф пуст`;
+        writeParams();
+      }
+    }
+
     function buildGraph() {
       const raw = getRawEdges();
       const links = [];
@@ -133,10 +158,11 @@
 
     function redraw() {
       stopSimulation();
+      clampMinWeight();
       const graph = buildGraph();
       svg.selectAll('*').remove();
 
-      if (summary) summary.textContent = `Узлов: ${graph.nodes.length} · Рёбер: ${graph.links.length}`;
+      if (summary) summary.textContent = `Узлов: ${graph.nodes.length} · Рёбер: ${graph.links.length}${clampedNote}`;
       if (empty) empty.hidden = !!(graph.nodes.length && graph.links.length);
 
       if (!graph.nodes.length || !graph.links.length) {

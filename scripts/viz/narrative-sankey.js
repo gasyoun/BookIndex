@@ -38,6 +38,8 @@
     const counter = asArray(payload && payload.counterarguments);
     if (!args.length) return null;
 
+    // No silent fallback to args[0]: an unmatched node is PARTIAL data and
+    // must look partial, not borrow the first argument's text.
     function findArgument(needles) {
       for (let i = 0; i < args.length; i += 1) {
         const name = String(args[i].name || '').toLowerCase();
@@ -45,7 +47,7 @@
           if (name.indexOf(needles[k]) >= 0) return args[i];
         }
       }
-      return args[0] || null;
+      return null;
     }
 
     const nodes = [
@@ -81,7 +83,18 @@
       coherence: findArgument(['согласован']),
       verdict: { detail: String(payload.verdict || ''), page: '' },
     };
-    return { nodes, links, detailsByNode, argsCount: args.length, counterCount: counter.length };
+    let missingCount = 0;
+    for (let i = 0; i < nodes.length; i += 1) {
+      if (!detailsByNode[nodes[i].id]) missingCount += 1;
+    }
+    return {
+      nodes,
+      links,
+      detailsByNode,
+      argsCount: args.length,
+      counterCount: counter.length,
+      missingCount,
+    };
   }
 
   function renderNarrativeSankey(container) {
@@ -153,7 +166,14 @@
 
     function renderDetail(node, detailsByNode) {
       if (!detail) return;
-      const data = detailsByNode[node.id] || {};
+      const data = detailsByNode[node.id];
+      if (!data) {
+        detail.innerHTML = [
+          `<h4>${node.label}</h4>`,
+          '<p>Для этого узла в данных лекции нет отдельного аргумента — источник не привязан.</p>',
+        ].join('');
+        return;
+      }
       const text = String(data.detail || data.context || 'Описание отсутствует.');
       const page = String(data.page || '');
       const href = pageToUrl(data.url || page);
@@ -182,7 +202,12 @@
         return;
       }
 
-      if (meta) meta.textContent = `Аргументы: ${diagram.argsCount} · Контраргументы: ${diagram.counterCount}`;
+      if (meta) {
+        const partial = diagram.missingCount
+          ? ` · данные частичны: без источника ${diagram.missingCount} из ${diagram.nodes.length} узлов`
+          : '';
+        meta.textContent = `Аргументы: ${diagram.argsCount} · Контраргументы: ${diagram.counterCount}${partial}`;
+      }
 
       const nodeById = new Map(diagram.nodes.map((n) => [n.id, n]));
       const nodeW = 150;
@@ -215,17 +240,21 @@
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', (d) => 5 + d.value * 2.2);
 
-      linksSel.each(function animatePath() {
-        const path = this;
-        const len = path.getTotalLength ? path.getTotalLength() : 0;
-        d3.select(path)
-          .attr('stroke-dasharray', `${len} ${len}`)
-          .attr('stroke-dashoffset', len)
-          .transition()
-          .duration(600)
-          .ease(d3.easeCubicOut)
-          .attr('stroke-dashoffset', 0);
-      });
+      const reduceMotion = typeof root.matchMedia === 'function'
+        && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduceMotion) {
+        linksSel.each(function animatePath() {
+          const path = this;
+          const len = path.getTotalLength ? path.getTotalLength() : 0;
+          d3.select(path)
+            .attr('stroke-dasharray', `${len} ${len}`)
+            .attr('stroke-dashoffset', len)
+            .transition()
+            .duration(600)
+            .ease(d3.easeCubicOut)
+            .attr('stroke-dashoffset', 0);
+        });
+      }
 
       const nodeG = svg.append('g')
         .selectAll('g')
@@ -239,7 +268,15 @@
         .attr('width', nodeW)
         .attr('height', nodeH)
         .attr('rx', 8)
-        .attr('fill', (d) => d.color);
+        .attr('fill', (d) => d.color)
+        .attr('fill-opacity', (d) => (diagram.detailsByNode[d.id] ? 1 : 0.55))
+        .attr('stroke', (d) => (diagram.detailsByNode[d.id] ? 'none' : 'var(--line-strong)'))
+        .attr('stroke-dasharray', (d) => (diagram.detailsByNode[d.id] ? null : '5 4'));
+
+      nodeG.append('title')
+        .text((d) => (diagram.detailsByNode[d.id]
+          ? d.label
+          : `${d.label} — нет привязанного источника`));
 
       nodeG.append('text')
         .attr('x', 10)

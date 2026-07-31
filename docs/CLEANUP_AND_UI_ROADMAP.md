@@ -219,6 +219,11 @@ Acceptance checks:
 
 ### Phase V2 - Improve individual modules
 
+Status: **done (H1822)** — all seven rows implemented in `scripts/viz/*.js`
+(reduced-motion-safe autoplay, min-weight clamp, era lanes, sticky heatmap
+labels + combined export, honest partial-data sankey state, chord top-N/family
+filters with stable colours, bump-chart leader lines + clamped URL state).
+
 | Module | Cleanup target | UX outcome |
 |---|---|---|
 | VIZ-01 map timeline | Make autoplay/reset state explicit and resilient to reduced motion. | The map can be explored as a time story without surprise motion. |
