@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.10.0] - 2026-07-31
+
 ### Added
 - **Переработан детектор моджибейка (Opus 5 1M (`claude-opus-5[1m]`), 31-07-2026, H1482):**
   [`scripts/check_encoding.py`](https://github.com/gasyoun/BookIndex/blob/main/scripts/check_encoding.py)
