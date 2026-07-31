@@ -64,7 +64,9 @@ python runtime_test.py                    # infrastructure/artifact smoke
 npm run check:security                    # dependency audit
 npm run check:security:static             # CSP/vendor/SW guard
 npm run check:perf                        # artifact size budgets
-python scripts/check_encoding.py          # mojibake / encoding guard
+python scripts/check_encoding.py          # mojibake / encoding guard (docs/ENCODING_GUARD.md)
+python scripts/check_encoding.py README.md CLAUDE.md docs/*.md   # same guard over docs
+python -m unittest discover -s tests/unit -t .                   # Python unit tests
 python scripts/validate_content.py app_data.json
 npm run check                             # typecheck + JS/UI guards + full Playwright suite
 ```

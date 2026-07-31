@@ -1,6 +1,48 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 30-07-2026_
+_Created: 24-07-2026 · Last updated: 31-07-2026_
+
+## H1482 — encoding-guard mojibake detector redesign (2026-07-31)
+
+`scripts/check_encoding.py`'s two hardcoded regexes replaced by a round-trip detector (re-encode through each candidate legacy codec, look for runs of well-formed UTF-8). Context: the guard CI-gates merges, and the project ingests external text through Wikidata API, `.docx`/`.srt` transcripts and GitHub issue forms.
+
+**Model:** Opus 5 1M (`claude-opus-5[1m]`).
+
+### Coverage vs. the old detector and vs. ftfy 6.3.1
+
+Fixtures corrupt the same Russian sentence through each codec; ftfy column is `ftfy.badness.is_bad` measured locally.
+
+| Corruption class | Old (2 regexes) | ftfy 6.3.1 | New detector |
+|---|---|---|---|
+| UTF-8 as CP1252 / Latin-1 | caught | caught | caught |
+| UTF-8 as CP1251 | missed | caught | caught |
+| UTF-8 as KOI8-R | missed | **missed** | caught |
+| UTF-8 as CP866 | missed | **missed** | caught |
+| UTF-8 as Mac Cyrillic | missed | **missed** | caught |
+| Double UTF-8 encoding | missed | caught | caught |
+| U+FFFD (lossy) | missed | caught | warns (`--strict` fails) |
+| Invalid UTF-8 / NUL | caught | n/a | caught |
+| Corruption buried in one line of a clean file | missed | n/a | caught |
+
+### False-positive calibration (committed corpus, 5592 files)
+
+`app_data.json`, `data/modules/*.json`, built artifacts, `README.md`, `docs/**/*.md`.
+
+| Configuration | `MIN_RUN`=2 | `MIN_RUN`=3 | `MIN_RUN`=4 |
+|---|---:|---:|---:|
+| Without script-plausibility filter | 9 | 9 | 1 |
+| With filter (shipped) | **0** | **0** | **0** |
+
+All false positives were the same accident: ordinary Russian words ("углубляем", "принудительно") whose CP866 bytes form valid UTF-8 and "recover" as CJK. Requiring the recovery to land in Latin/Greek/Cyrillic removes exactly that class. Scan cost with the filter: ~18 s for all 5592 files, ~0.4 s for the three CI core files.
+
+### Real defect found by the new signal
+
+| File | Count | Nature |
+|---|---:|---|
+| `v3_app.js` (and 700+ prerendered pages) | 1 | Intentional — the app's own quality queue tests for U+FFFD. Not a defect. |
+| `app_data.json` / `data/modules/13-languages.json` | 6 | **Genuine data loss**: opening quote `‘` dropped from KWIC lecture snippets (closing `’` still present). Originated upstream in the transcript pipeline. Tracked separately. |
+
+Verification: 25/25 unit fixtures pass; `python scripts/check_encoding.py` exits 0 on core files and on all docs; seven end-to-end injection cases (five whole-file codecs, one buried line, invalid UTF-8) all fail as expected while the untouched control passes.
 
 ## H1821b — VIZ-08, режим «Центр: сущность»: добор до спецификации Phase V3 (2026-07-30)
 
