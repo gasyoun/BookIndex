@@ -29,7 +29,7 @@ video_catalog[]:
   related_entities[]  // { head, type, t?, src? }
 ```
 
-**Dedup policy (D8):** `getDedupedVideoCatalog` keeps one row per `id` (richest `related_entities`). Dropped titles → GitHub `data-error` issues, not silent loss forever.
+**Dedup policy (D8):** Source catalog must already be unique-id (H2122 collapsed 191→175). Runtime `getDedupedVideoCatalog` still keeps one row per `id` (richest `related_entities`) as defence-in-depth. Dropped titles → GitHub `area:data` issues, not silent loss forever. CI: `validate_video_catalog` in `validate_content.py`.
 
 **Join to pipeline:** optional by YouTube id for theme/stage badges; never block gallery if pipeline file missing.
 

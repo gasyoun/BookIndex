@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+- **V0 video_catalog id collisions (H2122, Grok 4.5 (`grok-4.5`)):** three YouTube ids (`Tz3T7IxsbLU`, `xIoXVxahvDY`, `cJp5ZrnGivw`) held 6–8 distinct seminar titles each (191 raw → 175 unique). Catalog collapsed to one survivor per id (richest `related_entities`, first-on-ties — same as `getDedupedVideoCatalog`); 16 dropped titles tracked in a data-error GitHub issue. No invented URLs.
+
+### Added
+- **CI guard for video ids (H2122):** `validate_video_catalog` in `scripts/validate_content.py` fails on duplicate `video_catalog[].id` or id≠YouTube-url extract; unit tests in `tests/unit/test_validate_video_catalog.py`. One-shot census: `scripts/dedupe_video_catalog_v0.py` + `docs/history/H2122_video_catalog_collision_census.json`.
+
 ## [4.10.1] - 2026-07-31
 
 ### Fixed

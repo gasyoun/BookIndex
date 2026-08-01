@@ -4,11 +4,15 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 import unicodedata
 from collections import Counter
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qs, urlparse
+
+YOUTUBE_ID_RE = re.compile(r"^[A-Za-z0-9_-]{6,}$")
 
 
 ENTITY_KEYS = (
@@ -814,6 +818,89 @@ def validate_context_entry_pack(data_path: Path, errors: list[str]) -> None:
                 fail("[context_pack] markdown checklist missing context-key template rows", errors)
 
 
+def extract_youtube_id_from_url(url: str) -> str | None:
+    """Extract a YouTube video id from common watch / short / embed URL shapes."""
+    raw = (url or "").strip()
+    if not raw:
+        return None
+    try:
+        parsed = urlparse(raw)
+    except ValueError:
+        return None
+    host = (parsed.netloc or "").lower()
+    if host.startswith("www."):
+        host = host[4:]
+    if host.startswith("m."):
+        host = host[2:]
+
+    if host in {"youtu.be"}:
+        candidate = (parsed.path or "").lstrip("/").split("/")[0]
+        return candidate if YOUTUBE_ID_RE.match(candidate) else None
+
+    if host.endswith("youtube.com") or host.endswith("youtube-nocookie.com"):
+        path = parsed.path or ""
+        parts = [p for p in path.split("/") if p]
+        if parts and parts[0] in {"embed", "shorts", "v"} and len(parts) >= 2:
+            candidate = parts[1]
+            return candidate if YOUTUBE_ID_RE.match(candidate) else None
+        qs = parse_qs(parsed.query)
+        values = qs.get("v") or []
+        if values:
+            candidate = values[0]
+            return candidate if YOUTUBE_ID_RE.match(candidate) else None
+    return None
+
+
+def validate_video_catalog(data: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
+    """Enforce unique video_catalog ids and id↔YouTube-url match (H2122 V0)."""
+    catalog = data.get("video_catalog")
+    if catalog is None:
+        return
+    if not isinstance(catalog, list):
+        fail("[video_catalog] must be a list", errors)
+        return
+
+    seen_ids: dict[str, list[int]] = {}
+    for i, row in enumerate(catalog):
+        if not isinstance(row, dict):
+            fail(f"[video_catalog][{i}] must be an object", errors)
+            continue
+        url = row.get("url")
+        vid = row.get("id")
+        url_s = url.strip() if isinstance(url, str) else ""
+        id_s = vid.strip() if isinstance(vid, str) else ""
+
+        if not url_s:
+            warn(f"[video_catalog][{i}] missing url (title={row.get('title')!r})", warnings)
+            continue
+
+        if not id_s:
+            fail(f"[video_catalog][{i}] non-empty url requires non-empty id", errors)
+            continue
+
+        seen_ids.setdefault(id_s, []).append(i)
+
+        extracted = extract_youtube_id_from_url(url_s)
+        if extracted is None:
+            fail(
+                f"[video_catalog][{i}] id={id_s!r}: could not extract YouTube id from url={url_s!r}",
+                errors,
+            )
+        elif extracted != id_s:
+            fail(
+                f"[video_catalog][{i}] id={id_s!r} does not match YouTube id {extracted!r} in url",
+                errors,
+            )
+
+    for vid, indexes in sorted(seen_ids.items()):
+        if len(indexes) > 1:
+            fail(
+                f"[video_catalog] duplicate id {vid!r} at rows {indexes} "
+                f"(count={len(indexes)}; survivor policy requires unique ids)",
+                errors,
+            )
+
+
 def validate_readme_audit_summary(data_path: Path, errors: list[str]) -> None:
     readme_path = data_path.parent / "README.md"
     queue_path = data_path.parent / "tests" / "index-audit-queue.json"
@@ -877,6 +964,7 @@ def main() -> int:
     validate_manual_audit_queue(path, errors, warnings)
     validate_context_entry_pack(path, errors)
     validate_readme_audit_summary(path, errors)
+    validate_video_catalog(data, errors, warnings)
 
     print("validate_content.py report")
     print(f"- file: {path}")
