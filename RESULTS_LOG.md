@@ -2,6 +2,38 @@
 
 _Created: 24-07-2026 · Last updated: 01-08-2026_
 
+## H2122 — V0 video_catalog unique ids (2026-08-01)
+
+**Model:** Grok 4.5 (`grok-4.5`) — override dual-run of Sonnet-locked handoff; residual compare handoff minted for Sonnet.  
+**Handoff:** [H2122](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2122-Sonnet_BookIndex_video-catalog-id-collisions-v0_01.08.26.md)
+
+### Census → after survivor collapse
+
+| Metric | Before | After |
+| --- | ---: | ---: |
+| `video_catalog` rows | 191 | **175** |
+| Unique YouTube ids | 175 | **175** |
+| Collision groups | 3 | **0** |
+| Titles dropped (D8 issues) | — | **16** |
+
+### Survivors (richest `related_entities`; first wins on ties — matches `getDedupedVideoCatalog`)
+
+| YouTube id | Survivor title kept |
+| --- | --- |
+| `Tz3T7IxsbLU` | Зализняк. История русского ударения 16 10 29 семинар 08 |
+| `xIoXVxahvDY` | Зализняк. История русского ударения. 06.05.2017. Семинар 26 |
+| `cJp5ZrnGivw` | Зализняк. История русского ударения. 19.11.2016 |
+
+Pipeline (`video_pipeline.json`) had the same single title per id — **no alternate correct URLs** found; no URLs invented (D8).
+
+### Guard
+
+- `validate_video_catalog` in [`scripts/validate_content.py`](https://github.com/gasyoun/BookIndex/blob/main/scripts/validate_content.py): unique `id` among rows with URL; `id` must equal extracted YouTube id from `url`.
+- Unit tests: [`tests/unit/test_validate_video_catalog.py`](https://github.com/gasyoun/BookIndex/blob/main/tests/unit/test_validate_video_catalog.py) (duplicate + mismatch fixtures).
+- Census artifact: [`docs/history/H2122_video_catalog_collision_census.json`](https://github.com/gasyoun/BookIndex/blob/main/docs/history/H2122_video_catalog_collision_census.json).
+- Prove: `python scripts/validate_content.py app_data.json` → 0 errors; `python -m unittest tests.unit.test_validate_video_catalog`.
+- Lost titles issue: https://github.com/gasyoun/BookIndex/issues/192
+
 ## Ask-batch + better-interface — video gallery (~200) (2026-08-01)
 
 **Model:** Grok 4.5 (`grok-4.5`). Skills: [jakubkrehel/skills](https://github.com/jakubkrehel/skills) `better-interface` + domain skills.  

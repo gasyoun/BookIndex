@@ -11,8 +11,8 @@ Extends: [CLEANUP_AND_UI_ROADMAP.md](https://github.com/gasyoun/BookIndex/blob/m
 
 | ID | Deliverable | Unblocks |
 | --- | --- | --- |
-| V0.1 | Census + fix/document 3 multi-title YouTube ids; survivor = richest `related_entities` (status quo keep) with **issue per dropped title** | Honest gallery counts |
-| V0.2 | CI guard: unique `video_catalog[].id`; `id` matches YouTube `v=` / youtu.be path | Regressions never return |
+| V0.1 | ~~Census + fix/document 3 multi-title YouTube ids; survivor = richest `related_entities` (status quo keep) with **issue per dropped title**~~ **Done H2122** (175 unique rows; 16 titles in data-error issue) | Honest gallery counts |
+| V0.2 | ~~CI guard: unique `video_catalog[].id`; `id` matches YouTube `v=` / youtu.be path~~ **Done H2122** (`validate_video_catalog`) | Regressions never return |
 | V0.3 | Reconcile product copy: raw vs deduped vs pipeline 176 | Trust |
 
 ## Wave V1 — Video gallery (~200 page)

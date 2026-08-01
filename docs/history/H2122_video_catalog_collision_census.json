@@ -1,0 +1,153 @@
+{
+  "raw": 191,
+  "unique": 175,
+  "dropped_count": 16,
+  "dropped": [
+    {
+      "id": "Tz3T7IxsbLU",
+      "title": "Зализняк. История русского ударения. 11.02.2017 Семинар 16",
+      "source_index": 47,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения 16 10 29 семинар 08",
+      "survivor_index": 45
+    },
+    {
+      "id": "Tz3T7IxsbLU",
+      "title": "Зализняк. История русского ударения. 16 10 22 семинар 07",
+      "source_index": 48,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения 16 10 29 семинар 08",
+      "survivor_index": 45
+    },
+    {
+      "id": "xIoXVxahvDY",
+      "title": "Зализняк. История русского ударения. 25.03.2017. Семинар 22",
+      "source_index": 56,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 06.05.2017. Семинар 26",
+      "survivor_index": 55
+    },
+    {
+      "id": "xIoXVxahvDY",
+      "title": "Зализняк. История русского ударения 16 12 03 семинар 13",
+      "source_index": 57,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 06.05.2017. Семинар 26",
+      "survivor_index": 55
+    },
+    {
+      "id": "xIoXVxahvDY",
+      "title": "Зализняк. История русского ударения. 04.03.2017 Семинар 19",
+      "source_index": 58,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 06.05.2017. Семинар 26",
+      "survivor_index": 55
+    },
+    {
+      "id": "Tz3T7IxsbLU",
+      "title": "Зализняк. История русского ударения. 15.10.2016. Семинар 6",
+      "source_index": 60,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения 16 10 29 семинар 08",
+      "survivor_index": 45
+    },
+    {
+      "id": "cJp5ZrnGivw",
+      "title": "Зализняк. История русского ударения. 19.11.2016. Семинар 11",
+      "source_index": 61,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 19.11.2016",
+      "survivor_index": 59
+    },
+    {
+      "id": "xIoXVxahvDY",
+      "title": "Зализняк. История русского ударения. 13.05.2017. Семинар 27",
+      "source_index": 62,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 06.05.2017. Семинар 26",
+      "survivor_index": 55
+    },
+    {
+      "id": "cJp5ZrnGivw",
+      "title": "Зализняк. История русского ударения 16 12 10 семинар 14",
+      "source_index": 63,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 19.11.2016",
+      "survivor_index": 59
+    },
+    {
+      "id": "xIoXVxahvDY",
+      "title": "Зализняк. История русского ударения. 13.05.2017. Семинар 25",
+      "source_index": 64,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 06.05.2017. Семинар 26",
+      "survivor_index": 55
+    },
+    {
+      "id": "cJp5ZrnGivw",
+      "title": "Зализняк. История русского ударения. 17.12.2016 Семирар 15",
+      "source_index": 65,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 19.11.2016",
+      "survivor_index": 59
+    },
+    {
+      "id": "Tz3T7IxsbLU",
+      "title": "Зализняк. История русского ударения. 18.02.2017 Семинар 17",
+      "source_index": 66,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения 16 10 29 семинар 08",
+      "survivor_index": 45
+    },
+    {
+      "id": "xIoXVxahvDY",
+      "title": "Зализняк. История русского ударения. 11.03.2017 Семинар 20",
+      "source_index": 67,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 06.05.2017. Семинар 26",
+      "survivor_index": 55
+    },
+    {
+      "id": "Tz3T7IxsbLU",
+      "title": "Зализняк. История русского ударения 16 11 05 семинар 09",
+      "source_index": 68,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения 16 10 29 семинар 08",
+      "survivor_index": 45
+    },
+    {
+      "id": "cJp5ZrnGivw",
+      "title": "Зализняк. История русского ударения. 10.12.2016 Семинар 14",
+      "source_index": 71,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 19.11.2016",
+      "survivor_index": 59
+    },
+    {
+      "id": "xIoXVxahvDY",
+      "title": "Зализняк. История русского ударения. 20.05.2017. Семинар 28",
+      "source_index": 73,
+      "related_entities_count": 7,
+      "reason": "duplicate_id_survivor_kept",
+      "survivor_title": "Зализняк. История русского ударения. 06.05.2017. Семинар 26",
+      "survivor_index": 55
+    }
+  ],
+  "policy": "richest related_entities; first wins on ties (getDedupedVideoCatalog)",
+  "handoff": "H2122"
+}
