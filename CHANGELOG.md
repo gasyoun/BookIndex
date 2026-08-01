@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.10.2] - 2026-08-01
 ### Fixed
 - **V0 video_catalog id collisions (H2122, Grok 4.5 (`grok-4.5`)):** three YouTube ids (`Tz3T7IxsbLU`, `xIoXVxahvDY`, `cJp5ZrnGivw`) held 6–8 distinct seminar titles each (191 raw → 175 unique). Catalog collapsed to one survivor per id (richest `related_entities`, first-on-ties — same as `getDedupedVideoCatalog`); 16 dropped titles tracked in a data-error GitHub issue. No invented URLs.
 
