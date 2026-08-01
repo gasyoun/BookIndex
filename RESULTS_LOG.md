@@ -1,6 +1,38 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 31-07-2026_
+_Created: 24-07-2026 · Last updated: 01-08-2026_
+
+## Ask-batch + better-interface — video gallery (~200) (2026-08-01)
+
+**Model:** Grok 4.5 (`grok-4.5`). Skills: [jakubkrehel/skills](https://github.com/jakubkrehel/skills) `better-interface` + domain skills.  
+**Artifact:** [docs/INTERFACE_REVIEW_VIDEO_GALLERY_JAKUB_SKILLS_01.08.2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/INTERFACE_REVIEW_VIDEO_GALLERY_JAKUB_SKILLS_01.08.2026.md) · plan [docs/PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md)
+
+### Catalog census (load-bearing)
+
+| Metric | Value |
+| --- | ---: |
+| `video_catalog` raw rows | 191 |
+| Unique YouTube ids | 175 |
+| Multi-title id collision groups | 3 (`Tz3T7IxsbLU`, `xIoXVxahvDY`, `cJp5ZrnGivw`) |
+| Rows with `timecodes` nonempty | 0 |
+| Deduped with `date` | 33 / 175 |
+| Pipeline videos (`video_pipeline.json`) | 176 · 212.8 h |
+
+### Interview rulings (short)
+
+| ID | Ruling |
+| --- | --- |
+| D1 | V0 catalog truth before polish |
+| D2 | Dense list + optional thumbs |
+| D3–D4 | Modal player shell now; timecodes when data exists |
+| D5 | V1 video → U4 video routes before broader U1 home |
+| D6 | Full CLEANUP roadmap staged (wave-2+) |
+| D7 | Ambiguity → default + RESULTS_LOG |
+| D8 | Survivor title + GitHub issues for lost titles |
+
+### Verdict
+
+**Block** (interface review) until V0 unique-id integrity and gallery control labels/focus land.
 
 ## H2031 — KWIC lost-quote repair, issue #187 (2026-07-31)
 
