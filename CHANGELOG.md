@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.11.0] - 2026-08-02
+### Added
+- **+339 стратифицированных прямых контекстов (H1825, Fable 5 (`claude-fable-5`)):** дренаж очереди missing_context батчем lexicon 190 / lexicon_reverse 90 / lexicon_tech 26 (снята полностью) / names 26 / toponyms 7 (снята полностью). Прямое покрытие 26.8%→36.8% (порог 35% по прямым контекстам взят), эффективное 36.3%→50.0%, очередь 2149→1687. Глоссы редакторские, привязаны к карте лекций, страничным кластерам и KWIC-совпадениям расшифровок; нечитаемые OCR-заголовки помечены «требует сверки» — без выдуманных значений и страниц. Скрипт-инъектор архивирован: `docs/history/scripts/inject_contexts_h1825.py`; итоги: `RESULTS_LOG.md` § H1825.
+
 ## [4.10.2] - 2026-08-01
 ### Fixed
 - **V0 video_catalog id collisions (H2122, Grok 4.5 (`grok-4.5`)):** three YouTube ids (`Tz3T7IxsbLU`, `xIoXVxahvDY`, `cJp5ZrnGivw`) held 6–8 distinct seminar titles each (191 raw → 175 unique). Catalog collapsed to one survivor per id (richest `related_entities`, first-on-ties — same as `getDedupedVideoCatalog`); 16 dropped titles tracked in a data-error GitHub issue. No invented URLs.
