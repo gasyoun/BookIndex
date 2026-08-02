@@ -1,6 +1,54 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 01-08-2026_
+_Created: 24-07-2026 · Last updated: 02-08-2026_
+
+## H1825 — stratified context-coverage drain batch ×339 (2026-08-02)
+
+One stratified batch of **339** missing-context items received direct `contexts` glosses in `data/modules/*` (assembled into `app_data.json`). Editorial glosses only (house style of H1602 / `inject_mega_pack*`): each gloss grounded in the lecture-chapter map (`data/modules/20-lectures.json`), same-page glossed neighbours and lecture-transcript KWIC hits where available; no invented page numbers, no fabricated quotes. Opaque OCR heads (`mwlsm`, `d??f`, `öLsz̲9`…) carry an honest «требует сверки» note instead of an invented meaning (precedent: `RgH`/`Tj`/`UJ` in H1602).
+
+**Model:** Fable 5 (`claude-fable-5`).
+**Handoff:** [H1825](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1825-Fable_BookIndex_stratified-context-coverage-batch_29.07.26.md) — Fable-locked, `/next-task` pick 02-08-2026.
+**Injection script (archived):** [docs/history/scripts/inject_contexts_h1825.py](https://github.com/gasyoun/BookIndex/blob/main/docs/history/scripts/inject_contexts_h1825.py)
+
+### Before / after (`npm run content:audit` / `scripts/content_report.py`)
+
+| Metric | Before | After | Δ |
+|---|---:|---:|---:|
+| Items total | 3376 | 3376 | 0 |
+| With direct contexts | 904 (26.8%) | 1243 (36.8%) | **+339** (+10.0 pp) |
+| With effective contexts | 1227 (36.3%) | 1689 (50.0%) | **+462** (+13.7 pp) |
+| Inherited effective | 323 | 446 | +123 |
+| Context snippets | 3050 | 3389 | +339 |
+| missing_context queue | 2149 | 1687 | −462 |
+| Direct target ≥35% | below (26.8%) | **met (36.8%)** | — |
+| Effective coverage | 36.3% | **50.0%** | +13.7 pp |
+
+### Stratified batch composition
+
+| Entity | n | Contexts % after (direct) |
+|---|---:|---:|
+| lexicon | 190 | 37.8% |
+| lexicon_reverse | 90 | 8.6% |
+| lexicon_tech | 26 | **100.0%** (drained) |
+| names | 26 | 98.9% |
+| toponyms | 7 | **100.0%** (drained) |
+| **total** | **339** | **36.8% direct** |
+
+### Validation
+
+- `python scripts/validate_content.py app_data.json` → **OK** (0 errors, 0 warnings)
+- `python runtime_test.py` → OK (infrastructure smoke)
+- `python scripts/check_encoding.py --strict` → OK
+- `python -m unittest discover -s tests/unit -t .` → 33 tests OK
+- `npm run build` → aaz-index.html + 678 prerendered entity pages + sitemap regenerated
+
+### Caveats
+
+- Snippets are editorial book-grounded glosses, not verbatim OCR quotes (full page text not in-repo for most loci); the strongest grounding is the chapter map + per-page entity clusters + transcript KWIC (32 word-boundary hits).
+- Unknown persons (Кислов М. Н., Милославский Е., Чернышева П.…) and opaque OCR heads glossed with an explicit verify-by-page note, never an invented identity/meaning.
+- `lexicon_reverse` direct coverage remains low (8.6%) — its 90-item slice deliberately mirrored lexicon heads (same lexeme in both indexes shares one vetted gloss); the deep reverse-only tail (~960 items) is the next drain frontier.
+
+_Dr. Mārcis Gasūns_
 
 ## H2122 — V0 video_catalog unique ids (2026-08-01)
 

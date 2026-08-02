@@ -7,13 +7,13 @@
   "target_count": 25,
   "progress": {
     "phase_estimate_percent": 80.0,
-    "direct_context_coverage_percent": 26.8,
-    "effective_context_coverage_percent": 36.3,
+    "direct_context_coverage_percent": 36.8,
+    "effective_context_coverage_percent": 50.0,
     "context_target_min_percent": 35.0,
     "context_target_max_percent": 40.0
   },
   "queue_totals": {
-    "missing_context_count": 2149,
+    "missing_context_count": 1687,
     "suspicious_heads_count": 0,
     "sort_inversions_count": 0,
     "duplicate_heads_count": 0,
@@ -25,20 +25,20 @@
       "rank": 1,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "makätib",
-      "canonical_id": "lexicon-57a90db1-c709-54fe-a697-4f69a31735e3",
-      "item_index": 113,
-      "json_pointer": "/lexicon/113",
-      "contexts_pointer": "/lexicon/113/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/mak%C3%A4tib",
+      "head": "ведаться",
+      "canonical_id": "lexicon-1f5f5f5d-c894-57db-86b9-5159e789d1f7",
+      "item_index": 343,
+      "json_pointer": "/lexicon/343",
+      "contexts_pointer": "/lexicon/343/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B4%D0%B0%D1%82%D1%8C%D1%81%D1%8F",
       "pages_count": 1,
       "pages": [
-        219
+        30
       ],
       "pages_to_check": [
-        219
+        30
       ],
-      "pages_summary": "219",
+      "pages_summary": "30",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -46,7 +46,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "219": []
+          "30": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -56,20 +56,20 @@
       "rank": 2,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "masgid",
-      "canonical_id": "lexicon-3b0c28a8-bdef-556d-8b44-63889dabce6d",
-      "item_index": 117,
-      "json_pointer": "/lexicon/117",
-      "contexts_pointer": "/lexicon/117/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/masgid",
+      "head": "веде",
+      "canonical_id": "lexicon-bb5b73cf-758b-5faa-a605-6373fb2f032b",
+      "item_index": 344,
+      "json_pointer": "/lexicon/344",
+      "contexts_pointer": "/lexicon/344/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B4%D0%B5",
       "pages_count": 1,
       "pages": [
-        223
+        278
       ],
       "pages_to_check": [
-        223
+        278
       ],
-      "pages_summary": "223",
+      "pages_summary": "278",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -77,7 +77,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "223": []
+          "278": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -87,20 +87,20 @@
       "rank": 3,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "maslüm",
-      "canonical_id": "lexicon-8916b8b6-ae83-5a0b-a464-4a4f703d1fd1",
-      "item_index": 118,
-      "json_pointer": "/lexicon/118",
-      "contexts_pointer": "/lexicon/118/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/masl%C3%BCm",
+      "head": "ведет",
+      "canonical_id": "lexicon-c4aaed0d-e9eb-50f5-a4e3-9222cc687e9d",
+      "item_index": 345,
+      "json_pointer": "/lexicon/345",
+      "contexts_pointer": "/lexicon/345/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B4%D0%B5%D1%82",
       "pages_count": 1,
       "pages": [
-        233
+        33
       ],
       "pages_to_check": [
-        233
+        33
       ],
-      "pages_summary": "233",
+      "pages_summary": "33",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -108,7 +108,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "233": []
+          "33": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -118,20 +118,20 @@
       "rank": 4,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "maslüma",
-      "canonical_id": "lexicon-dae54424-6649-53bc-9b5e-471369046e82",
-      "item_index": 119,
-      "json_pointer": "/lexicon/119",
-      "contexts_pointer": "/lexicon/119/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/masl%C3%BCma",
+      "head": "ведетъ",
+      "canonical_id": "lexicon-65a75d3c-e0c9-5069-b5df-7fa2ef010acf",
+      "item_index": 346,
+      "json_pointer": "/lexicon/346",
+      "contexts_pointer": "/lexicon/346/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B4%D0%B5%D1%82%D1%8A",
       "pages_count": 1,
       "pages": [
-        233
+        278
       ],
       "pages_to_check": [
-        233
+        278
       ],
-      "pages_summary": "233",
+      "pages_summary": "278",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -139,7 +139,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "233": []
+          "278": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -149,20 +149,20 @@
       "rank": 5,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "mhzn",
-      "canonical_id": "lexicon-bffc0716-e0fb-5048-8ab7-d3a9ebd48ac5",
-      "item_index": 120,
-      "json_pointer": "/lexicon/120",
-      "contexts_pointer": "/lexicon/120/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/mhzn",
+      "head": "веза",
+      "canonical_id": "lexicon-d651abac-7e75-5d09-8ef2-ed7511901397",
+      "item_index": 348,
+      "json_pointer": "/lexicon/348",
+      "contexts_pointer": "/lexicon/348/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B7%D0%B0",
       "pages_count": 1,
       "pages": [
-        223
+        202
       ],
       "pages_to_check": [
-        223
+        202
       ],
-      "pages_summary": "223",
+      "pages_summary": "202",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -170,7 +170,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "223": []
+          "202": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -180,20 +180,20 @@
       "rank": 6,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "moi",
-      "canonical_id": "lexicon-a8cf0bdc-ef9b-52d6-b5f6-3dbc91714358",
-      "item_index": 121,
-      "json_pointer": "/lexicon/121",
-      "contexts_pointer": "/lexicon/121/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/moi",
+      "head": "везе",
+      "canonical_id": "lexicon-b828b830-72f5-53c3-b229-45ef9230d389",
+      "item_index": 349,
+      "json_pointer": "/lexicon/349",
+      "contexts_pointer": "/lexicon/349/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B7%D0%B5",
       "pages_count": 1,
       "pages": [
-        37
+        202
       ],
       "pages_to_check": [
-        37
+        202
       ],
-      "pages_summary": "37",
+      "pages_summary": "202",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -201,7 +201,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "37": []
+          "202": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -211,20 +211,20 @@
       "rank": 7,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "muhammad",
-      "canonical_id": "lexicon-0a26ff3f-f5c5-56a8-a1f6-1b37a3752872",
-      "item_index": 122,
-      "json_pointer": "/lexicon/122",
-      "contexts_pointer": "/lexicon/122/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/muhammad",
+      "head": "везёт",
+      "canonical_id": "lexicon-6115c579-9797-53ea-b873-b38721f9d35e",
+      "item_index": 350,
+      "json_pointer": "/lexicon/350",
+      "contexts_pointer": "/lexicon/350/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B7%D1%91%D1%82",
       "pages_count": 1,
       "pages": [
-        225
+        153
       ],
       "pages_to_check": [
-        225
+        153
       ],
-      "pages_summary": "225",
+      "pages_summary": "153",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -232,7 +232,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "225": []
+          "153": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -242,20 +242,20 @@
       "rank": 8,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "muhammid",
-      "canonical_id": "lexicon-6ff99ad5-56ae-580d-a6d7-7d301df36c56",
-      "item_index": 123,
-      "json_pointer": "/lexicon/123",
-      "contexts_pointer": "/lexicon/123/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/muhammid",
+      "head": "везете",
+      "canonical_id": "lexicon-0298510b-63bd-5ca7-9088-08614a545a98",
+      "item_index": 351,
+      "json_pointer": "/lexicon/351",
+      "contexts_pointer": "/lexicon/351/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B7%D0%B5%D1%82%D0%B5",
       "pages_count": 1,
       "pages": [
-        225
+        202
       ],
       "pages_to_check": [
-        225
+        202
       ],
-      "pages_summary": "225",
+      "pages_summary": "202",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -263,7 +263,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "225": []
+          "202": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -273,20 +273,20 @@
       "rank": 9,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "mukattab",
-      "canonical_id": "lexicon-edcf72d2-b582-5967-b04b-5ca1884e3161",
-      "item_index": 124,
-      "json_pointer": "/lexicon/124",
-      "contexts_pointer": "/lexicon/124/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/mukattab",
+      "head": "везетъ",
+      "canonical_id": "lexicon-b02f45eb-4a76-5bbd-9897-99680c6d1eb0",
+      "item_index": 352,
+      "json_pointer": "/lexicon/352",
+      "contexts_pointer": "/lexicon/352/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B7%D0%B5%D1%82%D1%8A",
       "pages_count": 1,
       "pages": [
-        218
+        202
       ],
       "pages_to_check": [
-        218
+        202
       ],
-      "pages_summary": "218",
+      "pages_summary": "202",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -294,7 +294,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "218": []
+          "202": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -304,20 +304,20 @@
       "rank": 10,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "mwlsm",
-      "canonical_id": "lexicon-3998d609-5d8e-5859-9cec-6b09f0088fbb",
-      "item_index": 127,
-      "json_pointer": "/lexicon/127",
-      "contexts_pointer": "/lexicon/127/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/mwlsm",
+      "head": "вези",
+      "canonical_id": "lexicon-366be512-1394-52a5-8ea5-76071bd17441",
+      "item_index": 353,
+      "json_pointer": "/lexicon/353",
+      "contexts_pointer": "/lexicon/353/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B7%D0%B8",
       "pages_count": 1,
       "pages": [
-        230
+        372
       ],
       "pages_to_check": [
-        230
+        372
       ],
-      "pages_summary": "230",
+      "pages_summary": "372",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -325,7 +325,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "230": []
+          "372": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -335,20 +335,20 @@
       "rank": 11,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "navas",
-      "canonical_id": "lexicon-2afbf4a6-0cb2-57a3-b0de-6da0e7d77ce5",
-      "item_index": 128,
-      "json_pointer": "/lexicon/128",
-      "contexts_pointer": "/lexicon/128/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/navas",
+      "head": "везите",
+      "canonical_id": "lexicon-52e5125a-0629-539b-a1a8-4958960aad9a",
+      "item_index": 354,
+      "json_pointer": "/lexicon/354",
+      "contexts_pointer": "/lexicon/354/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B7%D0%B8%D1%82%D0%B5",
       "pages_count": 1,
       "pages": [
-        152
+        202
       ],
       "pages_to_check": [
-        152
+        202
       ],
-      "pages_summary": "152",
+      "pages_summary": "202",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -356,7 +356,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "152": []
+          "202": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -366,20 +366,20 @@
       "rank": 12,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "necest",
-      "canonical_id": "lexicon-fb3ffdcd-8f48-5b26-a040-f7b76ec3b80c",
-      "item_index": 129,
-      "json_pointer": "/lexicon/129",
-      "contexts_pointer": "/lexicon/129/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/necest",
+      "head": "везя",
+      "canonical_id": "lexicon-139f0b9e-263e-5fc1-a751-ea051b617cfa",
+      "item_index": 355,
+      "json_pointer": "/lexicon/355",
+      "contexts_pointer": "/lexicon/355/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%B7%D1%8F",
       "pages_count": 1,
       "pages": [
-        306
+        202
       ],
       "pages_to_check": [
-        306
+        202
       ],
-      "pages_summary": "306",
+      "pages_summary": "202",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -387,7 +387,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "306": []
+          "202": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -397,20 +397,20 @@
       "rank": 13,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "necti",
-      "canonical_id": "lexicon-3d4644a9-e247-5567-a074-638edc703493",
-      "item_index": 130,
-      "json_pointer": "/lexicon/130",
-      "contexts_pointer": "/lexicon/130/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/necti",
+      "head": "векша",
+      "canonical_id": "lexicon-b9fcaf56-5c67-5709-8656-4b600f130888",
+      "item_index": 356,
+      "json_pointer": "/lexicon/356",
+      "contexts_pointer": "/lexicon/356/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%BA%D1%88%D0%B0",
       "pages_count": 1,
       "pages": [
-        305
+        315
       ],
       "pages_to_check": [
-        305
+        315
       ],
-      "pages_summary": "305",
+      "pages_summary": "315",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -418,7 +418,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "305": []
+          "315": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -428,20 +428,20 @@
       "rank": 14,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "neuf",
-      "canonical_id": "lexicon-b4fbee8c-ad04-565c-b049-8a760d57cc61",
-      "item_index": 131,
-      "json_pointer": "/lexicon/131",
-      "contexts_pointer": "/lexicon/131/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/neuf",
+      "head": "велик",
+      "canonical_id": "lexicon-a9b6a571-65a0-5b8d-982b-f9aaba4ea855",
+      "item_index": 357,
+      "json_pointer": "/lexicon/357",
+      "contexts_pointer": "/lexicon/357/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%BB%D0%B8%D0%BA",
       "pages_count": 1,
       "pages": [
-        258
+        367
       ],
       "pages_to_check": [
-        258
+        367
       ],
-      "pages_summary": "258",
+      "pages_summary": "367",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -449,7 +449,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "258": []
+          "367": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -459,20 +459,20 @@
       "rank": 15,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "neun",
-      "canonical_id": "lexicon-d075080b-0960-54f5-9121-f3305b22586a",
-      "item_index": 132,
-      "json_pointer": "/lexicon/132",
-      "contexts_pointer": "/lexicon/132/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/neun",
+      "head": "величина",
+      "canonical_id": "lexicon-56136572-37f8-5617-960b-70796710dfdf",
+      "item_index": 358,
+      "json_pointer": "/lexicon/358",
+      "contexts_pointer": "/lexicon/358/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B8%D0%BD%D0%B0",
       "pages_count": 1,
       "pages": [
-        258
+        367
       ],
       "pages_to_check": [
-        258
+        367
       ],
-      "pages_summary": "258",
+      "pages_summary": "367",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -480,7 +480,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "258": []
+          "367": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -490,20 +490,20 @@
       "rank": 16,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "nine",
-      "canonical_id": "lexicon-e825739e-2a73-59ea-8781-27054c816bb1",
-      "item_index": 133,
-      "json_pointer": "/lexicon/133",
-      "contexts_pointer": "/lexicon/133/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/nine",
+      "head": "вене",
+      "canonical_id": "lexicon-2bd6022d-db45-5d8c-aae5-c2edb9075d8b",
+      "item_index": 359,
+      "json_pointer": "/lexicon/359",
+      "contexts_pointer": "/lexicon/359/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%BD%D0%B5",
       "pages_count": 1,
       "pages": [
-        258
+        61
       ],
       "pages_to_check": [
-        258
+        61
       ],
-      "pages_summary": "258",
+      "pages_summary": "61",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -511,7 +511,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "258": []
+          "61": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -521,20 +521,20 @@
       "rank": 17,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "nynrk",
-      "canonical_id": "lexicon-d6dde882-7ff3-504e-8b67-205b1626e098",
-      "item_index": 135,
-      "json_pointer": "/lexicon/135",
-      "contexts_pointer": "/lexicon/135/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/nynrk",
+      "head": "венет",
+      "canonical_id": "lexicon-9c16bcbd-aadd-5c4b-972a-8f0389a58d53",
+      "item_index": 360,
+      "json_pointer": "/lexicon/360",
+      "contexts_pointer": "/lexicon/360/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%BD%D0%B5%D1%82",
       "pages_count": 1,
       "pages": [
-        230
+        61
       ],
       "pages_to_check": [
-        230
+        61
       ],
-      "pages_summary": "230",
+      "pages_summary": "61",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -542,7 +542,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "230": []
+          "61": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -552,20 +552,20 @@
       "rank": 18,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "ocfibö",
-      "canonical_id": "lexicon-f83f4677-edae-51de-8d3c-5869a433ff15",
-      "item_index": 138,
-      "json_pointer": "/lexicon/138",
-      "contexts_pointer": "/lexicon/138/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/ocfib%C3%B6",
+      "head": "Венеция",
+      "canonical_id": "lexicon-4e91d042-2efb-5064-a534-e272c898dee9",
+      "item_index": 361,
+      "json_pointer": "/lexicon/361",
+      "contexts_pointer": "/lexicon/361/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%92%D0%B5%D0%BD%D0%B5%D1%86%D0%B8%D1%8F",
       "pages_count": 1,
       "pages": [
-        230
+        62
       ],
       "pages_to_check": [
-        230
+        62
       ],
-      "pages_summary": "230",
+      "pages_summary": "62",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -573,7 +573,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "230": []
+          "62": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -583,20 +583,20 @@
       "rank": 19,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "of",
-      "canonical_id": "lexicon-5e189c47-c7bd-5b7f-ad36-d4b0091e5597",
-      "item_index": 139,
-      "json_pointer": "/lexicon/139",
-      "contexts_pointer": "/lexicon/139/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/of",
+      "head": "вент-",
+      "canonical_id": "lexicon-92f464ef-1e88-5077-bc06-2b785831e988",
+      "item_index": 362,
+      "json_pointer": "/lexicon/362",
+      "contexts_pointer": "/lexicon/362/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%BD%D1%82-",
       "pages_count": 1,
       "pages": [
-        123
+        62
       ],
       "pages_to_check": [
-        123
+        62
       ],
-      "pages_summary": "123",
+      "pages_summary": "62",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -604,7 +604,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "123": []
+          "62": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -614,20 +614,20 @@
       "rank": 20,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "peis",
-      "canonical_id": "lexicon-e5768205-eb08-55c1-b27c-e1efad80cdc9",
-      "item_index": 144,
-      "json_pointer": "/lexicon/144",
-      "contexts_pointer": "/lexicon/144/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/peis",
+      "head": "вентичи",
+      "canonical_id": "lexicon-b42b46ae-511a-5ab0-8cf1-4e03d806b16a",
+      "item_index": 363,
+      "json_pointer": "/lexicon/363",
+      "contexts_pointer": "/lexicon/363/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D0%BD%D1%82%D0%B8%D1%87%D0%B8",
       "pages_count": 1,
       "pages": [
-        72
+        62
       ],
       "pages_to_check": [
-        72
+        62
       ],
-      "pages_summary": "72",
+      "pages_summary": "62",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -635,7 +635,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "72": []
+          "62": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -645,20 +645,20 @@
       "rank": 21,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "pesak",
-      "canonical_id": "lexicon-dffcb0df-6ca3-592a-b752-036852c0cb6e",
-      "item_index": 145,
-      "json_pointer": "/lexicon/145",
-      "contexts_pointer": "/lexicon/145/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/pesak",
+      "head": "верг-",
+      "canonical_id": "lexicon-c5a0cf17-35cb-57e8-af30-81567335efbb",
+      "item_index": 364,
+      "json_pointer": "/lexicon/364",
+      "contexts_pointer": "/lexicon/364/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D1%80%D0%B3-",
       "pages_count": 1,
       "pages": [
-        108
+        297
       ],
       "pages_to_check": [
-        108
+        297
       ],
-      "pages_summary": "108",
+      "pages_summary": "297",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -666,7 +666,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "108": []
+          "297": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -676,20 +676,20 @@
       "rank": 22,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "pet",
-      "canonical_id": "lexicon-661408a8-fccb-5881-b0a8-6ad17f06cf70",
-      "item_index": 146,
-      "json_pointer": "/lexicon/146",
-      "contexts_pointer": "/lexicon/146/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/pet",
+      "head": "Вере-чи",
+      "canonical_id": "lexicon-9a0a6ec6-2d01-562f-88c4-f554f4497f0d",
+      "item_index": 365,
+      "json_pointer": "/lexicon/365",
+      "contexts_pointer": "/lexicon/365/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%92%D0%B5%D1%80%D0%B5-%D1%87%D0%B8",
       "pages_count": 1,
       "pages": [
-        255
+        298
       ],
       "pages_to_check": [
-        255
+        298
       ],
-      "pages_summary": "255",
+      "pages_summary": "298",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -697,7 +697,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "255": []
+          "298": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -707,20 +707,20 @@
       "rank": 23,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "piasek",
-      "canonical_id": "lexicon-e24c3faa-ce8b-5b91-a76c-5e4e26fa43ae",
-      "item_index": 147,
-      "json_pointer": "/lexicon/147",
-      "contexts_pointer": "/lexicon/147/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/piasek",
+      "head": "веречъ",
+      "canonical_id": "lexicon-4e250d2d-4b51-5287-82f4-70939151b725",
+      "item_index": 366,
+      "json_pointer": "/lexicon/366",
+      "contexts_pointer": "/lexicon/366/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D1%80%D0%B5%D1%87%D1%8A",
       "pages_count": 1,
       "pages": [
-        108
+        298
       ],
       "pages_to_check": [
-        108
+        298
       ],
-      "pages_summary": "108",
+      "pages_summary": "298",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -728,7 +728,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "108": []
+          "298": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -738,20 +738,20 @@
       "rank": 24,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "port",
-      "canonical_id": "lexicon-5ed30c89-4e7e-530b-b1ce-55ec6b666a7d",
-      "item_index": 148,
-      "json_pointer": "/lexicon/148",
-      "contexts_pointer": "/lexicon/148/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/port",
+      "head": "веречь",
+      "canonical_id": "lexicon-e7bc48e6-484c-59e8-a1ec-f33f999ffcea",
+      "item_index": 367,
+      "json_pointer": "/lexicon/367",
+      "contexts_pointer": "/lexicon/367/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D1%80%D0%B5%D1%87%D1%8C",
       "pages_count": 1,
       "pages": [
-        67
+        299
       ],
       "pages_to_check": [
-        67
+        299
       ],
-      "pages_summary": "67",
+      "pages_summary": "299",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -759,7 +759,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "67": []
+          "299": []
         },
         "source_notes": "",
         "verification_notes": ""
@@ -769,20 +769,20 @@
       "rank": 25,
       "status": "needs_source_context",
       "entity": "lexicon",
-      "head": "porte",
-      "canonical_id": "lexicon-be9dcd47-72c7-572f-9516-524e05eb7782",
-      "item_index": 149,
-      "json_pointer": "/lexicon/149",
-      "contexts_pointer": "/lexicon/149/contexts",
-      "route": "#v4/lexicon/list/item/lexicon/porte",
+      "head": "верешца",
+      "canonical_id": "lexicon-cdff3433-5516-5b85-9b42-4fe84b0e1c58",
+      "item_index": 368,
+      "json_pointer": "/lexicon/368",
+      "contexts_pointer": "/lexicon/368/contexts",
+      "route": "#v4/lexicon/list/item/lexicon/%D0%B2%D0%B5%D1%80%D0%B5%D1%88%D1%86%D0%B0",
       "pages_count": 1,
       "pages": [
-        67
+        301
       ],
       "pages_to_check": [
-        67
+        301
       ],
-      "pages_summary": "67",
+      "pages_summary": "301",
       "priority_score": 101,
       "priority_tier": "medium",
       "priority_reason": "v4.7 top priority: lexicon context expansion.",
@@ -790,7 +790,7 @@
       "context_snippets": 0,
       "entry_fields": {
         "contexts": {
-          "67": []
+          "301": []
         },
         "source_notes": "",
         "verification_notes": ""
