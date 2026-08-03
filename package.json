@@ -44,11 +44,11 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
-    "@playwright/test": "^1.62.0",
+    "@playwright/test": "^1.62.1",
     "chrome-launcher": "^1.2.1",
     "lighthouse": "^13.4.1",
     "typescript": "^7.0.2",
-    "vite": "^8.1.5",
+    "vite": "^8.2.0",
     "vite-plugin-singlefile": "^2.3.3"
   },
   "dependencies": {
