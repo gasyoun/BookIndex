@@ -1,0 +1,40 @@
+{
+  "schema": "video_catalog_source_snapshot/1",
+  "source_url": "https://docs.google.com/spreadsheets/d/1SNYEpI4xnVrt6jDPmZqIUzhPHyQbwG8INJKDdbrMNYk/export?format=csv&gid=816920641",
+  "sheet_gid": "816920641",
+  "snapshot_at": "2026-08-03T00:00:00Z",
+  "census": {
+    "source_rows": 192,
+    "videos": 175,
+    "unique_youtube_ids": 175,
+    "unresolved_records": 16,
+    "related_resources": 1
+  },
+  "title_reconciliation": "All 175 first-occurrence sheet titles exactly matched app_data.json video_catalog titles at snapshot time; app_data.json therefore supplies the public display title offline.",
+  "duplicate_records": [
+    {"source_row": 49, "youtube_id": "Tz3T7IxsbLU", "title_display": "Зализняк. История русского ударения. 11.02.2017 Семинар 16"},
+    {"source_row": 50, "youtube_id": "Tz3T7IxsbLU", "title_display": "Зализняк. История русского ударения. 16 10 22 семинар 07"},
+    {"source_row": 58, "youtube_id": "xIoXVxahvDY", "title_display": "Зализняк. История русского ударения. 25.03.2017. Семинар 22"},
+    {"source_row": 59, "youtube_id": "xIoXVxahvDY", "title_display": "Зализняк. История русского ударения 16 12 03 семинар 13"},
+    {"source_row": 60, "youtube_id": "xIoXVxahvDY", "title_display": "Зализняк. История русского ударения. 04.03.2017 Семинар 19"},
+    {"source_row": 62, "youtube_id": "Tz3T7IxsbLU", "title_display": "Зализняк. История русского ударения. 15.10.2016. Семинар 6"},
+    {"source_row": 63, "youtube_id": "cJp5ZrnGivw", "title_display": "Зализняк. История русского ударения. 19.11.2016. Семинар 11"},
+    {"source_row": 64, "youtube_id": "xIoXVxahvDY", "title_display": "Зализняк. История русского ударения. 13.05.2017. Семинар 27"},
+    {"source_row": 65, "youtube_id": "cJp5ZrnGivw", "title_display": "Зализняк. История русского ударения 16 12 10 семинар 14"},
+    {"source_row": 66, "youtube_id": "xIoXVxahvDY", "title_display": "Зализняк. История русского ударения. 13.05.2017. Семинар 25"},
+    {"source_row": 67, "youtube_id": "cJp5ZrnGivw", "title_display": "Зализняк. История русского ударения. 17.12.2016 Семирар 15"},
+    {"source_row": 68, "youtube_id": "Tz3T7IxsbLU", "title_display": "Зализняк. История русского ударения. 18.02.2017 Семинар 17"},
+    {"source_row": 69, "youtube_id": "xIoXVxahvDY", "title_display": "Зализняк. История русского ударения. 11.03.2017 Семинар 20"},
+    {"source_row": 70, "youtube_id": "Tz3T7IxsbLU", "title_display": "Зализняк. История русского ударения 16 11 05 семинар 09"},
+    {"source_row": 73, "youtube_id": "cJp5ZrnGivw", "title_display": "Зализняк. История русского ударения. 10.12.2016 Семинар 14"},
+    {"source_row": 75, "youtube_id": "xIoXVxahvDY", "title_display": "Зализняк. История русского ударения. 20.05.2017. Семинар 28"}
+  ],
+  "related_resources": [
+    {
+      "source_row": 193,
+      "title_display": "Некоторые проблемы порядка слов в истории русского языка",
+      "url": "https://elementy.ru/nauchno-populyarnaya_biblioteka/431049/Nekotorye_problemy_poryadka_slov_v_istorii_russkogo_yazyka",
+      "resource_type": "article"
+    }
+  ]
+}
