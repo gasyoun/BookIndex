@@ -101380,6 +101380,32 @@
           "type": "subject_index"
         }
       ]
+    },
+    {
+      "id": "spqW9cz7Gk0",
+      "title": "А. А. Зализняк: История русского ударения. Семинар 28",
+      "url": "https://youtube.com/watch?v=spqW9cz7Gk0",
+      "date": "2017-05-20",
+      "duration": 4706,
+      "timecodes": [],
+      "related_entities": [
+        {
+          "head": "А. А. Зализняк",
+          "type": "names"
+        },
+        {
+          "head": "Зализняк А. А.",
+          "type": "names"
+        },
+        {
+          "head": "русский",
+          "type": "languages"
+        },
+        {
+          "head": "ударение",
+          "type": "subject_index"
+        }
+      ]
     }
   ]
 }

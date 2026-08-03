@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gasyoun.github.io/BookIndex/schemas/video_catalog_editorial.schema.json",
+  "title": "BookIndex video catalog editorial evidence overlay",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "title_reviews", "overrides", "reconciled_records", "unresolved_research"],
+  "properties": {
+    "schema": {"const": "video_catalog_editorial/1"},
+    "title_reviews": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/title_review"}
+    },
+    "overrides": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/override"}
+    },
+    "reconciled_records": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/reconciliation"}
+    },
+    "unresolved_research": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/unresolved_research"}
+    }
+  },
+  "$defs": {
+    "iso_date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "accession": {"type": "string", "pattern": "^[0-9]{3}$"},
+        "youtube_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{11}$"}
+      }
+    },
+    "contributor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "role"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "role": {
+          "enum": ["speaker", "lecturer", "interviewer", "moderator", "participant", "host"]
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "label", "accessed_at", "supports"],
+      "properties": {
+        "url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "label": {"type": "string", "minLength": 1},
+        "accessed_at": {"$ref": "#/$defs/iso_date"},
+        "supports": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "title_display", "contributors", "date_recorded", "upload_date", "topics",
+              "type", "purpose", "transcript_status", "transcript_url", "public_note",
+              "public_summary", "reconciliation"
+            ]
+          }
+        }
+      }
+    },
+    "title_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "accession", "youtube_id", "title_source", "generated_title_display", "decision", "evidence"
+      ],
+      "properties": {
+        "accession": {"type": "string", "pattern": "^[0-9]{3}$"},
+        "youtube_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{11}$"},
+        "title_source": {"type": "string", "minLength": 1},
+        "generated_title_display": {"type": "string", "minLength": 1},
+        "decision": {"enum": ["accepted_generated", "overridden"]},
+        "title_display": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"decision": {"const": "overridden"}}},
+          "then": {"required": ["title_display"], "properties": {"evidence": {"minItems": 1}}},
+          "else": {"not": {"required": ["title_display"]}, "properties": {"evidence": {"maxItems": 0}}}
+        }
+      ]
+    },
+    "override": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["accession", "youtube_id", "evidence"],
+      "minProperties": 4,
+      "properties": {
+        "accession": {"type": "string", "pattern": "^[0-9]{3}$"},
+        "youtube_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{11}$"},
+        "title_display": {"type": "string", "minLength": 1},
+        "contributors": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/contributor"}},
+        "date_recorded": {"$ref": "#/$defs/iso_date"},
+        "upload_date": {"$ref": "#/$defs/iso_date"},
+        "topics": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "type": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1},
+        "transcript_status": {
+          "enum": ["unknown", "none", "automatic", "partial", "checked", "edited", "published", "problem"]
+        },
+        "transcript_url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "public_note": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_row", "status", "canonical_accession", "youtube_id",
+        "public_summary", "checked_at", "evidence"
+      ],
+      "properties": {
+        "source_row": {"type": "integer", "minimum": 1},
+        "status": {"const": "reconciled"},
+        "canonical_accession": {"type": "string", "pattern": "^[0-9]{3}$"},
+        "youtube_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{11}$"},
+        "public_summary": {"type": "string", "minLength": 1},
+        "checked_at": {"$ref": "#/$defs/iso_date"},
+        "evidence": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "allOf": [
+              {"$ref": "#/$defs/evidence"},
+              {"properties": {"supports": {"items": {"const": "reconciliation"}}}}
+            ]
+          }
+        }
+      }
+    },
+    "unresolved_research": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_row", "status", "public_summary", "checked_at", "evidence"],
+      "properties": {
+        "source_row": {"type": "integer", "minimum": 1},
+        "status": {"enum": ["unresolved", "resolved"]},
+        "public_summary": {"type": "string", "minLength": 1},
+        "checked_at": {"$ref": "#/$defs/iso_date"},
+        "evidence": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {"$ref": "#/$defs/evidence"},
+              {"properties": {"supports": {"items": {"const": "public_summary"}}}}
+            ]
+          }
+        }
+      }
+    }
+  }
+}

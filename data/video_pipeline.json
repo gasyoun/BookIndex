@@ -49,13 +49,13 @@
     }
   ],
   "stats": {
-    "videos": 176,
-    "videos_in_catalog": 175,
-    "total_seconds": 766146,
-    "total_hours": 212.82,
+    "videos": 177,
+    "videos_in_catalog": 176,
+    "total_seconds": 770852,
+    "total_hours": 214.13,
     "by_stage": {
       "transcribed": 98,
-      "queued": 53,
+      "queued": 54,
       "read1": 5,
       "prelayout": 3,
       "review": 12,
@@ -64,7 +64,7 @@
       "read2": 1
     },
     "by_theme": {
-      "русистика": 49,
+      "русистика": 50,
       "санскрит": 32,
       "ЛЛШ": 10,
       "береста": 8,
@@ -73,7 +73,7 @@
     "by_transcription_quality": {
       "ok": 119,
       "partial": 42,
-      "unknown": 11,
+      "unknown": 12,
       "no_audio": 4
     }
   },
@@ -5476,6 +5476,35 @@
         "disk_video": null
       },
       "notes": "https://disk.yandex.ru/d/wBYmuvIooFg-cA",
+      "in_catalog": true
+    },
+    {
+      "id": "spqW9cz7Gk0",
+      "title": "А. А. Зализняк: История русского ударения. Семинар 28",
+      "purpose": null,
+      "theme": "русистика",
+      "type": "семинар",
+      "priority": null,
+      "duration_sec": 4706,
+      "duration_hms": "01:18:26",
+      "youtube_url": "https://youtube.com/watch?v=spqW9cz7Gk0",
+      "status_raw": null,
+      "stage": "queued",
+      "stage_inferred": true,
+      "transcription": {
+        "quality": "unknown",
+        "note": null
+      },
+      "assigned": {
+        "issued": null,
+        "submitted": null
+      },
+      "proof": {},
+      "links": {
+        "text": null,
+        "disk_video": null
+      },
+      "notes": null,
       "in_catalog": true
     },
     {

@@ -1,0 +1,2042 @@
+{
+  "schema": "video_catalog_editorial/1",
+  "title_reviews": [
+    {
+      "accession": "016",
+      "youtube_id": "Zj7fSZFSaBU",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-Лекция-1-12092015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка Лекция 1 12092015",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. Лекция 1. 12.09.2015",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=Zj7fSZFSaBU",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "059",
+      "youtube_id": "XkzmxzvwAVQ",
+      "title_source": "А-А-Зализняк-Грамматический-строй-санскрита-2014-2015-гг-Лекция--3-27092014",
+      "generated_title_display": "А. А. Зализняк Грамматический строй санскрита 2014 2015 гг Лекция 3 27092014",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Грамматический строй санскрита. 2014-2015 гг. Лекция 3. 27.09.2014",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=XkzmxzvwAVQ",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "060",
+      "youtube_id": "zjOVQqgwc1g",
+      "title_source": "А-А-Зализняк-Грамматический-строй-санскрита-Лекция-1-13-09-2014-МГУ",
+      "generated_title_display": "А. А. Зализняк Грамматический строй санскрита Лекция 1 13 09 2014 МГУ",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Грамматический строй санскрита. Лекция 1. 13. 09. 2014. МГУ",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=zjOVQqgwc1g",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "061",
+      "youtube_id": "lo2wxrH6U9s",
+      "title_source": "А-А-Зализняк-Из-лекции-26-декабря-2011-г-Разбор-RV-10135",
+      "generated_title_display": "А. А. Зализняк Из лекции 26 декабря 2011 г Разбор RV 10135",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Из лекции 26 декабря 2011 г. Разбор RV 10.135",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=lo2wxrH6U9s",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "062",
+      "youtube_id": "96yszA1N9r8",
+      "title_source": "А-А-Зализняк-Из-лекции-27-ноября-2010-г-Разбор-RV-1034",
+      "generated_title_display": "А. А. Зализняк Из лекции 27 ноября 2010 г Разбор RV 1034",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Из лекции 27 ноября 2010 г. Разбор RV 10.34",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=96yszA1N9r8",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "063",
+      "youtube_id": "9hz2kCabk5k",
+      "title_source": "А-А-Зализняк-Из-лекции-4-декабря-2010-г-Разбор-RV-1034",
+      "generated_title_display": "А. А. Зализняк Из лекции 4 декабря 2010 г Разбор RV 1034",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Из лекции 4 декабря 2010 г. Разбор RV 10.34",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=9hz2kCabk5k",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "064",
+      "youtube_id": "6tPUfz8My4Y",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Аудиозапись-лекции-1-100916",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Аудиозапись лекции 1 100916",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Аудиозапись лекции 1. 10.09.16",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=6tPUfz8My4Y",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "065",
+      "youtube_id": "vs85X7hqFJs",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Аудиозапись-лекции-11-19112016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Аудиозапись лекции 11 19112016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Аудиозапись лекции 11. 19.11.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=vs85X7hqFJs",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "066",
+      "youtube_id": "l2TB7AY5Tus",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Аудиозапись-лекции-7--22102016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Аудиозапись лекции 7 22102016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Аудиозапись лекции 7. 22.10.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=l2TB7AY5Tus",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "067",
+      "youtube_id": "zBNyMMom0MQ",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-10-12112016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 10 12112016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 10. 12.11.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=zBNyMMom0MQ",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "068",
+      "youtube_id": "DZ_-gKx1kAE",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-12-26112016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 12 26112016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 12. 26.11.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=DZ_-gKx1kAE",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "069",
+      "youtube_id": "VKDg5GQdzkw",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-13-03122016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 13 03122016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 13. 03.12.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=VKDg5GQdzkw",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "070",
+      "youtube_id": "7ODUHMh-4-o",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-14-10122016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 14 10122016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 14. 10.12.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=7ODUHMh-4-o",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "071",
+      "youtube_id": "ATtkvTx6_4o",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-15-17122016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 15 17122016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 15. 17.12.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=ATtkvTx6_4o",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "072",
+      "youtube_id": "qWzBIm7x1Xc",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-16-11022017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 16 11022017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 16. 11.02.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=qWzBIm7x1Xc",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "073",
+      "youtube_id": "g8SdQX2JyCA",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-17-18022017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 17 18022017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 17. 18.02.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=g8SdQX2JyCA",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "074",
+      "youtube_id": "_qtOnaehHOc",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-19-04032017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 19 04032017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 19. 04.03.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=_qtOnaehHOc",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "075",
+      "youtube_id": "yIMk-x5LVUs",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-2-17092016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 2 17092016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 2. 17.09.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=yIMk-x5LVUs",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "076",
+      "youtube_id": "MiICdcfRCv0",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-20-11032017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 20 11032017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 20. 11.03.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=MiICdcfRCv0",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "077",
+      "youtube_id": "ursat5v2zqY",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-21-18032017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 21 18032017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 21. 18.03.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=ursat5v2zqY",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "078",
+      "youtube_id": "YBsxqGK7jlg",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-22-25032017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 22 25032017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 22. 25.03.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=YBsxqGK7jlg",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "079",
+      "youtube_id": "tnUBy-ULHcM",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-23-01042017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 23 01042017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 23. 01.04.2017.",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=tnUBy-ULHcM",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "080",
+      "youtube_id": "lhd8aa6f4ng",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-24-24042017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 24 24042017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 24. 24.04.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=lhd8aa6f4ng",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "081",
+      "youtube_id": "Z7ffIHNqvnU",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-25-29042017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 25 29042017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 25. 29.04.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=Z7ffIHNqvnU",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "082",
+      "youtube_id": "E5jSUrve0Ps",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-27-13052017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 27 13052017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 27. 13.05.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=E5jSUrve0Ps",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "083",
+      "youtube_id": "O4f_h2YVx64",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-3-24092016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 3 24092016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 3. 24.09.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=O4f_h2YVx64",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "084",
+      "youtube_id": "t5mpQaotzS0",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-4-01102016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 4 01102016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 4. 01.10.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=t5mpQaotzS0",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "085",
+      "youtube_id": "59hxvoyQ7QA",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-5-08102016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 5 08102016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 5. 08.10.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=59hxvoyQ7QA",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "086",
+      "youtube_id": "n-Td297bXfc",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-8-29102016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 8 29102016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 8. 29.10.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=n-Td297bXfc",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "087",
+      "youtube_id": "q-_9DQqHCho",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-9-05112016",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2016 2017 гг Лекция 9 05112016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 9. 05.11.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=q-_9DQqHCho",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "088",
+      "youtube_id": "s77yjzvyFD0",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Аудиозапись-лекции-2-23092017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Аудиозапись лекции 2 23092017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Аудиозапись лекции 2. 23.09.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=s77yjzvyFD0",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "089",
+      "youtube_id": "9A1ULx6Fgeg",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-1-16092017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 1 16092017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 1. 16.09.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=9A1ULx6Fgeg",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "090",
+      "youtube_id": "FaJu6mWgGyw",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-10-18112017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 10 18112017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 10. 18.11.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=FaJu6mWgGyw",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "091",
+      "youtube_id": "2KfoHYELQbs",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-11-25112017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 11 25112017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 11. 25.11.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=2KfoHYELQbs",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "092",
+      "youtube_id": "en2CCm5Zolk",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-12-02122017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 12 02122017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 12. 02.12.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=en2CCm5Zolk",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "093",
+      "youtube_id": "TNbu8fhFRcM",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-13-09122017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 13 09122017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 13. 09.12.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=TNbu8fhFRcM",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "094",
+      "youtube_id": "6nFkEysA3XU",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-14-последняя-16122017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 14 последняя 16122017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 14, последняя. 16.12.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=6nFkEysA3XU",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "095",
+      "youtube_id": "TBuor2fBzRs",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-3-30092017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 3 30092017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 3. 30.09.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=TBuor2fBzRs",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "096",
+      "youtube_id": "2SJRCTaEyQM",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-4-07102017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 4 07102017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 4. 07.10.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=2SJRCTaEyQM",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "097",
+      "youtube_id": "BkvqayCnNK4",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-5-14102017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 5 14102017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 5. 14.10.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=BkvqayCnNK4",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "098",
+      "youtube_id": "p_frWa3r22o",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-6-21102017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 6 21102017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 6. 21.10.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=p_frWa3r22o",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "099",
+      "youtube_id": "lAais7xEHEA",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-7-28102017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 7 28102017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 7. 28.10.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=lAais7xEHEA",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "100",
+      "youtube_id": "kDjo6BgqIu4",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-8-06112017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 8 06112017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 8. 06.11.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=kDjo6BgqIu4",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "101",
+      "youtube_id": "X_KpSp0AlxM",
+      "title_source": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-9-11112017",
+      "generated_title_display": "А. А. Зализняк История русского ударения 2017 г Лекция 9 11112017",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 9. 11.11.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=X_KpSp0AlxM",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "102",
+      "youtube_id": "xJepf-YTRmE",
+      "title_source": "А-А-Зализняк-Начало-лекции-11-декабря-2010-г-МГУ",
+      "generated_title_display": "А. А. Зализняк Начало лекции 11 декабря 2010 г МГУ",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Начало лекции 11 декабря 2010 г. МГУ",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=xJepf-YTRmE",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "103",
+      "youtube_id": "8pF86C0qoOs",
+      "title_source": "А-А-Зализняк-Начало-лекции-по-санскриту-18-декабря-2010-г",
+      "generated_title_display": "А. А. Зализняк Начало лекции по санскриту 18 декабря 2010 г",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Начало лекции по санскриту 18 декабря 2010 г.",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=8pF86C0qoOs",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "104",
+      "youtube_id": "fHEpCOpieBg",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-10-21112015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 10 21112015",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 10. 21.11.2015",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=fHEpCOpieBg",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "105",
+      "youtube_id": "p_2gPOxRzNQ",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-11-28112015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 11 28112015",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 11. 28.11.2015",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=p_2gPOxRzNQ",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "106",
+      "youtube_id": "b2iEGo1zJaY",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-12-05122015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 12 05122015",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 12. 05.12.2015",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=b2iEGo1zJaY",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "107",
+      "youtube_id": "x7QR2a8bCOI",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-13-12122015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 13 12122015",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 13. 12.12.2015",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=x7QR2a8bCOI",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "108",
+      "youtube_id": "USk4wmZK-8U",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-13-30042016",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 13 30042016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 13. 30.04.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=USk4wmZK-8U",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "109",
+      "youtube_id": "NRd6Aua4CKo",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-14-19122015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 14 19122015",
+      "decision": "accepted_generated",
+      "evidence": []
+    },
+    {
+      "accession": "110",
+      "youtube_id": "BVi1hQPY-cQ",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-15-13022016",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 15 13022016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 15. 13.02.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=BVi1hQPY-cQ",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "111",
+      "youtube_id": "sFNo06IsUAE",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-16-22022016",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 16 22022016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 16. 22.02.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=sFNo06IsUAE",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "112",
+      "youtube_id": "0zMwn0H95Ks",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-17-27022016",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 17 27022016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 17. 27.02.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=0zMwn0H95Ks",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "113",
+      "youtube_id": "pjd_mKDoJuA",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-18-05032016",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 18 05032016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 18. 05.03.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=pjd_mKDoJuA",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "114",
+      "youtube_id": "5G_x7XwWmgo",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-20-19032016",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 20 19032016",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 20. 19.03.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=5G_x7XwWmgo",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "115",
+      "youtube_id": "GgIxLPPC7uA",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-22-230416",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 22 230416",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 22. 23.04.16",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=GgIxLPPC7uA",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "116",
+      "youtube_id": "k3XJBG7jgzk",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-3-260915",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 3 260915",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 3. 26.09.15",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=k3XJBG7jgzk",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "117",
+      "youtube_id": "x2HbNS8OCqY",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-6-17102015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 6 17102015",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 6. 17.10.2015",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=x2HbNS8OCqY",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "118",
+      "youtube_id": "L3b1APWXOws",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-7-311015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 7 311015",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 7. 31.10.15",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=L3b1APWXOws",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "119",
+      "youtube_id": "G2Dj7e8HHeo",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-8-07112015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 8 07112015",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 8. 07.11.2015",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=G2Dj7e8HHeo",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "120",
+      "youtube_id": "DiH4bfrKlk0",
+      "title_source": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-9-13112015",
+      "generated_title_display": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 9 13112015",
+      "decision": "overridden",
+      "title_display": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 9. 13.11.2015",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=DiH4bfrKlk0",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "124",
+      "youtube_id": "RZW_tDZnvJo",
+      "title_source": "Академик-А-А-Зализняк-о-санскритском-корне-jR",
+      "generated_title_display": "Академик А. А. Зализняк о санскритском корне jR",
+      "decision": "overridden",
+      "title_display": "Академик А. А. Зализняк о санскритском корне jR",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=RZW_tDZnvJo",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "125",
+      "youtube_id": "EcpmjEdjzUY",
+      "title_source": "Грамматический-строй-санскрита-2014-2015-гг-Лекция-2-20-сентября-2014-г",
+      "generated_title_display": "Грамматический строй санскрита 2014 2015 гг Лекция 2 20 сентября 2014 г",
+      "decision": "overridden",
+      "title_display": "Грамматический строй санскрита. 2014-2015 гг. Лекция 2. 20 сентября 2014 г.",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=EcpmjEdjzUY",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "126",
+      "youtube_id": "X3nZS4YoeT0",
+      "title_source": "Грамматический-строй-санскрита-2014-2015-гг-Лекция-4-04102014",
+      "generated_title_display": "Грамматический строй санскрита 2014 2015 гг Лекция 4 04102014",
+      "decision": "overridden",
+      "title_display": "Грамматический строй санскрита. 2014-2015 гг. Лекция 4. 04.10.2014",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=X3nZS4YoeT0",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "127",
+      "youtube_id": "o4DFvnwjXyg",
+      "title_source": "Грамматический-строй-санскрита-2014-2015-гг-Лекция-5-11-10-2014",
+      "generated_title_display": "Грамматический строй санскрита 2014 2015 гг Лекция 5 11 10 2014",
+      "decision": "overridden",
+      "title_display": "Грамматический строй санскрита. 2014-2015 гг. Лекция 5. 11. 10. 2014.",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=o4DFvnwjXyg",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "128",
+      "youtube_id": "_x0FFVA-QGw",
+      "title_source": "Перед-лекцией-академика-А-А-Зализняка-Октябрь-2017-г-ГЗ-МГУ",
+      "generated_title_display": "Перед лекцией академика А. А. Зализняка Октябрь 2017 г ГЗ МГУ",
+      "decision": "overridden",
+      "title_display": "Перед лекцией академика А. А. Зализняка. Октябрь 2017 г., ГЗ МГУ",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=_x0FFVA-QGw",
+          "label": "YouTube title (oEmbed)",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    }
+  ],
+  "overrides": [
+    {
+      "accession": "046",
+      "youtube_id": "Tz3T7IxsbLU",
+      "title_display": "Зализняк. История русского ударения. Семинар 6. 15.10.2016",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=Tz3T7IxsbLU",
+          "label": "YouTube title",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "054",
+      "youtube_id": "xIoXVxahvDY",
+      "title_display": "Зализняк. История русского ударения. Семинар 22. 25.03.2017",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=xIoXVxahvDY",
+          "label": "YouTube title",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "176",
+      "youtube_id": "spqW9cz7Gk0",
+      "contributors": [
+        {
+          "name": "А. А. Зализняк",
+          "role": "lecturer"
+        }
+      ],
+      "date_recorded": "2017-05-20",
+      "upload_date": "2019-10-26",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=spqW9cz7Gk0",
+          "label": "YouTube metadata",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "upload_date"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "contributors",
+            "date_recorded"
+          ]
+        }
+      ]
+    }
+  ],
+  "reconciled_records": [
+    {
+      "source_row": 49,
+      "status": "reconciled",
+      "canonical_accession": "072",
+      "youtube_id": "qWzBIm7x1Xc",
+      "public_summary": "Reconciled to canonical accession 072 (qWzBIm7x1Xc) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=qWzBIm7x1Xc",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 50,
+      "status": "reconciled",
+      "canonical_accession": "066",
+      "youtube_id": "l2TB7AY5Tus",
+      "public_summary": "Reconciled to canonical accession 066 (l2TB7AY5Tus) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=l2TB7AY5Tus",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 58,
+      "status": "reconciled",
+      "canonical_accession": "054",
+      "youtube_id": "xIoXVxahvDY",
+      "public_summary": "Reconciled to canonical accession 054 (xIoXVxahvDY) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=xIoXVxahvDY",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 59,
+      "status": "reconciled",
+      "canonical_accession": "069",
+      "youtube_id": "VKDg5GQdzkw",
+      "public_summary": "Reconciled to canonical accession 069 (VKDg5GQdzkw) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=VKDg5GQdzkw",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 60,
+      "status": "reconciled",
+      "canonical_accession": "074",
+      "youtube_id": "_qtOnaehHOc",
+      "public_summary": "Reconciled to canonical accession 074 (_qtOnaehHOc) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=_qtOnaehHOc",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 62,
+      "status": "reconciled",
+      "canonical_accession": "046",
+      "youtube_id": "Tz3T7IxsbLU",
+      "public_summary": "Reconciled to canonical accession 046 (Tz3T7IxsbLU) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=Tz3T7IxsbLU",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 63,
+      "status": "reconciled",
+      "canonical_accession": "055",
+      "youtube_id": "cJp5ZrnGivw",
+      "public_summary": "Reconciled to canonical accession 055 (cJp5ZrnGivw) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=cJp5ZrnGivw",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 64,
+      "status": "reconciled",
+      "canonical_accession": "082",
+      "youtube_id": "E5jSUrve0Ps",
+      "public_summary": "Reconciled to canonical accession 082 (E5jSUrve0Ps) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=E5jSUrve0Ps",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 65,
+      "status": "reconciled",
+      "canonical_accession": "070",
+      "youtube_id": "7ODUHMh-4-o",
+      "public_summary": "Reconciled to canonical accession 070 (7ODUHMh-4-o) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=7ODUHMh-4-o",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 67,
+      "status": "reconciled",
+      "canonical_accession": "071",
+      "youtube_id": "ATtkvTx6_4o",
+      "public_summary": "Reconciled to canonical accession 071 (ATtkvTx6_4o) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=ATtkvTx6_4o",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 68,
+      "status": "reconciled",
+      "canonical_accession": "073",
+      "youtube_id": "g8SdQX2JyCA",
+      "public_summary": "Reconciled to canonical accession 073 (g8SdQX2JyCA) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=g8SdQX2JyCA",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 69,
+      "status": "reconciled",
+      "canonical_accession": "076",
+      "youtube_id": "MiICdcfRCv0",
+      "public_summary": "Reconciled to canonical accession 076 (MiICdcfRCv0) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=MiICdcfRCv0",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 70,
+      "status": "reconciled",
+      "canonical_accession": "087",
+      "youtube_id": "q-_9DQqHCho",
+      "public_summary": "Reconciled to canonical accession 087 (q-_9DQqHCho) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=q-_9DQqHCho",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 73,
+      "status": "reconciled",
+      "canonical_accession": "070",
+      "youtube_id": "7ODUHMh-4-o",
+      "public_summary": "Reconciled to canonical accession 070 (7ODUHMh-4-o) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=7ODUHMh-4-o",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "reconciliation"
+          ]
+        }
+      ]
+    }
+  ],
+  "unresolved_research": [
+    {
+      "source_row": 49,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 072 (qWzBIm7x1Xc) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=qWzBIm7x1Xc",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 50,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 066 (l2TB7AY5Tus) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=l2TB7AY5Tus",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 58,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 054 (xIoXVxahvDY) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=xIoXVxahvDY",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 59,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 069 (VKDg5GQdzkw) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=VKDg5GQdzkw",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 60,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 074 (_qtOnaehHOc) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=_qtOnaehHOc",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 62,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 046 (Tz3T7IxsbLU) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=Tz3T7IxsbLU",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 63,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 055 (cJp5ZrnGivw) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=cJp5ZrnGivw",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 64,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 082 (E5jSUrve0Ps) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=E5jSUrve0Ps",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 65,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 070 (7ODUHMh-4-o) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=7ODUHMh-4-o",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 66,
+      "status": "unresolved",
+      "public_summary": "The source title is internally contradictory: seminar 25 corresponds to 29.04.2017 (Z7ffIHNqvnU, accession 081), while 13.05.2017 corresponds to seminar 27 (E5jSUrve0Ps, accession 082).",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=Z7ffIHNqvnU",
+          "label": "YouTube video: seminar 25",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=E5jSUrve0Ps",
+          "label": "YouTube video: seminar 27",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 67,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 071 (ATtkvTx6_4o) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=ATtkvTx6_4o",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 68,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 073 (g8SdQX2JyCA) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=g8SdQX2JyCA",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 69,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 076 (MiICdcfRCv0) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=MiICdcfRCv0",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 70,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 087 (q-_9DQqHCho) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=q-_9DQqHCho",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 73,
+      "status": "resolved",
+      "public_summary": "Resolved to canonical accession 070 (7ODUHMh-4-o) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=7ODUHMh-4-o",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    },
+    {
+      "source_row": 75,
+      "status": "resolved",
+      "public_summary": "Resolved as new canonical accession 176 (spqW9cz7Gk0) using public YouTube and MathNet evidence.",
+      "checked_at": "2026-08-04",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=spqW9cz7Gk0",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        },
+        {
+          "url": "https://www.mathnet.ru/rus/person9125",
+          "label": "MathNet person and event record",
+          "accessed_at": "2026-08-04",
+          "supports": [
+            "public_summary"
+          ]
+        }
+      ]
+    }
+  ]
+}
