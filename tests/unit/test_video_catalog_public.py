@@ -14,6 +14,8 @@ from scripts.build_video_catalog_public import (
     DEFAULT_SNAPSHOT,
     build_catalog,
     dump_json,
+    humanize_display_title,
+    is_filename_like_title,
     load_json,
     validate_catalog,
 )
@@ -85,6 +87,24 @@ class PublicVideoCatalogTests(unittest.TestCase):
         catalog["videos"][0]["title_display"] = "private/final-video.mp4"
         with self.assertRaisesRegex(CatalogValidationError, "filename-like title_display"):
             validate_catalog(catalog)
+
+    def test_rejects_hyphen_delimited_source_name_as_display(self):
+        raw = "А-А-Зализняк-Грамматический-строй-санскрита-Лекция-1-13-09-2014-МГУ"
+        self.assertTrue(is_filename_like_title(raw))
+        catalog = self.mutated()
+        catalog["videos"][0]["title_display"] = raw
+        with self.assertRaisesRegex(CatalogValidationError, "filename-like title_display"):
+            validate_catalog(catalog)
+
+    def test_humanizes_filename_style_without_changing_title_source(self):
+        raw = "А-А-Зализняк-Грамматический-строй-санскрита-Лекция-1-13-09-2014-МГУ"
+        self.assertEqual(
+            humanize_display_title(raw),
+            "А. А. Зализняк Грамматический строй санскрита Лекция 1 13 09 2014 МГУ",
+        )
+        video = next(item for item in self.catalog["videos"] if item["accession"] == "060")
+        self.assertEqual(video["title_source"], raw)
+        self.assertEqual(video["title_display"], humanize_display_title(raw))
 
 
 if __name__ == "__main__":

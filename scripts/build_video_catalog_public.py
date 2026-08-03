@@ -110,6 +110,31 @@ class CatalogValidationError(ValueError):
     """Raised when the public export violates its data contract."""
 
 
+def is_filename_like_title(title: str) -> bool:
+    """Return true for path/extension names or obvious hyphen-delimited slugs."""
+    stripped = title.strip()
+    if FILENAME_TITLE_RE.search(stripped):
+        return True
+    hyphens = stripped.count("-")
+    whitespace = sum(character.isspace() for character in stripped)
+    return hyphens >= 4 and whitespace <= 1
+
+
+def humanize_display_title(title_source: str) -> str:
+    """Conservatively turn obvious filename-style hyphen slugs into display text."""
+    title = title_source.strip()
+    if not is_filename_like_title(title):
+        return title
+    title = re.sub(r"-+", " ", title)
+    title = re.sub(r"\s+", " ", title).strip()
+    title = re.sub(
+        r"\b([А-ЯЁA-Z])\s+([А-ЯЁA-Z])\s+(?=[А-ЯЁA-Z][а-яёa-z])",
+        r"\1. \2. ",
+        title,
+    )
+    return title
+
+
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -207,7 +232,7 @@ def validate_catalog(catalog: dict[str, Any]) -> None:
         title = video["title_display"]
         if not isinstance(title, str) or not title.strip():
             raise CatalogValidationError(f"{where}: title_display must be non-empty")
-        if FILENAME_TITLE_RE.search(title.strip()):
+        if is_filename_like_title(title):
             raise CatalogValidationError(f"{where}: filename-like title_display")
         duration = video["duration_seconds"]
         if duration is not None and (type(duration) is not int or duration <= 0):
@@ -354,7 +379,7 @@ def build_catalog(
             "youtube_id": youtube_id,
             "watch_url": f"https://www.youtube.com/watch?v={youtube_id}",
             "title_source": app_video["title"],
-            "title_display": app_video["title"],
+            "title_display": humanize_display_title(app_video["title"]),
             "duration_seconds": pipeline_video.get("duration_sec"),
             "topics": [topic] if topic else [],
             "type": pipeline_video.get("type"),
