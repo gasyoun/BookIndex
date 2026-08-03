@@ -5,12 +5,12 @@
   "snapshot_at": "2026-08-03T00:00:00Z",
   "census": {
     "source_rows": 192,
-    "videos": 175,
-    "unique_youtube_ids": 175,
-    "unresolved_records": 16,
+    "videos": 176,
+    "unique_youtube_ids": 176,
+    "unresolved_records": 15,
     "related_resources": 1
   },
-  "title_reconciliation": "All 175 first-occurrence sheet titles exactly matched app_data.json video_catalog titles at snapshot time; app_data.json therefore supplies the public display title offline.",
+  "title_reconciliation": "The original 175 first-occurrence sheet titles matched app_data.json at snapshot time. Public research added source row 75 as accession 176; app_data.json supplies canonical source titles offline.",
   "duplicate_records": [
     {"source_row": 49, "youtube_id": "Tz3T7IxsbLU", "title_display": "Зализняк. История русского ударения. 11.02.2017 Семинар 16"},
     {"source_row": 50, "youtube_id": "Tz3T7IxsbLU", "title_display": "Зализняк. История русского ударения. 16 10 22 семинар 07"},
@@ -26,8 +26,7 @@
     {"source_row": 68, "youtube_id": "Tz3T7IxsbLU", "title_display": "Зализняк. История русского ударения. 18.02.2017 Семинар 17"},
     {"source_row": 69, "youtube_id": "xIoXVxahvDY", "title_display": "Зализняк. История русского ударения. 11.03.2017 Семинар 20"},
     {"source_row": 70, "youtube_id": "Tz3T7IxsbLU", "title_display": "Зализняк. История русского ударения 16 11 05 семинар 09"},
-    {"source_row": 73, "youtube_id": "cJp5ZrnGivw", "title_display": "Зализняк. История русского ударения. 10.12.2016 Семинар 14"},
-    {"source_row": 75, "youtube_id": "xIoXVxahvDY", "title_display": "Зализняк. История русского ударения. 20.05.2017. Семинар 28"}
+    {"source_row": 73, "youtube_id": "cJp5ZrnGivw", "title_display": "Зализняк. История русского ударения. 10.12.2016 Семинар 14"}
   ],
   "related_resources": [
     {

@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gasyoun.github.io/BookIndex/schemas/video_catalog_public.v2.schema.json",
+  "title": "BookIndex public video catalog evidence export v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "version", "built_at", "source", "stats", "videos", "unresolved_records",
+    "reconciled_records", "related_resources"
+  ],
+  "properties": {
+    "schema": {"const": "video_catalog_public/2"},
+    "version": {"const": 2},
+    "built_at": {"type": "string", "format": "date-time"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sheet_url", "sheet_gid", "snapshot_file", "snapshot_at", "accession_registry",
+        "canonical_inputs", "editorial_file"
+      ],
+      "properties": {
+        "sheet_url": {"type": "string", "format": "uri"},
+        "sheet_gid": {"type": "string"},
+        "snapshot_file": {"type": "string"},
+        "snapshot_at": {"type": "string", "format": "date-time"},
+        "accession_registry": {"type": "string"},
+        "canonical_inputs": {"type": "array", "items": {"type": "string"}},
+        "editorial_file": {"const": "data/video_catalog_editorial.json"}
+      }
+    },
+    "stats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_rows", "videos", "unique_youtube_ids", "unresolved_records",
+        "reconciled_records", "related_resources"
+      ],
+      "properties": {
+        "source_rows": {"type": "integer", "minimum": 0},
+        "videos": {"type": "integer", "minimum": 0},
+        "unique_youtube_ids": {"type": "integer", "minimum": 0},
+        "unresolved_records": {"type": "integer", "minimum": 0},
+        "reconciled_records": {"type": "integer", "minimum": 0},
+        "related_resources": {"type": "integer", "minimum": 0}
+      }
+    },
+    "videos": {"type": "array", "items": {"$ref": "#/$defs/video"}},
+    "unresolved_records": {"type": "array", "items": {"$ref": "#/$defs/unresolved"}},
+    "reconciled_records": {"type": "array", "items": {"$ref": "#/$defs/reconciliation"}},
+    "related_resources": {"type": "array", "items": {"$ref": "#/$defs/resource"}}
+  },
+  "$defs": {
+    "iso_date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "label", "accessed_at", "supports"],
+      "properties": {
+        "url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "label": {"type": "string", "minLength": 1},
+        "accessed_at": {"$ref": "#/$defs/iso_date"},
+        "supports": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "title_display", "contributors", "date_recorded", "upload_date", "topics",
+              "type", "purpose", "transcript_status", "transcript_url", "public_note"
+            ]
+          }
+        }
+      }
+    },
+    "contributor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "role"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "role": {
+          "enum": ["speaker", "lecturer", "interviewer", "moderator", "participant", "host"]
+        }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["head", "type"],
+      "properties": {
+        "head": {"type": "string"},
+        "type": {"type": "string"},
+        "t": {"type": "integer"},
+        "src": {"type": "string"}
+      }
+    },
+    "video": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "accession", "youtube_id", "watch_url", "title_source", "title_display", "duration_seconds",
+        "topics", "type", "purpose", "transcript_status", "related_entities", "last_verified_at", "evidence"
+      ],
+      "properties": {
+        "accession": {"type": "string", "pattern": "^[0-9]{3}$"},
+        "youtube_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{11}$"},
+        "watch_url": {"type": "string", "format": "uri"},
+        "title_source": {"type": "string", "minLength": 1},
+        "title_display": {"type": "string", "minLength": 1},
+        "contributors": {"type": "array", "items": {"$ref": "#/$defs/contributor"}},
+        "date_recorded": {"$ref": "#/$defs/iso_date"},
+        "upload_date": {"$ref": "#/$defs/iso_date"},
+        "duration_seconds": {"type": ["integer", "null"], "minimum": 1},
+        "topics": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "type": {"type": ["string", "null"]},
+        "purpose": {"type": ["string", "null"]},
+        "transcript_status": {
+          "enum": ["unknown", "none", "automatic", "partial", "checked", "edited", "published", "problem"]
+        },
+        "transcript_url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "public_note": {"type": "string"},
+        "related_entities": {"type": "array", "items": {"$ref": "#/$defs/entity"}},
+        "last_verified_at": {"oneOf": [{"$ref": "#/$defs/iso_date"}, {"type": "null"}]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "unresolved_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "label", "accessed_at", "supports"],
+      "properties": {
+        "url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "label": {"type": "string", "minLength": 1},
+        "accessed_at": {"$ref": "#/$defs/iso_date"},
+        "supports": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"const": "public_summary"}
+        }
+      }
+    },
+    "unresolved": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_row", "reason", "youtube_id", "title_display", "canonical_accession",
+        "status", "public_summary", "checked_at", "evidence"
+      ],
+      "properties": {
+        "source_row": {"type": "integer", "minimum": 1},
+        "reason": {"type": "string"},
+        "youtube_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{11}$"},
+        "title_display": {"type": "string"},
+        "canonical_accession": {"type": "string", "pattern": "^[0-9]{3}$"},
+        "status": {"const": "unresolved"},
+        "public_summary": {"type": "string", "minLength": 1},
+        "checked_at": {"$ref": "#/$defs/iso_date"},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/unresolved_evidence"}}
+      }
+    },
+    "reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_row", "status", "canonical_accession", "youtube_id", "public_summary",
+        "checked_at", "evidence", "source_youtube_id", "source_title_display"
+      ],
+      "properties": {
+        "source_row": {"type": "integer", "minimum": 1},
+        "status": {"const": "reconciled"},
+        "canonical_accession": {"type": "string", "pattern": "^[0-9]{3}$"},
+        "youtube_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{11}$"},
+        "source_youtube_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{11}$"},
+        "source_title_display": {"type": "string"},
+        "public_summary": {"type": "string", "minLength": 1},
+        "checked_at": {"$ref": "#/$defs/iso_date"},
+        "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/reconciliation_evidence"}}
+      }
+    },
+    "reconciliation_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "label", "accessed_at", "supports"],
+      "properties": {
+        "url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "label": {"type": "string", "minLength": 1},
+        "accessed_at": {"$ref": "#/$defs/iso_date"},
+        "supports": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"const": "reconciliation"}
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_row", "title_display", "url", "resource_type"],
+      "properties": {
+        "source_row": {"type": "integer", "minimum": 1},
+        "title_display": {"type": "string"},
+        "url": {"type": "string", "format": "uri"},
+        "resource_type": {"type": "string"}
+      }
+    }
+  }
+}
