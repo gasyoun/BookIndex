@@ -59,6 +59,26 @@ test.describe('video gallery (B3.5)', () => {
     await expect.poll(async () => page.locator('#vg-list .vg-card').count()).toBeLessThan(all);
     await expect(page.locator('#vg-list')).toContainText('арабск', { ignoreCase: true });
   });
+
+  test('controls carry accessible names and the result count is a live region', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/materials/video');
+    await expect(page.locator('#vg-search')).toHaveAttribute('aria-label', /.+/);
+    await expect(page.locator('#vg-chapter')).toHaveAttribute('aria-label', /.+/);
+    await expect(page.locator('#vg-sort')).toHaveAttribute('aria-label', /.+/);
+    await expect(page.locator('#vg-meta')).toHaveAttribute('role', 'status');
+    await expect(page.locator('#vg-meta')).toHaveAttribute('aria-live', 'polite');
+  });
+
+  test('empty search shows an empty state with a working reset', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/materials/video');
+    const all = await page.locator('#vg-list .vg-card').count();
+    await page.locator('#vg-search').fill('zzzznonexistentquery');
+    await expect(page.locator('.vg-empty')).toBeVisible();
+    await expect(page.locator('#vg-list .vg-card')).toHaveCount(0);
+    await page.locator('.vg-empty-reset').click();
+    await expect.poll(async () => page.locator('#vg-list .vg-card').count()).toBe(all);
+    await expect(page.locator('#vg-search')).toBeFocused();
+  });
 });
 
 test.describe('video detail card (H1604 / B4 residual)', () => {

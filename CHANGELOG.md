@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- **Video gallery a11y + honest copy (H2123, Sonnet 5 (`claude-sonnet-5`)):** `#vg-search`/`#vg-chapter`/`#vg-sort` carry `aria-label`; `:focus-visible` ring on `.vg-input`/`.vg-card-title`/`.vg-chip`/`.video-detail-back`/`.video-detail-yt`; `#vg-meta` is now `role="status" aria-live="polite"`; empty-filter state with a reset-and-refocus button; default sort switched `date-desc` → `title` (only 33/175 rows carry a `date`); undated cards show «дата неизвестна»; intro copy no longer claims in-card timecodes. 2 new `tests/e2e/session-features.spec.js` cases. Details: `RESULTS_LOG.md` § H2123.
 
 ## [4.11.0] - 2026-08-02
 ### Added
