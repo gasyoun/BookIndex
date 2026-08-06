@@ -351,4 +351,36 @@ One stratified batch of **88** missing-context items received direct `contexts` 
 - Technical/OCR heads (`RgH`, `Tj`, `UJ`, `ˀи`…) marked as needing source-table verification.
 - Direct coverage still below the 35% *direct* aspirational band; effective coverage now clears 35%.
 
+## H2137 — H2122 dual-run compare (Sonnet independent re-check) (2026-08-06)
+
+**Model:** Sonnet 5 (`claude-sonnet-5`).
+**Handoff:** [H2137](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2137-Sonnet_BookIndex_h2122-grok-dual-run-compare_01.08.26.md) — dual-run residual for [H2122](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2122-Sonnet_BookIndex_video-catalog-id-collisions-v0_01.08.26.md) (Grok 4.5 override lane, [#193](https://github.com/gasyoun/BookIndex/pull/193)).
+
+### Independent re-execution on current `main` (post-#193, post-#213, post-4.11.2)
+
+- `python -m unittest tests.unit.test_validate_video_catalog` → **OK**, 6/6 (duplicate-id fixture, id↔URL-mismatch fixture, extractor unit tests).
+- `python scripts/validate_content.py app_data.json` → **OK**, 0 errors, 0 warnings.
+- `python scripts/dedupe_video_catalog_v0.py app_data.json --dry-run` (re-run against current data) → `raw=176 unique=176 dropped=0` — **idempotent**, confirms zero residual collisions.
+- Traced [`docs/history/H2122_video_catalog_collision_census.json`](https://github.com/gasyoun/BookIndex/blob/main/docs/history/H2122_video_catalog_collision_census.json) against [`scripts/dedupe_video_catalog_v0.py`](https://github.com/gasyoun/BookIndex/blob/main/scripts/dedupe_video_catalog_v0.py)'s algorithm: for all 3 collision ids (`Tz3T7IxsbLU`, `xIoXVxahvDY`, `cJp5ZrnGivw`) every dropped row has `related_entities_count = 7`, matching the kept survivor's own count — a genuine tie, so "first wins on ties" correctly kept the lowest `source_index` in each group (45, 55, 59). No richer-but-dropped row exists in any group. Survivor choice independently confirmed correct.
+- 16 dropped titles in the census artifact match the commit message's stated count exactly (16/16); issue [#192](https://github.com/gasyoun/BookIndex/issues/192) tracks them per the original commit — not re-fetched here (GitHub API rate-limited during this pass; census JSON is the durable source of truth and is internally consistent).
+
+### Count drift explained (not a defect)
+
+- H2122's own numbers: 191→175 unique. Current `app_data.json` shows `video_catalog` len=176 (176/176 unique, `python -m unittest` guard still passes). Traced via `git log`: commit `96ddecf54` ("ai-wip: add evidence-backed video catalog v2", 2026-08-04) added ONE new, non-colliding video (`spqW9cz7Gk0`) after the H2122 merge — unrelated to the dedupe fix, correctly unique. 175→176 drift is legitimate content growth, not a regression of the collision fix.
+
+### Runtime dedup note (pre-existing, not introduced by H2122)
+
+- `getDedupedVideoCatalog()` in the built frontend bundle already deduped `APP_DATA.video_catalog` at render time by the same "richest `related_entities`, first-on-ties" policy *before* H2122 landed — so the 3 id collisions were likely already invisible to end users in the rendered gallery. H2122's value is a correct single source of truth (search index, static prerender, `validate_content.py` guard) rather than a user-visible bug fix. Worth knowing, not a finding that changes the verdict.
+
+### `/dual-run-salvage` comparison
+
+| Item | Class | Notes |
+| --- | --- | --- |
+| Survivor selection (3 collision groups) | **identical** | Independently traced algorithm + census data agree with Grok's PR #193 result |
+| Guard (`validate_video_catalog`) + unit tests | **identical** | Re-run clean, 6/6 pass |
+| Dropped-titles tracking (16, issue #192) | **identical** | Count matches; issue body not re-fetched (rate-limited) |
+| Catalog row count (175 vs 176 seen now) | **net-new, unrelated** | Legitimate later addition (`96ddecf54`), not a conflict with H2122 |
+
+**Conflicts:** none. **Keep-best verdict:** keep the merged #193 lane as-is — independent Sonnet re-check finds no correctness gap and no better fix. No code changes landed for this handoff.
+
 _Dr. Mārcis Gasūns_
