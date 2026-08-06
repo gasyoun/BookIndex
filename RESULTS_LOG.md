@@ -2,6 +2,19 @@
 
 _Created: 24-07-2026 · Last updated: 06-08-2026_
 
+## H2124 — video gallery V1b: dense list default + optional thumbs toggle (2026-08-06)
+
+Implementation Step 3 (V1b) of [PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md) — D2 ruling (dense research list is the default; thumbs are a toggle, not the default).
+
+- `#vg-list` now renders `.vg-list-dense` (full-width compact rows: title, meta, chips) by default; a new `«Превью»` checkbox next to the sort control switches it to `.vg-list-thumbs` (the prior grid-of-cards layout).
+- Thumbs are lazily created only when the toggle is on — `<img class="vg-card-thumb" loading="lazy" alt="">` pointed at `https://img.youtube.com/vi/<id>/mqdefault.jpg`; decorative (`alt=""`), title text stays the adjacent accessible label. No image requests fire in the default dense mode.
+- Preference persisted to `localStorage` under `bookindex.vg.thumbs` (plain try/catch-guarded key, matching this file's existing storage pattern; no dedicated storage-helper module exists in this codebase to reuse) and re-applied on load.
+- No stagger/entry animation added; no `transition: all` used anywhere in the new CSS.
+- `tests/e2e/session-features.spec.js` (`video gallery (B3.5)` describe block): 2 new cases — dense-default/toggle/persist-across-reload, and a 390px-viewport no-horizontal-overflow check for both dense and thumbs modes. Full `video gallery` slice: 5/5 passed locally (Playwright, chromium); full repo `npm run check` run alongside this PR.
+
+**Model:** Sonnet 5 (`claude-sonnet-5`).
+**Handoff:** [H2124](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2124-Sonnet_BookIndex_video-gallery-dense-list-thumbs_01.08.26.md).
+
 ## H2123 — video gallery V1a: labels, focus-visible, live meta, empty state, honest copy (2026-08-06)
 
 Implementation Step 2 (V1a) of [PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md), addressing findings 2, 3, 5, 8 of [INTERFACE_REVIEW_VIDEO_GALLERY_JAKUB_SKILLS_01.08.2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/INTERFACE_REVIEW_VIDEO_GALLERY_JAKUB_SKILLS_01.08.2026.md).

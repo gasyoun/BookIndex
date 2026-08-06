@@ -79,6 +79,39 @@ test.describe('video gallery (B3.5)', () => {
     await expect.poll(async () => page.locator('#vg-list .vg-card').count()).toBe(all);
     await expect(page.locator('#vg-search')).toBeFocused();
   });
+
+  test('defaults to dense rows and the "Превью" toggle switches to thumbs, persisting across reload', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/materials/video');
+    await expect(page.locator('#vg-list')).toHaveClass(/vg-list-dense/);
+    await expect(page.locator('#vg-list .vg-card-thumb')).toHaveCount(0);
+
+    const toggle = page.locator('#vg-thumbs-toggle');
+    await expect(toggle).not.toBeChecked();
+    await toggle.check();
+    await expect(page.locator('#vg-list')).toHaveClass(/vg-list-thumbs/);
+    const firstThumb = page.locator('#vg-list .vg-card-thumb').first();
+    await expect(firstThumb).toBeVisible();
+    await expect(firstThumb).toHaveAttribute('alt', '');
+    await expect(firstThumb).toHaveAttribute('loading', 'lazy');
+    await expect(firstThumb).toHaveAttribute('src', /img\.youtube\.com\/vi\/.+\/mqdefault\.jpg/);
+
+    await page.reload();
+    await expect(page.locator('#vg-list')).toHaveClass(/vg-list-thumbs/);
+    await expect(page.locator('#vg-thumbs-toggle')).toBeChecked();
+  });
+
+  test('no horizontal overflow at mobile width (390) in dense or thumbs mode', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/aaz-index.html#v4/materials/video');
+    await expect(page.locator('#vg-list')).toHaveClass(/vg-list-dense/);
+    let overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+
+    await page.locator('#vg-thumbs-toggle').check();
+    await expect(page.locator('#vg-list')).toHaveClass(/vg-list-thumbs/);
+    overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  });
 });
 
 test.describe('video detail card (H1604 / B4 residual)', () => {
