@@ -2831,10 +2831,24 @@
     font-size: 12px;
     margin-bottom: 10px;
   }
-  .video-gallery-list {
+  .vg-thumbs-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--muted, #6d645a);
+    cursor: pointer;
+    user-select: none;
+  }
+  .video-gallery-list.vg-list-thumbs {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 12px;
+  }
+  .video-gallery-list.vg-list-dense {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
   .vg-card {
     border: 1px solid var(--line, #d4c8b0);
@@ -2844,6 +2858,24 @@
     display: flex;
     flex-direction: column;
     gap: 7px;
+  }
+  .vg-list-dense .vg-card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    padding: 8px 12px;
+  }
+  .vg-list-dense .vg-card-chips {
+    flex: 1 1 100%;
+  }
+  .vg-card-thumb {
+    order: -1;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--line, #d4c8b0);
   }
   .vg-card-title {
     color: #8c3a15;

@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-9VKDAq0u/9iOC+7jj0Ycup6DKAcGRDVCaAA4dX9NyZQ=' 'sha256-+d44pXfM44T1lS/VybJFGzzUkw+70JTPOTeREYMpXlo='; worker-src 'self' blob:; style-src 'self' 'sha256-mU0Or85STCJBJWdsBzg+PTB4Uny0F7faBKgOABzXRPk='; style-src-elem 'self' 'sha256-mU0Or85STCJBJWdsBzg+PTB4Uny0F7faBKgOABzXRPk='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-hULg9mxChWeruy5LameIcdf0VHO3L18NKknVlBZph4U=' 'sha256-E8GgFBaeDN4c4tJx57XuUbovN+Ahy579X+NemoowyzA='; worker-src 'self' blob:; style-src 'self' 'sha256-wwsLHeheuIraacYlMdKdE99J0aOosLadEhOycE9qdjU='; style-src-elem 'self' 'sha256-wwsLHeheuIraacYlMdKdE99J0aOosLadEhOycE9qdjU='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -2851,10 +2851,24 @@
     font-size: 12px;
     margin-bottom: 10px;
   }
-  .video-gallery-list {
+  .vg-thumbs-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--muted, #6d645a);
+    cursor: pointer;
+    user-select: none;
+  }
+  .video-gallery-list.vg-list-thumbs {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 12px;
+  }
+  .video-gallery-list.vg-list-dense {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
   .vg-card {
     border: 1px solid var(--line, #d4c8b0);
@@ -2864,6 +2878,24 @@
     display: flex;
     flex-direction: column;
     gap: 7px;
+  }
+  .vg-list-dense .vg-card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    padding: 8px 12px;
+  }
+  .vg-list-dense .vg-card-chips {
+    flex: 1 1 100%;
+  }
+  .vg-card-thumb {
+    order: -1;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--line, #d4c8b0);
   }
   .vg-card-title {
     color: #8c3a15;
@@ -6607,7 +6639,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "6cdc7da386e9",
+  "build_id": "dd8dbf8a0f18",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6915,7 +6947,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "6cdc7da386e9";
+	var APP_BUILD_ID$1 = "dd8dbf8a0f18";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7813,8 +7845,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "6cdc7da386e9").trim();
-		if (buildId && buildId !== "6cdc7da386e9") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "dd8dbf8a0f18").trim();
+		if (buildId && buildId !== "dd8dbf8a0f18") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -11866,7 +11898,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "6cdc7da386e9" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "dd8dbf8a0f18" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -17518,6 +17550,21 @@ var BookIndex = (function(exports) {
 		const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || ""));
 		return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
 	}
+	var VG_THUMBS_STORAGE_KEY = "bookindex.vg.thumbs";
+	function getVgThumbsPref() {
+		if (typeof localStorage === "undefined") return false;
+		try {
+			return localStorage.getItem(VG_THUMBS_STORAGE_KEY) === "1";
+		} catch (e) {
+			return false;
+		}
+	}
+	function setVgThumbsPref(on) {
+		if (typeof localStorage === "undefined") return;
+		try {
+			localStorage.setItem(VG_THUMBS_STORAGE_KEY, on ? "1" : "0");
+		} catch (e) {}
+	}
 	function renderVideoGalleryPanel(container) {
 		const detailId = getCurrentVideoId();
 		if (detailId) {
@@ -17539,15 +17586,18 @@ var BookIndex = (function(exports) {
         <option value="dur-desc">сначала длинные</option>
         <option value="dur-asc">сначала короткие</option>
       </select>
+      <label class="vg-thumbs-toggle" for="vg-thumbs-toggle"><input type="checkbox" id="vg-thumbs-toggle" class="vg-thumbs-input"> Превью</label>
     </div>
     <div id="vg-meta" class="video-gallery-meta" role="status" aria-live="polite"></div>
-    <div id="vg-list" class="video-gallery-list"></div>
+    <div id="vg-list" class="video-gallery-list vg-list-dense"></div>
   </div></div>`;
 		const searchEl = container.querySelector("#vg-search");
 		const chapterEl = container.querySelector("#vg-chapter");
 		const sortEl = container.querySelector("#vg-sort");
 		const metaEl = container.querySelector("#vg-meta");
 		const listEl = container.querySelector("#vg-list");
+		const thumbsEl = container.querySelector("#vg-thumbs-toggle");
+		thumbsEl.checked = getVgThumbsPref();
 		const render = () => {
 			const q = clampUiInput(searchEl.value || "", MAX_LIST_QUERY_LENGTH).trim().toLowerCase();
 			const chapterIdx = parseInt(chapterEl.value, 10);
@@ -17567,6 +17617,7 @@ var BookIndex = (function(exports) {
 				return String(a.title || "").localeCompare(String(b.title || ""), "ru");
 			});
 			metaEl.textContent = `Показано ${vids.length} из ${catalog.length} видео.`;
+			listEl.className = `video-gallery-list ${thumbsEl.checked ? "vg-list-thumbs" : "vg-list-dense"}`;
 			listEl.textContent = "";
 			if (!vids.length) {
 				const empty = document.createElement("div");
@@ -17591,6 +17642,14 @@ var BookIndex = (function(exports) {
 				const card = document.createElement("div");
 				card.className = "vg-card";
 				const vidId = sanitizeVideoId(v.id) || String(v.id || "");
+				if (thumbsEl.checked && vidId) {
+					const thumb = document.createElement("img");
+					thumb.className = "vg-card-thumb";
+					thumb.loading = "lazy";
+					thumb.alt = "";
+					thumb.src = `https://img.youtube.com/vi/${vidId}/mqdefault.jpg`;
+					card.appendChild(thumb);
+				}
 				const link = document.createElement("a");
 				link.className = "vg-card-title";
 				link.href = buildVideoDetailHash(vidId);
@@ -17641,6 +17700,10 @@ var BookIndex = (function(exports) {
 		searchEl.oninput = render;
 		chapterEl.onchange = render;
 		sortEl.onchange = render;
+		thumbsEl.onchange = () => {
+			setVgThumbsPref(thumbsEl.checked);
+			render();
+		};
 		render();
 	}
 	function renderLecturesPanel(container) {

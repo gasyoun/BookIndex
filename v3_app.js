@@ -10755,6 +10755,21 @@ var BookIndex = (function(exports) {
 		const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || ""));
 		return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
 	}
+	var VG_THUMBS_STORAGE_KEY = "bookindex.vg.thumbs";
+	function getVgThumbsPref() {
+		if (typeof localStorage === "undefined") return false;
+		try {
+			return localStorage.getItem(VG_THUMBS_STORAGE_KEY) === "1";
+		} catch (e) {
+			return false;
+		}
+	}
+	function setVgThumbsPref(on) {
+		if (typeof localStorage === "undefined") return;
+		try {
+			localStorage.setItem(VG_THUMBS_STORAGE_KEY, on ? "1" : "0");
+		} catch (e) {}
+	}
 	function renderVideoGalleryPanel(container) {
 		const detailId = getCurrentVideoId();
 		if (detailId) {
@@ -10776,15 +10791,18 @@ var BookIndex = (function(exports) {
         <option value="dur-desc">сначала длинные</option>
         <option value="dur-asc">сначала короткие</option>
       </select>
+      <label class="vg-thumbs-toggle" for="vg-thumbs-toggle"><input type="checkbox" id="vg-thumbs-toggle" class="vg-thumbs-input"> Превью</label>
     </div>
     <div id="vg-meta" class="video-gallery-meta" role="status" aria-live="polite"></div>
-    <div id="vg-list" class="video-gallery-list"></div>
+    <div id="vg-list" class="video-gallery-list vg-list-dense"></div>
   </div></div>`;
 		const searchEl = container.querySelector("#vg-search");
 		const chapterEl = container.querySelector("#vg-chapter");
 		const sortEl = container.querySelector("#vg-sort");
 		const metaEl = container.querySelector("#vg-meta");
 		const listEl = container.querySelector("#vg-list");
+		const thumbsEl = container.querySelector("#vg-thumbs-toggle");
+		thumbsEl.checked = getVgThumbsPref();
 		const render = () => {
 			const q = clampUiInput(searchEl.value || "", MAX_LIST_QUERY_LENGTH).trim().toLowerCase();
 			const chapterIdx = parseInt(chapterEl.value, 10);
@@ -10804,6 +10822,7 @@ var BookIndex = (function(exports) {
 				return String(a.title || "").localeCompare(String(b.title || ""), "ru");
 			});
 			metaEl.textContent = `Показано ${vids.length} из ${catalog.length} видео.`;
+			listEl.className = `video-gallery-list ${thumbsEl.checked ? "vg-list-thumbs" : "vg-list-dense"}`;
 			listEl.textContent = "";
 			if (!vids.length) {
 				const empty = document.createElement("div");
@@ -10828,6 +10847,14 @@ var BookIndex = (function(exports) {
 				const card = document.createElement("div");
 				card.className = "vg-card";
 				const vidId = sanitizeVideoId(v.id) || String(v.id || "");
+				if (thumbsEl.checked && vidId) {
+					const thumb = document.createElement("img");
+					thumb.className = "vg-card-thumb";
+					thumb.loading = "lazy";
+					thumb.alt = "";
+					thumb.src = `https://img.youtube.com/vi/${vidId}/mqdefault.jpg`;
+					card.appendChild(thumb);
+				}
 				const link = document.createElement("a");
 				link.className = "vg-card-title";
 				link.href = buildVideoDetailHash(vidId);
@@ -10878,6 +10905,10 @@ var BookIndex = (function(exports) {
 		searchEl.oninput = render;
 		chapterEl.onchange = render;
 		sortEl.onchange = render;
+		thumbsEl.onchange = () => {
+			setVgThumbsPref(thumbsEl.checked);
+			render();
+		};
 		render();
 	}
 	function renderLecturesPanel(container) {
