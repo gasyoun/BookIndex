@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## [4.11.3] - 2026-08-06
 ### Added
 - **Video gallery dense list default + thumbs toggle (H2124, Sonnet 5 (`claude-sonnet-5`)):** `#vg-list` defaults to `.vg-list-dense` (compact full-width rows); a new `«Превью»` checkbox switches to `.vg-list-thumbs` (grid of cards with a lazy, decorative `mqdefault.jpg` thumbnail per card, `alt=""`). Preference persisted in `localStorage` (`bookindex.vg.thumbs`). No thumb requests fire in the default dense mode. 2 new `tests/e2e/session-features.spec.js` cases (dense-default/toggle/persist, 390px no-overflow). Details: `RESULTS_LOG.md` § H2124.
 
