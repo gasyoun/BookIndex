@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-uq5v58eT9PPXB+1q38XvnsQgCLq56ULqjdEVOtNjyl8=' 'sha256-mKr/wPxbk+pnsP57G56p23RlTV0RxC0VHR2MyqL+1bM='; worker-src 'self' blob:; style-src 'self' 'sha256-w6lZNNvrtDqnZ1sW8iMwPsgAQLq3JKjeajGISds0AyE='; style-src-elem 'self' 'sha256-w6lZNNvrtDqnZ1sW8iMwPsgAQLq3JKjeajGISds0AyE='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-9VKDAq0u/9iOC+7jj0Ycup6DKAcGRDVCaAA4dX9NyZQ=' 'sha256-+d44pXfM44T1lS/VybJFGzzUkw+70JTPOTeREYMpXlo='; worker-src 'self' blob:; style-src 'self' 'sha256-mU0Or85STCJBJWdsBzg+PTB4Uny0F7faBKgOABzXRPk='; style-src-elem 'self' 'sha256-mU0Or85STCJBJWdsBzg+PTB4Uny0F7faBKgOABzXRPk='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -2914,6 +2914,35 @@
   .vg-card-yt:hover {
     color: #8c3a15;
     border-bottom-color: #8c3a15;
+  }
+  .vg-input:focus-visible,
+  .vg-card-title:focus-visible,
+  .vg-chip:focus-visible,
+  .video-detail-back:focus-visible,
+  .video-detail-yt:focus-visible {
+    outline: 2px solid var(--color-primary, #3a6ea5);
+    outline-offset: 2px;
+  }
+  .vg-empty {
+    grid-column: 1 / -1;
+    color: var(--muted, #6d645a);
+    font-size: 13px;
+    padding: 24px 0;
+    text-align: center;
+  }
+  .vg-empty-reset {
+    margin-top: 10px;
+    padding: 7px 14px;
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--title, #5a3818);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .vg-empty-reset:hover {
+    background: #ebdcc9;
   }
   .video-detail-inner {
     margin: 0 auto;
@@ -6531,7 +6560,7 @@
         <button type="button" class="citation-tab-btn" data-style="chicago">Chicago</button>
       </div>
       <div class="citation-box-container">
-        <div class="citation-box" id="citation-widget-card-zhe-box" aria-live="polite">Зализняк А. А. Справочная статья «же» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/zhe/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/zhe/</a> (дата обращения: 04.08.2026).</div>
+        <div class="citation-box" id="citation-widget-card-zhe-box" aria-live="polite">Зализняк А. А. Справочная статья «же» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/zhe/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/zhe/</a> (дата обращения: 06.08.2026).</div>
         <button type="button" class="citation-copy-btn" id="citation-widget-card-zhe-copy-btn">Копировать</button>
       </div>
     </div>
@@ -6551,7 +6580,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "f602afd3aaab",
+  "build_id": "6cdc7da386e9",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6859,7 +6888,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "f602afd3aaab";
+	var APP_BUILD_ID$1 = "6cdc7da386e9";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7757,8 +7786,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "f602afd3aaab").trim();
-		if (buildId && buildId !== "f602afd3aaab") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "6cdc7da386e9").trim();
+		if (buildId && buildId !== "6cdc7da386e9") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -11810,7 +11839,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "f602afd3aaab" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "6cdc7da386e9" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -17472,18 +17501,19 @@ var BookIndex = (function(exports) {
 		const catalog = getDedupedVideoCatalog();
 		container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
     <h2 class="video-gallery-title">Видеогалерея</h2>
-    <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; таймкоды на минуту — на карточках сущностей и в KWIC по лекциям.</div>
+    <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; дата известна не для всех записей, таймкоды на карточках пока не добавлены.</div>
     <div class="video-gallery-controls">
-      <input id="vg-search" class="vg-input vg-search" type="search" placeholder="поиск по названию или упомянутой сущности" autocomplete="off">
-      <select id="vg-chapter" class="vg-input"><option value="-1">все главы книги</option>${chapters.map((c, i) => `<option value="${i}">${escapeHtml(c.name)}</option>`).join("")}</select>
-      <select id="vg-sort" class="vg-input">
+      <input id="vg-search" class="vg-input vg-search" type="search" placeholder="поиск по названию или упомянутой сущности" aria-label="Поиск по названию или упомянутой сущности" autocomplete="off">
+      <select id="vg-chapter" class="vg-input" aria-label="Глава книги"><option value="-1">все главы книги</option>${chapters.map((c, i) => `<option value="${i}">${escapeHtml(c.name)}</option>`).join("")}</select>
+      <select id="vg-sort" class="vg-input" aria-label="Сортировка">
+        <option value="title">по названию</option>
         <option value="date-desc">сначала новые</option>
         <option value="date-asc">сначала старые</option>
         <option value="dur-desc">сначала длинные</option>
         <option value="dur-asc">сначала короткие</option>
       </select>
     </div>
-    <div id="vg-meta" class="video-gallery-meta"></div>
+    <div id="vg-meta" class="video-gallery-meta" role="status" aria-live="polite"></div>
     <div id="vg-list" class="video-gallery-list"></div>
   </div></div>`;
 		const searchEl = container.querySelector("#vg-search");
@@ -17506,10 +17536,30 @@ var BookIndex = (function(exports) {
 				if (sort === "dur-desc") return (Number(b.duration) || 0) - (Number(a.duration) || 0);
 				if (sort === "dur-asc") return (Number(a.duration) || 0) - (Number(b.duration) || 0);
 				if (sort === "date-asc") return String(a.date || "").localeCompare(String(b.date || ""));
-				return String(b.date || "").localeCompare(String(a.date || ""));
+				if (sort === "date-desc") return String(b.date || "").localeCompare(String(a.date || ""));
+				return String(a.title || "").localeCompare(String(b.title || ""), "ru");
 			});
 			metaEl.textContent = `Показано ${vids.length} из ${catalog.length} видео.`;
 			listEl.textContent = "";
+			if (!vids.length) {
+				const empty = document.createElement("div");
+				empty.className = "vg-empty";
+				empty.textContent = "Ничего не найдено по заданным фильтрам.";
+				const reset = document.createElement("button");
+				reset.type = "button";
+				reset.className = "vg-empty-reset";
+				reset.textContent = "Сбросить фильтры";
+				reset.onclick = () => {
+					searchEl.value = "";
+					chapterEl.value = "-1";
+					sortEl.value = "title";
+					render();
+					searchEl.focus();
+				};
+				empty.appendChild(document.createElement("br"));
+				empty.appendChild(reset);
+				listEl.appendChild(empty);
+			}
 			for (const v of vids) {
 				const card = document.createElement("div");
 				card.className = "vg-card";
@@ -17523,7 +17573,8 @@ var BookIndex = (function(exports) {
 				const meta = document.createElement("div");
 				meta.className = "vg-card-meta";
 				const dur = formatVideoDuration(v.duration);
-				meta.textContent = [formatVideoDate(v.date), dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
+				const dateLabel = formatVideoDate(v.date) || "дата неизвестна";
+				meta.textContent = [dateLabel, dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
 				card.appendChild(meta);
 				if (v.url) {
 					const yt = document.createElement("a");

@@ -1,6 +1,22 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 02-08-2026_
+_Created: 24-07-2026 · Last updated: 06-08-2026_
+
+## H2123 — video gallery V1a: labels, focus-visible, live meta, empty state, honest copy (2026-08-06)
+
+Implementation Step 2 (V1a) of [PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md), addressing findings 2, 3, 5, 8 of [INTERFACE_REVIEW_VIDEO_GALLERY_JAKUB_SKILLS_01.08.2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/INTERFACE_REVIEW_VIDEO_GALLERY_JAKUB_SKILLS_01.08.2026.md).
+
+- `#vg-search` / `#vg-chapter` / `#vg-sort` now carry `aria-label` (placeholder text kept as a hint only, not the accessible name).
+- `:focus-visible` ring added to `.vg-input`, `.vg-card-title`, `.vg-chip`, `.video-detail-back`, `.video-detail-yt` (same token as `.viz-toolbar` controls).
+- `#vg-meta` is now `role="status" aria-live="polite"` so screen readers hear the result count change.
+- Empty state: zero-result filtering shows a message + "Сбросить фильтры" button that clears search/chapter/sort and returns focus to the search field.
+- Intro copy rewritten to drop the timecode claim (catalog `timecodes` is empty for all rows) and the implied full date coverage.
+- **D7 ambiguity call (threshold not specified in the plan):** default sort switched from `date-desc` to **title** — only 33/175 deduped rows carry a `date`, so date-desc as a default silently misleads on ~81% of the catalog. `date-desc`/`date-asc`/`dur-desc`/`dur-asc` remain selectable.
+- Undated cards now show «дата неизвестна» instead of a blank meta line.
+- `tests/e2e/session-features.spec.js`: 2 new cases (`video gallery (B3.5)` describe block) — accessible-name/live-region assertions, and empty-state + reset-focus assertion. Full `session-features` suite: 13/13 passed locally (Playwright, chromium).
+
+**Model:** Sonnet 5 (`claude-sonnet-5`).
+**Handoff:** [H2123](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2123-Sonnet_BookIndex_video-gallery-a11y-focus-empty_01.08.26.md).
 
 ## H1825 — stratified context-coverage drain batch ×339 (2026-08-02)
 

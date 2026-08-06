@@ -10765,18 +10765,19 @@ var BookIndex = (function(exports) {
 		const catalog = getDedupedVideoCatalog();
 		container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
     <h2 class="video-gallery-title">Видеогалерея</h2>
-    <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; таймкоды на минуту — на карточках сущностей и в KWIC по лекциям.</div>
+    <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; дата известна не для всех записей, таймкоды на карточках пока не добавлены.</div>
     <div class="video-gallery-controls">
-      <input id="vg-search" class="vg-input vg-search" type="search" placeholder="поиск по названию или упомянутой сущности" autocomplete="off">
-      <select id="vg-chapter" class="vg-input"><option value="-1">все главы книги</option>${chapters.map((c, i) => `<option value="${i}">${escapeHtml(c.name)}</option>`).join("")}</select>
-      <select id="vg-sort" class="vg-input">
+      <input id="vg-search" class="vg-input vg-search" type="search" placeholder="поиск по названию или упомянутой сущности" aria-label="Поиск по названию или упомянутой сущности" autocomplete="off">
+      <select id="vg-chapter" class="vg-input" aria-label="Глава книги"><option value="-1">все главы книги</option>${chapters.map((c, i) => `<option value="${i}">${escapeHtml(c.name)}</option>`).join("")}</select>
+      <select id="vg-sort" class="vg-input" aria-label="Сортировка">
+        <option value="title">по названию</option>
         <option value="date-desc">сначала новые</option>
         <option value="date-asc">сначала старые</option>
         <option value="dur-desc">сначала длинные</option>
         <option value="dur-asc">сначала короткие</option>
       </select>
     </div>
-    <div id="vg-meta" class="video-gallery-meta"></div>
+    <div id="vg-meta" class="video-gallery-meta" role="status" aria-live="polite"></div>
     <div id="vg-list" class="video-gallery-list"></div>
   </div></div>`;
 		const searchEl = container.querySelector("#vg-search");
@@ -10799,10 +10800,30 @@ var BookIndex = (function(exports) {
 				if (sort === "dur-desc") return (Number(b.duration) || 0) - (Number(a.duration) || 0);
 				if (sort === "dur-asc") return (Number(a.duration) || 0) - (Number(b.duration) || 0);
 				if (sort === "date-asc") return String(a.date || "").localeCompare(String(b.date || ""));
-				return String(b.date || "").localeCompare(String(a.date || ""));
+				if (sort === "date-desc") return String(b.date || "").localeCompare(String(a.date || ""));
+				return String(a.title || "").localeCompare(String(b.title || ""), "ru");
 			});
 			metaEl.textContent = `Показано ${vids.length} из ${catalog.length} видео.`;
 			listEl.textContent = "";
+			if (!vids.length) {
+				const empty = document.createElement("div");
+				empty.className = "vg-empty";
+				empty.textContent = "Ничего не найдено по заданным фильтрам.";
+				const reset = document.createElement("button");
+				reset.type = "button";
+				reset.className = "vg-empty-reset";
+				reset.textContent = "Сбросить фильтры";
+				reset.onclick = () => {
+					searchEl.value = "";
+					chapterEl.value = "-1";
+					sortEl.value = "title";
+					render();
+					searchEl.focus();
+				};
+				empty.appendChild(document.createElement("br"));
+				empty.appendChild(reset);
+				listEl.appendChild(empty);
+			}
 			for (const v of vids) {
 				const card = document.createElement("div");
 				card.className = "vg-card";
@@ -10816,7 +10837,8 @@ var BookIndex = (function(exports) {
 				const meta = document.createElement("div");
 				meta.className = "vg-card-meta";
 				const dur = formatVideoDuration(v.duration);
-				meta.textContent = [formatVideoDate(v.date), dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
+				const dateLabel = formatVideoDate(v.date) || "дата неизвестна";
+				meta.textContent = [dateLabel, dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
 				card.appendChild(meta);
 				if (v.url) {
 					const yt = document.createElement("a");
