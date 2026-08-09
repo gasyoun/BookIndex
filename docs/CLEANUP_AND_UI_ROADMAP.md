@@ -305,6 +305,8 @@ Add route-level visual checks before large redesigns:
 6. `#v4/scholar/scholar`
 7. `#v4/scholar/viz/module/viz03`
 8. `#v4/materials/tasks`
+9. `#v4/materials/video`
+10. `#v4/materials/video/tv87ggs0yq4`
 
 For each route:
 
@@ -316,7 +318,7 @@ For each route:
 6. Console-error budget: zero unexpected errors.
 
 **Status: shipped (H1823).** The harness is [tests/e2e/redesign-baseline.spec.js](https://github.com/gasyoun/BookIndex/blob/main/tests/e2e/redesign-baseline.spec.js) —
-17 tests (8 routes × desktop 1366×900 / mobile 390×844, plus one contract test that re-reads
+21 tests (10 routes × desktop 1366×900 / mobile 390×844, plus one contract test that re-reads
 the route list out of this section and fails if the spec and the roadmap drift apart). Run it
 alone with `npm run check:redesign`; it is also picked up by `npm run check:e2e` because that
 walks the whole `tests/e2e` directory.
