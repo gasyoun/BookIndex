@@ -88,6 +88,18 @@ const ROUTES = [
     ready: '#tasks-container',
     controls: ['#entity-switcher', '#tasks-regen', '#tasks-reset-progress', '#tasks-container'],
   },
+  {
+    id: 'materials-video',
+    hash: '#v4/materials/video',
+    ready: '#vg-list',
+    controls: ['#vg-search', '#vg-list'],
+  },
+  {
+    id: 'materials-video-detail',
+    hash: '#v4/materials/video/tv87ggs0yq4',
+    ready: '.video-detail',
+    controls: ['.video-detail'],
+  },
 ];
 
 // Errors that are environmental rather than route defects (offline SW/PWA plumbing under
@@ -287,7 +299,7 @@ test.describe('redesign verification harness (Phase U4)', () => {
     expect(section, 'Phase U4 section missing from docs/CLEANUP_AND_UI_ROADMAP.md').toBeTruthy();
     const body = section.split('\n## ')[0];
     const documented = [...body.matchAll(/`(#v4\/[^`]+)`/g)].map((m) => m[1]);
-    expect(documented.length, 'expected 8 documented U4 routes').toBe(8);
+    expect(documented.length, 'expected 10 documented U4 routes').toBe(10);
     expect(ROUTES.map((r) => r.hash)).toEqual(documented);
   });
 });
