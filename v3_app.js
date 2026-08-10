@@ -2174,6 +2174,8 @@ var BookIndex = (function(exports) {
 	var commandPaletteActiveIndex = -1;
 	var commandPaletteReturnFocus = null;
 	var commandPaletteTimer = null;
+	var videoModalReturnFocus = null;
+	var videoModalCurrentId = "";
 	var visibleItemsCache = null;
 	var currentListSearchRaw = "";
 	var currentListSearchNorm = "";
@@ -4922,6 +4924,11 @@ var BookIndex = (function(exports) {
 			e.preventDefault();
 			return;
 		}
+		if (e && e.key === "Escape" && isVideoModalOpen()) {
+			closeVideoModal();
+			e.preventDefault();
+			return;
+		}
 		if (shouldIgnoreGlobalHotkeys(e)) return;
 		if (e.key === "/") {
 			const globalInput = document.getElementById("global-search");
@@ -4961,6 +4968,7 @@ var BookIndex = (function(exports) {
 	function wireGlobalUI() {
 		wireGraphWorkersLifecycle();
 		wireCommandPalette();
+		wireVideoModal();
 		const backBtn = document.getElementById("back-btn");
 		if (backBtn) backBtn.onclick = () => goBackInApp();
 		const densitySelect = document.getElementById("density-select");
@@ -7369,6 +7377,7 @@ var BookIndex = (function(exports) {
     <h2 class="video-detail-title">${escapeHtml(String(video.title || ""))}</h2>
     <div class="video-detail-meta">${escapeHtml(metaParts.join(" · "))}</div>
     <div class="video-detail-actions">
+      <button type="button" class="video-detail-watch" data-video-id="${escapeHtml(safeId)}">Смотреть</button>
       <a class="video-detail-yt" href="${escapeHtml(ytUrl)}" target="_blank" rel="noopener noreferrer">Смотреть на YouTube</a>
     </div>
     <div class="video-detail-section">
@@ -7383,12 +7392,159 @@ var BookIndex = (function(exports) {
   </div></div>`;
 		const back = container.querySelector(".video-detail-back");
 		if (back) bindActionWithKeyboard(back, () => openVideoGallery());
+		const watchBtn = container.querySelector(".video-detail-watch");
+		if (watchBtn) watchBtn.onclick = () => openVideoModal(watchBtn.dataset.videoId || "");
 		container.querySelectorAll(".video-detail-chip").forEach((chip) => {
 			bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
 		});
 		container.querySelectorAll(".video-detail-chapter").forEach((el) => {
 			bindActionWithKeyboard(el, () => openLecturePage(parseInt(el.dataset.lectureIdx || "0", 10) || 0));
 		});
+	}
+
+	// V1c (H2125): in-app modal watch shell. External YouTube link remains the
+	// fallback everywhere; the modal never autoplays and tolerates an empty
+	// timecodes[] (D4 — do not invent chapter markers).
+	function isVideoModalOpen() {
+		const root = document.getElementById("video-player-modal");
+		if (!root) return false;
+		if (root.classList && typeof root.classList.contains === "function") return root.classList.contains("open");
+		return /\bopen\b/.test(String(root.className || ""));
+	}
+	function renderVideoModalTimecodes(video) {
+		const list = document.getElementById("video-modal-tc-list");
+		if (!list) return;
+		list.textContent = "";
+		const timecodes = Array.isArray(video && video.timecodes) ? video.timecodes : [];
+		if (!timecodes.length) {
+			const empty = document.createElement("div");
+			empty.className = "video-modal-tc-empty";
+			empty.textContent = "Разметка глав пока не загружена.";
+			list.appendChild(empty);
+			return;
+		}
+		for (const tc of timecodes) {
+			const seconds = Number(tc && tc.time);
+			const safeSeconds = Number.isFinite(seconds) && seconds >= 0 ? Math.floor(seconds) : 0;
+			const item = document.createElement("a");
+			item.className = "video-modal-tc-item";
+			item.href = youtubeUrlWithT(video.url, safeSeconds) || "#";
+			item.target = "_blank";
+			item.rel = "noopener noreferrer";
+			const time = document.createElement("span");
+			time.className = "video-modal-tc-time";
+			time.textContent = formatVideoDuration(safeSeconds) || "0:00";
+			const label = document.createElement("span");
+			label.className = "video-modal-tc-label";
+			label.textContent = String((tc && tc.label) || "");
+			item.appendChild(time);
+			item.appendChild(label);
+			// Step 4.6: no postMessage seek API is wired to the plain (no-autoplay)
+			// iframe embed, so each item stays a real external `?t=` deep link — no
+			// JS click handler needed; native <a> navigation + keyboard already work.
+			list.appendChild(item);
+		}
+	}
+	function renderVideoModalPlayer(video) {
+		const host = document.getElementById("video-modal-player-host");
+		if (!host) return;
+		host.textContent = "";
+		const ytId = sanitizeVideoId(video && video.id);
+		if (!ytId) return;
+		const iframe = document.createElement("iframe");
+		iframe.className = "video-modal-iframe";
+		// autoplay=0: no autoplay on open per D3/D4 — playback starts on explicit
+		// user gesture (the visible YouTube play button inside the frame).
+		iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(ytId)}?autoplay=0&rel=0`;
+		iframe.title = String((video && video.title) || "Видео");
+		iframe.setAttribute("allowfullscreen", "");
+		iframe.setAttribute("allow", "fullscreen");
+		iframe.loading = "lazy";
+		host.appendChild(iframe);
+	}
+	function openVideoModal(id) {
+		const video = findVideoById(id);
+		if (!video) return false;
+		const root = document.getElementById("video-player-modal");
+		if (!root) return false;
+		if (isVideoModalOpen() && videoModalCurrentId === sanitizeVideoId(id)) return true;
+		videoModalCurrentId = sanitizeVideoId(id);
+		videoModalReturnFocus = typeof document !== "undefined" && document.activeElement instanceof HTMLElement ? document.activeElement : null;
+		const titleEl = document.getElementById("video-modal-title");
+		if (titleEl) titleEl.textContent = String(video.title || "");
+		renderVideoModalPlayer(video);
+		renderVideoModalTimecodes(video);
+		if (typeof root.removeAttribute === "function") root.removeAttribute("hidden");
+		if (root.classList && typeof root.classList.add === "function") root.classList.add("open");
+		safeSetAttr(root, "aria-hidden", "false");
+		const content = document.getElementById("content");
+		if (content) safeSetAttr(content, "aria-hidden", "true");
+		const header = document.querySelector("header");
+		if (header) safeSetAttr(header, "aria-hidden", "true");
+		const closeBtn = document.getElementById("video-modal-close");
+		if (closeBtn && typeof closeBtn.focus === "function") closeBtn.focus();
+		return true;
+	}
+	function closeVideoModal(restoreFocus = true) {
+		const root = document.getElementById("video-player-modal");
+		if (!root) return false;
+		if (!isVideoModalOpen()) return false;
+		if (root.classList && typeof root.classList.remove === "function") root.classList.remove("open");
+		safeSetAttr(root, "aria-hidden", "true");
+		if (typeof root.setAttribute === "function") root.setAttribute("hidden", "");
+		const host = document.getElementById("video-modal-player-host");
+		if (host) host.textContent = "";
+		const content = document.getElementById("content");
+		if (content) safeSetAttr(content, "aria-hidden", "false");
+		const header = document.querySelector("header");
+		if (header) safeSetAttr(header, "aria-hidden", "false");
+		videoModalCurrentId = "";
+		const returnTo = videoModalReturnFocus;
+		videoModalReturnFocus = null;
+		if (restoreFocus && returnTo && typeof returnTo.focus === "function") returnTo.focus();
+		return true;
+	}
+	function getVideoModalFocusable() {
+		const root = document.getElementById("video-player-modal");
+		if (!root || typeof root.querySelectorAll !== "function") return [];
+		const selector = "a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex='-1'])";
+		return Array.from(root.querySelectorAll(selector)).filter((el) => el instanceof HTMLElement);
+	}
+	function onVideoModalKeydown(e) {
+		if (!e || !isVideoModalOpen()) return;
+		if (e.key === "Escape") {
+			closeVideoModal();
+			e.preventDefault();
+			return;
+		}
+		if (e.key !== "Tab") return;
+		const focusable = getVideoModalFocusable();
+		if (!focusable.length) return;
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+		const active = document.activeElement;
+		if (e.shiftKey) {
+			if (active === first || !focusable.includes(active)) {
+				last.focus();
+				e.preventDefault();
+			}
+		} else if (active === last) {
+			first.focus();
+			e.preventDefault();
+		}
+	}
+	function wireVideoModal() {
+		const root = document.getElementById("video-player-modal");
+		if (!root) return;
+		safeSetAttr(root, "aria-hidden", isVideoModalOpen() ? "false" : "true");
+		const backdrop = document.getElementById("video-modal-backdrop");
+		if (backdrop) backdrop.onclick = () => closeVideoModal();
+		const closeBtn = document.getElementById("video-modal-close");
+		if (closeBtn) closeBtn.onclick = () => closeVideoModal();
+		if (!root._videoModalKeydownWired) {
+			root.addEventListener("keydown", onVideoModalKeydown);
+			root._videoModalKeydownWired = true;
+		}
 	}
 
 	// B3.4: videos whose discussed entities overlap a book chapter's pages.
@@ -14827,6 +14983,10 @@ var BookIndex = (function(exports) {
 		window.openVideoDetail = openVideoDetail;
 		window.openVideoGallery = openVideoGallery;
 		window.buildVideoDetailHash = buildVideoDetailHash;
+		window.isVideoModalOpen = isVideoModalOpen;
+		window.openVideoModal = openVideoModal;
+		window.closeVideoModal = closeVideoModal;
+		window.wireVideoModal = wireVideoModal;
 		window.findVideoById = findVideoById;
 		window.openLectureTerm = openLectureTerm;
 		window.openMaterialsLectures = openMaterialsLectures;
