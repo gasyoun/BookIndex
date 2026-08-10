@@ -1,6 +1,6 @@
 # Metadoc — PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3
 
-_Created: 01-08-2026 · Last updated: 01-08-2026_
+_Created: 01-08-2026 · Last updated: 10-08-2026_
 
 | Field | Value |
 | --- | --- |
@@ -28,5 +28,6 @@ _Created: 01-08-2026 · Last updated: 01-08-2026_
 | Date | Change |
 | --- | --- |
 | 01-08-2026 | Initial metadoc + plan suite from ask-batch interview |
+| 10-08-2026 | Wave-1 complete: H2123 (V1a), H2124 (V1b), H2125 (V1c modal + timecodes, PR [#250](https://github.com/gasyoun/BookIndex/pull/250), [v4.11.5](https://github.com/gasyoun/BookIndex/releases/tag/v4.11.5)), H2126 (V1d U4 routes) all shipped. Next front is wave-2 (U1–U3). |
 
 _Dr. Mārcis Gasūns_
