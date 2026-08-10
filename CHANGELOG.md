@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- **Video modal player shell + empty-capable timecode list (H2125, Sonnet 5 (`claude-sonnet-5`)):** «Смотреть» on the video detail page opens an in-app `#video-player-modal` (YouTube iframe embed) instead of only linking out to YouTube; the external "Смотреть на YouTube" link remains as a fallback everywhere. Modal never autoplays, traps focus, restores focus on close, closes on Escape/backdrop/close button, and sets `aria-hidden` on the app chrome while open. Timecode list renders each `video.timecodes[]` entry as a seekable link and shows an honest "Разметка глав пока не загружена" empty state when a video has none — no invented chapter markers (D4). U4 harness routes (`materials-video`, `materials-video-detail`) already covered. `check:security:static` and `check:perf` (standalone HTML gzip budget) both pass.
 
 ## [4.11.3] - 2026-08-06
 ### Added

@@ -3079,6 +3079,142 @@
     color: var(--muted, #6d645a);
     font-size: 13px;
   }
+  .video-detail-watch {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    border: 0;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin-right: 10px;
+  }
+  .video-detail-watch:hover {
+    background: #a93226;
+  }
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 130;
+    display: none;
+  }
+  .video-modal.open { display: block; }
+  .video-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(40, 28, 12, 0.55);
+  }
+  .video-modal-panel {
+    position: relative;
+    margin: 4vh auto 0;
+    max-width: 880px;
+    width: calc(100% - 32px);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--surface, #fff);
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 8px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    padding: 14px 16px 18px;
+  }
+  .video-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .video-modal-title {
+    color: var(--title, #5a3818);
+    font-size: 17px;
+    font-weight: normal;
+    line-height: 1.35;
+    margin: 0;
+  }
+  .video-modal-close {
+    flex: 0 0 auto;
+    background: var(--surface-soft, #f7f2e8);
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 4px;
+    color: var(--title, #5a3818);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 5px 9px;
+  }
+  .video-modal-close:hover {
+    background: var(--surface-soft-2, #ebdcc9);
+  }
+  .video-modal-player-host {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .video-modal-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .video-modal-tc {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line, #d4c8b0);
+  }
+  .video-modal-tc-title {
+    color: var(--title, #5a3818);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+  .video-modal-tc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+  .video-modal-tc-item {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    padding: 5px 8px;
+    border-radius: 6px;
+    color: var(--title, #5a3818);
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .video-modal-tc-item:hover {
+    background: var(--surface-soft, #faf6ee);
+  }
+  .video-modal-tc-time {
+    flex: 0 0 auto;
+    color: var(--muted, #6d645a);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
+  .video-modal-tc-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .video-modal-tc-empty {
+    color: var(--muted, #6d645a);
+    font-size: 13px;
+  }
+  .video-modal-close:focus-visible,
+  .video-detail-watch:focus-visible,
+  .video-modal-tc-item:focus-visible {
+    outline: 2px solid var(--color-primary, #3a6ea5);
+    outline-offset: 2px;
+  }
   .lectures-title {
     color: #5a3818;
     font-size: 20px;
@@ -6316,6 +6452,7 @@
     .header-search.header-search-inline { flex: 1 1 100%; max-width: 100%; }
     .command-palette-panel { margin-top: 4vh; width: calc(100% - 20px); }
     .command-palette-list { max-height: 60vh; }
+    .video-modal-panel { margin-top: 2vh; width: calc(100% - 16px); padding: 10px 12px 14px; }
     .header-tools { flex-direction: column; align-items: stretch; }
     .back-btn { align-self: flex-start; }
 
@@ -6551,6 +6688,21 @@
     <input class="command-palette-input" id="command-palette-input" type="text" autocomplete="off" placeholder="Куда перейти или что сделать…" aria-label="Команда или запрос" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="command-palette-list" />
     <div class="command-palette-list" id="command-palette-list" role="listbox" aria-label="Команды и результаты"></div>
     <div class="command-palette-hint">↑↓ — выбор · Enter — переход · Esc — закрыть</div>
+  </div>
+</div>
+
+<div class="video-modal" id="video-player-modal" role="dialog" aria-modal="true" aria-label="Просмотр видео" aria-hidden="true" hidden>
+  <div class="video-modal-backdrop" id="video-modal-backdrop"></div>
+  <div class="video-modal-panel">
+    <div class="video-modal-header">
+      <h2 class="video-modal-title" id="video-modal-title"></h2>
+      <button type="button" class="video-modal-close" id="video-modal-close" aria-label="Закрыть плеер">Закрыть ✕</button>
+    </div>
+    <div class="video-modal-player-host" id="video-modal-player-host"></div>
+    <div class="video-modal-tc">
+      <h3 class="video-modal-tc-title">Таймкоды</h3>
+      <div class="video-modal-tc-list" id="video-modal-tc-list"></div>
+    </div>
   </div>
 </div>
 

@@ -1,6 +1,14 @@
 /**
  * @file multimedia.js
  * @description Renderers for the Video Archive and YouTube player integration
+ *
+ * NOT PRODUCTION SOURCE (H2125 / D10). The live video gallery, detail page,
+ * and watch modal are implemented directly in `v3_app.js`
+ * (`renderVideoGalleryPanel`, `renderVideoDetailPanel`, `openVideoModal`) and
+ * styled in `v3_template.html` (`.video-gallery-*`, `.vg-*`, `.video-detail-*`,
+ * `.video-modal-*`). This module is a stale experiment, is not imported by
+ * any production entry point, and must not be treated as the runtime path —
+ * see docs/ARCHITECTURE_BOOKINDEX_VIDEO_GALLERY.md "Runtime ownership".
  */
 
 import { APP_DATA } from '../core/state.js';

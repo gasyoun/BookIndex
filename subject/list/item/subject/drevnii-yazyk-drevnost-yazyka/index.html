@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-hULg9mxChWeruy5LameIcdf0VHO3L18NKknVlBZph4U=' 'sha256-E8GgFBaeDN4c4tJx57XuUbovN+Ahy579X+NemoowyzA='; worker-src 'self' blob:; style-src 'self' 'sha256-wwsLHeheuIraacYlMdKdE99J0aOosLadEhOycE9qdjU='; style-src-elem 'self' 'sha256-wwsLHeheuIraacYlMdKdE99J0aOosLadEhOycE9qdjU='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-e3TApnZ2DRCqfSbyyUchDucru0YsaMvuP4C2rWc+uPY=' 'sha256-oM/bqut0+FqAMbAM1iG3DKTCH61UPnGOOstuNOXq/z8='; worker-src 'self' blob:; style-src 'self' 'sha256-2uaU7B/0vfZaSMcSZJf2pRYxRoQGdFZQnR78IC+orU0='; style-src-elem 'self' 'sha256-2uaU7B/0vfZaSMcSZJf2pRYxRoQGdFZQnR78IC+orU0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -3098,6 +3098,142 @@
   .video-detail-intro {
     color: var(--muted, #6d645a);
     font-size: 13px;
+  }
+  .video-detail-watch {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    border: 0;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin-right: 10px;
+  }
+  .video-detail-watch:hover {
+    background: #a93226;
+  }
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 130;
+    display: none;
+  }
+  .video-modal.open { display: block; }
+  .video-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(40, 28, 12, 0.55);
+  }
+  .video-modal-panel {
+    position: relative;
+    margin: 4vh auto 0;
+    max-width: 880px;
+    width: calc(100% - 32px);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--surface, #fff);
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 8px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    padding: 14px 16px 18px;
+  }
+  .video-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .video-modal-title {
+    color: var(--title, #5a3818);
+    font-size: 17px;
+    font-weight: normal;
+    line-height: 1.35;
+    margin: 0;
+  }
+  .video-modal-close {
+    flex: 0 0 auto;
+    background: var(--surface-soft, #f7f2e8);
+    border: 1px solid var(--line, #d4c8b0);
+    border-radius: 4px;
+    color: var(--title, #5a3818);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 5px 9px;
+  }
+  .video-modal-close:hover {
+    background: var(--surface-soft-2, #ebdcc9);
+  }
+  .video-modal-player-host {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .video-modal-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .video-modal-tc {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line, #d4c8b0);
+  }
+  .video-modal-tc-title {
+    color: var(--title, #5a3818);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+  .video-modal-tc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+  .video-modal-tc-item {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    padding: 5px 8px;
+    border-radius: 6px;
+    color: var(--title, #5a3818);
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .video-modal-tc-item:hover {
+    background: var(--surface-soft, #faf6ee);
+  }
+  .video-modal-tc-time {
+    flex: 0 0 auto;
+    color: var(--muted, #6d645a);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
+  .video-modal-tc-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .video-modal-tc-empty {
+    color: var(--muted, #6d645a);
+    font-size: 13px;
+  }
+  .video-modal-close:focus-visible,
+  .video-detail-watch:focus-visible,
+  .video-modal-tc-item:focus-visible {
+    outline: 2px solid var(--color-primary, #3a6ea5);
+    outline-offset: 2px;
   }
   .lectures-title {
     color: #5a3818;
@@ -6336,6 +6472,7 @@
     .header-search.header-search-inline { flex: 1 1 100%; max-width: 100%; }
     .command-palette-panel { margin-top: 4vh; width: calc(100% - 20px); }
     .command-palette-list { max-height: 60vh; }
+    .video-modal-panel { margin-top: 2vh; width: calc(100% - 16px); padding: 10px 12px 14px; }
     .header-tools { flex-direction: column; align-items: stretch; }
     .back-btn { align-self: flex-start; }
 
@@ -6595,7 +6732,7 @@
         <button type="button" class="citation-tab-btn" data-style="chicago">Chicago</button>
       </div>
       <div class="citation-box-container">
-        <div class="citation-box" id="citation-widget-card-drevnii-yazyk-drevnost-yazyka-box" aria-live="polite">Зализняк А. А. Справочная статья «древний язык, древность языка» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/subject/list/item/subject/drevnii-yazyk-drevnost-yazyka/" target="_blank">https://gasyoun.github.io/BookIndex/subject/list/item/subject/drevnii-yazyk-drevnost-yazyka/</a> (дата обращения: 06.08.2026).</div>
+        <div class="citation-box" id="citation-widget-card-drevnii-yazyk-drevnost-yazyka-box" aria-live="polite">Зализняк А. А. Справочная статья «древний язык, древность языка» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/subject/list/item/subject/drevnii-yazyk-drevnost-yazyka/" target="_blank">https://gasyoun.github.io/BookIndex/subject/list/item/subject/drevnii-yazyk-drevnost-yazyka/</a> (дата обращения: 10.08.2026).</div>
         <button type="button" class="citation-copy-btn" id="citation-widget-card-drevnii-yazyk-drevnost-yazyka-copy-btn">Копировать</button>
       </div>
     </div>
@@ -6611,11 +6748,26 @@
   </div>
 </div>
 
+<div class="video-modal" id="video-player-modal" role="dialog" aria-modal="true" aria-label="Просмотр видео" aria-hidden="true" hidden>
+  <div class="video-modal-backdrop" id="video-modal-backdrop"></div>
+  <div class="video-modal-panel">
+    <div class="video-modal-header">
+      <h2 class="video-modal-title" id="video-modal-title"></h2>
+      <button type="button" class="video-modal-close" id="video-modal-close" aria-label="Закрыть плеер">Закрыть ✕</button>
+    </div>
+    <div class="video-modal-player-host" id="video-modal-player-host"></div>
+    <div class="video-modal-tc">
+      <h3 class="video-modal-tc-title">Таймкоды</h3>
+      <div class="video-modal-tc-list" id="video-modal-tc-list"></div>
+    </div>
+  </div>
+</div>
+
 <script id="app-data-json" type="application/json">
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "dd8dbf8a0f18",
+  "build_id": "228f07996f2c",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6923,7 +7075,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "dd8dbf8a0f18";
+	var APP_BUILD_ID$1 = "228f07996f2c";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7821,8 +7973,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "dd8dbf8a0f18").trim();
-		if (buildId && buildId !== "dd8dbf8a0f18") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "228f07996f2c").trim();
+		if (buildId && buildId !== "228f07996f2c") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -8945,6 +9097,8 @@ var BookIndex = (function(exports) {
 	var commandPaletteActiveIndex = -1;
 	var commandPaletteReturnFocus = null;
 	var commandPaletteTimer = null;
+	var videoModalReturnFocus = null;
+	var videoModalCurrentId = "";
 	var visibleItemsCache = null;
 	var currentListSearchRaw = "";
 	var currentListSearchNorm = "";
@@ -11693,6 +11847,11 @@ var BookIndex = (function(exports) {
 			e.preventDefault();
 			return;
 		}
+		if (e && e.key === "Escape" && isVideoModalOpen()) {
+			closeVideoModal();
+			e.preventDefault();
+			return;
+		}
 		if (shouldIgnoreGlobalHotkeys(e)) return;
 		if (e.key === "/") {
 			const globalInput = document.getElementById("global-search");
@@ -11732,6 +11891,7 @@ var BookIndex = (function(exports) {
 	function wireGlobalUI() {
 		wireGraphWorkersLifecycle();
 		wireCommandPalette();
+		wireVideoModal();
 		const backBtn = document.getElementById("back-btn");
 		if (backBtn) backBtn.onclick = () => goBackInApp();
 		const densitySelect = document.getElementById("density-select");
@@ -11874,7 +12034,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "dd8dbf8a0f18" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "228f07996f2c" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -14140,6 +14300,7 @@ var BookIndex = (function(exports) {
     <h2 class="video-detail-title">${escapeHtml(String(video.title || ""))}</h2>
     <div class="video-detail-meta">${escapeHtml(metaParts.join(" · "))}</div>
     <div class="video-detail-actions">
+      <button type="button" class="video-detail-watch" data-video-id="${escapeHtml(safeId)}">Смотреть</button>
       <a class="video-detail-yt" href="${escapeHtml(ytUrl)}" target="_blank" rel="noopener noreferrer">Смотреть на YouTube</a>
     </div>
     <div class="video-detail-section">
@@ -14154,12 +14315,159 @@ var BookIndex = (function(exports) {
   </div></div>`;
 		const back = container.querySelector(".video-detail-back");
 		if (back) bindActionWithKeyboard(back, () => openVideoGallery());
+		const watchBtn = container.querySelector(".video-detail-watch");
+		if (watchBtn) watchBtn.onclick = () => openVideoModal(watchBtn.dataset.videoId || "");
 		container.querySelectorAll(".video-detail-chip").forEach((chip) => {
 			bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
 		});
 		container.querySelectorAll(".video-detail-chapter").forEach((el) => {
 			bindActionWithKeyboard(el, () => openLecturePage(parseInt(el.dataset.lectureIdx || "0", 10) || 0));
 		});
+	}
+
+	// V1c (H2125): in-app modal watch shell. External YouTube link remains the
+	// fallback everywhere; the modal never autoplays and tolerates an empty
+	// timecodes[] (D4 — do not invent chapter markers).
+	function isVideoModalOpen() {
+		const root = document.getElementById("video-player-modal");
+		if (!root) return false;
+		if (root.classList && typeof root.classList.contains === "function") return root.classList.contains("open");
+		return /\bopen\b/.test(String(root.className || ""));
+	}
+	function renderVideoModalTimecodes(video) {
+		const list = document.getElementById("video-modal-tc-list");
+		if (!list) return;
+		list.textContent = "";
+		const timecodes = Array.isArray(video && video.timecodes) ? video.timecodes : [];
+		if (!timecodes.length) {
+			const empty = document.createElement("div");
+			empty.className = "video-modal-tc-empty";
+			empty.textContent = "Разметка глав пока не загружена.";
+			list.appendChild(empty);
+			return;
+		}
+		for (const tc of timecodes) {
+			const seconds = Number(tc && tc.time);
+			const safeSeconds = Number.isFinite(seconds) && seconds >= 0 ? Math.floor(seconds) : 0;
+			const item = document.createElement("a");
+			item.className = "video-modal-tc-item";
+			item.href = youtubeUrlWithT(video.url, safeSeconds) || "#";
+			item.target = "_blank";
+			item.rel = "noopener noreferrer";
+			const time = document.createElement("span");
+			time.className = "video-modal-tc-time";
+			time.textContent = formatVideoDuration(safeSeconds) || "0:00";
+			const label = document.createElement("span");
+			label.className = "video-modal-tc-label";
+			label.textContent = String((tc && tc.label) || "");
+			item.appendChild(time);
+			item.appendChild(label);
+			// Step 4.6: no postMessage seek API is wired to the plain (no-autoplay)
+			// iframe embed, so each item stays a real external `?t=` deep link — no
+			// JS click handler needed; native <a> navigation + keyboard already work.
+			list.appendChild(item);
+		}
+	}
+	function renderVideoModalPlayer(video) {
+		const host = document.getElementById("video-modal-player-host");
+		if (!host) return;
+		host.textContent = "";
+		const ytId = sanitizeVideoId(video && video.id);
+		if (!ytId) return;
+		const iframe = document.createElement("iframe");
+		iframe.className = "video-modal-iframe";
+		// autoplay=0: no autoplay on open per D3/D4 — playback starts on explicit
+		// user gesture (the visible YouTube play button inside the frame).
+		iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(ytId)}?autoplay=0&rel=0`;
+		iframe.title = String((video && video.title) || "Видео");
+		iframe.setAttribute("allowfullscreen", "");
+		iframe.setAttribute("allow", "fullscreen");
+		iframe.loading = "lazy";
+		host.appendChild(iframe);
+	}
+	function openVideoModal(id) {
+		const video = findVideoById(id);
+		if (!video) return false;
+		const root = document.getElementById("video-player-modal");
+		if (!root) return false;
+		if (isVideoModalOpen() && videoModalCurrentId === sanitizeVideoId(id)) return true;
+		videoModalCurrentId = sanitizeVideoId(id);
+		videoModalReturnFocus = typeof document !== "undefined" && document.activeElement instanceof HTMLElement ? document.activeElement : null;
+		const titleEl = document.getElementById("video-modal-title");
+		if (titleEl) titleEl.textContent = String(video.title || "");
+		renderVideoModalPlayer(video);
+		renderVideoModalTimecodes(video);
+		if (typeof root.removeAttribute === "function") root.removeAttribute("hidden");
+		if (root.classList && typeof root.classList.add === "function") root.classList.add("open");
+		safeSetAttr(root, "aria-hidden", "false");
+		const content = document.getElementById("content");
+		if (content) safeSetAttr(content, "aria-hidden", "true");
+		const header = document.querySelector("header");
+		if (header) safeSetAttr(header, "aria-hidden", "true");
+		const closeBtn = document.getElementById("video-modal-close");
+		if (closeBtn && typeof closeBtn.focus === "function") closeBtn.focus();
+		return true;
+	}
+	function closeVideoModal(restoreFocus = true) {
+		const root = document.getElementById("video-player-modal");
+		if (!root) return false;
+		if (!isVideoModalOpen()) return false;
+		if (root.classList && typeof root.classList.remove === "function") root.classList.remove("open");
+		safeSetAttr(root, "aria-hidden", "true");
+		if (typeof root.setAttribute === "function") root.setAttribute("hidden", "");
+		const host = document.getElementById("video-modal-player-host");
+		if (host) host.textContent = "";
+		const content = document.getElementById("content");
+		if (content) safeSetAttr(content, "aria-hidden", "false");
+		const header = document.querySelector("header");
+		if (header) safeSetAttr(header, "aria-hidden", "false");
+		videoModalCurrentId = "";
+		const returnTo = videoModalReturnFocus;
+		videoModalReturnFocus = null;
+		if (restoreFocus && returnTo && typeof returnTo.focus === "function") returnTo.focus();
+		return true;
+	}
+	function getVideoModalFocusable() {
+		const root = document.getElementById("video-player-modal");
+		if (!root || typeof root.querySelectorAll !== "function") return [];
+		const selector = "a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex='-1'])";
+		return Array.from(root.querySelectorAll(selector)).filter((el) => el instanceof HTMLElement);
+	}
+	function onVideoModalKeydown(e) {
+		if (!e || !isVideoModalOpen()) return;
+		if (e.key === "Escape") {
+			closeVideoModal();
+			e.preventDefault();
+			return;
+		}
+		if (e.key !== "Tab") return;
+		const focusable = getVideoModalFocusable();
+		if (!focusable.length) return;
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+		const active = document.activeElement;
+		if (e.shiftKey) {
+			if (active === first || !focusable.includes(active)) {
+				last.focus();
+				e.preventDefault();
+			}
+		} else if (active === last) {
+			first.focus();
+			e.preventDefault();
+		}
+	}
+	function wireVideoModal() {
+		const root = document.getElementById("video-player-modal");
+		if (!root) return;
+		safeSetAttr(root, "aria-hidden", isVideoModalOpen() ? "false" : "true");
+		const backdrop = document.getElementById("video-modal-backdrop");
+		if (backdrop) backdrop.onclick = () => closeVideoModal();
+		const closeBtn = document.getElementById("video-modal-close");
+		if (closeBtn) closeBtn.onclick = () => closeVideoModal();
+		if (!root._videoModalKeydownWired) {
+			root.addEventListener("keydown", onVideoModalKeydown);
+			root._videoModalKeydownWired = true;
+		}
 	}
 
 	// B3.4: videos whose discussed entities overlap a book chapter's pages.
@@ -21598,6 +21906,10 @@ var BookIndex = (function(exports) {
 		window.openVideoDetail = openVideoDetail;
 		window.openVideoGallery = openVideoGallery;
 		window.buildVideoDetailHash = buildVideoDetailHash;
+		window.isVideoModalOpen = isVideoModalOpen;
+		window.openVideoModal = openVideoModal;
+		window.closeVideoModal = closeVideoModal;
+		window.wireVideoModal = wireVideoModal;
 		window.findVideoById = findVideoById;
 		window.openLectureTerm = openLectureTerm;
 		window.openMaterialsLectures = openMaterialsLectures;
