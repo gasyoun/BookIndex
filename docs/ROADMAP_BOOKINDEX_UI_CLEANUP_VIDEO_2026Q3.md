@@ -1,6 +1,6 @@
 # ROADMAP — BookIndex UI cleanup + video gallery (2026Q3)
 
-_Created: 01-08-2026 · Last updated: 01-08-2026_
+_Created: 01-08-2026 · Last updated: 10-08-2026_
 
 Parent plan: [PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md)  
 Extends: [CLEANUP_AND_UI_ROADMAP.md](https://github.com/gasyoun/BookIndex/blob/main/docs/CLEANUP_AND_UI_ROADMAP.md) (U1–U4 still valid; this roadmap sequences video-first).
@@ -23,7 +23,7 @@ Extends: [CLEANUP_AND_UI_ROADMAP.md](https://github.com/gasyoun/BookIndex/blob/m
 | V1.2 | Honest intro; default sort not date-desc while dates sparse; undated badge | Sort trust |
 | V1.3 | Dense list default + «Превью» toggle (lazy thumbs) | Scan vs browse modes |
 | V1.4 | Facets: year (from title/date), pipeline theme when joinable, series keyword | Non-linear browse |
-| V1.5 | Modal player shell + timecode list (empty OK); external YT fallback | D3 ruling |
+| V1.5 | ~~Modal player shell + timecode list (empty OK); external YT fallback~~ **Done H2125** (PR [#250](https://github.com/gasyoun/BookIndex/pull/250), release [v4.11.5](https://github.com/gasyoun/BookIndex/releases/tag/v4.11.5)) | D3 ruling |
 | V1.6 | U4 harness: `#v4/materials/video` + one detail id | Redesign safety net |
 
 ## Wave V2 — CLEANUP U1–U3 (app-wide)
