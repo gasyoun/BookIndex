@@ -961,12 +961,16 @@ var BookIndex = (function(exports) {
 		window.normalizeBibtexText = normalizeBibtexText$1;
 		window.safeUrl = (url, fallback = "#") => {
 			const clean = String(url || "").trim();
-			if (!clean || clean.toLowerCase().startsWith("javascript:")) return fallback;
+			if (!clean) return fallback;
+			const lower = clean.toLowerCase();
+			if (lower.startsWith("javascript:") || lower.startsWith("data:") || lower.startsWith("vbscript:")) return fallback;
 			return clean;
 		};
 		window.safeImageUrl = (url, fallback = "") => {
 			const clean = String(url || "").trim();
-			if (!clean || clean.toLowerCase().startsWith("javascript:")) return fallback;
+			if (!clean) return fallback;
+			const lower = clean.toLowerCase();
+			if ((lower.startsWith("javascript:") || lower.startsWith("vbscript:")) || (lower.startsWith("data:") && !/^data:image\/(?:png|jpe?g|gif|webp|avif);/.test(lower))) return fallback;
 			return clean;
 		};
 	}
@@ -2701,11 +2705,9 @@ var BookIndex = (function(exports) {
 		if (!parent) return;
 		const raw = String(text || "");
 		if (!raw) return;
-		// Context data is plain text; strip any accidental markup tags rather than trusting HTML.
-		if (/<[a-zA-Z!/?]/.test(raw)) {
-			appendAccentSafeText(parent, raw.replace(/<[^>]*>/g, ""));
-			return;
-		}
+		// Context data is plain text; all insertion below goes through appendAccentSafeText/
+		// createTextNode (never innerHTML), so raw "<" characters are inserted as literal text
+		// and cannot be interpreted as markup. No regex-based tag stripping needed or attempted.
 		appendAutoLinkedEntitiesPlain(parent, raw);
 	}
 	function getPreferredContextSplitIndex(text) {
@@ -15168,7 +15170,7 @@ var BookIndex = (function(exports) {
 			const message = error && error.message ? error.message : String(error || "Unknown data loading error");
 			if (typeof document !== "undefined") {
 				const content = document.getElementById("content");
-				if (content) content.innerHTML = `<div class="panel-empty-state">Не удалось загрузить данные справочника.<br><small>${message}</small></div>`;
+				if (content) content.innerHTML = `<div class="panel-empty-state">Не удалось загрузить данные справочника.<br><small>${escapeHtml$1(message)}</small></div>`;
 			}
 			console.error("[app-data] Boot failed:", error);
 		});
