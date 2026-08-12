@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.12.1] - 2026-08-12
+### Fixed
+- **Контраст пустого состояния «Недавно открывали» (H2127, Opus 5 (`claude-opus-5`)):** `.home-recent-empty` был `#888` на белом при 12px — **3.54:1** против порога WCAG AA 4.5:1; стало `#6b6b6b` (5.28:1). Дефект был на `main` и раньше — правило не менялось с момента появления карточки, — но гейт `post-deploy-quality` (`check:a11y`) до 12-08-2026 **ни разу не выполнялся**: все прогоны за недели были `skipped`, и первый же реальный запуск его нашёл. Отдельно стоит запомнить: «зелёная» история воркфлоу, состоящая из `skipped`, — это отсутствие проверки, а не её прохождение.
+
 ## [4.12.0] - 2026-08-12
 ### Fixed
 - **`validate-and-build` red on `main` since 10-08-2026 (found during H2127):** the standalone-HTML gzip ceiling in `scripts/check_performance_budget.mjs` was 186,000 B while `main`'s artifact had been 186,113 B since v4.11.5 — CI on `main` had been failing for two days on a size assertion nobody read as a build break. Ceiling raised to 192,000 B (~5 KiB real headroom) with the rationale recorded in the file: setting it ~0.3% above the current artifact guarantees the next feature of any size goes red for reasons unrelated to itself.

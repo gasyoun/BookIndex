@@ -3835,7 +3835,10 @@
     line-height: 1.6;
   }
   .home-recent-empty {
-    color: #888;
+    /* #888 on #fff at 12px is 3.54:1 — below the 4.5:1 WCAG AA floor for body text.
+       #6b6b6b is 5.28:1 and keeps the muted reading. Caught by the post-deploy axe
+       gate on 12-08-2026, its first non-skipped run in weeks. */
+    color: #6b6b6b;
   }
   .home-recent-link {
     background: #f0e8d8;
