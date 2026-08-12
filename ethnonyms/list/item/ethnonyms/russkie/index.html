@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-bqBlpr/uOHWbAEx822MBKQC1Y6Ip3zG+rBH2RGId+8I=' 'sha256-NHdnvewKgw5jva9PKMCAd1FbflPUHMquGGlfMfQRSWQ='; worker-src 'self' blob:; style-src 'self' 'sha256-wvTawDUJKmjaM1PmOoVFuQelDj/DZrDTQEhr/ByGJ10='; style-src-elem 'self' 'sha256-wvTawDUJKmjaM1PmOoVFuQelDj/DZrDTQEhr/ByGJ10='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-Jr9wXXbAjlgIoGhAPtWScFZWYwVlF2y5QTMl9uUeduA=' 'sha256-7dyjSoFu8pEGQdjFO+Vs35WlFc083RdE70Eg+Vp2rAE='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -119,18 +119,38 @@
     --color-success: #2e8b57;
     --color-text-muted: #6d645a;
     --primary: var(--color-primary);
-    
+
     /* Premium Typography: Sans-serif for Interface, Serif for reading content */
     --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-serif: 'Noto Serif', 'DejaVu Serif', Georgia, 'PT Serif', 'Times New Roman', serif;
-    
+
     /* Design Tokens */
     --shadow-sm: 0 1px 3px rgba(90, 56, 24, 0.04);
     --shadow-md: 0 4px 16px rgba(90, 56, 24, 0.06);
     --shadow-lg: 0 16px 36px rgba(90, 56, 24, 0.08);
     --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Shared focus-visible ring: one token for viz, density, gallery, forms (H2128) */
+    --focus-ring-color: var(--color-primary);
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+
+    /* Shared control sizing: inputs/chips/buttons (H2128) */
+    --control-radius: 4px;
+    --control-radius-pill: 999px;
+    --control-pad-y: 5px;
+    --control-pad-x: 8px;
+    --control-font-size: 12px;
+    --control-min-h: 28px;
+    --chip-pad-y: 2px;
+    --chip-pad-x: 8px;
+    --chip-font-size: 11px;
   }
   * { box-sizing: border-box; }
+  :focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
   html, body {
     margin: 0; padding: 0;
     font-family: var(--font-sans);
@@ -348,7 +368,7 @@
     background: var(--surface, #fff);
     color: var(--title, #3a2a12);
   }
-  .command-palette-input:focus { outline: 2px solid #c4b890; outline-offset: -2px; }
+  .command-palette-input:focus-visible { outline-offset: -2px; }
   .command-palette-list {
     max-height: 52vh;
     overflow-y: auto;
@@ -896,14 +916,7 @@
     border-color: var(--title);
     color: #fff;
   }
-  .viz-module-btn:focus-visible,
-  .viz-action-btn:focus-visible,
-  .viz-toolbar input:focus-visible,
-  .viz-toolbar select:focus-visible,
-  .viz-toolbar button:focus-visible {
-    outline: 2px solid var(--color-primary, #3a6ea5);
-    outline-offset: 2px;
-  }
+  /* shared :focus-visible ring covers viz toolbar controls — see --focus-ring-* tokens */
   .viz-module-host {
     min-height: 520px;
     max-width: 100%;
@@ -1344,10 +1357,6 @@
   .rmap-clickable:focus-visible .rmap-dot {
     stroke: var(--title);
     stroke-width: 2.5;
-  }
-  .rmap-clickable:focus-visible {
-    outline: 2px solid var(--color-primary, #3a6ea5);
-    outline-offset: 2px;
   }
   .rmap-label {
     font-size: 10px;
@@ -2927,10 +2936,10 @@
     gap: 5px;
   }
   .vg-chip {
-    font-size: 11px;
-    padding: 2px 8px;
+    font-size: var(--chip-font-size);
+    padding: var(--chip-pad-y) var(--chip-pad-x);
     border: 1px solid var(--line, #d4c8b0);
-    border-radius: 999px;
+    border-radius: var(--control-radius-pill);
     background: #faf6ee;
     color: var(--title, #5a3818);
     text-decoration: none;
@@ -2951,14 +2960,7 @@
     color: #8c3a15;
     border-bottom-color: #8c3a15;
   }
-  .vg-input:focus-visible,
-  .vg-card-title:focus-visible,
-  .vg-chip:focus-visible,
-  .video-detail-back:focus-visible,
-  .video-detail-yt:focus-visible {
-    outline: 2px solid var(--color-primary, #3a6ea5);
-    outline-offset: 2px;
-  }
+  /* shared :focus-visible ring covers vg-input/vg-card-title/vg-chip/video-detail-back/video-detail-yt */
   .vg-empty {
     grid-column: 1 / -1;
     color: var(--muted, #6d645a);
@@ -3233,12 +3235,7 @@
     color: var(--muted, #6d645a);
     font-size: 13px;
   }
-  .video-modal-close:focus-visible,
-  .video-detail-watch:focus-visible,
-  .video-modal-tc-item:focus-visible {
-    outline: 2px solid var(--color-primary, #3a6ea5);
-    outline-offset: 2px;
-  }
+  /* shared :focus-visible ring covers video-modal-close/video-detail-watch/video-modal-tc-item */
   .lectures-title {
     color: #5a3818;
     font-size: 20px;
@@ -6381,16 +6378,16 @@
 
   .density-select {
     border: 1px solid var(--line);
-    border-radius: 4px;
+    border-radius: var(--control-radius);
     background: var(--surface-soft);
     color: var(--title);
     font-family: inherit;
-    font-size: 12px;
-    padding: 5px 8px;
-    min-height: 28px;
+    font-size: var(--control-font-size);
+    padding: var(--control-pad-y) var(--control-pad-x);
+    min-height: var(--control-min-h);
   }
   .density-select:hover { background: var(--surface-soft-2); }
-  .density-select:focus { outline: 2px solid var(--line-strong); outline-offset: 1px; }
+  .density-select:focus-visible { outline-offset: 1px; }
 
   body.density-compact .entity-btn,
   body.density-compact .tab,
@@ -6801,7 +6798,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "29095bd51a39",
+  "build_id": "ac493b70dd61",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -7109,7 +7106,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "29095bd51a39";
+	var APP_BUILD_ID$1 = "ac493b70dd61";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -8011,8 +8008,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "29095bd51a39").trim();
-		if (buildId && buildId !== "29095bd51a39") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "ac493b70dd61").trim();
+		if (buildId && buildId !== "ac493b70dd61") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -12070,7 +12067,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "29095bd51a39" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "ac493b70dd61" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
