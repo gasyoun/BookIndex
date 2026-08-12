@@ -10248,6 +10248,19 @@ var BookIndex = (function(exports) {
 		applyDataDrivenStyles(container);
 		alpine.initTree(container);
 	}
+	function buildHomeIndexTaskEntries() {
+		const section = getNavSectionById("indexes");
+		const items = section && Array.isArray(section.items) ? section.items : [];
+		return items.filter((item) => item && item.entity && ENTITY_TYPES[item.entity]).map((item) => {
+			const conf = ENTITY_TYPES[item.entity];
+			const count = Array.isArray(conf && conf.items) ? conf.items.length : 0;
+			return {
+				entity: item.entity,
+				label: String(item.label || item.entity),
+				count
+			};
+		});
+	}
 	function wireHomeTasks(container, totalPages) {
 		if (!container || typeof container.querySelector !== "function") return;
 		const maxPage = Math.max(1, Number(totalPages) || getTotalBookPages());
@@ -10262,6 +10275,13 @@ var BookIndex = (function(exports) {
 			e.preventDefault();
 			const q = clampUiInput((container.querySelector("#home-task-term-input") || {}).value || "", MAX_LIST_QUERY_LENGTH).trim();
 			if (q) applyHash(buildListSearchHash("all", q));
+		};
+		const indexForm = container.querySelector("#home-task-index");
+		if (indexForm) indexForm.onsubmit = (e) => {
+			e.preventDefault();
+			const sel = container.querySelector("#home-task-index-select");
+			const entity = String(sel && sel.value || "").trim();
+			if (entity && ENTITY_TYPES[entity]) applyHash(buildListSearchHash(entity, ""));
 		};
 		const videoForm = container.querySelector("#home-task-video");
 		const videoInput = container.querySelector("#home-task-video-input");
@@ -10335,10 +10355,12 @@ var BookIndex = (function(exports) {
 		const quoteClass = compactHome ? "home-featured-quote home-featured-quote-compact" : "home-featured-quote home-featured-quote-full";
 		const quoteTextClass = compactHome ? "home-featured-quote-clamp" : "";
 		const routeGridClass = compactHome || isDesktop ? "home-routes-grid home-routes-grid-compact" : "home-routes-grid";
+		const indexEntries = buildHomeIndexTaskEntries();
+		const indexOptionsHtml = indexEntries.map((entry) => `<option value="${escapeHtml(entry.entity)}">${escapeHtml(entry.label)}${entry.count ? ` (${entry.count})` : ""}</option>`).join("");
 		let html = `<div class="panel active home-panel"><div class="home-panel-inner" data-home-inner-padding="${escapeHtml(homeInnerPadding)}">`;
 		html += `<div class="home-tasks">
     <div class="home-tasks-title">С чего начать?</div>
-    <div class="home-tasks-grid">
+    <div id="home-tasks-grid" class="home-tasks-grid">
       <form class="home-task" id="home-task-page">
         <div class="home-task-head"><span class="home-task-icon">📖</span><label class="home-task-label" for="home-task-page-input">Я читаю страницу книги</label></div>
         <div class="home-task-row">
@@ -10363,9 +10385,19 @@ var BookIndex = (function(exports) {
         </div>
         <div class="home-task-hint">Поиск по всему указателю.</div>
       </form>
+      <form class="home-task" id="home-task-index">
+        <div class="home-task-head"><span class="home-task-icon">📇</span><label class="home-task-label" for="home-task-index-select">Смотрю указатель целиком</label></div>
+        <div class="home-task-row">
+          <select id="home-task-index-select" class="home-task-input home-task-select">${indexOptionsHtml}</select>
+          <button class="home-task-btn" type="submit">Открыть</button>
+        </div>
+        <div class="home-task-hint">Полный список с фильтрами и сортировкой.</div>
+      </form>
     </div>
   </div>`;
-		html += `<div class="home-stats-hero">
+		// U1 (H2127): the «Книга в цифрах» showcase is BUILT here but APPENDED after the
+		// task-shaped surfaces (routes, recents), so the home fold stays task-first.
+		let showcase = `<div class="home-stats-hero">
     <div class="home-stats-head">
       <h2 class="home-stats-title">Книга в цифрах</h2>
       <button id="export-site-md" class="home-export-btn">Экспорт всего BookIndex в Markdown</button>
@@ -10382,12 +10414,12 @@ var BookIndex = (function(exports) {
 			[stats.lexicon.toLocaleString("ru"), "лексем"],
 			[stats.subject_index, "понятий"]
 		];
-		for (const [num, label] of cells) html += `<div class="home-stat-cell">
+		for (const [num, label] of cells) showcase += `<div class="home-stat-cell">
       <div class="home-stat-num">${num}</div>
       <div class="home-stat-label">${label}</div>
     </div>`;
-		html += "</div>";
-		html += `<div class="home-facts" data-home-facts-space="${compactHome ? 10 : 14}" data-home-facts-line-height="${compactHome ? 1.55 : 1.7}">
+		showcase += "</div>";
+		showcase += `<div class="home-facts" data-home-facts-space="${compactHome ? 10 : 14}" data-home-facts-line-height="${compactHome ? 1.55 : 1.7}">
     <div id="home-fact-pair" class="${factPairClass}">
       <div>
         <div class="home-fact-row">📖 Самая длинная лекция — <strong>«${escapeHtml(stats.longest_lecture.name)}»</strong> (${stats.longest_lecture.pages} страниц)</div>
@@ -10434,6 +10466,7 @@ var BookIndex = (function(exports) {
     <div class="home-recent-title">Недавно открывали</div>
     <div id="home-recent-items" class="home-recent-items">${recentItems.length ? "" : "<span class=\"home-recent-empty\">Пока пусто — откройте любую карточку.</span>"}</div>
   </div>`;
+		html += showcase;
 		html += buildHomeHowToGuideHtml();
 		html += "</div></div>";
 		container.innerHTML = html;

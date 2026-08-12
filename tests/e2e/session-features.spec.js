@@ -5,11 +5,12 @@ const { test, expect } = require('@playwright/test');
 // card order/dedup/actions (B5 + review fix), page citations (B2), and the
 // lecture↔video link (B3.4).
 
-test.describe('home task dashboard (B4)', () => {
-  test('three task tiles, video search is inline, page tile navigates', async ({ page }) => {
+test.describe('home task dashboard (B4 + U1)', () => {
+  test('four task tiles, video search is inline, page tile navigates', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/home/home');
     await expect(page.locator('.home-tasks')).toBeVisible();
-    await expect(page.locator('.home-task')).toHaveCount(3);
+    // U1 (H2127): reading, video, term search, and the index browse entry.
+    await expect(page.locator('.home-task')).toHaveCount(4);
 
     // inline video search over the catalog
     await page.locator('#home-task-video-input').fill('берестян');
@@ -20,6 +21,38 @@ test.describe('home task dashboard (B4)', () => {
     await page.locator('#home-task-page button[type="submit"]').click();
     await expect(page).toHaveURL(/reading\/272$/);
     await expect(page.locator('.reading-now-page-title')).toContainText('272');
+  });
+
+  // U1 (H2127): the fourth entry — browse a whole index — and task-first ordering.
+  test('index tile opens the chosen index list', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/home/home');
+    const select = page.locator('#home-task-index-select');
+    await expect(select).toBeVisible();
+    await expect(select.locator('option')).toHaveCount(8);
+    await select.selectOption('toponyms');
+    await page.locator('#home-task-index button[type="submit"]').click();
+    await expect(page).toHaveURL(/#v4\/toponyms\/list$/);
+    await expect(page.locator('#name-list')).toBeVisible();
+  });
+
+  test('tasks precede the «Книга в цифрах» showcase on home', async ({ page }) => {
+    await page.goto('/aaz-index.html#v4/home/home');
+    await expect(page.locator('.home-tasks')).toBeVisible();
+    await expect(page.locator('.home-stats-hero')).toBeVisible();
+    const order = await page.evaluate(() => {
+      const panel = document.querySelector('.home-panel');
+      const tasks = panel && panel.querySelector('.home-tasks');
+      const hero = panel && panel.querySelector('.home-stats-hero');
+      const recents = panel && panel.querySelector('.home-recent-card');
+      if (!tasks || !hero || !recents) return null;
+      return {
+        tasksBeforeHero: !!(tasks.compareDocumentPosition(hero) & Node.DOCUMENT_POSITION_FOLLOWING),
+        recentsBeforeHero: !!(recents.compareDocumentPosition(hero) & Node.DOCUMENT_POSITION_FOLLOWING),
+      };
+    });
+    expect(order).toBeTruthy();
+    expect(order.tasksBeforeHero).toBeTruthy();
+    expect(order.recentsBeforeHero).toBeTruthy();
   });
 });
 

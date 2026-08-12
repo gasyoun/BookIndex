@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-SGR+e/+9U0nhjrafyABSq7MSp0TRTfflMd+g72ZD6hc=' 'sha256-EJ/WABgh+AT+I/HmQFWgdEJLXv/2l5RNMCqE0ZcXXfM='; worker-src 'self' blob:; style-src 'self' 'sha256-2uaU7B/0vfZaSMcSZJf2pRYxRoQGdFZQnR78IC+orU0='; style-src-elem 'self' 'sha256-2uaU7B/0vfZaSMcSZJf2pRYxRoQGdFZQnR78IC+orU0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-Hdi1B+iQExNHTeBZpQqlTWivnZPPJ8XpDKEnzRYDe8Y=' 'sha256-PiXnhAmXu4qmIzv3YYaiMusBxvfDfoheGRAh8qcymvI='; worker-src 'self' blob:; style-src 'self' 'sha256-VDz8Hp3w/Y8xgZ9ENn88NbgpoJyXXVJ9FSA5F1T4BkE='; style-src-elem 'self' 'sha256-VDz8Hp3w/Y8xgZ9ENn88NbgpoJyXXVJ9FSA5F1T4BkE='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -3526,8 +3526,11 @@
   }
   .home-tasks-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 12px;
+  }
+  .home-task-select {
+    min-width: 0;
   }
   .home-task {
     background: var(--surface, #fffdf8);
@@ -6726,7 +6729,7 @@
         <button type="button" class="citation-tab-btn" data-style="chicago">Chicago</button>
       </div>
       <div class="citation-box-container">
-        <div class="citation-box" id="citation-widget-card-inyi-2-box" aria-live="polite">Зализняк А. А. Справочная статья «и́ный» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/inyi-2/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/inyi-2/</a> (дата обращения: 11.08.2026).</div>
+        <div class="citation-box" id="citation-widget-card-inyi-2-box" aria-live="polite">Зализняк А. А. Справочная статья «и́ный» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/inyi-2/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/inyi-2/</a> (дата обращения: 12.08.2026).</div>
         <button type="button" class="citation-copy-btn" id="citation-widget-card-inyi-2-copy-btn">Копировать</button>
       </div>
     </div>
@@ -6761,7 +6764,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "5cf7f257788f",
+  "build_id": "769ff029bb98",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -7069,7 +7072,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "5cf7f257788f";
+	var APP_BUILD_ID$1 = "769ff029bb98";
 	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7971,8 +7974,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "5cf7f257788f").trim();
-		if (buildId && buildId !== "5cf7f257788f") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "769ff029bb98").trim();
+		if (buildId && buildId !== "769ff029bb98") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule$1(manifest, file) {
@@ -12030,7 +12033,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "5cf7f257788f" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "769ff029bb98" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -17165,6 +17168,19 @@ var BookIndex = (function(exports) {
 		applyDataDrivenStyles(container);
 		alpine.initTree(container);
 	}
+	function buildHomeIndexTaskEntries() {
+		const section = getNavSectionById("indexes");
+		const items = section && Array.isArray(section.items) ? section.items : [];
+		return items.filter((item) => item && item.entity && ENTITY_TYPES[item.entity]).map((item) => {
+			const conf = ENTITY_TYPES[item.entity];
+			const count = Array.isArray(conf && conf.items) ? conf.items.length : 0;
+			return {
+				entity: item.entity,
+				label: String(item.label || item.entity),
+				count
+			};
+		});
+	}
 	function wireHomeTasks(container, totalPages) {
 		if (!container || typeof container.querySelector !== "function") return;
 		const maxPage = Math.max(1, Number(totalPages) || getTotalBookPages());
@@ -17179,6 +17195,13 @@ var BookIndex = (function(exports) {
 			e.preventDefault();
 			const q = clampUiInput((container.querySelector("#home-task-term-input") || {}).value || "", MAX_LIST_QUERY_LENGTH).trim();
 			if (q) applyHash(buildListSearchHash("all", q));
+		};
+		const indexForm = container.querySelector("#home-task-index");
+		if (indexForm) indexForm.onsubmit = (e) => {
+			e.preventDefault();
+			const sel = container.querySelector("#home-task-index-select");
+			const entity = String(sel && sel.value || "").trim();
+			if (entity && ENTITY_TYPES[entity]) applyHash(buildListSearchHash(entity, ""));
 		};
 		const videoForm = container.querySelector("#home-task-video");
 		const videoInput = container.querySelector("#home-task-video-input");
@@ -17252,10 +17275,12 @@ var BookIndex = (function(exports) {
 		const quoteClass = compactHome ? "home-featured-quote home-featured-quote-compact" : "home-featured-quote home-featured-quote-full";
 		const quoteTextClass = compactHome ? "home-featured-quote-clamp" : "";
 		const routeGridClass = compactHome || isDesktop ? "home-routes-grid home-routes-grid-compact" : "home-routes-grid";
+		const indexEntries = buildHomeIndexTaskEntries();
+		const indexOptionsHtml = indexEntries.map((entry) => `<option value="${escapeHtml(entry.entity)}">${escapeHtml(entry.label)}${entry.count ? ` (${entry.count})` : ""}</option>`).join("");
 		let html = `<div class="panel active home-panel"><div class="home-panel-inner" data-home-inner-padding="${escapeHtml(homeInnerPadding)}">`;
 		html += `<div class="home-tasks">
     <div class="home-tasks-title">С чего начать?</div>
-    <div class="home-tasks-grid">
+    <div id="home-tasks-grid" class="home-tasks-grid">
       <form class="home-task" id="home-task-page">
         <div class="home-task-head"><span class="home-task-icon">📖</span><label class="home-task-label" for="home-task-page-input">Я читаю страницу книги</label></div>
         <div class="home-task-row">
@@ -17280,9 +17305,19 @@ var BookIndex = (function(exports) {
         </div>
         <div class="home-task-hint">Поиск по всему указателю.</div>
       </form>
+      <form class="home-task" id="home-task-index">
+        <div class="home-task-head"><span class="home-task-icon">📇</span><label class="home-task-label" for="home-task-index-select">Смотрю указатель целиком</label></div>
+        <div class="home-task-row">
+          <select id="home-task-index-select" class="home-task-input home-task-select">${indexOptionsHtml}</select>
+          <button class="home-task-btn" type="submit">Открыть</button>
+        </div>
+        <div class="home-task-hint">Полный список с фильтрами и сортировкой.</div>
+      </form>
     </div>
   </div>`;
-		html += `<div class="home-stats-hero">
+		// U1 (H2127): the «Книга в цифрах» showcase is BUILT here but APPENDED after the
+		// task-shaped surfaces (routes, recents), so the home fold stays task-first.
+		let showcase = `<div class="home-stats-hero">
     <div class="home-stats-head">
       <h2 class="home-stats-title">Книга в цифрах</h2>
       <button id="export-site-md" class="home-export-btn">Экспорт всего BookIndex в Markdown</button>
@@ -17299,12 +17334,12 @@ var BookIndex = (function(exports) {
 			[stats.lexicon.toLocaleString("ru"), "лексем"],
 			[stats.subject_index, "понятий"]
 		];
-		for (const [num, label] of cells) html += `<div class="home-stat-cell">
+		for (const [num, label] of cells) showcase += `<div class="home-stat-cell">
       <div class="home-stat-num">${num}</div>
       <div class="home-stat-label">${label}</div>
     </div>`;
-		html += "</div>";
-		html += `<div class="home-facts" data-home-facts-space="${compactHome ? 10 : 14}" data-home-facts-line-height="${compactHome ? 1.55 : 1.7}">
+		showcase += "</div>";
+		showcase += `<div class="home-facts" data-home-facts-space="${compactHome ? 10 : 14}" data-home-facts-line-height="${compactHome ? 1.55 : 1.7}">
     <div id="home-fact-pair" class="${factPairClass}">
       <div>
         <div class="home-fact-row">📖 Самая длинная лекция — <strong>«${escapeHtml(stats.longest_lecture.name)}»</strong> (${stats.longest_lecture.pages} страниц)</div>
@@ -17351,6 +17386,7 @@ var BookIndex = (function(exports) {
     <div class="home-recent-title">Недавно открывали</div>
     <div id="home-recent-items" class="home-recent-items">${recentItems.length ? "" : "<span class=\"home-recent-empty\">Пока пусто — откройте любую карточку.</span>"}</div>
   </div>`;
+		html += showcase;
 		html += buildHomeHowToGuideHtml();
 		html += "</div></div>";
 		container.innerHTML = html;

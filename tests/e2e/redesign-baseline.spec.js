@@ -34,7 +34,8 @@ const ROUTES = [
     id: 'home',
     hash: '#v4/home/home',
     ready: '#home-stats-grid',
-    controls: ['#entity-switcher', '#density-select', '#global-search', '#home-stats-grid'],
+    // U1 (H2127): the task grid is the primary home surface, so the U4 gate guards it too.
+    controls: ['#entity-switcher', '#density-select', '#global-search', '#home-tasks-grid', '#home-stats-grid'],
   },
   {
     id: 'all-list',
