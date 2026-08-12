@@ -1,6 +1,28 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 06-08-2026_
+_Created: 24-07-2026 · Last updated: 12-08-2026_
+
+## H2127 — U1 home task dashboard: what was already there (2026-08-12)
+
+Model: Opus 5 (`claude-opus-5`). PR [#254](https://github.com/gasyoun/BookIndex/pull/254).
+
+U1 («home as task dashboard, not feature showcase») read as a from-scratch redesign in the
+roadmap, but two thirds of it had already shipped under different labels — worth recording
+because the roadmap row gave no hint of it:
+
+| U1 requirement | State at execution | Source |
+| --- | --- | --- |
+| Task strip at top of home | **already shipped** — «С чего начать?», 3 tiles | B4, commit [3014d6b8](https://github.com/gasyoun/BookIndex/commit/3014d6b8347ad83576b51ea611edb48eede5f7f2), 13-06-2026 |
+| Home video search reused/improved | **already in-app** — `buildVideoDetailHash` + `openVideoDetail`, not a YouTube out-link | H2125, PR [#250](https://github.com/gasyoun/BookIndex/pull/250) |
+| All four task areas (reading · video · search · indexes) have an entry | **gap** — indexes had none | closed here |
+| Home fold is task-first, not showcase-first | **gap** — «Книга в цифрах» + 7 facts + quote sat directly under the task strip | closed here |
+
+So H2127 was a two-item gap-fill, not a redesign. The measurable ordering contract that
+constrained the fix: `smoke.spec.js` pins routes-before-recents, so the showcase could only be
+demoted *below* both, never swapped with recents.
+
+Checks at merge: `check:redesign` 21/21, full `npm run check` 179/179, `runtime_test.py`,
+`check_encoding.py`, `validate_content.py` all green.
 
 ## H2124 — video gallery V1b: dense list default + optional thumbs toggle (2026-08-06)
 
