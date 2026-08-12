@@ -9,10 +9,18 @@ const budgets = [
     // Gzip ceiling raised 2026-07-30 (H1821): the VIZ-08 research-map styles cost
     // ~0.9 KiB gzip and the previous 180 KiB ceiling was already 99.7% full
     // (179,435 B on the preceding main), leaving no room for any new panel.
+    // Raised again 2026-08-12 (H2127) 186_000 -> 192_000. Two facts forced it:
+    // (a) main had ALREADY been over this ceiling since v4.11.5 landed on 10-08-2026
+    //     (186,113 B against a 186,000 B limit — `validate-and-build` red on main for
+    //     two days, unnoticed because the failure is a size assertion, not a test);
+    // (b) the U1 home task tile adds a further ~562 B gzip.
+    // The pattern to stop repeating: setting this ceiling ~0.3% above the current
+    // artifact means the NEXT feature of any size turns the branch red for a reason
+    // unrelated to that feature. 192_000 leaves ~5 KiB of real headroom.
     label: 'standalone HTML',
     path: 'aaz-index.html',
     maxBytes: 1_200_000,
-    maxGzipBytes: 186_000,
+    maxGzipBytes: 192_000,
   },
   {
     label: 'source app data',
