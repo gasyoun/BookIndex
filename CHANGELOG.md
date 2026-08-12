@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Fixed
+- **`validate-and-build` red on `main` since 10-08-2026 (found during H2127):** the standalone-HTML gzip ceiling in `scripts/check_performance_budget.mjs` was 186,000 B while `main`'s artifact had been 186,113 B since v4.11.5 — CI on `main` had been failing for two days on a size assertion nobody read as a build break. Ceiling raised to 192,000 B (~5 KiB real headroom) with the rationale recorded in the file: setting it ~0.3% above the current artifact guarantees the next feature of any size goes red for reasons unrelated to itself.
+
+### Changed
+- **Home as a task dashboard, not a feature showcase (U1, H2127, Opus 5 (`claude-opus-5`)):** `#v4/home/home` gained a fourth «С чего начать?» tile — «Смотрю указатель целиком», a picker over the eight `indexes` nav entries with live item counts, submitting to that index's list route — so all four task areas the CLEANUP roadmap names (reading, video, term search, indexes) have a home entry. The showcase block («Книга в цифрах» stat hero + seven trivia facts + featured quote) is now appended *after* the route grid and «Недавно открывали» instead of directly under the task strip, so the fold is task-first; routes still precede recents. Task grid is `#home-tasks-grid` and joined the U4 home control set, so the harness guards the task surface. No palette flip, no `index.html` marketing rewrite (H1603 stays out of fence). 3 `session-features` cases (4 tiles, index tile navigation, task-before-showcase order); `check:redesign` 21/21 and the full suite 179/179 green.
 
 ## [4.11.5] - 2026-08-10
 ### Added

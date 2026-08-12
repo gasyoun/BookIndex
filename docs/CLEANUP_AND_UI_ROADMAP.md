@@ -270,6 +270,17 @@ But redesign the surfaces under it:
 5. Tools: collect KWIC, glossary, maps, and export utilities.
 6. Practice: keep quiz/progress compact and focused.
 
+**Status of item 1 (home): shipped in two passes.** B4 (13-06-2026) put the «С чего начать?»
+task strip at the top with three entries — reading a page, video, term search. H2127
+(12-08-2026) finished the task-dashboard shape: a fourth entry «Смотрю указатель целиком»
+(index picker over the eight `indexes` nav entries, with live item counts) so all four task
+areas the roadmap names — reading, video, search, indexes — have a home entry; and the
+feature showcase («Книга в цифрах» stat hero + the seven trivia facts + featured quote) is
+now appended *after* the route grid and «Недавно открывали», so the fold is task-first
+rather than showcase-first. `#home-tasks-grid` joined the U4 home control set below, so the
+task surface is what the harness protects. Items 2–6 (indexes/materials/apparatus/tools/practice
+surfaces) are untouched by H2127.
+
 ### Phase U2 - Visual system
 
 Current palette is warm archival brown/cream. It suits the subject, but it can become visually flat.

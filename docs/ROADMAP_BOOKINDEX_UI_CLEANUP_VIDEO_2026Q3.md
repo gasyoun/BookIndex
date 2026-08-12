@@ -1,6 +1,6 @@
 # ROADMAP — BookIndex UI cleanup + video gallery (2026Q3)
 
-_Created: 01-08-2026 · Last updated: 10-08-2026_
+_Created: 01-08-2026 · Last updated: 12-08-2026_
 
 Parent plan: [PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md)  
 Extends: [CLEANUP_AND_UI_ROADMAP.md](https://github.com/gasyoun/BookIndex/blob/main/docs/CLEANUP_AND_UI_ROADMAP.md) (U1–U4 still valid; this roadmap sequences video-first).
@@ -30,7 +30,7 @@ Extends: [CLEANUP_AND_UI_ROADMAP.md](https://github.com/gasyoun/BookIndex/blob/m
 
 | ID | Deliverable | Notes |
 | --- | --- | --- |
-| U1 | Home as task dashboard (not feature showcase) | Reuse home video search |
+| U1 | ~~Home as task dashboard (not feature showcase)~~ **Done H2127** — 4th task tile «Смотрю указатель целиком», showcase («Книга в цифрах» + facts + quote) demoted below routes/recents, `#home-tasks-grid` added to the U4 home gate | Reuse home video search (already in-app since H2125) |
 | U2 | Shared tokens: focus ring, input height, chip, 6–8px radius | Video already on 6–8px |
 | U3 | Header/list/card/toolbar anatomy consistency | No palette flip |
 | IA | Materials tabs: «Лекции книги (11)» vs «Видеоархив (N)» | Clarity |
