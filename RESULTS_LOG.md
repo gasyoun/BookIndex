@@ -1,6 +1,32 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 12-08-2026_
+_Created: 24-07-2026 · Last updated: 13-08-2026_
+
+## H2577 — UI-review state verification layer (2026-08-13)
+
+Repeatable browser contract for the PR [#213](https://github.com/gasyoun/BookIndex/pull/213) / interface-review findings 2, 3, 5, 8 (labels, `:focus-visible`, live `#vg-meta`, empty-filter, honest copy). No visual-language change.
+
+| Item | Value |
+| --- | --- |
+| Command | `npm run check:ui-review-states` |
+| Spec | [tests/e2e/ui-review-states.spec.js](https://github.com/gasyoun/BookIndex/blob/main/tests/e2e/ui-review-states.spec.js) |
+| Result | **12 passed** / 33.2 s (Playwright chromium; desktop 1366×900 + mobile 390×844) |
+| Axe | `.video-gallery` rules `label` `select-name` `button-name` `link-name` `aria-allowed-attr` `aria-valid-attr` — 0 violations |
+| Focus proof | Keyboard Tab (Shift+Tab / Tab), not `locator.focus()`. Computed `outline-style: solid`, width ≥ 2px |
+| Artifacts | gitignored `test-results/ui-review-states/*.png` (review clips, not pixel baselines) |
+| Checklist | [docs/VERIFICATION_BOOKINDEX_UI_VIDEO.md](https://github.com/gasyoun/BookIndex/blob/main/docs/VERIFICATION_BOOKINDEX_UI_VIDEO.md) § H2577 |
+
+Residual gaps (named, not failed):
+
+| Gap | Why it is residual |
+| --- | --- |
+| Screen-reader speech of `#vg-meta` | Live-region attributes + text change are proved; NVDA/JAWS/VoiceOver announcement is not |
+| Ring colour contrast on every surface | Width/style proved; headed eyeball of `--focus-ring-color` vs chips remains |
+| Print | No `@media print` in `v3_template.html`; not a V1a deliverable |
+| Gallery loading / error UI | Catalog is inlined in `APP_DATA`; there is no async chrome on `#v4/materials/video` |
+
+**Model:** Grok 4.6 (`grok-4.6`).
+**Handoff:** [H2577](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2577-Grok_BookIndex_ui-review-states_11.08.26.md).
 
 ## H2127 — U1 home task dashboard: what was already there (2026-08-12)
 
