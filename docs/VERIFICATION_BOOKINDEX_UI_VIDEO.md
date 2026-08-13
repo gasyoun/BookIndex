@@ -1,6 +1,6 @@
 # VERIFICATION — BookIndex UI video waves
 
-_Created: 01-08-2026 · Last updated: 13-08-2026_
+_Created: 01-08-2026 · Last updated: 14-08-2026_
 
 Parent: [PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md)
 
@@ -45,6 +45,7 @@ Spec: [tests/e2e/ui-review-states.spec.js](https://github.com/gasyoun/BookIndex/
 | --- | --- | --- | --- |
 | Aria labels | Search / chapter / sort have accessible names | DOM `aria-label` + axe `label`/`select-name`/`button-name`/`link-name` | **PASS** (desktop + mobile + axe 0 violations) |
 | Live status | `#vg-meta` is a polite live region and its text tracks the list | attributes + text change after search `араб` | **PASS** (desktop + mobile) |
+| Live region on the AX tree | Chromium exposes `#vg-meta` as `role=status` `live=polite` `atomic` with a `StaticText` child that tracks the filter | CDP `Accessibility.getPartialAXTree` | **PASS** 14-08-2026: 176→4 on `араб` |
 | Empty filter | Zero-hit search shows reset; reset restores cards and focus | `.vg-empty` / `.vg-empty-reset` | **PASS** (desktop + mobile) |
 | Honest copy | Intro, default sort `title`, «дата неизвестна» | text / `select` value | **PASS** (desktop + mobile) |
 | Keyboard focus ring | Tab origin produces the H2128 ring token | computed `outline` after Shift+Tab / Tab | **PASS** (search, chapter, sort, thumbs, first title, detail back, YouTube link) |
@@ -56,7 +57,7 @@ Spec: [tests/e2e/ui-review-states.spec.js](https://github.com/gasyoun/BookIndex/
 
 | Gap | Why it stays residual | What a live browser still adds |
 | --- | --- | --- |
-| Screen-reader announcement of `#vg-meta` | Playwright asserts the live-region *attributes* and text change; it does not hear NVDA/JAWS/VoiceOver speak the update | One pass with a screen reader: filter the list and confirm the new «Показано N из M» is announced |
+| Screen-reader *audio* of `#vg-meta` | NVDA/JAWS are not installed on this box. Narrator.exe exists but was not started (it takes over the desktop and this session cannot capture speech). The API those engines read **was** checked 14-08-2026 | A human ear on NVDA/Narrator is the only remaining speech check; engineering no longer blocks on it |
 | Visible ring *colour* against the archival cream | Computed style proves width/style; contrast of `--focus-ring-color` vs card surface is a headed-eyeball check | Tab through controls on a real display (and, if desired, Windows High Contrast) |
 | Print | There is **no** `@media print` rule in [v3_template.html](https://github.com/gasyoun/BookIndex/blob/main/v3_template.html). Print is not a V1a deliverable | Not applicable until a print stylesheet exists |
 | Gallery loading / error chrome | Catalog is inlined in `aaz-index.html` (`APP_DATA`). The gallery has no `.vg-loading` / `.vg-error` path to exercise | Not applicable on this route. App-boot failure is a different surface (`[app-data] Boot failed`) |
@@ -71,6 +72,17 @@ Spec: [tests/e2e/ui-review-states.spec.js](https://github.com/gasyoun/BookIndex/
 - Empty state (desktop and 390): «Ничего не найдено по заданным фильтрам.» + «Сбросить фильтры» button, no leftover cards.
 - Keyboard ring is a 2px solid brown outline on `#vg-search`, the first `.vg-card-title` («21.07.2010, Новгород, берестяная грамота № 1000»), and «← К видеогалерее». The ring is visible against the cream field; colour-contrast vs every chip surface was not measured.
 - Dense list default is intact (no thumbs in the gallery-top clips).
+
+### Live-region AX pass (14-08-2026)
+
+`npx playwright test tests/e2e/ui-review-states.spec.js -g "Chromium AX tree"` — **1 passed**. Chromium CDP `Accessibility.getPartialAXTree` (what Narrator / NVDA / JAWS consume via the platform API):
+
+| Moment | role | live | relevant | atomic | ignored | Accessible name | Spoken child (`StaticText`) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| After load | `status` | `polite` | `additions text` | true | false | empty (normal for `status`) | Показано 176 из 176 видео. |
+| After search `араб` | `status` | `polite` | `additions text` | true | false | empty | Показано 4 из 176 видео. |
+
+Empty accessible **name** is expected: `role=status` is named from contents. The spoken payload is the `StaticText` child, which changed with the filter. That is the live-region contract. NVDA was not on PATH; Narrator was not launched.
 
 ---
 
