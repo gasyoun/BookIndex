@@ -4,8 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.12.2] - 2026-08-13
 ### Added
 - **Video-gallery UI-review verification layer (H2577, Grok 4.6 (`grok-4.6`)):** repeatable Playwright contract for the PR [#213](https://github.com/gasyoun/BookIndex/pull/213) states (aria labels, keyboard `:focus-visible` ring, live `#vg-meta`, empty-filter reset, honest intro/sort). Command: `npm run check:ui-review-states`. Manual residual (print + AT announcement) named in `docs/VERIFICATION_BOOKINDEX_UI_VIDEO.md`.
+
+### Fixed
+- **Empty-filter e2e race:** `session-features` counted `#vg-list .vg-card` before hydrate, so `all` was 0 and reset looked like a failure (CI flake on the 4.12.2 PR). Wait for the first card before counting.
 
 ## [4.12.1] - 2026-08-12
 ### Fixed

@@ -16,6 +16,8 @@ Repeatable browser contract for the PR [#213](https://github.com/gasyoun/BookInd
 | Artifacts | gitignored `test-results/ui-review-states/*.png` (review clips, not pixel baselines) |
 | Checklist | [docs/VERIFICATION_BOOKINDEX_UI_VIDEO.md](https://github.com/gasyoun/BookIndex/blob/main/docs/VERIFICATION_BOOKINDEX_UI_VIDEO.md) § H2577 |
 
+CI note (4.12.2 PR): the older `session-features` empty-filter case flaked on Linux/2-workers (`all` captured as 0 before hydrate, then reset restored 176). Hardened to wait for the first `.vg-card` before counting. The H2577 spec already waited and did not flake.
+
 Residual gaps (named, not failed):
 
 | Gap | Why it is residual |
