@@ -104,6 +104,9 @@ test.describe('video gallery (B3.5)', () => {
 
   test('empty search shows an empty state with a working reset', async ({ page }) => {
     await page.goto('/aaz-index.html#v4/materials/video');
+    // Cards are painted after APP_DATA hydrates; counting immediately races to 0
+    // and then reset "fails" because `all` was 0 (CI flake on #259, 2 workers).
+    await expect(page.locator('#vg-list .vg-card').first()).toBeVisible();
     const all = await page.locator('#vg-list .vg-card').count();
     await page.locator('#vg-search').fill('zzzznonexistentquery');
     await expect(page.locator('.vg-empty')).toBeVisible();

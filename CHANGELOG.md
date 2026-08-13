@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - **Video-gallery UI-review verification layer (H2577, Grok 4.6 (`grok-4.6`)):** repeatable Playwright contract for the PR [#213](https://github.com/gasyoun/BookIndex/pull/213) states (aria labels, keyboard `:focus-visible` ring, live `#vg-meta`, empty-filter reset, honest intro/sort). Command: `npm run check:ui-review-states`. Manual residual (print + AT announcement) named in `docs/VERIFICATION_BOOKINDEX_UI_VIDEO.md`.
 
+### Fixed
+- **Empty-filter e2e race:** `session-features` counted `#vg-list .vg-card` before hydrate, so `all` was 0 and reset looked like a failure (CI flake on the 4.12.2 PR). Wait for the first card before counting.
+
 ## [4.12.1] - 2026-08-12
 ### Fixed
 - **Контраст пустого состояния «Недавно открывали» (H2127, Opus 5 (`claude-opus-5`)):** `.home-recent-empty` был `#888` на белом при 12px — **3.54:1** против порога WCAG AA 4.5:1; стало `#6b6b6b` (5.28:1). Дефект был на `main` и раньше — правило не менялось с момента появления карточки, — но гейт `post-deploy-quality` (`check:a11y`) до 12-08-2026 **ни разу не выполнялся**: все прогоны за недели были `skipped`, и первый же реальный запуск его нашёл. Отдельно стоит запомнить: «зелёная» история воркфлоу, состоящая из `skipped`, — это отсутствие проверки, а не её прохождение.
