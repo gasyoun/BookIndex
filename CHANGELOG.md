@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.12.3] - 2026-08-14
 ### Added
 - **`#vg-meta` Chromium AX live-region check (H2577 residual, Grok 4.6 (`grok-4.6`)):** `check:ui-review-states` now reads the accessibility tree (not just DOM attributes). After search `араб` the `status`/`polite` node’s `StaticText` child changes 176→4. NVDA is not installed here; Narrator was not launched. Notes: `docs/VERIFICATION_BOOKINDEX_UI_VIDEO.md`.
 
