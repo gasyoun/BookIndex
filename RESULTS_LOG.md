@@ -1,6 +1,20 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 13-08-2026_
+_Created: 24-07-2026 · Last updated: 14-08-2026_
+
+## H2577 residual — `#vg-meta` on the Chromium AX tree (2026-08-14)
+
+Optional live-region pass asked after [v4.12.2](https://github.com/gasyoun/BookIndex/releases/tag/v4.12.2). NVDA/JAWS are not on this machine; `Narrator.exe` exists but was not started (it takes over the desktop; this session cannot capture speech). Instead the Chromium accessibility tree — the API Narrator/NVDA/JAWS read — was queried via CDP `Accessibility.getPartialAXTree`.
+
+| Moment | role | live | relevant | atomic | ignored | Accessible name | Spoken `StaticText` child |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Load | `status` | `polite` | `additions text` | true | false | empty | Показано 176 из 176 видео. |
+| Search `араб` | `status` | `polite` | `additions text` | true | false | empty | Показано 4 из 176 видео. |
+
+Empty name is expected for `role=status` (name-from-contents). The spoken payload is the child text, which tracked the filter. Command: `npx playwright test tests/e2e/ui-review-states.spec.js -g "Chromium AX tree"` — 1 passed. Full local suite was not re-green: the static server OOM’d mid-axe on this box; CI is the clean runner.
+
+**Model:** Grok 4.6 (`grok-4.6`).
+**Handoff:** [H2577](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2577-Grok_BookIndex_ui-review-states_11.08.26.md) (already ✅; this is the residual).
 
 ## H2577 — UI-review state verification layer (2026-08-13)
 
@@ -22,13 +36,13 @@ Residual gaps (named, not failed):
 
 | Gap | Why it is residual |
 | --- | --- |
-| Screen-reader speech of `#vg-meta` | Live-region attributes + text change are proved; NVDA/JAWS/VoiceOver announcement is not |
+| Screen-reader *audio* of `#vg-meta` | AX tree + child text proved 14-08-2026; no NVDA binary; Narrator not launched |
 | Ring colour contrast on every surface | Width/style proved; headed eyeball of `--focus-ring-color` vs chips remains |
 | Print | No `@media print` in `v3_template.html`; not a V1a deliverable |
 | Gallery loading / error UI | Catalog is inlined in `APP_DATA`; there is no async chrome on `#v4/materials/video` |
 
 **Model:** Grok 4.6 (`grok-4.6`).
-**Handoff:** [H2577](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2577-Grok_BookIndex_ui-review-states_11.08.26.md).
+**Handoff:** [H2577](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2577-Grok_BookIndex_ui-review-states_11.08.26.md).
 
 ## H2127 — U1 home task dashboard: what was already there (2026-08-12)
 

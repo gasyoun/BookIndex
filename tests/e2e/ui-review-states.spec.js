@@ -81,6 +81,55 @@ function expectVisibleRing(ring, label) {
   expect(ring.outlineWidth, `${label}: outline-width`).toBeGreaterThanOrEqual(2);
 }
 
+function axProp(node, name) {
+  const hit = ((node && node.properties) || []).find((p) => p.name === name);
+  if (!hit || hit.value == null) return undefined;
+  return typeof hit.value === 'object' && 'value' in hit.value ? hit.value.value : hit.value;
+}
+
+async function readVgMetaAx(page) {
+  const client = await page.context().newCDPSession(page);
+  await client.send('Accessibility.enable');
+  const evaled = await client.send('Runtime.evaluate', {
+    expression: 'document.querySelector("#vg-meta")',
+    objectGroup: 'vg-meta-ax',
+  });
+  const objectId = evaled.result && evaled.result.objectId;
+  if (!objectId) throw new Error('#vg-meta not in DOM');
+  const described = await client.send('DOM.describeNode', { objectId });
+  const { nodes } = await client.send('Accessibility.getPartialAXTree', {
+    backendNodeId: described.node.backendNodeId,
+    fetchRelatives: true,
+  });
+  await client.send('Runtime.releaseObjectGroup', { objectGroup: 'vg-meta-ax' }).catch(() => {});
+  if (!nodes || !nodes.length) throw new Error('#vg-meta missing from the Chromium accessibility tree');
+  const byId = new Map(nodes.map((n) => [n.nodeId, n]));
+  const root = nodes[0];
+  const childText = (root.childIds || [])
+    .map((id) => byId.get(id))
+    .filter(Boolean)
+    .map((n) => (n.name && n.name.value) || (n.role && n.role.value) || '')
+    .filter(Boolean);
+  const spoken = [
+    root.name && root.name.value,
+    root.value && root.value.value,
+    root.description && root.description.value,
+    ...childText,
+  ].filter(Boolean).join(' ').trim();
+  return {
+    role: root.role && root.role.value,
+    name: root.name && root.name.value,
+    value: root.value && root.value.value,
+    ignored: !!root.ignored,
+    live: axProp(root, 'live'),
+    relevant: axProp(root, 'relevant'),
+    atomic: axProp(root, 'atomic'),
+    childText,
+    spoken,
+    rawRoles: nodes.map((n) => n.role && n.role.value),
+  };
+}
+
 test.describe('UI review states — video gallery (H2577 / PR #213)', () => {
   for (const viewport of VIEWPORTS) {
     test.describe(viewport.name, () => {
@@ -206,5 +255,38 @@ test.describe('UI review states — video gallery (H2577 / PR #213)', () => {
     await openGallery(page);
     await expect(page.locator('.vg-loading, .vg-error, [data-vg-status]')).toHaveCount(0);
     await expect(page.locator('#vg-list .vg-card').first()).toBeVisible();
+  });
+
+  // NVDA/JAWS are not on this box. Chromium's AX tree is the API those
+  // engines (and Narrator) read — a node that is ignored, or whose name
+  // does not track the live text, will not be spoken.
+  test('Chromium AX tree exposes #vg-meta as a polite status whose name tracks the filter', async ({ page }) => {
+    await openGallery(page);
+    const before = await readVgMetaAx(page);
+    expect(before.ignored, `AX ignored before filter: ${JSON.stringify(before)}`).toBe(false);
+    expect(String(before.role || ''), 'AX role').toMatch(/status/i);
+    expect(String(before.live || ''), 'AX live').toMatch(/polite/i);
+    const beforeText = (await page.locator('#vg-meta').innerText()).trim();
+    expect(before.spoken || '', 'AX spoken before').toMatch(/Показано \d+ из \d+ видео/);
+    expect(before.spoken).toContain(beforeText.split('.')[0]);
+
+    await page.locator('#vg-search').fill('араб');
+    await expect.poll(async () => (await page.locator('#vg-meta').innerText()).trim())
+      .not.toBe(beforeText);
+
+    const after = await readVgMetaAx(page);
+    fs.writeFileSync(
+      path.join(SHOT_DIR, 'vg-meta-ax.json'),
+      `${JSON.stringify({ before, after }, null, 2)}\n`,
+      'utf8',
+    );
+    expect(after.ignored, `AX ignored after filter: ${JSON.stringify(after)}`).toBe(false);
+    expect(String(after.role || ''), 'AX role after').toMatch(/status/i);
+    expect(String(after.live || ''), 'AX live after').toMatch(/polite/i);
+    expect(after.spoken || '', 'AX spoken after').toMatch(/Показано \d+ из \d+ видео/);
+    expect(after.spoken).not.toBe(before.spoken);
+    const shown = Number((after.spoken.match(/Показано (\d+)/) || [])[1]);
+    expect(shown, 'filtered count in AX spoken text').toBeGreaterThan(0);
+    expect(shown, 'filtered count in AX spoken text').toBeLessThan(100);
   });
 });

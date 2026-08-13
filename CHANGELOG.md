@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- **`#vg-meta` Chromium AX live-region check (H2577 residual, Grok 4.6 (`grok-4.6`)):** `check:ui-review-states` now reads the accessibility tree (not just DOM attributes). After search `араб` the `status`/`polite` node’s `StaticText` child changes 176→4. NVDA is not installed here; Narrator was not launched. Notes: `docs/VERIFICATION_BOOKINDEX_UI_VIDEO.md`.
+
 ## [4.12.2] - 2026-08-13
 ### Added
 - **Video-gallery UI-review verification layer (H2577, Grok 4.6 (`grok-4.6`)):** repeatable Playwright contract for the PR [#213](https://github.com/gasyoun/BookIndex/pull/213) states (aria labels, keyboard `:focus-visible` ring, live `#vg-meta`, empty-filter reset, honest intro/sort). Command: `npm run check:ui-review-states`. Manual residual (print + AT announcement) named in `docs/VERIFICATION_BOOKINDEX_UI_VIDEO.md`.
