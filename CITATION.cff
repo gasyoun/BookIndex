@@ -18,8 +18,8 @@ authors:
   - family-names: Gasūns
     given-names: Mārcis
     # orcid: "https://orcid.org/0000-0000-0000-0000"  # TODO: вставить реальный ORCID и раскомментировать
-version: 4.12.2
-date-released: 2026-08-13
+version: 4.12.3
+date-released: 2026-08-14
 repository-code: "https://github.com/gasyoun/BookIndex"
 url: "https://gasyoun.github.io/BookIndex/index.html"
 license:
