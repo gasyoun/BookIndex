@@ -25,7 +25,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import (CW, MODULES, catalog, chapters, dump_json, load_json)  # noqa: E402
+from common import (CW, MODULES, catalog, chapters, load_json)  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+# Модуль и манифест должны быть побайтово теми же, что напишет `npm run data:split`,
+# иначе CI-шаг «Ensure split modules are in sync» краснеет на одном отступе.
+# Поэтому пишем канонической функцией репозитория, а не своим dump_json.
+from app_data_modules import write_json  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -143,7 +150,7 @@ def main() -> int:
     empty = [c["id"] for c in chs if not per_chapter[c["id"]]]
     accs = {e["accession"] for e in edges}
 
-    dump_json(OUT, {
+    write_json(OUT, {
         "crosswalk": {
             "schema": "bookindex.crosswalk/1",
             "built_by": "scripts/crosswalk/assemble_crosswalk.py (H2711)",
@@ -178,7 +185,7 @@ def main() -> int:
         man["module_layout"].insert(pos, OUT.name)
     if "crosswalk" not in man["key_order"]:
         man["key_order"].append("crosswalk")
-    dump_json(MANIFEST, man)
+    write_json(MANIFEST, man)
 
     print(f"рёбер после слияния: {len(edges)}  (из проходов: {dict(per_pass)})")
     print(f"  записей охвачено   {len(accs)} / {len(catalog())}")

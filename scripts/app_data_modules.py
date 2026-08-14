@@ -30,6 +30,7 @@ MODULE_LAYOUT: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("14-lexicon.json", ("lexicon", "lexicon_tech", "lexicon_reverse", "subject_index", "cross_links")),
     ("20-lectures.json", ("chapters", "lectures", "lecture_summaries", "routes", "tasks")),
     ("21-materials.json", ("glossary", "quotes", "russian_evolution", "phonetic_laws", "featured_quote", "further_reading")),
+    ("22-crosswalk.json", ("crosswalk",)),
     ("30-scholar.json", ("scholar",)),
 )
 EXTRA_MODULE_FILENAME = "99-extra.json"
