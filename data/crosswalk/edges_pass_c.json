@@ -1,0 +1,966 @@
+{
+ "schema": "bookindex.crosswalk.edges/1",
+ "pass": "title_topics",
+ "skipped_with_confident_edge": 111,
+ "by_rule": {
+  "title": 36,
+  "about": 18,
+  "topic": 3
+ },
+ "edges": [
+  {
+   "edge_id": "acc001-ch07-title_topics",
+   "accession": "001",
+   "chapter": "ch07",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет арабский язык",
+    "matched_title_token": "арабск",
+    "title": "А.А. Зализняк. Коротко об арабском языке А.А. Зализняк. Коротко об арабском языке",
+    "topics": [
+     "ЛЛШ"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc004-ch03-title_topics",
+   "accession": "004",
+   "chapter": "ch03",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет звуковые изменения — предмет исторической лингвистики",
+    "matched_title_token": "изменяется внешняя сторона слова",
+    "title": "А.А. Зализняк. Как изменяется внешняя сторона слова А.А. Зализняк. Как изменяется внешняя сторона слова",
+    "topics": [
+     "ЛЛШ"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc007-ch03-title_topics",
+   "accession": "007",
+   "chapter": "ch03",
+   "relation": "expands",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет разбор любительской лингвистики",
+    "matched_title_token": "Велесов",
+    "title": "Зализняк. О Велесовой книге. 2008 Зализняк. О Велесовой книге. 2008",
+    "topics": [
+     "ЛЛШ"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc009-ch06-title_topics",
+   "accession": "009",
+   "chapter": "ch06",
+   "relation": "other_book",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "запись о книге «„Слово о полку Игореве“: взгляд лингвиста»",
+    "matched_title_token": "Слово о полку",
+    "title": "ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 1 лекция. Канал Культура ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 1 лекция. Канал Культура",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc013-ch06-title_topics",
+   "accession": "013",
+   "chapter": "ch06",
+   "relation": "other_book",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "запись о книге «„Слово о полку Игореве“: взгляд лингвиста»",
+    "matched_title_token": "Слово о полку",
+    "title": "ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 2 лекция. Канал Культура ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 2 лекция. Канал Культура",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc014-ch06-title_topics",
+   "accession": "014",
+   "chapter": "ch06",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет историю русского языка",
+    "matched_title_token": "прошлом и будущем русского",
+    "title": "Зализняк. О прошлом и будущем русского языка (Очевидное-невероятное, 2009) Зализняк. О прошлом и будущем русского языка (Очевидное-невероятное, 2009)",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc019-ch01-title_topics",
+   "accession": "019",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Фильм о",
+    "title": "Фильм о А.А.Зализняке «Коэффициент достоверности», 2019 Фильм о А.А.Зализняке «Коэффициент достоверности», 2019",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc020-ch09-title_topics",
+   "accession": "020",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет новгородские находки и берестяные грамоты",
+    "matched_title_token": "грамот",
+    "title": "Зализняк о древнейшей грамоте и о Новгородском кодексе (цере). 04.08.2000 Зализняк о древнейшей грамоте и о Новгородском кодексе (цере). 04.08.2000",
+    "topics": [
+     "русистика"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc021-ch05-title_topics",
+   "accession": "021",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет санскрит / ведийский разбор",
+    "matched_title_token": "санскрит",
+    "title": "Об Очерке, академике Зализняке и санскрите (презентация книги) Об Очерке, академике Зализняке и санскрите (презентация книги)",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc021-ch01-title_topics",
+   "accession": "021",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "презентация книги",
+    "title": "Об Очерке, академике Зализняке и санскрите (презентация книги) Об Очерке, академике Зализняке и санскрите (презентация книги)",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc023-ch09-title_topics",
+   "accession": "023",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "тема каталога «береста»",
+    "topic": "береста",
+    "title": "Новые открытия академика Зализняка в 2017 году Новые открытия академика Зализняка в 2017 году",
+    "topics": [
+     "береста"
+    ]
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc024-ch01-title_topics",
+   "accession": "024",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "presents a book",
+    "title": "Andrey Zaliznyak presents a book, 24 Dec 2015 Andrey Zaliznyak presents a book, 24 Dec 2015",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc025-ch01-title_topics",
+   "accession": "025",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Наблюдатель",
+    "title": "Наблюдатель. Елена Рыбина, Андрей Зализняк, Пётр Гайдуков и Савва Михеев. Эфир от 27.10.2015 Наблюдатель. Елена Рыбина, Андрей Зализняк, Пётр Гайдуков и Савва Михеев. Эфир от 27.10.2015",
+    "topics": [
+     "береста"
+    ]
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc027-ch03-title_topics",
+   "accession": "027",
+   "chapter": "ch03",
+   "relation": "expands",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет разбор любительской лингвистики",
+    "matched_title_token": "ложной лингвистике",
+    "title": "Зализняк. О ложной лингвистике и квазиистории. 2011 Зализняк. О ложной лингвистике и квазиистории. 2011",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc028-ch03-title_topics",
+   "accession": "028",
+   "chapter": "ch03",
+   "relation": "expands",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет разбор любительской лингвистики",
+    "matched_title_token": "псевдознан",
+    "title": "Зализняк. О псевдознаниях и лженауке. Угол зрения, 2011 Зализняк. О псевдознаниях и лженауке. Угол зрения, 2011",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc029-ch01-title_topics",
+   "accession": "029",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Истина существует",
+    "title": "Истина существует. Жизнь Андрея Зализняка в рассказах ее участников Истина существует. Жизнь Андрея Зализняка в рассказах ее участников",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc030-ch01-title_topics",
+   "accession": "030",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Наблюдатель",
+    "title": "Наблюдатель. Андрей Зализняк. Воспоминания жизни. Эфир 30.09.2019 Наблюдатель. Андрей Зализняк. Воспоминания жизни. Эфир 30.09.2019",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc031-ch01-title_topics",
+   "accession": "031",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Лингвистический детектив",
+    "title": "Фильм «Андрей Зализняк. Лингвистический детектив». 2019 Фильм «Андрей Зализняк. Лингвистический детектив». 2019",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc032-ch10-title_topics",
+   "accession": "032",
+   "chapter": "ch10",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет тему главы «О жизни слов»",
+    "matched_title_token": "происхождении слов",
+    "title": "А.А. Зализняк. О происхождении слов А.А. Зализняк. О происхождении слов",
+    "topics": [
+     "ЛЛШ"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc033-ch10-title_topics",
+   "accession": "033",
+   "chapter": "ch10",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет тему главы «О жизни слов»",
+    "matched_title_token": "Механизмы экспрессивности",
+    "title": "Зализняк. Механизмы экспрессивности в языке. 2011 Зализняк. Механизмы экспрессивности в языке. 2011",
+    "topics": [
+     "ЛЛШ"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc035-ch03-title_topics",
+   "accession": "035",
+   "chapter": "ch03",
+   "relation": "expands",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет разбор любительской лингвистики",
+    "matched_title_token": "любительская лингвистик",
+    "title": "Зализняк. Что такое любительская лингвистика. 2010 Зализняк. Что такое любительская лингвистика. 2010",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc037-ch03-title_topics",
+   "accession": "037",
+   "chapter": "ch03",
+   "relation": "expands",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "заголовок называет этимологический разбор «Руси»",
+    "matched_title_token": "древних Укров",
+    "title": "Украина родина древних Укров! А.А. Зализняк Украина родина древних Укров! А.А. Зализняк",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc038-ch01-title_topics",
+   "accession": "038",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "День рождения",
+    "title": "День рождения А. А. Зализняка. Видеоконференция, слайд-шоу. 29.04.2023 День рождения А. А. Зализняка. Видеоконференция, слайд-шоу. 29.04.2023",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc039-ch01-title_topics",
+   "accession": "039",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "отвечает на вопросы",
+    "title": "А.А.Зализняк отвечает на вопросы В.А.Успенского. Часть II, 02.07.2010 А.А.Зализняк отвечает на вопросы В.А.Успенского. Часть II, 02.07.2010",
+    "topics": [
+     "интервью"
+    ]
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc043-ch09-title_topics",
+   "accession": "043",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет новгородские находки и берестяные грамоты",
+    "matched_title_token": "новгородск",
+    "title": "А.А.Зализняк и другие участники новгородской экспедиции, 21.07.2010 А.А.Зализняк и другие участники новгородской экспедиции, 21.07.2010",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc044-ch06-title_topics",
+   "accession": "044",
+   "chapter": "ch06",
+   "relation": "other_book",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "запись о книге «„Слово о полку Игореве“: взгляд лингвиста»",
+    "matched_title_token": "Слово о полку",
+    "title": "Андрей Зализняк и Александр Ужанков_ Слово о полку Игореве Андрей Зализняк и Александр Ужанков_ Слово о полку Игореве",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc045-ch03-title_topics",
+   "accession": "045",
+   "chapter": "ch03",
+   "relation": "expands",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет разбор любительской лингвистики",
+    "matched_title_token": "любительской лингвистик",
+    "title": "Андрей Зализняк О любительской лингвистике Андрей Зализняк О любительской лингвистике",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc048-ch03-title_topics",
+   "accession": "048",
+   "chapter": "ch03",
+   "relation": "expands",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет разбор любительской лингвистики",
+    "matched_title_token": "любительской лингвистик",
+    "title": "Зализняк. О профессиональной и любительской лингвистике. 2008 Зализняк. О профессиональной и любительской лингвистике. 2008",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc049-ch09-title_topics",
+   "accession": "049",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет новгородские находки и берестяные грамоты",
+    "matched_title_token": "Новгородск",
+    "title": "Новгородский семинар. Юбилей А.А. Зализняка Новгородский семинар. Юбилей А.А. Зализняка",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc049-ch01-title_topics",
+   "accession": "049",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Юбилей",
+    "title": "Новгородский семинар. Юбилей А.А. Зализняка Новгородский семинар. Юбилей А.А. Зализняка",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc051-ch01-title_topics",
+   "accession": "051",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Прощание",
+    "title": "Прощание с А.А.Зализняком. ТВ «Культура», 28.12.2017 Прощание с А.А.Зализняком. ТВ «Культура», 28.12.2017",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc052-ch01-title_topics",
+   "accession": "052",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Умер Андрей",
+    "title": "Умер Андрей Зализняк Умер Андрей Зализняк",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc053-ch05-title_topics",
+   "accession": "053",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет санскрит / ведийский разбор",
+    "matched_title_token": "санскрит",
+    "title": "Университетская рецитация, фрагменты занятия А.А. Зализняка Строй санскрита (23) Университетская рецитация, фрагменты занятия А.А. Зализняка Строй санскрита (23)",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc061-ch05-title_topics",
+   "accession": "061",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет санскрит / ведийский разбор",
+    "matched_title_token": "RV 1",
+    "title": "А. А. Зализняк. Из лекции 26 декабря 2011 г. Разбор RV 10.135 А-А-Зализняк-Из-лекции-26-декабря-2011-г-Разбор-RV-10135",
+    "topics": [
+     "санскрит"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc062-ch05-title_topics",
+   "accession": "062",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет санскрит / ведийский разбор",
+    "matched_title_token": "RV 1",
+    "title": "А. А. Зализняк. Из лекции 27 ноября 2010 г. Разбор RV 10.34 А-А-Зализняк-Из-лекции-27-ноября-2010-г-Разбор-RV-1034",
+    "topics": [
+     "санскрит"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc103-ch05-title_topics",
+   "accession": "103",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет санскрит / ведийский разбор",
+    "matched_title_token": "санскрит",
+    "title": "А. А. Зализняк. Начало лекции по санскриту 18 декабря 2010 г. А-А-Зализняк-Начало-лекции-по-санскриту-18-декабря-2010-г",
+    "topics": [
+     "санскрит"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc121-ch06-title_topics",
+   "accession": "121",
+   "chapter": "ch06",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет историю русского языка",
+    "matched_title_token": "лекция в Падуе",
+    "title": "А. А. Зализняк. 1-я лекция в Падуе (Италия), 07.04.2008 А. А. Зализняк. 1-я лекция в Падуе (Италия), 07.04.2008",
+    "topics": [
+     "русистика"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc122-ch06-title_topics",
+   "accession": "122",
+   "chapter": "ch06",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет историю русского языка",
+    "matched_title_token": "лекция в Падуе",
+    "title": "А. А. Зализняк. 2-я лекция в Падуе (Италия), 08.04.2008 А. А. Зализняк. 2-я лекция в Падуе (Италия), 08.04.2008",
+    "topics": [
+     "русистика"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc123-ch06-title_topics",
+   "accession": "123",
+   "chapter": "ch06",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет историю русского языка",
+    "matched_title_token": "лекция в Падуе",
+    "title": "А. А. Зализняк. 3-я лекция в Падуе (Италия), 09.04.2008 А. А. Зализняк. 3-я лекция в Падуе (Италия), 09.04.2008",
+    "topics": [
+     "русистика"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc124-ch05-title_topics",
+   "accession": "124",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет санскрит / ведийский разбор",
+    "matched_title_token": "санскрит",
+    "title": "Академик А. А. Зализняк о санскритском корне jR Академик-А-А-Зализняк-о-санскритском-корне-jR",
+    "topics": [
+     "санскрит"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc129-ch01-title_topics",
+   "accession": "129",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "беседует с",
+    "title": "А.А.Зализняк беседует с В.А.Успенским. Часть 1, 28.06.2010 А.А.Зализняк беседует с В.А.Успенским. Часть 1, 28.06.2010",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc134-ch01-title_topics",
+   "accession": "134",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "birthday",
+    "title": "Igor Melchuk to Andrey Zaliznyak birthday Igor Melchuk to Andrey Zaliznyak birthday",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc139-ch10-title_topics",
+   "accession": "139",
+   "chapter": "ch10",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет тему главы «О жизни слов»",
+    "matched_title_token": "жизни слов",
+    "title": "А.А. Зализняк. Ещё раз о жизни слов А.А. Зализняк. Ещё раз о жизни слов",
+    "topics": [
+     "ЛЛШ"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc140-ch08-title_topics",
+   "accession": "140",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет русское ударение",
+    "matched_title_token": "ударени",
+    "title": "А.А. Зализняк. Живые механизмы современного русского ударения А.А. Зализняк. Живые механизмы современного русского ударения",
+    "topics": [
+     "ЛЛШ"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc147-ch09-title_topics",
+   "accession": "147",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет новгородские находки и берестяные грамоты",
+    "matched_title_token": "Новгородск",
+    "title": "А.А.Зализняк о находках Новгородской экспедиции, август 2014 А.А.Зализняк о находках Новгородской экспедиции, август 2014",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc148-ch01-title_topics",
+   "accession": "148",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Госпремию",
+    "title": "А.А.Зализняк получает Госпремию, 12.06.2008 А.А.Зализняк получает Госпремию, 12.06.2008",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc152-ch01-title_topics",
+   "accession": "152",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "абсолютной репутацией",
+    "title": "Андрей Зализняк лингвист с абсолютной репутацией Андрей Зализняк лингвист с абсолютной репутацией",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc154-ch01-title_topics",
+   "accession": "154",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "Между прошлым и будущим",
+    "title": "Андрей Зализняк_ Между прошлым и будущим Андрей Зализняк_ Между прошлым и будущим",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc156-ch01-title_topics",
+   "accession": "156",
+   "chapter": "ch01",
+   "relation": "other_book",
+   "pass": "title_topics",
+   "confidence": 0.5,
+   "evidence": {
+    "rule": "запись о книге «Прогулки по Европе»",
+    "matched_title_token": "Прогулки по Европе",
+    "title": "Андрей Зализняк. Прогулки по Европе Андрей Зализняк. Прогулки по Европе",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc158-ch05-title_topics",
+   "accession": "158",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет санскрит / ведийский разбор",
+    "matched_title_token": "санскрит",
+    "title": "Вы занимались раньше санскритом..., фрагменты занятия А.А. Зализняка Строем санскрита (3 из 3) Вы занимались раньше санскритом..., фрагменты занятия А.А. Зализняка Строем санскрита (3 из 3)",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc160-ch01-title_topics",
+   "accession": "160",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "материал *о* Зализняке — глава «От редколлегии и предисловие» собирает контекст издания и биографии",
+    "matched_title_token": "воспоминани",
+    "title": "Из моих воспоминаний о А.А.Зализняке Из моих воспоминаний о А.А.Зализняке",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc162-ch09-title_topics",
+   "accession": "162",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет новгородские находки и берестяные грамоты",
+    "matched_title_token": "Новгородск",
+    "title": "К 20-летию обретения Новгородской псалтыри история открытия, сохранения и изучения К 20-летию обретения Новгородской псалтыри история открытия, сохранения и изучения",
+    "topics": [
+     "русистика"
+    ]
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc165-ch03-title_topics",
+   "accession": "165",
+   "chapter": "ch03",
+   "relation": "expands",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "заголовок называет этимологический разбор «Руси»",
+    "matched_title_token": "изначально был Русью",
+    "title": "Лекция Какой народ изначально был Русью. Рассказывает Академик РАН Андрей Анатольевич Зализняк Лекция Какой народ изначально был Русью. Рассказывает Академик РАН Андрей Анатольевич Зализняк",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc167-ch09-title_topics",
+   "accession": "167",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет новгородские находки и берестяные грамоты",
+    "matched_title_token": "Новгородск",
+    "title": "А.А.Зализняк и А.А.Гиппиус о находках Новгородской экспедиции, август 2017 А.А.Зализняк и А.А.Гиппиус о находках Новгородской экспедиции, август 2017",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc168-ch09-title_topics",
+   "accession": "168",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.6,
+   "evidence": {
+    "rule": "заголовок называет новгородские находки и берестяные грамоты",
+    "matched_title_token": "Новгород",
+    "title": "Новгород Письма из средневековья Новгород Письма из средневековья",
+    "topics": []
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc173-ch05-title_topics",
+   "accession": "173",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.55,
+   "evidence": {
+    "rule": "тема каталога «санскрит»",
+    "topic": "санскрит",
+    "title": "А.А. Зализняк в МГУ, 07.11.2015 А.А. Зализняк в МГУ, 07.11.2015",
+    "topics": [
+     "санскрит"
+    ]
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc174-ch06-title_topics",
+   "accession": "174",
+   "chapter": "ch06",
+   "relation": "lecture_of",
+   "pass": "title_topics",
+   "confidence": 0.5,
+   "evidence": {
+    "rule": "тема каталога «русистика»",
+    "topic": "русистика",
+    "title": "Лекция академика Андрея Зализняка Лекция академика Андрея Зализняка",
+    "topics": [
+     "русистика"
+    ]
+   },
+   "timecode": null,
+   "status": "disputed"
+  }
+ ]
+}

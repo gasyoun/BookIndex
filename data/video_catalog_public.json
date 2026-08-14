@@ -6130,7 +6130,9 @@
           "type": "subject_index"
         }
       ],
-      "last_verified_at": null
+      "last_verified_at": "2026-08-14",
+      "public_note": "Тот же доклад, что и запись 005: «Новгородские берестяные грамоты» (2007), обе записи длительностью 8340 с. Запись сохраняется, удаление сломало бы существующие ссылки и счётчики.",
+      "duplicate_of": "005"
     },
     {
       "accession": "041",
@@ -9466,8 +9468,10 @@
       "title_source": "А.А. Зализняк. Ещё раз о жизни слов",
       "title_display": "А.А. Зализняк. Ещё раз о жизни слов",
       "duration_seconds": 8123,
-      "topics": [],
-      "type": "совпадает ли с https://elementy.ru/nauchno-populyarnaya_biblioteka/433260/O_zhizni_slov ?",
+      "topics": [
+        "ЛЛШ"
+      ],
+      "type": "лекция",
       "purpose": null,
       "transcript_status": "automatic",
       "related_entities": [
@@ -9480,7 +9484,8 @@
           "type": "names"
         }
       ],
-      "last_verified_at": null
+      "last_verified_at": "2026-08-14",
+      "public_note": "Редакторская заметка, перенесённая из поля «type»: сверить с публикацией «О жизни слов» на «Элементах» — возможно, тот же текст."
     },
     {
       "accession": "140",
@@ -9489,7 +9494,9 @@
       "title_source": "А.А. Зализняк. Живые механизмы современного русского ударения",
       "title_display": "А.А. Зализняк. Живые механизмы современного русского ударения",
       "duration_seconds": 6003,
-      "topics": [],
+      "topics": [
+        "ЛЛШ"
+      ],
       "type": null,
       "purpose": null,
       "transcript_status": "automatic",
@@ -9519,7 +9526,7 @@
           "type": "subject_index"
         }
       ],
-      "last_verified_at": null
+      "last_verified_at": "2026-08-14"
     },
     {
       "accession": "141",
@@ -9637,7 +9644,7 @@
       "title_display": "А.А.Зализняк Или и Уже (2017) ч.1",
       "duration_seconds": 2879,
       "topics": [],
-      "type": "https://elementy.ru/nauchno-populyarnaya_biblioteka/433894/Ili_i_uzhe",
+      "type": "лекция",
       "purpose": null,
       "transcript_status": "automatic",
       "related_entities": [
@@ -9666,7 +9673,8 @@
           "type": "lexicon"
         }
       ],
-      "last_verified_at": null
+      "last_verified_at": "2026-08-14",
+      "public_note": "Редакторская заметка, перенесённая из поля «type»: расшифровка доклада опубликована на «Элементах» как «Или и уже»."
     },
     {
       "accession": "146",
@@ -9676,7 +9684,7 @@
       "title_display": "А.А.Зализняк Или и Уже (2017) ч.2",
       "duration_seconds": 2475,
       "topics": [],
-      "type": "https://elementy.ru/nauchno-populyarnaya_biblioteka/433894/Ili_i_uzhe",
+      "type": "лекция",
       "purpose": null,
       "transcript_status": "automatic",
       "related_entities": [
@@ -9705,7 +9713,8 @@
           "type": "lexicon"
         }
       ],
-      "last_verified_at": null
+      "last_verified_at": "2026-08-14",
+      "public_note": "Редакторская заметка, перенесённая из поля «type»: расшифровка доклада опубликована на «Элементах» как «Или и уже»."
     },
     {
       "accession": "147",

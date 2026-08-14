@@ -9,6 +9,7 @@
     "14-lexicon.json",
     "20-lectures.json",
     "21-materials.json",
+    "22-crosswalk.json",
     "30-scholar.json"
   ],
   "modules": [
@@ -86,6 +87,12 @@
       ]
     },
     {
+      "file": "22-crosswalk.json",
+      "keys": [
+        "crosswalk"
+      ]
+    },
+    {
       "file": "30-scholar.json",
       "keys": [
         "scholar"
@@ -137,6 +144,7 @@
     "further_reading",
     "semantic_links",
     "historical_context",
-    "video_catalog"
+    "video_catalog",
+    "crosswalk"
   ]
 }

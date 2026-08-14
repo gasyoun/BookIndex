@@ -1,0 +1,1205 @@
+{
+ "schema": "bookindex.crosswalk.stats/1",
+ "generated": "2026-08-14",
+ "catalog": {
+  "records": 176,
+  "hours": 214.1,
+  "topics": {
+   "русистика": 50,
+   "санскрит": 32,
+   "ЛЛШ": 12,
+   "береста": 8,
+   "интервью": 1
+  },
+  "without_topic": 73,
+  "types": {
+   "семинар": 71,
+   "—": 65,
+   "фрагмент": 19,
+   "лекция": 13,
+   "интервью": 6,
+   "личное": 2
+  },
+  "years": {
+   "2017": 1
+  },
+  "longest": {
+   "accession": "039",
+   "minutes": 184,
+   "title": "А.А.Зализняк отвечает на вопросы В.А.Успенского. Часть II, 02.07.2010"
+  },
+  "shortest": {
+   "accession": "128",
+   "minutes": 0,
+   "title": "Перед лекцией академика А. А. Зализняка. Октябрь 2017 г., ГЗ МГУ"
+  },
+  "duplicates_flagged": 1
+ },
+ "archive": {
+  "files": 1569,
+  "with_timecode": 171,
+  "proofread_docx": 86,
+  "note": "Расшифровки лежат в публичной шаре «ААЗализняк-архив», учётка не нужна; в репозиторий они не копируются."
+ },
+ "crosswalk": {
+  "edges": 377,
+  "records_covered": 173,
+  "with_timecode": 215,
+  "per_chapter": {
+   "ch01": {
+    "name": "От редколлегии и предисловие",
+    "edges": 21
+   },
+   "ch02": {
+    "name": "Порядок слов",
+    "edges": 5
+   },
+   "ch03": {
+    "name": "Историческая лингвистика",
+    "edges": 10
+   },
+   "ch04": {
+    "name": "Историческая лингвистика (продолж.)",
+    "edges": 11
+   },
+   "ch05": {
+    "name": "Древняя Индия",
+    "edges": 41
+   },
+   "ch06": {
+    "name": "История русского языка",
+    "edges": 60
+   },
+   "ch07": {
+    "name": "Арабский язык",
+    "edges": 1
+   },
+   "ch08": {
+    "name": "Из русского ударения",
+    "edges": 102
+   },
+   "ch09": {
+    "name": "Берестяные грамоты",
+    "edges": 51
+   },
+   "ch10": {
+    "name": "О жизни слов",
+    "edges": 43
+   },
+   "ch11": {
+    "name": "Или и уже",
+    "edges": 32
+   }
+  }
+ },
+ "youtube": {
+  "fetched_at": "2026-08-14",
+  "source": "YouTube Data API v3, part=statistics",
+  "covered": 176,
+  "total_views": 1894768,
+  "most_viewed": [
+   {
+    "accession": "018",
+    "views": 586399,
+    "title": "Андрей Зализняк. История русского языка"
+   },
+   {
+    "accession": "037",
+    "views": 90537,
+    "title": "Украина родина древних Укров! А.А. Зализняк"
+   },
+   {
+    "accession": "022",
+    "views": 77192,
+    "title": "Язык берестяных грамот (рассказывает лингвист Андрей Зализняк)"
+   },
+   {
+    "accession": "045",
+    "views": 61221,
+    "title": "Андрей Зализняк О любительской лингвистике"
+   },
+   {
+    "accession": "027",
+    "views": 50308,
+    "title": "Зализняк. О ложной лингвистике и квазиистории. 2011"
+   },
+   {
+    "accession": "013",
+    "views": 43910,
+    "title": "ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 2 лекция. Канал Культура"
+   },
+   {
+    "accession": "009",
+    "views": 43097,
+    "title": "ACADEMIA. Андрей Зализняк. Читаем «Слово о полку Игореве». 1 лекция. Канал Культура"
+   },
+   {
+    "accession": "165",
+    "views": 41045,
+    "title": "Лекция Какой народ изначально был Русью. Рассказывает Академик РАН Андрей Анатольевич Зализняк"
+   },
+   {
+    "accession": "012",
+    "views": 40984,
+    "title": "ACADEMIA. Андрей Зализняк. Русский устный. 1 лекция. Канал Культура"
+   },
+   {
+    "accession": "044",
+    "views": 40767,
+    "title": "Андрей Зализняк и Александр Ужанков_ Слово о полку Игореве"
+   }
+  ],
+  "videos": {
+   "001": {
+    "viewCount": 14349,
+    "likeCount": 371,
+    "favoriteCount": 0,
+    "commentCount": 26
+   },
+   "002": {
+    "viewCount": 2966,
+    "likeCount": 91,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "003": {
+    "viewCount": 5108,
+    "likeCount": 178,
+    "favoriteCount": 0,
+    "commentCount": 4
+   },
+   "004": {
+    "viewCount": 24162,
+    "likeCount": 776,
+    "favoriteCount": 0,
+    "commentCount": 101
+   },
+   "005": {
+    "viewCount": 19925,
+    "likeCount": 507,
+    "favoriteCount": 0,
+    "commentCount": 63
+   },
+   "006": {
+    "viewCount": 5725,
+    "likeCount": 92,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "007": {
+    "viewCount": 4525,
+    "likeCount": 111,
+    "favoriteCount": 0,
+    "commentCount": 7
+   },
+   "008": {
+    "viewCount": 19269,
+    "likeCount": 549,
+    "favoriteCount": 0,
+    "commentCount": 19
+   },
+   "009": {
+    "viewCount": 43097,
+    "likeCount": 1132,
+    "favoriteCount": 0,
+    "commentCount": 299
+   },
+   "010": {
+    "viewCount": 6808,
+    "likeCount": 170,
+    "favoriteCount": 0,
+    "commentCount": 10
+   },
+   "011": {
+    "viewCount": 21137,
+    "likeCount": 242,
+    "favoriteCount": 0,
+    "commentCount": 7
+   },
+   "012": {
+    "viewCount": 40984,
+    "likeCount": 1192,
+    "favoriteCount": 0,
+    "commentCount": 84
+   },
+   "013": {
+    "viewCount": 43910,
+    "likeCount": 1516,
+    "favoriteCount": 0,
+    "commentCount": 175
+   },
+   "014": {
+    "viewCount": 17647,
+    "likeCount": 477,
+    "favoriteCount": 0,
+    "commentCount": 39
+   },
+   "015": {
+    "viewCount": 6023,
+    "likeCount": 233,
+    "favoriteCount": 0,
+    "commentCount": 15
+   },
+   "016": {
+    "viewCount": 1690,
+    "likeCount": 68,
+    "favoriteCount": 0,
+    "commentCount": 10
+   },
+   "017": {
+    "viewCount": 12123,
+    "likeCount": 499,
+    "favoriteCount": 0,
+    "commentCount": 129
+   },
+   "018": {
+    "viewCount": 586399,
+    "likeCount": 13495,
+    "favoriteCount": 0
+   },
+   "019": {
+    "viewCount": 6640,
+    "likeCount": 280,
+    "favoriteCount": 0,
+    "commentCount": 15
+   },
+   "020": {
+    "viewCount": 7213,
+    "likeCount": 317,
+    "favoriteCount": 0,
+    "commentCount": 30
+   },
+   "021": {
+    "viewCount": 4546,
+    "likeCount": 138,
+    "favoriteCount": 0,
+    "commentCount": 23
+   },
+   "022": {
+    "viewCount": 77192,
+    "likeCount": 1964,
+    "favoriteCount": 0,
+    "commentCount": 345
+   },
+   "023": {
+    "viewCount": 16881,
+    "likeCount": 390,
+    "favoriteCount": 0
+   },
+   "024": {
+    "viewCount": 2689,
+    "likeCount": 35,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "025": {
+    "viewCount": 1090,
+    "likeCount": 29,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "026": {
+    "viewCount": 1795,
+    "likeCount": 58,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "027": {
+    "viewCount": 50308,
+    "likeCount": 1579,
+    "favoriteCount": 0,
+    "commentCount": 477
+   },
+   "028": {
+    "viewCount": 1779,
+    "likeCount": 53,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "029": {
+    "viewCount": 793,
+    "likeCount": 17,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "030": {
+    "viewCount": 3326,
+    "likeCount": 109,
+    "favoriteCount": 0,
+    "commentCount": 10
+   },
+   "031": {
+    "viewCount": 20843,
+    "likeCount": 980,
+    "favoriteCount": 0,
+    "commentCount": 70
+   },
+   "032": {
+    "viewCount": 27120,
+    "likeCount": 913,
+    "favoriteCount": 0,
+    "commentCount": 81
+   },
+   "033": {
+    "viewCount": 14653,
+    "likeCount": 361,
+    "favoriteCount": 0,
+    "commentCount": 38
+   },
+   "034": {
+    "viewCount": 663,
+    "likeCount": 16,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "035": {
+    "viewCount": 23001,
+    "likeCount": 752,
+    "favoriteCount": 0,
+    "commentCount": 83
+   },
+   "036": {
+    "viewCount": 2895,
+    "likeCount": 48,
+    "favoriteCount": 0,
+    "commentCount": 57
+   },
+   "037": {
+    "viewCount": 90537,
+    "likeCount": 1665,
+    "favoriteCount": 0,
+    "commentCount": 934
+   },
+   "038": {
+    "viewCount": 766,
+    "likeCount": 30,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "039": {
+    "viewCount": 7980,
+    "likeCount": 269,
+    "favoriteCount": 0,
+    "commentCount": 26
+   },
+   "040": {
+    "viewCount": 8838,
+    "likeCount": 192,
+    "favoriteCount": 0,
+    "commentCount": 28
+   },
+   "041": {
+    "viewCount": 3336,
+    "likeCount": 61,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "042": {
+    "viewCount": 436,
+    "likeCount": 20,
+    "favoriteCount": 0
+   },
+   "043": {
+    "viewCount": 562,
+    "likeCount": 14,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "044": {
+    "viewCount": 40767,
+    "likeCount": 1165,
+    "favoriteCount": 0,
+    "commentCount": 281
+   },
+   "045": {
+    "viewCount": 61221,
+    "likeCount": 1951,
+    "favoriteCount": 0,
+    "commentCount": 677
+   },
+   "046": {
+    "viewCount": 177,
+    "likeCount": 5,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "047": {
+    "viewCount": 95,
+    "likeCount": 1,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "048": {
+    "viewCount": 9384,
+    "likeCount": 244,
+    "favoriteCount": 0,
+    "commentCount": 8
+   },
+   "049": {
+    "viewCount": 354,
+    "likeCount": 4,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "050": {
+    "viewCount": 214,
+    "likeCount": 9,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "051": {
+    "viewCount": 1625,
+    "likeCount": 27,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "052": {
+    "viewCount": 20158,
+    "likeCount": 950,
+    "favoriteCount": 0,
+    "commentCount": 47
+   },
+   "053": {
+    "viewCount": 75,
+    "likeCount": 3,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "054": {
+    "viewCount": 104,
+    "likeCount": 6,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "055": {
+    "viewCount": 109,
+    "likeCount": 4,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "056": {
+    "viewCount": 90,
+    "likeCount": 3,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "057": {
+    "viewCount": 1526,
+    "likeCount": 35,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "058": {
+    "viewCount": 842,
+    "likeCount": 28,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "059": {
+    "viewCount": 82,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "060": {
+    "viewCount": 14433,
+    "likeCount": 493,
+    "favoriteCount": 0,
+    "commentCount": 38
+   },
+   "061": {
+    "viewCount": 156,
+    "likeCount": 1,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "062": {
+    "viewCount": 118,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "063": {
+    "viewCount": 70,
+    "likeCount": 0,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "064": {
+    "viewCount": 1157,
+    "likeCount": 31,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "065": {
+    "viewCount": 113,
+    "likeCount": 1,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "066": {
+    "viewCount": 192,
+    "likeCount": 5,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "067": {
+    "viewCount": 126,
+    "likeCount": 0,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "068": {
+    "viewCount": 158,
+    "likeCount": 5,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "069": {
+    "viewCount": 91,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "070": {
+    "viewCount": 78,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "071": {
+    "viewCount": 89,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "072": {
+    "viewCount": 121,
+    "likeCount": 4,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "073": {
+    "viewCount": 264,
+    "likeCount": 9,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "074": {
+    "viewCount": 218,
+    "likeCount": 9,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "075": {
+    "viewCount": 1588,
+    "likeCount": 38,
+    "favoriteCount": 0,
+    "commentCount": 13
+   },
+   "076": {
+    "viewCount": 158,
+    "likeCount": 4,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "077": {
+    "viewCount": 4790,
+    "likeCount": 72,
+    "favoriteCount": 0,
+    "commentCount": 8
+   },
+   "078": {
+    "viewCount": 219,
+    "likeCount": 7,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "079": {
+    "viewCount": 1244,
+    "likeCount": 15,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "080": {
+    "viewCount": 1634,
+    "likeCount": 32,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "081": {
+    "viewCount": 130,
+    "likeCount": 4,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "082": {
+    "viewCount": 87,
+    "likeCount": 1,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "083": {
+    "viewCount": 407,
+    "likeCount": 10,
+    "favoriteCount": 0,
+    "commentCount": 3
+   },
+   "084": {
+    "viewCount": 257,
+    "likeCount": 7,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "085": {
+    "viewCount": 265,
+    "likeCount": 8,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "086": {
+    "viewCount": 186,
+    "likeCount": 7,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "087": {
+    "viewCount": 544,
+    "likeCount": 6,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "088": {
+    "viewCount": 383,
+    "likeCount": 19,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "089": {
+    "viewCount": 3267,
+    "likeCount": 86,
+    "favoriteCount": 0,
+    "commentCount": 11
+   },
+   "090": {
+    "viewCount": 226,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 6
+   },
+   "091": {
+    "viewCount": 270,
+    "likeCount": 8,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "092": {
+    "viewCount": 430,
+    "likeCount": 11,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "093": {
+    "viewCount": 682,
+    "likeCount": 8,
+    "favoriteCount": 0,
+    "commentCount": 6
+   },
+   "094": {
+    "viewCount": 2679,
+    "likeCount": 60,
+    "favoriteCount": 0,
+    "commentCount": 6
+   },
+   "095": {
+    "viewCount": 969,
+    "likeCount": 23,
+    "favoriteCount": 0,
+    "commentCount": 3
+   },
+   "096": {
+    "viewCount": 733,
+    "likeCount": 17,
+    "favoriteCount": 0,
+    "commentCount": 4
+   },
+   "097": {
+    "viewCount": 610,
+    "likeCount": 13,
+    "favoriteCount": 0,
+    "commentCount": 5
+   },
+   "098": {
+    "viewCount": 382,
+    "likeCount": 4,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "099": {
+    "viewCount": 295,
+    "likeCount": 4,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "100": {
+    "viewCount": 317,
+    "likeCount": 5,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "101": {
+    "viewCount": 226,
+    "likeCount": 7,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "102": {
+    "viewCount": 85,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "103": {
+    "viewCount": 305,
+    "likeCount": 3,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "104": {
+    "viewCount": 120,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "105": {
+    "viewCount": 952,
+    "likeCount": 23,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "106": {
+    "viewCount": 121,
+    "likeCount": 3,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "107": {
+    "viewCount": 170,
+    "likeCount": 1,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "108": {
+    "viewCount": 135,
+    "likeCount": 3,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "109": {
+    "viewCount": 94,
+    "likeCount": 1,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "110": {
+    "viewCount": 135,
+    "likeCount": 4,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "111": {
+    "viewCount": 2823,
+    "likeCount": 30,
+    "favoriteCount": 0,
+    "commentCount": 3
+   },
+   "112": {
+    "viewCount": 124,
+    "likeCount": 1,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "113": {
+    "viewCount": 243,
+    "likeCount": 8,
+    "favoriteCount": 0,
+    "commentCount": 3
+   },
+   "114": {
+    "viewCount": 144,
+    "likeCount": 5,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "115": {
+    "viewCount": 120,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "116": {
+    "viewCount": 200,
+    "likeCount": 8,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "117": {
+    "viewCount": 119,
+    "likeCount": 1,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "118": {
+    "viewCount": 154,
+    "likeCount": 3,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "119": {
+    "viewCount": 108,
+    "likeCount": 1,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "120": {
+    "viewCount": 1373,
+    "likeCount": 31,
+    "favoriteCount": 0,
+    "commentCount": 7
+   },
+   "121": {
+    "viewCount": 1632,
+    "likeCount": 88,
+    "favoriteCount": 0,
+    "commentCount": 5
+   },
+   "122": {
+    "viewCount": 496,
+    "likeCount": 29,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "123": {
+    "viewCount": 560,
+    "likeCount": 31,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "124": {
+    "viewCount": 424,
+    "likeCount": 9,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "125": {
+    "viewCount": 630,
+    "likeCount": 27,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "126": {
+    "viewCount": 321,
+    "likeCount": 11,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "127": {
+    "viewCount": 335,
+    "likeCount": 3,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "128": {
+    "viewCount": 117,
+    "likeCount": 3,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "129": {
+    "viewCount": 10845,
+    "likeCount": 399,
+    "favoriteCount": 0,
+    "commentCount": 39
+   },
+   "130": {
+    "viewCount": 144,
+    "likeCount": 4,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "131": {
+    "viewCount": 7659,
+    "likeCount": 172,
+    "favoriteCount": 0,
+    "commentCount": 5
+   },
+   "132": {
+    "viewCount": 14257,
+    "likeCount": 176,
+    "favoriteCount": 0,
+    "commentCount": 11
+   },
+   "133": {
+    "viewCount": 2638,
+    "likeCount": 101,
+    "favoriteCount": 0,
+    "commentCount": 7
+   },
+   "134": {
+    "viewCount": 1019,
+    "likeCount": 32,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "135": {
+    "viewCount": 1202,
+    "likeCount": 9,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "136": {
+    "viewCount": 6011,
+    "likeCount": 195,
+    "favoriteCount": 0,
+    "commentCount": 27
+   },
+   "137": {
+    "viewCount": 8945,
+    "likeCount": 216,
+    "favoriteCount": 0,
+    "commentCount": 8
+   },
+   "138": {
+    "viewCount": 2625,
+    "likeCount": 65,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "139": {
+    "viewCount": 36337,
+    "likeCount": 1229,
+    "favoriteCount": 0,
+    "commentCount": 277
+   },
+   "140": {
+    "viewCount": 24012,
+    "likeCount": 756,
+    "favoriteCount": 0,
+    "commentCount": 36
+   },
+   "141": {
+    "viewCount": 4253,
+    "likeCount": 103,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "142": {
+    "viewCount": 2829,
+    "likeCount": 84,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "143": {
+    "viewCount": 12385,
+    "likeCount": 303,
+    "favoriteCount": 0,
+    "commentCount": 22
+   },
+   "144": {
+    "viewCount": 1826,
+    "likeCount": 52,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "145": {
+    "viewCount": 36450,
+    "likeCount": 839,
+    "favoriteCount": 0,
+    "commentCount": 86
+   },
+   "146": {
+    "viewCount": 11671,
+    "likeCount": 372,
+    "favoriteCount": 0,
+    "commentCount": 34
+   },
+   "147": {
+    "viewCount": 540,
+    "likeCount": 15,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "148": {
+    "viewCount": 1168,
+    "likeCount": 31,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "149": {
+    "viewCount": 9928,
+    "likeCount": 404,
+    "favoriteCount": 0,
+    "commentCount": 59
+   },
+   "150": {
+    "viewCount": 1489,
+    "likeCount": 18,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "151": {
+    "viewCount": 18176,
+    "likeCount": 478,
+    "favoriteCount": 0,
+    "commentCount": 75
+   },
+   "152": {
+    "viewCount": 4240,
+    "favoriteCount": 0
+   },
+   "153": {
+    "viewCount": 6263,
+    "likeCount": 195,
+    "favoriteCount": 0,
+    "commentCount": 384
+   },
+   "154": {
+    "viewCount": 9433,
+    "likeCount": 205,
+    "favoriteCount": 0,
+    "commentCount": 9
+   },
+   "155": {
+    "viewCount": 38303,
+    "likeCount": 1162,
+    "favoriteCount": 0,
+    "commentCount": 169
+   },
+   "156": {
+    "viewCount": 825,
+    "likeCount": 41,
+    "favoriteCount": 0,
+    "commentCount": 2
+   },
+   "157": {
+    "viewCount": 13173,
+    "likeCount": 413,
+    "favoriteCount": 0,
+    "commentCount": 421
+   },
+   "158": {
+    "viewCount": 137,
+    "likeCount": 2,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "159": {
+    "viewCount": 2092,
+    "likeCount": 28,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "160": {
+    "viewCount": 778,
+    "likeCount": 18,
+    "favoriteCount": 0,
+    "commentCount": 3
+   },
+   "161": {
+    "viewCount": 8482,
+    "likeCount": 201,
+    "favoriteCount": 0,
+    "commentCount": 86
+   },
+   "162": {
+    "viewCount": 778,
+    "likeCount": 50,
+    "favoriteCount": 0,
+    "commentCount": 6
+   },
+   "163": {
+    "viewCount": 17354,
+    "likeCount": 577,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "164": {
+    "viewCount": 12281,
+    "likeCount": 278,
+    "favoriteCount": 0,
+    "commentCount": 16
+   },
+   "165": {
+    "viewCount": 41045,
+    "likeCount": 900,
+    "favoriteCount": 0,
+    "commentCount": 543
+   },
+   "166": {
+    "viewCount": 13520,
+    "likeCount": 353,
+    "favoriteCount": 0,
+    "commentCount": 29
+   },
+   "167": {
+    "viewCount": 1660,
+    "likeCount": 49,
+    "favoriteCount": 0,
+    "commentCount": 12
+   },
+   "168": {
+    "viewCount": 558,
+    "likeCount": 14,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "169": {
+    "viewCount": 487,
+    "likeCount": 19,
+    "favoriteCount": 0,
+    "commentCount": 3
+   },
+   "170": {
+    "viewCount": 11402,
+    "likeCount": 289,
+    "favoriteCount": 0,
+    "commentCount": 13
+   },
+   "171": {
+    "viewCount": 2626,
+    "likeCount": 55,
+    "favoriteCount": 0,
+    "commentCount": 1
+   },
+   "172": {
+    "viewCount": 11306,
+    "likeCount": 292,
+    "favoriteCount": 0,
+    "commentCount": 35
+   },
+   "173": {
+    "viewCount": 1444,
+    "likeCount": 23,
+    "favoriteCount": 0,
+    "commentCount": 0
+   },
+   "174": {
+    "viewCount": 30500,
+    "likeCount": 403,
+    "favoriteCount": 0
+   },
+   "175": {
+    "viewCount": 8263,
+    "likeCount": 188,
+    "favoriteCount": 0,
+    "commentCount": 13
+   },
+   "176": {
+    "viewCount": 455,
+    "likeCount": 9,
+    "favoriteCount": 0,
+    "commentCount": 6
+   }
+  }
+ }
+}

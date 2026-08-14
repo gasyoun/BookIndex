@@ -1218,6 +1218,31 @@
   ],
   "overrides": [
     {
+      "accession": "040",
+      "youtube_id": "PXDA9rQAsx0",
+      "duplicate_of": "005",
+      "public_note": "Тот же доклад, что и запись 005: «Новгородские берестяные грамоты» (2007), обе записи длительностью 8340 с. Запись сохраняется, удаление сломало бы существующие ссылки и счётчики.",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=PXDA9rQAsx0",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-14",
+          "supports": [
+            "duplicate_of",
+            "public_note"
+          ]
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=Xf2GBzzKb_0",
+          "label": "YouTube video (запись 005)",
+          "accessed_at": "2026-08-14",
+          "supports": [
+            "duplicate_of"
+          ]
+        }
+      ]
+    },
+    {
       "accession": "046",
       "youtube_id": "Tz3T7IxsbLU",
       "title_display": "Зализняк. История русского ударения. Семинар 6. 15.10.2016",
@@ -1243,6 +1268,99 @@
           "accessed_at": "2026-08-04",
           "supports": [
             "title_display"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "139",
+      "youtube_id": "Y8-LcHSreTE",
+      "type": "лекция",
+      "topics": [
+        "ЛЛШ"
+      ],
+      "public_note": "Редакторская заметка, перенесённая из поля «type»: сверить с публикацией «О жизни слов» на «Элементах» — возможно, тот же текст.",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=Y8-LcHSreTE",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-14",
+          "supports": [
+            "type",
+            "topics"
+          ]
+        },
+        {
+          "url": "https://elementy.ru/nauchno-populyarnaya_biblioteka/433260/O_zhizni_slov",
+          "label": "«Элементы»: О жизни слов",
+          "accessed_at": "2026-08-14",
+          "supports": [
+            "public_note"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "140",
+      "youtube_id": "cdowOJcJ9_c",
+      "topics": [
+        "ЛЛШ"
+      ],
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=cdowOJcJ9_c",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-14",
+          "supports": [
+            "topics"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "145",
+      "youtube_id": "H9Ul5qcniS8",
+      "type": "лекция",
+      "public_note": "Редакторская заметка, перенесённая из поля «type»: расшифровка доклада опубликована на «Элементах» как «Или и уже».",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=H9Ul5qcniS8",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-14",
+          "supports": [
+            "type"
+          ]
+        },
+        {
+          "url": "https://elementy.ru/nauchno-populyarnaya_biblioteka/433894/Ili_i_uzhe",
+          "label": "«Элементы»: Или и уже",
+          "accessed_at": "2026-08-14",
+          "supports": [
+            "public_note"
+          ]
+        }
+      ]
+    },
+    {
+      "accession": "146",
+      "youtube_id": "r7ep0PXICkk",
+      "type": "лекция",
+      "public_note": "Редакторская заметка, перенесённая из поля «type»: расшифровка доклада опубликована на «Элементах» как «Или и уже».",
+      "evidence": [
+        {
+          "url": "https://www.youtube.com/watch?v=r7ep0PXICkk",
+          "label": "YouTube video",
+          "accessed_at": "2026-08-14",
+          "supports": [
+            "type"
+          ]
+        },
+        {
+          "url": "https://elementy.ru/nauchno-populyarnaya_biblioteka/433894/Ili_i_uzhe",
+          "label": "«Элементы»: Или и уже",
+          "accessed_at": "2026-08-14",
+          "supports": [
+            "public_note"
           ]
         }
       ]
