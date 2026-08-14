@@ -1,0 +1,1641 @@
+{
+ "schema": "bookindex.crosswalk.edges/1",
+ "pass": "series",
+ "series": [
+  {
+   "id": "rus_stress",
+   "name": "История русского ударения",
+   "chapter": "ch08",
+   "records": 46
+  },
+  {
+   "id": "vedic_sanskrit",
+   "name": "Строй ведийского языка / Грамматический строй санскрита",
+   "chapter": "ch05",
+   "records": 26
+  },
+  {
+   "id": "birchbark",
+   "name": "Берестяные грамоты, раскопки по сезонам",
+   "chapter": "ch09",
+   "records": 23
+  }
+ ],
+ "edges": [
+  {
+   "edge_id": "acc002-ch08-series",
+   "accession": "002",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "истории русского ударения",
+    "title": "А.А. Зализняк. Эпизод из истории русского ударения"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc003-ch08-series",
+   "accession": "003",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "истории русского ударения",
+    "title": "А.А. Зализняк. Контуры истории русского ударения"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc005-ch09-series",
+   "accession": "005",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяные",
+    "title": "А.А. Зализняк. Новгородские берестяные грамоты"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc010-ch09-series",
+   "accession": "010",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "Берестяные",
+    "title": "ACADEMIA. Андрей Зализняк. Берестяные грамоты. 2 лекция. Канал Культура"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc011-ch09-series",
+   "accession": "011",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "Берестяные",
+    "title": "ACADEMIA. Андрей Зализняк. Берестяные грамоты. 1 лекция. Канал Культура"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc016-ch05-series",
+   "accession": "016",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. Лекция 1. 12.09.2015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc022-ch09-series",
+   "accession": "022",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "Язык берестяных грамот (рассказывает лингвист Андрей Зализняк)"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc026-ch09-series",
+   "accession": "026",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А.Зализняк читает лекцию о берестяных грамотах студентам-историкам, 08.08.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc034-ch09-series",
+   "accession": "034",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "Зализняк. О берестяных грамотах из раскопок 2017 года"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc040-ch09-series",
+   "accession": "040",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяные",
+    "title": "Зализняк. Новгородские берестяные грамоты. 2007"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc046-ch08-series",
+   "accession": "046",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "Зализняк. История русского ударения. Семинар 6. 15.10.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc047-ch08-series",
+   "accession": "047",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "Зализняк. История русского ударения 16 11 12 семинар 10"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc054-ch08-series",
+   "accession": "054",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "Зализняк. История русского ударения. Семинар 22. 25.03.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc055-ch08-series",
+   "accession": "055",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "Зализняк. История русского ударения. 19.11.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc056-ch08-series",
+   "accession": "056",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "Зализняк. История русского ударения. 26.11.2016 Семинар 12"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc058-ch05-series",
+   "accession": "058",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "Спецкурс А.А. Зализняка Строй ведийского языка, 2015 г."
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc059-ch05-series",
+   "accession": "059",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Грамматический строй санскрита",
+    "title": "А. А. Зализняк. Грамматический строй санскрита. 2014-2015 гг. Лекция 3. 27.09.2014"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc060-ch05-series",
+   "accession": "060",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Грамматический строй санскрита",
+    "title": "А. А. Зализняк. Грамматический строй санскрита. Лекция 1. 13. 09. 2014. МГУ"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc064-ch08-series",
+   "accession": "064",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Аудиозапись лекции 1. 10.09.16"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc065-ch08-series",
+   "accession": "065",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Аудиозапись лекции 11. 19.11.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc066-ch08-series",
+   "accession": "066",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Аудиозапись лекции 7. 22.10.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc067-ch08-series",
+   "accession": "067",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 10. 12.11.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc068-ch08-series",
+   "accession": "068",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 12. 26.11.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc069-ch08-series",
+   "accession": "069",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 13. 03.12.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc070-ch08-series",
+   "accession": "070",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 14. 10.12.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc071-ch08-series",
+   "accession": "071",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 15. 17.12.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc072-ch08-series",
+   "accession": "072",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 16. 11.02.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc073-ch08-series",
+   "accession": "073",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 17. 18.02.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc074-ch08-series",
+   "accession": "074",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 19. 04.03.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc075-ch08-series",
+   "accession": "075",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 2. 17.09.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc076-ch08-series",
+   "accession": "076",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 20. 11.03.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc077-ch08-series",
+   "accession": "077",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 21. 18.03.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc078-ch08-series",
+   "accession": "078",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 22. 25.03.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc079-ch08-series",
+   "accession": "079",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 23. 01.04.2017."
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc080-ch08-series",
+   "accession": "080",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 24. 24.04.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc081-ch08-series",
+   "accession": "081",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 25. 29.04.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc082-ch08-series",
+   "accession": "082",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 27. 13.05.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc083-ch08-series",
+   "accession": "083",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 3. 24.09.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc084-ch08-series",
+   "accession": "084",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 4. 01.10.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc085-ch08-series",
+   "accession": "085",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 5. 08.10.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc086-ch08-series",
+   "accession": "086",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 8. 29.10.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc087-ch08-series",
+   "accession": "087",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2016-2017 гг. Лекция 9. 05.11.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc088-ch08-series",
+   "accession": "088",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Аудиозапись лекции 2. 23.09.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc089-ch08-series",
+   "accession": "089",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 1. 16.09.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc090-ch08-series",
+   "accession": "090",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 10. 18.11.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc091-ch08-series",
+   "accession": "091",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 11. 25.11.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc092-ch08-series",
+   "accession": "092",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 12. 02.12.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc093-ch08-series",
+   "accession": "093",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 13. 09.12.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc094-ch08-series",
+   "accession": "094",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 14, последняя. 16.12.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc095-ch08-series",
+   "accession": "095",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 3. 30.09.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc096-ch08-series",
+   "accession": "096",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 4. 07.10.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc097-ch08-series",
+   "accession": "097",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 5. 14.10.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc098-ch08-series",
+   "accession": "098",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 6. 21.10.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc099-ch08-series",
+   "accession": "099",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 7. 28.10.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc100-ch08-series",
+   "accession": "100",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 8. 06.11.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc101-ch08-series",
+   "accession": "101",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк. История русского ударения. 2017 г. Лекция 9. 11.11.2017"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc104-ch05-series",
+   "accession": "104",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 10. 21.11.2015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc105-ch05-series",
+   "accession": "105",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 11. 28.11.2015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc106-ch05-series",
+   "accession": "106",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 12. 05.12.2015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc107-ch05-series",
+   "accession": "107",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 13. 12.12.2015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc108-ch05-series",
+   "accession": "108",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 13. 30.04.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc109-ch05-series",
+   "accession": "109",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк Строй ведийского языка 2015 2016 гг Лекция 14 19122015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc110-ch05-series",
+   "accession": "110",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 15. 13.02.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc111-ch05-series",
+   "accession": "111",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 16. 22.02.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc112-ch05-series",
+   "accession": "112",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 17. 27.02.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc113-ch05-series",
+   "accession": "113",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 18. 05.03.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc114-ch05-series",
+   "accession": "114",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 20. 19.03.2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc115-ch05-series",
+   "accession": "115",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 22. 23.04.16"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc116-ch05-series",
+   "accession": "116",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 3. 26.09.15"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc117-ch05-series",
+   "accession": "117",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 6. 17.10.2015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc118-ch05-series",
+   "accession": "118",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 7. 31.10.15"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc119-ch05-series",
+   "accession": "119",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 8. 07.11.2015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc120-ch05-series",
+   "accession": "120",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 9. 13.11.2015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc125-ch05-series",
+   "accession": "125",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Грамматический строй санскрита",
+    "title": "Грамматический строй санскрита. 2014-2015 гг. Лекция 2. 20 сентября 2014 г."
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc126-ch05-series",
+   "accession": "126",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Грамматический строй санскрита",
+    "title": "Грамматический строй санскрита. 2014-2015 гг. Лекция 4. 04.10.2014"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc127-ch05-series",
+   "accession": "127",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Грамматический строй санскрита",
+    "title": "Грамматический строй санскрита. 2014-2015 гг. Лекция 5. 11. 10. 2014."
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc130-ch05-series",
+   "accession": "130",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Грамматический строй санскрита",
+    "title": "Грамматический строй санскрита. 2014-2015 гг. Лекция 6. 18 октября 2014 г."
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc131-ch09-series",
+   "accession": "131",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А. Зализняк. О берестяных грамотах из раскопок 2010 г., лекция 2"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc133-ch09-series",
+   "accession": "133",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяная",
+    "title": "21.07.2010, Новгород, берестяная грамота № 1000"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc136-ch09-series",
+   "accession": "136",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "Берестяные",
+    "title": "А.А. Гиппиус. Берестяные грамоты как живая речь"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc137-ch09-series",
+   "accession": "137",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А. Гиппиус. О берестяных грамотах из раскопок сезона 2019 года"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc138-ch09-series",
+   "accession": "138",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "Берестяные",
+    "title": "А.А. Зализняк. Берестяные грамоты сезона 2014"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc141-ch09-series",
+   "accession": "141",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2014 года"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc142-ch09-series",
+   "accession": "142",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2015 года"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc143-ch09-series",
+   "accession": "143",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2016 года. Лекция 1"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc149-ch09-series",
+   "accession": "149",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяную",
+    "title": "А.А.Зализняк читает берестяную грамоту. Новгород, 2016"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc155-ch09-series",
+   "accession": "155",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяным",
+    "title": "Андрей Зализняк. Новгородская Русь по берестяным грамотам взгляд из 2012 года"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc163-ch09-series",
+   "accession": "163",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "Лекция А.А. Гиппиуса о берестяных грамотах, 30 окт 2018"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc166-ch09-series",
+   "accession": "166",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2008 года"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc169-ch05-series",
+   "accession": "169",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "vedic_sanskrit",
+    "series_name": "Строй ведийского языка / Грамматический строй санскрита",
+    "rule": "заголовок записи содержит признак цикла «Строй ведийского языка / Грамматический строй санскрита» → глава ch05",
+    "matched": "Строй ведийского",
+    "title": "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 2. 19.09.2015"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc170-ch09-series",
+   "accession": "170",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяным",
+    "title": "Зализняк. Новгородская Русь по берестяным грамотам. 2012"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc171-ch09-series",
+   "accession": "171",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2012 года. Лекция 2"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc172-ch09-series",
+   "accession": "172",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А. Зализняк. О берестяных грамотах из раскопок 2010 г., лекция 1"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc175-ch09-series",
+   "accession": "175",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "birchbark",
+    "series_name": "Берестяные грамоты, раскопки по сезонам",
+    "rule": "заголовок записи содержит признак цикла «Берестяные грамоты, раскопки по сезонам» → глава ch09",
+    "matched": "берестяных",
+    "title": "А.А. Зализняк. О берестяных грамотах из раскопок сезона 2016 года. Лекция 2"
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc176-ch08-series",
+   "accession": "176",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "series",
+   "confidence": 0.95,
+   "evidence": {
+    "series_id": "rus_stress",
+    "series_name": "История русского ударения",
+    "rule": "заголовок записи содержит признак цикла «История русского ударения» → глава ch08",
+    "matched": "История русского ударения",
+    "title": "А. А. Зализняк: История русского ударения. Семинар 28"
+   },
+   "timecode": null,
+   "status": "auto"
+  }
+ ]
+}

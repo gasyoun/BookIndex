@@ -37,6 +37,7 @@ OVERRIDE_FIELD_ORDER = (
     "transcript_status",
     "transcript_url",
     "public_note",
+    "duplicate_of",
 )
 OVERRIDE_FIELDS = set(OVERRIDE_FIELD_ORDER)
 CONTRIBUTOR_ROLES = {
@@ -99,6 +100,7 @@ VIDEO_KEYS = {
     "transcript_status",
     "transcript_url",
     "public_note",
+    "duplicate_of",
     "related_entities",
     "last_verified_at",
     "evidence",
@@ -356,6 +358,13 @@ def _validate_video_field_shapes(video: dict[str, Any], where: str) -> None:
             )
     if transcript_status_value == "published" and not transcript_url:
         raise CatalogValidationError(f"{where}: published transcript requires transcript_url")
+    duplicate_of = video.get("duplicate_of")
+    if duplicate_of is not None:
+        # Дубли помечаются, а не удаляются: удаление ломает ссылки и счётчики.
+        if not isinstance(duplicate_of, str) or not re.fullmatch(r"\d{3}", duplicate_of):
+            raise CatalogValidationError(f"{where}.duplicate_of: must be a three-digit accession")
+        if duplicate_of == video.get("accession"):
+            raise CatalogValidationError(f"{where}.duplicate_of: cannot point at itself")
 
 
 def validate_catalog(catalog: dict[str, Any]) -> None:

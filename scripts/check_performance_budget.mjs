@@ -23,10 +23,18 @@ const budgets = [
     maxGzipBytes: 192_000,
   },
   {
+    // Raised 2026-08-14 (H2711) 6_300_000 -> 7_000_000 raw and 600_000 -> 680_000
+    // gzip for the `crosswalk` module: 377 evidence-bearing video-to-chapter edges,
+    // a new data layer rather than incidental growth. Note where the bytes actually
+    // go — the edges themselves are ~231 KB, but app_data is pretty-printed at
+    // indent 2, so per-key indentation roughly doubles them. The reader does not pay
+    // this: aaz-index.html grew by 196 B, because modules load lazily. Headroom is
+    // deliberately ~5%, per this file's own lesson about ceilings set just above the
+    // current artifact.
     label: 'source app data',
     path: 'app_data.json',
-    maxBytes: 6_300_000,
-    maxGzipBytes: 600_000,
+    maxBytes: 7_000_000,
+    maxGzipBytes: 680_000,
   },
   {
     // Raised 2026-06-13 for corpus video links / KWIC; 2026-07-24 for H1604
@@ -54,9 +62,12 @@ const vendorBudget = {
 };
 
 const dataModuleBudget = {
+  // Raw ceiling raised 2026-08-14 (H2711) 6_400_000 -> 6_800_000 alongside
+  // app_data: 22-crosswalk.json is a new module in this directory. The gzip
+  // ceiling is left alone — 626 KB against 650 KB still has real room.
   label: 'lazy app data modules',
   dir: 'data/modules',
-  maxBytes: 6_400_000,
+  maxBytes: 6_800_000,
   maxGzipBytes: 650_000,
 };
 

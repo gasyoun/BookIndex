@@ -14,6 +14,7 @@ from scripts.build_video_catalog_public import (
     DEFAULT_PIPELINE,
     DEFAULT_REGISTRY,
     DEFAULT_SNAPSHOT,
+    OVERRIDE_FIELDS,
     apply_editorial,
     build_catalog,
     build_exports,
@@ -154,19 +155,19 @@ class PublicVideoCatalogTests(unittest.TestCase):
         self.assertNotIn("editorial_file", self.catalog["source"])
         self.assertNotIn("reconciled_records", self.catalog)
         self.assertNotIn("reconciled_records", self.catalog["stats"])
+        # Инвариант, а не снимок состояния: оверлей вправе добавлять и менять
+        # ровно объявленные редакторские поля, и ничего сверх них. Прежняя
+        # версия перечисляла три поля, которые оверлей содержал на тот день, и
+        # потому краснела на любой законной редакторской правке (H2711 добавил
+        # public_note и duplicate_of).
+        allowed = set(OVERRIDE_FIELDS)
         for base, merged in zip(self.base_catalog["videos"], self.catalog["videos"], strict=True):
             self.assertLessEqual(set(base), set(merged))
-            self.assertLessEqual(
-                set(merged) - set(base),
-                {"contributors", "date_recorded", "upload_date"},
-            )
+            self.assertLessEqual(set(merged) - set(base), allowed)
             changed = {
                 field for field in set(base) & set(merged) if base[field] != merged[field]
             }
-            self.assertLessEqual(
-                changed,
-                {"title_display", "last_verified_at"},
-            )
+            self.assertLessEqual(changed, allowed | {"last_verified_at"})
         for unresolved in self.catalog["unresolved_records"]:
             self.assertTrue(
                 {"status", "public_summary", "checked_at", "evidence"}.isdisjoint(unresolved)
@@ -178,9 +179,16 @@ class PublicVideoCatalogTests(unittest.TestCase):
 
     def test_v2_evidence_and_last_verified_are_derived(self):
         evidenced = [video for video in self.catalog_v2["videos"] if video["evidence"]]
-        self.assertEqual(len(evidenced), 70)
+        self.assertEqual(len(evidenced), 75)
+        # Проверяем ВЫВОДИМОСТЬ даты, а не конкретную дату: смысл поля в том, что
+        # оно равно самой свежей проверке среди доказательств этой записи, и
+        # пришпиливание календарного дня делало тест сигналом «оверлей трогали»,
+        # а не «дата перестала быть выводимой».
         for video in evidenced:
-            self.assertEqual(video["last_verified_at"], "2026-08-04")
+            self.assertEqual(
+                video["last_verified_at"],
+                max(evidence["accessed_at"] for evidence in video["evidence"]),
+            )
         self.assertEqual(
             sum(
                 any("title_display" in evidence["supports"] for evidence in video["evidence"])

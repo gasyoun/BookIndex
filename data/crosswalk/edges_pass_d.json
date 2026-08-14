@@ -1,0 +1,790 @@
+{
+ "schema": "bookindex.crosswalk.edges/1",
+ "pass": "llm",
+ "model": "deepseek-v4-flash",
+ "gateway": "https://api.deepseek.com",
+ "attempted": 35,
+ "failed": 0,
+ "edges": [
+  {
+   "edge_id": "acc009-ch09-llm",
+   "accession": "009",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "62b52b5df97809fb",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"lecture_of\", \"confidence\": 0.9, \"quote\": \"Известен своими исследованиями по выявлению специфических особенностей древненовгородского диалекта, его отличия от наддиалектного древнерусского языка, орфографии и полиографии берестяных грамот, методики их датирования.\"}",
+    "quote": "Известен своими исследованиями по выявлению специфических особенностей древненовгородского диалекта, его отличия от наддиалектного древнерусского языка, орфографии и полиографии берестяных грамот, методики их датирования.",
+    "usage": {
+     "prompt_tokens": 3083,
+     "completion_tokens": 87,
+     "total_tokens": 3170,
+     "prompt_tokens_details": {
+      "cached_tokens": 3072
+     },
+     "prompt_cache_hit_tokens": 3072,
+     "prompt_cache_miss_tokens": 11
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc013-ch09-llm",
+   "accession": "013",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "3eab1e50023a78a5",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"lecture_of\", \"confidence\": 0.9, \"quote\": \"Самый лучший из них – вы теперь знаете – это «Берестяные грамоты».\"}",
+    "quote": "Самый лучший из них – вы теперь знаете – это «Берестяные грамоты».",
+    "usage": {
+     "prompt_tokens": 3020,
+     "completion_tokens": 52,
+     "total_tokens": 3072,
+     "prompt_tokens_details": {
+      "cached_tokens": 2944
+     },
+     "prompt_cache_hit_tokens": 2944,
+     "prompt_cache_miss_tokens": 76
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc015-ch01-llm",
+   "accession": "015",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "913075a5b47eafd0",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Литературное премие Александра Солженицына 2007 года. Решение в жюри от 5 февраля 2007 года предсуждено Андрею Анатольевичу Залезняку за фундаментальные достижения в изучении русского языка, дошифровку древнерусских текстов, за филиграмное лингвистическое исследование первоисточника русской поэзии \\\"Слово о полку Игореве\\\", убедительно доказывающее его пользу.\"}",
+    "quote": "Литературное премие Александра Солженицына 2007 года. Решение в жюри от 5 февраля 2007 года предсуждено Андрею Анатольевичу Залезняку за фундаментальные достижения в изучении русского языка, дошифровку древнерусских текстов, за филиграмное лингвистическое исследование первоисточника русской поэзии \"Слово о полку Игореве\", убедительно доказывающее его пользу.",
+    "usage": {
+     "prompt_tokens": 3296,
+     "completion_tokens": 149,
+     "total_tokens": 3445,
+     "prompt_tokens_details": {
+      "cached_tokens": 3200
+     },
+     "prompt_cache_hit_tokens": 3200,
+     "prompt_cache_miss_tokens": 96
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc019-ch01-llm",
+   "accession": "019",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "c95ec064da55bc74",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Фильм о А.А.Зализняке «Коэффициент достоверности», 2019\"}",
+    "quote": "Фильм о А.А.Зализняке «Коэффициент достоверности», 2019",
+    "usage": {
+     "prompt_tokens": 3220,
+     "completion_tokens": 56,
+     "total_tokens": 3276,
+     "prompt_tokens_details": {
+      "cached_tokens": 3200
+     },
+     "prompt_cache_hit_tokens": 3200,
+     "prompt_cache_miss_tokens": 20
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc023-ch09-llm",
+   "accession": "023",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.95,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "17756e62b24db15f",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"lecture_of\", \"confidence\": 0.95, \"quote\": \"Итак, сегодня мне предстоит вам рассказать об итогах очередного археологического сезона, а именно наших лингвистических, феологических итогах.\"}",
+    "quote": "Итак, сегодня мне предстоит вам рассказать об итогах очередного археологического сезона, а именно наших лингвистических, феологических итогах.",
+    "usage": {
+     "prompt_tokens": 2987,
+     "completion_tokens": 68,
+     "total_tokens": 3055,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2091
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc024-ch09-llm",
+   "accession": "024",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.95,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "8dc7754c87c3391f",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"lecture_of\", \"confidence\": 0.95, \"quote\": \"Ну, вот перед нами эта грамотная версия, с первого века. В том числе, включены грамоты этого года. С Тройского ростов 2 грамма переносили. И восход в Медемьянске, 8 граммов.\"}",
+    "quote": "Ну, вот перед нами эта грамотная версия, с первого века. В том числе, включены грамоты этого года. С Тройского ростов 2 грамма переносили. И восход в Медемьянске, 8 граммов.",
+    "usage": {
+     "prompt_tokens": 3270,
+     "completion_tokens": 90,
+     "total_tokens": 3360,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2374
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc025-ch09-llm",
+   "accession": "025",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.95,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "3cd3bc85a6189c6f",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"lecture_of\", \"confidence\": 0.95, \"quote\": \"сегодня мы будем говорить о новгородских берестяных грамотах\"}",
+    "quote": "сегодня мы будем говорить о новгородских берестяных грамотах",
+    "usage": {
+     "prompt_tokens": 3088,
+     "completion_tokens": 44,
+     "total_tokens": 3132,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2192
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc029-ch01-llm",
+   "accession": "029",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "74c2fae087c02d02",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"И для начала я прошу представиться наших сегодняшних спикеров и немножко рассказать о себе, кто они такие и почему они здесь сейчас являются.\"}",
+    "quote": "И для начала я прошу представиться наших сегодняшних спикеров и немножко рассказать о себе, кто они такие и почему они здесь сейчас являются.",
+    "usage": {
+     "prompt_tokens": 3138,
+     "completion_tokens": 65,
+     "total_tokens": 3203,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2242
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc030-ch01-llm",
+   "accession": "030",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "47cb05fac2555ecb",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Это первая биография, первая вышедшая книга о замечательном учёном, великом учёном-лингвисте Андрея Анатольевича Зализняке\"}",
+    "quote": "Это первая биография, первая вышедшая книга о замечательном учёном, великом учёном-лингвисте Андрея Анатольевича Зализняке",
+    "usage": {
+     "prompt_tokens": 3209,
+     "completion_tokens": 74,
+     "total_tokens": 3283,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2313
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc031-ch09-llm",
+   "accession": "031",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.95,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "05f227516a0d2f2c",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"lecture_of\", \"confidence\": 0.95, \"quote\": \"В 1951 в одном из раскопов была найдена первая берестяная грамота. Потом еще и еще. Только вот незадача. Находить находили, а понять, что нацарапано, толком не получалось.\"}",
+    "quote": "В 1951 в одном из раскопов была найдена первая берестяная грамота. Потом еще и еще. Только вот незадача. Находить находили, а понять, что нацарапано, толком не получалось.",
+    "usage": {
+     "prompt_tokens": 3179,
+     "completion_tokens": 84,
+     "total_tokens": 3263,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2283
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc037-ch10-llm",
+   "accession": "037",
+   "chapter": "ch10",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "259d381fb88bd88f",
+    "answer": "{\"chapter\": \"ch10\", \"relation\": \"lecture_of\", \"confidence\": 0.9, \"quote\": \"Есть такое вполне известное слово, которое я написал с маленькой буквы, не случайно, потому что ещё удали. Оно пишется с маленькой буквы. Ещё даже, собственно говоря, вы сейчас, конечно, его знаете, как имя собственной, название страны, но первоначальное это было именно написательное, и оно, конечно, было полным аналогом слова «окраина»...\"}",
+    "quote": "Есть такое вполне известное слово, которое я написал с маленькой буквы, не случайно, потому что ещё удали. Оно пишется с маленькой буквы. Ещё даже, собственно говоря, вы сейчас, конечно, его знаете, как имя собственной, название страны, но первоначальное это было именно написательное, и оно, конечно, было полным аналогом слова «окраина»...",
+    "usage": {
+     "prompt_tokens": 2111,
+     "completion_tokens": 121,
+     "total_tokens": 2232,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 1215
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc038-ch01-llm",
+   "accession": "038",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "ef0e6adfb91318c4",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"День рождения А. А. Зализняка. Видеоконференция, слайд-шоу. 29.04.2023\"}",
+    "quote": "День рождения А. А. Зализняка. Видеоконференция, слайд-шоу. 29.04.2023",
+    "usage": {
+     "prompt_tokens": 3290,
+     "completion_tokens": 64,
+     "total_tokens": 3354,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2394
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc039-ch01-llm",
+   "accession": "039",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "2c3961ce2bfd7452",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Это продолжение той беседы с Андреем Анатольевичем Зарязником, которую ведет веду я Владимир Андреевич Успенский\"}",
+    "quote": "Это продолжение той беседы с Андреем Анатольевичем Зарязником, которую ведет веду я Владимир Андреевич Успенский",
+    "usage": {
+     "prompt_tokens": 3308,
+     "completion_tokens": 66,
+     "total_tokens": 3374,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2412
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc041-ch01-llm",
+   "accession": "041",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.1,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "df9b4a3ca6e5abed",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.1, \"quote\": \"\"}",
+    "quote": "",
+    "usage": {
+     "prompt_tokens": 2088,
+     "completion_tokens": 31,
+     "total_tokens": 2119,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 1192
+    }
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc044-ch09-llm",
+   "accession": "044",
+   "chapter": "ch09",
+   "relation": "scholarly_work",
+   "pass": "llm",
+   "confidence": 0.3,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "9021601ebcb62790",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"scholarly_work\", \"confidence\": 0.3, \"quote\": \"Слово о полку Игореве\"}",
+    "quote": "Слово о полку Игореве",
+    "usage": {
+     "prompt_tokens": 3149,
+     "completion_tokens": 40,
+     "total_tokens": 3189,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2253
+    }
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc051-ch01-llm",
+   "accession": "051",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "e9381325bbc3414b",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"В Москве простились с Андреем Залезником, выдающимся лингвистом, академиком, лауреатом государственной премии Большой Золотой Медали имени Ломоносова.\"}",
+    "quote": "В Москве простились с Андреем Залезником, выдающимся лингвистом, академиком, лауреатом государственной премии Большой Золотой Медали имени Ломоносова.",
+    "usage": {
+     "prompt_tokens": 2064,
+     "completion_tokens": 82,
+     "total_tokens": 2146,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 1168
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc052-ch01-llm",
+   "accession": "052",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "8b1a47087020616c",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Умер Андрей Зализняк\"}",
+    "quote": "Умер Андрей Зализняк",
+    "usage": {
+     "prompt_tokens": 1289,
+     "completion_tokens": 40,
+     "total_tokens": 1329,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 393
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc129-ch01-llm",
+   "accession": "129",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "564c76f63e64ebe4",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Андрей Анатольевич Зарезняк любезно согласился прийти ко мне сюда, съемка происходит в моей квартире, и побеседовать со мной на разные темы.\"}",
+    "quote": "Андрей Анатольевич Зарезняк любезно согласился прийти ко мне сюда, съемка происходит в моей квартире, и побеседовать со мной на разные темы.",
+    "usage": {
+     "prompt_tokens": 3143,
+     "completion_tokens": 78,
+     "total_tokens": 3221,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2247
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc132-ch09-llm",
+   "accession": "132",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.95,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "507e8ae4fc80d721",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"lecture_of\", \"confidence\": 0.95, \"quote\": \"И вот с этим я приступаю к рассказу о грамотах этого года.\"}",
+    "quote": "И вот с этим я приступаю к рассказу о грамотах этого года.",
+    "usage": {
+     "prompt_tokens": 3125,
+     "completion_tokens": 46,
+     "total_tokens": 3171,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2229
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc134-ch01-llm",
+   "accession": "134",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "702a5c54e5319f94",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Дорогой Андрей, то ли по старости, то ли по природному раздолбайству, я даже не очень помню, как мы первый раз с тобой встретились.\"}",
+    "quote": "Дорогой Андрей, то ли по старости, то ли по природному раздолбайству, я даже не очень помню, как мы первый раз с тобой встретились.",
+    "usage": {
+     "prompt_tokens": 2327,
+     "completion_tokens": 75,
+     "total_tokens": 2402,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 1431
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc135-ch08-llm",
+   "accession": "135",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.7,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "affb17ad732e57fe",
+    "answer": "{\"chapter\": \"ch08\", \"relation\": \"lecture_of\", \"confidence\": 0.7, \"quote\": \"перебрасывание ударения с начала до конца представлено в целом в классе случаев\"}",
+    "quote": "перебрасывание ударения с начала до конца представлено в целом в классе случаев",
+    "usage": {
+     "prompt_tokens": 3151,
+     "completion_tokens": 47,
+     "total_tokens": 3198,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2255
+    }
+   },
+   "timecode": null,
+   "status": "disputed"
+  },
+  {
+   "edge_id": "acc148-ch01-llm",
+   "accession": "148",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "17dea2a50ed8d044",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Академик Российской Академии Наук Андрей Анатольевич Залезняк Выдающийся лингвист, специалист в области современного и исторического языкознания\"}",
+    "quote": "Академик Российской Академии Наук Андрей Анатольевич Залезняк Выдающийся лингвист, специалист в области современного и исторического языкознания",
+    "usage": {
+     "prompt_tokens": 1925,
+     "completion_tokens": 72,
+     "total_tokens": 1997,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 1029
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc152-ch09-llm",
+   "accession": "152",
+   "chapter": "ch09",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "3268dcdbf6302725",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Он научил нас читать брестяные грамоты и поставил точку в споре о подлинности слова о полку Игореве\"}",
+    "quote": "Он научил нас читать брестяные грамоты и поставил точку в споре о подлинности слова о полку Игореве",
+    "usage": {
+     "prompt_tokens": 2671,
+     "completion_tokens": 67,
+     "total_tokens": 2738,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 1775
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc154-ch09-llm",
+   "accession": "154",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.95,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "96b591616956e93e",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"lecture_of\", \"confidence\": 0.95, \"quote\": \"В середине 20-го века в Новгороде впервые были найдены берестяные грамоты тысячелетней давности.\"}",
+    "quote": "В середине 20-го века в Новгороде впервые были найдены берестяные грамоты тысячелетней давности.",
+    "usage": {
+     "prompt_tokens": 2800,
+     "completion_tokens": 58,
+     "total_tokens": 2858,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 1904
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc156-ch01-llm",
+   "accession": "156",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "938d95b4592d9cf4",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Судьба её уникальна. Друзья, поклонники, ученики к юбилею Залезняка в одном экземпляре издали рукопись, которую он давал, просто дал им почитать.\"}",
+    "quote": "Судьба её уникальна. Друзья, поклонники, ученики к юбилею Залезняка в одном экземпляре издали рукопись, которую он давал, просто дал им почитать.",
+    "usage": {
+     "prompt_tokens": 3189,
+     "completion_tokens": 86,
+     "total_tokens": 3275,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2293
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc159-ch08-llm",
+   "accession": "159",
+   "chapter": "ch08",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "7453442a375ec875",
+    "answer": "{\"chapter\": \"ch08\", \"relation\": \"lecture_of\", \"confidence\": 0.9, \"quote\": \"Я уже предложил Екапсон, были в пра-славянском языке целиком фонологически безударны. Я буду говорить о словоформах, но на самом деле тоже венно для фонетических слов, то есть для тартовых рук, где входит одна знаменательная словоформа, и сколько угодно критик.\"}",
+    "quote": "Я уже предложил Екапсон, были в пра-славянском языке целиком фонологически безударны. Я буду говорить о словоформах, но на самом деле тоже венно для фонетических слов, то есть для тартовых рук, где входит одна знаменательная словоформа, и сколько угодно критик.",
+    "usage": {
+     "prompt_tokens": 3036,
+     "completion_tokens": 105,
+     "total_tokens": 3141,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2140
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc160-ch01-llm",
+   "accession": "160",
+   "chapter": "ch01",
+   "relation": "about_zaliznyak",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "f8ebfdfcb75b5e4b",
+    "answer": "{\"chapter\": \"ch01\", \"relation\": \"about_zaliznyak\", \"confidence\": 0.9, \"quote\": \"Из моих воспоминаний о А.А.Зализняке\"}",
+    "quote": "Из моих воспоминаний о А.А.Зализняке",
+    "usage": {
+     "prompt_tokens": 1968,
+     "completion_tokens": 47,
+     "total_tokens": 2015,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 1072
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc165-ch06-llm",
+   "accession": "165",
+   "chapter": "ch06",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "f4af16dcefec1ade",
+    "answer": "{\"chapter\": \"ch06\", \"relation\": \"lecture_of\", \"confidence\": 0.9, \"quote\": \"Безусловно установленный факт состоит в том, что в девятом десятом кеке термин \\\"рус\\\" или \\\"рос\\\" в греческом варианте означает \\\"скандинал\\\".\"}",
+    "quote": "Безусловно установленный факт состоит в том, что в девятом десятом кеке термин \"рус\" или \"рос\" в греческом варианте означает \"скандинал\".",
+    "usage": {
+     "prompt_tokens": 2599,
+     "completion_tokens": 73,
+     "total_tokens": 2672,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 1703
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc173-ch05-llm",
+   "accession": "173",
+   "chapter": "ch05",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.9,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "70cf532b47dbebec",
+    "answer": "{\"chapter\": \"ch05\", \"relation\": \"lecture_of\", \"confidence\": 0.9, \"quote\": \"Санскрейт отличается только тем, что его аккорюющая система превратилась в Балчан и полторизация ДМК.\"}",
+    "quote": "Санскрейт отличается только тем, что его аккорюющая система превратилась в Балчан и полторизация ДМК.",
+    "usage": {
+     "prompt_tokens": 3320,
+     "completion_tokens": 59,
+     "total_tokens": 3379,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2424
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  },
+  {
+   "edge_id": "acc174-ch09-llm",
+   "accession": "174",
+   "chapter": "ch09",
+   "relation": "lecture_of",
+   "pass": "llm",
+   "confidence": 0.95,
+   "evidence": {
+    "model": "deepseek-v4-flash",
+    "prompt_hash": "5e3b3088ee9d3244",
+    "answer": "{\"chapter\": \"ch09\", \"relation\": \"lecture_of\", \"confidence\": 0.95, \"quote\": \"Расскажите мне об этом. Информация распространяется мгновенно. Я, например, не уверен, что через час, допустим, после того, как грамота найдена в Новгороде, находится уже некоторый контингент людей, которые знают ее содержание.\"}",
+    "quote": "Расскажите мне об этом. Информация распространяется мгновенно. Я, например, не уверен, что через час, допустим, после того, как грамота найдена в Новгороде, находится уже некоторый контингент людей, которые знают ее содержание.",
+    "usage": {
+     "prompt_tokens": 3099,
+     "completion_tokens": 90,
+     "total_tokens": 3189,
+     "prompt_tokens_details": {
+      "cached_tokens": 896
+     },
+     "prompt_cache_hit_tokens": 896,
+     "prompt_cache_miss_tokens": 2203
+    }
+   },
+   "timecode": null,
+   "status": "auto"
+  }
+ ]
+}

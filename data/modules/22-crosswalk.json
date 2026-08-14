@@ -1,0 +1,6728 @@
+{
+ "crosswalk": {
+  "schema": "bookindex.crosswalk/1",
+  "built_by": "scripts/crosswalk/assemble_crosswalk.py (H2711)",
+  "note": "Полное доказательство каждого ребра — в data/crosswalk/edges_pass_*.json; здесь оно урезано под бюджет артефакта. Ключ accession совпадает с полем каталога («001»); в документации та же запись зовётся acc001.",
+  "chapters": [
+   {
+    "id": "ch01",
+    "name": "От редколлегии и предисловие",
+    "start": 6,
+    "end": 13
+   },
+   {
+    "id": "ch02",
+    "name": "Порядок слов",
+    "start": 14,
+    "end": 49
+   },
+   {
+    "id": "ch03",
+    "name": "Историческая лингвистика",
+    "start": 50,
+    "end": 91
+   },
+   {
+    "id": "ch04",
+    "name": "Историческая лингвистика (продолж.)",
+    "start": 92,
+    "end": 131
+   },
+   {
+    "id": "ch05",
+    "name": "Древняя Индия",
+    "start": 132,
+    "end": 175
+   },
+   {
+    "id": "ch06",
+    "name": "История русского языка",
+    "start": 176,
+    "end": 209
+   },
+   {
+    "id": "ch07",
+    "name": "Арабский язык",
+    "start": 210,
+    "end": 235
+   },
+   {
+    "id": "ch08",
+    "name": "Из русского ударения",
+    "start": 236,
+    "end": 271
+   },
+   {
+    "id": "ch09",
+    "name": "Берестяные грамоты",
+    "start": 272,
+    "end": 321
+   },
+   {
+    "id": "ch10",
+    "name": "О жизни слов",
+    "start": 322,
+    "end": 359
+   },
+   {
+    "id": "ch11",
+    "name": "Или и уже",
+    "start": 360,
+    "end": 392
+   }
+  ],
+  "passes": {
+   "series": 95,
+   "kwic": 274,
+   "title_topics": 57,
+   "llm": 30
+  },
+  "stats": {
+   "edges": 377,
+   "records_covered": 173,
+   "records_total": 176,
+   "with_timecode": 215,
+   "auto": 167,
+   "disputed": 210,
+   "per_chapter": {
+    "ch01": 21,
+    "ch02": 5,
+    "ch03": 10,
+    "ch04": 11,
+    "ch05": 41,
+    "ch06": 60,
+    "ch07": 1,
+    "ch08": 102,
+    "ch09": 51,
+    "ch10": 43,
+    "ch11": 32
+   },
+   "per_relation": {
+    "expands": 101,
+    "lecture_of": 252,
+    "other_book": 1,
+    "about_zaliznyak": 22,
+    "scholarly_work": 1
+   }
+  },
+  "edges": [
+   {
+    "edge_id": "acc001-ch06-kwic",
+    "accession": "001",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.555,
+    "evidence": {
+     "term": "изумруд",
+     "page": 185,
+     "srt": "А.А.-Зализняк.-Коротко-об-арабском-языке.srt",
+     "at": 1854.0,
+     "quote": "а в арабском синтаксисе. но тут, к сожалению, должен сдаться. в коротком изложении показать вам действительно бриллиант изумруды арабского с"
+    },
+    "timecode": "30:54",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc001-ch07-title_topics",
+    "accession": "001",
+    "chapter": "ch07",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "арабск",
+     "by": "title",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.555,
+       "edge_id": "acc001-ch07-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc002-ch08-series",
+    "accession": "002",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "истории русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.731,
+       "edge_id": "acc002-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc003-ch08-series",
+    "accession": "003",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "истории русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.822,
+       "edge_id": "acc003-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc004-ch03-title_topics",
+    "accession": "004",
+    "chapter": "ch03",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "изменяется внешняя сторона слова",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc004-ch06-kwic",
+    "accession": "004",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.643,
+    "evidence": {
+     "term": "изъян",
+     "page": 188,
+     "srt": "А.А.-Зализняк.-Как-изменяется-внешняя-сторона-слова.srt",
+     "at": 6724.9,
+     "quote": "звучит? понятно. совершенно точно изъяли из человека что-то полезное. вот осталось только что-то вредное. это получился изъян. это чистая пе"
+    },
+    "timecode": "112:04",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc004-ch10-kwic",
+    "accession": "004",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.547,
+    "evidence": {
+     "term": "ножик",
+     "page": 341,
+     "srt": "А.А.-Зализняк.-Как-изменяется-внешняя-сторона-слова.srt",
+     "at": 6886.9,
+     "quote": "своими глазами, потому что массе слов еще есть и то, и другое. можете выбирать. значения практически одинаковые. нож и ножик. наверное, како"
+    },
+    "timecode": "114:46",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc005-ch06-kwic",
+    "accession": "005",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.573,
+    "evidence": {
+     "term": "благословение",
+     "page": 186,
+     "srt": "А.А.-Зализняк.-Новгородские-берестяные-грамоты.srt",
+     "at": 6734.28,
+     "quote": "ащать. кроме того, заметьте, сокращение - это вообще говоря, нормально, способ записи слов сакрального задержания. пух, благословение, церко"
+    },
+    "timecode": "112:14",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc005-ch08-kwic",
+    "accession": "005",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.556,
+    "evidence": {
+     "term": "семнадцать",
+     "page": 256,
+     "srt": "А.А.-Зализняк.-Новгородские-берестяные-грамоты.srt",
+     "at": 6109.28,
+     "quote": "анных, один из самых, я бы сказал, хорошо обеспеченных письменным материалом. человек, которому так или иначе посвящено семнадцать писем. се"
+    },
+    "timecode": "101:49",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc005-ch09-series",
+    "accession": "005",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяные"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc006-ch06-kwic",
+    "accession": "006",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.788,
+    "evidence": {
+     "term": "южнославянские",
+     "page": 180,
+     "srt": "Зализняк.-Контуры-истории-русского-языка.-2012.srt",
+     "at": 3884.0,
+     "quote": "гие славянские языки. к северу остаются нижнелужицкий, польский и севернеликорусский, где везде \"г\". к югу остаются все южнославянские языки"
+    },
+    "timecode": "64:44",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc007-ch03-title_topics",
+    "accession": "007",
+    "chapter": "ch03",
+    "relation": "expands",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "Велесов",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc007-ch06-kwic",
+    "accession": "007",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.552,
+    "evidence": {
+     "term": "татары",
+     "page": 204,
+     "srt": "Зализняк.-О-Велесовой-книге.-2008.srt",
+     "at": 2090.0,
+     "quote": "ь. \"придя весть из руси зла, як ухотя татару и тамгы, и десяти на новый эдвард\". то есть пришла из руси злая весть, что татары требуют дани "
+    },
+    "timecode": "34:50",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc007-ch08-kwic",
+    "accession": "007",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.722,
+    "evidence": {
+     "term": "пятью",
+     "page": 255,
+     "srt": "Зализняк.-О-Велесовой-книге.-2008.srt",
+     "at": 3634.0,
+     "quote": "ом разных способов. вот я вам сказал, там слово князь пишется десятью способом, может и все достигают цифры десять. там пятью, четырьмя, тре"
+    },
+    "timecode": "60:34",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc008-ch08-kwic",
+    "accession": "008",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.95,
+    "evidence": {
+     "term": "грозам",
+     "page": 265,
+     "srt": "ACADEMIA.-Андрей-Зализняк.-Русский-устный.-2-лекция.-Канал-Культура.srt",
+     "at": 2376.52,
+     "quote": "проверяли. раньше была струна, всегда струна, струна, струна, струна. раньше было более тонкий случай - гроза грозы, но грозам. а сейчас гро"
+    },
+    "timecode": "39:36",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc009-ch06-title_topics",
+    "accession": "009",
+    "chapter": "ch06",
+    "relation": "other_book",
+    "pass": "title_topics",
+    "confidence": 0.55,
+    "evidence": {
+     "matched": "Слово о полку",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc009-ch09-llm",
+    "accession": "009",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Известен своими исследованиями по выявлению специфических особенностей древненовгородского диалекта, его отличия от наддиалектного древнерус"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc009-ch10-kwic",
+    "accession": "009",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.594,
+    "evidence": {
+     "term": "устоял",
+     "page": 353,
+     "srt": "ACADEMIA.-Андрей-Зализняк.-Читаем-«Слово-о-полку-Игореве».-1-лекция.-Канал-Культура.srt",
+     "at": 554.04,
+     "quote": "о очень типичное для той эпохи. ну, вам, к счастью, для вас эта эпоха уже чуждана и далека, но тем не менее тогда жизнь устояла именно таким"
+    },
+    "timecode": "09:14",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc009-ch11-kwic",
+    "accession": "009",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.552,
+    "evidence": {
+     "term": "перёд",
+     "page": 386,
+     "srt": "ACADEMIA.-Андрей-Зализняк.-Читаем-«Слово-о-полку-Игореве».-1-лекция.-Канал-Культура.srt",
+     "at": 1262.72,
+     "quote": "у всё-таки к тому, что же дает нынешний современный лингвистический анализ этого произведения. абсолютно не загадывая наперёд, что хотеть по"
+    },
+    "timecode": "21:02",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc010-ch06-kwic",
+    "accession": "010",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.548,
+    "evidence": {
+     "term": "везе",
+     "page": 202,
+     "srt": "ACADEMIA.-Андрей-Зализняк.-Берестяные-грамоты.-2-лекция.-Кан.srt",
+     "at": 1910.52,
+     "quote": "о родам и числам, в одной и той же строке сохранившиеся тем же чудом, это вот как хотите можете понимать какое огромное везение для филологи"
+    },
+    "timecode": "31:50",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc010-ch09-series",
+    "accession": "010",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "Берестяные",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.636,
+       "edge_id": "acc010-ch09-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc011-ch06-kwic",
+    "accession": "011",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.711,
+    "evidence": {
+     "term": "корове",
+     "page": 202,
+     "srt": "ACADEMIA.-Андрей-Зализняк.-Берестяные-грамоты.-1-лекция.-Кан.srt",
+     "at": 2426.84,
+     "quote": "ежали. о коне, ну вот здесь есть снова вместо ятия, в данном случае это множественное число. так же, как у нас там было корове. о коне не ве"
+    },
+    "timecode": "40:26",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc011-ch08-kwic",
+    "accession": "011",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.548,
+    "evidence": {
+     "term": "сёла",
+     "page": 263,
+     "srt": "ACADEMIA.-Андрей-Зализняк.-Берестяные-грамоты.-1-лекция.-Кан.srt",
+     "at": 714.84,
+     "quote": "вно \"ё\" почти не использовали, и до сих пор, строго говоря, вы в каких-то случаях можете писать там, там, какой-нибудь \"сёла\", можете написа"
+    },
+    "timecode": "11:54",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc011-ch09-series",
+    "accession": "011",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "Берестяные"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc012-ch08-kwic",
+    "accession": "012",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.95,
+    "evidence": {
+     "term": "грозам",
+     "page": 265,
+     "srt": "ACADEMIA.-Андрей-Зализняк.-Русский-устный.-2-лекция.-Канал-Культура.srt",
+     "at": 2376.52,
+     "quote": "проверяли. раньше была струна, всегда струна, струна, струна, струна. раньше было более тонкий случай - гроза грозы, но грозам. а сейчас гро"
+    },
+    "timecode": "39:36",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc013-ch06-kwic",
+    "accession": "013",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.587,
+    "evidence": {
+     "term": "солдат",
+     "page": 191,
+     "srt": "ACADEMIA.-Андрей-Зализняк.-Читаем-«Слово-о-полку-Игореве».-2-лекция.-Канал-Культура.srt",
+     "at": 683.24,
+     "quote": "пишите его». неужели вы станете переписывать формы букв тамошние? вы увидите, как это читается? там, понятно, написано «солдаты перешли гран",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc013-ch06-title_topics"
+      }
+     ]
+    },
+    "timecode": "11:23",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc013-ch08-kwic",
+    "accession": "013",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.557,
+    "evidence": {
+     "term": "пятьдесят",
+     "page": 256,
+     "srt": "ACADEMIA.-Андрей-Зализняк.-Читаем-«Слово-о-полку-Игореве».-2-лекция.-Канал-Культура.srt",
+     "at": 531.08,
+     "quote": "деле это делается на основании двух признаков, а примерно на основании пятидесяти признаков. ясно совершенно, что я вам пятьдесят выписывать"
+    },
+    "timecode": "08:51",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc013-ch09-llm",
+    "accession": "013",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Самый лучший из них – вы теперь знаете – это «Берестяные грамоты»."
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc014-ch06-title_topics",
+    "accession": "014",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "прошлом и будущем русского",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc014-ch08-kwic",
+    "accession": "014",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.59,
+    "evidence": {
+     "term": "доложил",
+     "page": 268,
+     "srt": "Зализняк.-О-прошлом-и-будущем-русского-языка-Очевидное-невероятное,-2009.srt",
+     "at": 1382.68,
+     "quote": "то дверь, замок цел, и дверь цела. и дальше идёт совершенно понятный текст, а накажите того обвинителя, который это вам доложил, который это"
+    },
+    "timecode": "23:02",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc014-ch09-kwic",
+    "accession": "014",
+    "chapter": "ch09",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "господарь",
+     "page": 316,
+     "srt": "Зализняк.-О-прошлом-и-будущем-русского-языка-Очевидное-невероятное,-2009.srt",
+     "at": 1139.56,
+     "quote": "а, это ведь сударь так сокращалось, а сударь в свою очередь – это сокращение от государь, а государь – это упрощение от господарь. первонача"
+    },
+    "timecode": "18:59",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc015-ch01-llm",
+    "accession": "015",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Литературное премие Александра Солженицына 2007 года. Решение в жюри от 5 февраля 2007 года предсуждено Андрею Анатольевичу Залезняку за фун"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc015-ch06-kwic",
+    "accession": "015",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "ворог",
+     "page": 193,
+     "srt": "Яндекс-Гугл-и-алгоритм-Зализняка-Острова-Телеканал-Культура-mBKJLH0EU7M-480pp-1713273916.srt",
+     "at": 1145.52,
+     "quote": "гато, в день вообще богато, ничего не было. ночью изысканно. сыр какой-то такой. и я спросил его, а едят ли во франции творог. мне очень пон"
+    },
+    "timecode": "19:05",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc015-ch08-kwic",
+    "accession": "015",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.698,
+    "evidence": {
+     "term": "Лотман",
+     "page": 246,
+     "srt": "Яндекс-Гугл-и-алгоритм-Зализняка-Острова-Телеканал-Культура-mBKJLH0EU7M-480pp-1713273916.srt",
+     "at": 2144.2,
+     "quote": "от тут вот. и тут рядом был мой брат, борис андреевич успеанский, специалист по древнерусскому языку, и юрий михайлович лотман, специалист п"
+    },
+    "timecode": "35:44",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc016-ch05-series",
+    "accession": "016",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.697,
+       "edge_id": "acc016-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc017-ch06-kwic",
+    "accession": "017",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.786,
+    "evidence": {
+     "term": "лежачий",
+     "page": 194,
+     "srt": "Андрей-Зализняк-Интереснейшая-история-русского-языка.srt",
+     "at": 1007.56,
+     "quote": "форма церковно-славянская, лежащий, горящий, а эти же слова существуют и с \"че\", они русские, пожалуйста, \"бродячий\", \"лежачий\", \"горячий\", "
+    },
+    "timecode": "16:47",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc018-ch06-kwic",
+    "accession": "018",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.786,
+    "evidence": {
+     "term": "лежачий",
+     "page": 194,
+     "srt": "Андрей-Зализняк-Интереснейшая-история-русского-языка.srt",
+     "at": 1007.56,
+     "quote": "форма церковно-славянская, лежащий, горящий, а эти же слова существуют и с \"че\", они русские, пожалуйста, \"бродячий\", \"лежачий\", \"горячий\", "
+    },
+    "timecode": "16:47",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc019-ch01-llm",
+    "accession": "019",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Фильм о А.А.Зализняке «Коэффициент достоверности», 2019",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc019-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc019-ch08-kwic",
+    "accession": "019",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.624,
+    "evidence": {
+     "term": "футбол",
+     "page": 242,
+     "srt": "Фильм-о-А.А.Зализняке-«Коэффициент-достоверности»,-2019.srt",
+     "at": 342.0,
+     "quote": "отал, он лучше всех на свет, наверное. поэтому он вязался в любую вещь, так сказать, лишь бы это было живое дело, вроде футбола. причем игра"
+    },
+    "timecode": "05:42",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc019-ch11-kwic",
+    "accession": "019",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.578,
+    "evidence": {
+     "term": "рубль",
+     "page": 390,
+     "srt": "Фильм-о-А.А.Зализняке-«Коэффициент-достоверности»,-2019.srt",
+     "at": 194.0,
+     "quote": "нт достоверности высказывания андреева, у меня 100%. ничего не могу поделать. вся комбинация вырисовывается очень ясно. рубль таки был пожал"
+    },
+    "timecode": "03:14",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc020-ch08-kwic",
+    "accession": "020",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.628,
+    "evidence": {
+     "term": "пятнадцать",
+     "page": 255,
+     "srt": "Зализняк-о-древнейшей-грамоте-и-о-Новгородском-кодексе-цере.-04.08.2000.srt",
+     "at": 218.59,
+     "quote": "ов одиннадцатого века, в основном, это были образованные документы. и вот уже прошлый год, даже не обману, были найдены пятнадцать граммов, "
+    },
+    "timecode": "03:38",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc020-ch09-title_topics",
+    "accession": "020",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "грамот",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc021-ch01-title_topics",
+    "accession": "021",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "title_topics",
+    "confidence": 0.55,
+    "evidence": {
+     "matched": "презентация книги",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc021-ch05-title_topics",
+    "accession": "021",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "санскрит",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc021-ch08-kwic",
+    "accession": "021",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.656,
+    "evidence": {
+     "term": "десятью",
+     "page": 254,
+     "srt": "Об-Очерке,-академике-Зализняке-и-санскрите-презентация-книги.srt",
+     "at": 1146.0,
+     "quote": "цикл происходил. не мог систематически заниматься, но многое мне запомнилось. в частности, вот этот знаменитый эпизод с десятью пальцами. то"
+    },
+    "timecode": "19:06",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc022-ch06-kwic",
+    "accession": "022",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.752,
+    "evidence": {
+     "term": "болгары",
+     "page": 199,
+     "srt": "Язык-берестяных-грамот-рассказывает-лингвист-Андрей-Зализняк.srt",
+     "at": 1275.46,
+     "quote": "о таком эпохе, как 11 век, то между всеми славянами было еще возможное понимание. да? то есть и поляки, и черногорцы, и болгары. конечно, по"
+    },
+    "timecode": "21:15",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc022-ch09-series",
+    "accession": "022",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc023-ch09-llm",
+    "accession": "023",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.95,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Итак, сегодня мне предстоит вам рассказать об итогах очередного археологического сезона, а именно наших лингвистических, феологических итога",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc023-ch09-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc023-ch10-kwic",
+    "accession": "023",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.608,
+    "evidence": {
+     "term": "беречь",
+     "page": 358,
+     "srt": "Новые-открытия-академика-Зализняка-в-2017-году.srt",
+     "at": 3773.72,
+     "quote": "ножко слишком сложная, но следующая строка замечательным образом начинается с следующих четырех букв. надо знать слово \"беречь\". беречь в то"
+    },
+    "timecode": "62:53",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc023-ch11-kwic",
+    "accession": "023",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.547,
+    "evidence": {
+     "term": "рубель",
+     "page": 390,
+     "srt": "Новые-открытия-академика-Зализняка-в-2017-году.srt",
+     "at": 9095.72,
+     "quote": "яла себе писать и в других случаях, и тогда \"рубили\" с двумя \"и\" всего лишь является передачей совершеннейшей фонетики \"рубель\". больше того"
+    },
+    "timecode": "151:35",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc024-ch01-title_topics",
+    "accession": "024",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "title_topics",
+    "confidence": 0.55,
+    "evidence": {
+     "matched": "presents a book",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc024-ch09-llm",
+    "accession": "024",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.95,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Ну, вот перед нами эта грамотная версия, с первого века. В том числе, включены грамоты этого года. С Тройского ростов 2 грамма переносили. И"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc024-ch11-kwic",
+    "accession": "024",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.366,
+    "evidence": {
+     "term": "ветк",
+     "page": 368,
+     "srt": "Andrey-Zaliznyak-presents-a-book,-24-Dec-2015.srt",
+     "at": 330.0,
+     "quote": "вот она уже как бы развернута, растянута, но, как видите, она требует, конечно, реставрации. и тут владимир иванович поветкин упаковывает гр",
+     "asr": "looped"
+    },
+    "timecode": "05:30",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc025-ch01-title_topics",
+    "accession": "025",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "title_topics",
+    "confidence": 0.55,
+    "evidence": {
+     "matched": "Наблюдатель",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc025-ch06-kwic",
+    "accession": "025",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.548,
+    "evidence": {
+     "term": "руке",
+     "page": 202,
+     "srt": "Наблюдатель.-Елена-Рыбина,-Андрей-Зализняк,-Пётр-Гайдуков-и-Савва-Михеев.-Эфир-от-27.10.2015.srt",
+     "at": 2812.2,
+     "quote": "ли. адресат остался недоволен этим письмам. он разодрал, часть порыни он бросил на землю, а еще два куска у него было в руке, и запутал в кл"
+    },
+    "timecode": "46:52",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc025-ch08-kwic",
+    "accession": "025",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.572,
+    "evidence": {
+     "term": "семью",
+     "page": 255,
+     "srt": "Наблюдатель.-Елена-Рыбина,-Андрей-Зализняк,-Пётр-Гайдуков-и-Савва-Михеев.-Эфир-от-27.10.2015.srt",
+     "at": 1866.2,
+     "quote": "ого, когда была найдена грамота номер 94 с упоминанием юрия анцифоровича, который был известным посадником в новгороде. семью, которую, мы з"
+    },
+    "timecode": "31:06",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc025-ch09-llm",
+    "accession": "025",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.95,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "сегодня мы будем говорить о новгородских берестяных грамотах"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc026-ch08-kwic",
+    "accession": "026",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.601,
+    "evidence": {
+     "term": "пропил",
+     "page": 262,
+     "srt": "А.А.Зализняк-читает-лекцию-о-берестяных-грамотах-студентам-историкам,-08.08.2017.srt",
+     "at": 3740.0,
+     "quote": "чень характерным видом нижней строки. смотрите, не случайно, это не вредно, что где-то написано. каждый домец почему-то пропилует. \"может он"
+    },
+    "timecode": "62:20",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc026-ch09-series",
+    "accession": "026",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc026-ch10-kwic",
+    "accession": "026",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.547,
+    "evidence": {
+     "term": "переехать",
+     "page": 352,
+     "srt": "А.А.Зализняк-читает-лекцию-о-берестяных-грамотах-студентам-историкам,-08.08.2017.srt",
+     "at": 1359.0,
+     "quote": "ь просто переезды из одного города в другой, когда человек переселялся, скажем, переселялся, на части странных, пытался переехать в страну, "
+    },
+    "timecode": "22:39",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc027-ch03-title_topics",
+    "accession": "027",
+    "chapter": "ch03",
+    "relation": "expands",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "ложной лингвистике",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc027-ch06-kwic",
+    "accession": "027",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.571,
+    "evidence": {
+     "term": "украинцы",
+     "page": 206,
+     "srt": "Зализняк.-О-ложной-лингвистике-и-квазиистории.-2011-1fhpsEJE2GM-360p-1713274001.srt",
+     "at": 4467.0,
+     "quote": "-то образом представить себе, как выглядел тот язык, каким они тогда пользовались. он знал, что славяне бывают русские, украинцы, поляки, се"
+    },
+    "timecode": "74:27",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc027-ch08-kwic",
+    "accession": "027",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.555,
+    "evidence": {
+     "term": "полюс",
+     "page": 245,
+     "srt": "Зализняк.-О-ложной-лингвистике-и-квазиистории.-2011-1fhpsEJE2GM-360p-1713274001.srt",
+     "at": 1344.0,
+     "quote": "iii, там до этого тоже ничего нет и так далее. на широком поле такого рода неоисторических сочинений находится и другой полюс, когда, наобор"
+    },
+    "timecode": "22:24",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc028-ch03-title_topics",
+    "accession": "028",
+    "chapter": "ch03",
+    "relation": "expands",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "псевдознан",
+     "by": "title",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.582,
+       "edge_id": "acc028-ch03-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc029-ch01-llm",
+    "accession": "029",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "И для начала я прошу представиться наших сегодняшних спикеров и немножко рассказать о себе, кто они такие и почему они здесь сейчас являются",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc029-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc029-ch06-kwic",
+    "accession": "029",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.551,
+    "evidence": {
+     "term": "готский",
+     "page": 184,
+     "srt": "Истина-существует.-Жизнь-Андрея-Зализняка-в-рассказах-ее-участников.srt",
+     "at": 676.4,
+     "quote": "семестровые курсы про разные языки. они обычно называли строй там такого-то языка. ну, был арабский, был литовский, был готский, был генгерс"
+    },
+    "timecode": "11:16",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc029-ch10-kwic",
+    "accession": "029",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.63,
+    "evidence": {
+     "term": "застать",
+     "page": 351,
+     "srt": "Истина-существует.-Жизнь-Андрея-Зализняка-в-рассказах-ее-участников.srt",
+     "at": 105.4,
+     "quote": "ей анатольевич является личностью легендарной и именно мифически легендарной, потому что я, к сожалению, мне не удалось застать его лично, я"
+    },
+    "timecode": "01:45",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc030-ch01-llm",
+    "accession": "030",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Это первая биография, первая вышедшая книга о замечательном учёном, великом учёном-лингвисте Андрея Анатольевича Зализняке",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc030-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc030-ch08-kwic",
+    "accession": "030",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.618,
+    "evidence": {
+     "term": "сёла",
+     "page": 263,
+     "srt": "Наблюдатель.-Андрей-Зализняк.-Воспоминания-жизни.-Эфир-30.09.2019.srt",
+     "at": 0.0,
+     "quote": "(весёлая музыка) -здравствуйте! в студии программного бедацы фёкла толстая. я с удовольствием самоначалу показываю вам эту книж"
+    },
+    "timecode": "00:00",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc030-ch09-kwic",
+    "accession": "030",
+    "chapter": "ch09",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.548,
+    "evidence": {
+     "term": "вырути",
+     "page": 314,
+     "srt": "Наблюдатель.-Андрей-Зализняк.-Воспоминания-жизни.-Эфир-30.09.2019.srt",
+     "at": 470.92,
+     "quote": "градову. и залезняк там делал доклад про одну грамоту, 246 целая грамота xi века. там было совершенно непонятное слово \"вырути\", которое ник"
+    },
+    "timecode": "07:50",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc031-ch01-title_topics",
+    "accession": "031",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "title_topics",
+    "confidence": 0.55,
+    "evidence": {
+     "matched": "Лингвистический детектив",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc031-ch06-kwic",
+    "accession": "031",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.622,
+    "evidence": {
+     "term": "кошмар",
+     "page": 191,
+     "srt": "Фильм-«Андрей-Зализняк.-Лингвистический-детектив».-2019.srt",
+     "at": 1420.0,
+     "quote": ". ой, опять неправильно. и вот такие вещи, конечно, нужно описывать. -известно, что русское дарение - это вообще полный кошмар. это полный к"
+    },
+    "timecode": "23:40",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc031-ch08-kwic",
+    "accession": "031",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.563,
+    "evidence": {
+     "term": "Париж",
+     "page": 248,
+     "srt": "Фильм-«Андрей-Зализняк.-Лингвистический-детектив».-2019.srt",
+     "at": 1359.0,
+     "quote": "ации на мотороллер. -в 1956 году 21-летнего студента романа германского отделения филфака мгу отправили на стажировку в париж. он поступил в"
+    },
+    "timecode": "22:39",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc031-ch09-llm",
+    "accession": "031",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.95,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "В 1951 в одном из раскопов была найдена первая берестяная грамота. Потом еще и еще. Только вот незадача. Находить находили, а понять, что на"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc032-ch04-kwic",
+    "accession": "032",
+    "chapter": "ch04",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.614,
+    "evidence": {
+     "term": "древнеперсидский",
+     "page": 120,
+     "srt": "А.А.-Зализняк.-О-происхождении-слов.srt",
+     "at": 5314.6,
+     "quote": "domo» и так далее. с помощью такого же склонения, как по-русски. вот второй такой пример. какой-нибудь персидский язык, древнеперсидский язы"
+    },
+    "timecode": "88:34",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc032-ch08-kwic",
+    "accession": "032",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "полюс",
+     "page": 245,
+     "srt": "А.А.-Зализняк.-О-происхождении-слов.srt",
+     "at": 4951.16,
+     "quote": "тическое оформление присутствуют в каждом, но выражена целая серия отдельных морфем, которые вам это показывают. как бы полюсы типов языково"
+    },
+    "timecode": "82:31",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc032-ch10-title_topics",
+    "accession": "032",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "происхождении слов",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc033-ch05-kwic",
+    "accession": "033",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.609,
+    "evidence": {
+     "term": "лимон",
+     "page": 136,
+     "srt": "Зализняк.-Механизмы-экспрессивности-в-языке.-2011.srt",
+     "at": 6241.48,
+     "quote": "шенно верно, да, очень хорошо, да, думаю, что это еще пример из этого ряда, спасибо. а вот это вот как бутырка. газета «лимонка» как бутырка"
+    },
+    "timecode": "104:01",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc033-ch10-title_topics",
+    "accession": "033",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "Механизмы экспрессивности",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc034-ch09-series",
+    "accession": "034",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc034-ch10-kwic",
+    "accession": "034",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.601,
+    "evidence": {
+     "term": "беречь",
+     "page": 358,
+     "srt": "Зализняк.-О-берестяных-грамотах-из-раскопок-2017-года.srt",
+     "at": 3774.0,
+     "quote": "ножко слишком сложная, но следующая строка замечательным образом начинается с следующих четырех букв. надо знать слово «беречь». беречь в то"
+    },
+    "timecode": "62:54",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc034-ch11-kwic",
+    "accession": "034",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "рубель",
+     "page": 390,
+     "srt": "Зализняк.-О-берестяных-грамотах-из-раскопок-2017-года.srt",
+     "at": 9096.0,
+     "quote": "яла себе писать и в других случаях, и тогда \"рубили\" с двумя \"и\" всего лишь является передачей совершеннейшей фонетики \"рубель\". больше того"
+    },
+    "timecode": "151:36",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc035-ch03-title_topics",
+    "accession": "035",
+    "chapter": "ch03",
+    "relation": "expands",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "любительская лингвистик",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc035-ch06-kwic",
+    "accession": "035",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.545,
+    "evidence": {
+     "term": "белорусы",
+     "page": 204,
+     "srt": "Зализняк.-Что-такое-любительская-лингвистика.-2010.srt",
+     "at": 5696.0,
+     "quote": "роняют капли. брюссель, например, это очень просто объясняется. это брусы, а б - это сокращение от белые русы, то есть белорусы. таким образ"
+    },
+    "timecode": "94:56",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc035-ch08-kwic",
+    "accession": "035",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.594,
+    "evidence": {
+     "term": "Шекспир",
+     "page": 243,
+     "srt": "Зализняк.-Что-такое-любительская-лингвистика.-2010.srt",
+     "at": 3681.0,
+     "quote": "чуть-чуть вышел за пределы своего же дневного употребления нынешнего живого языка. англичанин с некоторым трудом читает шекспира и уж совсем"
+    },
+    "timecode": "61:21",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc036-ch06-kwic",
+    "accession": "036",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.781,
+    "evidence": {
+     "term": "глава",
+     "page": 193,
+     "srt": "Русь---скандинавское-слово.-Ведущий-русский-лингвист-современности---академик-Зализняк.srt",
+     "at": 96.02,
+     "quote": "аменитый трактат об управлении империей, где он описывает все территории, окружающего его мира. и, в частности, имеются глава днепровских по"
+    },
+    "timecode": "01:36",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc037-ch03-title_topics",
+    "accession": "037",
+    "chapter": "ch03",
+    "relation": "expands",
+    "pass": "title_topics",
+    "confidence": 0.55,
+    "evidence": {
+     "matched": "древних Укров",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc037-ch06-kwic",
+    "accession": "037",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.499,
+    "evidence": {
+     "term": "Украина",
+     "page": 179,
+     "srt": "Украина-родина-древних-Укров!-А.А.-Зализняк.srt",
+     "at": 33.66,
+     "quote": "чальное это было именно написательное, и оно, конечно, было полным аналогом слова «окраина», и, конечно, ударение было «украина», «окраина» "
+    },
+    "timecode": "00:33",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc037-ch09-kwic",
+    "accession": "037",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.602,
+    "evidence": {
+     "term": "морь",
+     "page": 277,
+     "srt": "Украина-родина-древних-Укров!-А.А.-Зализняк.srt",
+     "at": 156.42,
+     "quote": "сто так там существовали, а оказывается, они великолепно засвидетельствованы в древнейших документах древнего средиземноморья. а именно, тро"
+    },
+    "timecode": "02:36",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc037-ch10-llm",
+    "accession": "037",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Есть такое вполне известное слово, которое я написал с маленькой буквы, не случайно, потому что ещё удали. Оно пишется с маленькой буквы. Ещ"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc038-ch01-llm",
+    "accession": "038",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "День рождения А. А. Зализняка. Видеоконференция, слайд-шоу. 29.04.2023",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc038-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc038-ch08-kwic",
+    "accession": "038",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.639,
+    "evidence": {
+     "term": "проговорил",
+     "page": 261,
+     "srt": "День-рождения-А.-А.-Зализняка.-Видеоконференция,-слайд-шоу.-29.04.2023.srt",
+     "at": 2828.98,
+     "quote": ", и так зацепились с языками, выясняя, так сказать, позиции свои всякие, научные, жизненные и прочее. вот, что до обеда проговорили. ну и во"
+    },
+    "timecode": "47:08",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc038-ch09-kwic",
+    "accession": "038",
+    "chapter": "ch09",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "вырути",
+     "page": 314,
+     "srt": "День-рождения-А.-А.-Зализняка.-Видеоконференция,-слайд-шоу.-29.04.2023.srt",
+     "at": 2668.98,
+     "quote": "ад делает зализняк про грамоту 246. грамота 11 века абсолютно целая, очень интересная. там невероятно непонятное слово \"вырути\". мы с яеном "
+    },
+    "timecode": "44:28",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc039-ch01-llm",
+    "accession": "039",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Это продолжение той беседы с Андреем Анатольевичем Зарязником, которую ведет веду я Владимир Андреевич Успенский",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc039-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc039-ch06-kwic",
+    "accession": "039",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.55,
+    "evidence": {
+     "term": "Крым",
+     "page": 184,
+     "srt": "А.А.Зализняк-отвечает-на-вопросы-В.А.Успенского.-Часть-II,-02.07.2010.srt",
+     "at": 2979.04,
+     "quote": "о я не помню все это. нет, более-менее. там уже к этому моменту поход закончился. каждый поступал как хотел, кто ехал в крым. и вы вернулись"
+    },
+    "timecode": "49:39",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc039-ch08-kwic",
+    "accession": "039",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.625,
+    "evidence": {
+     "term": "глобус",
+     "page": 245,
+     "srt": "А.А.Зализняк-отвечает-на-вопросы-В.А.Успенского.-Часть-II,-02.07.2010.srt",
+     "at": 3348.36,
+     "quote": "воздушном шаре. там негр джим, потом летит вместе с ним и говорит «мастер томас, а где же эти линии, которые я видел на глобусе?» это такие "
+    },
+    "timecode": "55:48",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc040-ch06-kwic",
+    "accession": "040",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.276,
+    "evidence": {
+     "term": "почта",
+     "page": 189,
+     "srt": "Зализняк.-Новгородские-берестяные-грамоты.-2007.srt",
+     "at": 1420.48,
+     "quote": "к выживы здоровы\". очень показательный текст, писан из следовательной эли смоленской или из киева, так что, как видите, почта, если можно на",
+     "asr": "looped"
+    },
+    "timecode": "23:40",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc040-ch09-series",
+    "accession": "040",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяные",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.279,
+       "edge_id": "acc040-ch09-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc041-ch01-llm",
+    "accession": "041",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.1,
+    "evidence": {
+     "model": "deepseek-v4-flash"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc043-ch09-title_topics",
+    "accession": "043",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "новгородск",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc044-ch06-kwic",
+    "accession": "044",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.667,
+    "evidence": {
+     "term": "везя",
+     "page": 202,
+     "srt": "Андрей-Зализняк-и-Александр-Ужанков_-Слово-о-полку-Игореве.srt",
+     "at": 880.6,
+     "quote": "ки, можете ли вы найти объяснение, почему мусин пушкин, вывозя часть своей библиотеки перед тем, как покинуть москву, вывезя, по-моему, целу",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc044-ch06-title_topics"
+      }
+     ]
+    },
+    "timecode": "14:40",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc044-ch08-kwic",
+    "accession": "044",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.549,
+    "evidence": {
+     "term": "помянуть",
+     "page": 260,
+     "srt": "Андрей-Зализняк-и-Александр-Ужанков_-Слово-о-полку-Игореве.srt",
+     "at": 1736.6,
+     "quote": "кой-то степени описывал язык словополку игорю, практически не касались. одна из таких вещей, о которых стоит буквально упомянуть, хотя это и"
+    },
+    "timecode": "28:56",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc044-ch09-llm",
+    "accession": "044",
+    "chapter": "ch09",
+    "relation": "scholarly_work",
+    "pass": "llm",
+    "confidence": 0.3,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Слово о полку Игореве"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc045-ch03-title_topics",
+    "accession": "045",
+    "chapter": "ch03",
+    "relation": "expands",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "любительской лингвистик",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc045-ch06-kwic",
+    "accession": "045",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.623,
+    "evidence": {
+     "term": "хижина",
+     "page": 186,
+     "srt": "Андрей-Зализняк-О-любительской-лингвистике-rP3UyDow5i4-480pp-1713274102.srt",
+     "at": 948.32,
+     "quote": "ски \"страдали\", что значит \"дорожные\". \"кабан\", как вы видите, совершенно сходно звучит с французским словом \"кабан\" - \"хижина\". \"завал\" име"
+    },
+    "timecode": "15:48",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc045-ch10-kwic",
+    "accession": "045",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.555,
+    "evidence": {
+     "term": "забава",
+     "page": 334,
+     "srt": "Андрей-Зализняк-О-любительской-лингвистике-rP3UyDow5i4-480pp-1713274102.srt",
+     "at": 2268.48,
+     "quote": "от степень произвола, которая на каждом шагу наблюдается в конструкциях любительских лингвистов. ну, казалось бы, такая забава, пустая игра "
+    },
+    "timecode": "37:48",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc046-ch08-series",
+    "accession": "046",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.527,
+       "edge_id": "acc046-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc046-ch10-kwic",
+    "accession": "046",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.585,
+    "evidence": {
+     "term": "забить",
+     "page": 356,
+     "srt": "Зализняк.-История-русского-ударения.-19.11.2016.srt",
+     "at": 490.96,
+     "quote": "наша молитва, как это отмечать, важная суть. ну, «ебу» точно так же даты. да. да. ну, с второго года «преда» тоже можно забить. ясно соверше"
+    },
+    "timecode": "08:10",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc047-ch08-series",
+    "accession": "047",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.563,
+       "edge_id": "acc047-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc047-ch11-kwic",
+    "accession": "047",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.55,
+    "evidence": {
+     "term": "петь",
+     "page": 373,
+     "srt": "Зализняк.-История-русского-ударения-16-11-12-семинар-10.srt",
+     "at": 2261.5,
+     "quote": "и. три. так. три. три. три. три. три. три. три. три. а вот стрелку в ударном ставьте под нужным. но это же незаконно терпеть. перед вами сло"
+    },
+    "timecode": "37:41",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc048-ch03-title_topics",
+    "accession": "048",
+    "chapter": "ch03",
+    "relation": "expands",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "любительской лингвистик",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc048-ch06-kwic",
+    "accession": "048",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.658,
+    "evidence": {
+     "term": "хижина",
+     "page": 186,
+     "srt": "Зализняк.-О-профессиональной-и-любительской-лингвистике.-2008.srt",
+     "at": 1016.0,
+     "quote": "вот несколько примеров, немногие из очень-очень многих. допустим, во французском языке есть слово \"кабанма\", означает \"хижина\". в итальянско"
+    },
+    "timecode": "16:56",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc048-ch08-kwic",
+    "accession": "048",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.548,
+    "evidence": {
+     "term": "эксперт",
+     "page": 244,
+     "srt": "Зализняк.-О-профессиональной-и-любительской-лингвистике.-2008.srt",
+     "at": 380.0,
+     "quote": "опрос о том, что правильнее из тех или иных встречающихся в речи вариантов. например, как правильно? продал или продал? эксперт или эксперт?"
+    },
+    "timecode": "06:20",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc049-ch01-title_topics",
+    "accession": "049",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "title_topics",
+    "confidence": 0.55,
+    "evidence": {
+     "matched": "Юбилей",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc049-ch08-kwic",
+    "accession": "049",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.559,
+    "evidence": {
+     "term": "экскурс",
+     "page": 244,
+     "srt": "Новгородский-семинар.-Юбилей-А.А.-Зализняка.srt",
+     "at": 251.0,
+     "quote": "дрея порошинога декорируется в сервейном курсе второго года у экспедиции. но тогда это не было, а это 83-й год, вот, на экскурсиях яинских в"
+    },
+    "timecode": "04:11",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc049-ch09-title_topics",
+    "accession": "049",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "Новгородск",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc049-ch11-kwic",
+    "accession": "049",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.529,
+    "evidence": {
+     "term": "Михайлович",
+     "page": 372,
+     "srt": "Новгородский-семинар.-Юбилей-А.А.-Зализняка.srt",
+     "at": 718.0,
+     "quote": "ич получит личный экземплям. вот такой, в виде книги. у-у-у! [аплодисменты] ну, у меня все. есть еще какие-нибудь? олег михайлович, вы не со"
+    },
+    "timecode": "11:58",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc050-ch04-kwic",
+    "accession": "050",
+    "chapter": "ch04",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.777,
+    "evidence": {
+     "term": "Крит",
+     "page": 121,
+     "srt": "Они-узнали-ее-нездоровую...,-фрагменты-занятия-А.А.-Зализняка-Строй-санскрита-1-из-3.srt",
+     "at": 60.0,
+     "quote": "в дом я видел его вошедшего в дом по-русски это немножко разные вещи чтение любого текста понимать, что это и есть санскритская форма выраже"
+    },
+    "timecode": "01:00",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc051-ch01-llm",
+    "accession": "051",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "В Москве простились с Андреем Залезником, выдающимся лингвистом, академиком, лауреатом государственной премии Большой Золотой Медали имени Л",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc051-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc051-ch04-kwic",
+    "accession": "051",
+    "chapter": "ch04",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.705,
+    "evidence": {
+     "term": "Фест",
+     "page": 122,
+     "srt": "Прощание-с-А.А.Зализняком.-ТВ-«Культура»,-28.12.2017.srt",
+     "at": 151.0,
+     "quote": "оизнесены при получении в 2007 году премии александра солженицына. истина существует и цель науки, и ее поиск стали манифестом для многих уч"
+    },
+    "timecode": "02:31",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc052-ch01-llm",
+    "accession": "052",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Умер Андрей Зализняк",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc052-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc053-ch05-title_topics",
+    "accession": "053",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "санскрит",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc054-ch08-series",
+    "accession": "054",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.747,
+       "edge_id": "acc054-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc055-ch08-series",
+    "accession": "055",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.527,
+       "edge_id": "acc055-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc055-ch10-kwic",
+    "accession": "055",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.585,
+    "evidence": {
+     "term": "забить",
+     "page": 356,
+     "srt": "Зализняк.-История-русского-ударения.-19.11.2016.srt",
+     "at": 490.96,
+     "quote": "наша молитва, как это отмечать, важная суть. ну, «ебу» точно так же даты. да. да. ну, с второго года «преда» тоже можно забить. ясно соверше"
+    },
+    "timecode": "08:10",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc056-ch02-kwic",
+    "accession": "056",
+    "chapter": "ch02",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.703,
+    "evidence": {
+     "term": "есме",
+     "page": 26,
+     "srt": "Зализняк.-История-русского-ударения.-26.11.2016-Семинар-12.srt",
+     "at": 829.0,
+     "quote": "обо страстно\" одна группа, и следующая была просто \"есвет\". именно так. но это постоянно следует напомнить, что \"еси\", \"есме\", \"есмы\", \"есве"
+    },
+    "timecode": "13:49",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc056-ch08-series",
+    "accession": "056",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.559,
+       "edge_id": "acc056-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc057-ch06-kwic",
+    "accession": "057",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.34,
+    "evidence": {
+     "term": "туман",
+     "page": 188,
+     "srt": "60-летие-Е.В.Падучевой-застолье,-песни…-1995-год.srt",
+     "at": 1005.0,
+     "quote": "ж вы теперь, какой новый богине? ищете вы идеалов своих. вы только вы держите по ныне пара огненных пара огненных. тихо туманное утро столиц",
+     "asr": "looped"
+    },
+    "timecode": "16:45",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc057-ch10-kwic",
+    "accession": "057",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.256,
+    "evidence": {
+     "term": "здоровье",
+     "page": 344,
+     "srt": "60-летие-Е.В.Падучевой-застолье,-песни…-1995-год.srt",
+     "at": 317.0,
+     "quote": "те. но тем не менее, кто-то не понимает. ну, потом, но... я уже подождать. я уже как-то уже не выращиваю. да ты за свое здоровье не закрой ю",
+     "asr": "looped"
+    },
+    "timecode": "05:17",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc058-ch05-series",
+    "accession": "058",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc058-ch08-kwic",
+    "accession": "058",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.335,
+    "evidence": {
+     "term": "десятков",
+     "page": 253,
+     "srt": "Спецкурс-А.А.-Зализняка-Строй-ведийского-языка,-2015-г..srt",
+     "at": 840.0,
+     "quote": "дое из них, конечно, можно в славаре в окончательном значении посмотреть и все, но тогда у вас будет большое количество десятков слов. в общ",
+     "asr": "looped"
+    },
+    "timecode": "14:00",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc059-ch05-series",
+    "accession": "059",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Грамматический строй санскрита"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc059-ch06-kwic",
+    "accession": "059",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.6,
+    "evidence": {
+     "term": "солдат",
+     "page": 191,
+     "srt": "А-А-Зализняк-Грамматический-строй-санскрита-2014-2015-гг-Лекция--3-27092014.srt",
+     "at": 1922.0,
+     "quote": "ичное сложное слово имело бы вид веросейна и означало бы войско из героев, или геройское войско, войско из мужественных солдат, так сказать,"
+    },
+    "timecode": "32:02",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc059-ch10-kwic",
+    "accession": "059",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "достал",
+     "page": 353,
+     "srt": "А-А-Зализняк-Грамматический-строй-санскрита-2014-2015-гг-Лекция--3-27092014.srt",
+     "at": 3158.0,
+     "quote": "кой чисто технический будет \"наделенный\". но смысл именно такой. \"наделенный\", что значит \"наделенный\"? тот, к которому досталось, а достало"
+    },
+    "timecode": "52:38",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc060-ch05-series",
+    "accession": "060",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Грамматический строй санскрита",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.742,
+       "edge_id": "acc060-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc061-ch05-title_topics",
+    "accession": "061",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "RV 1",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc062-ch05-title_topics",
+    "accession": "062",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "RV 1",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc063-ch09-kwic",
+    "accession": "063",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.95,
+    "evidence": {
+     "term": "Анна",
+     "page": 286,
+     "srt": "А-А-Зализняк-Из-лекции-4-декабря-2010-г-Разбор-RV-1034.srt",
+     "at": 22.0,
+     "quote": "ой операции. даже так. пожалуйста, какое-то ударение могут быть с печеньем. пожалуйста, какие есть замечания? не крыть ванна. не крыть ванна"
+    },
+    "timecode": "00:22",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc064-ch08-series",
+    "accession": "064",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.735,
+       "edge_id": "acc064-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc065-ch05-kwic",
+    "accession": "065",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.616,
+    "evidence": {
+     "term": "Кавказ",
+     "page": 135,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Аудиозапись-лекции-11-19112016.srt",
+     "at": 2853.56,
+     "quote": "мо дальше. да, ну, мы не быстро двигаемся, но здесь есть над чем поработать. а посты одни написано. он стоит, да. и вот кавказское замечание"
+    },
+    "timecode": "47:33",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc065-ch08-series",
+    "accession": "065",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc066-ch02-kwic",
+    "accession": "066",
+    "chapter": "ch02",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.561,
+    "evidence": {
+     "term": "ведаться",
+     "page": 30,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Аудиозапись-лекции-7--22102016.srt",
+     "at": 1326.6,
+     "quote": "своей простотой. так это просто потому, что это просто в других отношениях. да, очень хорошо. более того, они могут переведаться в парадигме"
+    },
+    "timecode": "22:06",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc066-ch08-series",
+    "accession": "066",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.658,
+       "edge_id": "acc066-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc067-ch08-series",
+    "accession": "067",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.738,
+       "edge_id": "acc067-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc068-ch05-kwic",
+    "accession": "068",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.394,
+    "evidence": {
+     "term": "сахар",
+     "page": 136,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-12-26112016.srt",
+     "at": 84.0,
+     "quote": "елательно показать еще конец строки. ну, может, какие волнистые вертикальные шутки провести после подолбо. может, как в сахаре или нет? може",
+     "asr": "looped"
+    },
+    "timecode": "01:24",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc068-ch08-series",
+    "accession": "068",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc069-ch08-series",
+    "accession": "069",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc069-ch10-kwic",
+    "accession": "069",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.392,
+    "evidence": {
+     "term": "напрасный",
+     "page": 335,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-13-03122016.srt",
+     "at": 43.44,
+     "quote": "у вас было. и там, из левого столбца, второй абзац, начинающийся с лого-гнеда. оттуда начинается следующий раз. первый напрасный текст, коне",
+     "asr": "looped"
+    },
+    "timecode": "00:43",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc070-ch08-series",
+    "accession": "070",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.566,
+       "edge_id": "acc070-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc070-ch10-kwic",
+    "accession": "070",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.652,
+    "evidence": {
+     "term": "напрасный",
+     "page": 335,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-14-10122016.srt",
+     "at": 1650.0,
+     "quote": ". дальше. а она пишет, у вас ничего нет? посмотрите, ко всем вопросам. видите, что они есть? а, у вас есть? простите, я напрасный был. я хож"
+    },
+    "timecode": "27:30",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc071-ch05-kwic",
+    "accession": "071",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.284,
+    "evidence": {
+     "term": "Веды",
+     "page": 138,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-15-17122016.srt",
+     "at": 1768.0,
+     "quote": "е ведать, это... ведать, конечно, тот же корень, да, но в данном случае это не ведать. отведать было бы что-нибудь типа веды ему. о какой та",
+     "asr": "looped"
+    },
+    "timecode": "29:28",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc071-ch08-series",
+    "accession": "071",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc071-ch09-kwic",
+    "accession": "071",
+    "chapter": "ch09",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.26,
+    "evidence": {
+     "term": "господа",
+     "page": 295,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-15-17122016.srt",
+     "at": 896.0,
+     "quote": "осподу, господу, перед господом и так далее. и эти господные формы прекрасно ведутся в парадигме с твердостью буйна. на господа, пред господ",
+     "asr": "looped"
+    },
+    "timecode": "14:56",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc072-ch08-series",
+    "accession": "072",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.617,
+       "edge_id": "acc072-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc073-ch06-kwic",
+    "accession": "073",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.559,
+    "evidence": {
+     "term": "флаг",
+     "page": 190,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-17-18022017.srt",
+     "at": 3616.0,
+     "quote": "чень легкое слово. [говорят по-грузински] это про удар. ну, надо рассказать, что \"все-все\" это еще не аргумент, там нет флагов. тоже самое м"
+    },
+    "timecode": "60:16",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc073-ch08-series",
+    "accession": "073",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.585,
+       "edge_id": "acc073-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc074-ch08-series",
+    "accession": "074",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc074-ch10-kwic",
+    "accession": "074",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.28,
+    "evidence": {
+     "term": "забыть",
+     "page": 353,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-19-04032017.srt",
+     "at": 1960.0,
+     "quote": "все слова спереди. ну, проблема, всевозможное, это не кончается. значит, это ударение. если специфика этого «забы», то «забыть». а если общи",
+     "asr": "looped"
+    },
+    "timecode": "32:40",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc074-ch11-kwic",
+    "accession": "074",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.312,
+    "evidence": {
+     "term": "бояться",
+     "page": 361,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-19-04032017.srt",
+     "at": 2610.0,
+     "quote": "опять-таки, я как всех вы представляешь, иногда я даю смехотворно легкие задания, но с серьезным видом, а вы начинаете бояться. ну, у меня у",
+     "asr": "looped"
+    },
+    "timecode": "43:30",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc075-ch06-kwic",
+    "accession": "075",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.646,
+    "evidence": {
+     "term": "поляки",
+     "page": 199,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-2-17092016.srt",
+     "at": 2184.48,
+     "quote": "вительно это был звук, который скорее должен был квалифицироваться тогда как \"а\" носовой. ну, или более неопределенный. поляки сохранили зап"
+    },
+    "timecode": "36:24",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc075-ch08-series",
+    "accession": "075",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.559,
+       "edge_id": "acc075-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc076-ch04-kwic",
+    "accession": "076",
+    "chapter": "ch04",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "стрела",
+     "page": 97,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-20-11032017.srt",
+     "at": 4759.28,
+     "quote": "ь. самолюбива соболь. соболь. моролев не ест ничего же, чем не жалеть. моролев не ест ничего же, чем не жалеть. *звук выстрела*"
+    },
+    "timecode": "79:19",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc076-ch08-series",
+    "accession": "076",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc076-ch10-kwic",
+    "accession": "076",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.552,
+    "evidence": {
+     "term": "закрыть",
+     "page": 358,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-20-11032017.srt",
+     "at": 2450.28,
+     "quote": "ляр нужно с минусом, действительно, добавить по челюстью. если по челюстью, почему омега? по украинскому принципу можно закрыть это для русс"
+    },
+    "timecode": "40:50",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc077-ch08-series",
+    "accession": "077",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.555,
+       "edge_id": "acc077-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc077-ch10-kwic",
+    "accession": "077",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.671,
+    "evidence": {
+     "term": "переть",
+     "page": 346,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-21-18032017.srt",
+     "at": 3221.0,
+     "quote": "нее слово \"пар\", хотя это разные светлые слова. парить, летать - это тот же корень, имеющий корневые \"пр\", что русское \"переть\", \"перед\", \"п"
+    },
+    "timecode": "53:41",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc078-ch08-series",
+    "accession": "078",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.729,
+       "edge_id": "acc078-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc079-ch04-kwic",
+    "accession": "079",
+    "chapter": "ch04",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.566,
+    "evidence": {
+     "term": "потока",
+     "page": 103,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-23-01042017.srt",
+     "at": 1211.32,
+     "quote": "тому что существует две возможности для такой комбинации. возможности... ну, в данном случае по модели окупа, по модели потока. если... нет."
+    },
+    "timecode": "20:11",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc079-ch08-series",
+    "accession": "079",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc079-ch11-kwic",
+    "accession": "079",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.621,
+    "evidence": {
+     "term": "ветр",
+     "page": 390,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-23-01042017.srt",
+     "at": 3311.98,
+     "quote": "кс может быть самым ударом. это на корне запрет распространяется для кратких гласных. ветер. хорошо, пожалуйста. сейчас ветров. ветров, ветр"
+    },
+    "timecode": "55:11",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc080-ch08-series",
+    "accession": "080",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.692,
+       "edge_id": "acc080-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc081-ch08-series",
+    "accession": "081",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.678,
+       "edge_id": "acc081-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc081-ch10-kwic",
+    "accession": "081",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "лесть",
+     "page": 334,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-25-29042017.srt",
+     "at": 3022.0,
+     "quote": "одняться вот на вершину божественной святыни. ну и точно такой же механизм. «и же не прият насуе душу свою и не клястся лестью искреннему св"
+    },
+    "timecode": "50:22",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc082-ch04-kwic",
+    "accession": "082",
+    "chapter": "ch04",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.315,
+    "evidence": {
+     "term": "истока",
+     "page": 103,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-27-13052017.srt",
+     "at": 1767.6,
+     "quote": "след за ним сварянский. наслед сварянский пошел обходить нас к грунту, взявшуюся с мудрого теста, в течение набора и перистока. наслед сваря",
+     "asr": "looped"
+    },
+    "timecode": "29:27",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc082-ch08-series",
+    "accession": "082",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc082-ch11-kwic",
+    "accession": "082",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.255,
+    "evidence": {
+     "term": "узел",
+     "page": 379,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-27-13052017.srt",
+     "at": 1394.6,
+     "quote": "поэтому надеющиеся. да, это, действительно, заслуживает комментариев, потому что, действительно, здесь это целый такой узел. ну, ладно, пере",
+     "asr": "looped"
+    },
+    "timecode": "23:14",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc083-ch06-kwic",
+    "accession": "083",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.362,
+    "evidence": {
+     "term": "туман",
+     "page": 188,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-3-24092016.srt",
+     "at": 195.0,
+     "quote": "в доске разбирать эти правила. полезно их записать письменно, поскольку это вещь такая алгоритмическая, в общем виде и туман нам здесь говор",
+     "asr": "looped"
+    },
+    "timecode": "03:15",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc083-ch08-series",
+    "accession": "083",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc084-ch04-kwic",
+    "accession": "084",
+    "chapter": "ch04",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "боба",
+     "page": 103,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-4-01102016.srt",
+     "at": 1419.0,
+     "quote": "нибудь пример, в какой, скажем, пример? в таблице. кровя. ну да. крад получается. ну, это для долгого варианта. ой, да, боба получается. для"
+    },
+    "timecode": "23:39",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc084-ch08-series",
+    "accession": "084",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.613,
+       "edge_id": "acc084-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc085-ch06-kwic",
+    "accession": "085",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.665,
+    "evidence": {
+     "term": "сербы",
+     "page": 199,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-5-08102016.srt",
+     "at": 1089.0,
+     "quote": "кстати, маленький вопрос, я забыла вам задать. прочтите славянский? чечи, гол, да, дальше просто, чтобы вы помнили, что сербы пишут то, что "
+    },
+    "timecode": "18:09",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc085-ch08-series",
+    "accession": "085",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc085-ch10-kwic",
+    "accession": "085",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.557,
+    "evidence": {
+     "term": "прощение",
+     "page": 343,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-5-08102016.srt",
+     "at": 3618.0,
+     "quote": "часто. минус, так. минус два. да. у меня остался одно, пожалуйста, давайте, потому что я хочу еще вас просить маленькое прощение. вы не удив"
+    },
+    "timecode": "60:18",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc086-ch08-series",
+    "accession": "086",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.385,
+       "edge_id": "acc086-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc087-ch08-series",
+    "accession": "087",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.286,
+       "edge_id": "acc087-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc087-ch11-kwic",
+    "accession": "087",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.28,
+    "evidence": {
+     "term": "перёд",
+     "page": 386,
+     "srt": "А-А-Зализняк-История-русского-ударения-2016-2017-гг-Лекция-9-05112016.srt",
+     "at": 4096.56,
+     "quote": "а\" глаголы или \"а и\" глаголы? \"послает\" \"а\" глаголы теряют это \"а\" в претензии какое-нибудь писать, пишет, ждать брать вперёд \"а\" и глаголы ",
+     "asr": "looped"
+    },
+    "timecode": "68:16",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc088-ch08-series",
+    "accession": "088",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.758,
+       "edge_id": "acc088-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc089-ch08-series",
+    "accession": "089",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.747,
+       "edge_id": "acc089-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc090-ch08-series",
+    "accession": "090",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.557,
+       "edge_id": "acc090-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc090-ch10-kwic",
+    "accession": "090",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.567,
+    "evidence": {
+     "term": "переть",
+     "page": 346,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-10-18112017.srt",
+     "at": 1053.0,
+     "quote": "к далее. есть, кроме того, сейчас формы, правда, они так немножко окрашены, где нету \"и\", скажем, посереть чего-то. и попереть батьки, там, "
+    },
+    "timecode": "17:33",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc091-ch06-kwic",
+    "accession": "091",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.678,
+    "evidence": {
+     "term": "аптека",
+     "page": 191,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-11-25112017.srt",
+     "at": 916.0,
+     "quote": "как водка становится совершенно лучшим синонимом алкогольного напитка, слово это употребляется необычайно часто во всех аптекарских делах. в"
+    },
+    "timecode": "15:16",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc091-ch08-series",
+    "accession": "091",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc092-ch08-series",
+    "accession": "092",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.616,
+       "edge_id": "acc092-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc092-ch11-kwic",
+    "accession": "092",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.545,
+    "evidence": {
+     "term": "ветр",
+     "page": 390,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-12-02122017.srt",
+     "at": 3888.72,
+     "quote": ".. в другую темпу, и там, прибор, наверное, ничего не нашли. и потом еще дальше шли на лугу, и попали в большую бурю от ветра, который парус"
+    },
+    "timecode": "64:48",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc093-ch08-series",
+    "accession": "093",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.725,
+       "edge_id": "acc093-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc093-ch09-kwic",
+    "accession": "093",
+    "chapter": "ch09",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.551,
+    "evidence": {
+     "term": "двери",
+     "page": 316,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-13-09122017.srt",
+     "at": 106.2,
+     "quote": "дно, что до этого момента, клярно, две страницы текста. это рассказ о том, как рафанесе никитин двинулся из своей одной двери по волге. угли"
+    },
+    "timecode": "01:46",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc094-ch08-series",
+    "accession": "094",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.365,
+       "edge_id": "acc094-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc095-ch08-series",
+    "accession": "095",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.284,
+       "edge_id": "acc095-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc095-ch10-kwic",
+    "accession": "095",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.311,
+    "evidence": {
+     "term": "загнать",
+     "page": 357,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-3-30092017.srt",
+     "at": 12.28,
+     "quote": "ь обратный словарь, то я думаю, вы можете быстро вооружиться, но по нынешним временам это не проблема, вы вообще можете загнать обратный сло",
+     "asr": "looped"
+    },
+    "timecode": "00:12",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc096-ch06-kwic",
+    "accession": "096",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.557,
+    "evidence": {
+     "term": "стекло",
+     "page": 186,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-4-07102017.srt",
+     "at": 3995.04,
+     "quote": "синтексизм, конечно, есть, насколько осталось «две матицы и жемчужных». ну, дальше все-все. все, поскольку наше время истекло, я должен немн"
+    },
+    "timecode": "66:35",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc096-ch08-series",
+    "accession": "096",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc096-ch10-kwic",
+    "accession": "096",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.671,
+    "evidence": {
+     "term": "встать",
+     "page": 349,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-4-07102017.srt",
+     "at": 567.0,
+     "quote": "о называется, предосхищение. война типовая описка. у вас кое-нибудь враз? не помню. не помню. кажется, мне нужно как-то встать. ну, вы сами "
+    },
+    "timecode": "09:27",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc097-ch06-kwic",
+    "accession": "097",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.576,
+    "evidence": {
+     "term": "Испания",
+     "page": 184,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-5-14102017.srt",
+     "at": 3348.0,
+     "quote": "в xvi веке. но к этому идет, конечно. он исчез вовсе не доминантный. потому что какие-нибудь академии и прочие векции. испания. испания, да."
+    },
+    "timecode": "55:48",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc097-ch08-series",
+    "accession": "097",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.638,
+       "edge_id": "acc097-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc098-ch08-series",
+    "accession": "098",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.276,
+       "edge_id": "acc098-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc098-ch10-kwic",
+    "accession": "098",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.29,
+    "evidence": {
+     "term": "напрасный",
+     "page": 335,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-6-21102017.srt",
+     "at": 35.0,
+     "quote": "тал дальше? много? спасибо. и кто готов к доске? пожалуйста. это большая часть, и там все бумаги. они танцевали. тетюнт напрасный. хороший, ",
+     "asr": "looped"
+    },
+    "timecode": "00:35",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc099-ch06-kwic",
+    "accession": "099",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.56,
+    "evidence": {
+     "term": "киви",
+     "page": 185,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-7-28102017.srt",
+     "at": 2728.9,
+     "quote": "тнике уже вы реально тоже. где локализация этой рукописи? точно я пропустил. она откуда рукопись? откуда? с собранием аркивича. все остально"
+    },
+    "timecode": "45:28",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc099-ch08-series",
+    "accession": "099",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.673,
+       "edge_id": "acc099-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc100-ch08-series",
+    "accession": "100",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc100-ch10-kwic",
+    "accession": "100",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.294,
+    "evidence": {
+     "term": "уложить",
+     "page": 353,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-8-06112017.srt",
+     "at": 1266.0,
+     "quote": "верила их пишет через омегу. до куоли, до туоли и так далее. каким образом это получилось, боюсь, что я не беру с вами. уложить это в просту",
+     "asr": "looped"
+    },
+    "timecode": "21:06",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc100-ch11-kwic",
+    "accession": "100",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.289,
+    "evidence": {
+     "term": "ковра",
+     "page": 378,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-8-06112017.srt",
+     "at": 1356.0,
+     "quote": "омальний совершенно. напомню вам, вспомните, как он спрячется. вот каково спрячение первого и второго? маленький, такая коврапная вопрос. об",
+     "asr": "looped"
+    },
+    "timecode": "22:36",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc101-ch06-kwic",
+    "accession": "101",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.518,
+    "evidence": {
+     "term": "казак",
+     "page": 187,
+     "srt": "А-А-Зализняк-История-русского-ударения-2017-г-Лекция-9-11112017.srt",
+     "at": 1287.0,
+     "quote": "онка кишка, и колонка голова. считанное число слов сопримеряется. главная статистика будет падать в колонку типа труба. казак, как вы видите"
+    },
+    "timecode": "21:27",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc101-ch08-series",
+    "accession": "101",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.639,
+       "edge_id": "acc101-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc102-ch08-kwic",
+    "accession": "102",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.901,
+    "evidence": {
+     "term": "восемьдесят",
+     "page": 258,
+     "srt": "А-А-Зализняк-Начало-лекции-11-декабря-2010-г-МГУ.srt",
+     "at": 17.2,
+     "quote": "еперь, значит, сегодня одиннадцатая, тем самым следующего восемнадцатого, да? восемнадцатого будет занять? или уже этой восемьдесят? ну, мож"
+    },
+    "timecode": "00:17",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc103-ch05-title_topics",
+    "accession": "103",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "санскрит",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc103-ch10-kwic",
+    "accession": "103",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.648,
+    "evidence": {
+     "term": "достать",
+     "page": 351,
+     "srt": "А-А-Зализняк-Начало-лекции-по-санскриту-18-декабря-2010-г.srt",
+     "at": 87.0,
+     "quote": "сивого текста, не из самого красивого течения, который возможно, а из средней. вы можете даже из самой красивой течения достать, если хотите"
+    },
+    "timecode": "01:27",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc103-ch11-kwic",
+    "accession": "103",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.486,
+    "evidence": {
+     "term": "ветер",
+     "page": 390,
+     "srt": "А-А-Зализняк-Начало-лекции-по-санскриту-18-декабря-2010-г.srt",
+     "at": 20.0,
+     "quote": "написано, что мы будем читать февраль. но с тем, чтобы уже первое занятие было пустое, то есть уже два. нет. больше я в ветеранах не буду го"
+    },
+    "timecode": "00:20",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc104-ch05-series",
+    "accession": "104",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.268,
+       "edge_id": "acc104-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc104-ch10-kwic",
+    "accession": "104",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.328,
+    "evidence": {
+     "term": "лесть",
+     "page": 334,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-10-21112015.srt",
+     "at": 325.92,
+     "quote": "родуктом правильных, соответственно, русских, санскритских или английских химических языков. везде имеется некоторая прелесть, происходящая ",
+     "asr": "looped"
+    },
+    "timecode": "05:25",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc105-ch05-series",
+    "accession": "105",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.551,
+       "edge_id": "acc105-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc105-ch11-kwic",
+    "accession": "105",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.667,
+    "evidence": {
+     "term": "ветр",
+     "page": 390,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-11-28112015.srt",
+     "at": 496.0,
+     "quote": "придумали. корень есть, но не совсем такой, который прекрасно есть и по-русски. ну, я думаю, что это имеет отношение к ветру. ветру, правиль"
+    },
+    "timecode": "08:16",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc106-ch02-kwic",
+    "accession": "106",
+    "chapter": "ch02",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.475,
+    "evidence": {
+     "term": "зять",
+     "page": 28,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-12-05122015.srt",
+     "at": 0.0,
+     "quote": "уже семяста. убежайте к концу. до какого числа нужно взять? до девятнадцатого ключа. очень хорошо, ну что ж тогда. испорционный образ. кто в",
+     "asr": "looped"
+    },
+    "timecode": "00:00",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc106-ch05-series",
+    "accession": "106",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc107-ch05-series",
+    "accession": "107",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc107-ch10-kwic",
+    "accession": "107",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.311,
+    "evidence": {
+     "term": "упасть",
+     "page": 353,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-13-12122015.srt",
+     "at": 1071.0,
+     "quote": "чему соответственно? всем вопрос. вот, по смыслу. нет, этимологически. у. у, конечно, да. это то, у как? уйти, убежать, упасть. и так далее.",
+     "asr": "looped"
+    },
+    "timecode": "17:51",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc107-ch11-kwic",
+    "accession": "107",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.286,
+    "evidence": {
+     "term": "уголь",
+     "page": 380,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-13-12122015.srt",
+     "at": 781.0,
+     "quote": "глагол \"ду\", он на грани несуществования глагол \"ду идти\". его всего отследяется в своем каком-то зрении, в каком-то треугольном, в каком-то",
+     "asr": "looped"
+    },
+    "timecode": "13:01",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc108-ch05-series",
+    "accession": "108",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc108-ch08-kwic",
+    "accession": "108",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.246,
+    "evidence": {
+     "term": "десятка",
+     "page": 253,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-13-30042016.srt",
+     "at": 206.6,
+     "quote": "олне хорошо известное. одна из великих гор. ну, в индии более чем достаточно, большой город. на этот день входит первая десятка, да. да, пож",
+     "asr": "looped"
+    },
+    "timecode": "03:26",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc108-ch10-kwic",
+    "accession": "108",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.321,
+    "evidence": {
+     "term": "инде",
+     "page": 332,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-13-30042016.srt",
+     "at": 825.6,
+     "quote": "му что «анджан» — это великий текст, один из самых отличительных текстов предыдущего. это главный космогонический текст индейский, который п",
+     "asr": "looped"
+    },
+    "timecode": "13:45",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc109-ch05-series",
+    "accession": "109",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc109-ch11-kwic",
+    "accession": "109",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.343,
+    "evidence": {
+     "term": "палка",
+     "page": 368,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-14-19122015.srt",
+     "at": 203.0,
+     "quote": "дальше идут определения к этим костям. анкущина. анкущина - это имеющий крюк, потому что анкуша - это крюк, или вот та палка, которая погоня",
+     "asr": "looped"
+    },
+    "timecode": "03:23",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc110-ch04-kwic",
+    "accession": "110",
+    "chapter": "ch04",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.328,
+    "evidence": {
+     "term": "внутренняя",
+     "page": 97,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-15-13022016.srt",
+     "at": 1970.0,
+     "quote": "ль, который изначально тут был и она приносится на уголь в связи того, что... по-моему, это тоже да а вы думаете, какая внутренняя неславнос",
+     "asr": "looped"
+    },
+    "timecode": "32:50",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc110-ch05-series",
+    "accession": "110",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc110-ch06-kwic",
+    "accession": "110",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.263,
+    "evidence": {
+     "term": "брег",
+     "page": 193,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-15-13022016.srt",
+     "at": 2278.0,
+     "quote": "нет но они спринь? нет, спринь тут нет есть переулитовская шпурман и спаева есть сперно сперно? сперно отвергать, пренебрегать отвергать, пр",
+     "asr": "looped"
+    },
+    "timecode": "37:58",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc111-ch04-kwic",
+    "accession": "111",
+    "chapter": "ch04",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.623,
+    "evidence": {
+     "term": "листок",
+     "page": 103,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-16-22022016.srt",
+     "at": 24.0,
+     "quote": "со следующим словом, то у вас появляется «тс» и «сы». но это не во всех, это валирующая вещь. на самом деле я поставлю листок, потому что в "
+    },
+    "timecode": "00:24",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc111-ch05-series",
+    "accession": "111",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.561,
+       "edge_id": "acc111-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc112-ch05-series",
+    "accession": "112",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc112-ch08-kwic",
+    "accession": "112",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.335,
+    "evidence": {
+     "term": "стоишь",
+     "page": 267,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-17-27022016.srt",
+     "at": 3347.04,
+     "quote": ". опять невидимый переводчик? как интересно, у нас уже залог был помечен. невидящий, ты вступаешь. почему вступаешь? ты стоишь? стоишь, в че",
+     "asr": "looped"
+    },
+    "timecode": "55:47",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc112-ch11-kwic",
+    "accession": "112",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.27,
+    "evidence": {
+     "term": "уголь",
+     "page": 380,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-17-27022016.srt",
+     "at": 3747.04,
+     "quote": "множко оценили. сколько раз в пределах короткого текста, коротной строфы автору удалось дать такое кричащее, такое остроугольное противостоя",
+     "asr": "looped"
+    },
+    "timecode": "62:27",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc113-ch05-series",
+    "accession": "113",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc113-ch06-kwic",
+    "accession": "113",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.556,
+    "evidence": {
+     "term": "корабль",
+     "page": 186,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-18-05032016.srt",
+     "at": 1222.0,
+     "quote": "\" агитам, даже \"сам\" агитам, собранные вместе, как приложенные буквально с райбой, ну, возложенные. - куда агитам? - на корабль. - на корабл"
+    },
+    "timecode": "20:22",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc113-ch08-kwic",
+    "accession": "113",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.589,
+    "evidence": {
+     "term": "дуба",
+     "page": 263,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-18-05032016.srt",
+     "at": 3447.96,
+     "quote": "», «бды», «бды»… а наше название «дубна» это вот из «балтийских»… есть версии, что «дубна» есть две версии. «дубна» от «дуба» одна версия, д"
+    },
+    "timecode": "57:27",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc114-ch05-series",
+    "accession": "114",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.326,
+       "edge_id": "acc114-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc114-ch10-kwic",
+    "accession": "114",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.281,
+    "evidence": {
+     "term": "гнать",
+     "page": 357,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-20-19032016.srt",
+     "at": 2015.34,
+     "quote": ", у вас занятие древности. а у нас это гнатин, ганин и гн. у нас нет полотеризованной формы. есть, же нет старой формы. гнать старое основно",
+     "asr": "looped"
+    },
+    "timecode": "33:35",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc115-ch05-series",
+    "accession": "115",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.555,
+       "edge_id": "acc115-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc115-ch10-kwic",
+    "accession": "115",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.616,
+    "evidence": {
+     "term": "упасть",
+     "page": 353,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-22-230416.srt",
+     "at": 164.0,
+     "quote": "тица\" - это занятие, то есть попытка прямо найти конкретные русские переводы. безнадёжные. нужно каждый раз в контексте упасть и найти умёрт"
+    },
+    "timecode": "02:44",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc116-ch02-kwic",
+    "accession": "116",
+    "chapter": "ch02",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.274,
+    "evidence": {
+     "term": "ведать",
+     "page": 30,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-3-260915.srt",
+     "at": 288.28,
+     "quote": "тельное \"и\" так же. ну, \"ж\" и так далее. как в всяких таких случаях, числительно. не приходится значительно степень переведать по конец. сам",
+     "asr": "looped"
+    },
+    "timecode": "04:48",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc116-ch05-series",
+    "accession": "116",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc116-ch08-kwic",
+    "accession": "116",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.286,
+    "evidence": {
+     "term": "футбол",
+     "page": 242,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-3-260915.srt",
+     "at": 116.28,
+     "quote": "ения расставили? нет. проверьте все выголения второй строке. а, да. да. сейчас, сейчас. смотрите, посмотрите. у нас так футболисты. лице тог",
+     "asr": "looped"
+    },
+    "timecode": "01:56",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc117-ch05-series",
+    "accession": "117",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc117-ch08-kwic",
+    "accession": "117",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.715,
+    "evidence": {
+     "term": "шестьдесят",
+     "page": 256,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-6-17102015.srt",
+     "at": 3034.68,
+     "quote": "талось от труда, попали небесные воды. небесные воды. понимаете, как цепится дождь. как в эгоцентре. в ирландии. триста шестьдесят. триста ш"
+    },
+    "timecode": "50:34",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc118-ch05-series",
+    "accession": "118",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc119-ch05-series",
+    "accession": "119",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.593,
+       "edge_id": "acc119-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc119-ch06-kwic",
+    "accession": "119",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.557,
+    "evidence": {
+     "term": "коровы",
+     "page": 202,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-8-07112015.srt",
+     "at": 3278.8,
+     "quote": "сложное слово. бычащий. коровомычащий. это так, паруша. а я даю настоящий бог в рихе. быкомычащий. ну, если бы там были коровы. а это козлом"
+    },
+    "timecode": "54:38",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc120-ch02-kwic",
+    "accession": "120",
+    "chapter": "ch02",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.313,
+    "evidence": {
+     "term": "кто-либо",
+     "page": 17,
+     "srt": "А-А-Зализняк-Строй-ведийского-языка-2015-2016-гг-Лекция-9-13112015.srt",
+     "at": 2812.0,
+     "quote": "верно. это такое \"ktet\". на самом деле древний, конечно, был не \"ktet\", а \"keto\". \"keto\" - это либо. значит, верно, что кто-либо был варьер ",
+     "asr": "looped"
+    },
+    "timecode": "46:52",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc120-ch05-series",
+    "accession": "120",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.269,
+       "edge_id": "acc120-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc121-ch06-title_topics",
+    "accession": "121",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "лекция в Падуе",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc122-ch06-title_topics",
+    "accession": "122",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "лекция в Падуе",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc123-ch06-title_topics",
+    "accession": "123",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "лекция в Падуе",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc124-ch05-kwic",
+    "accession": "124",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.718,
+    "evidence": {
+     "term": "зрелый",
+     "page": 159,
+     "srt": "Академик-А-А-Зализняк-о-санскритском-корне-jR.srt",
+     "at": 52.6,
+     "quote": "должен быть зо, славянский, христианский. ну, там разных названий есть, но чаще всего такой, и тогда это будет зретий, зрелый и так далее. н",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.6,
+       "edge_id": "acc124-ch05-title_topics"
+      }
+     ]
+    },
+    "timecode": "00:52",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc124-ch08-kwic",
+    "accession": "124",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.529,
+    "evidence": {
+     "term": "зерно",
+     "page": 263,
+     "srt": "Академик-А-А-Зализняк-о-санскритском-корне-jR.srt",
+     "at": 84.9,
+     "quote": "растений и живых существ. и есть еще в мире растений от этого производное, классическое существительное причитливость. зерно - это точно все"
+    },
+    "timecode": "01:24",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc125-ch05-series",
+    "accession": "125",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Грамматический строй санскрита",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.825,
+       "edge_id": "acc125-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc126-ch03-kwic",
+    "accession": "126",
+    "chapter": "ch03",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.262,
+    "evidence": {
+     "term": "разум",
+     "page": 86,
+     "srt": "Грамматический-строй-санскрита-2014-2015-гг-Лекция-4-04102014.srt",
+     "at": 1582.0,
+     "quote": "о дамоянти. а почему акузатив о дамоянти? чего? да, конечно, тоже самое. как там был налал в тесте дамоянти. нишадса подразумевается прослав",
+     "asr": "looped"
+    },
+    "timecode": "26:22",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc126-ch05-series",
+    "accession": "126",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Грамматический строй санскрита"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc126-ch11-kwic",
+    "accession": "126",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.367,
+    "evidence": {
+     "term": "угол",
+     "page": 389,
+     "srt": "Грамматический-строй-санскрита-2014-2015-гг-Лекция-4-04102014.srt",
+     "at": 1534.0,
+     "quote": "сказывали, что есть такой неслыханный, красавец и герой ивана. которого она, конечно, никогда не видела. все верно. вот уголат, ну вот, може",
+     "asr": "looped"
+    },
+    "timecode": "25:34",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc127-ch05-series",
+    "accession": "127",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Грамматический строй санскрита"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc127-ch11-kwic",
+    "accession": "127",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.366,
+    "evidence": {
+     "term": "утро",
+     "page": 374,
+     "srt": "Грамматический-строй-санскрита-2014-2015-гг-Лекция-5-11-10-2014.srt",
+     "at": 314.84,
+     "quote": "да. а вот тут, конечно, это дыхание. да. а здесь т. таким образом, у т появилась позвонкость и преддыхание. а у дх оно утроелся признак пред",
+     "asr": "looped"
+    },
+    "timecode": "05:14",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc129-ch01-llm",
+    "accession": "129",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Андрей Анатольевич Зарезняк любезно согласился прийти ко мне сюда, съемка происходит в моей квартире, и побеседовать со мной на разные темы.",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc129-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc129-ch06-kwic",
+    "accession": "129",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.558,
+    "evidence": {
+     "term": "белорусы",
+     "page": 204,
+     "srt": "А.А.Зализняк-беседует-с-В.А.Успенским.-Часть-1,-28.06.2010.srt",
+     "at": 6152.96,
+     "quote": "пожалуйста. едешь, едешь. а белорусский не знаешь, какой есть язык? ну, в общем-то, да. беларусы же не говорят, что они белорусы, это ревня."
+    },
+    "timecode": "102:32",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc129-ch10-kwic",
+    "accession": "129",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.572,
+    "evidence": {
+     "term": "белить",
+     "page": 345,
+     "srt": "А.А.Зализняк-беседует-с-В.А.Успенским.-Часть-1,-28.06.2010.srt",
+     "at": 1859.72,
+     "quote": "ну-ка, нет. это все я догадался, чтобы пар не валил из окна, и так далее. нет. а потом, значит, была задача, там, подзабелить стену, там... "
+    },
+    "timecode": "30:59",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc130-ch05-series",
+    "accession": "130",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Грамматический строй санскрита"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc130-ch08-kwic",
+    "accession": "130",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.562,
+    "evidence": {
+     "term": "Петербург",
+     "page": 246,
+     "srt": "Грамматический-строй-санскрита.-2014-2015-гг.-Лекция-6.-18-октября-2014-г..srt",
+     "at": 3995.33,
+     "quote": "меньшениях еще есть в каком-нибудь языке, поэтому я не знаю, когда вы делаете. — ну, в тот самый случай, когда... санкт-петербург всей своей"
+    },
+    "timecode": "66:35",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc130-ch10-kwic",
+    "accession": "130",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.66,
+    "evidence": {
+     "term": "долбать",
+     "page": 357,
+     "srt": "Грамматический-строй-санскрита.-2014-2015-гг.-Лекция-6.-18-октября-2014-г..srt",
+     "at": 2016.13,
+     "quote": "м, но это был бы приятный тот, который легко влияет на себя. старый глагол имелся в санскрите, глагол при любить, при задолбать, который сох"
+    },
+    "timecode": "33:36",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc131-ch06-kwic",
+    "accession": "131",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.275,
+    "evidence": {
+     "term": "половцы",
+     "page": 186,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-2010-г.,-лекция-2.srt",
+     "at": 6495.8,
+     "quote": "ить. но так или иначе полываешь в черные молли, переплываешь, попадаешь в византию, торгуешь, приводишь. все хорошо, но половцы. половцы в с",
+     "asr": "looped"
+    },
+    "timecode": "108:15",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc131-ch08-kwic",
+    "accession": "131",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.283,
+    "evidence": {
+     "term": "восемнадцать",
+     "page": 255,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-2010-г.,-лекция-2.srt",
+     "at": 3223.8,
+     "quote": "ли, что такими единицами можно было, веришь, мерить. что такими единицами можно было, веришь, мерить. вот чего было 18. восемнадцать котел! ",
+     "asr": "looped"
+    },
+    "timecode": "53:43",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc131-ch09-series",
+    "accession": "131",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc132-ch08-kwic",
+    "accession": "132",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.546,
+    "evidence": {
+     "term": "приговорил",
+     "page": 261,
+     "srt": "Andrei-Zaliznyak-lecture-01-Oct-2015.srt",
+     "at": 6244.0,
+     "quote": "лся текст, навеянный хорошо известным подслужением, который парем шестого часа. он уже в шестый день, уже час на кресте приговорил ей. очень"
+    },
+    "timecode": "104:04",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc132-ch09-llm",
+    "accession": "132",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.95,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "И вот с этим я приступаю к рассказу о грамотах этого года."
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc132-ch10-kwic",
+    "accession": "132",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.636,
+    "evidence": {
+     "term": "истора",
+     "page": 332,
+     "srt": "Andrei-Zaliznyak-lecture-01-Oct-2015.srt",
+     "at": 8999.0,
+     "quote": "е узнаете. значит, «протор» — это слово от того же корни, что «потеря», «терять», «терять» — другой день. истерять там, истора. потерять или"
+    },
+    "timecode": "149:59",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc133-ch08-kwic",
+    "accession": "133",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.56,
+    "evidence": {
+     "term": "пятнадцать",
+     "page": 255,
+     "srt": "21.07.2010,-Новгород,-берестяная-грамота-№-1000.srt",
+     "at": 105.84,
+     "quote": "ять строчек грамм. семь утра. оля, ну поздравляю. поздравляю, поздравляю. поздравляю. мы нашли её в семь тридцать. семь пятнадцать? да. хоте"
+    },
+    "timecode": "01:45",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc133-ch09-series",
+    "accession": "133",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяная"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc133-ch10-kwic",
+    "accession": "133",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.612,
+    "evidence": {
+     "term": "перестаньте",
+     "page": 352,
+     "srt": "21.07.2010,-Новгород,-берестяная-грамота-№-1000.srt",
+     "at": 249.84,
+     "quote": "на корабле. люба. да. ну, должны это, чтобы водичка не упразднула. а, поставьте. ну, я желаю, чтобы она в воду попала. перестаньте раз. вы с"
+    },
+    "timecode": "04:09",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc134-ch01-llm",
+    "accession": "134",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Дорогой Андрей, то ли по старости, то ли по природному раздолбайству, я даже не очень помню, как мы первый раз с тобой встретились.",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc134-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc134-ch08-kwic",
+    "accession": "134",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.638,
+    "evidence": {
+     "term": "пятьдесят",
+     "page": 256,
+     "srt": "Igor-Melchuk-to-Andrey-Zaliznyak-birthday.srt",
+     "at": 246.32,
+     "quote": "взять эту замечательную поговорку или историю в качестве эпиграфа к своей статье. я затаил тяжелую обиду и вот теперь, пятьдесят лет спустя "
+    },
+    "timecode": "04:06",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc134-ch11-kwic",
+    "accession": "134",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.484,
+    "evidence": {
+     "term": "Игорь",
+     "page": 382,
+     "srt": "Igor-Melchuk-to-Andrey-Zaliznyak-birthday.srt",
+     "at": 271.84,
+     "quote": "воем сто двадцатилетии. начиная с сегодняшнего вечера, я начну готовить свое выступление. пусть тебе будет хорошо, твой игорь. пока! *стоп*"
+    },
+    "timecode": "04:31",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc135-ch08-llm",
+    "accession": "135",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.7,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "перебрасывание ударения с начала до конца представлено в целом в классе случаев"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc135-ch09-kwic",
+    "accession": "135",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.544,
+    "evidence": {
+     "term": "вернуться",
+     "page": 296,
+     "srt": "zaliznyak-answers-261012.srt",
+     "at": 75.0,
+     "quote": "ообще в целом разведения спонсульствованного алекрада, но для дарного ударения пока стесняется. -нет, я как-то... -если вернуться к профессо"
+    },
+    "timecode": "01:15",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc135-ch11-kwic",
+    "accession": "135",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.508,
+    "evidence": {
+     "term": "Игорь",
+     "page": 382,
+     "srt": "zaliznyak-answers-261012.srt",
+     "at": 331.0,
+     "quote": ". нет, но это профессиональные ударения, которые существуют давно здесь. так что я думаю, что здесь... если вот то, что игорь предлагает, то"
+    },
+    "timecode": "05:31",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc136-ch08-kwic",
+    "accession": "136",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.55,
+    "evidence": {
+     "term": "дубы",
+     "page": 263,
+     "srt": "А.А.-Гиппиус.-Берестяные-грамоты-как-живая-речь.srt",
+     "at": 1419.16,
+     "quote": "писывает. а бы целый телазин. я с дубья отымаю по своей мети. о чем идет речь? как вы думаете, о каких дубах? что такое дубы? это борть. это"
+    },
+    "timecode": "23:39",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc136-ch09-series",
+    "accession": "136",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "Берестяные",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.552,
+       "edge_id": "acc136-ch09-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc137-ch08-kwic",
+    "accession": "137",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.551,
+    "evidence": {
+     "term": "зерно",
+     "page": 263,
+     "srt": "А.А.-Гиппиус.-О-берестяных-грамотах-из-раскопок-сезона-2019-года.srt",
+     "at": 2480.5,
+     "quote": "стороны, есть, конечно, свидетельства и в грамотах, когда вместо \"за три гривны возьмите верешью\", то есть тем же самым зерном, есть сербски"
+    },
+    "timecode": "41:20",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc137-ch09-series",
+    "accession": "137",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.633,
+       "edge_id": "acc137-ch09-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc138-ch08-kwic",
+    "accession": "138",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.551,
+    "evidence": {
+     "term": "прибыл",
+     "page": 262,
+     "srt": "А.А.-Зализняк.-Берестяные-грамоты-сезона-2014.srt",
+     "at": 2603.0,
+     "quote": "дит, как будто это другая поддельная диалектика. \"у лодьи\", то есть \"в лодье\", \"в лодье\", то есть \"в лодье\", который он прибыл, очевидно. во"
+    },
+    "timecode": "43:23",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc138-ch09-series",
+    "accession": "138",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "Берестяные",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.651,
+       "edge_id": "acc138-ch09-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc139-ch08-kwic",
+    "accession": "139",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.603,
+    "evidence": {
+     "term": "базис",
+     "page": 245,
+     "srt": "А.А.-Зализняк.-Ещё-раз-о-жизни-слов.srt",
+     "at": 7382.0,
+     "quote": "воды о том, как различались чем-нибудь оттенки или нет. наверное, различались, но все зависит от того, как много, какой базис будет для того"
+    },
+    "timecode": "123:02",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc139-ch10-title_topics",
+    "accession": "139",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "жизни слов",
+     "by": "title",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.563,
+       "edge_id": "acc139-ch10-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc140-ch06-kwic",
+    "accession": "140",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.549,
+    "evidence": {
+     "term": "страж",
+     "page": 193,
+     "srt": "А.А.-Зализняк.-Живые-механизмы-современного-русского-ударения.srt",
+     "at": 3978.96,
+     "quote": "о в правой таблице, значит слово, допустим, \"вепрь\", было \"вепри\", \"вепрь вепри\" по множественному числе. какой-нибудь \"страж\" было, \"страж "
+    },
+    "timecode": "66:18",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc140-ch08-kwic",
+    "accession": "140",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.682,
+    "evidence": {
+     "term": "дымы",
+     "page": 263,
+     "srt": "А.А.-Зализняк.-Живые-механизмы-современного-русского-ударения.srt",
+     "at": 3934.92,
+     "quote": "но точно также был \"жук жуки\", \"куст кусты\". сейчас это ваш слух удивляет и травмирует, но тем не менее было так. \"дым дымы\", \"сыр сыры\". за",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.6,
+       "edge_id": "acc140-ch08-title_topics"
+      }
+     ]
+    },
+    "timecode": "65:34",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc141-ch08-kwic",
+    "accession": "141",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.548,
+    "evidence": {
+     "term": "красота",
+     "page": 263,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-сезона-2014-года.srt",
+     "at": 5389.0,
+     "quote": "рые плавают, я даже могу вам издалека показать, что получилось. в результате получилась вот такая, такая вот совокупная красота, вы даже не "
+    },
+    "timecode": "89:49",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc141-ch09-series",
+    "accession": "141",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.642,
+       "edge_id": "acc141-ch09-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc142-ch08-kwic",
+    "accession": "142",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.632,
+    "evidence": {
+     "term": "эллипс",
+     "page": 246,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-сезона-2015-года.srt",
+     "at": 9413.56,
+     "quote": "очень простые. одно ся, что это ся. а другое ся, что это не ся. версии, где ся - это ся представляет собой версию одним эллипсисом и одним п"
+    },
+    "timecode": "156:53",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc142-ch09-series",
+    "accession": "142",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc142-ch10-kwic",
+    "accession": "142",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.553,
+    "evidence": {
+     "term": "молни",
+     "page": 342,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-сезона-2015-года.srt",
+     "at": 6183.56,
+     "quote": "ныне почтенным священником, отцом александром троицким, который мне сообщил своё чтение, грамоте номер 206, которое как молния пронзило меня"
+    },
+    "timecode": "103:03",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc143-ch08-kwic",
+    "accession": "143",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.624,
+    "evidence": {
+     "term": "Оренбург",
+     "page": 246,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-сезона-2016-года.-Лекция-1.srt",
+     "at": 6621.0,
+     "quote": "тный вариант \"няма\". никто его не знает, но товарь говоров его знает. но довольно ограниченно. это, оказывается, вятка, оренбург, вот пример"
+    },
+    "timecode": "110:21",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc143-ch09-series",
+    "accession": "143",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc143-ch11-kwic",
+    "accession": "143",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.553,
+    "evidence": {
+     "term": "палок",
+     "page": 368,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-сезона-2016-года.-Лекция-1.srt",
+     "at": 4248.0,
+     "quote": "оего рассказа, что это неверный ответ оказался. в отличие от нас, гибиус прочел иначе. и верно прочел. что из этих трех палок? три палки. эт"
+    },
+    "timecode": "70:48",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc144-ch04-kwic",
+    "accession": "144",
+    "chapter": "ch04",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.359,
+    "evidence": {
+     "term": "живот",
+     "page": 116,
+     "srt": "А.А.Зализняк-в-1995-году,-60-летие-Е.В.Падучевой,-застолье.srt",
+     "at": 206.0,
+     "quote": "х] [смех] [смех] [смех] [смех] [смех] [смех] не надо, не надо садиться, наоборот. вышла замуж рингвиста, несчастный мой живот. не прошло еще",
+     "asr": "looped"
+    },
+    "timecode": "03:26",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc144-ch05-kwic",
+    "accession": "144",
+    "chapter": "ch05",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.265,
+    "evidence": {
+     "term": "Андрей",
+     "page": 160,
+     "srt": "А.А.Зализняк-в-1995-году,-60-летие-Е.В.Падучевой,-застолье.srt",
+     "at": 10.0,
+     "quote": "[смех] андрей анатольевич... андрей анатольевич, говорят, сказал, что, мол, мужья не пишут. [смех] но я при этом так просто подумала,",
+     "asr": "looped"
+    },
+    "timecode": "00:10",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc145-ch11-kwic",
+    "accession": "145",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.95,
+    "evidence": {
+     "term": "веток",
+     "page": 368,
+     "srt": "А.А.Зализняк-Или-и-Уже-2017-ч.1.srt",
+     "at": 1412.04,
+     "quote": ", родительный падеж будет уже не палк, а палок. рыбка будет уже не рыбка, а рыбок, и так далее. ветка будет не ветка, а веток. прекрасные си"
+    },
+    "timecode": "23:32",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc146-ch11-kwic",
+    "accession": "146",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.95,
+    "evidence": {
+     "term": "Данилович",
+     "page": 391,
+     "srt": "А.А.Зализняк-Или-и-Уже-2017-ч.2.srt",
+     "at": 2426.4,
+     "quote": "акие нападения? ну, \"наил\", \"сейбут\" - их довольно много. \"рагуил\", \"самуил\", \"сатанаил\". даниил - хороший фёдор, будет данилович, потому чт"
+    },
+    "timecode": "40:26",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc147-ch08-kwic",
+    "accession": "147",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.551,
+    "evidence": {
+     "term": "прибыл",
+     "page": 262,
+     "srt": "А.А.Зализняк-о-находках-Новгородской-экспедиции,-август-2014.srt",
+     "at": 2600.0,
+     "quote": "\"в\", в нюргородском реализации. а \"лодьи\" это \"лодьи\". в \"лодьи\". и тогда смысл совершенно прозрачный. \"лодьи\", которая прибыла, так что это"
+    },
+    "timecode": "43:20",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc147-ch09-kwic",
+    "accession": "147",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.671,
+    "evidence": {
+     "term": "саме",
+     "page": 278,
+     "srt": "А.А.Зализняк-о-находках-Новгородской-экспедиции,-август-2014.srt",
+     "at": 3707.0,
+     "quote": "тируется. это не а. а, язис. а, язис. совершенно верно. ну тут все изжеванно, изжеванно все. это кто был? жевал, жевал. саме. а, я с тобой в",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.6,
+       "edge_id": "acc147-ch09-title_topics"
+      }
+     ]
+    },
+    "timecode": "61:47",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc148-ch01-llm",
+    "accession": "148",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Академик Российской Академии Наук Андрей Анатольевич Залезняк Выдающийся лингвист, специалист в области современного и исторического языкозн",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc148-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc148-ch06-kwic",
+    "accession": "148",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.523,
+    "evidence": {
+     "term": "полк",
+     "page": 184,
+     "srt": "А.А.Зализняк-получает-Госпремию,-12.06.2008.srt",
+     "at": 99.48,
+     "quote": "е его огромной исторической заслугой стал подробный лингвистический разбор величайшего литературного памятника \"слово о полку игореве\" и бла"
+    },
+    "timecode": "01:39",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc148-ch09-kwic",
+    "accession": "148",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.628,
+    "evidence": {
+     "term": "господин",
+     "page": 295,
+     "srt": "А.А.Зализняк-получает-Госпремию,-12.06.2008.srt",
+     "at": 142.4,
+     "quote": "мику российской академии наук, главному научному сотруднику института славяноведения российской академии наук уважаемый господин президент, "
+    },
+    "timecode": "02:22",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc149-ch08-kwic",
+    "accession": "149",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.786,
+    "evidence": {
+     "term": "родила",
+     "page": 268,
+     "srt": "А.А.Зализняк-читает-берестяную-грамоту.-Новгород,-2016.srt",
+     "at": 72.12,
+     "quote": "ывается \"один на сто\". -наконец текст из пяти строк полностью переписан. залезняк впервые за 900 лет читает его вслух. -родила родонегу. дел"
+    },
+    "timecode": "01:12",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc149-ch09-series",
+    "accession": "149",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяную"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc151-ch11-kwic",
+    "accession": "151",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.755,
+    "evidence": {
+     "term": "величина",
+     "page": 367,
+     "srt": "Андрей-Зализняк-Истина-сушествует-Солженицынская-речь-qMatYmttb3c-1080pp-1713274237.srt",
+     "at": 93.0,
+     "quote": "вая бездарность. если академик, то нужны какие-то совершенно исключительные свидетельства, чтобы поверить, что не дутая величина и не проход"
+    },
+    "timecode": "01:33",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc152-ch01-title_topics",
+    "accession": "152",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "title_topics",
+    "confidence": 0.55,
+    "evidence": {
+     "matched": "абсолютной репутацией",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc152-ch04-kwic",
+    "accession": "152",
+    "chapter": "ch04",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.559,
+    "evidence": {
+     "term": "исток",
+     "page": 103,
+     "srt": "Андрей-Зализняк-лингвист-с-абсолютной-репутацией-VJ6Yv7d8IDE-480pp-1713274291.srt",
+     "at": 138.0,
+     "quote": "славяне пришли в новгород из северного поднепровья. зелезняк выяснил, что на самом деле всё это не так. на самом деле, истоке новгородского "
+    },
+    "timecode": "02:18",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc152-ch05-kwic",
+    "accession": "152",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.581,
+    "evidence": {
+     "term": "славяне",
+     "page": 145,
+     "srt": "Андрей-Зализняк-лингвист-с-абсолютной-репутацией-VJ6Yv7d8IDE-480pp-1713274291.srt",
+     "at": 132.0,
+     "quote": "это основа всех наших современных занятий бирейственными грамотами. валентин янин помнит, еще недавно историков учили, славяне пришли в новг"
+    },
+    "timecode": "02:12",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc152-ch09-llm",
+    "accession": "152",
+    "chapter": "ch09",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Он научил нас читать брестяные грамоты и поставил точку в споре о подлинности слова о полку Игореве"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc153-ch06-kwic",
+    "accession": "153",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.756,
+    "evidence": {
+     "term": "князь",
+     "page": 184,
+     "srt": "Андрей-Зализняк-ЧТО-ТАКОЕ-РУСЬ--jaaRAyPlpQ0-480pp-1713274163.srt",
+     "at": 264.66,
+     "quote": "жескими дружинами, состоявшими, если не целиком, из варягов, то, по крайней мере, на очень значительную часть. ну, сами князья были скандина"
+    },
+    "timecode": "04:24",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc154-ch01-title_topics",
+    "accession": "154",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "title_topics",
+    "confidence": 0.55,
+    "evidence": {
+     "matched": "Между прошлым и будущим",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc154-ch06-kwic",
+    "accession": "154",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.545,
+    "evidence": {
+     "term": "Псков",
+     "page": 198,
+     "srt": "Андрей-Зализняк_-Между-прошлым-и-будущим.srt",
+     "at": 329.28,
+     "quote": "хеологи находят около 16 грамот в год. причем география находок расширилась. уже найдены берестяные документы в торжке, пскове, на украине. "
+    },
+    "timecode": "05:29",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc154-ch09-llm",
+    "accession": "154",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.95,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "В середине 20-го века в Новгороде впервые были найдены берестяные грамоты тысячелетней давности."
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc154-ch11-kwic",
+    "accession": "154",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.604,
+    "evidence": {
+     "term": "география",
+     "page": 369,
+     "srt": "Андрей-Зализняк_-Между-прошлым-и-будущим.srt",
+     "at": 326.72,
+     "quote": "дый год количество найденных берестяных грамот увеличивается. в среднем археологи находят около 16 грамот в год. причем география находок ра"
+    },
+    "timecode": "05:26",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc155-ch08-kwic",
+    "accession": "155",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.574,
+    "evidence": {
+     "term": "гроза",
+     "page": 263,
+     "srt": "Андрей-Зализняк.-Новгородская-Русь-по-берестяным-грамотам-взгляд-из-2012-года.srt",
+     "at": 3191.0,
+     "quote": "я операция называлась \"рубеж\". и глагол назывался, что вот то, что сделает жировит, называлось \"рути\", соответственно, угроза, что он порубе"
+    },
+    "timecode": "53:11",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc155-ch09-series",
+    "accession": "155",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяным"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc155-ch10-kwic",
+    "accession": "155",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.55,
+    "evidence": {
+     "term": "встала",
+     "page": 351,
+     "srt": "Андрей-Зализняк.-Новгородская-Русь-по-берестяным-грамотам-взгляд-из-2012-года.srt",
+     "at": 983.2,
+     "quote": "енно, я могу ее и в подлиннике прочесть, поскольку отличие от перевода будет ничтожное. в подлиннике звучит так. \"литва встала на кореллу\". "
+    },
+    "timecode": "16:23",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc156-ch01-llm",
+    "accession": "156",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Судьба её уникальна. Друзья, поклонники, ученики к юбилею Залезняка в одном экземпляре издали рукопись, которую он давал, просто дал им почи",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.5,
+       "edge_id": "acc156-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc156-ch05-kwic",
+    "accession": "156",
+    "chapter": "ch05",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.559,
+    "evidence": {
+     "term": "счастье",
+     "page": 172,
+     "srt": "Андрей-Зализняк.-Прогулки-по-Европе.srt",
+     "at": 73.1,
+     "quote": "неоценимо. я уже не говорю о знаменитом кодексе, я уже не говорю обо всём остальном, просто надо признать, что на наше счастье даже люди, ко"
+    },
+    "timecode": "01:13",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc156-ch06-kwic",
+    "accession": "156",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.575,
+    "evidence": {
+     "term": "журнал",
+     "page": 191,
+     "srt": "Андрей-Зализняк.-Прогулки-по-Европе.srt",
+     "at": 361.64,
+     "quote": "е надо рассказывать, пожалуйста, что все это было доступно, стоило только открыть какой-нибудь там глянцевый зарубежный журнал. найдите мне "
+    },
+    "timecode": "06:01",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc157-ch06-kwic",
+    "accession": "157",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.836,
+    "evidence": {
+     "term": "руце",
+     "page": 202,
+     "srt": "Андрей_Зализняк__Русский__Украинский__Белорусский-lcPSaAEANSQ-480pp-1713273801.srt",
+     "at": 113.52,
+     "quote": "то северо-западное было в руке, на ноге, а снахе - рука, руке, нога, ноге и так далее, а восточно-южное было рука, но в руце, нога, но в нос"
+    },
+    "timecode": "01:53",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc158-ch05-title_topics",
+    "accession": "158",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "санскрит",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc159-ch08-llm",
+    "accession": "159",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Я уже предложил Екапсон, были в пра-славянском языке целиком фонологически безударны. Я буду говорить о словоформах, но на самом деле тоже в",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.624,
+       "edge_id": "acc159-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc159-ch11-kwic",
+    "accession": "159",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.578,
+    "evidence": {
+     "term": "взяти",
+     "page": 391,
+     "srt": "Доклад-А.А.-Зализняка,-26-октября-2012-года--Andrei-Zaliznyak-report.srt",
+     "at": 1484.7,
+     "quote": "ь. в этом ряду импленовенным является слово «проводитель», абсолютно надёжным, со всеми утекающими последствиями штабов взятия будут притяже"
+    },
+    "timecode": "24:44",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc160-ch01-llm",
+    "accession": "160",
+    "chapter": "ch01",
+    "relation": "about_zaliznyak",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Из моих воспоминаний о А.А.Зализняке",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc160-ch01-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc160-ch06-kwic",
+    "accession": "160",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.598,
+    "evidence": {
+     "term": "журнал",
+     "page": 191,
+     "srt": "Из-моих-воспоминаний-о-А.А.Зализняке.srt",
+     "at": 21.6,
+     "quote": "головастиков алексей николаевич. а для меня андрей анатольевич начал быть легендой, когда я учился в пятом классе. и в журнале «наука и жизн"
+    },
+    "timecode": "00:21",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc160-ch10-kwic",
+    "accession": "160",
+    "chapter": "ch10",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.527,
+    "evidence": {
+     "term": "зачитать",
+     "page": 356,
+     "srt": "Из-моих-воспоминаний-о-А.А.Зализняке.srt",
+     "at": 119.6,
+     "quote": "орый казался мне почти мифологическим персонажем и небожителем. главастиков алексей николаевич, личная переписка, прошу зачитать второй отры"
+    },
+    "timecode": "01:59",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc161-ch06-kwic",
+    "accession": "161",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.803,
+    "evidence": {
+     "term": "ворог",
+     "page": 193,
+     "srt": "Исконное-ударение-в-слове-«творог».-Академик-Андрей-Зализняк.srt",
+     "at": 0.0,
+     "quote": "больше того, ударение творог выдаёт мгновенно и для историка языка свою позднейшесть. а именно, дело в том, что в слове «творог» корень «тва"
+    },
+    "timecode": "00:00",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc162-ch08-kwic",
+    "accession": "162",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.586,
+    "evidence": {
+     "term": "эксперт",
+     "page": 244,
+     "srt": "К-20-летию-обретения-Новгородской-псалтыри-история-открытия,-сохранения-и-изучения.srt",
+     "at": 24.12,
+     "quote": "в дню бересты, который мы ежегодно отмечаем 26 июля, мы предлагаем вашему вниманию лекцию кандидата исторических наук, эксперта новгородског"
+    },
+    "timecode": "00:24",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc162-ch09-title_topics",
+    "accession": "162",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "Новгородск",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc162-ch11-kwic",
+    "accession": "162",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.549,
+    "evidence": {
+     "term": "величина",
+     "page": 367,
+     "srt": "К-20-летию-обретения-Новгородской-псалтыри-история-открытия,-сохранения-и-изучения.srt",
+     "at": 2372.76,
+     "quote": "и, его интеллекту нет равных, по-моему, до сих пор, хотя он ушел от нас не так давно, но пока мы говорим о том, что это величина, которая не"
+    },
+    "timecode": "39:32",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc163-ch06-kwic",
+    "accession": "163",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.615,
+    "evidence": {
+     "term": "брег",
+     "page": 193,
+     "srt": "Лекция-А.А.-Гиппиуса-о-берестяных-грамотах,-30-окт-2018.srt",
+     "at": 3917.96,
+     "quote": "дальше опять же сава михайлович удачно прочел это как \"берегу\", и хочется думать, что это не \"берегу\", в значении \"принебрегают\". кто-то чем"
+    },
+    "timecode": "65:17",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc163-ch09-series",
+    "accession": "163",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.547,
+       "edge_id": "acc163-ch09-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc164-ch10-kwic",
+    "accession": "164",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.95,
+    "evidence": {
+     "term": "friendship",
+     "page": 330,
+     "srt": "Лекция-А.А.Зализняка-12.2.16.srt",
+     "at": 1400.0,
+     "quote": "вами. ну, какие-то простые примеры, очень наглядные, можно выводить из вполне известных языков. какой-нибудь английский friendship, начальни"
+    },
+    "timecode": "23:20",
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc165-ch03-kwic",
+    "accession": "165",
+    "chapter": "ch03",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.595,
+    "evidence": {
+     "term": "вене",
+     "page": 61,
+     "srt": "Лекция-Какой-народ-изначально-был-Русью.-Рассказывает-Академик-РАН-Андрей-Анатольевич-Зализняк.srt",
+     "at": 134.0,
+     "quote": "я два названия. говорят, что из порога называется росисти, то есть по-росски, по-росски, по-славянски. и в реальность повенести все названия",
+     "superseded_by": [
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc165-ch03-title_topics"
+      }
+     ]
+    },
+    "timecode": "02:14",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc165-ch06-llm",
+    "accession": "165",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Безусловно установленный факт состоит в том, что в девятом десятом кеке термин \"рус\" или \"рос\" в греческом варианте означает \"скандинал\".",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.645,
+       "edge_id": "acc165-ch06-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc166-ch09-series",
+    "accession": "166",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc166-ch10-kwic",
+    "accession": "166",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.565,
+    "evidence": {
+     "term": "аканье",
+     "page": 328,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-сезона-2008-года.srt",
+     "at": 6163.1,
+     "quote": "тное объяснение для меня. вот что подряд. он же не ошибся вот здесь. совершенно том же слове. так что думаю, что это не аканье. но доказать "
+    },
+    "timecode": "102:43",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc167-ch06-kwic",
+    "accession": "167",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.615,
+    "evidence": {
+     "term": "Ирак",
+     "page": 192,
+     "srt": "А.А.Зализняк-и-А.А.Гиппиус-о-находках-Новгородской-экспедиции,-август-2017.srt",
+     "at": 10.79,
+     "quote": "ом дождусь, ведь я уже стоял, ходил, а сейчас еще не ночевал. ну, значит, наверное, самый конец нашей конференции, да, дирак, что мы должны "
+    },
+    "timecode": "00:10",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc167-ch09-title_topics",
+    "accession": "167",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "Новгородск",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc167-ch11-kwic",
+    "accession": "167",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.547,
+    "evidence": {
+     "term": "Гавриил",
+     "page": 391,
+     "srt": "А.А.Зализняк-и-А.А.Гиппиус-о-находках-Новгородской-экспедиции,-август-2017.srt",
+     "at": 3704.8,
+     "quote": "ьше, спустя несколько дней. в пустяне несколько дней находится кусок, в котором находится слово гаврр, это, безусловно, гавриил, так что гав"
+    },
+    "timecode": "61:44",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc168-ch06-kwic",
+    "accession": "168",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.294,
+    "evidence": {
+     "term": "туман",
+     "page": 188,
+     "srt": "Новгород-Письма-из-средневековья.srt",
+     "at": 2878.98,
+     "quote": "и падает солнышко в росы, и меня такой молодой. от пляса вон лихо и рвался рубахи большой разворота. по госи, по госи, туманная гладь, и что",
+     "asr": "looped"
+    },
+    "timecode": "47:58",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc168-ch08-kwic",
+    "accession": "168",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.278,
+    "evidence": {
+     "term": "сёла",
+     "page": 263,
+     "srt": "Новгород-Письма-из-средневековья.srt",
+     "at": 2108.98,
+     "quote": "реставрация церкви почти завершена, и поэтому валентин надеется отыскать следы художника. но что осталось от фресок? (весёлая музыка) (весёл",
+     "asr": "looped"
+    },
+    "timecode": "35:08",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc168-ch09-title_topics",
+    "accession": "168",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.6,
+    "evidence": {
+     "matched": "Новгород",
+     "by": "title"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc169-ch05-series",
+    "accession": "169",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "vedic_sanskrit",
+     "matched": "Строй ведийского",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.563,
+       "edge_id": "acc169-ch05-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc169-ch06-kwic",
+    "accession": "169",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.581,
+    "evidence": {
+     "term": "зиян",
+     "page": 189,
+     "srt": "А.-А.-Зализняк.-Строй-ведийского-языка.-2015-2016-гг.-Лекция-2.-19.09.2015.srt",
+     "at": 3681.26,
+     "quote": "льда оставляли живьем правильных раздражений. поэтому здесь, если вы можете прочесть стих, вам не сломается. получалось зияне в таком случае"
+    },
+    "timecode": "61:21",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc170-ch06-kwic",
+    "accession": "170",
+    "chapter": "ch06",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.547,
+    "evidence": {
+     "term": "Литва",
+     "page": 200,
+     "srt": "Зализняк.-Новгородская-Русь-по-берестяным-грамотам.-2012.srt",
+     "at": 1063.4,
+     "quote": "собственно, я могу ее и в подлиннике прочесть, поскольку отличие от перевода будет ничтожное. в подлиннике звучит так. литва встала на курел"
+    },
+    "timecode": "17:43",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc170-ch08-kwic",
+    "accession": "170",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.553,
+    "evidence": {
+     "term": "гроза",
+     "page": 263,
+     "srt": "Зализняк.-Новгородская-Русь-по-берестяным-грамотам.-2012.srt",
+     "at": 3269.19,
+     "quote": "я операция называлась рубеж. и глагол назывался, что вот то, что сделает джировид, называлось рути, и, соответственно, угроза, что он порубе"
+    },
+    "timecode": "54:29",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc170-ch09-series",
+    "accession": "170",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяным"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc171-ch08-kwic",
+    "accession": "171",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.548,
+    "evidence": {
+     "term": "конкурс",
+     "page": 244,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-сезона-2012-года.-Лекция-2.srt",
+     "at": 4312.61,
+     "quote": "ворите, что, если хотите, притворяйтесь, что вы в деле, что вы включились в дело. вы догадались последний драматический конкурс в речи 150-г"
+    },
+    "timecode": "71:52",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc171-ch09-series",
+    "accession": "171",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc171-ch10-kwic",
+    "accession": "171",
+    "chapter": "ch10",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.63,
+    "evidence": {
+     "term": "забывается",
+     "page": 359,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-сезона-2012-года.-Лекция-2.srt",
+     "at": 1077.75,
+     "quote": "зования таких гигант, и возможно, что это тот же катаглав, который нам воздействует. как ни иначе, ты сказал убаду. что забывается деньги, у"
+    },
+    "timecode": "17:57",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc172-ch08-kwic",
+    "accession": "172",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.603,
+    "evidence": {
+     "term": "проговорился",
+     "page": 268,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-2010-г.,-лекция-1.srt",
+     "at": 4014.53,
+     "quote": "восемь» и так далее. а «о» это сначала слово «осемь». совершенно точно. «о» – это тот самый фокус, о котором я немножко проговорился в начал"
+    },
+    "timecode": "66:54",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc172-ch09-series",
+    "accession": "172",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.553,
+       "edge_id": "acc172-ch09-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc173-ch05-llm",
+    "accession": "173",
+    "chapter": "ch05",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.9,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Санскрейт отличается только тем, что его аккорюющая система превратилась в Балчан и полторизация ДМК.",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.567,
+       "edge_id": "acc173-ch05-kwic"
+      },
+      {
+       "pass": "title_topics",
+       "confidence": 0.55,
+       "edge_id": "acc173-ch05-title_topics"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc173-ch11-kwic",
+    "accession": "173",
+    "chapter": "ch11",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.55,
+    "evidence": {
+     "term": "узел",
+     "page": 379,
+     "srt": "А.А.-Зализняк-в-МГУ,-07.11.2015.srt",
+     "at": 2048.91,
+     "quote": "жется, вот... значение для слова павла. да ну, какие-то... значение, это... нет, это полезно прочесть. почти так, типа, узел на рост. прочти"
+    },
+    "timecode": "34:08",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc174-ch06-title_topics",
+    "accession": "174",
+    "chapter": "ch06",
+    "relation": "lecture_of",
+    "pass": "title_topics",
+    "confidence": 0.5,
+    "evidence": {
+     "matched": "русистика",
+     "by": "topic"
+    },
+    "timecode": null,
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc174-ch08-kwic",
+    "accession": "174",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.547,
+    "evidence": {
+     "term": "приговорил",
+     "page": 261,
+     "srt": "Лекция-академика-Андрея-Зализняка.srt",
+     "at": 6232.9,
+     "quote": "оказался текст, навеянный хорошо известным в богослужении тропарем шестого часа. и уже в шестый день, уже час на кресте приговорились. очень"
+    },
+    "timecode": "103:52",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc174-ch09-llm",
+    "accession": "174",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "llm",
+    "confidence": 0.95,
+    "evidence": {
+     "model": "deepseek-v4-flash",
+     "quote": "Расскажите мне об этом. Информация распространяется мгновенно. Я, например, не уверен, что через час, допустим, после того, как грамота найд"
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc174-ch11-kwic",
+    "accession": "174",
+    "chapter": "ch11",
+    "relation": "lecture_of",
+    "pass": "kwic",
+    "confidence": 0.56,
+    "evidence": {
+     "term": "рубель",
+     "page": 390,
+     "srt": "Лекция-академика-Андрея-Зализняка.srt",
+     "at": 8712.69,
+     "quote": "те. о, брат, оставь. послал я. я. с тобой. неправда, по смыслу очень хорошо. да все конкретно да немножко смущает что дурубель сказан дважды"
+    },
+    "timecode": "145:12",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc175-ch08-kwic",
+    "accession": "175",
+    "chapter": "ch08",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.555,
+    "evidence": {
+     "term": "родила",
+     "page": 268,
+     "srt": "А.А.-Зализняк.-О-берестяных-грамотах-из-раскопок-сезона-2016-года.-Лекция-2.srt",
+     "at": 6510.3,
+     "quote": "ликом грамота, тоже такой подарок исключительный, самая древняя из грамот, найденных в этом году, и очень интересная. отродила крадонюгу, ка"
+    },
+    "timecode": "108:30",
+    "status": "disputed"
+   },
+   {
+    "edge_id": "acc175-ch09-series",
+    "accession": "175",
+    "chapter": "ch09",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "birchbark",
+     "matched": "берестяных",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.58,
+       "edge_id": "acc175-ch09-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc176-ch08-series",
+    "accession": "176",
+    "chapter": "ch08",
+    "relation": "lecture_of",
+    "pass": "series",
+    "confidence": 0.95,
+    "evidence": {
+     "series": "rus_stress",
+     "matched": "История русского ударения",
+     "superseded_by": [
+      {
+       "pass": "kwic",
+       "confidence": 0.349,
+       "edge_id": "acc176-ch08-kwic"
+      }
+     ]
+    },
+    "timecode": null,
+    "status": "auto"
+   },
+   {
+    "edge_id": "acc176-ch09-kwic",
+    "accession": "176",
+    "chapter": "ch09",
+    "relation": "expands",
+    "pass": "kwic",
+    "confidence": 0.28,
+    "evidence": {
+     "term": "двери",
+     "page": 316,
+     "srt": "Зализняк.-История-русского-ударения.-20.05.2017.-Семинар-28.srt",
+     "at": 659.0,
+     "quote": "е такие записи, не очень много, но все-таки полдружины есть. вот, в частности, для юга это как минимум три точки. здесь двери включены. зелк",
+     "asr": "looped"
+    },
+    "timecode": "10:59",
+    "status": "disputed"
+   }
+  ],
+  "duplicates": [
+   {
+    "pair": [
+     "008",
+     "012"
+    ],
+    "duration_seconds": 2638,
+    "titles": [
+     "ACADEMIA. Андрей Зализняк. Русский устный. 2 лекция. Канал Культура",
+     "ACADEMIA. Андрей Зализняк. Русский устный. 1 лекция. Канал Культура"
+    ],
+    "verdict": "false",
+    "rationale": "Разные лекции одного цикла «Русский устный» (1-я и 2-я)",
+    "status": "disputed"
+   },
+   {
+    "pair": [
+     "017",
+     "018"
+    ],
+    "duration_seconds": 3852,
+    "titles": [
+     "Андрей Зализняк Интереснейшая история русского языка",
+     "Андрей Зализняк. История русского языка"
+    ],
+    "verdict": "likely",
+    "rationale": "Один и тот же рассказ об истории русского языка под разными заголовками перезаливки",
+    "status": "disputed"
+   },
+   {
+    "pair": [
+     "119",
+     "173"
+    ],
+    "duration_seconds": 4852,
+    "titles": [
+     "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 8. 07.11.2015",
+     "А.А. Зализняк в МГУ, 07.11.2015"
+    ],
+    "verdict": "likely",
+    "rationale": "Одна дата 07.11.2015 и одна длительность: вероятно, одна и та же лекция под общим заголовком «в МГУ»",
+    "status": "disputed"
+   },
+   {
+    "pair": [
+     "088",
+     "107"
+    ],
+    "duration_seconds": 5129,
+    "titles": [
+     "А. А. Зализняк. История русского ударения. 2017 г. Аудиозапись лекции 2. 23.09.2017",
+     "А. А. Зализняк. Строй ведийского языка. 2015-2016 гг. Лекция 13. 12.12.2015"
+    ],
+    "verdict": "false",
+    "rationale": "Разные циклы: русское ударение и строй ведийского языка",
+    "status": "disputed"
+   },
+   {
+    "pair": [
+     "007",
+     "054"
+    ],
+    "duration_seconds": 5303,
+    "titles": [
+     "Зализняк. О Велесовой книге. 2008",
+     "Зализняк. История русского ударения. Семинар 22. 25.03.2017"
+    ],
+    "verdict": "false",
+    "rationale": "Разные темы: «О Велесовой книге» и семинар об ударении",
+    "status": "disputed"
+   },
+   {
+    "pair": [
+     "005",
+     "040"
+    ],
+    "duration_seconds": 8340,
+    "titles": [
+     "А.А. Зализняк. Новгородские берестяные грамоты",
+     "Зализняк. Новгородские берестяные грамоты. 2007"
+    ],
+    "verdict": "confirmed",
+    "rationale": "Один доклад «Новгородские берестяные грамоты» (2007); проставлен `duplicate_of`",
+    "status": "approved"
+   },
+   {
+    "pair": [
+     "023",
+     "034"
+    ],
+    "duration_seconds": 9288,
+    "titles": [
+     "Новые открытия академика Зализняка в 2017 году",
+     "Зализняк. О берестяных грамотах из раскопок 2017 года"
+    ],
+    "verdict": "likely",
+    "rationale": "Обе записи о берестяных грамотах из раскопок 2017 года",
+    "status": "disputed"
+   }
+  ]
+ }
+}
