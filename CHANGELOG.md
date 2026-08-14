@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## [4.14.0] - 2026-08-14
 ### Added
 - **Крест «видео ↔ главы» с тайм-кодами, волна 1 (H2711 — остаток H2706, Opus 5 (`claude-opus-5`); проход D — DeepSeek, отдался как `deepseek-v4-flash`):** новый модуль [data/modules/22-crosswalk.json](https://github.com/gasyoun/BookIndex/blob/main/data/modules/22-crosswalk.json) — **377 рёбер** «запись каталога → глава книги» на 173 из 176 записей, **215 с тайм-кодом `▸ ММ:СС`**, у каждого обязательное доказательство. До этой работы каталог не нёс ни одного тайм-кода и ни одной связи с главой. Четыре прохода: серии (95), KWIC по 171 расшифровке публичного архива (215), заголовок и темы (37), DeepSeek на остатке (30). Все 11 глав непусты, включая ch07 «Арабский язык» (термин указателя `katiba`, с. 216) и ch01 «От редколлегии» — при прежней сущностной разводке обе получали ноль. Лист голосования куратора: 255 карточек (38 кандидатов, 210 спорных, 7 пар дублей), собирается `python scripts/crosswalk/build_crosswalk_gate.py`. Числа и разбор: [RESULTS_CROSSWALK_VIDEO_CHAPTER_W1_2026-08-14.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_CROSSWALK_VIDEO_CHAPTER_W1_2026-08-14.md).
 - **`duplicate_of` в схеме видеокаталога:** дубли помечаются, а не удаляются — удаление ломает существующие ссылки и счётчики. Поле объявлено в `OVERRIDE_FIELDS`/`VIDEO_KEYS` с проверкой формы (трёхзначный accession, не сам на себя).
