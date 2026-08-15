@@ -1,30 +1,46 @@
-"""Шаг 8: лист голосования куратора над крестом «видео ↔ главы».
+"""Шаг 8, версия 2: лист голосования куратора над крестом «видео ↔ главы».
 
-Лист собирается канонической org-функцией `csl_pyutil.render_review_sheet`
-(та же, что у `scripts/build_authority_review_sheet.py`) — своя HTML-форма
-запрещена конвенцией `/review-sheet`, markdown-чекбоксы запрещены тем более.
+Версия 1 (H2711) провалила первый заход куратора 15-08-2026 — 10 карточек из
+255, дальше голосование остановилось. Причины, по примечаниям куратора в
+`data/crosswalk/gate_decisions_v1_partial.json`, все — про подачу:
 
-Три секции:
+* «как по-твоему я должен знать, что такое запись acc001?» — вопрос называл
+  запись голым инвентарным номером; название лежало в нижней панели;
+* «модель deepseek-v4-flash — это не может быть самим доказательством, а
+  способом получения оного» — LLM-проход подавал имя модели в панели
+  «Доказательство»;
+* «термин указателя семнадцать — а в книге он на что ссылался?» — карточка
+  показывала цитату из ВИДЕО, но не показывала, о чём термин в КНИГЕ;
+* «файлов много, надо цитировать точно название файла» — источник цитаты
+  должен быть назван полным именем файла.
 
-* **рёбра-кандидаты** — всё, что дал LLM-проход, плюс тайм-кодированные рёбра
-  KWIC в полосе 0.75–0.85: они автоматические, но на бумагу без человеческого
-  «да» не идут (печать неисправима);
-* **спорные** — всё ниже порога своего прохода; не выбрасывается и не
-  досочиняется, а выносится сюда;
-* **дубли** — все семь пар с одинаковой длительностью, включая три заведомо
-  ложные: схлопывание вручную, автоматом ни одно не выполняется (риск R-5).
+Версия 2 отвечает на каждое примечание:
 
-Лист пишется в gitignored `review/` (конвенция репозитория: лист — личный
-рабочий артефакт). Воспроизводится этим скриптом; в коммит идут кандидаты
-`data/crosswalk/gate_candidates.json`, чтобы лист можно было пересобрать.
+* вопрос карточки называет запись по имени, глава — по имени и страницам;
+* панель «Термин в книге» — статья указателя: заголовок, страницы, книжный
+  контекст (modules 10–14, `occurrences.mumintroll.contexts`);
+* панель «Цитата из записи» цитирует точное имя srt-файла и смещение;
+* у LLM-рёбер метод (модель, хеш промпта) отделён от доказательства; цитата
+  модели проверяется поиском по данным репозитория — найден источник, карточка
+  его называет; не найден — карточка честно предупреждает, что цитата может
+  быть выдумана;
+* десять решений первого захода переносятся преднабором (localStorage),
+  остаются редактируемыми;
+* лист меряет время куратора (csl-pyutil v0.10.0, V11): всего и на карточку,
+  секунды уходят в decisions.json.
+
+Лист пишется в gitignored `review/`; в коммит идут кандидаты
+`data/crosswalk/gate_candidates.json`. Применение решений —
+`scripts/crosswalk/apply_gate_decisions.py`.
 
     python scripts/crosswalk/build_crosswalk_gate.py
 
-План: docs/PLAN_BOOKINDEX_VIDEO_LECTURE_CROSSWALK_2026Q3.md · handoff H2711.
+План: docs/PLAN_BOOKINDEX_VIDEO_LECTURE_CROSSWALK_2026Q3.md · handoffs H2711, H2841.
 """
 from __future__ import annotations
 
 import html
+import json
 import sys
 from pathlib import Path
 
@@ -36,23 +52,93 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parents[2]
 OUT_DIR = REPO / "review"
-SHEET_ID = "bookindex-crosswalk-video-chapter"
+SHEET_ID = "bookindex-crosswalk-video-chapter-v2"
 OUT_HTML = OUT_DIR / "crosswalk_gate.html"
 SAVE_AS = "review/crosswalk_gate_decisions.json"
-GENERATED = "2026-08-14"
+PREFILL_V1 = CW / "gate_decisions_v1_partial.json"
+GENERATED = "2026-08-15"
 
 PRINT_FLOOR = 0.85          # ниже этого ребро KWIC на полосу не идёт без куратора
 
 VERDICT_RU = {"confirmed": "подтверждён", "likely": "вероятен",
               "false": "скорее всего не дубль", "unknown": "не разобрано"}
 
+RELATION_RU = {
+    "lecture_of": "лекция по теме главы",
+    "expands": "дополняет главу",
+    "sequel_to": "продолжение темы",
+    "about_zaliznyak": "о самом Зализняке",
+    "other_book": "другая книга",
+    "scholarly_work": "научная работа",
+}
+
+# Модули указателя, где живут статьи с книжным контекстом (head/occurrences).
+_INDEX_MODULES = (
+    ("10-names", "names", "имена"),
+    ("11-toponyms", "toponyms", "топонимы"),
+    ("12-ethnonyms", "ethnonyms", "этнонимы"),
+    ("13-languages", "languages", "языки"),
+    ("14-lexicon", "lexicon", "лексикон"),
+)
+
 
 def esc(s) -> str:
     return html.escape("" if s is None else str(s))
 
 
+def fmt_hms(seconds: float | None) -> str:
+    s = max(0, int(seconds or 0))
+    if s >= 3600:
+        return f"{s // 3600}:{s % 3600 // 60:02d}:{s % 60:02d}"
+    return f"{s // 60}:{s % 60:02d}"
+
+
+def index_entries() -> dict[str, dict]:
+    """head(lower) -> статья указателя с книжными страницами и контекстом."""
+    out: dict[str, dict] = {}
+    for fname, key, rubric in _INDEX_MODULES:
+        for e in load_json(MODULES / f"{fname}.json")[key]:
+            occ = (e.get("occurrences") or {}).get("mumintroll") or {}
+            rec = {
+                "head": e.get("head", ""),
+                "rubric": rubric,
+                "pages": occ.get("pages") or e.get("page_list") or [],
+                "contexts": occ.get("contexts") or e.get("contexts") or [],
+            }
+            out.setdefault(rec["head"].lower(), rec)
+    return out
+
+
+def quote_source(quote: str) -> str | None:
+    """Где в данных репозитория живёт цитата, которую привела модель.
+
+    Ищем по тем входам, что шли в промпт прохода D (аннотации глав) и по
+    смежным модулям. Возвращаем человекочитаемое имя источника или None —
+    и тогда карточка честно предупреждает, что цитата не подтверждена.
+    """
+    if not quote:
+        return None
+    needle = " ".join(quote.split())[:120].lower()
+    sources = [
+        ("data/modules/20-lectures.json", "аннотации глав (20-lectures.json)"),
+        ("data/modules/30-scholar.json", "биография учёного (30-scholar.json)"),
+        ("data/video_catalog_public.v2.json", "каталог записей (video_catalog_public.v2.json)"),
+        ("data/modules/21-materials.json", "материалы (21-materials.json)"),
+    ]
+    for rel, label in sources:
+        try:
+            hay = " ".join((REPO / rel).read_text(encoding="utf-8").split()).lower()
+        except OSError:
+            continue
+        if needle and needle in hay:
+            return label
+    return None
+
+
 def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
-    ch_name = {c["id"]: c["name"] for c in chapters()}
+    chs = {c["id"]: c for c in chapters()}
+    lectures = {l["name"]: l for l in load_json(MODULES / "20-lectures.json")["lectures"]}
+    idx = index_entries()
     items: list[dict] = []
     counts = {"candidate": 0, "disputed": 0, "duplicate": 0}
 
@@ -69,43 +155,83 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
 
         v = cat.get(e["accession"]) or {}
         ev = e["evidence"]
-        title = v.get("title_display") or f"acc{e['accession']}"
-        tc = f" ▸ {e['timecode']}" if e.get("timecode") else ""
+        ch = chs.get(e["chapter"]) or {}
+        ch_label = f'{e["chapter"]} «{ch.get("name", "")}» (с. {ch.get("start")}–{ch.get("end")})'
+        title = v.get("title_display") or f'acc{e["accession"]}'
+        rel_ru = RELATION_RU.get(e["relation"], e["relation"])
+        tc = f' ▸ {e["timecode"]}' if e.get("timecode") else ""
+
         question = (
-            f'Связать запись <b>acc{esc(e["accession"])}</b> с главой '
-            f'<b>{esc(e["chapter"])} «{esc(ch_name.get(e["chapter"], ""))}»</b> '
-            f'(связь <code>{esc(e["relation"])}</code>, проход {esc(e["pass"])}, '
-            f'уверенность {e["confidence"]:.2f}){esc(tc)}?'
+            f'Дополнить главу <b>{esc(ch_label)}</b> ссылкой на запись '
+            f'<b>acc{esc(e["accession"])} «{esc(title)}»</b> '
+            f'({fmt_hms(v.get("duration_seconds"))})? '
+            f'Тип связи: <b>{esc(rel_ru)}</b> (<code>{esc(e["relation"])}</code>), '
+            f'проход <code>{esc(e["pass"])}</code>, '
+            f'уверенность {e["confidence"]:.2f}{esc(tc)}. '
+            f'Связь значит «чем запись дополняет главу», а не «это запись этой главы».'
         )
-        rows = []
-        if ev.get("term"):
-            rows.append(f'термин указателя <b>{esc(ev["term"])}</b>, с. {esc(ev.get("page"))}')
-        if ev.get("srt"):
-            rows.append(f'файл <code>{esc(ev["srt"])}</code>, смещение {esc(ev.get("at"))} с')
-        if ev.get("series"):
-            rows.append(f'цикл <code>{esc(ev["series"])}</code>')
-        if ev.get("matched"):
-            rows.append(f'совпало по {esc(ev.get("by", "заголовку"))}: «{esc(ev["matched"])}»')
-        if ev.get("model"):
-            rows.append(f'модель <code>{esc(ev["model"])}</code>')
-        if ev.get("asr") == "looped":
-            rows.append("⚠ подозрение на зацикленный фрагмент распознавания — "
-                        "уверенность уже снижена вдвое")
-        panels = [("Доказательство", "<div>" + "; ".join(rows) + "</div>"
-                   if rows else '<span class="muted">только правило прохода</span>')]
-        if ev.get("quote"):
-            panels.append(("Цитата", f"<pre>{esc(ev['quote'])}</pre>"))
-        panels.append(("Запись каталога", (
+
+        panels = []
+        panels.append(("Что это за запись", (
             f'<div><a href="{esc(v.get("watch_url"))}" target="_blank" rel="noopener">'
-            f'{esc(title)}</a><br>темы: {esc(", ".join(v.get("topics") or []) or "нет")}; '
-            f'длительность: {(v.get("duration_seconds") or 0) // 60} мин</div>')))
+            f'{esc(title)}</a> — {fmt_hms(v.get("duration_seconds"))}'
+            f'{"; темы: " + esc(", ".join(v.get("topics") or [])) if v.get("topics") else ""}'
+            f'</div>')))
+        lec = lectures.get(ch.get("name", ""))
+        if lec:
+            panels.append(("Глава книги", (
+                f'<div><b>{esc(ch.get("name"))}</b>, с. {esc(lec.get("pages"))}: '
+                f'{esc(lec.get("main_idea", ""))}</div>')))
+
+        if ev.get("term"):
+            entry = idx.get(str(ev["term"]).lower())
+            if entry:
+                book_ctx = "<br>".join(f"«…{esc(c)}…»" for c in entry["contexts"][:2]) \
+                    or '<span class="muted">контекст в указателе не сохранён</span>'
+                panels.append(("Термин в книге", (
+                    f'<div>Статья указателя ({esc(entry["rubric"])}): <b>{esc(entry["head"])}</b>, '
+                    f'с. {esc(", ".join(str(p) for p in entry["pages"]))}.<br>{book_ctx}</div>')))
+            else:
+                panels.append(("Термин в книге", (
+                    f'<div>Термин <b>{esc(ev["term"])}</b> (с. {esc(ev.get("page"))}) '
+                    f'в модулях указателя не найден — совпадение только по расшифровке, '
+                    f'доказательство слабее.</div>')))
+
+        if ev.get("quote"):
+            src = (f'файл <code>{esc(ev["srt"])}</code>, смещение '
+                   f'{fmt_hms(ev.get("at") or ev.get("offset_seconds"))}'
+                   if ev.get("srt") else "источник не назван")
+            panels.append(("Цитата из записи", f'<pre>{esc(ev["quote"])}</pre>'
+                                               f'<div class="muted">{src}</div>'))
+
+        if is_llm:
+            src = quote_source(ev.get("quote", ""))
+            verdict = (f'цитата найдена в: {esc(src)}' if src else
+                       '⚠ источник цитаты в данных репозитория НЕ найден — модель могла '
+                       'её пересказать или выдумать; перед approve проверьте вручную')
+            panels.append(("Метод (не доказательство)", (
+                f'<div>Ребро предложила модель <code>{esc(ev.get("model"))}</code> '
+                f'(промпт <code>{esc(ev.get("prompt_hash"))}</code>) по аннотациям глав и '
+                f'метаданным записи. Имя модели — способ получения связи; доказательство — '
+                f'приведённая ею цитата: {verdict}.</div>')))
+
+        extra = []
+        if ev.get("series"):
+            extra.append(f'цикл <code>{esc(ev["series"])}</code>')
+        if ev.get("matched"):
+            extra.append(f'совпало по {esc(ev.get("by", "заголовку"))}: «{esc(ev["matched"])}»')
+        if ev.get("asr") == "looped":
+            extra.append("⚠ подозрение на зацикленный фрагмент распознавания — "
+                         "уверенность уже снижена вдвое")
+        if extra:
+            panels.append(("Прочие сигналы", "<div>" + "; ".join(extra) + "</div>"))
 
         items.append({
             "id": e["edge_id"],
             "filt": filt,
-            "title": f'acc{e["accession"]} → {e["chapter"]}',
+            "title": f'«{title}» ↔ {e["chapter"]} «{ch.get("name", "")}»',
             "title_href": v.get("watch_url"),
-            "badges": [e["pass"], f'{e["confidence"]:.2f}', e["relation"]],
+            "badges": [e["pass"], f'{e["confidence"]:.2f}', rel_ru],
             "question": question,
             "panels": panels,
             "note_placeholder": "если глава другая — впишите ch01…ch11; apply-скрипт читает "
@@ -115,15 +241,19 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
     for d in module["duplicates"]:
         counts["duplicate"] += 1
         a, b = d["pair"]
+        ta, tb = ((cat.get(a) or {}).get("title_display") or f"acc{a}",
+                  (cat.get(b) or {}).get("title_display") or f"acc{b}")
         items.append({
             "id": f"dup-{a}-{b}",
             "filt": "duplicate",
-            "title": f"acc{a} ≡ acc{b}?",
+            "title": f"дубль? «{ta}» ≡ «{tb}»",
             "badges": ["дубль", VERDICT_RU.get(d["verdict"], d["verdict"]),
                        f'{d["duration_seconds"] // 60} мин'],
-            "question": (f'Считать записи <b>acc{esc(a)}</b> и <b>acc{esc(b)}</b> одной и той '
-                         f'же публикацией? Approve проставит <code>duplicate_of</code>; '
-                         f'запись <b>не удаляется</b> ни при каком решении.'),
+            "question": (f'Считать записи <b>acc{esc(a)} «{esc(ta)}»</b> и '
+                         f'<b>acc{esc(b)} «{esc(tb)}»</b> одной и той же публикацией '
+                         f'(длительность совпадает до секунды)? Approve проставит '
+                         f'<code>duplicate_of</code>; запись <b>не удаляется</b> ни при '
+                         f'каком решении.'),
             "panels": [
                 ("Заголовки", "<div>" + "<br>".join(
                     f"acc{esc(x)} — {esc(t)}" for x, t in zip(d["pair"], d["titles"])) + "</div>"),
@@ -137,6 +267,34 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
     return items, counts
 
 
+def prefill_script(sheet_id: str) -> str:
+    """Преднабор решений первого захода (15-08-2026): голоса переносятся в
+    localStorage нового листа, если куратор ещё не голосовал эти карточки."""
+    if not PREFILL_V1.is_file():
+        return ""
+    v1 = load_json(PREFILL_V1)
+    seed = {i["id"]: {"d": i["decision"], "n": i.get("note", "")}
+            for i in v1["items"] if i.get("decision")}
+    if not seed:
+        return ""
+    return ("\n<script>\n(function () {\n"
+            "  var K = 'review-sheet:' + %s;\n"
+            "  var P = %s;\n"
+            "  try {\n"
+            "    var s = JSON.parse(localStorage.getItem(K) || '{}') || {};\n"
+            "    var changed = false;\n"
+            "    for (var id in P) {\n"
+            "      if (!Object.prototype.hasOwnProperty.call(P, id)) continue;\n"
+            "      s[id] = s[id] || {};\n"
+            "      if (!s[id].decision) { s[id].decision = P[id].d; changed = true; }\n"
+            "      if (P[id].n && !s[id].note) { s[id].note = P[id].n; changed = true; }\n"
+            "    }\n"
+            "    if (changed) localStorage.setItem(K, JSON.stringify(s));\n"
+            "  } catch (e) {}\n"
+            "})();\n</script>\n"
+            % (json.dumps(sheet_id), json.dumps(seed, ensure_ascii=False)))
+
+
 def main() -> int:
     from csl_pyutil import render_review_sheet
     from csl_pyutil.evidence import EvidenceManifest
@@ -146,7 +304,7 @@ def main() -> int:
     items, counts = build_items(module, cat)
 
     dump_json(CW / "gate_candidates.json", {
-        "schema": "bookindex.crosswalk.gate/1",
+        "schema": "bookindex.crosswalk.gate/2",
         "generated": GENERATED,
         "sheet_id": SHEET_ID,
         "counts": counts,
@@ -171,16 +329,18 @@ def main() -> int:
 
     config = {
         "sheet_id": SHEET_ID,
-        "title": "BookIndex — крест «видео ↔ главы», куратор-гейт (H2711)",
+        "title": "BookIndex — крест «видео ↔ главы», куратор-гейт v2 (H2841)",
         "subtitle": (
             f"{stats['edges']} рёбер на {stats['records_covered']} из "
             f"{stats['records_total']} записей каталога; {stats['with_timecode']} с тайм-кодом. "
             "Approve = ребро идёт в печать волны 2; Reject = ребро остаётся в данных "
-            "со статусом rejected и на полосу не попадает."
+            "со статусом rejected и на полосу не попадает. Десять решений захода "
+            "15-08-2026 уже проставлены — их можно менять."
         ),
         "footer": ("Секции: кандидаты (LLM и слабый KWIC) · спорные (ниже порога прохода) · "
                    "дубли (все семь пар одинаковой длительности). Записи каталога не "
-                   "удаляются ни при каком решении."),
+                   "удаляются ни при каком решении. Лист меряет активное время (⏱) — "
+                   "всего и на карточку; секунды уходят в decisions.json."),
         "approve_label": "Принять связь",
         "reject_label": "Отклонить",
         "filters": [("candidate", f"кандидаты ({counts['candidate']})"),
@@ -189,41 +349,42 @@ def main() -> int:
         "generated": GENERATED,
         "show_ids": True,
         "save_as": SAVE_AS,
+        "ui_strings": {"timing_title": "активное время на листе (пока вкладка видима)"},
         # Идентификаторы YouTube — латиница со смешанным регистром, и детектор
         # SLP1 читает их как санскрит в человеческом тексте. Это не транслитерация,
-        # а машинный ключ, поэтому он объявляется допустимым явно, а не глушится
-        # отключением проверки.
-        "preflight": {"allow_slp1_tokens": tuple(
-            sorted({v["youtube_id"] for v in cat.values() if v.get("youtube_id")}))},
+        # а машинный ключ, поэтому он объявляется допустимым явно. Латинские
+        # арабские модели ("katiba", "salima") — предмет главы 6, тоже данные.
+        "preflight": {"allow_slp1_tokens": tuple(sorted(
+            {v["youtube_id"] for v in cat.values() if v.get("youtube_id")}))},
     }
 
-    # V9-манифест: чем карточки уже обеспечены и что сознательно не подмешано.
-    # Без него никто не проверяет, не спрашиваем ли мы человека о том, на что в
-    # репозитории уже есть ответ — а это ровно тот дефект, из-за которого в другом
-    # листе 191 карточка из 200 уехала к куратору с готовым вердиктом под рукой.
     manifest = EvidenceManifest(SHEET_ID, [i["id"] for i in items], repo_root=str(REPO))
     manifest.declare_joined("data/modules/22-crosswalk.json",
                             ["chapter", "relation", "confidence", "evidence", "timecode"])
     manifest.declare_joined("data/video_catalog_public.v2.json",
                             ["title_display", "topics", "duration_seconds", "watch_url"])
+    manifest.declare_joined("data/modules/20-lectures.json",
+                            ["name", "pages", "main_idea"])
+    for fname, _key, _r in _INDEX_MODULES:
+        manifest.declare_joined(f"data/modules/{fname}.json",
+                                ["head", "occurrences"])
     manifest.declare_omitted_path(
         "data/crosswalk/srt_cache",
         "расшифровки целиком не публикуются (права); в карточке — цитата ±120 знаков")
     manifest.declare_omitted_path(
-        "data/modules/20-lectures.json",
-        "аннотации глав шли в промпт прохода D; на карточке дублировали бы вопрос")
-    manifest.declare_omitted_path(
         "data/lectures_kwic.json",
-        "прежний KWIC по книге, а не по расшифровкам: другой источник, не про эти рёбра")
+        "KWIC по вечеру памяти, а не по этим записям: другой источник, не про эти рёбра")
 
     doc = render_review_sheet(items, config, screening=screening, manifest=manifest)
+    doc = doc.replace("</body>", prefill_script(SHEET_ID) + "</body>", 1)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     OUT_HTML.write_text(doc, encoding="utf-8")
 
     print(f"записано {OUT_HTML.relative_to(REPO)} — {len(items)} карточек "
           f"(кандидаты {counts['candidate']}, спорные {counts['disputed']}, "
           f"дубли {counts['duplicate']})")
-    print(f"решения выгружаются в {SAVE_AS}")
+    print(f"решения выгружаются в {SAVE_AS}; применение — "
+          f"python scripts/crosswalk/apply_gate_decisions.py <decisions.json>")
     print("кандидаты продублированы в data/crosswalk/gate_candidates.json (лист gitignored)")
     return 0
 
