@@ -1,7 +1,7 @@
 {
- "schema": "bookindex.crosswalk.gate/1",
- "generated": "2026-08-14",
- "sheet_id": "bookindex-crosswalk-video-chapter",
+ "schema": "bookindex.crosswalk.gate/2",
+ "generated": "2026-08-15",
+ "sheet_id": "bookindex-crosswalk-video-chapter-v2",
  "counts": {
   "candidate": 38,
   "disputed": 210,

@@ -1,0 +1,1282 @@
+{
+  "sheet_id": "bookindex-crosswalk-video-chapter",
+  "generated": "2026-08-15T16:38:40.464Z",
+  "decided": 10,
+  "items": [
+    {
+      "id": "acc001-ch06-kwic",
+      "decision": "reject",
+      "note": "Связать запись acc001 с главой ch06 «История русского языка» (связь expands, проход kwic, уверенность 0.56) ▸ 30:54? - и как по твоему я должен знать что такое запись acc001? Ты придумал ее, но ты забыл рассказать что это.\nСвязь вредная, потому что изумруд в цитате используется переносно."
+    },
+    {
+      "id": "acc004-ch06-kwic",
+      "decision": "approve",
+      "note": ""
+    },
+    {
+      "id": "acc004-ch10-kwic",
+      "decision": "approve",
+      "note": ""
+    },
+    {
+      "id": "acc005-ch06-kwic",
+      "decision": "approve",
+      "note": ""
+    },
+    {
+      "id": "acc005-ch08-kwic",
+      "decision": "defer",
+      "note": "термин указателя семнадцать - а в книге он на что ссылался? Тоже на семнадцать писем?"
+    },
+    {
+      "id": "acc006-ch06-kwic",
+      "decision": "approve",
+      "note": "с. 180; файл Зализняк - файлов много, надо цитировать точно название файла."
+    },
+    {
+      "id": "acc007-ch06-kwic",
+      "decision": "approve",
+      "note": ""
+    },
+    {
+      "id": "acc007-ch08-kwic",
+      "decision": "reject",
+      "note": ""
+    },
+    {
+      "id": "acc009-ch06-title_topics",
+      "decision": "approve",
+      "note": ""
+    },
+    {
+      "id": "acc009-ch09-llm",
+      "decision": "defer",
+      "note": "Доказательство\nмодель deepseek-v4-flash - это не может быть самим докозательством, а способом получения оного. Связать запись acc009 - не знаю кто это такой. Не понимая кого с кем связываем, трудно ответить. Переделай целиком все голосование согласно началу голосования и моим примечаниям там."
+    },
+    {
+      "id": "acc009-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc009-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc010-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc011-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc011-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc013-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc013-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc013-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc014-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc014-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc015-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc015-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc015-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc017-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc018-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc019-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc019-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc019-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc020-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc021-ch01-title_topics",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc021-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc022-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc023-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc023-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc023-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc024-ch01-title_topics",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc024-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc024-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc025-ch01-title_topics",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc025-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc025-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc025-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc026-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc026-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc027-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc027-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc029-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc029-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc029-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc030-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc030-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc030-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc031-ch01-title_topics",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc031-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc031-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc031-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc032-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc032-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc033-ch05-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc034-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc034-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc035-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc035-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc036-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc037-ch03-title_topics",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc037-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc037-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc037-ch10-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc038-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc038-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc038-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc039-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc039-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc039-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc040-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc041-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc044-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc044-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc044-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc045-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc045-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc046-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc047-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc048-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc048-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc049-ch01-title_topics",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc049-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc049-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc050-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc051-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc051-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc052-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc055-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc056-ch02-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc057-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc057-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc058-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc059-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc059-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc065-ch05-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc066-ch02-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc068-ch05-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc069-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc070-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc071-ch05-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc071-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc073-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc074-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc074-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc075-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc076-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc076-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc077-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc079-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc079-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc081-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc082-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc082-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc083-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc084-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc085-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc085-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc087-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc090-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc091-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc092-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc093-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc095-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc096-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc096-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc097-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc098-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc099-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc100-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc100-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc101-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc103-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc103-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc104-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc105-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc106-ch02-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc107-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc107-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc108-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc108-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc109-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc110-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc110-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc111-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc112-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc112-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc113-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc113-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc114-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc115-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc116-ch02-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc116-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc117-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc119-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc120-ch02-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc124-ch05-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc124-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc126-ch03-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc126-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc127-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc129-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc129-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc129-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc130-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc130-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc131-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc131-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc132-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc132-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc132-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc133-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc133-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc134-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc134-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc134-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc135-ch08-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc135-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc135-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc136-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc137-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc138-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc139-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc140-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc140-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc141-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc142-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc142-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc143-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc143-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc144-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc144-ch05-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc147-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc147-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc148-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc148-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc148-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc149-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc151-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc152-ch01-title_topics",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc152-ch04-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc152-ch05-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc152-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc153-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc154-ch01-title_topics",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc154-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc154-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc154-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc155-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc155-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc156-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc156-ch05-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc156-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc157-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc159-ch08-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc159-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc160-ch01-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc160-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc160-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc161-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc162-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc162-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc163-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc165-ch03-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc165-ch06-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc166-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc167-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc167-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc168-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc168-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc169-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc170-ch06-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc170-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc171-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc171-ch10-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc172-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc173-ch05-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc173-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc174-ch06-title_topics",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc174-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc174-ch09-llm",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc174-ch11-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc175-ch08-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "acc176-ch09-kwic",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "dup-008-012",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "dup-017-018",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "dup-119-173",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "dup-088-107",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "dup-007-054",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "dup-005-040",
+      "decision": null,
+      "note": ""
+    },
+    {
+      "id": "dup-023-034",
+      "decision": null,
+      "note": ""
+    }
+  ]
+}
