@@ -35,8 +35,27 @@ def load_json(path: Path):
 
 
 def dump_json(path: Path, obj) -> None:
+    """Рабочие файлы прохода (`data/crosswalk/*`): компактный indent=1, всегда LF.
+
+    `newline="\\n"` обязателен: без него на Windows Python пишет CRLF, и файл
+    целиком «меняется» в diff при правке одной строки.
+    """
     Path(path).parent.mkdir(parents=True, exist_ok=True)
-    Path(path).write_text(json.dumps(obj, ensure_ascii=False, indent=1), encoding="utf-8")
+    Path(path).write_text(json.dumps(obj, ensure_ascii=False, indent=1),
+                          encoding="utf-8", newline="\n")
+
+
+def dump_canonical(path: Path, obj) -> None:
+    """Канонические данные приложения — формат `scripts/app_data_modules.py`.
+
+    `data/modules/*.json` и `data/video_catalog_public.v2.json` пишутся
+    `indent=2` + завершающий перевод строки + LF. Писать их через `dump_json`
+    нельзя: `indent=1` ломает байтовую сверку split/assemble в CI и раздувает
+    diff одной правки до размера всего файла.
+    """
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    Path(path).write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n",
+                          encoding="utf-8", newline="\n")
 
 
 def chapters() -> list[dict]:
