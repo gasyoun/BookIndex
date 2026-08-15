@@ -1,0 +1,232 @@
+{
+ "votes": [
+  {
+   "sheet_id": "bookindex-crosswalk-video-chapter-v2",
+   "generated": "2026-08-15T20:13:35.135Z",
+   "decided": 44,
+   "time_total_seconds": 868,
+   "items": [
+    {
+     "id": "acc001-ch06-kwic",
+     "decision": "reject",
+     "time_seconds": 100
+    },
+    {
+     "id": "acc004-ch06-kwic",
+     "decision": "approve",
+     "time_seconds": 30
+    },
+    {
+     "id": "acc004-ch10-kwic",
+     "decision": "approve",
+     "time_seconds": 25
+    },
+    {
+     "id": "acc005-ch06-kwic",
+     "decision": "approve",
+     "time_seconds": 9
+    },
+    {
+     "id": "acc005-ch08-kwic",
+     "decision": "reject",
+     "time_seconds": 28
+    },
+    {
+     "id": "acc006-ch06-kwic",
+     "decision": "approve",
+     "time_seconds": 12
+    },
+    {
+     "id": "acc007-ch06-kwic",
+     "decision": "approve",
+     "time_seconds": 11
+    },
+    {
+     "id": "acc007-ch08-kwic",
+     "decision": "reject",
+     "time_seconds": 50
+    },
+    {
+     "id": "acc009-ch06-title_topics",
+     "decision": "approve",
+     "time_seconds": 12
+    },
+    {
+     "id": "acc009-ch09-llm",
+     "decision": "approve",
+     "time_seconds": 18
+    },
+    {
+     "id": "acc009-ch10-kwic",
+     "decision": "reject",
+     "time_seconds": 16
+    },
+    {
+     "id": "acc009-ch11-kwic",
+     "decision": "reject",
+     "time_seconds": 12
+    },
+    {
+     "id": "acc010-ch06-kwic",
+     "decision": "reject",
+     "time_seconds": 23
+    },
+    {
+     "id": "acc011-ch06-kwic",
+     "decision": "approve",
+     "time_seconds": 12
+    },
+    {
+     "id": "acc011-ch08-kwic",
+     "decision": "approve",
+     "time_seconds": 14
+    },
+    {
+     "id": "acc013-ch06-kwic",
+     "decision": "approve",
+     "time_seconds": 11
+    },
+    {
+     "id": "acc013-ch08-kwic",
+     "decision": "reject",
+     "time_seconds": 21
+    },
+    {
+     "id": "acc013-ch09-llm",
+     "decision": "approve",
+     "time_seconds": 13
+    },
+    {
+     "id": "acc014-ch08-kwic",
+     "decision": "approve",
+     "time_seconds": 23
+    },
+    {
+     "id": "acc014-ch09-kwic",
+     "decision": "approve",
+     "time_seconds": 11
+    },
+    {
+     "id": "acc015-ch01-llm",
+     "decision": "approve",
+     "time_seconds": 11
+    },
+    {
+     "id": "acc015-ch06-kwic",
+     "decision": "reject",
+     "time_seconds": 37
+    },
+    {
+     "id": "acc015-ch08-kwic",
+     "decision": "approve",
+     "time_seconds": 10
+    },
+    {
+     "id": "acc017-ch06-kwic",
+     "decision": "approve",
+     "time_seconds": 11
+    },
+    {
+     "id": "acc018-ch06-kwic",
+     "decision": "approve",
+     "time_seconds": 28
+    },
+    {
+     "id": "acc019-ch01-llm",
+     "decision": "approve",
+     "time_seconds": 8
+    },
+    {
+     "id": "acc019-ch08-kwic",
+     "decision": "approve",
+     "time_seconds": 22
+    },
+    {
+     "id": "acc019-ch11-kwic",
+     "decision": "approve",
+     "time_seconds": 13
+    },
+    {
+     "id": "acc020-ch08-kwic",
+     "decision": "reject",
+     "time_seconds": 14
+    },
+    {
+     "id": "acc021-ch01-title_topics",
+     "decision": "approve",
+     "time_seconds": 7
+    },
+    {
+     "id": "acc021-ch08-kwic",
+     "decision": "reject",
+     "time_seconds": 13
+    },
+    {
+     "id": "acc022-ch06-kwic",
+     "decision": "approve",
+     "time_seconds": 12
+    },
+    {
+     "id": "acc023-ch09-llm",
+     "decision": "approve",
+     "time_seconds": 23
+    },
+    {
+     "id": "acc023-ch10-kwic",
+     "decision": "approve",
+     "time_seconds": 10
+    },
+    {
+     "id": "acc023-ch11-kwic",
+     "decision": "approve",
+     "time_seconds": 60
+    },
+    {
+     "id": "acc024-ch01-title_topics",
+     "decision": "approve",
+     "time_seconds": 7
+    },
+    {
+     "id": "acc024-ch09-llm",
+     "decision": "approve",
+     "time_seconds": 24
+    },
+    {
+     "id": "acc024-ch11-kwic",
+     "decision": "reject",
+     "time_seconds": 11
+    },
+    {
+     "id": "acc025-ch01-title_topics",
+     "decision": "approve",
+     "time_seconds": 11
+    },
+    {
+     "id": "acc025-ch06-kwic",
+     "decision": "reject",
+     "time_seconds": 12
+    },
+    {
+     "id": "acc025-ch08-kwic",
+     "decision": "reject",
+     "time_seconds": 23
+    },
+    {
+     "id": "acc025-ch09-llm",
+     "decision": "approve",
+     "time_seconds": 14
+    },
+    {
+     "id": "acc026-ch08-kwic",
+     "decision": "reject",
+     "time_seconds": 15
+    },
+    {
+     "id": "acc026-ch10-kwic",
+     "decision": "approve",
+     "time_seconds": 21
+    }
+   ]
+  }
+ ]
+}

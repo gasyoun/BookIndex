@@ -28,7 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import CATALOG, CW, MODULES, dump_json, load_json  # noqa: E402
+from common import CATALOG, CW, MODULES, dump_canonical, dump_json, load_json  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -101,8 +101,8 @@ def main() -> int:
         print("--dry: ничего не записано")
         return 0
 
-    dump_json(CROSSWALK, doc)
-    dump_json(CATALOG, cat_doc)
+    dump_canonical(CROSSWALK, doc)      # модуль app_data.json — формат сверяет CI
+    dump_canonical(CATALOG, cat_doc)
     telem = load_json(TELEMETRY) if TELEMETRY.is_file() else {"votes": []}
     telem["votes"].append({
         "sheet_id": dec.get("sheet_id"),
