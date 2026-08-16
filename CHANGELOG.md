@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.15.0] - 2026-08-16
+
 ### Added
 
 - **Куратор-гейт креста v4 — переделка по замечаниям третьего захода (H2707-гейт; правки — Fable 5 `claude-fable-5`, скрин — DeepSeek `deepseek-v4-flash`).** 210 → **160 карточек**: применены 39 решений куратора ([gate_decisions_v3_partial.json](https://github.com/gasyoun/BookIndex/blob/main/data/crosswalk/gate_decisions_v3_partial.json)), 11 ложных подстрочных совпадений (тер|петь) сняты машинным правилом R1, откалиброванным на всех 62 голосах куратора с нулём ложных срабатываний ([apply_kwic_autoreject.py](https://github.com/gasyoun/BookIndex/blob/main/scripts/crosswalk/apply_kwic_autoreject.py)). Оставшиеся спорные kwic-рёбра несут вердикт DeepSeek-скрина и отсортированы «вероятный мусор — в конец»; семантический автоотсев отвергнут честно — на тех же голосах он убил бы 13–14 approve ([deepseek_kwic_screen.py](https://github.com/gasyoun/BookIndex/blob/main/scripts/crosswalk/deepseek_kwic_screen.py), вердикты в [kwic_screen_verdicts.json](https://github.com/gasyoun/BookIndex/blob/main/data/crosswalk/kwic_screen_verdicts.json)). Reject — в один клик по ярлыкам; `decisions.json` теперь несёт `context {handoff: H2707, repo, apply_with}` (csl-pyutil 0.13.0 V14) и лист прошёл identity-gate V13. Разбор и матрицы: [docs/RESULTS_CROSSWALK_GATE_V4_REDO_2026-08-16.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_CROSSWALK_GATE_V4_REDO_2026-08-16.md).
