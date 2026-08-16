@@ -29,6 +29,17 @@
 * лист меряет время куратора (csl-pyutil v0.10.0, V11): всего и на карточку,
   секунды уходят в decisions.json.
 
+Версия 3 (H2857) — после второго захода 15-08-2026: 30 принято, 14 отклонено из
+255 за 14 минут, дальше время кончилось. Два следствия:
+
+* решённое применено к кресту и на лист больше не выносится (`SETTLED`). До v3
+  фильтр по статусу стоял только на ветке «спорные», поэтому отклонённое ребро
+  прохода LLM вернулось бы кандидатом следующим заходом;
+* «Сдать сколько успел» и ⏸ (csl-pyutil v0.11.0, V12) — куратор может
+  остановиться, не потеряв работу: «Хочу поставить на паузу, остановить таймер и
+  остановить работу, сдать то что было… но такой функции как сдать сколько успел
+  нет — а она нужна.»
+
 Лист пишется в gitignored `review/`; в коммит идут кандидаты
 `data/crosswalk/gate_candidates.json`. Применение решений —
 `scripts/crosswalk/apply_gate_decisions.py`.
@@ -52,11 +63,17 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parents[2]
 OUT_DIR = REPO / "review"
-SHEET_ID = "bookindex-crosswalk-video-chapter-v2"
+SHEET_ID = "bookindex-crosswalk-video-chapter-v3"
 OUT_HTML = OUT_DIR / "crosswalk_gate.html"
 SAVE_AS = "review/crosswalk_gate_decisions.json"
-PREFILL_V1 = CW / "gate_decisions_v1_partial.json"
-GENERATED = "2026-08-15"
+PREFILL_V1 = CW / "gate_decisions_v2_partial.json"
+GENERATED = "2026-08-16"
+
+# Решённое куратором на лист больше не выносится (H2857). До v3 фильтр по статусу
+# стоял только на ветке `disputed`: ребро прохода LLM или слабого KWIC попадало в
+# «кандидаты» независимо от статуса, поэтому уже отклонённое ребро вернулось бы на
+# лист следующим заходом.
+SETTLED = {"approved", "rejected"}
 
 PRINT_FLOOR = 0.85          # ниже этого ребро KWIC на полосу не идёт без куратора
 
@@ -143,6 +160,8 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
     counts = {"candidate": 0, "disputed": 0, "duplicate": 0}
 
     for e in module["edges"]:
+        if e["status"] in SETTLED:
+            continue          # куратор уже высказался — второй раз не спрашиваем
         is_llm = e["pass"] == "llm"
         weak_auto = e["status"] == "auto" and e["pass"] == "kwic" and e["confidence"] < PRINT_FLOOR
         if e["status"] == "disputed":
@@ -239,6 +258,8 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
         })
 
     for d in module["duplicates"]:
+        if d.get("status") in SETTLED:
+            continue
         counts["duplicate"] += 1
         a, b = d["pair"]
         ta, tb = ((cat.get(a) or {}).get("title_display") or f"acc{a}",
@@ -329,18 +350,21 @@ def main() -> int:
 
     config = {
         "sheet_id": SHEET_ID,
-        "title": "BookIndex — крест «видео ↔ главы», куратор-гейт v2 (H2841)",
+        "title": "BookIndex — крест «видео ↔ главы», куратор-гейт v3 (H2857)",
         "subtitle": (
             f"{stats['edges']} рёбер на {stats['records_covered']} из "
             f"{stats['records_total']} записей каталога; {stats['with_timecode']} с тайм-кодом. "
             "Approve = ребро идёт в печать волны 2; Reject = ребро остаётся в данных "
-            "со статусом rejected и на полосу не попадает. Десять решений захода "
-            "15-08-2026 уже проставлены — их можно менять."
+            f"со статусом rejected и на полосу не попадает. Решённое в заходах "
+            f"15-08-2026 ({stats.get('approved', 0)} принято, {stats.get('rejected', 0)} "
+            "отклонено) применено к данным и на лист больше не выносится."
         ),
         "footer": ("Секции: кандидаты (LLM и слабый KWIC) · спорные (ниже порога прохода) · "
-                   "дубли (все семь пар одинаковой длительности). Записи каталога не "
+                   "дубли (пары одинаковой длительности). Записи каталога не "
                    "удаляются ни при каком решении. Лист меряет активное время (⏱) — "
-                   "всего и на карточку; секунды уходят в decisions.json."),
+                   "всего и на карточку; секунды уходят в decisions.json. Кончилось "
+                   "время — ⏸ останавливает таймер, «Сдать сколько успел» выгружает "
+                   "проголосованное; остальное остаётся в браузере, заход продолжается."),
         "approve_label": "Принять связь",
         "reject_label": "Отклонить",
         "filters": [("candidate", f"кандидаты ({counts['candidate']})"),
@@ -349,7 +373,16 @@ def main() -> int:
         "generated": GENERATED,
         "show_ids": True,
         "save_as": SAVE_AS,
-        "ui_strings": {"timing_title": "активное время на листе (пока вкладка видима)"},
+        "ui_strings": {
+            "timing_title": "активное время на листе (пока вкладка видима)",
+            # V12 (csl-pyutil 0.11.0) — то, чего куратору не хватило 15-08-2026.
+            "handin_button": "Сдать сколько успел",
+            "handin_title": ("остановить таймер и выгрузить уже проголосованное; "
+                             "остальное остаётся сохранённым в этом браузере"),
+            "pause_title": "пауза — перерыв не должен считаться работой",
+            "handin_said": ("сдано {n} из {total} — таймер остановлен, "
+                            "остальное осталось в браузере"),
+        },
         # Идентификаторы YouTube — латиница со смешанным регистром, и детектор
         # SLP1 читает их как санскрит в человеческом тексте. Это не транслитерация,
         # а машинный ключ, поэтому он объявляется допустимым явно. Латинские
