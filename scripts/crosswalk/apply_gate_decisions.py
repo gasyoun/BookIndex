@@ -58,6 +58,11 @@ def main() -> int:
 
     applied = Counter()
     telem_items = []
+    ctx = dec.get("context")
+    if ctx:
+        print(f"context: {ctx}")
+        if ctx.get("handoff") and ctx["handoff"] != "H2707":
+            print(f"⚠ context.handoff = {ctx['handoff']} — файл от другого гейта?")
     for item in dec["items"]:
         d, note = item.get("decision"), (item.get("note") or "").strip()
         if item.get("time_seconds"):
@@ -72,12 +77,17 @@ def main() -> int:
             edges[eid]["status"] = "approved" if d == "approve" else "rejected"
             if note:
                 edges[eid]["curator_note"] = note
+            if d == "reject" and item.get("reject_label"):
+                # v4: reject-ярлык в один клик — машиночитаемая причина
+                edges[eid]["curator_reject_label"] = item["reject_label"]
             applied[f"ребро {d}"] += 1
         elif eid in dups:
             dup = dups[eid]
             dup["status"] = "approved" if d == "approve" else "rejected"
             if note:
                 dup["curator_note"] = note
+            if d == "reject" and item.get("reject_label"):
+                dup["curator_reject_label"] = item["reject_label"]
             if d == "approve":
                 a, b = sorted(dup["pair"])          # бо́льший указывает на меньший
                 if b in cat:

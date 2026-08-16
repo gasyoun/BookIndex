@@ -40,13 +40,33 @@
   остановить работу, сдать то что было… но такой функции как сдать сколько успел
   нет — а она нужна.»
 
+Версия 4 (16-08-2026) — после третьего захода (39 решений, v3 partial) и
+замечаний куратора «Почему показана невозможная связь петь и терпеть?
+Переделай все голосование, чтобы человек на подобный мусор больше времени
+не тратил» и «почему в скачанном .json нет главного, H2707 для опознания»:
+
+* ложные подстрочные совпадения (тер|петь) сняты машиной ДО листа — правило
+  R1, откалиброванное на 62 голосах куратора с нулём ложных срабатываний
+  (scripts/crosswalk/apply_kwic_autoreject.py);
+* каждое оставшееся спорное kwic-ребро несёт вердикт DeepSeek-скрина
+  (linguistic / mere_use / false_match — scripts/crosswalk/deepseek_kwic_screen.py);
+  карточки отсортированы: вероятно-ценные первыми, вероятный мусор в конце.
+  Скрин НЕ режет сам: на тех же 62 голосах он убил бы 13–14 approve —
+  критерий куратора шире (биографическим главам достаточно тематической
+  связи), поэтому семантика остаётся человеку;
+* reject получил ярлыки в один клик («лишь употреблено», «метафора»,
+  «ложное совпадение», «глава другая») — печатать причину больше не нужно;
+* decisions.json несёт context {handoff: H2707, repo, apply_with}
+  (V14 csl-pyutil 0.13.0) — файл сам говорит, чей он;
+* identity-gate V13 включён: каждый acc###/ch## в вопросе назван по имени.
+
 Лист пишется в gitignored `review/`; в коммит идут кандидаты
 `data/crosswalk/gate_candidates.json`. Применение решений —
 `scripts/crosswalk/apply_gate_decisions.py`.
 
     python scripts/crosswalk/build_crosswalk_gate.py
 
-План: docs/PLAN_BOOKINDEX_VIDEO_LECTURE_CROSSWALK_2026Q3.md · handoffs H2711, H2841.
+План: docs/PLAN_BOOKINDEX_VIDEO_LECTURE_CROSSWALK_2026Q3.md · handoffs H2711, H2841, H2707.
 """
 from __future__ import annotations
 
@@ -63,11 +83,24 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parents[2]
 OUT_DIR = REPO / "review"
-SHEET_ID = "bookindex-crosswalk-video-chapter-v3"
+SHEET_ID = "bookindex-crosswalk-video-chapter-v4"
 OUT_HTML = OUT_DIR / "crosswalk_gate.html"
 SAVE_AS = "review/crosswalk_gate_decisions.json"
-PREFILL_V1 = CW / "gate_decisions_v2_partial.json"
+PREFILL_V1 = CW / "gate_decisions_v3_partial.json"
 GENERATED = "2026-08-16"
+SCREEN_FILE = CW / "kwic_screen_verdicts.json"
+CONTEXT = {"handoff": "H2707", "repo": "gasyoun/BookIndex",
+           "apply_with": "python scripts/crosswalk/apply_gate_decisions.py"}
+SCREEN_RU = {"linguistic": "скрин: о слове / по теме главы",
+             "mere_use": "скрин: слово лишь употреблено",
+             "false_match": "скрин: ложное совпадение",
+             "unsure": "скрин: не ясно"}
+SCREEN_ORDER = {"linguistic": 0, None: 1, "unsure": 1, "mere_use": 2, "false_match": 3}
+REJECT_LABELS = [("mere_use", "слово лишь употреблено"),
+                 ("metaphor", "метафора"),
+                 ("false_match", "ложное совпадение"),
+                 ("wrong_chapter", "глава другая"),
+                 ("other", "другое (в заметку)")]
 
 # Решённое куратором на лист больше не выносится (H2857). До v3 фильтр по статусу
 # стоял только на ветке `disputed`: ребро прохода LLM или слабого KWIC попадало в
@@ -152,10 +185,14 @@ def quote_source(quote: str) -> str | None:
     return None
 
 
-def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
+def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict, dict]:
     chs = {c["id"]: c for c in chapters()}
     lectures = {l["name"]: l for l in load_json(MODULES / "20-lectures.json")["lectures"]}
     idx = index_entries()
+    screen = {}
+    if SCREEN_FILE.is_file():
+        screen = {r["edge_id"]: r for r in load_json(SCREEN_FILE)["verdicts"]}
+    id_labels: dict[str, str] = {}
     items: list[dict] = []
     counts = {"candidate": 0, "disputed": 0, "duplicate": 0}
 
@@ -245,12 +282,25 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
         if extra:
             panels.append(("Прочие сигналы", "<div>" + "; ".join(extra) + "</div>"))
 
+        badges = [e["pass"], f'{e["confidence"]:.2f}', rel_ru]
+        sc = screen.get(e["edge_id"])
+        if sc:
+            badges.append(SCREEN_RU.get(sc.get("verdict"), sc.get("verdict", "")))
+            panels.append(("Скрин DeepSeek (не приговор)", (
+                f'<div>{esc(SCREEN_RU.get(sc.get("verdict"), sc.get("verdict")))} — '
+                f'{esc(sc.get("reason", ""))}. Модель deepseek-v4-flash; на 62 ваших '
+                f'голосах скрин расходится с вами в ~1/4 случаев, поэтому он только '
+                f'сортирует и подписывает карточки, а решает человек.</div>')))
+
+        id_labels[f'acc{e["accession"]}'] = title
+        id_labels[e["chapter"]] = ch.get("name", "")
         items.append({
             "id": e["edge_id"],
             "filt": filt,
+            "_screen_rank": SCREEN_ORDER.get((sc or {}).get("verdict"), 1),
             "title": f'«{title}» ↔ {e["chapter"]} «{ch.get("name", "")}»',
             "title_href": v.get("watch_url"),
-            "badges": [e["pass"], f'{e["confidence"]:.2f}', rel_ru],
+            "badges": badges,
             "question": question,
             "panels": panels,
             "note_placeholder": "если глава другая — впишите ch01…ch11; apply-скрипт читает "
@@ -264,6 +314,8 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
         a, b = d["pair"]
         ta, tb = ((cat.get(a) or {}).get("title_display") or f"acc{a}",
                   (cat.get(b) or {}).get("title_display") or f"acc{b}")
+        id_labels[f"acc{a}"] = ta
+        id_labels[f"acc{b}"] = tb
         items.append({
             "id": f"dup-{a}-{b}",
             "filt": "duplicate",
@@ -285,7 +337,12 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict]:
             "note_placeholder": "чем именно записи отличаются, если это не дубль",
         })
 
-    return items, counts
+    # вероятно-ценные карточки первыми, вероятный мусор в конце (замечание
+    # куратора v3: не тратить человеческое время на мусор); сортировка
+    # устойчивая — внутри ранга исходный порядок рёбер сохраняется
+    group = {"candidate": 0, "disputed": 1, "duplicate": 2}
+    items.sort(key=lambda it: (group[it["filt"]], it.pop("_screen_rank", 1)))
+    return items, counts, id_labels
 
 
 def prefill_script(sheet_id: str) -> str:
@@ -322,7 +379,7 @@ def main() -> int:
 
     module = load_json(MODULES / "22-crosswalk.json")["crosswalk"]
     cat = {v["accession"]: v for v in catalog()}
-    items, counts = build_items(module, cat)
+    items, counts, id_labels = build_items(module, cat)
 
     dump_json(CW / "gate_candidates.json", {
         "schema": "bookindex.crosswalk.gate/2",
@@ -350,14 +407,21 @@ def main() -> int:
 
     config = {
         "sheet_id": SHEET_ID,
-        "title": "BookIndex — крест «видео ↔ главы», куратор-гейт v3 (H2857)",
+        "title": "BookIndex — крест «видео ↔ главы», куратор-гейт v4 (H2707)",
+        "context": CONTEXT,
+        "reject_labels": REJECT_LABELS,
+        "identity_gate": {"patterns": [r"\bacc\d{3}\b", r"\bch\d{2}\b"],
+                          "labels": id_labels},
         "subtitle": (
             f"{stats['edges']} рёбер на {stats['records_covered']} из "
             f"{stats['records_total']} записей каталога; {stats['with_timecode']} с тайм-кодом. "
             "Approve = ребро идёт в печать волны 2; Reject = ребро остаётся в данных "
             f"со статусом rejected и на полосу не попадает. Решённое в заходах "
-            f"15-08-2026 ({stats.get('approved', 0)} принято, {stats.get('rejected', 0)} "
-            "отклонено) применено к данным и на лист больше не выносится."
+            f"15–16-08-2026 ({stats.get('approved', 0)} принято, {stats.get('rejected', 0)} "
+            "отклонено, включая машинные R1-отсевы ложных подстрочных совпадений) "
+            "применено к данным и на лист больше не выносится. Карточки отсортированы "
+            "DeepSeek-скрином: вероятно-ценные первыми, вероятный мусор в конце — "
+            "вердикт скрина подписан на карточке, решает человек."
         ),
         "footer": ("Секции: кандидаты (LLM и слабый KWIC) · спорные (ниже порога прохода) · "
                    "дубли (пары одинаковой длительности). Записи каталога не "
