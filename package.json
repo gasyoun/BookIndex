@@ -44,7 +44,7 @@
     "e2e:report": "playwright show-report"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
     "chrome-launcher": "^1.2.1",
     "lighthouse": "^13.4.1",
