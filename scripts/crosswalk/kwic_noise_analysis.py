@@ -31,7 +31,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 PARTIALS = [CW / "gate_decisions_v1_partial.json",
             CW / "gate_decisions_v2_partial.json",
-            CW / "gate_decisions_v3_partial.json"]
+            CW / "gate_decisions_v3_partial.json",
+            CW / "gate_decisions_v4.json"]
 
 # маркеры разговора о слове/языке (основы, без окончаний)
 META_MARKERS = [

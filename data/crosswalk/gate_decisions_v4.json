@@ -1,0 +1,1136 @@
+{
+  "sheet_id": "bookindex-crosswalk-video-chapter-v4",
+  "context": {
+    "handoff": "H2707",
+    "repo": "gasyoun/BookIndex",
+    "apply_with": "python scripts/crosswalk/apply_gate_decisions.py"
+  },
+  "generated": "2026-08-16",
+  "decided": 160,
+  "partial": true,
+  "complete": false,
+  "undecided": 0,
+  "items": [
+    {
+      "id": "acc050-ch04-kwic",
+      "decision": "reject",
+      "note": "Почему вообще мое время тратиться, сопоставляя Крит и санскритская? Можно ли пересобрать голосование без подобного мусора? Чтобы впредь нигде подобное не повторялось.",
+      "time_seconds": 77,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc051-ch01-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 5,
+      "reject_label": null
+    },
+    {
+      "id": "acc052-ch01-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 3,
+      "reject_label": null
+    },
+    {
+      "id": "acc129-ch01-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": null
+    },
+    {
+      "id": "acc132-ch09-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 127,
+      "reject_label": null
+    },
+    {
+      "id": "acc134-ch01-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 3,
+      "reject_label": null
+    },
+    {
+      "id": "acc148-ch01-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc149-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 14,
+      "reject_label": null
+    },
+    {
+      "id": "acc151-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 15,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc152-ch09-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 6,
+      "reject_label": null
+    },
+    {
+      "id": "acc153-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc154-ch09-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 6,
+      "reject_label": null
+    },
+    {
+      "id": "acc156-ch01-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 3,
+      "reject_label": null
+    },
+    {
+      "id": "acc157-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 6,
+      "reject_label": null
+    },
+    {
+      "id": "acc159-ch08-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 26,
+      "reject_label": null
+    },
+    {
+      "id": "acc160-ch01-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 6,
+      "reject_label": null
+    },
+    {
+      "id": "acc161-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 18,
+      "reject_label": null
+    },
+    {
+      "id": "acc165-ch06-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 11,
+      "reject_label": null
+    },
+    {
+      "id": "acc173-ch05-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": null
+    },
+    {
+      "id": "acc174-ch09-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc048-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc048-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 5,
+      "reject_label": null
+    },
+    {
+      "id": "acc056-ch02-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc059-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 18,
+      "reject_label": null
+    },
+    {
+      "id": "acc059-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc071-ch05-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": null
+    },
+    {
+      "id": "acc071-ch09-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": null
+    },
+    {
+      "id": "acc074-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": null
+    },
+    {
+      "id": "acc075-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": null
+    },
+    {
+      "id": "acc076-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc077-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": null
+    },
+    {
+      "id": "acc079-ch04-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc079-ch11-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc081-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": null
+    },
+    {
+      "id": "acc084-ch04-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 6,
+      "reject_label": null
+    },
+    {
+      "id": "acc085-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc090-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 23,
+      "reject_label": null
+    },
+    {
+      "id": "acc091-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 24,
+      "reject_label": null
+    },
+    {
+      "id": "acc104-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 15,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc105-ch11-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": null
+    },
+    {
+      "id": "acc107-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc108-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 11,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc109-ch11-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": null
+    },
+    {
+      "id": "acc113-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": null
+    },
+    {
+      "id": "acc114-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc119-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 15,
+      "reject_label": null
+    },
+    {
+      "id": "acc120-ch02-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 24,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc124-ch05-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc129-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 11,
+      "reject_label": null
+    },
+    {
+      "id": "acc130-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc131-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": null
+    },
+    {
+      "id": "acc132-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": null
+    },
+    {
+      "id": "acc136-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": null
+    },
+    {
+      "id": "acc137-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": null
+    },
+    {
+      "id": "acc140-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 5,
+      "reject_label": null
+    },
+    {
+      "id": "acc140-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc143-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc148-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": null
+    },
+    {
+      "id": "acc152-ch04-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": "metaphor"
+    },
+    {
+      "id": "acc154-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 14,
+      "reject_label": null
+    },
+    {
+      "id": "acc155-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 4,
+      "reject_label": null
+    },
+    {
+      "id": "acc163-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": null
+    },
+    {
+      "id": "acc166-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc167-ch11-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc169-ch06-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 24,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc170-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 5,
+      "reject_label": null
+    },
+    {
+      "id": "acc049-ch01-title_topics",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": null
+    },
+    {
+      "id": "acc100-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": null
+    },
+    {
+      "id": "acc110-ch04-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": null
+    },
+    {
+      "id": "acc135-ch08-llm",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 29,
+      "reject_label": null
+    },
+    {
+      "id": "acc147-ch09-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": null
+    },
+    {
+      "id": "acc152-ch01-title_topics",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc154-ch01-title_topics",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc174-ch06-title_topics",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc049-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc057-ch06-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc057-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc058-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 15,
+      "reject_label": "metaphor"
+    },
+    {
+      "id": "acc065-ch05-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": null
+    },
+    {
+      "id": "acc068-ch05-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc070-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": null
+    },
+    {
+      "id": "acc073-ch06-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc074-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 21,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc082-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 14,
+      "reject_label": "metaphor"
+    },
+    {
+      "id": "acc083-ch06-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": "metaphor"
+    },
+    {
+      "id": "acc085-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc092-ch11-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": null
+    },
+    {
+      "id": "acc095-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 26,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc096-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 11,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc097-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": null
+    },
+    {
+      "id": "acc103-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 22,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc108-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 23,
+      "reject_label": "metaphor"
+    },
+    {
+      "id": "acc111-ch04-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc112-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc113-ch06-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc115-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 23,
+      "reject_label": "metaphor"
+    },
+    {
+      "id": "acc116-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": null
+    },
+    {
+      "id": "acc130-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "acc131-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 110,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc133-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc134-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc135-ch09-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 14,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc135-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 15,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc139-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 20,
+      "reject_label": "metaphor"
+    },
+    {
+      "id": "acc141-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 23,
+      "reject_label": "metaphor"
+    },
+    {
+      "id": "acc142-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": null
+    },
+    {
+      "id": "acc142-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc144-ch04-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc144-ch05-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 14,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc148-ch09-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 15,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc152-ch05-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": null
+    },
+    {
+      "id": "acc154-ch11-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 17,
+      "reject_label": null
+    },
+    {
+      "id": "acc156-ch05-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": "metaphor"
+    },
+    {
+      "id": "acc156-ch06-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 11,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc160-ch06-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc160-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 21,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc162-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc162-ch11-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": null
+    },
+    {
+      "id": "acc168-ch06-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc172-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": null
+    },
+    {
+      "id": "acc049-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 6,
+      "reject_label": null
+    },
+    {
+      "id": "acc055-ch10-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "acc066-ch02-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 117,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc069-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 14,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc076-ch04-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc087-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc093-ch09-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 25,
+      "reject_label": null
+    },
+    {
+      "id": "acc098-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc100-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc101-ch06-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 4,
+      "reject_label": null
+    },
+    {
+      "id": "acc103-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc106-ch02-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc116-ch02-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc117-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc124-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 11,
+      "reject_label": null
+    },
+    {
+      "id": "acc126-ch03-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 17,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc126-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc127-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 14,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc132-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc133-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc134-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 8,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc138-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": null
+    },
+    {
+      "id": "acc143-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 37,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc147-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 16,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc155-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 22,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc159-ch11-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc165-ch03-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 9,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc170-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 11,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc171-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 47,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc171-ch10-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 12,
+      "reject_label": "mere_use"
+    },
+    {
+      "id": "acc173-ch11-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 13,
+      "reject_label": null
+    },
+    {
+      "id": "acc174-ch08-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 24,
+      "reject_label": null
+    },
+    {
+      "id": "acc175-ch08-kwic",
+      "decision": "reject",
+      "note": "",
+      "time_seconds": 17,
+      "reject_label": "false_match"
+    },
+    {
+      "id": "acc176-ch09-kwic",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 17,
+      "reject_label": null
+    },
+    {
+      "id": "dup-008-012",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 10,
+      "reject_label": null
+    },
+    {
+      "id": "dup-017-018",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 7,
+      "reject_label": null
+    },
+    {
+      "id": "dup-119-173",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 5,
+      "reject_label": null
+    },
+    {
+      "id": "dup-088-107",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 3,
+      "reject_label": null
+    },
+    {
+      "id": "dup-007-054",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 1,
+      "reject_label": null
+    },
+    {
+      "id": "dup-023-034",
+      "decision": "approve",
+      "note": "",
+      "time_seconds": 4,
+      "reject_label": null
+    }
+  ],
+  "time_total_seconds": 2322
+}

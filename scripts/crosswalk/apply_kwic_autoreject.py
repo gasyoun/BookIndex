@@ -11,6 +11,10 @@ approve — scripts/crosswalk/kwic_noise_analysis.py): стем термина �
 причиной в curator_note-стиле поля machine_note (аудит-след; куратор ничего
 не голосовал — это машинное решение по его же явному указанию).
 
+H3198: не расширять на `status=auto`. На v4 золоте R1 убивает curator-approve
+acc161 (ворог ⊂ творог). Слабый auto с R1 построитель листа теперь только
+сортирует в конец, не отклоняет.
+
 Run: python scripts/crosswalk/apply_kwic_autoreject.py [--dry]
 """
 from __future__ import annotations

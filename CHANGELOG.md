@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- **Куратор-гейт креста v4 применён полностью ([H3198](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3198-Grok_BookIndex_crosswalk-gate-v4-votes-apply_20.08.26.md), Grok 4.6 `grok-4.6`).** 160/160: 90 approve · 70 reject (84 ребра + 6 пар дублей / 70 рёбер). Статусы рёбер: `approved` 142 · `rejected` 106 · `auto` 129 · `disputed` 0. Голоса: [data/crosswalk/gate_decisions_v4.json](https://github.com/gasyoun/BookIndex/blob/main/data/crosswalk/gate_decisions_v4.json). Разбор: [docs/RESULTS_CROSSWALK_GATE_V4_APPLIED_2026-08-20.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_CROSSWALK_GATE_V4_APPLIED_2026-08-20.md). Печатный разворот 4–5 ([H3135](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3135-Fable_BookIndex_h2707-residual-spread-4-5-print-prose_19.08.26.md)) читает только `status: approved`.
+
+### Fixed
+
+- **Слабый auto-KWIC с ложным подстрочным совпадением (Крит ⊂ санскритская) больше не идёт первой карточкой кандидата.** R1 и DeepSeek-скрин в v4 бежали только по `disputed`; acc050 (`status: auto`, conf 0,777) возглавил лист. Построитель теперь понижает такое ребро в `disputed` + ранг `false_match`. Автоотклонение R1 на `auto` не расширяется: на v4 золоте R1 убивает curator-approve acc161 (`ворог` ⊂ `творог`).
+- **`assemble_app_data.py` writes LF on Windows.** `Path.write_text` without `newline="\n"` emitted CRLF and would have dirtied `app_data.json` the same way `dump_json` did before H2857.
+
 ## [4.15.0] - 2026-08-16
 
 ### Added
