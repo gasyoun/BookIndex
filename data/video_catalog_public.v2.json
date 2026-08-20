@@ -2681,7 +2681,8 @@
         }
       ],
       "last_verified_at": null,
-      "evidence": []
+      "evidence": [],
+      "duplicate_of": "008"
     },
     {
       "accession": "013",
@@ -4130,7 +4131,8 @@
         }
       ],
       "last_verified_at": null,
-      "evidence": []
+      "evidence": [],
+      "duplicate_of": "017"
     },
     {
       "accession": "019",
@@ -5993,7 +5995,8 @@
         }
       ],
       "last_verified_at": null,
-      "evidence": []
+      "evidence": [],
+      "duplicate_of": "023"
     },
     {
       "accession": "035",
@@ -6665,7 +6668,8 @@
             "title_display"
           ]
         }
-      ]
+      ],
+      "duplicate_of": "007"
     },
     {
       "accession": "055",
@@ -9302,7 +9306,8 @@
             "title_display"
           ]
         }
-      ]
+      ],
+      "duplicate_of": "088"
     },
     {
       "accession": "108",
@@ -11395,7 +11400,8 @@
         }
       ],
       "last_verified_at": null,
-      "evidence": []
+      "evidence": [],
+      "duplicate_of": "119"
     },
     {
       "accession": "174",

@@ -23,7 +23,7 @@ def main() -> int:
         print(f"ERROR: {exc}")
         return 1
 
-    out_path.write_text(canonical_json_text(data), encoding="utf-8")
+    out_path.write_text(canonical_json_text(data), encoding="utf-8", newline="\n")
     print(f"OK: assembled {out_path} from {modules_dir}")
     return 0
 

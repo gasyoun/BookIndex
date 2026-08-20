@@ -78,6 +78,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from common import CW, MODULES, catalog, chapters, dump_json, load_json  # noqa: E402
+from kwic_noise_analysis import r1_substring_false  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -201,16 +202,22 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict, d
             continue          # куратор уже высказался — второй раз не спрашиваем
         is_llm = e["pass"] == "llm"
         weak_auto = e["status"] == "auto" and e["pass"] == "kwic" and e["confidence"] < PRINT_FLOOR
+        ev = e.get("evidence") or {}
+        # H3198: R1 (крит⊂санскритская) on weak-auto was shown FIRST as a
+        # "candidate" because R1/screen only ran on disputed. Demote to
+        # disputed + false_match rank so it never leads the pack. Do NOT
+        # auto-reject: v4 gold has 1 R1 false positive (ворог⊂творог, approve).
+        is_r1 = e["pass"] == "kwic" and r1_substring_false(
+            ev.get("term", ""), ev.get("quote", ""))
         if e["status"] == "disputed":
             filt = "disputed"
         elif is_llm or weak_auto:
-            filt = "candidate"
+            filt = "disputed" if is_r1 else "candidate"
         else:
             continue          # проход A и уверенный KWIC — доказаны, человеку не нужны
         counts[filt] += 1
 
         v = cat.get(e["accession"]) or {}
-        ev = e["evidence"]
         ch = chs.get(e["chapter"]) or {}
         ch_label = f'{e["chapter"]} «{ch.get("name", "")}» (с. {ch.get("start")}–{ch.get("end")})'
         title = v.get("title_display") or f'acc{e["accession"]}'
@@ -291,13 +298,18 @@ def build_items(module: dict, cat: dict[str, dict]) -> tuple[list[dict], dict, d
                 f'{esc(sc.get("reason", ""))}. Модель deepseek-v4-flash; на 62 ваших '
                 f'голосах скрин расходится с вами в ~1/4 случаев, поэтому он только '
                 f'сортирует и подписывает карточки, а решает человек.</div>')))
+        if is_r1:
+            badges.append("R1: термин только внутри чужого слова")
 
         id_labels[f'acc{e["accession"]}'] = title
         id_labels[e["chapter"]] = ch.get("name", "")
+        screen_rank = SCREEN_ORDER.get((sc or {}).get("verdict"), 1)
+        if is_r1:
+            screen_rank = max(screen_rank, SCREEN_ORDER["false_match"])
         items.append({
             "id": e["edge_id"],
             "filt": filt,
-            "_screen_rank": SCREEN_ORDER.get((sc or {}).get("verdict"), 1),
+            "_screen_rank": screen_rank,
             "title": f'«{title}» ↔ {e["chapter"]} «{ch.get("name", "")}»',
             "title_href": v.get("watch_url"),
             "badges": badges,
