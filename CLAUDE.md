@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+_Created: 09-05-2026 · Last updated: 20-08-2026_
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project
@@ -42,7 +44,7 @@ Implications:
 
 ## Data: `app_data.json` ↔ `data/modules/`
 
-`app_data.json` (~6 MB) is the single source of truth at runtime, but it is **split into `data/modules/*.json`** for reviewable diffs. CI enforces that the split and reassembly are byte-identical to the committed monolith:
+`app_data.json` (~6.4 MB) is the single source of truth at runtime, but it is **split into `data/modules/*.json`** for reviewable diffs. CI enforces that the split and reassembly are byte-identical to the committed monolith:
 
 ```sh
 npm run data:split       # app_data.json  ->  data/modules/*.json
@@ -80,7 +82,7 @@ The optional Gemini Flash workflow is documented in `docs/GEMINI_FLASH_WORKFLOW_
 ```sh
 npm run e2e                # full Playwright suite against aaz-index.html
 npm run check:e2e:smoke    # fast local subset for focused smoke checks
-npm run check:redesign     # Phase U4 route harness (8 routes x desktop/mobile)
+npm run check:redesign     # Phase U4 route harness (10 routes x desktop/mobile)
 npm run e2e:headed
 npx playwright test tests/e2e/smoke.spec.js -g "<test name>"   # single test
 ```
@@ -91,7 +93,7 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 
 - Python: 3.12 (CI). Ensure `sys.stdout.reconfigure(encoding='utf-8')` and `encoding='utf-8'` on subprocess calls per global rule.
 - Node: 24 (CI).
-- The platform version reflected in README/changelog is `v4.7.0` — `v4.3.0` was the first tagged GitHub release since `v4.2.0`, closing DH-roadmap Tracks A/B/C plus citability/Zenodo packaging; `v4.3.1` wired in the real Zenodo DOI; `v4.4.0` shipped the print-companion brainstorm; `v4.5.0` added VIZ-08 «Исследовательская карта» and `v4.6.0` its entity-centred mode (both H1821); `v4.7.0` added the Phase U4 redesign verification harness (H1823). Note that `package.json`/`CITATION.cff` were left at `4.3.1` when `v4.4.0` was tagged — resynced at `v4.5.0`, so keep them in the release sweep.
+- Current release is `v4.15.1` in [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md) and [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (2026-08-20). `v4.3.0` was the first tagged GitHub release since `v4.2.0`. [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) is still `4.14.0` while CITATION/CHANGELOG are `4.15.1` — keep them in the same release sweep.
 
 ## Issue conventions (Codex regulation)
 
@@ -106,3 +108,5 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 - Do not add ESM `import`/`export` syntax that the regex stripper in `bundle.js` cannot handle (default exports, `export *`, dynamic `import()` of local modules).
 - Do not commit `v3_app.js` or `aaz-index.html` out of sync with their inputs — CI will reject.
 - Do not bypass the modules split: editing `app_data.json` without re-running `data:split` (or vice versa) will fail the "Ensure split modules are in sync" CI step.
+
+_Dr. Mārcis Gasūns_
