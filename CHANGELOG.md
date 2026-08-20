@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.15.2] - 2026-08-21
 ### Added
 
 - **Камера-реди полосы 4–5 печатного блока-спутника ([H3135 (Fable 5) — residual H2707: карта соответствий и хронология ЛЛШ](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3135-Fable_BookIndex_h2707-residual-spread-4-5-print-prose_19.08.26.md), набор Grok 4.6 `grok-4.6`).** Тексты: [docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md). Строки 4–5 в [docs/PRINT_8PP_COMPANION_BACKMATTER_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_8PP_COMPANION_BACKMATTER_2026.md) заменены (1–3, 6–8 не тронуты). Только `status: approved` (142 ребра; глава «Арабский язык» — пустая клетка). Архив на 20-08-2026: 176 записей, 214,13 ч. Пересчёт: `python scripts/crosswalk/census_print_spreads.py`. Гейт: [data/crosswalk/gate_decisions_v4.json](https://github.com/gasyoun/BookIndex/blob/main/data/crosswalk/gate_decisions_v4.json) 20-08-2026.
