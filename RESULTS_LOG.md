@@ -1,6 +1,19 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 14-08-2026_
+_Created: 24-07-2026 · Last updated: 21-08-2026_
+
+## H3238 — две карты полос 4–5 (21-08-2026)
+
+Перепись камера-реди после замечания к [docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md): заголовок ЛЛШ первым; соседство ЛЛШ ↔ глава «Муми-тролля»; именные `approved`-связки на полосе 4. Полные таблицы (тема vs голос) — служебный раздел того же файла, **«Две карты, не одна»**. PR: [BookIndex #275](https://github.com/gasyoun/BookIndex/pull/275). Знаки: 1935 / 1917.
+
+| Карта | Где в печати | Правило |
+|---|---|---|
+| Соседство тем ЛЛШ → глава | Полоса 5, закрытие | не тождество лекции и главы |
+| Кураторский голос, 142 ребра | Полоса 4 | только `status: approved`; 95 `series` auto не печатаются |
+| Доклад 2007 про бересту | Полоса 4: «История русского языка» 112:14 | к «Берестяным грамотам» — auto, не голос |
+
+**Model:** Grok 4.6 (`grok-4.6`).
+**Handoff:** [H3238 (Grok 4.6) — print spreads 4–5: title-first LLSH and vote-named Mumi-Troll supplements](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3238-Grok_BookIndex_print-spreads-4-5-title-first-vote-map_21.08.26.md).
 
 ## H2577 residual — `#vg-meta` on the Chromium AX tree (2026-08-14)
 
