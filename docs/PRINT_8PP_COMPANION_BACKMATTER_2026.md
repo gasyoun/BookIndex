@@ -1,6 +1,6 @@
 # Печатный блок-спутник: 8 полос концевого материала для «Из жизни слов и языков» (2026)
 
-_Created: 26-07-2026 · Last updated: 21-08-2026_
+_Created: 26-07-2026 · Last updated: 24-08-2026_
 
 Производственный бриф по заданию [H1609](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1609-Fable_BookIndex_print-8pp-companion-backmatter_24.07.26.md).
 Издание-носитель: **«Из жизни слов и языков»** (А. А. Зализняк; корпусный идентификатор
@@ -19,7 +19,7 @@ _Created: 26-07-2026 · Last updated: 21-08-2026_
 | Полосы 4–5 | **Правка 21-08-2026** ([H3238 (Grok 4.6) — title-first LLSH and vote-named Mumi-Troll supplements](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3238-Grok_BookIndex_print-spreads-4-5-title-first-vote-map_21.08.26.md)): заголовок доклада первым; полоса 4 — именные утверждённые связки к лекциям «Муми-тролля»; полоса 5 — соседство ЛЛШ ↔ глава. Камера-реди: [PRINT_SPREADS_4_5_CAMERA_READY_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md). Первый набор 20-08-2026: [H3135 (Fable 5) — residual H2707: камера-реди полосы 4–5](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3135-Fable_BookIndex_h2707-residual-spread-4-5-print-prose_19.08.26.md) |
 | Полоса 8 | **Открыто — нужен выбор человека** из 10 вариантов ниже; рекомендация: вариант 1 |
 | Запасной макет «одна азбука вместо трёх» | Опция для издательства, см. § Запасной макет |
-| Камера-реди тексты полос | Полосы 4–5 написаны (≈1935 / ≈1917 знаков). Полосы 1–3 и 6–7 — после выбора полосы 8 |
+| Камера-реди тексты полос | Полосы 4–5 написаны (≈2063 / ≈1885 знаков). Полосы 1–3 и 6–7 — после выбора полосы 8 |
 
 ## Карта восьми полос (базовый макет)
 
@@ -100,6 +100,6 @@ _Created: 26-07-2026 · Last updated: 21-08-2026_
 
 1. Человек выбирает полосу 8 (и решает про запасной макет) — строка `@DECIDE` заведена в
    [Uprava/GTD_NEXT_ACTIONS.md](https://github.com/gasyoun/Uprava/blob/main/GTD_NEXT_ACTIONS.md).
-2. Полосы 4–5 набраны 20-08-2026, правлены 21-08-2026 ([PRINT_SPREADS_4_5_CAMERA_READY_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md), [H3238 (Grok 4.6) — title-first LLSH and vote-named Mumi-Troll supplements](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3238-Grok_BookIndex_print-spreads-4-5-title-first-vote-map_21.08.26.md)). Камера-реди 1–3 и 6–7 — после выбора полосы 8; упаковка под InDesign — по `/book-press-prep`.
+2. Полосы 4–5 набраны 20-08-2026, правлены 21-08-2026 ([PRINT_SPREADS_4_5_CAMERA_READY_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md), [H3238 (Grok 4.6) — title-first LLSH and vote-named Mumi-Troll supplements](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3238-Grok_BookIndex_print-spreads-4-5-title-first-vote-map_21.08.26.md)), пересобраны keep-best 24-08-2026 ([H3211 (Fable 5) — dual-run compare vs Grok override](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3211-Fable_BookIndex_h3135-grok-dual-run-compare_20.08.26.md), сравнение: [PRINT_SPREADS_4_5_DUAL_RUN_COMPARE_H3211_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_DUAL_RUN_COMPARE_H3211_2026.md)). Камера-реди 1–3 и 6–7 — после выбора полосы 8; упаковка под InDesign — по `/book-press-prep`.
 
 _Dr. Mārcis Gasūns_
