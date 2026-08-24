@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.15.3] - 2026-08-24
+
 ### Changed
 
+- **Keep-best пересбор полос 4–5 после Fable dual-run compare ([H3211 (Fable 5) — dual-run compare: Fable re-execution of H3135 print spreads 4–5 vs Grok override](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3211-Fable_BookIndex_h3135-grok-dual-run-compare_20.08.26.md), Fable 5 `claude-fable-5`, [PR #278](https://github.com/gasyoun/BookIndex/pull/278)).** Независимый Fable-набор + таблица сравнения (9 участков, identical / equivalent / conflicting / net-new) в [docs/PRINT_SPREADS_4_5_DUAL_RUN_COMPARE_H3211_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_DUAL_RUN_COMPARE_H3211_2026.md); пересчёт census 24-08-2026 воспроизводит числа лейна Grok без расхождений, все именованные рёбра сверены с approved-строками [data/modules/22-crosswalk.json](https://github.com/gasyoun/BookIndex/blob/main/data/modules/22-crosswalk.json). Печатный текст пересобран из Fable-драфта с двумя победами Grok (явная дата каталога; финальная формула про пустую клетку арабского); жаргон «ребро креста» заменён читательским «связи карты». Объём: ≈2063 / ≈1885 знаков (коридор 1800–2200). Полосы 1–3, 6–8 не тронуты.
 - **Камера-реди полос 4–5: заголовок доклада первым; именные утверждённые связки к лекциям «Муми-тролля» ([H3238 (Grok 4.6) — title-first LLSH and vote-named Mumi-Troll supplements](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3238-Grok_BookIndex_print-spreads-4-5-title-first-vote-map_21.08.26.md), Grok 4.6 `grok-4.6`).** [docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md): хронология ЛЛШ в форме `Новгородские берестяные грамоты (2 ч 19 мин), 10 июля 2007 (ЛЛШ IX, Ратмино).`; полоса 4 называет утверждённые видео по главам (не только счётчики); полоса 5 явно сопоставляет доклады ЛЛШ с главами «Муми-тролля» как соседство тем. Служебный раздел «Две карты, не одна» — тема vs голос по всем 11 докладам. Честность: доклад 2007 к главе «Берестяные грамоты» куратор не утвердил (`series` auto). Объём печати: ≈1935 / ≈1917 знаков.
 
 ## [4.15.2] - 2026-08-21
