@@ -17,7 +17,7 @@ type: software
 authors:
   - family-names: Gasūns
     given-names: Mārcis
-    # orcid: "https://orcid.org/0000-0000-0000-0000"  # TODO: вставить реальный ORCID и раскомментировать
+    orcid: "https://orcid.org/0000-0003-4513-884X"
 version: 4.15.3
 date-released: 2026-08-24
 repository-code: "https://github.com/gasyoun/BookIndex"
