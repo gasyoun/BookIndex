@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.15.4] - 2026-08-28
+
+### Added
+
+- **Local `FINDINGS.md` + README "как устроена привязка к организации" ([H3566 (Sonnet 5) — interconnect BookIndex findings/README wiring](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3566-Sonnet_BookIndex_interconnect-bookindex-findings-readme-wiring_26.08.26.md), `claude-sonnet-5`).** Two back-filled findings from this repo's own crosswalk history — the book-frequency filter that let `говор` swamp chapter 8's video↔chapter edges ([`[4.14.0]`](#4140---2026-08-14) "Fixed"), and the `disputed`-only screen that let a false-substring `auto` edge through ([`[4.15.0]`](#4150---2026-08-16) "Fixed"). README gains one-click links to PROJECT_INTERLINKS, SHARED_CODE, FEATURES_INDEX, GTD_NEXT_ACTIONS, and where to record a new gotcha. Ruling F1/F11: [ASK_BATCH_STAGING_REPO_INTERCONNECTION_2026-08.md](https://github.com/gasyoun/Uprava/blob/main/ASK_BATCH_STAGING_REPO_INTERCONNECTION_2026-08.md).
+
 ## [4.15.3] - 2026-08-24
 
 ### Changed
