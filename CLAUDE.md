@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 09-05-2026 · Last updated: 20-08-2026_
+_Created: 09-05-2026 · Last updated: 28-08-2026_
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -93,7 +93,7 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 
 - Python: 3.12 (CI). Ensure `sys.stdout.reconfigure(encoding='utf-8')` and `encoding='utf-8'` on subprocess calls per global rule.
 - Node: 24 (CI).
-- Current release is `v4.15.1` in [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md) and [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (2026-08-20). `v4.3.0` was the first tagged GitHub release since `v4.2.0`. [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) is still `4.14.0` while CITATION/CHANGELOG are `4.15.1` — keep them in the same release sweep.
+- Current release is `v4.15.4` in [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md), [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff), and [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) (2026-08-28, H3566 resync — `v4.3.0` was the first tagged GitHub release since `v4.2.0`). Keep all three in the same release sweep going forward; they have drifted twice before (H1825, H3566).
 
 ## Issue conventions (Codex regulation)
 
