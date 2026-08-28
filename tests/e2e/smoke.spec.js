@@ -9,7 +9,8 @@ test.describe('aaz-index smoke', () => {
     await expect(page.locator('.brand-mark')).toHaveAttribute('src', './icon-512.svg');
     await expect(page.locator('.index-sheet')).toContainText('Сводный указатель');
     await expect(page.locator('.button.primary')).toHaveAttribute('href', './aaz-index.html#v4/home/home');
-    await expect(page.locator('.route')).toHaveCount(6);
+    await expect(page.locator('.route')).toHaveCount(7);
+    await expect(page.locator('.route', { hasText: 'Смотреть видео к главам' })).toHaveAttribute('href', './guide.html');
     await expect(page.locator('.route', { hasText: 'Корпус источников' })).toHaveAttribute('href', './aaz-index.html#v4/materials/sources');
     await expect(page.locator('body')).toContainText('главным публичным входом');
   });
