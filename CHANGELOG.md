@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.16.0] - 2026-08-28
+
+### Added
+
+- **Гид читателя «главы книги → видеоархив» ([H3657 (OxAlpha) — reader guide chapters-to-videos](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3657-OxAlpha_BookIndex_reader-guide-chapters-videos_28.08.26.md)).** На вопрос «хочу подробнее тему главы — что смотреть» отвечает страница [guide.html](https://github.com/gasyoun/BookIndex/blob/main/guide.html) (сайт: <https://gasyoun.github.io/BookIndex/guide.html>): 11 глав, на каждой — абзац «о чём глава», блок «С чего начать» и полный список видео с минутами ▶ ММ:СС и ссылками; глава «Арабский язык» подана честно пустой клеткой (0 утверждённых связей). Внизу — хронология 11 докладов ЛЛШ 2007–2017 с колонкой «куда куратор утвердил». Ядро — **142 утверждённые связи** гейта v4 к **98 видео** (103 с минутой); рядом с пометкой «машинный кандидат» — 129 рёбер `auto` (серия/KWIC/заголовки/DeepSeek), которые на печатный разворот 4–5 не идут. Всё derive-don't-store: генератор [`scripts/crosswalk/build_reader_guide.py`](https://github.com/gasyoun/BookIndex/blob/main/scripts/crosswalk/build_reader_guide.py) (`--emit`/`--check`, байт-в-байт паритет) собирает [guide.html](https://github.com/gasyoun/BookIndex/blob/main/guide.html), [data/reader_guide.json](https://github.com/gasyoun/BookIndex/blob/main/data/reader_guide.json) и документ [docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md) из креста + каталога + редакторской прозы [`reader_guide_prose.json`](https://github.com/gasyoun/BookIndex/blob/main/scripts/crosswalk/reader_guide_prose.json); при каждом запуске сверяет счётчики по главам с камера-реди полосы 4 (20/1/1/4/5/38/0/25/18/19/11) и принадлежность «с чего начать» утверждённым связям. Страница — без JS, со своим CSP (`script-src 'none'`); вход — седьмая карточка на [лендинге](https://github.com/gasyoun/BookIndex/blob/main/index.html). npm-скрипты `guide:build`/`guide:check`; e2e-слой `tests/e2e/reader-guide.spec.js` (+ smoke-тест лендинга 6→7 карточек).
+
+### Verified
+
+- **Связка «10 лекций „Муми-тролля“ + редколлегия ↔ 11 докладов ЛЛШ» проверена на живых данных.** Все 11 глав камеры-реди полос 4–5 воспроизводятся побитово на сегодняшнем кресте: `approved` 142 · `rejected` 106 · `auto` 129 · `disputed` 0; каталог 176 записей, 214,13 ч; расхождения длительностей ЛЛШ (полоса 5) сняты округлением минут.
+
 ## [4.15.4] - 2026-08-28
 
 ### Added
