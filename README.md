@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21630473.svg)](https://doi.org/10.5281/zenodo.21630473)
 
-_Created: 14-04-2026 · Last updated: 30-07-2026_
+_Created: 14-04-2026 · Last updated: 28-08-2026_
 
 **BookIndex** — автономный интерактивный веб-справочник, корпусная лаборатория и интеллектуальная база знаний по научному наследию **А. А. Зализняка**.
 
@@ -147,6 +147,28 @@ GitHub Release чеканит свой отдельный version DOI, указ�
 | Цитаты и расшифровки из книг/лекций | © правообладатели, с разрешения |
 
 Подробнее — [LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md).
+
+## Как устроена привязка к организации
+
+BookIndex — самостоятельный DH-проект **вне** справочного корешка CDSL: он
+делит инструментарий и методы `sanskrit-util` с санскритскими репозиториями,
+но не является Sanskrit-транскодом и не несёт формальной data-связи в эту
+сторону (см. [PROJECT_INTERLINKS.md — «Repos in their own domains»](https://github.com/gasyoun/Uprava/blob/main/PROJECT_INTERLINKS.md#repos-in-their-own-domains-toolkit-only-links)).
+Его собственная научная инфраструктура — Zenodo DOI, `CITATION.cff`, корпус
+Zalizniakiada/KWIC/crosswalk — самодостаточна и это зафиксировано как
+`standalone-by-design`.
+
+- **Кто уже пользуется этим репозиторием / чем он делится с организацией**: [PROJECT_INTERLINKS.md](https://github.com/gasyoun/Uprava/blob/main/PROJECT_INTERLINKS.md) — строка «Repos in their own domains».
+- **Общий с другими репозиториями код/инструментарий**: [SHARED_CODE.md](https://github.com/gasyoun/github-spine/blob/main/SHARED_CODE.md).
+- **Что уже существует по всей организации** (44 словаря, 20 интерфейсов, 37 датасетов, 14 инструментов): [FEATURES_INDEX.md](https://github.com/gasyoun/SanskritLexicography/blob/master/FEATURES_INDEX.md).
+- **Что делать дальше / кто чем занят по всей организации**: [GTD_NEXT_ACTIONS.md](https://github.com/gasyoun/Uprava/blob/main/GTD_NEXT_ACTIONS.md).
+
+Нашли неочевидную деталь при работе с корпусом Zalizniakiada, KWIC-конкордансом
+или crosswalk «видео ↔ главы»? Запишите её в собственный
+[FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) этого
+репозитория — это отдельный реестр от инфраструктурного
+[Uprava/FINDINGS.md](https://github.com/gasyoun/Uprava/blob/main/FINDINGS.md) и от
+санскритского [SanskritLexicography/FINDINGS.md](https://github.com/gasyoun/SanskritLexicography/blob/master/FINDINGS.md).
 
 ## История версий (Major Milestones)
 *   **v4.8.0**: Палитра команд (Ctrl+K / ⌘K) и быстрый переключатель (H1824): 24 маршрута навигации и 5 действий в одном окне, недавно открытые записи без запроса, содержание указателя тем же полем ввода; поиск по подпоследовательности, полная клавиатурная обвязка и `role="dialog"`/`aria-activedescendant`. Кнопка «⌘K» в шапке даёт тот же вход без клавиатуры.
