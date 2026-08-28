@@ -64,6 +64,33 @@ handoff's premise was falsified by measurement, not by effort. Source:
 [docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md),
 [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md) `[Unreleased]`.
 
+## §4. Curator facts written into a *generated* export survive only until the next rebuild — six `duplicate_of` links live nowhere but `video_catalog_public.v2.json`
+
+`tests/unit/test_video_catalog_public.py::test_committed_export_is_deterministic`
+has been red on `main` since at least 28-08-2026. The instinct is to rerun
+[scripts/build_video_catalog_public.py](https://github.com/gasyoun/BookIndex/blob/main/scripts/build_video_catalog_public.py)
+and commit the result — and that is the wrong move: the rebuild **removes six
+`duplicate_of` fields** (accessions pointing at 008, 017, 023, 007, 088, 119)
+rather than adding anything. Those six were written directly into the generated
+[data/video_catalog_public.v2.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_public.v2.json)
+by `199b0d058` (H3198), while
+[data/video_catalog_editorial.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_editorial.json)
+— the overlay the builder actually reads for `duplicate_of` — carries exactly
+one such override (`040 → 005`, with two dated evidence URLs). The builder is
+correct; the committed export is carrying unsourced curator judgments.
+
+Two things generalise. First, **a red determinism gate is evidence, not a
+chore**: it is the only thing standing between six curated duplicate-identity
+links and a silent rebuild that erases them, and "make CI green" would have
+been the destructive option. Second, this is the same shape as [§3](#3-v3_appjs-stopped-being-build-output-and-became-the-source-of-record--rebuilding-it-silently-deletes-four-shipped-features)
+one directory over — a *generated* artifact hand-edited without updating its
+input, so the generator and the artifact quietly disagree until someone runs
+the generator. Whenever this repo's derived files (`v3_app.js`,
+`aaz-index.html`, `data/video_catalog_public*.json`, `data/modules/*`) are
+edited, the edit belongs in the input. Repair here is curatorial — back the six
+links with evidence in the overlay, or retract them — not mechanical. Source:
+[docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md).
+
 ## Record a gotcha found here
 
 Append a new `§N` entry to this file for anything that surprised you while

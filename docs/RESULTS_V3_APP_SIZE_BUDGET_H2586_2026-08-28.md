@@ -123,13 +123,25 @@ Three routes reach gzip ≤157 000 B. None of them is a trim:
    in sync"* step (`git diff --exit-code -- aaz-index.html` after
    `npm run build`) could not pass. The rebuild in this pass corrects it.
 2. **`tests/unit/test_video_catalog_public.py::test_committed_export_is_deterministic`
-   fails on `main`.** The committed
+   fails on `main`, and the obvious fix would destroy curated data.** The test
+   asserts that the committed
    [data/video_catalog_public.v2.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_public.v2.json)
-   no longer matches what
-   [scripts/build_video_catalog_public.py](https://github.com/gasyoun/BookIndex/blob/main/scripts/build_video_catalog_public.py)
-   produces — the rebuild adds a `"duplicate_of": "008"` field the committed
-   export lacks. Untouched here: regenerating a curated public export is a
-   separate call, not a side effect of a size pass.
+   equals a fresh build. It does not — and running the builder **removes six
+   `duplicate_of` fields** (accessions pointing at 008, 017, 023, 007, 088,
+   119) rather than adding anything. Those six duplicate-provenance facts were
+   written straight into the generated export by `199b0d058` (H3198) with no
+   backing override in
+   [data/video_catalog_editorial.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_editorial.json),
+   which carries exactly one (`040 → 005`, with two evidence URLs). So the
+   builder is behaving correctly and the committed export is carrying
+   unsourced curator facts that the next rebuild erases.
+
+   Regenerating to make CI green would silently delete them, so it was not
+   done. The honest repair is to add six overrides to the editorial overlay
+   with real evidence, or to retract them — either way a curatorial call, not
+   a side effect of a size pass. **This gate fails `validate-and-build` before
+   the build/e2e steps are reached, so it blocks every PR, including this
+   one.** Recorded as [FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) §4.
 
 ## How to reproduce
 
