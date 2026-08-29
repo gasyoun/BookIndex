@@ -41,6 +41,17 @@ const budgets = [
     // video detail card (+ ~6 KiB raw); 2026-07-30 for H1824 command palette
     // (+27.8 KiB raw / +1.9 KiB gzip — nav/action registry, fuzzy scorer,
     // palette renderer). Intended size with modest headroom.
+    // 2026-08-28 (H2586): a size-reduction pass took gzip 160,322 -> 158,559 B,
+    // so headroom under this ceiling is 3,441 B rather than 1,678 B. Do not read
+    // that as room to spend freely — the pass also established that the artifact
+    // has NO dead code left (0 unreferenced functions out of 489), so the next
+    // feature cannot be paid for by another trim. Two further facts belong with
+    // this ceiling: `v3_app.js` is the source of record, not build output
+    // (rebuilding from src/runtime/ drops 61 functions and four shipped
+    // features — FINDINGS.md §3), so `treeshake`/`minify` are NOT available
+    // levers; and the only honest route to a smaller runtime script is moving
+    // the hard-coded scholarly tables into the data layer, which is a content-
+    // model decision. Detail: docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md
     label: 'runtime script',
     path: 'v3_app.js',
     maxBytes: 700_000,

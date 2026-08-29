@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- **`v3_app.js` gzip 160 322 → 158 559 B; headroom under the 162 000 B budget doubles to 3 441 B ([H2586 (Opus 5) — optimize the v3_app.js runtime-script size budget](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2586-Opus_BookIndex_optimize-home-panel-size-budget_11.08.26.md), Opus 5 `claude-opus-5`).** Four semantics-preserving removals, all 192 Playwright tests green after: `window.X = Y` aliases for function bindings that `Object.assign(window, *_exports)` already publishes (−767 B); seven `name$1` helpers byte-identical to their unsuffixed sibling, call sites repointed (−653 B); `console.log`/`debug`/`info` scaffolding, keeping `error`/`warn` (−233 B); rolldown `//#region` markers (−110 B). Human-authored comments kept on purpose — they are the artifact's only documentation. The handoff's ≤157 000 B stop condition is **not** met and the remaining routes are named in [docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md). Standalone HTML moved 182.6 → 181.0 KiB gzip with it.
+
+### Fixed
+
+- **`aaz-index.html` re-synced with `data/modules/22-crosswalk.json`.** The committed HTML embedded `"bytes": 258355` for that module against a committed 261 728 B file, so CI's *"Ensure committed aaz-index.html is in sync"* step could not pass on `main`. Rebuilt here along with the 700 prerendered entity pages.
+
+### Documented
+
+- **[FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) §3 — `v3_app.js` is the source of record, not build output.** `npx vite build -c vite.runtime.config.mjs` produces 565.56 kB against a committed 677 875 B, dropping 61 functions: the Ctrl+K palette (H1824), the video gallery/detail/modal trio (H2123–H2125), the home task tile (H2127). `src/runtime/legacy.js` has not been written since `e30dc3f34` (H1821). Every bundler-level size lever — `treeshake`, `minify`, code-splitting — would therefore delete four shipped features while the size gate reported a win.
+- **[FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) §4 — six `duplicate_of` links live only in the generated export.** `tests/unit/test_video_catalog_public.py::test_committed_export_is_deterministic` is red on `main`, and rerunning the builder does not add a field — it **removes six** (`008`, `017`, `023`, `007`, `088`, `119`). They were written straight into `data/video_catalog_public.v2.json` by `199b0d058` (H3198), while `data/video_catalog_editorial.json` carries exactly one such override (`040 → 005`, two dated evidence URLs). Regenerating to make CI green would silently erase curated duplicate-provenance, so it was not done; the repair is curatorial. This gate fails `validate-and-build` before the build and e2e steps, so it blocks every PR.
+
 ## [4.16.0] - 2026-08-28
 
 ### Added

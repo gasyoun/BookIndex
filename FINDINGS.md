@@ -40,6 +40,57 @@ v4 gold set and rejected because it would also kill a genuine curator-approved
 edge, `ворог ⊂ творог` (`acc161`), which is the same substring shape with the
 opposite verdict. Source: [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md) `[4.15.0]` "Fixed".
 
+## §3. `v3_app.js` stopped being build output and became the source of record — rebuilding it silently deletes four shipped features
+
+[vite.runtime.config.mjs](https://github.com/gasyoun/BookIndex/blob/main/vite.runtime.config.mjs)
+builds `v3_app.js` from `src/runtime/entry.js`, and the config's own comments
+explain why it keeps `minify: false` and `treeshake: false`. Running that build
+on 28-08-2026 produced **565.56 kB against a committed 677 875 B — 61 top-level
+functions missing**: the Ctrl+K command palette (H1824), the video
+gallery/detail/modal trio (H2123–H2125), the home task tile (H2127) and the
+KWIC lecture rows. `src/runtime/legacy.js` was last written by `e30dc3f34`
+(H1821, 30-07-2026); every feature after it went straight into the generated
+artifact instead. So the generated file is now the only place those features
+exist, and `src/runtime/` is a stale fork carrying 62 `legacy_*` functions
+(38 KB) that no longer reach the artifact at all.
+
+The trap this sets: every bundler-level size lever — enabling `treeshake`,
+enabling `minify`, rolldown code-splitting — reads as an obvious win and would
+quietly drop four features, because the size assertion in CI is the only gate
+that would notice and it would read the loss as a *success*. Related: a
+595-line dead-code census over the artifact itself found **0 unreferenced
+top-level functions out of 489**, so there is no trim available either — the
+handoff's premise was falsified by measurement, not by effort. Source:
+[docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md),
+[CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md) `[Unreleased]`.
+
+## §4. Curator facts written into a *generated* export survive only until the next rebuild — six `duplicate_of` links live nowhere but `video_catalog_public.v2.json`
+
+`tests/unit/test_video_catalog_public.py::test_committed_export_is_deterministic`
+has been red on `main` since at least 28-08-2026. The instinct is to rerun
+[scripts/build_video_catalog_public.py](https://github.com/gasyoun/BookIndex/blob/main/scripts/build_video_catalog_public.py)
+and commit the result — and that is the wrong move: the rebuild **removes six
+`duplicate_of` fields** (accessions pointing at 008, 017, 023, 007, 088, 119)
+rather than adding anything. Those six were written directly into the generated
+[data/video_catalog_public.v2.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_public.v2.json)
+by `199b0d058` (H3198), while
+[data/video_catalog_editorial.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_editorial.json)
+— the overlay the builder actually reads for `duplicate_of` — carries exactly
+one such override (`040 → 005`, with two dated evidence URLs). The builder is
+correct; the committed export is carrying unsourced curator judgments.
+
+Two things generalise. First, **a red determinism gate is evidence, not a
+chore**: it is the only thing standing between six curated duplicate-identity
+links and a silent rebuild that erases them, and "make CI green" would have
+been the destructive option. Second, this is the same shape as [§3](#3-v3_appjs-stopped-being-build-output-and-became-the-source-of-record--rebuilding-it-silently-deletes-four-shipped-features)
+one directory over — a *generated* artifact hand-edited without updating its
+input, so the generator and the artifact quietly disagree until someone runs
+the generator. Whenever this repo's derived files (`v3_app.js`,
+`aaz-index.html`, `data/video_catalog_public*.json`, `data/modules/*`) are
+edited, the edit belongs in the input. Repair here is curatorial — back the six
+links with evidence in the overlay, or retract them — not mechanical. Source:
+[docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md).
+
 ## Record a gotcha found here
 
 Append a new `§N` entry to this file for anything that surprised you while
