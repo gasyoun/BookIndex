@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [Unreleased]
+
+### Documented
+
+- **[FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) §4a — the six `duplicate_of` links are heuristic output, not curator judgments, and three are provably wrong.** §4 framed the repair as curatorial; an audit before spending any viewing time showed the catalogue holds 176 videos at 169 distinct `duration_seconds`, giving **7 duration-collision groups — and exactly those 7 carry a `duplicate_of` mark**, with no unmarked collision and no marked non-collision. The mapping *is* duration equality. Three marks then fail on their own titles: `012 → 008` links **1 лекция** to **2 лекция** of one ACADEMIA series, `054 → 007` links a 2017 `русистика` seminar to a 2008 `ЛЛШ` talk, and `107 → 088` links a 2015 `санскрит` lecture to a 2017 `русистика` one. Three remain plausible (`173 → 119`, both dated 07.11.2015; `034 → 023`; `018 → 017`) and need only a side-by-side look at the opening minute — not a full viewing. Two dead ends recorded: related-entity overlap does not discriminate (median Jaccard 0.25 over 14 028 pairs, p90 = 1.00, and the one confirmed duplicate scores 0.000), and `WebFetch` on a YouTube watch URL returns the title alone. Reproducible via the new [scripts/audit_duplicate_of.py](https://github.com/gasyoun/BookIndex/blob/main/scripts/audit_duplicate_of.py). Separately noted: record `054`'s `title_source` and `title_display` disagree on both seminar number and date.
+
 ## [4.16.1] - 2026-08-29
 ### Changed
 

@@ -91,6 +91,57 @@ edited, the edit belongs in the input. Repair here is curatorial — back the si
 links with evidence in the overlay, or retract them — not mechanical. Source:
 [docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md).
 
+## §4a. Those six `duplicate_of` links were never curator judgments — they are the unvalidated output of a duration-collision heuristic, and three of them are provably wrong
+
+Measured 29-08-2026 (H2586 residual pass), before spending any human viewing
+time on §4's "back them with evidence or retract them" choice. Two probes over
+the committed
+[data/video_catalog_public.v2.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_public.v2.json):
+
+1. **The mapping is exactly duration equality.** The catalogue holds 176 videos
+   at 169 distinct `duration_seconds`, giving **7 duration-collision groups**.
+   There are **7** `duplicate_of` marks, and they are those 7 groups — every
+   collision is marked, and no non-colliding pair is. Zero exceptions. So
+   `duplicate_of` was assigned by "same duration ⇒ same recording", not by
+   anyone comparing the videos.
+2. **Three of the six contradict their own titles and dates**, which is what a
+   duration-only rule predicts:
+
+   | link | source record | target record | why it fails |
+   |---|---|---|---|
+   | `012 → 008` | ACADEMIA «Русский устный», **1 лекция** | ACADEMIA «Русский устный», **2 лекция** | consecutive episodes of one series, explicitly numbered; a fixed 2 638 s broadcast slot makes the collision expected, not evidence |
+   | `054 → 007` | «История русского ударения, Семинар 26, **06.05.2017**» (`русистика`) | «О Велесовой книге, **2008**» (`ЛЛШ`) | different talk, different topic, nine years apart |
+   | `107 → 088` | «Строй ведийского языка, Лекция 13, **12.12.2015**» (`санскрит`) | «История русского ударения, лекции 2, **23.09.2017**» (`русистика`) | different course, different subject, different year |
+
+**What this changes.** §4 is right about the mechanism — the rebuild does drop
+these fields, and a hand-edit of a generated file is what put them there — but
+its framing of the repair as *curatorial* was too generous to the data. Six
+unsourced heuristic outputs are not six curated facts, and half of them are
+false. The determinism gate was still doing its job: it stopped a silent
+rebuild, and forced the audit that found the false half.
+
+**What is left.** Three links are consistent with everything on record and
+plausibly real reuploads: `173 → 119` (both dated **07.11.2015**, both
+`санскрит`, one titled generically «А.А. Зализняк в МГУ, 07.11.2015» against
+«Строй ведийского языка. Лекция 8. 07.11.2015» — the strongest of the three),
+`034 → 023` (both the 2017 birch-bark finds, 9 288 s, a news-style headline
+against a lecture title) and `018 → 017` (two undated uploads with
+near-synonymous titles at 3 852 s). None can be closed from the repository:
+YouTube's watch page is JS-rendered, so a fetch returns the title and nothing
+else — no upload date, no description. Confirming them means opening the two
+links side by side and comparing the **opening minute**, not watching either
+talk through.
+
+**Two dead ends, recorded so they are not re-run.** Related-entity overlap does
+**not** discriminate: over 14 028 catalogue pairs the Jaccard median is 0.25
+with p90 = 1.00, and the one human-confirmed duplicate (`040 → 005`) scores
+**0.000**. And `WebFetch` on a YouTube watch URL yields the title only.
+
+**Also found:** record `054` carries `title_source` «Семинар 26, 06.05.2017»
+against `title_display` «Семинар 22, 25.03.2017` — the overlay's title override
+disagrees with the source row on both the seminar number and the date. That is
+a separate defect from the `duplicate_of` question and is not fixed here.
+
 ## Record a gotcha found here
 
 Append a new `§N` entry to this file for anything that surprised you while
