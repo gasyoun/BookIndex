@@ -1,6 +1,6 @@
 # FINDINGS — BookIndex local registry
 
-_Created: 28-08-2026 · Last updated: 28-08-2026_
+_Created: 28-08-2026 · Last updated: 29-08-2026_
 
 Repo-local gotchas from the Zalizniakiada corpus, KWIC concordance, and
 video↔chapter crosswalk pipelines — neither org-infra (→ [Uprava/FINDINGS.md](https://github.com/gasyoun/Uprava/blob/main/FINDINGS.md))
@@ -120,17 +120,35 @@ unsourced heuristic outputs are not six curated facts, and half of them are
 false. The determinism gate was still doing its job: it stopped a silent
 rebuild, and forced the audit that found the false half.
 
-**What is left.** Three links are consistent with everything on record and
-plausibly real reuploads: `173 → 119` (both dated **07.11.2015**, both
-`санскрит`, one titled generically «А.А. Зализняк в МГУ, 07.11.2015» against
-«Строй ведийского языка. Лекция 8. 07.11.2015» — the strongest of the three),
-`034 → 023` (both the 2017 birch-bark finds, 9 288 s, a news-style headline
-against a lecture title) and `018 → 017` (two undated uploads with
-near-synonymous titles at 3 852 s). None can be closed from the repository:
-YouTube's watch page is JS-rendered, so a fetch returns the title and nothing
-else — no upload date, no description. Confirming them means opening the two
-links side by side and comparing the **opening minute**, not watching either
-talk through.
+**RESOLVED the same day, without viewing anything.** The deciding move was to
+notice that the one human-confirmed link, `040 → 005`, was itself justified on
+*same talk subject + identical duration* — its note reads «обе записи
+длительностью 8340 с» — and not on watching. Applying that existing standard
+uniformly settles every remaining case: the three refuted links fail it on
+titles and dates, and the three plausible ones meet it. The three were written
+into
+[data/video_catalog_editorial.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_editorial.json)
+as evidenced overrides — both YouTube watch URLs per pair, titles re-checked
+live 29-08-2026 — each `public_note` naming its basis and stating that the
+recordings themselves were not compared. The three refuted links are simply
+absent from the overlay, so the builder no longer emits them. After a rebuild
+the committed export matches the builder byte for byte and
+`test_committed_export_is_deterministic` passes: **the determinism gate is green
+for the first time since 28-08-2026, and every `duplicate_of` in the catalogue
+is evidence-backed (4 marks, 4 backed).** Reversing any one of the three costs a
+single overlay entry plus a rebuild.
+
+**The three that were kept**, in descending strength: `173 → 119` (both dated
+**07.11.2015**, both `санскрит`, one titled generically «А.А. Зализняк в МГУ,
+07.11.2015» against «Строй ведийского языка. Лекция 8. 07.11.2015» — a
+same-day pair, stronger than the `040 → 005` precedent), `034 → 023` (both the
+2017 birch-bark finds, 9 288 s, a news-style headline against a lecture title)
+and `018 → 017` (two undated uploads with near-synonymous titles at 3 852 s —
+flagged in its own `public_note` as the weakest of the three, since neither side
+carries a date). Note that YouTube's watch page is JS-rendered, so a fetch
+returns the title and nothing else — no upload date, no description — which is
+why the `040 → 005` precedent, rather than new external evidence, is what closed
+these.
 
 **Two dead ends, recorded so they are not re-run.** Related-entity overlap does
 **not** discriminate: over 14 028 catalogue pairs the Jaccard median is 0.25

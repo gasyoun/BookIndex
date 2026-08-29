@@ -179,7 +179,7 @@ class PublicVideoCatalogTests(unittest.TestCase):
 
     def test_v2_evidence_and_last_verified_are_derived(self):
         evidenced = [video for video in self.catalog_v2["videos"] if video["evidence"]]
-        self.assertEqual(len(evidenced), 75)
+        self.assertEqual(len(evidenced), 78)
         # Проверяем ВЫВОДИМОСТЬ даты, а не конкретную дату: смысл поля в том, что
         # оно равно самой свежей проверке среди доказательств этой записи, и
         # пришпиливание календарного дня делало тест сигналом «оверлей трогали»,
