@@ -1,6 +1,19 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 21-08-2026_
+_Created: 24-07-2026 · Last updated: 28-08-2026_
+
+## H3657 — гид читателя «главы → видео» + сверка полос 4–5 (28-08-2026)
+
+Задача владельца «связать печатные лекции с видео и подсказать, что смотреть» закрыта двумя слоями: (1) верификация уже сделанной связки, (2) новый читательский гид. Полный разбор — [docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md](docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md); выходы — [guide.html](../guide.html) + [data/reader_guide.json](../data/reader_guide.json).
+
+| Слой | Результат | Проверка |
+|---|---|---|
+| Сверка полос 4–5 | approved по главам 20/1/1/4/5/38/0/25/18/19/11 = 142; auto 129; rejected 106; disputed 0; каталог 176 / 214,13 ч — всё воспроизводится на живом кресте | счётчики вшиты в генератор (`EXPECTED_APPROVED`), сверяются при каждом запуске |
+| Гид | guide.html: 11 глав (шапка + «с чего начать» + approved + помеченные auto) + хронология ЛЛШ с колонкой «куда куратор утвердил»; ch07 — честная пустая клетка | `npm run guide:check` — байт-в-байт паритет; e2e `reader-guide.spec.js` (12 секций, 142 бейджа, real YouTube-id, CSP `script-src 'none'`) |
+| Дефекты, пойманные по пути | каталог ключуется `001`, не `acc001`; минута `0:00` фальсится в truthiness-проверках; длительности ЛЛШ — округление минут (2 ч 12 мин), не усечение | починены в генераторе; паритет с полосой 5 восстановлен |
+
+**Model:** OxAlpha (`opencode`, Z.ai `glm`).
+**Handoff:** [H3657 (OxAlpha) — reader guide chapters-to-videos](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3657-OxAlpha_BookIndex_reader-guide-chapters-videos_28.08.26.md).
 
 ## H3238 — две карты полос 4–5 (21-08-2026)
 

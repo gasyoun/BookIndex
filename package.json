@@ -1,6 +1,6 @@
 {
   "name": "bookindex-aaz",
-  "version": "4.15.4",
+  "version": "4.16.0",
   "private": true,
   "description": "E2E smoke checks for aaz-index standalone app",
   "scripts": {
@@ -14,6 +14,8 @@
     "pipeline:dashboard": "python scripts/build_pipeline_dashboard.py",
     "slug:freeze": "node scripts/build_slug_registry.mjs",
     "slug:check": "node scripts/build_slug_registry.mjs --check",
+    "guide:build": "python3 scripts/crosswalk/build_reader_guide.py --emit",
+    "guide:check": "python3 scripts/crosswalk/build_reader_guide.py --check",
     "export:tei": "python scripts/export_tei.py",
     "export:tei:check": "python scripts/export_tei.py --check",
     "kwic:build": "python scripts/build_lectures_kwic.py",
