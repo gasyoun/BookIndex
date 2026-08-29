@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.16.2] - 2026-08-29
 ### Fixed
 
 - **Every `duplicate_of` link in the video catalogue is now evidence-backed, and the determinism gate is green for the first time since 28-08-2026.** `tests/unit/test_video_catalog_public.py::test_committed_export_is_deterministic` had been red on `main`, blocking every PR by aborting `validate-and-build` before the build and e2e steps. Resolved without viewing a single recording, by applying the standard the one human-confirmed link already used — `040 → 005` is justified on same subject + identical duration, not on watching. Under it `012 → 008`, `054 → 007` and `107 → 088` fail on their own titles and dates and are gone; `173 → 119`, `034 → 023` and `018 → 017` meet it and were written into [data/video_catalog_editorial.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_editorial.json) as evidenced overrides — both watch URLs per pair, titles re-checked live 29-08-2026, each `public_note` naming its basis and stating that the recordings were not compared (`018 → 017` flagged as the weakest, no date on either side). Marks go 7 → 4, all four overlay-backed; the golden evidenced-record count moves 75 → 78. Reversing any one is a single overlay entry plus a rebuild.
