@@ -1,0 +1,836 @@
+{
+  "tool": "tools/document_check.py",
+  "skill": "/document",
+  "legacy_name": "/artifact-propagate",
+  "generated": "2026-08-28 09:21:08",
+  "artifacts": [
+    {
+      "artifact": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\FINDINGS.md",
+      "repo": "C:\\Users\\user\\Documents\\GitHub\\BookIndex",
+      "kind": "doc",
+      "surfaces": [
+        {
+          "id": "readme",
+          "phase": 1,
+          "label": "README.md",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\README.md:168: [FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) этого"
+        },
+        {
+          "id": "claude_md",
+          "phase": 1,
+          "label": "CLAUDE.md",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CLAUDE.md:76: The optional Gemini Flash workflow is documented in `docs/GEMINI_FLASH_WORKFLOW_RU.md`. Treat Gemini Flash as a fast analysis/drafting loop only: context pack i"
+        },
+        {
+          "id": "cold_start",
+          "phase": 1,
+          "label": "Cold-start doc (GEMINI.md / equivalent)",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "none of C:\\Users\\user\\Documents\\GitHub\\BookIndex\\GEMINI.md, C:\\Users\\user\\Documents\\GitHub\\BookIndex\\AGENTS.md exist"
+        },
+        {
+          "id": "sibling_domain_docs",
+          "phase": 1,
+          "label": "Sibling domain docs (manual/roadmap/method docs)",
+          "scope": "repo",
+          "status": "n/a",
+          "evidence": "small doc-only wiring artifact; no other domain doc (roadmap/method doc) governs FINDINGS.md/README-wiring content — CLAUDE.md and .ai_state.md already carry the pointer"
+        },
+        {
+          "id": "metadoc",
+          "phase": 1,
+          "label": "Metadoc (<name>.meta.md)",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\FINDINGS.meta.md (file does not exist)"
+        },
+        {
+          "id": "changelog",
+          "phase": 1,
+          "label": "CHANGELOG.md -> release (/cut-release)",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CHANGELOG.md:11: - **Local `FINDINGS.md` + README \"как устроена привязка к организации\" ([H3566 (Sonnet 5) — interconnect BookIndex findings/README wiring](https://github.com/ga"
+        },
+        {
+          "id": "ai_state",
+          "phase": 1,
+          "label": ".ai_state.md",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\.ai_state.md:20: - ✅ **H3566 (28-08-2026, Sonnet 5 `claude-sonnet-5`):** local [FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) (2 back-filled findings:"
+        },
+        {
+          "id": "issues",
+          "phase": 1,
+          "label": "Issues (per-person task issues)",
+          "scope": "repo",
+          "status": "n/a",
+          "evidence": "no per-person task issue open for this handoff; nothing to comment on"
+        },
+        {
+          "id": "gtd",
+          "phase": 2,
+          "label": "Uprava/GTD_NEXT_ACTIONS.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\GTD_NEXT_ACTIONS.md:118: - OxAlpha `@DO` — **Разобрать 136 chat-only кандидатов H3598 по хабам (батчи с капом) + rulers stage B** (27-08-2026, OxAlpha, [candidates-stage-a.json](https:/"
+        },
+        {
+          "id": "handoffs_registry",
+          "phase": 2,
+          "label": "Uprava/handoffs/README.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\handoffs\\README.md:147: | H3566 | — | [H3566-Sonnet_BookIndex_interconnect-bookindex-findings-readme-wiring_26.08.26](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3566-Sonnet_"
+        },
+        {
+          "id": "features_index",
+          "phase": 2,
+          "label": "SanskritLexicography/FEATURES_INDEX.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\SanskritLexicography\\FEATURES_INDEX.md:84: | 🟢 C19 | semdom ↔ Amarakosha crosswalk | First SIL semantic-domains ↔ classical-thesaurus map (H742): Level A varga↔domain ID pairs (108, hand-authored) + top-"
+        },
+        {
+          "id": "kosha_manifest",
+          "phase": 2,
+          "label": "kosha/data/manifest/datasets.json",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "not a derived dataset"
+        },
+        {
+          "id": "data_layers_census",
+          "phase": 2,
+          "label": "Uprava/DATA_LAYERS_CENSUS.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "not large/local-only data (risk) and no open statistics cell to close"
+        },
+        {
+          "id": "project_interlinks",
+          "phase": 2,
+          "label": "Uprava/PROJECT_INTERLINKS.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\PROJECT_INTERLINKS.md:3: _Created: 23-06-2026 · Last updated: 26-08-2026 (H3567: IndologyScholars' meso-discipline crosswalk registered as a producer edge under ruling F5 — the repo's `"
+        },
+        {
+          "id": "skills_index",
+          "phase": 2,
+          "label": "root SKILLS_INDEX.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "artifact is not itself a skill/command"
+        },
+        {
+          "id": "articles",
+          "phase": 2,
+          "label": "Uprava/ARTICLES.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "artifact is not a paper (delegate to /articles-update when it is)"
+        },
+        {
+          "id": "danger_facts",
+          "phase": 2,
+          "label": "Uprava/DANGER_FACTS.md + context_facts.yaml",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\DANGER_FACTS.md:20: (where off-git assets live), [FINDINGS.md](https://github.com/gasyoun/Uprava/blob/main/FINDINGS.md)"
+        },
+        {
+          "id": "questions_log",
+          "phase": 2,
+          "label": "Uprava/QUESTIONS_LOG.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\QUESTIONS_LOG.md:88: | Q2607-155 | 28-07-2026 | 28-07-2026 | PROCESS-META | Uprava | «Как сделать так, чтобы попутно найденное (инциденты сессии) не повторялось?» — запрос на превен"
+        },
+        {
+          "id": "megabook",
+          "phase": 2,
+          "label": "Uprava/MEGABOOK.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "repo-local wiring detail, not an org thesis refinement — MEGABOOK doesn't cover per-repo README sections"
+        },
+        {
+          "id": "skills_manual_ru",
+          "phase": 2,
+          "label": "Uprava/SKILLS_MANUAL_RU.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "no skill/tool contract changed"
+        },
+        {
+          "id": "hooks_index",
+          "phase": 2,
+          "label": "claude-config HOOKS_INDEX.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\claude-config\\HOOKS_INDEX.md:11: **Per-guard liveness — the row H1820 could not move ([H1852](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1852-Opus_claude-config_per-guard-liveness-in"
+        },
+        {
+          "id": "repo_status_rollup",
+          "phase": 2,
+          "label": "Uprava/REPO_STATUS_ROLLUP.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\REPO_STATUS_ROLLUP.md:26: - **H3115 (Opus 5 `claude-opus-5`, 19-08-2026) — витрина курса перестала складывать потоки.** У курса из 16 занятий, идущего двумя потоками одной программы, [`C"
+        },
+        {
+          "id": "hub_manifest",
+          "phase": 2,
+          "label": "Uprava/tools/hub_manifest.json",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\tools\\hub_manifest.json:77: \"id\": \"findings-infra\","
+        },
+        {
+          "id": "auto_derived_views",
+          "phase": 2,
+          "label": "Auto-derived views (NEXT_UP/BOTTLENECKS/kanban/dashboards/HUB_STALENESS_REPORT)",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "auto -- never hand-edit; verify their SOURCES carry the change instead"
+        },
+        {
+          "id": "epistemic_registries",
+          "phase": 2,
+          "label": "FINDINGS x2 + 7 epistemic registries (ASSUMPTIONS/CONTRADICTIONS/GAPS/DEAD_ENDS/RECIPES/STALENESS/GLOSSARY, Uprava + SanskritLexicography)",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "two back-filled findings landed directly in BookIndex's own new FINDINGS.md (the correct home per ruling F1); nothing here rests on an unproven premise or exposes a cross-repo disagreement for the epistemic registries"
+        }
+      ]
+    },
+    {
+      "artifact": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\README.md",
+      "repo": "C:\\Users\\user\\Documents\\GitHub\\BookIndex",
+      "kind": "doc",
+      "surfaces": [
+        {
+          "id": "readme",
+          "phase": 1,
+          "label": "README.md",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\README.md:177: *   **v4.5.0**: VIZ-08 «Исследовательская карта» (H1821) — восьмой модуль визуализаций и первый интегративный: семь направлений исследовательской программы, каж"
+        },
+        {
+          "id": "claude_md",
+          "phase": 1,
+          "label": "CLAUDE.md",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CLAUDE.md:70: python scripts/check_encoding.py README.md CLAUDE.md docs/*.md   # same guard over docs"
+        },
+        {
+          "id": "cold_start",
+          "phase": 1,
+          "label": "Cold-start doc (GEMINI.md / equivalent)",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "none of C:\\Users\\user\\Documents\\GitHub\\BookIndex\\GEMINI.md, C:\\Users\\user\\Documents\\GitHub\\BookIndex\\AGENTS.md exist"
+        },
+        {
+          "id": "sibling_domain_docs",
+          "phase": 1,
+          "label": "Sibling domain docs (manual/roadmap/method docs)",
+          "scope": "repo",
+          "status": "n/a",
+          "evidence": "small doc-only wiring artifact; no other domain doc (roadmap/method doc) governs FINDINGS.md/README-wiring content — CLAUDE.md and .ai_state.md already carry the pointer"
+        },
+        {
+          "id": "metadoc",
+          "phase": 1,
+          "label": "Metadoc (<name>.meta.md)",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\README.meta.md (file does not exist)"
+        },
+        {
+          "id": "changelog",
+          "phase": 1,
+          "label": "CHANGELOG.md -> release (/cut-release)",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CHANGELOG.md:11: - **Local `FINDINGS.md` + README \"как устроена привязка к организации\" ([H3566 (Sonnet 5) — interconnect BookIndex findings/README wiring](https://github.com/ga"
+        },
+        {
+          "id": "ai_state",
+          "phase": 1,
+          "label": ".ai_state.md",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\.ai_state.md:20: - ✅ **H3566 (28-08-2026, Sonnet 5 `claude-sonnet-5`):** local [FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) (2 back-filled findings:"
+        },
+        {
+          "id": "issues",
+          "phase": 1,
+          "label": "Issues (per-person task issues)",
+          "scope": "repo",
+          "status": "n/a",
+          "evidence": "no per-person task issue open for this handoff; nothing to comment on"
+        },
+        {
+          "id": "gtd",
+          "phase": 2,
+          "label": "Uprava/GTD_NEXT_ACTIONS.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\GTD_NEXT_ACTIONS.md:14: [`handoffs/README.md`](https://github.com/gasyoun/Uprava/blob/main/handoffs/README.md)."
+        },
+        {
+          "id": "handoffs_registry",
+          "phase": 2,
+          "label": "Uprava/handoffs/README.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\handoffs\\README.md:147: | H3566 | — | [H3566-Sonnet_BookIndex_interconnect-bookindex-findings-readme-wiring_26.08.26](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3566-Sonnet_"
+        },
+        {
+          "id": "features_index",
+          "phase": 2,
+          "label": "SanskritLexicography/FEATURES_INDEX.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\SanskritLexicography\\FEATURES_INDEX.md:114: | 🟢 E42 | Kompozity `names.csv` | DCS proper-name compound (samāsa) splits with frequency vectors: surface form; constituent-stem split; part count; total corpu"
+        },
+        {
+          "id": "kosha_manifest",
+          "phase": 2,
+          "label": "kosha/data/manifest/datasets.json",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "not a derived dataset"
+        },
+        {
+          "id": "data_layers_census",
+          "phase": 2,
+          "label": "Uprava/DATA_LAYERS_CENSUS.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "not large/local-only data (risk) and no open statistics cell to close"
+        },
+        {
+          "id": "project_interlinks",
+          "phase": 2,
+          "label": "Uprava/PROJECT_INTERLINKS.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\PROJECT_INTERLINKS.md:768: **14-08-2026 H2685 Track C:** the 2,392 publication records now have lossless TMX 1.4b + TEI Lex-0 + OntoLex/vartrans/PROV-O exporters and a zero-loss ledger (`"
+        },
+        {
+          "id": "skills_index",
+          "phase": 2,
+          "label": "root SKILLS_INDEX.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "artifact is not itself a skill/command"
+        },
+        {
+          "id": "articles",
+          "phase": 2,
+          "label": "Uprava/ARTICLES.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "artifact is not a paper (delegate to /articles-update when it is)"
+        },
+        {
+          "id": "danger_facts",
+          "phase": 2,
+          "label": "Uprava/DANGER_FACTS.md + context_facts.yaml",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\DANGER_FACTS.md:43: | **H2699 (16-08-2026): тела стенограмм сняты с tip Uprava.** Живут в приватном sibling [gasyoun/Uprava-stenogrammy-private](https://github.com/gasyoun/Uprava-s"
+        },
+        {
+          "id": "questions_log",
+          "phase": 2,
+          "label": "Uprava/QUESTIONS_LOG.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\QUESTIONS_LOG.md:90: | Q2607-24 | 10-07-2026 | 09-08-2026 | PROCESS-META | CommentaryStrategies | «А в X (MANUAL / README / CLAUDE.md / GEMINI / ROADMAP / GTD / .ai_state / FEATURES"
+        },
+        {
+          "id": "megabook",
+          "phase": 2,
+          "label": "Uprava/MEGABOOK.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "repo-local wiring detail, not an org thesis refinement — MEGABOOK doesn't cover per-repo README sections"
+        },
+        {
+          "id": "skills_manual_ru",
+          "phase": 2,
+          "label": "Uprava/SKILLS_MANUAL_RU.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "no skill/tool contract changed"
+        },
+        {
+          "id": "hooks_index",
+          "phase": 2,
+          "label": "claude-config HOOKS_INDEX.md",
+          "scope": "org",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\claude-config\\HOOKS_INDEX.md (file exists, no mention of artifact found)"
+        },
+        {
+          "id": "repo_status_rollup",
+          "phase": 2,
+          "label": "Uprava/REPO_STATUS_ROLLUP.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\REPO_STATUS_ROLLUP.md:37: - **H2168 (Opus 5 `claude-opus-5`, 17-08-2026) — `ReadingPackController` generalized to multi-course, multi-pack.** New `courseIndex()`/`coursePack()` resolve p"
+        },
+        {
+          "id": "hub_manifest",
+          "phase": 2,
+          "label": "Uprava/tools/hub_manifest.json",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\tools\\hub_manifest.json:17: \"path\": \"handoffs/README.md\","
+        },
+        {
+          "id": "auto_derived_views",
+          "phase": 2,
+          "label": "Auto-derived views (NEXT_UP/BOTTLENECKS/kanban/dashboards/HUB_STALENESS_REPORT)",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "auto -- never hand-edit; verify their SOURCES carry the change instead"
+        },
+        {
+          "id": "epistemic_registries",
+          "phase": 2,
+          "label": "FINDINGS x2 + 7 epistemic registries (ASSUMPTIONS/CONTRADICTIONS/GAPS/DEAD_ENDS/RECIPES/STALENESS/GLOSSARY, Uprava + SanskritLexicography)",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "two back-filled findings landed directly in BookIndex's own new FINDINGS.md (the correct home per ruling F1); nothing here rests on an unproven premise or exposes a cross-repo disagreement for the epistemic registries"
+        }
+      ]
+    },
+    {
+      "artifact": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\.ai_state.md",
+      "repo": "C:\\Users\\user\\Documents\\GitHub\\BookIndex",
+      "kind": "doc",
+      "surfaces": [
+        {
+          "id": "readme",
+          "phase": 1,
+          "label": "README.md",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\README.md (file exists, no mention of artifact found)"
+        },
+        {
+          "id": "claude_md",
+          "phase": 1,
+          "label": "CLAUDE.md",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CLAUDE.md (file exists, no mention of artifact found)"
+        },
+        {
+          "id": "cold_start",
+          "phase": 1,
+          "label": "Cold-start doc (GEMINI.md / equivalent)",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "none of C:\\Users\\user\\Documents\\GitHub\\BookIndex\\GEMINI.md, C:\\Users\\user\\Documents\\GitHub\\BookIndex\\AGENTS.md exist"
+        },
+        {
+          "id": "sibling_domain_docs",
+          "phase": 1,
+          "label": "Sibling domain docs (manual/roadmap/method docs)",
+          "scope": "repo",
+          "status": "n/a",
+          "evidence": "small doc-only wiring artifact; no other domain doc (roadmap/method doc) governs FINDINGS.md/README-wiring content — CLAUDE.md and .ai_state.md already carry the pointer"
+        },
+        {
+          "id": "metadoc",
+          "phase": 1,
+          "label": "Metadoc (<name>.meta.md)",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\.ai_state.meta.md (file does not exist)"
+        },
+        {
+          "id": "changelog",
+          "phase": 1,
+          "label": "CHANGELOG.md -> release (/cut-release)",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CHANGELOG.md:174: - Два теста падали в полном прогоне и проходили по отдельности (числились в `.ai_state.md` как «order-dependent flakes» после H1823): причина не в утечке `local"
+        },
+        {
+          "id": "ai_state",
+          "phase": 1,
+          "label": ".ai_state.md",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\.ai_state.md (file exists, no mention of artifact found)"
+        },
+        {
+          "id": "issues",
+          "phase": 1,
+          "label": "Issues (per-person task issues)",
+          "scope": "repo",
+          "status": "n/a",
+          "evidence": "no per-person task issue open for this handoff; nothing to comment on"
+        },
+        {
+          "id": "gtd",
+          "phase": 2,
+          "label": "Uprava/GTD_NEXT_ACTIONS.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\GTD_NEXT_ACTIONS.md:470: - MG `@DO`/`@DECIDE` — kosha CI/dependency drift (found 31-07-2026, Sonnet 5 `claude-sonnet-5`, `/gtd-sync` Session 63 harvest, [`.ai_state.md`](https://github."
+        },
+        {
+          "id": "handoffs_registry",
+          "phase": 2,
+          "label": "Uprava/handoffs/README.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\handoffs\\README.md:53: action on reading a handoff, before the model self-check or any `git log`/`.ai_state.md`"
+        },
+        {
+          "id": "features_index",
+          "phase": 2,
+          "label": "SanskritLexicography/FEATURES_INDEX.md",
+          "scope": "org",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\SanskritLexicography\\FEATURES_INDEX.md (file exists, no mention of artifact found)"
+        },
+        {
+          "id": "kosha_manifest",
+          "phase": 2,
+          "label": "kosha/data/manifest/datasets.json",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "not a derived dataset"
+        },
+        {
+          "id": "data_layers_census",
+          "phase": 2,
+          "label": "Uprava/DATA_LAYERS_CENSUS.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "not large/local-only data (risk) and no open statistics cell to close"
+        },
+        {
+          "id": "project_interlinks",
+          "phase": 2,
+          "label": "Uprava/PROJECT_INTERLINKS.md",
+          "scope": "org",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\PROJECT_INTERLINKS.md (file exists, no mention of artifact found)"
+        },
+        {
+          "id": "skills_index",
+          "phase": 2,
+          "label": "root SKILLS_INDEX.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "artifact is not itself a skill/command"
+        },
+        {
+          "id": "articles",
+          "phase": 2,
+          "label": "Uprava/ARTICLES.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "artifact is not a paper (delegate to /articles-update when it is)"
+        },
+        {
+          "id": "danger_facts",
+          "phase": 2,
+          "label": "Uprava/DANGER_FACTS.md + context_facts.yaml",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\DANGER_FACTS.md:39: | **Unexplained process-tree deaths on the shared host are usually a SIBLING SESSION's task hygiene, not OS infrastructure** — during the H3361 dual-run (25-08)"
+        },
+        {
+          "id": "questions_log",
+          "phase": 2,
+          "label": "Uprava/QUESTIONS_LOG.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\QUESTIONS_LOG.md:88: | Q2607-155 | 28-07-2026 | 28-07-2026 | PROCESS-META | Uprava | «Как сделать так, чтобы попутно найденное (инциденты сессии) не повторялось?» — запрос на превен"
+        },
+        {
+          "id": "megabook",
+          "phase": 2,
+          "label": "Uprava/MEGABOOK.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "repo-local wiring detail, not an org thesis refinement — MEGABOOK doesn't cover per-repo README sections"
+        },
+        {
+          "id": "skills_manual_ru",
+          "phase": 2,
+          "label": "Uprava/SKILLS_MANUAL_RU.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "no skill/tool contract changed"
+        },
+        {
+          "id": "hooks_index",
+          "phase": 2,
+          "label": "claude-config HOOKS_INDEX.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\claude-config\\HOOKS_INDEX.md:56: | [pretooluse_collision_check.py](https://github.com/gasyoun/claude-config/blob/main/hooks/pretooluse_collision_check.py) | Write·Edit | ℹ️ | open | repos with "
+        },
+        {
+          "id": "repo_status_rollup",
+          "phase": 2,
+          "label": "Uprava/REPO_STATUS_ROLLUP.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\REPO_STATUS_ROLLUP.md:7: Source: each repo's `.ai_state.md` (Next Steps + WIP) plus GTD rows tagged to that repo."
+        },
+        {
+          "id": "hub_manifest",
+          "phase": 2,
+          "label": "Uprava/tools/hub_manifest.json",
+          "scope": "org",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\tools\\hub_manifest.json (file exists, no mention of artifact found)"
+        },
+        {
+          "id": "auto_derived_views",
+          "phase": 2,
+          "label": "Auto-derived views (NEXT_UP/BOTTLENECKS/kanban/dashboards/HUB_STALENESS_REPORT)",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "auto -- never hand-edit; verify their SOURCES carry the change instead"
+        },
+        {
+          "id": "epistemic_registries",
+          "phase": 2,
+          "label": "FINDINGS x2 + 7 epistemic registries (ASSUMPTIONS/CONTRADICTIONS/GAPS/DEAD_ENDS/RECIPES/STALENESS/GLOSSARY, Uprava + SanskritLexicography)",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "two back-filled findings landed directly in BookIndex's own new FINDINGS.md (the correct home per ruling F1); nothing here rests on an unproven premise or exposes a cross-repo disagreement for the epistemic registries"
+        }
+      ]
+    },
+    {
+      "artifact": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CLAUDE.md",
+      "repo": "C:\\Users\\user\\Documents\\GitHub\\BookIndex",
+      "kind": "doc",
+      "surfaces": [
+        {
+          "id": "readme",
+          "phase": 1,
+          "label": "README.md",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\README.md (file exists, no mention of artifact found)"
+        },
+        {
+          "id": "claude_md",
+          "phase": 1,
+          "label": "CLAUDE.md",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CLAUDE.md:1: # CLAUDE.md"
+        },
+        {
+          "id": "cold_start",
+          "phase": 1,
+          "label": "Cold-start doc (GEMINI.md / equivalent)",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "none of C:\\Users\\user\\Documents\\GitHub\\BookIndex\\GEMINI.md, C:\\Users\\user\\Documents\\GitHub\\BookIndex\\AGENTS.md exist"
+        },
+        {
+          "id": "sibling_domain_docs",
+          "phase": 1,
+          "label": "Sibling domain docs (manual/roadmap/method docs)",
+          "scope": "repo",
+          "status": "n/a",
+          "evidence": "small doc-only wiring artifact; no other domain doc (roadmap/method doc) governs FINDINGS.md/README-wiring content — CLAUDE.md and .ai_state.md already carry the pointer"
+        },
+        {
+          "id": "metadoc",
+          "phase": 1,
+          "label": "Metadoc (<name>.meta.md)",
+          "scope": "repo",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CLAUDE.meta.md (file does not exist)"
+        },
+        {
+          "id": "changelog",
+          "phase": 1,
+          "label": "CHANGELOG.md -> release (/cut-release)",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\CHANGELOG.md:11: - **Local `FINDINGS.md` + README \"как устроена привязка к организации\" ([H3566 (Sonnet 5) — interconnect BookIndex findings/README wiring](https://github.com/ga"
+        },
+        {
+          "id": "ai_state",
+          "phase": 1,
+          "label": ".ai_state.md",
+          "scope": "repo",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\BookIndex\\.ai_state.md:20: - ✅ **H3566 (28-08-2026, Sonnet 5 `claude-sonnet-5`):** local [FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) (2 back-filled findings:"
+        },
+        {
+          "id": "issues",
+          "phase": 1,
+          "label": "Issues (per-person task issues)",
+          "scope": "repo",
+          "status": "n/a",
+          "evidence": "no per-person task issue open for this handoff; nothing to comment on"
+        },
+        {
+          "id": "gtd",
+          "phase": 2,
+          "label": "Uprava/GTD_NEXT_ACTIONS.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\GTD_NEXT_ACTIONS.md:7: Primary reader: future Codex/Claude agents. Optimize"
+        },
+        {
+          "id": "handoffs_registry",
+          "phase": 2,
+          "label": "Uprava/handoffs/README.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\handoffs\\README.md:118: | H137 | — | [H137-Opus_DO_csl-atlas_lrv_fri_patel_annotation_and_dictset_blockers_03.07.26](https://github.com/gasyoun/Uprava/blob/main/handoffs/H137-Opus_DO_c"
+        },
+        {
+          "id": "features_index",
+          "phase": 2,
+          "label": "SanskritLexicography/FEATURES_INDEX.md",
+          "scope": "org",
+          "status": "missing",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\SanskritLexicography\\FEATURES_INDEX.md (file exists, no mention of artifact found)"
+        },
+        {
+          "id": "kosha_manifest",
+          "phase": 2,
+          "label": "kosha/data/manifest/datasets.json",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "not a derived dataset"
+        },
+        {
+          "id": "data_layers_census",
+          "phase": 2,
+          "label": "Uprava/DATA_LAYERS_CENSUS.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "not large/local-only data (risk) and no open statistics cell to close"
+        },
+        {
+          "id": "project_interlinks",
+          "phase": 2,
+          "label": "Uprava/PROJECT_INTERLINKS.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\PROJECT_INTERLINKS.md:109: is in the root `CLAUDE.md`."
+        },
+        {
+          "id": "skills_index",
+          "phase": 2,
+          "label": "root SKILLS_INDEX.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "artifact is not itself a skill/command"
+        },
+        {
+          "id": "articles",
+          "phase": 2,
+          "label": "Uprava/ARTICLES.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "artifact is not a paper (delegate to /articles-update when it is)"
+        },
+        {
+          "id": "danger_facts",
+          "phase": 2,
+          "label": "Uprava/DANGER_FACTS.md + context_facts.yaml",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\DANGER_FACTS.md:7: One place a session (Claude Code or Codex) can check for the facts that, missed, destroy"
+        },
+        {
+          "id": "questions_log",
+          "phase": 2,
+          "label": "Uprava/QUESTIONS_LOG.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\QUESTIONS_LOG.md:6: Cross-repo, cross-session register of questions M.G. has asked any Claude Code"
+        },
+        {
+          "id": "megabook",
+          "phase": 2,
+          "label": "Uprava/MEGABOOK.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "repo-local wiring detail, not an org thesis refinement — MEGABOOK doesn't cover per-repo README sections"
+        },
+        {
+          "id": "skills_manual_ru",
+          "phase": 2,
+          "label": "Uprava/SKILLS_MANUAL_RU.md",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "no skill/tool contract changed"
+        },
+        {
+          "id": "hooks_index",
+          "phase": 2,
+          "label": "claude-config HOOKS_INDEX.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\claude-config\\HOOKS_INDEX.md:1: # HOOKS_INDEX — the per-hook roster of the claude-config hook suite"
+        },
+        {
+          "id": "repo_status_rollup",
+          "phase": 2,
+          "label": "Uprava/REPO_STATUS_ROLLUP.md",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\REPO_STATUS_ROLLUP.md:24: - **Telegram anti-duplicate contour, waves 1+2 (ox-alpha `x-preview-f-free`, 24-08-2026) — SHIPPED, live on prod.** Incident: chat гр.61 got two identical «Скор"
+        },
+        {
+          "id": "hub_manifest",
+          "phase": 2,
+          "label": "Uprava/tools/hub_manifest.json",
+          "scope": "org",
+          "status": "present",
+          "evidence": "C:\\Users\\user\\Documents\\GitHub\\Uprava\\tools\\hub_manifest.json:221: \"id\": \"org-claude-md\","
+        },
+        {
+          "id": "auto_derived_views",
+          "phase": 2,
+          "label": "Auto-derived views (NEXT_UP/BOTTLENECKS/kanban/dashboards/HUB_STALENESS_REPORT)",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "auto -- never hand-edit; verify their SOURCES carry the change instead"
+        },
+        {
+          "id": "epistemic_registries",
+          "phase": 2,
+          "label": "FINDINGS x2 + 7 epistemic registries (ASSUMPTIONS/CONTRADICTIONS/GAPS/DEAD_ENDS/RECIPES/STALENESS/GLOSSARY, Uprava + SanskritLexicography)",
+          "scope": "org",
+          "status": "n/a",
+          "evidence": "two back-filled findings landed directly in BookIndex's own new FINDINGS.md (the correct home per ruling F1); nothing here rests on an unproven premise or exposes a cross-repo disagreement for the epistemic registries"
+        }
+      ]
+    }
+  ]
+}
