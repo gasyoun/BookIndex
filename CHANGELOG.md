@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.16.1] - 2026-08-29
 ### Changed
 
 - **`v3_app.js` gzip 160 322 → 158 559 B; headroom under the 162 000 B budget doubles to 3 441 B ([H2586 (Opus 5) — optimize the v3_app.js runtime-script size budget](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2586-Opus_BookIndex_optimize-home-panel-size-budget_11.08.26.md), Opus 5 `claude-opus-5`).** Four semantics-preserving removals, all 192 Playwright tests green after: `window.X = Y` aliases for function bindings that `Object.assign(window, *_exports)` already publishes (−767 B); seven `name$1` helpers byte-identical to their unsuffixed sibling, call sites repointed (−653 B); `console.log`/`debug`/`info` scaffolding, keeping `error`/`warn` (−233 B); rolldown `//#region` markers (−110 B). Human-authored comments kept on purpose — they are the artifact's only documentation. The handoff's ≤157 000 B stop condition is **not** met and the remaining routes are named in [docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md). Standalone HTML moved 182.6 → 181.0 KiB gzip with it.
