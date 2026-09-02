@@ -1044,7 +1044,9 @@
         "Название Греции в «Велесовой книге»."
       ],
       "letter_change": false,
-      "letter": "Г"
+      "letter": "Г",
+      "lat": 39.07,
+      "lon": 21.82
     },
     {
       "canonical_id": "toponyms-f546ae3d-d62c-5e68-8ca6-eaa819cac193",
@@ -1852,7 +1854,9 @@
         "gnd": "4010558-1",
         "geonames": "6357216",
         "src": "wikidata-auto"
-      }
+      },
+      "lat": 37.88,
+      "lon": -4.78
     },
     {
       "canonical_id": "toponyms-6f5f100d-6524-5264-98c8-7026a666e1c0",
@@ -2865,7 +2869,10 @@
         "Страна русов, фигурирующая в «Велесовой книге»."
       ],
       "letter_change": false,
-      "letter": "Р"
+      "letter": "Р",
+      "lat": 49.6,
+      "lon": 32.0,
+      "coords_conditional": true
     },
     {
       "canonical_id": "toponyms-7c15526f-b19c-5577-830b-70df666df2e4",
@@ -3250,7 +3257,9 @@
         "Греческий город."
       ],
       "letter_change": true,
-      "letter": "Ф"
+      "letter": "Ф",
+      "lat": 40.64,
+      "lon": 22.94
     },
     {
       "canonical_id": "toponyms-e6e25995-353f-593a-a57b-16ea2cf6fc8d",

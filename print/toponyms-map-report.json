@@ -1,0 +1,18 @@
+{
+  "total_toponyms": 98,
+  "coordinate_groups": 83,
+  "labeled_groups": 37,
+  "numbered_groups": 46,
+  "legend_rows_drawn": 46,
+  "legend_capacity": 48,
+  "legend_overflow": 0,
+  "labels_without_slot": 0,
+  "labels_in_fallback_slots": 19,
+  "chip_close_pairs": 0,
+  "legend_parity_ok": true,
+  "scale_bar_km": 1000,
+  "page_mm": [
+    290,
+    215
+  ]
+}
