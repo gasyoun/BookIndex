@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
-
+## [4.16.4] - 2026-09-02
 ### Documented
 
 - **[docs/VIDEO_ABOUT_ZALIZNYAK_BRIEF_1877_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/VIDEO_ABOUT_ZALIZNYAK_BRIEF_1877_2026.md) — два кратких аннотированных списка видео «про самого Зализняка», сжатых из watchlist (H3973).** Вариант A — один лист (группы 1–2 + якоря группы 3, 11 записей, от длинного к короткому); вариант B — два листа (Лист 1 = группы 1–2 полностью; Лист 2 = группы 3–4: якоря acc029/acc021/acc038 + ключевые acc041/acc042/acc156/acc148/acc051). Каждый лист — жёсткий бюджет ≤1877 знаков с пробелами с печатаемым счётчиком «N/1877» в шапке; запись = `acc###` + название + длительность + 1–2 строки аннотации из прозы watchlist + уровень заземления Р/З/К одной буквой; URL в телах листов нет. Новый гейт [scripts/crosswalk/count_brief_chars.py](https://github.com/gasyoun/BookIndex/blob/main/scripts/crosswalk/count_brief_chars.py) `--emit`/`--check` закрепляет три бюджета (A 1868/1877 · Лист 1 1319/1877 · Лист 2 1236/1877), подмножественность ids A ⊆ ids B и паритет названий/длительностей с [data/video_catalog_public.v2.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_public.v2.json) — все 16 записей, 0 расхождений. Шапка [watchlist](https://github.com/gasyoun/BookIndex/blob/main/docs/VIDEO_ABOUT_ZALIZNYAK_WATCHLIST_2026.md) получила одну перекрёстную строку «краткие формы — см. brief», проза watchlist больше не меняется; `census_print_spreads.py` без изменений (176 / 214,13 ч / 142 approved / 98 / 103 / 95).
