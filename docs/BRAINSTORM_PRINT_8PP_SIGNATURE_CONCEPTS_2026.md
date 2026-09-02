@@ -109,7 +109,7 @@ Ruling MG 29-07-2026: «Я не решил что именно будет на 8
 2. Биографическая справка о Зализняке **[А]**.
 3. Мини-словарь лингвистических терминов **[Д, но см. § 4]**.
 4. Хронология лекций и выступлений **[Д/А]**.
-5. Карта топонимов книги — 98 позиций **[Д + картография]**.
+5. Карта топонимов книги — 98 позиций **[Д + картография]**. _Макет готов 03-09-2026 ([H3974 (OxAlpha) — print vector toponym map](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3974-OxAlpha_BookIndex_print-toponyms-map_03.09.26.md)): [print/toponyms-map.pdf](https://github.com/gasyoun/BookIndex/blob/main/print/toponyms-map.pdf), вектор + легенда из [data/modules/11-toponyms.json](https://github.com/gasyoun/BookIndex/blob/main/data/modules/11-toponyms.json); обрезной формат полосы — константа в [scripts/print/toponyms_print_map.mjs](https://github.com/gasyoun/BookIndex/blob/main/scripts/print/toponyms_print_map.mjs) до уточнения вёрстки._
 6. Древо индоевропейских / славянских языков — 1 931 связь **[Д]**.
 7. Как не попасться любительской этимологии, 8–10 правил **[А]**.
 8. Таблица звуковых соответствий праслав. → рус./пол./чеш. **[А + источникование]**.

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.17.0] - 2026-09-03
+### Added
+
+- **Print-ready vector toponym map for the book spread - [print/toponyms-map.pdf](https://github.com/gasyoun/BookIndex/blob/main/print/toponyms-map.pdf) (290x215 mm, fonts embedded) with offline regenerator [scripts/print/toponyms_print_map.mjs](https://github.com/gasyoun/BookIndex/blob/main/scripts/print/toponyms_print_map.mjs) (H3974).** Fills the "Карта топонимов книги" spread of the 8pp companion brief: contour Natural Earth 50m land base (public domain, no state borders, no country labels), conic conformal projection auto-fitted to the 98 toponym points with a ~9% safety frame, light 10-degree graticule, 0/500/1000 km scale bar. Hybrid labelling: 37 `discussed=true` groups get name+pages printed at the point (collision-swept with leader lines, grid fallback for the 19 unluckiest), the remaining 46 groups get numbered chips revealed by a 4-column legend under the map. Black-white safe: epoch shapes dropped for legibility (dense Europe cluster), `coords_conditional` heads («Велесова книга» legendary lands) drawn with dashed rings, `«—»` marks handbook entries without page anchors. Data: [data/modules/11-toponyms.json](https://github.com/gasyoun/BookIndex/blob/main/data/modules/11-toponyms.json) gains coordinates for Кордова (37.88, -4.78), Фессалоники (40.64, 22.94), условные Русколань (49.6, 32.0, `coords_conditional`) and Грецколань (39.07, 21.82) - all 98 toponyms now geolocated, same data feeds the web map. Deterministic smokes gate the run (marker/chip/label accounting 98=37+46, zero chip overlaps, zero label collisions, legend-pages parity) - [print/toponyms-map-report.json](https://github.com/gasyoun/BookIndex/blob/main/print/toponyms-map-report.json); vector sources [print/toponyms-map.svg](https://github.com/gasyoun/BookIndex/blob/main/print/toponyms-map.svg) + print HTML, live review copy at [gasyoun.github.io/BookIndex/print/toponyms-map.html](https://gasyoun.github.io/BookIndex/print/toponyms-map.html).
+
 ## [4.16.4] - 2026-09-02
 ### Documented
 
