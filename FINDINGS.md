@@ -213,6 +213,39 @@ unexported, unreferenced module-level binding. That is why the pre-H3874
 `legacy.js` had lost its 62 `legacy_*` functions, and why declarations read
 only from `legacy.js` have to live there rather than in a core module.
 
+## §6. Two implementations of one safety helper, and only the publication order decided which one the app got
+
+`safeUrl` and `safeImageUrl` existed **twice** in the runtime, and the copies were
+not equivalent:
+
+- [src/runtime/legacy.js](https://github.com/gasyoun/BookIndex/blob/main/src/runtime/legacy.js)
+  had the correct version — parse with `new URL()`, allow-list `http:`/`https:`/`mailto:`/`tel:`
+  (plus `data:image/*` and `blob:` for images), cap the length, refuse protocol-relative `//`.
+- [src/runtime/core/utils.js](https://github.com/gasyoun/BookIndex/blob/main/src/runtime/core/utils.js)
+  published a one-line **deny-list** onto `window`: reject `javascript:`, pass everything
+  else. That misses `data:text/html`, `vbscript:`, and the classic `java&#9;script:` bypass —
+  browsers strip control characters out of a scheme, `startsWith('javascript:')` does not.
+
+Both assigned to the same global. `window.safeUrl` was the *robust* one at runtime purely
+because legacy's publication block runs **later** in the bundle and overwrote utils'
+assignment — line 15334 beating line 1002. So the weak sanitiser was harmless by accident
+of ordering, not by design: reorder the modules, or delete legacy's publication block in a
+future tidy-up, and `window.safeUrl` silently becomes the deny-list again with no test and
+no gate noticing. CodeQL flagged it as `js/incomplete-url-scheme-check` (2 high) the whole
+time and the alerts were carried as known.
+
+Fixed in H4025 by giving `core/utils.js` the allow-list implementation and assigning the
+real function to `window`, so both copies are now correct and order stops mattering. **The
+general rule for this repo: a security helper must not have a second implementation.** If
+you find one, make the weaker site delegate — never leave two and rely on which one loads
+last.
+
+Same pass, same file: the boot `catch` in
+[src/runtime/entry.js](https://github.com/gasyoun/BookIndex/blob/main/src/runtime/entry.js)
+interpolated `error.message` into `innerHTML`. An exception can carry attacker-influenced
+text — a failed fetch echoes the URL it tried, and that URL comes from the hash — so the
+error panel is now assembled as DOM with `textContent`.
+
 ## Record a gotcha found here
 
 Append a new `§N` entry to this file for anything that surprised you while

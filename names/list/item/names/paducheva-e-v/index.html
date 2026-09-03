@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-K4+cbEtJzMgqbefQfAodlK0gGaxSjIaBCgSicbtfV9A=' 'sha256-rLn2pKURLuFEL2xYt/6b4TZe6jEhCKJvink7RvLYoGI='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-2SaISl/kSMhSbMLCzL45XsSIq0ym8TpC/m0b6XLrPXs=' 'sha256-S+30cYJ9ltQbDPamjgqHfDSqpI6oGq0ZSm4cMh0Ne/4='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -6775,7 +6775,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "dd558103abb6",
+  "build_id": "7a79eac969e3",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6880,8 +6880,8 @@
       "keys": [
         "scholar"
       ],
-      "bytes": 42340,
-      "sha256": "4Z3rwzOWB4vljsrw6dahiVjakZ+BTLJXmf0fw7otGs4="
+      "bytes": 42811,
+      "sha256": "7aeGo+sJSl4ITu0zKLpiGz+pyO6KEXgJVrXjnddE/uk="
     },
     {
       "file": "99-extra.json",
@@ -7094,7 +7094,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "dd558103abb6";
+	var APP_BUILD_ID$1 = "7a79eac969e3";
 	var NORMALIZE_CACHE_LIMIT = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7492,6 +7492,7 @@ var BookIndex = (function(exports) {
 	var utils_exports = /* @__PURE__ */ __exportAll({
 		ACCENT_SAFE_TOKEN_RE: () => ACCENT_SAFE_TOKEN_RE$1,
 		CYRILLIC_TO_LATIN_MAP: () => CYRILLIC_TO_LATIN_MAP,
+		MAX_URL_LENGTH: () => MAX_URL_LENGTH$1,
 		announceUiMessage: () => announceUiMessage$1,
 		buildHashSlugIndexesForItems: () => buildHashSlugIndexesForItems,
 		clampPageInBook: () => clampPageInBook$1,
@@ -7519,7 +7520,9 @@ var BookIndex = (function(exports) {
 		rememberBoundedCacheValue: () => rememberBoundedCacheValue$1,
 		resolveExistingHead: () => resolveExistingHead$1,
 		resolveItemHeadFromHash: () => resolveItemHeadFromHash,
+		safeImageUrl: () => safeImageUrl$1,
 		safeSetAttr: () => safeSetAttr$1,
+		safeUrl: () => safeUrl$1,
 		shuffleArray: () => shuffleArray$1,
 		slugify: () => slugify$1
 	});
@@ -7847,6 +7850,65 @@ var BookIndex = (function(exports) {
 	function normalizeBibtexText$1(value) {
 		return String(value == null ? "" : value).replace(/\s+/g, " ").trim();
 	}
+	/** Longest URL either sanitiser will consider; anything longer is refused outright. */
+	var MAX_URL_LENGTH$1 = 2048;
+	/**
+	* Sanitise a URL for an `href`.
+	*
+	* These two used to be one-line deny-lists — reject `javascript:`, pass everything else —
+	* published straight onto `window`. That is the shape CodeQL's `js/incomplete-url-scheme-check`
+	* flags, and rightly: a deny-list misses `data:text/html`, `vbscript:`, and the classic
+	* `java\tscript:` bypass, because browsers strip control characters from a scheme while
+	* `startsWith('javascript:')` does not. `legacy.js` already carried a correct version;
+	* this is that logic, so the binding on `window` is no weaker than the one legacy code calls.
+	*
+	* Allow-list, not deny-list: relative and fragment URLs pass through untouched, everything
+	* else must parse and land on a scheme we name.
+	*/
+	function safeUrl$1(url, fallback = "#") {
+		if (url === null || url === void 0) return fallback;
+		const raw = String(url).trim();
+		if (!raw) return fallback;
+		if (raw.length > 2048) return fallback;
+		if (raw.startsWith("//")) return fallback;
+		if (raw.startsWith("/") || raw.startsWith("./") || raw.startsWith("../")) return raw;
+		if (raw.startsWith("#")) return raw;
+		try {
+			const base = typeof window !== "undefined" && window.location && window.location.href ? window.location.href : "https://example.invalid/";
+			const parsed = new URL(raw, base);
+			if (![
+				"http:",
+				"https:",
+				"mailto:",
+				"tel:"
+			].includes(parsed.protocol)) return fallback;
+			return parsed.href;
+		} catch {
+			return fallback;
+		}
+	}
+	/** Sanitise a URL for an image `src`. Same rules, plus inline image data and blobs. */
+	function safeImageUrl$1(url, fallback = "") {
+		if (url === null || url === void 0) return fallback;
+		const raw = String(url).trim();
+		if (!raw) return fallback;
+		if (raw.length > 2048) return fallback;
+		if (raw.startsWith("//")) return fallback;
+		if (raw.startsWith("/") || raw.startsWith("./") || raw.startsWith("../")) return raw;
+		if (/^data:image\/(?:png|jpe?g|gif|webp|avif);/i.test(raw)) return raw;
+		try {
+			const base = typeof window !== "undefined" && window.location && window.location.href ? window.location.href : "https://example.invalid/";
+			const parsed = new URL(raw, base);
+			if (![
+				"http:",
+				"https:",
+				"blob:"
+			].includes(parsed.protocol)) return fallback;
+			return parsed.href;
+		} catch {
+			return fallback;
+		}
+	}
 	if (typeof window !== "undefined") {
 		window.nowMs = nowMs$1;
 		window.safeSetAttr = safeSetAttr$1;
@@ -7877,16 +7939,8 @@ var BookIndex = (function(exports) {
 		window.encodeItemHeadForHash = encodeItemHeadForHash$1;
 		window.resolveItemHeadFromHash = resolveItemHeadFromHash;
 		window.normalizeBibtexText = normalizeBibtexText$1;
-		window.safeUrl = (url, fallback = "#") => {
-			const clean = String(url || "").trim();
-			if (!clean || clean.toLowerCase().startsWith("javascript:")) return fallback;
-			return clean;
-		};
-		window.safeImageUrl = (url, fallback = "") => {
-			const clean = String(url || "").trim();
-			if (!clean || clean.toLowerCase().startsWith("javascript:")) return fallback;
-			return clean;
-		};
+		window.safeUrl = safeUrl$1;
+		window.safeImageUrl = safeImageUrl$1;
 	}
 	//#endregion
 	//#region src/runtime/core/data.js
@@ -7968,8 +8022,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "dd558103abb6").trim();
-		if (buildId && buildId !== "dd558103abb6") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "7a79eac969e3").trim();
+		if (buildId && buildId !== "7a79eac969e3") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule(manifest, file) {
@@ -11915,7 +11969,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "dd558103abb6" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "7a79eac969e3" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -22426,7 +22480,17 @@ var BookIndex = (function(exports) {
 			const message = error && error.message ? error.message : String(error || "Unknown data loading error");
 			if (typeof document !== "undefined") {
 				const content = document.getElementById("content");
-				if (content) content.innerHTML = `<div class="panel-empty-state">Не удалось загрузить данные справочника.<br><small>${message}</small></div>`;
+				if (content) {
+					const panel = document.createElement("div");
+					panel.className = "panel-empty-state";
+					panel.append("Не удалось загрузить данные справочника.");
+					panel.appendChild(document.createElement("br"));
+					const detail = document.createElement("small");
+					detail.textContent = message;
+					panel.appendChild(detail);
+					content.innerHTML = "";
+					content.appendChild(panel);
+				}
 			}
 			console.error("[app-data] Boot failed:", error);
 		});

@@ -552,6 +552,7 @@ var BookIndex = (function(exports) {
 	var utils_exports = /* @__PURE__ */ __exportAll({
 		ACCENT_SAFE_TOKEN_RE: () => ACCENT_SAFE_TOKEN_RE$1,
 		CYRILLIC_TO_LATIN_MAP: () => CYRILLIC_TO_LATIN_MAP,
+		MAX_URL_LENGTH: () => MAX_URL_LENGTH$1,
 		announceUiMessage: () => announceUiMessage$1,
 		buildHashSlugIndexesForItems: () => buildHashSlugIndexesForItems,
 		clampPageInBook: () => clampPageInBook$1,
@@ -579,7 +580,9 @@ var BookIndex = (function(exports) {
 		rememberBoundedCacheValue: () => rememberBoundedCacheValue$1,
 		resolveExistingHead: () => resolveExistingHead$1,
 		resolveItemHeadFromHash: () => resolveItemHeadFromHash,
+		safeImageUrl: () => safeImageUrl$1,
 		safeSetAttr: () => safeSetAttr$1,
+		safeUrl: () => safeUrl$1,
 		shuffleArray: () => shuffleArray$1,
 		slugify: () => slugify$1
 	});
@@ -907,6 +910,65 @@ var BookIndex = (function(exports) {
 	function normalizeBibtexText$1(value) {
 		return String(value == null ? "" : value).replace(/\s+/g, " ").trim();
 	}
+	/** Longest URL either sanitiser will consider; anything longer is refused outright. */
+	var MAX_URL_LENGTH$1 = 2048;
+	/**
+	* Sanitise a URL for an `href`.
+	*
+	* These two used to be one-line deny-lists — reject `javascript:`, pass everything else —
+	* published straight onto `window`. That is the shape CodeQL's `js/incomplete-url-scheme-check`
+	* flags, and rightly: a deny-list misses `data:text/html`, `vbscript:`, and the classic
+	* `java\tscript:` bypass, because browsers strip control characters from a scheme while
+	* `startsWith('javascript:')` does not. `legacy.js` already carried a correct version;
+	* this is that logic, so the binding on `window` is no weaker than the one legacy code calls.
+	*
+	* Allow-list, not deny-list: relative and fragment URLs pass through untouched, everything
+	* else must parse and land on a scheme we name.
+	*/
+	function safeUrl$1(url, fallback = "#") {
+		if (url === null || url === void 0) return fallback;
+		const raw = String(url).trim();
+		if (!raw) return fallback;
+		if (raw.length > 2048) return fallback;
+		if (raw.startsWith("//")) return fallback;
+		if (raw.startsWith("/") || raw.startsWith("./") || raw.startsWith("../")) return raw;
+		if (raw.startsWith("#")) return raw;
+		try {
+			const base = typeof window !== "undefined" && window.location && window.location.href ? window.location.href : "https://example.invalid/";
+			const parsed = new URL(raw, base);
+			if (![
+				"http:",
+				"https:",
+				"mailto:",
+				"tel:"
+			].includes(parsed.protocol)) return fallback;
+			return parsed.href;
+		} catch {
+			return fallback;
+		}
+	}
+	/** Sanitise a URL for an image `src`. Same rules, plus inline image data and blobs. */
+	function safeImageUrl$1(url, fallback = "") {
+		if (url === null || url === void 0) return fallback;
+		const raw = String(url).trim();
+		if (!raw) return fallback;
+		if (raw.length > 2048) return fallback;
+		if (raw.startsWith("//")) return fallback;
+		if (raw.startsWith("/") || raw.startsWith("./") || raw.startsWith("../")) return raw;
+		if (/^data:image\/(?:png|jpe?g|gif|webp|avif);/i.test(raw)) return raw;
+		try {
+			const base = typeof window !== "undefined" && window.location && window.location.href ? window.location.href : "https://example.invalid/";
+			const parsed = new URL(raw, base);
+			if (![
+				"http:",
+				"https:",
+				"blob:"
+			].includes(parsed.protocol)) return fallback;
+			return parsed.href;
+		} catch {
+			return fallback;
+		}
+	}
 	if (typeof window !== "undefined") {
 		window.nowMs = nowMs$1;
 		window.safeSetAttr = safeSetAttr$1;
@@ -937,16 +999,8 @@ var BookIndex = (function(exports) {
 		window.encodeItemHeadForHash = encodeItemHeadForHash$1;
 		window.resolveItemHeadFromHash = resolveItemHeadFromHash;
 		window.normalizeBibtexText = normalizeBibtexText$1;
-		window.safeUrl = (url, fallback = "#") => {
-			const clean = String(url || "").trim();
-			if (!clean || clean.toLowerCase().startsWith("javascript:")) return fallback;
-			return clean;
-		};
-		window.safeImageUrl = (url, fallback = "") => {
-			const clean = String(url || "").trim();
-			if (!clean || clean.toLowerCase().startsWith("javascript:")) return fallback;
-			return clean;
-		};
+		window.safeUrl = safeUrl$1;
+		window.safeImageUrl = safeImageUrl$1;
 	}
 	//#endregion
 	//#region src/runtime/core/data.js
@@ -15486,7 +15540,17 @@ var BookIndex = (function(exports) {
 			const message = error && error.message ? error.message : String(error || "Unknown data loading error");
 			if (typeof document !== "undefined") {
 				const content = document.getElementById("content");
-				if (content) content.innerHTML = `<div class="panel-empty-state">Не удалось загрузить данные справочника.<br><small>${message}</small></div>`;
+				if (content) {
+					const panel = document.createElement("div");
+					panel.className = "panel-empty-state";
+					panel.append("Не удалось загрузить данные справочника.");
+					panel.appendChild(document.createElement("br"));
+					const detail = document.createElement("small");
+					detail.textContent = message;
+					panel.appendChild(detail);
+					content.innerHTML = "";
+					content.appendChild(panel);
+				}
 			}
 			console.error("[app-data] Boot failed:", error);
 		});
