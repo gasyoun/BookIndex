@@ -132,7 +132,20 @@ setTimeout(() => {
     if (typeof document !== 'undefined') {
       const content = document.getElementById('content');
       if (content) {
-        content.innerHTML = `<div class="panel-empty-state">Не удалось загрузить данные справочника.<br><small>${message}</small></div>`;
+        // Built as DOM, not interpolated into innerHTML. `message` is an exception string,
+        // and an exception can carry attacker-influenced text — a failed fetch echoes the
+        // URL it tried, and that URL comes from the hash. Assembling it here means the
+        // error panel renders the message as text and can never execute it
+        // (CodeQL js/xss-through-dom + js/xss-through-exception).
+        const panel = document.createElement('div');
+        panel.className = 'panel-empty-state';
+        panel.append('Не удалось загрузить данные справочника.');
+        panel.appendChild(document.createElement('br'));
+        const detail = document.createElement('small');
+        detail.textContent = message;
+        panel.appendChild(detail);
+        content.innerHTML = '';
+        content.appendChild(panel);
       }
     }
     console.error('[app-data] Boot failed:', error);

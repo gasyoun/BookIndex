@@ -375,6 +375,63 @@ export function normalizeBibtexText(value) {
   return String(value == null ? '' : value).replace(/\s+/g, ' ').trim();
 }
 
+/** Longest URL either sanitiser will consider; anything longer is refused outright. */
+export const MAX_URL_LENGTH = 2048;
+
+/**
+ * Sanitise a URL for an `href`.
+ *
+ * These two used to be one-line deny-lists — reject `javascript:`, pass everything else —
+ * published straight onto `window`. That is the shape CodeQL's `js/incomplete-url-scheme-check`
+ * flags, and rightly: a deny-list misses `data:text/html`, `vbscript:`, and the classic
+ * `java\tscript:` bypass, because browsers strip control characters from a scheme while
+ * `startsWith('javascript:')` does not. `legacy.js` already carried a correct version;
+ * this is that logic, so the binding on `window` is no weaker than the one legacy code calls.
+ *
+ * Allow-list, not deny-list: relative and fragment URLs pass through untouched, everything
+ * else must parse and land on a scheme we name.
+ */
+export function safeUrl(url, fallback = '#') {
+  if (url === null || url === undefined) return fallback;
+  const raw = String(url).trim();
+  if (!raw) return fallback;
+  if (raw.length > MAX_URL_LENGTH) return fallback;
+  if (raw.startsWith('//')) return fallback;
+  if (raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) return raw;
+  if (raw.startsWith('#')) return raw;
+  try {
+    const base = typeof window !== 'undefined' && window.location && window.location.href
+      ? window.location.href
+      : 'https://example.invalid/';
+    const parsed = new URL(raw, base);
+    if (!['http:', 'https:', 'mailto:', 'tel:'].includes(parsed.protocol)) return fallback;
+    return parsed.href;
+  } catch {
+    return fallback;
+  }
+}
+
+/** Sanitise a URL for an image `src`. Same rules, plus inline image data and blobs. */
+export function safeImageUrl(url, fallback = '') {
+  if (url === null || url === undefined) return fallback;
+  const raw = String(url).trim();
+  if (!raw) return fallback;
+  if (raw.length > MAX_URL_LENGTH) return fallback;
+  if (raw.startsWith('//')) return fallback;
+  if (raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) return raw;
+  if (/^data:image\/(?:png|jpe?g|gif|webp|avif);/i.test(raw)) return raw;
+  try {
+    const base = typeof window !== 'undefined' && window.location && window.location.href
+      ? window.location.href
+      : 'https://example.invalid/';
+    const parsed = new URL(raw, base);
+    if (!['http:', 'https:', 'blob:'].includes(parsed.protocol)) return fallback;
+    return parsed.href;
+  } catch {
+    return fallback;
+  }
+}
+
 if (typeof window !== 'undefined') {
   window.nowMs = nowMs;
   window.safeSetAttr = safeSetAttr;
@@ -405,15 +462,7 @@ if (typeof window !== 'undefined') {
   window.encodeItemHeadForHash = encodeItemHeadForHash;
   window.resolveItemHeadFromHash = resolveItemHeadFromHash;
   window.normalizeBibtexText = normalizeBibtexText;
-  window.safeUrl = (url, fallback = '#') => {
-    const clean = String(url || '').trim();
-    if (!clean || clean.toLowerCase().startsWith('javascript:')) return fallback;
-    return clean;
-  };
-  window.safeImageUrl = (url, fallback = '') => {
-    const clean = String(url || '').trim();
-    if (!clean || clean.toLowerCase().startsWith('javascript:')) return fallback;
-    return clean;
-  };
+  window.safeUrl = safeUrl;
+  window.safeImageUrl = safeImageUrl;
 }
 
