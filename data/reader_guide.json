@@ -1,7 +1,7 @@
 {
   "schema": "bookindex.reader_guide/1",
   "generated": {
-    "doc_updated": "28-08-2026",
+    "doc_updated": "03-09-2026",
     "gate_date": "20-08-2026"
   },
   "gate": {
@@ -717,7 +717,13 @@
         }
       ],
       "auto": [],
-      "llsh_neighbors": []
+      "llsh_neighbors": [
+        {
+          "accession": "acc032",
+          "title": "А.А. Зализняк. О происхождении слов",
+          "year": 2010
+        }
+      ]
     },
     {
       "id": "ch05",
@@ -962,7 +968,6 @@
           "pass": "series",
           "pass_ru": "серия",
           "confidence": 0.95,
-          "duplicate_of": "acc088",
           "watch_url_at_minute": "https://www.youtube.com/watch?v=x7QR2a8bCOI"
         },
         {
@@ -2026,6 +2031,11 @@
       ],
       "llsh_neighbors": [
         {
+          "accession": "acc007",
+          "title": "Зализняк. О Велесовой книге. 2008",
+          "year": 2008
+        },
+        {
           "accession": "acc006",
           "title": "Зализняк. Контуры истории русского языка. 2012",
           "year": 2012
@@ -2538,7 +2548,6 @@
           "pass": "kwic",
           "pass_ru": "KWIC",
           "confidence": 0.95,
-          "duplicate_of": "acc008",
           "watch_url_at_minute": "https://www.youtube.com/watch?v=Hf1kFHCFb4E&t=2376s"
         },
         {
@@ -2629,7 +2638,6 @@
           "pass": "series",
           "pass_ru": "серия",
           "confidence": 0.95,
-          "duplicate_of": "acc007",
           "watch_url_at_minute": "https://www.youtube.com/watch?v=xIoXVxahvDY"
         },
         {
@@ -4225,7 +4233,6 @@
           "pass": "kwic",
           "pass_ru": "KWIC",
           "confidence": 0.311,
-          "duplicate_of": "acc088",
           "watch_url_at_minute": "https://www.youtube.com/watch?v=x7QR2a8bCOI&t=1071s"
         },
         {
@@ -4457,21 +4464,6 @@
         }
       ],
       "llsh_neighbors": [
-        {
-          "accession": "acc007",
-          "title": "Зализняк. О Велесовой книге. 2008",
-          "year": 2008
-        },
-        {
-          "accession": "acc032",
-          "title": "А.А. Зализняк. О происхождении слов",
-          "year": 2010
-        },
-        {
-          "accession": "acc033",
-          "title": "Зализняк. Механизмы экспрессивности в языке. 2011",
-          "year": 2011
-        },
         {
           "accession": "acc004",
           "title": "А.А. Зализняк. Как изменяется внешняя сторона слова",

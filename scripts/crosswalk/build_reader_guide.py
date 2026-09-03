@@ -73,10 +73,18 @@ LLSH_CHRONOLOGY = [
 ]
 
 # Соседство тем: доклад ЛЛШ → глава книги (камера-реди, служебная таблица
-# «Две карты, не одна»; соседство ≠ кураторский голос).
+# «Две карты, не одна»; соседство ≠ кураторский голос). Порядок хронологический —
+# им же рендерится столбец «Соседний доклад ЛЛШ». Заземление каждого соседства —
+# H4024 (03-09-2026), сверка с 22-crosswalk.json:
+#   acc005 ch09 серия auto (куратор утвердил доклад в ch06 112:14);
+#   acc007 ch06 approved 34:50 (ребра в ch10 нет — старое соседство было без заземления);
+#   acc032 ch04 approved 88:34 (ch10 — только auto по заголовку);
+#   acc033 исключён: утверждённых рёбер нет ни в одну главу (ch05 rejected, ch10 auto);
+#   acc139 ch10 по названию «Ещё раз о жизни слов»;
+#   acc004 ch10 approved 114:46.
 LLSH_TOPIC_NEIGHBOR = {
-    "acc005": "ch09", "acc007": "ch10", "acc003": "ch08", "acc032": "ch10",
-    "acc033": "ch10", "acc006": "ch06", "acc001": "ch07", "acc004": "ch10",
+    "acc005": "ch09", "acc007": "ch06", "acc003": "ch08", "acc032": "ch04",
+    "acc006": "ch06", "acc001": "ch07", "acc004": "ch10",
     "acc002": "ch08", "acc139": "ch10", "acc140": "ch08",
 }
 
@@ -488,7 +496,7 @@ def render_doc(guide):
     lines.append("| Глава | стр. | Утверждено видео | Из них с минутой | Машинных кандидатов | Соседний доклад ЛЛШ |")
     lines.append("|---|---|---|---|---|---|")
     for ch in guide["chapters"]:
-        nb = "«%s» (%d)" % (ch["llsh_neighbors"][0]["title"], ch["llsh_neighbors"][0]["year"]) if ch["llsh_neighbors"] else "—"
+        nb = ", ".join("«%s» (%d)" % (n["title"], n["year"]) for n in ch["llsh_neighbors"]) if ch["llsh_neighbors"] else "—"
         lines.append("| %s | %s | %d | %d | %d | %s |" % (
             esc(ch["name"]), esc(ch["pages"]), ch["counts"]["approved_videos"],
             ch["counts"]["with_timecode"], ch["counts"]["auto_videos"], nb))

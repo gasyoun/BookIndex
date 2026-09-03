@@ -1,6 +1,6 @@
 # Печатный блок-спутник: 8 полос концевого материала для «Из жизни слов и языков» (2026)
 
-_Created: 26-07-2026 · Last updated: 24-08-2026_
+_Created: 26-07-2026 · Last updated: 03-09-2026_
 
 Производственный бриф по заданию [H1609](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1609-Fable_BookIndex_print-8pp-companion-backmatter_24.07.26.md).
 Издание-носитель: **«Из жизни слов и языков»** (А. А. Зализняк; корпусный идентификатор
@@ -16,10 +16,10 @@ _Created: 26-07-2026 · Last updated: 24-08-2026_
 | Вопрос | Состояние |
 |---|---|
 | Полосы 1–3, 6–7 | Зафиксированы по эскизу владельца (таблица ниже) — правки возможны до вёрстки |
-| Полосы 4–5 | **Правка 21-08-2026** ([H3238 (Grok 4.6) — title-first LLSH and vote-named Mumi-Troll supplements](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3238-Grok_BookIndex_print-spreads-4-5-title-first-vote-map_21.08.26.md)): заголовок доклада первым; полоса 4 — именные утверждённые связки к лекциям «Муми-тролля»; полоса 5 — соседство ЛЛШ ↔ глава. Камера-реди: [PRINT_SPREADS_4_5_CAMERA_READY_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md). Первый набор 20-08-2026: [H3135 (Fable 5) — residual H2707: камера-реди полосы 4–5](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3135-Fable_BookIndex_h2707-residual-spread-4-5-print-prose_19.08.26.md) |
+| Полосы 4–5 | **Правка 03-09-2026** ([H4024 (OxAlpha) — print: honest LLSH neighbor map + Полоса 5 prose before press](https://github.com/gasyoun/Uprava/blob/main/handoffs/H4024-OxAlpha_BookIndex_print-llsh-neighbor-fix_03.09.26.md)): карта соседств ЛЛШ → глава перепроверена по кресту — «О Велесовой книге» (2008) → «История русского языка», «О происхождении слов» (2010) → «Историческая лингвистика (продолж.)», «Механизмы экспрессивности» (2011) — без пары; в «О жизни слов» — доклады 2014 и 2016 годов. **Правка 21-08-2026** ([H3238 (Grok 4.6) — title-first LLSH and vote-named Mumi-Troll supplements](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3238-Grok_BookIndex_print-spreads-4-5-title-first-vote-map_21.08.26.md)): заголовок доклада первым; полоса 4 — именные утверждённые связки к лекциям «Муми-тролля»; полоса 5 — соседство ЛЛШ ↔ глава. Камера-реди: [PRINT_SPREADS_4_5_CAMERA_READY_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/PRINT_SPREADS_4_5_CAMERA_READY_2026.md). Первый набор 20-08-2026: [H3135 (Fable 5) — residual H2707: камера-реди полосы 4–5](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3135-Fable_BookIndex_h2707-residual-spread-4-5-print-prose_19.08.26.md) |
 | Полоса 8 | **Открыто — нужен выбор человека** из 10 вариантов ниже; рекомендация: вариант 1 |
 | Запасной макет «одна азбука вместо трёх» | Опция для издательства, см. § Запасной макет |
-| Камера-реди тексты полос | Полосы 4–5 написаны (≈2063 / ≈1885 знаков). Полосы 1–3 и 6–7 — после выбора полосы 8 |
+| Камера-реди тексты полос | Полосы 4–5 написаны (≈1878 / ≈2072 знака на 03-09-2026, коридор 1800–2200). Полосы 1–3 и 6–7 — после выбора полосы 8 |
 
 ## Карта восьми полос (базовый макет)
 
