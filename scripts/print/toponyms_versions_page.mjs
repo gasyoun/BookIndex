@@ -83,6 +83,15 @@ const sections = [
       { label: "D3 — легенда", svg: readFile("toponyms-map-d3-legend.svg"), pageW: 145 },
     ],
   },
+  {
+    num: 7,
+    title: "B2 — вариант B с названиями на своих местах: страницы в легенде, якоря отменены, сдвиг ≤ 10 мм",
+    note: "v4.17.10 · <a href='toponyms-map-b2.html'>toponyms-map-b2.html</a>",
+    files: [
+      { label: "B2 — карта", svg: readFile("toponyms-map-b2-map.svg"), pageW: 145 },
+      { label: "B2 — легенда (83 записи)", svg: readFile("toponyms-map-b2-legend.svg"), pageW: 145 },
+    ],
+  },
 ];
 
 const body = sections

@@ -79,6 +79,17 @@ const DLEG_X1 = 137;
 const DLEG_COLS = 2;
 const DLEG_FONT_U = 8.4;
 
+// sheet B2 (MG 03-09-2026 rev 4): variant B with labels at their true places -
+// name-only labels (pages moved to the legend), CIS anchors retired, label
+// displacement capped at ~10 mm with a last-resort diagonal at ~14 mm, frame
+// grows to 206 mm; the legend page carries ALL 83 entries at compact density
+// (discussed marked ●, chip numbers 1..46 unchanged). Versioned URL: writes
+// b2-* files, older URLs stay frozen. Stamp removed before print.
+const B2_MAP_BOX = { x0: 8, y0: 20, x1: 137, y1: 206 };
+const B2_INSET_BOX = { x0: 73, y0: 128, x1: 137, y1: 196 };
+const B2_STAMP = "вариант B2 · v4.17.10 · 03-09-2026";
+const B2_LABEL_RINGS = [0, 8, 16, 24, 32, 40, 48];
+
 const PAD_FRACTION = 0.09;
 const LABEL_FONT_U = 11.2;
 const INSET_LABEL_FONT_U = 8.5;
@@ -262,7 +273,7 @@ function buildProjection(boxMm, points, padFraction) {
 
 const textW = (t, fontU) => t.length * fontU * CHAR_W;
 
-function placeLabel(g, px, py, lines, placed, box, fontU, clipBox) {
+function placeLabel(g, px, py, lines, placed, box, fontU, clipBox, ringDeltas, padU) {
   const widest = Math.max(...lines.map((l) => textW(l, fontU)));
   const lineH = fontU * 1.22;
   const blockH = lines.length * lineH;
@@ -286,10 +297,21 @@ function placeLabel(g, px, py, lines, placed, box, fontU, clipBox) {
     [-0.45, 1, "middle"],
   ];
   const cb = clipBox || box;
-  for (const r of [startR, startR + 12, startR + 26, startR + 42, startR + 60, startR + 85, startR + 115, startR + 150]) {
+  const deltas = ringDeltas || [0, 12, 26, 42, 60, 85, 115, 150];
+  for (const d of deltas) {
+    const r = startR + d;
     for (const [dx, dy, anchor] of dirs) {
-      const lx2 = dx !== 0 ? px + dx * r : px;
-      const ly2 = dy !== 0 ? py + dy * r : py;
+      // B2: normalize diagonal dirs so the ring radius is the TRUE distance
+      // (raw dirs put diagonal placements at r*sqrt2, breaking the mm budget)
+      let ux = dx;
+      let uy = dy;
+      if (ringDeltas) {
+        const len = Math.hypot(dx, dy) || 1;
+        ux = dx / len;
+        uy = dy / len;
+      }
+      const lx2 = ux !== 0 ? px + ux * r : px;
+      const ly2 = uy !== 0 ? py + uy * r : py;
       let bx0, bx1, by0, by1, ly;
       if (anchor === "start") {
         bx0 = lx2;
@@ -315,7 +337,7 @@ function placeLabel(g, px, py, lines, placed, box, fontU, clipBox) {
         by1 = by0 + blockH;
       }
       if (bx0 < cb.x0 + 2 || bx1 > cb.x1 - 2 || by0 < cb.y0 + 2 || by1 > cb.y1 - 2) continue;
-      const P = 2.5;
+      const P = padU ?? 2.5;
       let clash = false;
       for (const b of placed) {
         if (bx0 - P < b.x1 && bx1 + P > b.x0 && by0 - P < b.y1 && by1 + P > b.y0) {
@@ -324,6 +346,7 @@ function placeLabel(g, px, py, lines, placed, box, fontU, clipBox) {
         }
       }
       if (clash) continue;
+      if (g.primary.head === "Литва") console.error("LITVA placed anchor", anchor, "d", d, "r", r, "at", lx2, ly2, "from", px, py);
       placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
       const dist = Math.hypot(lx2 - px, ly2 - py);
       const leader = dist > startR + 6 ? { x: px, y: py, tx: lx2, ty: ly2 } : null;
@@ -362,6 +385,8 @@ function renderSheet(cfg, world, landObj, groups, total) {
     sheet: cfg.key,
     labels_without_slot: 0,
     labels_in_fallback_slots: 0,
+    labels_last_resort: 0,
+    max_leader_mm: 0,
     escapes: 0,
     chip_close_pairs: 0,
     legend_rows_drawn: 0,
@@ -391,7 +416,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   const { projection, geopath, box } = buildProjection(cfg.mapBox, groups.map((g) => [g.lon, g.lat]), PAD_FRACTION);
   for (const g of groups) {
     [g.px, g.py] = projection([g.lon, g.lat]);
-    g.anchorPx = g.anchor ? projection([g.anchor.lon, g.anchor.lat]) : null;
+    g.anchorPx = !cfg.ignoreAnchors && g.anchor ? projection([g.anchor.lon, g.anchor.lat]) : null;
   }
 
   const mapClip = `url(#map-clip-${cfg.key})`;
@@ -478,6 +503,8 @@ function renderSheet(cfg, world, landObj, groups, total) {
     .sort((a, b) => b.width - a.width || a.g.primary.head.localeCompare(b.g.primary.head, "ru"));
 
   const buildLines = (g) => {
+    // B2: name-only labels - pages live in the legend, not on the map
+    if (cfg.nameOnlyLabels) return wrapText(g.mapName, 26, 2);
     const lines = wrapText(g.mapName, 26, 2);
     if (g.pages) {
       lines.push(...wrapText(g.pages, 34, 3).map((l, i) => (i === 0 ? `стр. ${l}` : l)));
@@ -493,14 +520,31 @@ function renderSheet(cfg, world, landObj, groups, total) {
 
   const pushLeader = (g, x2, y2) => {
     const dash = LINE_DASH[g.lineClass];
+    if (cfg.nameOnlyLabels) {
+      const d = Math.hypot(x2 - g.px2, y2 - g.py2) / 4;
+      stats.max_leader_mm = Math.max(stats.max_leader_mm || 0, d);
+    }
     leaders.push({ x1: g.px2, y1: g.py2, x2, y2, dash });
   };
 
   for (const { g } of mainLabeled) {
     const lines = buildLines(g);
-    const origin = g.anchorPx ? { x: g.anchorPx[0], y: g.anchorPx[1] } : { x: g.px2, y: g.py2 };
-    const pos = placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U);
+    const origin = !cfg.ignoreAnchors && g.anchorPx ? { x: g.anchorPx[0], y: g.anchorPx[1] } : { x: g.px2, y: g.py2 };
+    let pos = placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, cfg.labelRingDeltas);
+    let squeezed = false;
+    if (!pos && cfg.noWholeFrameFallback) {
+      // second pass: wider radius, tighter padding - overlaps stay forbidden
+      pos = placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, [64, 72, 80, 88], 1);
+      squeezed = pos != null;
+    }
     if (!pos) {
+      if (cfg.noWholeFrameFallback) {
+        // B2 last resort: rings up to +55U failed - place the label right at
+        // the (relax-adjusted) dot, overlaps permitted and reported
+        stats.labels_last_resort += 1;
+        labels.push({ g, x: origin.x, y: origin.y + LABEL_FONT_U * 0.34, anchor: "middle", lines, lineH: LABEL_FONT_U * 1.22 });
+        pushLeader(g, origin.x, origin.y - 2);
+      } else {
       const widest = Math.max(...lines.map((l) => textW(l, LABEL_FONT_U)));
       const blockH = lines.length * LABEL_FONT_U * 1.22;
       const step = 6;
@@ -533,12 +577,16 @@ function renderSheet(cfg, world, landObj, groups, total) {
         labels.push({ g, x: lx, y: ly, anchor: "middle", lines, lineH: LABEL_FONT_U * 1.22 });
         pushLeader(g, lx, ly - 4);
       }
+      }
     } else {
       labels.push({ g, ...pos });
-      const lx = pos.anchor === "end" ? pos.x - textW(lines[0], LABEL_FONT_U) : pos.anchor === "middle" ? pos.x - textW(lines[0], LABEL_FONT_U) / 2 : pos.x;
-      if (g.anchorPx || Math.hypot(lx - g.px2, pos.y - g.py2) > 24 || g.displaced) {
+      // leader meets the label's NEAR edge; for name-only labels the anchor
+      // point is that edge, don't run the line under the text to its far side
+      const lx = cfg.nameOnlyLabels ? pos.x : pos.anchor === "end" ? pos.x - textW(lines[0], LABEL_FONT_U) : pos.anchor === "middle" ? pos.x - textW(lines[0], LABEL_FONT_U) / 2 : pos.x;
+      if (squeezed || g.anchorPx || Math.hypot(lx - g.px2, pos.y - g.py2) > 24 || g.displaced) {
         pushLeader(g, lx, pos.y - 2);
       }
+      if (squeezed) stats.labels_last_resort += 1;
     }
   }
 
@@ -655,11 +703,10 @@ function renderSheet(cfg, world, landObj, groups, total) {
     );
   }
 
-  // CIS anchors must sit east of 55E (MG: former-CIS labels move onto RF territory)
+  // CIS anchors must sit east of 55E (MG: former-CIS labels move onto RF territory);
+  // sheets that retire anchors (B2) still gate the data property
   for (const g of inMain) {
-    if (g.anchor && g.anchorPx) {
-      if (g.anchor.lon >= 55) stats.cis_anchored_ok += 1;
-    }
+    if (g.anchor && (g.anchorPx || cfg.ignoreAnchors) && g.anchor.lon >= 55) stats.cis_anchored_ok += 1;
   }
 
   // legend
@@ -765,7 +812,8 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const maxChars = Math.floor((colW - 10) / (DLEG_FONT_U * CHAR_W));
     const wrapped = groups.map((g) => {
       const expect = g.pages ? `стр. ${g.pages}` : "—";
-      const lines = wrapText(`${g.number}. ${g.display} — ${expect}`, maxChars, 3);
+      const prefix = g.number ? `${g.number}. ` : "● ";
+      const lines = wrapText(`${prefix}${g.display} — ${expect}`, maxChars, 3);
       return { g, lines, parity: !g.pages || expect === `стр. ${g.pages}` };
     });
     const totalLines = wrapped.reduce((acc, w) => acc + w.lines.length, 0);
@@ -809,14 +857,14 @@ function renderSheet(cfg, world, landObj, groups, total) {
     s.push(
       `<text x="${DLEG_X0 * U}" y="${f(keyY)}" font-size="7.6" fill="#33302b">Залитый маркер — обсуждается в книге, контурный — упоминается; штриховой контур — Русь, Византия, Восток</text>` +
         `<text x="${DLEG_X0 * U}" y="${f(keyY + 9)}" font-size="7.6" fill="#33302b">Штриховой ареал — языковая зона · пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц</text>` +
-        `<text x="${DLEG_X0 * U}" y="${f(keyY + 18)}" font-size="7.4" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция · крупный план — верхняя панель карты</text>`
+        `<text x="${DLEG_X0 * U}" y="${f(keyY + 18)}" font-size="7.4" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция${cfg.legendTail || ""}</text>`
     );
   }
 
   // title + subtitle
   if (cfg.title) {
     s.push(`<text x="${8 * U}" y="${8.4 * U}" font-size="23" font-weight="bold" fill="#111111">Карта топонимов книги</text>`);
-    const sub = `«Из жизни слов и языков» · ${total} названий мест: обсуждаемые в книге подписаны с номерами страниц${cfg.legend ? ", остальные раскрывает легенда" : ", номера раскрывает легенда на соседней странице"}`;
+    const sub = cfg.subtitleOverride || `«Из жизни слов и языков» · ${total} названий мест: обсуждаемые в книге подписаны с номерами страниц${cfg.legend ? ", остальные раскрывает легенда" : ", номера раскрывает легенда на соседней странице"}`;
     if (cfg.pageW < 200) {
       const subLines = wrapText(sub, 66, 2);
       s.push(
@@ -826,6 +874,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
       );
     } else {
       s.push(`<text x="${8 * U}" y="${(8.4 * U + 13).toFixed(1)}" font-size="11" fill="#33302b">${esc(sub)}</text>`);
+    }
+    if (cfg.stamp) {
+      s.push(`<text x="${137 * U}" y="${8.4 * U}" text-anchor="end" font-size="7.2" fill="#55524c">${esc(cfg.stamp)}</text>`);
     }
   }
 
@@ -1195,11 +1246,44 @@ function render() {
       fit: "all",
       inset: null,
       legend: "page-compact",
+      legendTail: " · крупный план — верхняя панель карты",
       noMap: true,
       title: false,
       stamp: D_STAMP,
       scaleBar: false,
       svgFile: "toponyms-map-d3-legend.svg",
+    },
+    {
+      key: "B2map",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: B2_MAP_BOX,
+      fit: "all",
+      inset: { box: B2_INSET_BOX },
+      legend: null,
+      nameOnlyLabels: true,
+      ignoreAnchors: true,
+      labelRingDeltas: B2_LABEL_RINGS,
+      noWholeFrameFallback: true,
+      title: true,
+      subtitleOverride: `«Из жизни слов и языков» · ${total} названий мест: обсуждаемые подписаны названием, страницы — в легенде на соседней странице, у остальных номер`,
+      stamp: B2_STAMP,
+      scaleBar: true,
+      svgFile: "toponyms-map-b2-map.svg",
+    },
+    {
+      key: "B2legend",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: { x0: 0, y0: 0, x1: PAGE_W_MM, y1: PAGE_H_MM },
+      fit: "all",
+      inset: null,
+      legend: "page-compact",
+      noMap: true,
+      title: false,
+      stamp: B2_STAMP,
+      scaleBar: false,
+      svgFile: "toponyms-map-b2-legend.svg",
     },
   ];
 
@@ -1264,6 +1348,22 @@ function render() {
     ),
     "utf-8"
   );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b2-print.html"),
+    pageHtml("Карта топонимов книги — вариант B2: подписи на местах + плотная легенда", PAGE_W_MM, PAGE_H_MM, [rendered[6].svg, rendered[7].svg]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b2.html"),
+    reviewHtml(
+      "Карта топонимов — вариант B2: названия на своих местах, страницы в легенде",
+      [
+        { title: `B2 — страница (карта): названия у истинных точек (сдвиг ≤ 10 мм), врезка Западной Европы · ${B2_STAMP}`, pageW: PAGE_W_MM, svg: rendered[6].svg },
+        { title: `B2 — соседняя страница: легенда, все 83 записи (● — обсуждается, номера — чипы) · ${B2_STAMP}`, pageW: PAGE_W_MM, svg: rendered[7].svg },
+      ]
+    ),
+    "utf-8"
+  );
 
   const A = byKey.A;
   const report = {
@@ -1305,7 +1405,15 @@ function render() {
     byKey.Dmap.labels_without_slot > 0 ||
     byKey.Dlegend.legend_rows_drawn !== groups.length ||
     byKey.Dlegend.legend_overflow > 0 ||
-    !byKey.Dlegend.legend_parity_ok;
+    !byKey.Dlegend.legend_parity_ok ||
+    byKey.B2map.chip_close_pairs > 0 ||
+    byKey.B2map.labels_without_slot > 0 ||
+    byKey.B2map.labels_last_resort > 4 ||
+    byKey.B2map.max_leader_mm > 22.5 ||
+    byKey.B2map.escapes > 0 ||
+    byKey.B2legend.legend_rows_drawn !== groups.length ||
+    byKey.B2legend.legend_overflow > 0 ||
+    !byKey.B2legend.legend_parity_ok;
   if (hardFail) {
     console.error("FAIL: see report fields above");
     process.exit(1);
