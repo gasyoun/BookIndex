@@ -45,13 +45,25 @@ const budgets = [
     // so headroom under this ceiling is 3,441 B rather than 1,678 B. Do not read
     // that as room to spend freely — the pass also established that the artifact
     // has NO dead code left (0 unreferenced functions out of 489), so the next
-    // feature cannot be paid for by another trim. Two further facts belong with
-    // this ceiling: `v3_app.js` is the source of record, not build output
-    // (rebuilding from src/runtime/ drops 61 functions and four shipped
-    // features — FINDINGS.md §3), so `treeshake`/`minify` are NOT available
-    // levers; and the only honest route to a smaller runtime script is moving
-    // the hard-coded scholarly tables into the data layer, which is a content-
-    // model decision. Detail: docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md
+    // feature cannot be paid for by another trim.
+    // 2026-09-03 (H3874 + H4012): `src/runtime/` was reconciled, so the claim that
+    // used to sit here — "`treeshake`/`minify` are NOT available levers" — is no
+    // longer true, and all three levers have now been priced against the REBUILT
+    // runtime (197/197 Playwright each, not just a size read):
+    //   treeshake        −3 B gzip      — safe and worthless; there is no dead code
+    //   minify: true     −35 394 B gzip — safe, but mangles names (so the parity
+    //                                     gate cannot check it) and ends the
+    //                                     artifact's readability, which
+    //                                     vite.runtime.config.mjs keeps on purpose
+    //   code splitting   n/a            — the IIFE lib format forces codeSplitting
+    //                                     off, and there are no dynamic import()
+    //                                     boundaries to split at anyway
+    // Shipping the plain build in place of the hand-maintained artifact is worth
+    // 2 196 B gzip on its own. None was applied: each is a human trade, not a win.
+    // Moving the hard-coded scholarly tables into the data layer remains the other
+    // route, and is a content-model decision.
+    // Detail: docs/RESULTS_BUNDLER_LEVERS_MEASURED_2026-09-03.md,
+    // docs/RESULTS_V3_APP_SIZE_BUDGET_H2586_2026-08-28.md
     label: 'runtime script',
     path: 'v3_app.js',
     maxBytes: 700_000,
