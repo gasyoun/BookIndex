@@ -61,12 +61,19 @@ jobs:
       - name: JS syntax checks
         run: npm run check:js
 
-      # Fails if rebuilding the runtime from src/runtime/ would drop a declaration the
-      # committed v3_app.js publishes (FINDINGS.md §3 / H3874). Without this, a source tree
-      # that has drifted out of the artifact reads as green and the size budget scores the
-      # lost features as a win.
+      # v3_app.js is build output again (H4013), so this asserts the strong property:
+      # the committed artifact is byte-identical to what src/runtime/ builds. Without it a
+      # hand-edit to the generated file reads as green — which is how four shipped features
+      # became un-rebuildable between H1821 and H3874 (FINDINGS.md §3).
       - name: Runtime source parity
         run: npm run check:parity:runtime
+
+      # Belt to the parity gate's braces: prove the committed artifact survives the
+      # documented regeneration path, the same way aaz-index.html is checked below.
+      - name: Ensure committed v3_app.js is in sync
+        run: |
+          npm run build:runtime
+          git diff --exit-code -- v3_app.js
 
       - name: UI inline style guard
         run: npm run check:ui

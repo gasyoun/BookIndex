@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-ypvxJ4t4tLkvDDBJIuxR+e6LXV8rJoAbj9v1Vnxj94I=' 'sha256-CPZ/ED2QY/Cso7sM6XiRFKtrcK1D2dJZhTR65TlJ140='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-MylGMuR5RLSnnITHKVMiZXXa212hcwYgKfN6qHIFhOw=' 'sha256-82uqEY3cwWNydPdKPVU5xmnxcXCY4Lbww2+iyDV06hk='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -6766,7 +6766,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "b3d6eed5bc5d",
+  "build_id": "55ce4e6bcbf6",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6931,6 +6931,7 @@
 <script>
 var BookIndex = (function(exports) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+	//#region \0rolldown/runtime.js
 	var __defProp = Object.defineProperty;
 	var __exportAll = (all, no_symbols) => {
 		let target = {};
@@ -6941,14 +6942,16 @@ var BookIndex = (function(exports) {
 		if (!no_symbols) __defProp(target, Symbol.toStringTag, { value: "Module" });
 		return target;
 	};
+	//#endregion
+	//#region src/runtime/core/state.js
 	var state_exports = /* @__PURE__ */ __exportAll({
 		AGGREGATE_CACHE_MAX: () => 100,
 		APP_BUILD_ID: () => APP_BUILD_ID$1,
 		APP_DATA: () => APP_DATA$1,
-		APP_DATA_GLOBAL_FALLBACK_KEY: () => APP_DATA_GLOBAL_FALLBACK_KEY$1,
-		APP_DATA_MODULES_BASE_URL: () => APP_DATA_MODULES_BASE_URL$1,
+		APP_DATA_GLOBAL_FALLBACK_KEY: () => APP_DATA_GLOBAL_FALLBACK_KEY,
+		APP_DATA_MODULES_BASE_URL: () => APP_DATA_MODULES_BASE_URL,
 		APP_DATA_SCHEMA_CURRENT: () => 2,
-		APP_DATA_SCRIPT_TAG_ID: () => APP_DATA_SCRIPT_TAG_ID$1,
+		APP_DATA_SCRIPT_TAG_ID: () => APP_DATA_SCRIPT_TAG_ID,
 		CHAPTER_ITEM_INDEX: () => CHAPTER_ITEM_INDEX$1,
 		COLORS: () => COLORS$1,
 		DEFAULT_TOTAL_PAGES: () => 424,
@@ -6957,10 +6960,10 @@ var BookIndex = (function(exports) {
 		EPOCH_LABELS: () => EPOCH_LABELS$1,
 		FAMILY_COLORS: () => FAMILY_COLORS$1,
 		HASH_ROUTE_PREFIX: () => "v4",
-		ITEM_HASH_HEAD_BY_SLUG: () => ITEM_HASH_HEAD_BY_SLUG$1,
-		ITEM_HASH_SLUG_BY_HEAD: () => ITEM_HASH_SLUG_BY_HEAD$1,
-		ITEM_INDEX_EXACT: () => ITEM_INDEX_EXACT$1,
-		ITEM_INDEX_NORMALIZED: () => ITEM_INDEX_NORMALIZED$1,
+		ITEM_HASH_HEAD_BY_SLUG: () => ITEM_HASH_HEAD_BY_SLUG,
+		ITEM_HASH_SLUG_BY_HEAD: () => ITEM_HASH_SLUG_BY_HEAD,
+		ITEM_INDEX_EXACT: () => ITEM_INDEX_EXACT,
+		ITEM_INDEX_NORMALIZED: () => ITEM_INDEX_NORMALIZED,
 		KWIC_MAX_ROWS: () => KWIC_MAX_ROWS$1,
 		KWIC_MAX_SNIPPETS_PER_PAGE: () => 24,
 		KWIC_MAX_SNIPPET_LENGTH: () => 420,
@@ -6970,7 +6973,7 @@ var BookIndex = (function(exports) {
 		MAX_HASH_PART_LENGTH: () => 120,
 		MAX_HASH_SLUG_LENGTH: () => 60,
 		MAX_LIST_QUERY_LENGTH: () => 100,
-		NORMALIZE_CACHE_LIMIT: () => NORMALIZE_CACHE_LIMIT$1,
+		NORMALIZE_CACHE_LIMIT: () => NORMALIZE_CACHE_LIMIT,
 		PAGE_TO_CHAPTER: () => PAGE_TO_CHAPTER$1,
 		activeFilters: () => activeFilters$1,
 		aggregateCache: () => aggregateCache$1,
@@ -6984,6 +6987,7 @@ var BookIndex = (function(exports) {
 		currentLecture: () => currentLecture$1,
 		currentScholarAnchor: () => currentScholarAnchor$1,
 		currentTab: () => currentTab$1,
+		currentVideoId: () => currentVideoId,
 		currentVizModule: () => currentVizModule$1,
 		currentVizQueryString: () => currentVizQueryString$1,
 		expectedHash: () => expectedHash$1,
@@ -7004,13 +7008,13 @@ var BookIndex = (function(exports) {
 		globalSearchScope: () => globalSearchScope$1,
 		globalSearchTimer: () => globalSearchTimer$1,
 		graphStrongOnly: () => graphStrongOnly$1,
-		historyStack: () => historyStack$1,
-		isNavigatingHistory: () => isNavigatingHistory$1,
+		historyStack: () => historyStack,
+		isNavigatingHistory: () => isNavigatingHistory,
 		lectureCompareA: () => lectureCompareA$1,
 		lectureCompareB: () => lectureCompareB$1,
 		nameGraphLayoutPromiseCache: () => nameGraphLayoutPromiseCache$1,
 		nameGraphMinEdgeWeight: () => nameGraphMinEdgeWeight$1,
-		normalizeHeadCache: () => normalizeHeadCache$1,
+		normalizeHeadCache: () => normalizeHeadCache,
 		onlyDiscussed: () => onlyDiscussed$1,
 		onlyQuestionCandidates: () => onlyQuestionCandidates$1,
 		pendingGlossaryQuery: () => pendingGlossaryQuery$1,
@@ -7034,6 +7038,7 @@ var BookIndex = (function(exports) {
 		setCurrentLecture: () => setCurrentLecture,
 		setCurrentScholarAnchor: () => setCurrentScholarAnchor,
 		setCurrentTab: () => setCurrentTab,
+		setCurrentVideoId: () => setCurrentVideoId,
 		setCurrentVizModule: () => setCurrentVizModule,
 		setCurrentVizQueryString: () => setCurrentVizQueryString,
 		setEntityTypes: () => setEntityTypes,
@@ -7070,18 +7075,18 @@ var BookIndex = (function(exports) {
 		setTrendsRangeEnd: () => setTrendsRangeEnd,
 		setTrendsRangeStart: () => setTrendsRangeStart,
 		sortMostFrequentFirst: () => sortMostFrequentFirst$1,
-		suppressHashSync: () => suppressHashSync$1,
+		suppressHashSync: () => suppressHashSync,
 		syncStateFromGlobal: () => syncStateFromGlobal,
 		syncStateToGlobal: () => syncStateToGlobal,
 		trendsRangeEnd: () => trendsRangeEnd$1,
 		trendsRangeStart: () => trendsRangeStart$1
 	});
-	var APP_DATA_SCRIPT_TAG_ID$1 = "app-data-json";
-	var APP_DATA_GLOBAL_FALLBACK_KEY$1 = "__APP_DATA_STRING__";
-	var APP_DATA_MODULES_BASE_URL$1 = "./data/modules/";
+	var APP_DATA_SCRIPT_TAG_ID = "app-data-json";
+	var APP_DATA_GLOBAL_FALLBACK_KEY = "__APP_DATA_STRING__";
+	var APP_DATA_MODULES_BASE_URL = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "b3d6eed5bc5d";
-	var NORMALIZE_CACHE_LIMIT$1 = 5e3;
+	var APP_BUILD_ID$1 = "55ce4e6bcbf6";
+	var NORMALIZE_CACHE_LIMIT = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
 	var COLORS$1 = null;
@@ -7089,11 +7094,11 @@ var BookIndex = (function(exports) {
 	var EPOCH_COLORS$1 = null;
 	var FAMILY_COLORS$1 = null;
 	var ENTITY_TYPES$1 = null;
-	var ITEM_INDEX_EXACT$1 = /* @__PURE__ */ new Map();
-	var ITEM_INDEX_NORMALIZED$1 = /* @__PURE__ */ new Map();
+	var ITEM_INDEX_EXACT = /* @__PURE__ */ new Map();
+	var ITEM_INDEX_NORMALIZED = /* @__PURE__ */ new Map();
 	var CHAPTER_ITEM_INDEX$1 = /* @__PURE__ */ new Map();
-	var ITEM_HASH_SLUG_BY_HEAD$1 = /* @__PURE__ */ new Map();
-	var ITEM_HASH_HEAD_BY_SLUG$1 = /* @__PURE__ */ new Map();
+	var ITEM_HASH_SLUG_BY_HEAD = /* @__PURE__ */ new Map();
+	var ITEM_HASH_HEAD_BY_SLUG = /* @__PURE__ */ new Map();
 	var PAGE_TO_CHAPTER$1 = /* @__PURE__ */ new Map();
 	var currentEntity$1 = "home";
 	var currentTab$1 = "home";
@@ -7108,40 +7113,18 @@ var BookIndex = (function(exports) {
 	var graphStrongOnly$1 = false;
 	var nameGraphMinEdgeWeight$1 = .1;
 	var currentLecture$1 = 0;
-	var currentVideoId$1 = "";
 	var lectureCompareA$1 = 1;
 	var lectureCompareB$1 = 2;
 	var trendsRangeStart$1 = 1;
 	var trendsRangeEnd$1 = 424;
-	var historyStack$1 = [];
-	var isNavigatingHistory$1 = false;
-	var suppressHashSync$1 = false;
+	var historyStack = [];
+	var isNavigatingHistory = false;
+	var suppressHashSync = false;
 	var expectedHash$1 = null;
 	var globalSearchTimer$1 = null;
 	var globalSearchActiveIndex$1 = -1;
 	var globalSearchScope$1 = "corpus";
 	var pendingGlossaryQuery$1 = "";
-	var currentSimRootIndex$1 = 0;
-	var currentSimStep$1 = 0;
-	var currentAccentReconRootIndex$1 = 0;
-	var currentAccentReconStageIndex$1 = 0;
-	var currentOrthoHydratorInput$1 = "хлеб";
-	var LANGUAGE_LOD_MAP = {
-		"русский": { iso: "rus", wals: "rus", glottolog: "russ1263" },
-		"санскрит": { iso: "san", wals: "skt", glottolog: "sans1269" },
-		"латынь": { iso: "lat", wals: "lat", glottolog: "lati1261" },
-		"латинский": { iso: "lat", wals: "lat", glottolog: "lati1261" },
-		"древнегреческий": { iso: "grc", wals: "grk", glottolog: "anci1242" },
-		"греческий": { iso: "ell", wals: "mgo", glottolog: "mode1248" },
-		"праславянский": { iso: "sla", wals: "psl", glottolog: "prot1234", customWals: "https://wals.info/languoid/lect/wals_code_psl" },
-		"старославянский": { iso: "chu", wals: "ocs", glottolog: "oldc1244" },
-		"древнерусский": { iso: "orv", wals: "orv", glottolog: "olde1240" },
-		"литовский": { iso: "lit", wals: "lit", glottolog: "lith1251" },
-		"готский": { iso: "got", wals: "got", glottolog: "goth1244" },
-		"английский": { iso: "eng", wals: "eng", glottolog: "engl1287" },
-		"немецкий": { iso: "deu", wals: "ger", glottolog: "stan1295" },
-		"французский": { iso: "fra", wals: "fre", glottolog: "stan1290" }
-	};
 	var getPendingGlossaryQuery = () => pendingGlossaryQuery$1;
 	var setPendingGlossaryQuery = (v) => {
 		pendingGlossaryQuery$1 = v;
@@ -7201,7 +7184,7 @@ var BookIndex = (function(exports) {
 	var setPendingKwicTerm = (v) => {
 		pendingKwicTerm$1 = v;
 	};
-	var normalizeHeadCache$1 = /* @__PURE__ */ new Map();
+	var normalizeHeadCache = /* @__PURE__ */ new Map();
 	var aggregateCache$1 = /* @__PURE__ */ new Map();
 	var nameGraphLayoutPromiseCache$1 = /* @__PURE__ */ new Map();
 	var familiesGraphLayoutPromiseCache$1 = /* @__PURE__ */ new Map();
@@ -7235,11 +7218,11 @@ var BookIndex = (function(exports) {
 		if (typeof window !== "undefined") window.ENTITY_TYPES = val;
 	}
 	function setItemIndexExact(val) {
-		ITEM_INDEX_EXACT$1 = val;
+		ITEM_INDEX_EXACT = val;
 		if (typeof window !== "undefined") window.ITEM_INDEX_EXACT = val;
 	}
 	function setItemIndexNormalized(val) {
-		ITEM_INDEX_NORMALIZED$1 = val;
+		ITEM_INDEX_NORMALIZED = val;
 		if (typeof window !== "undefined") window.ITEM_INDEX_NORMALIZED = val;
 	}
 	function setChapterItemIndex(val) {
@@ -7247,11 +7230,11 @@ var BookIndex = (function(exports) {
 		if (typeof window !== "undefined") window.CHAPTER_ITEM_INDEX = val;
 	}
 	function setItemHashSlugByHead(val) {
-		ITEM_HASH_SLUG_BY_HEAD$1 = val;
+		ITEM_HASH_SLUG_BY_HEAD = val;
 		if (typeof window !== "undefined") window.ITEM_HASH_SLUG_BY_HEAD = val;
 	}
 	function setItemHashHeadBySlug(val) {
-		ITEM_HASH_HEAD_BY_SLUG$1 = val;
+		ITEM_HASH_HEAD_BY_SLUG = val;
 		if (typeof window !== "undefined") window.ITEM_HASH_HEAD_BY_SLUG = val;
 	}
 	function setPageToChapter(val) {
@@ -7310,10 +7293,6 @@ var BookIndex = (function(exports) {
 		currentLecture$1 = val;
 		if (typeof window !== "undefined") window.currentLecture = val;
 	}
-	function setCurrentVideoId(val) {
-		currentVideoId$1 = String(val || "");
-		if (typeof window !== "undefined") window.currentVideoId = currentVideoId$1;
-	}
 	function setLectureCompareA(val) {
 		lectureCompareA$1 = val;
 		if (typeof window !== "undefined") window.lectureCompareA = val;
@@ -7331,15 +7310,15 @@ var BookIndex = (function(exports) {
 		if (typeof window !== "undefined") window.trendsRangeEnd = val;
 	}
 	function setHistoryStack(val) {
-		historyStack$1 = val;
+		historyStack = val;
 		if (typeof window !== "undefined") window.historyStack = val;
 	}
 	function setIsNavigatingHistory(val) {
-		isNavigatingHistory$1 = val;
+		isNavigatingHistory = val;
 		if (typeof window !== "undefined") window.isNavigatingHistory = val;
 	}
 	function setSuppressHashSync(val) {
-		suppressHashSync$1 = val;
+		suppressHashSync = val;
 		if (typeof window !== "undefined") window.suppressHashSync = val;
 	}
 	function setExpectedHash(val) {
@@ -7372,7 +7351,7 @@ var BookIndex = (function(exports) {
 		window.selectedItemType = selectedItemType$1;
 		window.rightPaneMode = rightPaneMode$1;
 		window.currentLecture = currentLecture$1;
-		window.currentVideoId = currentVideoId$1;
+		window.currentVideoId = currentVideoId;
 		window.lectureCompareA = lectureCompareA$1;
 		window.lectureCompareB = lectureCompareB$1;
 		window.trendsRangeStart = trendsRangeStart$1;
@@ -7392,9 +7371,9 @@ var BookIndex = (function(exports) {
 		window.pendingKwicTerm = pendingKwicTerm$1;
 		window.graphStrongOnly = graphStrongOnly$1;
 		window.nameGraphMinEdgeWeight = nameGraphMinEdgeWeight$1;
-		window.historyStack = historyStack$1;
-		window.isNavigatingHistory = isNavigatingHistory$1;
-		window.suppressHashSync = suppressHashSync$1;
+		window.historyStack = historyStack;
+		window.isNavigatingHistory = isNavigatingHistory;
+		window.suppressHashSync = suppressHashSync;
 		window.expectedHash = expectedHash$1;
 		window.globalSearchTimer = globalSearchTimer$1;
 		window.globalSearchActiveIndex = globalSearchActiveIndex$1;
@@ -7412,7 +7391,7 @@ var BookIndex = (function(exports) {
 		if (window.selectedItemType !== void 0) selectedItemType$1 = window.selectedItemType;
 		if (window.rightPaneMode !== void 0) rightPaneMode$1 = window.rightPaneMode;
 		if (window.currentLecture !== void 0) currentLecture$1 = window.currentLecture;
-		if (window.currentVideoId !== void 0) currentVideoId$1 = String(window.currentVideoId || "");
+		if (window.currentVideoId !== void 0) currentVideoId = String(window.currentVideoId || "");
 		if (window.lectureCompareA !== void 0) lectureCompareA$1 = window.lectureCompareA;
 		if (window.lectureCompareB !== void 0) lectureCompareB$1 = window.lectureCompareB;
 		if (window.trendsRangeStart !== void 0) trendsRangeStart$1 = window.trendsRangeStart;
@@ -7432,9 +7411,9 @@ var BookIndex = (function(exports) {
 		if (window.pendingKwicTerm !== void 0) pendingKwicTerm$1 = window.pendingKwicTerm;
 		if (window.graphStrongOnly !== void 0) graphStrongOnly$1 = window.graphStrongOnly;
 		if (window.nameGraphMinEdgeWeight !== void 0) nameGraphMinEdgeWeight$1 = window.nameGraphMinEdgeWeight;
-		if (window.historyStack !== void 0) historyStack$1 = window.historyStack;
-		if (window.isNavigatingHistory !== void 0) isNavigatingHistory$1 = window.isNavigatingHistory;
-		if (window.suppressHashSync !== void 0) suppressHashSync$1 = window.suppressHashSync;
+		if (window.historyStack !== void 0) historyStack = window.historyStack;
+		if (window.isNavigatingHistory !== void 0) isNavigatingHistory = window.isNavigatingHistory;
+		if (window.suppressHashSync !== void 0) suppressHashSync = window.suppressHashSync;
 		if (window.expectedHash !== void 0) expectedHash$1 = window.expectedHash;
 		if (window.globalSearchTimer !== void 0) globalSearchTimer$1 = window.globalSearchTimer;
 		if (window.globalSearchActiveIndex !== void 0) globalSearchActiveIndex$1 = window.globalSearchActiveIndex;
@@ -7460,14 +7439,13 @@ var BookIndex = (function(exports) {
 		window.graphStrongOnly = graphStrongOnly$1;
 		window.nameGraphMinEdgeWeight = nameGraphMinEdgeWeight$1;
 		window.currentLecture = currentLecture$1;
-		window.currentVideoId = currentVideoId$1;
 		window.lectureCompareA = lectureCompareA$1;
 		window.lectureCompareB = lectureCompareB$1;
 		window.trendsRangeStart = trendsRangeStart$1;
 		window.trendsRangeEnd = trendsRangeEnd$1;
-		window.historyStack = historyStack$1;
-		window.isNavigatingHistory = isNavigatingHistory$1;
-		window.suppressHashSync = suppressHashSync$1;
+		window.historyStack = historyStack;
+		window.isNavigatingHistory = isNavigatingHistory;
+		window.suppressHashSync = suppressHashSync;
 		window.expectedHash = expectedHash$1;
 		window.globalSearchTimer = globalSearchTimer$1;
 		window.globalSearchActiveIndex = globalSearchActiveIndex$1;
@@ -7484,22 +7462,29 @@ var BookIndex = (function(exports) {
 		window.currentKwicPageStart = currentKwicPageStart$1;
 		window.currentKwicPageEnd = currentKwicPageEnd$1;
 		window.pendingKwicTerm = pendingKwicTerm$1;
-		window.normalizeHeadCache = normalizeHeadCache$1;
+		window.normalizeHeadCache = normalizeHeadCache;
 		window.aggregateCache = aggregateCache$1;
 		window.nameGraphLayoutPromiseCache = nameGraphLayoutPromiseCache$1;
 		window.familiesGraphLayoutPromiseCache = familiesGraphLayoutPromiseCache$1;
-		window.ITEM_INDEX_EXACT = ITEM_INDEX_EXACT$1;
-		window.ITEM_INDEX_NORMALIZED = ITEM_INDEX_NORMALIZED$1;
+		window.ITEM_INDEX_EXACT = ITEM_INDEX_EXACT;
+		window.ITEM_INDEX_NORMALIZED = ITEM_INDEX_NORMALIZED;
 		window.CHAPTER_ITEM_INDEX = CHAPTER_ITEM_INDEX$1;
-		window.ITEM_HASH_SLUG_BY_HEAD = ITEM_HASH_SLUG_BY_HEAD$1;
-		window.ITEM_HASH_HEAD_BY_SLUG = ITEM_HASH_HEAD_BY_SLUG$1;
+		window.ITEM_HASH_SLUG_BY_HEAD = ITEM_HASH_SLUG_BY_HEAD;
+		window.ITEM_HASH_HEAD_BY_SLUG = ITEM_HASH_HEAD_BY_SLUG;
 		window.PAGE_TO_CHAPTER = PAGE_TO_CHAPTER$1;
 	}
+	var currentVideoId = "";
+	function setCurrentVideoId(val) {
+		currentVideoId = String(val || "");
+		if (typeof window !== "undefined") window.currentVideoId = currentVideoId;
+	}
+	//#endregion
+	//#region src/runtime/core/utils.js
 	var utils_exports = /* @__PURE__ */ __exportAll({
 		ACCENT_SAFE_TOKEN_RE: () => ACCENT_SAFE_TOKEN_RE$1,
-		CYRILLIC_TO_LATIN_MAP: () => CYRILLIC_TO_LATIN_MAP$1,
+		CYRILLIC_TO_LATIN_MAP: () => CYRILLIC_TO_LATIN_MAP,
 		announceUiMessage: () => announceUiMessage$1,
-		buildHashSlugIndexesForItems: () => buildHashSlugIndexesForItems$1,
+		buildHashSlugIndexesForItems: () => buildHashSlugIndexesForItems,
 		clampPageInBook: () => clampPageInBook$1,
 		clampUiInput: () => clampUiInput$1,
 		compareHeadsRu: () => compareHeadsRu$1,
@@ -7513,24 +7498,24 @@ var BookIndex = (function(exports) {
 		getDataSignature: () => getDataSignature$1,
 		getIndexedItem: () => getIndexedItem$1,
 		getTotalBookPages: () => getTotalBookPages$1,
-		invalidateAggregateCache: () => invalidateAggregateCache$1,
+		invalidateAggregateCache: () => invalidateAggregateCache,
 		normalizeBibtexText: () => normalizeBibtexText$1,
-		normalizeHashSlug: () => normalizeHashSlug$1,
+		normalizeHashSlug: () => normalizeHashSlug,
 		normalizeHeadForMatch: () => normalizeHeadForMatch$1,
 		normalizeKwicSort: () => normalizeKwicSort$1,
 		normalizeKwicSource: () => normalizeKwicSource$1,
 		normalizePageRangeInBook: () => normalizePageRangeInBook$1,
 		nowMs: () => nowMs$1,
 		perfDebug: () => perfDebug$1,
-		rememberBoundedCacheValue: () => rememberBoundedCacheValue,
+		rememberBoundedCacheValue: () => rememberBoundedCacheValue$1,
 		resolveExistingHead: () => resolveExistingHead$1,
-		resolveItemHeadFromHash: () => resolveItemHeadFromHash$1,
+		resolveItemHeadFromHash: () => resolveItemHeadFromHash,
 		safeSetAttr: () => safeSetAttr$1,
 		shuffleArray: () => shuffleArray$1,
 		slugify: () => slugify$1
 	});
 	var ACCENT_SAFE_TOKEN_RE$1 = /([^\s,;()[\]{}<>]*[\u0300-\u036f][^\s,;()[\]{}<>]*)/g;
-	var CYRILLIC_TO_LATIN_MAP$1 = Object.freeze({
+	var CYRILLIC_TO_LATIN_MAP = Object.freeze({
 		"а": "a",
 		"б": "b",
 		"в": "v",
@@ -7581,6 +7566,7 @@ var BookIndex = (function(exports) {
 	function perfDebug$1(label, ms, meta = "") {
 		if (typeof console === "undefined" || typeof console.debug !== "function") return;
 		const extra = meta ? ` · ${meta}` : "";
+		console.debug(`[perf] ${label}: ${ms.toFixed(1)}ms${extra}`);
 	}
 	function deterministicUnitFromString$1(text, salt = 0) {
 		const src = String(text || "");
@@ -7609,6 +7595,19 @@ var BookIndex = (function(exports) {
 			(APP_DATA$1.chapters || []).length
 		].join("-");
 	}
+	function rememberBoundedCacheValue$1(cache, key, value, maxSize, options = {}) {
+		if (!cache || typeof cache.set !== "function") return value;
+		const limit = Number(maxSize || 0);
+		if (limit > 0 && cache.size >= limit) {
+			if (options && options.clearWhenFull && typeof cache.clear === "function") cache.clear();
+			else if (typeof cache.keys === "function" && typeof cache.delete === "function") {
+				const firstKey = cache.keys().next();
+				if (!firstKey.done) cache.delete(firstKey.value);
+			}
+		}
+		cache.set(key, value);
+		return value;
+	}
 	function getCachedAggregate$1(kind, key, computeFn) {
 		const fullKey = `${kind}::${key}`;
 		if (aggregateCache$1.has(fullKey)) {
@@ -7618,11 +7617,11 @@ var BookIndex = (function(exports) {
 		const t0 = nowMs$1();
 		const value = computeFn();
 		const dt = nowMs$1() - t0;
-		rememberBoundedCacheValue(aggregateCache$1, fullKey, value, 100);
+		rememberBoundedCacheValue$1(aggregateCache$1, fullKey, value, 100);
 		perfDebug$1(`${kind} cache`, dt, "miss");
 		return value;
 	}
-	function invalidateAggregateCache$1(reason = "") {
+	function invalidateAggregateCache(reason = "") {
 		const hadAny = aggregateCache$1.size > 0 || nameGraphLayoutPromiseCache$1.size > 0 || familiesGraphLayoutPromiseCache$1.size > 0;
 		aggregateCache$1.clear();
 		nameGraphLayoutPromiseCache$1.clear();
@@ -7659,8 +7658,6 @@ var BookIndex = (function(exports) {
 		if (source === "lectures") return "lectures";
 		return "lexicon";
 	}
-	var LECTURES_KWIC_CACHE = null;
-	var lecturesKwicLoadPromise = null;
 	function normalizeKwicSort$1(mode) {
 		return [
 			"left",
@@ -7725,13 +7722,13 @@ var BookIndex = (function(exports) {
 	function normalizeHeadForMatch$1(value) {
 		if (value === null || value === void 0) return "";
 		const raw = String(value);
-		const cached = normalizeHeadCache$1.get(raw);
+		const cached = normalizeHeadCache.get(raw);
 		if (cached !== void 0) return cached;
 		let s = raw.trim().toLowerCase();
 		if (typeof s.normalize === "function") s = s.normalize("NFD");
 		s = s.replace(/[\u0300-\u036f]/g, "").replace(/ё/g, "е");
 		s = s.replace(/^[?]+/, "").replace(/[^a-zа-я0-9]+/gi, " ").trim();
-		rememberBoundedCacheValue(normalizeHeadCache$1, raw, s, NORMALIZE_CACHE_LIMIT$1, { clearWhenFull: true });
+		rememberBoundedCacheValue$1(normalizeHeadCache, raw, s, NORMALIZE_CACHE_LIMIT, { clearWhenFull: true });
 		return s;
 	}
 	function compareHeadsRu$1(aHead, bHead) {
@@ -7755,7 +7752,7 @@ var BookIndex = (function(exports) {
 	function slugify$1(text) {
 		return String(text || "").toLowerCase().replace(/[^a-zа-яё0-9]+/gi, "-").replace(/^-+|-+$/g, "").slice(0, 80) || "item";
 	}
-	function normalizeHashSlug$1(value) {
+	function normalizeHashSlug(value) {
 		if (value === null || value === void 0) return "";
 		let text = String(value).trim().toLowerCase();
 		if (!text) return "";
@@ -7768,8 +7765,8 @@ var BookIndex = (function(exports) {
 				out += ch;
 				continue;
 			}
-			if (Object.prototype.hasOwnProperty.call(CYRILLIC_TO_LATIN_MAP$1, ch)) {
-				out += CYRILLIC_TO_LATIN_MAP$1[ch];
+			if (Object.prototype.hasOwnProperty.call(CYRILLIC_TO_LATIN_MAP, ch)) {
+				out += CYRILLIC_TO_LATIN_MAP[ch];
 				continue;
 			}
 			out += "-";
@@ -7779,7 +7776,7 @@ var BookIndex = (function(exports) {
 		if (out.length > 60) out = out.slice(0, 60).replace(/-+$/g, "");
 		return out;
 	}
-	function buildHashSlugIndexesForItems$1(items) {
+	function buildHashSlugIndexesForItems(items) {
 		const byHead = /* @__PURE__ */ new Map();
 		const bySlug = /* @__PURE__ */ new Map();
 		if (!Array.isArray(items)) return {
@@ -7789,7 +7786,7 @@ var BookIndex = (function(exports) {
 		for (const it of items) {
 			const head = String(it && it.head ? it.head : "").trim();
 			if (!head || byHead.has(head)) continue;
-			const base = normalizeHashSlug$1(head) || "item";
+			const base = normalizeHashSlug(head) || "item";
 			let slug = base;
 			let suffix = 2;
 			while (bySlug.has(slug) && bySlug.get(slug) !== head) {
@@ -7808,10 +7805,10 @@ var BookIndex = (function(exports) {
 	}
 	function getIndexedItem$1(type, head) {
 		if (!type || !head) return null;
-		const exact = ITEM_INDEX_EXACT$1.get(type);
+		const exact = ITEM_INDEX_EXACT.get(type);
 		if (exact && exact.has(head)) return exact.get(head);
 		const nHead = normalizeHeadForMatch$1(head);
-		const normalized = ITEM_INDEX_NORMALIZED$1.get(type);
+		const normalized = ITEM_INDEX_NORMALIZED.get(type);
 		if (nHead && normalized && normalized.has(nHead)) return normalized.get(nHead);
 		return null;
 	}
@@ -7821,19 +7818,19 @@ var BookIndex = (function(exports) {
 	}
 	function encodeItemHeadForHash$1(type, head) {
 		const resolved = resolveExistingHead$1(type, head);
-		const byHead = ITEM_HASH_SLUG_BY_HEAD$1.get(type);
+		const byHead = ITEM_HASH_SLUG_BY_HEAD.get(type);
 		if (byHead && byHead.has(resolved)) return byHead.get(resolved);
-		return normalizeHashSlug$1(resolved) || resolved;
+		return normalizeHashSlug(resolved) || resolved;
 	}
-	function resolveItemHeadFromHash$1(type, encodedHead) {
+	function resolveItemHeadFromHash(type, encodedHead) {
 		const raw = clampUiInput$1(encodedHead, 120);
 		if (!raw) return "";
 		const exact = getIndexedItem$1(type, raw);
 		if (exact) return exact.head;
-		const bySlug = ITEM_HASH_HEAD_BY_SLUG$1.get(type);
+		const bySlug = ITEM_HASH_HEAD_BY_SLUG.get(type);
 		if (bySlug) {
 			if (bySlug.has(raw)) return bySlug.get(raw);
-			const normalizedSlug = normalizeHashSlug$1(raw);
+			const normalizedSlug = normalizeHashSlug(raw);
 			if (normalizedSlug && bySlug.has(normalizedSlug)) return bySlug.get(normalizedSlug);
 		}
 		return resolveExistingHead$1(type, raw);
@@ -7842,56 +7839,83 @@ var BookIndex = (function(exports) {
 		return String(value == null ? "" : value).replace(/\s+/g, " ").trim();
 	}
 	if (typeof window !== "undefined") {
+		window.nowMs = nowMs$1;
+		window.safeSetAttr = safeSetAttr$1;
+		window.perfDebug = perfDebug$1;
+		window.deterministicUnitFromString = deterministicUnitFromString$1;
+		window.getDataSignature = getDataSignature$1;
+		window.getCachedAggregate = getCachedAggregate$1;
+		window.invalidateAggregateCache = invalidateAggregateCache;
+		window.escapeHtml = escapeHtml$1;
+		window.escapeYamlDoubleQuoted = escapeYamlDoubleQuoted$1;
+		window.escapeMarkdownTableCell = escapeMarkdownTableCell$1;
+		window.clampUiInput = clampUiInput$1;
+		window.getTotalBookPages = getTotalBookPages$1;
+		window.normalizeKwicSource = normalizeKwicSource$1;
+		window.normalizeKwicSort = normalizeKwicSort$1;
+		window.clampPageInBook = clampPageInBook$1;
+		window.normalizePageRangeInBook = normalizePageRangeInBook$1;
+		window.announceUiMessage = announceUiMessage$1;
+		window.shuffleArray = shuffleArray$1;
+		window.normalizeHeadForMatch = normalizeHeadForMatch$1;
+		window.compareHeadsRu = compareHeadsRu$1;
+		window.compareItemsByHead = compareItemsByHead$1;
+		window.slugify = slugify$1;
+		window.normalizeHashSlug = normalizeHashSlug;
+		window.buildHashSlugIndexesForItems = buildHashSlugIndexesForItems;
+		window.getIndexedItem = getIndexedItem$1;
+		window.resolveExistingHead = resolveExistingHead$1;
+		window.encodeItemHeadForHash = encodeItemHeadForHash$1;
+		window.resolveItemHeadFromHash = resolveItemHeadFromHash;
+		window.normalizeBibtexText = normalizeBibtexText$1;
 		window.safeUrl = (url, fallback = "#") => {
 			const clean = String(url || "").trim();
-			if (!clean) return fallback;
-			const lower = clean.toLowerCase();
-			if (lower.startsWith("javascript:") || lower.startsWith("data:") || lower.startsWith("vbscript:")) return fallback;
+			if (!clean || clean.toLowerCase().startsWith("javascript:")) return fallback;
 			return clean;
 		};
 		window.safeImageUrl = (url, fallback = "") => {
 			const clean = String(url || "").trim();
-			if (!clean) return fallback;
-			const lower = clean.toLowerCase();
-			if ((lower.startsWith("javascript:") || lower.startsWith("vbscript:")) || (lower.startsWith("data:") && !/^data:image\/(?:png|jpe?g|gif|webp|avif);/.test(lower))) return fallback;
+			if (!clean || clean.toLowerCase().startsWith("javascript:")) return fallback;
 			return clean;
 		};
 	}
+	//#endregion
+	//#region src/runtime/core/data.js
 	var data_exports = /* @__PURE__ */ __exportAll({
-		DESCRIPTION_FIELDS_WITH_NORMALIZED_YO: () => DESCRIPTION_FIELDS_WITH_NORMALIZED_YO$1,
-		LECTURE_WHY_READ_BROTHER_BRAT: () => LECTURE_WHY_READ_BROTHER_BRAT$1,
+		DESCRIPTION_FIELDS_WITH_NORMALIZED_YO: () => DESCRIPTION_FIELDS_WITH_NORMALIZED_YO,
+		LECTURE_WHY_READ_BROTHER_BRAT: () => LECTURE_WHY_READ_BROTHER_BRAT,
 		TAB_LABELS: () => TAB_LABELS$1,
-		appDataModuleUrl: () => appDataModuleUrl$1,
-		applyActiveBookFromQuery: () => applyActiveBookFromQuery$1,
-		applyDescriptionEditorialConventions: () => applyDescriptionEditorialConventions$1,
-		buildAllItems: () => buildAllItems$1,
-		buildDataIndexes: () => buildDataIndexes$1,
-		buildDefaultCorpusRegistry: () => buildDefaultCorpusRegistry$1,
-		fetchAppDataModule: () => fetchAppDataModule$1,
+		appDataModuleUrl: () => appDataModuleUrl,
+		applyActiveBookFromQuery: () => applyActiveBookFromQuery,
+		applyDescriptionEditorialConventions: () => applyDescriptionEditorialConventions,
+		buildAllItems: () => buildAllItems,
+		buildDataIndexes: () => buildDataIndexes,
+		buildDefaultCorpusRegistry: () => buildDefaultCorpusRegistry,
+		fetchAppDataModule: () => fetchAppDataModule,
 		getActiveBook: () => getActiveBook$1,
 		getContextEntries: () => getContextEntries$1,
 		getCorpusBooks: () => getCorpusBooks$1,
 		getCorpusRegistry: () => getCorpusRegistry$1,
-		getEmbeddedAppDataText: () => getEmbeddedAppDataText$1,
+		getEmbeddedAppDataText: () => getEmbeddedAppDataText,
 		getFirstContextQuote: () => getFirstContextQuote$1,
-		hydrateAppData: () => hydrateAppData$1,
-		indexItems: () => indexItems$1,
+		hydrateAppData: () => hydrateAppData,
+		indexItems: () => indexItems,
 		initEntityTypes: () => initEntityTypes,
-		isAppDataModuleManifest: () => isAppDataModuleManifest$1,
+		isAppDataModuleManifest: () => isAppDataModuleManifest,
 		loadAppData: () => loadAppData,
-		loadAppDataFromModules: () => loadAppDataFromModules$1,
-		migrateAppDataSchema: () => migrateAppDataSchema$1,
+		loadAppDataFromModules: () => loadAppDataFromModules,
+		migrateAppDataSchema: () => migrateAppDataSchema,
 		normalizeAppData: () => normalizeAppData,
-		normalizeContextSnippet: () => normalizeContextSnippet$1,
-		normalizeCorpusRegistry: () => normalizeCorpusRegistry$1,
-		normalizeDescriptionYoInNode: () => normalizeDescriptionYoInNode$1,
-		normalizeDescriptionYoText: () => normalizeDescriptionYoText$1,
-		normalizeEditorialFlags: () => normalizeEditorialFlags$1,
-		normalizeItemContexts: () => normalizeItemContexts$1,
-		normalizeItemSources: () => normalizeItemSources$1,
+		normalizeContextSnippet: () => normalizeContextSnippet,
+		normalizeCorpusRegistry: () => normalizeCorpusRegistry,
+		normalizeDescriptionYoInNode: () => normalizeDescriptionYoInNode,
+		normalizeDescriptionYoText: () => normalizeDescriptionYoText,
+		normalizeEditorialFlags: () => normalizeEditorialFlags,
+		normalizeItemContexts: () => normalizeItemContexts,
+		normalizeItemSources: () => normalizeItemSources,
 		parseAppData: () => parseAppData
 	});
-	var DESCRIPTION_FIELDS_WITH_NORMALIZED_YO$1 = new Set([
+	var DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = /* @__PURE__ */ new Set([
 		"desc",
 		"about",
 		"why",
@@ -7902,25 +7926,25 @@ var BookIndex = (function(exports) {
 		"tagline",
 		"event"
 	]);
-	var LECTURE_WHY_READ_BROTHER_BRAT$1 = "Чтобы понять, почему «brother» и «брат» — родственники, а не дети «санскрита», и как это узнают ученые.";
-	function getEmbeddedAppDataText$1() {
+	var LECTURE_WHY_READ_BROTHER_BRAT = "Чтобы понять, почему «brother» и «брат» — родственники, а не дети «санскрита», и как это узнают ученые.";
+	function getEmbeddedAppDataText() {
 		if (typeof document !== "undefined" && typeof document.getElementById === "function") {
-			const node = document.getElementById(APP_DATA_SCRIPT_TAG_ID$1);
+			const node = document.getElementById(APP_DATA_SCRIPT_TAG_ID);
 			if (node && typeof node.textContent === "string") {
 				const raw = node.textContent.trim();
 				if (raw) return raw;
 			}
 		}
-		const fallback = typeof globalThis !== "undefined" && typeof globalThis["__APP_DATA_STRING__"] === "string" ? globalThis[APP_DATA_GLOBAL_FALLBACK_KEY$1] : "";
+		const fallback = typeof globalThis !== "undefined" && typeof globalThis["__APP_DATA_STRING__"] === "string" ? globalThis[APP_DATA_GLOBAL_FALLBACK_KEY] : "";
 		return String(fallback || "").trim();
 	}
-	function hydrateAppData$1(data) {
+	function hydrateAppData(data) {
 		setAppData(data);
 		if (typeof window !== "undefined") {
 			window.__vizCache = {};
 			window.VIZ_MODULES = window.VIZ_MODULES || {};
 		} else if (typeof globalThis !== "undefined") globalThis.__vizCache = {};
-		migrateAppDataSchema$1(data);
+		migrateAppDataSchema(data);
 		setLabels(data.labels || {});
 		setColors(data.colors || {});
 		setEpochLabels(data.epoch_labels || {});
@@ -7928,29 +7952,29 @@ var BookIndex = (function(exports) {
 		setFamilyColors(data.family_colors || {});
 		return data;
 	}
-	function isAppDataModuleManifest$1(value) {
+	function isAppDataModuleManifest(value) {
 		return !!(value && typeof value === "object" && !Array.isArray(value) && value.mode === "modules" && Array.isArray(value.modules));
 	}
-	function appDataModuleUrl$1(manifest, file) {
+	function appDataModuleUrl(manifest, file) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "b3d6eed5bc5d").trim();
-		if (buildId && buildId !== "b3d6eed5bc5d") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "55ce4e6bcbf6").trim();
+		if (buildId && buildId !== "55ce4e6bcbf6") url.searchParams.set("v", buildId);
 		return url.href;
 	}
-	async function fetchAppDataModule$1(manifest, file) {
-		const url = appDataModuleUrl$1(manifest, file);
+	async function fetchAppDataModule(manifest, file) {
+		const url = appDataModuleUrl(manifest, file);
 		const response = await fetch(url, { cache: "default" });
 		if (!response.ok) throw new Error(`Failed to load app data module ${file}: HTTP ${response.status}`);
 		const payload = await response.json();
 		if (!payload || Array.isArray(payload) || typeof payload !== "object") throw new Error(`App data module must be a JSON object: ${file}`);
 		return payload;
 	}
-	async function loadAppDataFromModules$1(manifest) {
+	async function loadAppDataFromModules(manifest) {
 		const modules = (manifest.modules || []).filter((entry) => entry && entry.file);
 		if (!modules.length) throw new Error("App data module manifest is empty");
-		const payloads = await Promise.all(modules.map((entry) => fetchAppDataModule$1(manifest, entry.file)));
+		const payloads = await Promise.all(modules.map((entry) => fetchAppDataModule(manifest, entry.file)));
 		const merged = {};
 		const seen = /* @__PURE__ */ new Set();
 		for (const payload of payloads) for (const [key, value] of Object.entries(payload)) {
@@ -7966,19 +7990,19 @@ var BookIndex = (function(exports) {
 		return ordered;
 	}
 	function parseAppData() {
-		const payload = getEmbeddedAppDataText$1();
+		const payload = getEmbeddedAppDataText();
 		if (!payload) throw new Error("Embedded app data not found");
 		const data = JSON.parse(payload);
-		if (isAppDataModuleManifest$1(data)) throw new Error("Embedded app data contains a module manifest; use loadAppData() instead");
-		return hydrateAppData$1(data);
+		if (isAppDataModuleManifest(data)) throw new Error("Embedded app data contains a module manifest; use loadAppData() instead");
+		return hydrateAppData(data);
 	}
 	async function loadAppData() {
-		const payload = getEmbeddedAppDataText$1();
+		const payload = getEmbeddedAppDataText();
 		if (!payload) throw new Error("Embedded app data not found");
 		const parsed = JSON.parse(payload);
-		return hydrateAppData$1(isAppDataModuleManifest$1(parsed) ? await loadAppDataFromModules$1(parsed) : parsed);
+		return hydrateAppData(isAppDataModuleManifest(parsed) ? await loadAppDataFromModules(parsed) : parsed);
 	}
-	function migrateAppDataSchema$1(data) {
+	function migrateAppDataSchema(data) {
 		if (!data || typeof data !== "object") return;
 		let version = Number.isInteger(data.schema_version) ? data.schema_version : 1;
 		data.schema_migrations = Array.isArray(data.schema_migrations) ? data.schema_migrations : [];
@@ -7990,7 +8014,7 @@ var BookIndex = (function(exports) {
 		}
 		if (version > 2 && typeof console !== "undefined" && typeof console.warn === "function") console.warn(`[schema] app_data schema_version ${version} is newer than supported 2`);
 	}
-	function buildDefaultCorpusRegistry$1() {
+	function buildDefaultCorpusRegistry() {
 		const stats = APP_DATA$1 && APP_DATA$1.book_stats && typeof APP_DATA$1.book_stats === "object" ? APP_DATA$1.book_stats : {};
 		return {
 			schema_version: 1,
@@ -8021,7 +8045,7 @@ var BookIndex = (function(exports) {
 		};
 	}
 	function getCorpusRegistry$1() {
-		if (!APP_DATA$1 || !APP_DATA$1.corpus || typeof APP_DATA$1.corpus !== "object") return buildDefaultCorpusRegistry$1();
+		if (!APP_DATA$1 || !APP_DATA$1.corpus || typeof APP_DATA$1.corpus !== "object") return buildDefaultCorpusRegistry();
 		return APP_DATA$1.corpus;
 	}
 	function getCorpusBooks$1() {
@@ -8031,9 +8055,9 @@ var BookIndex = (function(exports) {
 	function getActiveBook$1() {
 		const registry = getCorpusRegistry$1();
 		const books = getCorpusBooks$1();
-		return books.find((book) => book.book_id === registry.active_book_id) || books[0] || buildDefaultCorpusRegistry$1().books[0];
+		return books.find((book) => book.book_id === registry.active_book_id) || books[0] || buildDefaultCorpusRegistry().books[0];
 	}
-	function applyActiveBookFromQuery$1(query) {
+	function applyActiveBookFromQuery(query) {
 		const rawQuery = String(query || "").trim();
 		if (!rawQuery) return;
 		const params = new URLSearchParams(rawQuery);
@@ -8044,9 +8068,9 @@ var BookIndex = (function(exports) {
 		registry.active_book_id = bookId;
 		if (typeof window !== "undefined") window.localStorage.setItem("Zalizniakiada.corpus.activeBook", bookId);
 	}
-	function normalizeCorpusRegistry$1() {
+	function normalizeCorpusRegistry() {
 		if (!APP_DATA$1 || typeof APP_DATA$1 !== "object") return;
-		const defaults = buildDefaultCorpusRegistry$1();
+		const defaults = buildDefaultCorpusRegistry();
 		const raw = APP_DATA$1.corpus && typeof APP_DATA$1.corpus === "object" ? APP_DATA$1.corpus : {};
 		const books = Array.isArray(raw.books) && raw.books.length ? raw.books : defaults.books;
 		const sourceTypes = Array.isArray(raw.source_types) && raw.source_types.length ? raw.source_types : defaults.source_types;
@@ -8064,7 +8088,7 @@ var BookIndex = (function(exports) {
 		if (!APP_DATA$1) return;
 		APP_DATA$1.labels = APP_DATA$1.labels || {};
 		APP_DATA$1.colors = APP_DATA$1.colors || {};
-		normalizeCorpusRegistry$1();
+		normalizeCorpusRegistry();
 		APP_DATA$1.labels.literator = "Носитель языка";
 		APP_DATA$1.labels.schoolchild = "Участник лекции";
 		APP_DATA$1.labels.lecture_host = "Участник лекции";
@@ -8084,9 +8108,9 @@ var BookIndex = (function(exports) {
 		]) {
 			const arr = Array.isArray(APP_DATA$1[key]) ? APP_DATA$1[key] : [];
 			for (const item of arr) {
-				normalizeEditorialFlags$1(item);
-				normalizeItemSources$1(item);
-				normalizeItemContexts$1(item);
+				normalizeEditorialFlags(item);
+				normalizeItemSources(item);
+				normalizeItemContexts(item);
 			}
 		}
 		const stats = APP_DATA$1.book_stats || (APP_DATA$1.book_stats = {});
@@ -8114,9 +8138,9 @@ var BookIndex = (function(exports) {
 		scholar.sound_correspondences = Array.isArray(scholar.sound_correspondences) ? scholar.sound_correspondences : [];
 		scholar.visualization_ideas = Array.isArray(scholar.visualization_ideas) ? scholar.visualization_ideas : [];
 		scholar.slovo_links = Array.isArray(scholar.slovo_links) ? scholar.slovo_links : [];
-		applyDescriptionEditorialConventions$1();
+		applyDescriptionEditorialConventions();
 	}
-	function normalizeEditorialFlags$1(item) {
+	function normalizeEditorialFlags(item) {
 		if (!item || typeof item !== "object") return;
 		const raw = item.editorial_flags && typeof item.editorial_flags === "object" ? item.editorial_flags : {};
 		const suspectByLegacy = String(item.head || "").trim().startsWith("?") || item.needs_review === true;
@@ -8140,7 +8164,7 @@ var BookIndex = (function(exports) {
 		}
 		return "";
 	}
-	function normalizeItemSources$1(item) {
+	function normalizeItemSources(item) {
 		if (!item || typeof item !== "object") return;
 		const arr = Array.isArray(item.sources) ? item.sources : [];
 		const normalized = [];
@@ -8170,13 +8194,13 @@ var BookIndex = (function(exports) {
 		}
 		item.sources = normalized;
 	}
-	function normalizeContextSnippet$1(raw) {
+	function normalizeContextSnippet(raw) {
 		const text = String(raw == null ? "" : raw).replace(/\s+/g, " ").trim();
 		if (!text) return "";
 		if (text.length <= 420) return text;
 		return text.slice(0, 420).trim();
 	}
-	function normalizeItemContexts$1(item) {
+	function normalizeItemContexts(item) {
 		if (!item || typeof item !== "object") return;
 		const src = item.contexts;
 		if (!src || typeof src !== "object") {
@@ -8184,7 +8208,7 @@ var BookIndex = (function(exports) {
 			return;
 		}
 		if (Array.isArray(src)) {
-			item.contexts = src.map(normalizeContextSnippet$1).filter(Boolean);
+			item.contexts = src.map(normalizeContextSnippet).filter(Boolean);
 			return;
 		}
 		const normalized = {};
@@ -8194,7 +8218,7 @@ var BookIndex = (function(exports) {
 			if (!Array.isArray(snippets)) continue;
 			const out = [];
 			for (const raw of snippets) {
-				const snippet = normalizeContextSnippet$1(raw);
+				const snippet = normalizeContextSnippet(raw);
 				if (!snippet) continue;
 				out.push(snippet);
 				if (out.length >= 24) break;
@@ -8209,7 +8233,7 @@ var BookIndex = (function(exports) {
 		if (Array.isArray(source)) {
 			const snippets = [];
 			for (const raw of source) {
-				const snippet = normalizeContextSnippet$1(raw);
+				const snippet = normalizeContextSnippet(raw);
 				if (!snippet) continue;
 				snippets.push(snippet);
 				if (snippets.length >= 24) break;
@@ -8231,7 +8255,7 @@ var BookIndex = (function(exports) {
 			if (!Array.isArray(snippets)) continue;
 			const normalizedSnippets = [];
 			for (const raw of snippets) {
-				const snippet = normalizeContextSnippet$1(raw);
+				const snippet = normalizeContextSnippet(raw);
 				if (!snippet) continue;
 				normalizedSnippets.push(snippet);
 				if (normalizedSnippets.length >= 24) break;
@@ -8244,27 +8268,27 @@ var BookIndex = (function(exports) {
 		}
 		return entries;
 	}
-	function normalizeDescriptionYoText$1(value) {
+	function normalizeDescriptionYoText(value) {
 		return String(value == null ? "" : value).replace(/е\u0308/g, "е").replace(/Е\u0308/g, "Е").replace(/ё/g, "е").replace(/Ё/g, "Е");
 	}
-	function normalizeDescriptionYoInNode$1(node) {
+	function normalizeDescriptionYoInNode(node) {
 		if (!node || typeof node !== "object") return;
 		if (Array.isArray(node)) {
-			for (const item of node) normalizeDescriptionYoInNode$1(item);
+			for (const item of node) normalizeDescriptionYoInNode(item);
 			return;
 		}
 		for (const [key, value] of Object.entries(node)) {
-			if (typeof value === "string" && DESCRIPTION_FIELDS_WITH_NORMALIZED_YO$1.has(key)) {
-				node[key] = normalizeDescriptionYoText$1(value);
+			if (typeof value === "string" && DESCRIPTION_FIELDS_WITH_NORMALIZED_YO.has(key)) {
+				node[key] = normalizeDescriptionYoText(value);
 				continue;
 			}
-			if (value && typeof value === "object") normalizeDescriptionYoInNode$1(value);
+			if (value && typeof value === "object") normalizeDescriptionYoInNode(value);
 		}
 	}
-	function applyDescriptionEditorialConventions$1() {
-		normalizeDescriptionYoInNode$1(APP_DATA$1);
+	function applyDescriptionEditorialConventions() {
+		normalizeDescriptionYoInNode(APP_DATA$1);
 		const lectures = Array.isArray(APP_DATA$1?.lectures) ? APP_DATA$1.lectures : [];
-		if (lectures[2] && typeof lectures[2].why_read === "string" && lectures[2].why_read.includes("brother") && lectures[2].why_read.includes("брат")) lectures[2].why_read = LECTURE_WHY_READ_BROTHER_BRAT$1;
+		if (lectures[2] && typeof lectures[2].why_read === "string" && lectures[2].why_read.includes("brother") && lectures[2].why_read.includes("брат")) lectures[2].why_read = LECTURE_WHY_READ_BROTHER_BRAT;
 	}
 	function initEntityTypes() {
 		setEntityTypes({
@@ -8380,10 +8404,10 @@ var BookIndex = (function(exports) {
 				]
 			}
 		});
-		ENTITY_TYPES$1.all.items = buildAllItems$1();
-		for (const key of Object.keys(ENTITY_TYPES$1)) indexItems$1(ENTITY_TYPES$1[key].items);
-		buildDataIndexes$1();
-		invalidateAggregateCache$1("entity-types-init");
+		ENTITY_TYPES$1.all.items = buildAllItems();
+		for (const key of Object.keys(ENTITY_TYPES$1)) indexItems(ENTITY_TYPES$1[key].items);
+		buildDataIndexes();
+		invalidateAggregateCache("entity-types-init");
 	}
 	var TAB_LABELS$1 = {
 		viz: "Визуализации",
@@ -8415,7 +8439,7 @@ var BookIndex = (function(exports) {
 		chronology: "Хронология открытий",
 		page_trends: "Динамика по страницам"
 	};
-	function buildAllItems$1() {
+	function buildAllItems() {
 		const all = [];
 		function add(items, type, typeLabel) {
 			for (const it of items) all.push({
@@ -8434,7 +8458,7 @@ var BookIndex = (function(exports) {
 		add(APP_DATA$1.subject_index || [], "subject", "понятие");
 		return all;
 	}
-	function indexItems$1(items) {
+	function indexItems(items) {
 		if (!items) return;
 		for (const it of items) if (!it._search) {
 			const raw = String(it.head || "");
@@ -8442,7 +8466,7 @@ var BookIndex = (function(exports) {
 			it._searchNorm = normalizeHeadForMatch$1(raw);
 		}
 	}
-	function buildDataIndexes$1() {
+	function buildDataIndexes() {
 		const exactIndexes = /* @__PURE__ */ new Map();
 		const normalizedIndexes = /* @__PURE__ */ new Map();
 		const chapterIndexes = /* @__PURE__ */ new Map();
@@ -8479,7 +8503,7 @@ var BookIndex = (function(exports) {
 			exactIndexes.set(type, exact);
 			normalizedIndexes.set(type, normalized);
 			chapterIndexes.set(type, byChapter);
-			const slugIndexes = buildHashSlugIndexesForItems$1(conf.items);
+			const slugIndexes = buildHashSlugIndexesForItems(conf.items);
 			slugIndexesByHead.set(type, slugIndexes.byHead);
 			slugIndexesBySlug.set(type, slugIndexes.bySlug);
 		}
@@ -8491,10 +8515,41 @@ var BookIndex = (function(exports) {
 		setPageToChapter(pageToChapterMap);
 	}
 	if (typeof window !== "undefined") {
-		window.DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = DESCRIPTION_FIELDS_WITH_NORMALIZED_YO$1;
-		window.LECTURE_WHY_READ_BROTHER_BRAT = LECTURE_WHY_READ_BROTHER_BRAT$1;
+		window.DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = DESCRIPTION_FIELDS_WITH_NORMALIZED_YO;
+		window.LECTURE_WHY_READ_BROTHER_BRAT = LECTURE_WHY_READ_BROTHER_BRAT;
+		window.getEmbeddedAppDataText = getEmbeddedAppDataText;
+		window.hydrateAppData = hydrateAppData;
+		window.isAppDataModuleManifest = isAppDataModuleManifest;
+		window.appDataModuleUrl = appDataModuleUrl;
+		window.fetchAppDataModule = fetchAppDataModule;
+		window.loadAppDataFromModules = loadAppDataFromModules;
+		window.parseAppData = parseAppData;
+		window.loadAppData = loadAppData;
+		window.migrateAppDataSchema = migrateAppDataSchema;
+		window.buildDefaultCorpusRegistry = buildDefaultCorpusRegistry;
+		window.getCorpusRegistry = getCorpusRegistry$1;
+		window.getCorpusBooks = getCorpusBooks$1;
+		window.getActiveBook = getActiveBook$1;
+		window.applyActiveBookFromQuery = applyActiveBookFromQuery;
+		window.normalizeCorpusRegistry = normalizeCorpusRegistry;
+		window.normalizeAppData = normalizeAppData;
+		window.normalizeEditorialFlags = normalizeEditorialFlags;
+		window.getFirstContextQuote = getFirstContextQuote$1;
+		window.normalizeItemSources = normalizeItemSources;
+		window.normalizeContextSnippet = normalizeContextSnippet;
+		window.normalizeItemContexts = normalizeItemContexts;
+		window.getContextEntries = getContextEntries$1;
+		window.normalizeDescriptionYoText = normalizeDescriptionYoText;
+		window.normalizeDescriptionYoInNode = normalizeDescriptionYoInNode;
+		window.applyDescriptionEditorialConventions = applyDescriptionEditorialConventions;
+		window.initEntityTypes = initEntityTypes;
 		window.TAB_LABELS = TAB_LABELS$1;
+		window.buildAllItems = buildAllItems;
+		window.indexItems = indexItems;
+		window.buildDataIndexes = buildDataIndexes;
 	}
+	//#endregion
+	//#region src/runtime/core/router.js
 	var router_exports = /* @__PURE__ */ __exportAll({
 		ROUTE_SEO_METADATA: () => ROUTE_SEO_METADATA,
 		applyHash: () => applyHash$1,
@@ -8502,17 +8557,17 @@ var BookIndex = (function(exports) {
 		buildCanonicalHash: () => buildCanonicalHash$1,
 		buildHashFromState: () => buildHashFromState$1,
 		captureViewState: () => captureViewState$1,
-		encodeHashPart: () => encodeHashPart,
+		encodeHashPart: () => encodeHashPart$1,
 		goBackInApp: () => goBackInApp$1,
 		parseHashRoute: () => parseHashRoute$1,
-		parsePositiveRouteNumber: () => parsePositiveRouteNumber,
-		pushHistoryState: () => pushHistoryState$1,
-		routeValueAfter: () => routeValueAfter,
-		routeVizAlias: () => routeVizAlias,
-		sameViewState: () => sameViewState,
+		parsePositiveRouteNumber: () => parsePositiveRouteNumber$1,
+		pushHistoryState: () => pushHistoryState,
+		routeValueAfter: () => routeValueAfter$1,
+		routeVizAlias: () => routeVizAlias$1,
+		sameViewState: () => sameViewState$1,
 		syncNavigationHashOnly: () => syncNavigationHashOnly$1,
 		syncNavigationState: () => syncNavigationState$1,
-		updateBackButton: () => updateBackButton$1,
+		updateBackButton: () => updateBackButton,
 		updateSEOMetadata: () => updateSEOMetadata,
 		updateStructuredData: () => updateStructuredData
 	});
@@ -8587,8 +8642,11 @@ var BookIndex = (function(exports) {
 		if (schemaObj) script.textContent = JSON.stringify(schemaObj, null, 2);
 		else script.textContent = "{}";
 	}
+	function encodeHashPart$1(value) {
+		return encodeURIComponent(String(value));
+	}
 	function buildCanonicalHash$1(parts) {
-		return "#" + ["v4", ...Array.isArray(parts) ? parts : []].map(encodeHashPart).join("/");
+		return "#" + ["v4", ...Array.isArray(parts) ? parts : []].map(encodeHashPart$1).join("/");
 	}
 	function parseHashRoute$1(hash) {
 		const cleanHash = String(hash || "").trim();
@@ -8622,6 +8680,25 @@ var BookIndex = (function(exports) {
 			query: query.slice(0, 240)
 		};
 	}
+	function routeVizAlias$1(parts) {
+		if (!Array.isArray(parts)) return parts;
+		if (parts.length === 1 && parts[0] === "viz") return ["scholar", "viz"];
+		if (parts[0] === "corpus" && parts[1] === "sources") return ["materials", "sources"];
+		if (parts[0] === "corpus" && parts[1] === "viz") return [
+			"scholar",
+			"viz",
+			...parts.slice(2)
+		];
+		return parts;
+	}
+	function routeValueAfter$1(parts, marker) {
+		const pos = Array.isArray(parts) ? parts.indexOf(marker) : -1;
+		return pos >= 0 ? parts[pos + 1] : "";
+	}
+	function parsePositiveRouteNumber$1(value) {
+		const raw = String(value || "");
+		return /^\d+$/.test(raw) ? parseInt(raw, 10) : null;
+	}
 	function buildHashFromState$1() {
 		syncStateFromGlobal();
 		const parts = [currentEntity$1, currentTab$1];
@@ -8630,7 +8707,7 @@ var BookIndex = (function(exports) {
 			if (Number.isFinite(readingPage)) parts.push("reading", String(clampPageInBook$1(readingPage)));
 		}
 		if (currentEntity$1 === "materials" && currentTab$1 === "lecture_pages") parts.push(String(Math.max(0, currentLecture$1)));
-		if (currentEntity$1 === "materials" && currentTab$1 === "video" && currentVideoId$1) parts.push(String(currentVideoId$1));
+		if (currentEntity$1 === "materials" && currentTab$1 === "video" && currentVideoId) parts.push(String(currentVideoId));
 		if (currentEntity$1 === "materials" && currentTab$1 === "glossary" && currentGlossaryTerm$1) parts.push("term", currentGlossaryTerm$1);
 		if (currentEntity$1 === "scholar" && currentTab$1 === "scholar" && currentScholarAnchor$1) parts.push("anchor", currentScholarAnchor$1);
 		if (currentEntity$1 === "scholar" && currentTab$1 === "page_trends") {
@@ -8650,6 +8727,9 @@ var BookIndex = (function(exports) {
 		return hash;
 	}
 	var UI_STATE_SCHEMA_VERSION$1 = 3;
+	function normalizeGlobalSearchScope$1(scope) {
+		return scope === "corpus" ? "corpus" : "current";
+	}
 	function captureViewState$1() {
 		syncStateFromGlobal();
 		const globalSearchInput = typeof document !== "undefined" ? document.getElementById("global-search") : null;
@@ -8661,7 +8741,7 @@ var BookIndex = (function(exports) {
 			selectedItemType: selectedItemType$1,
 			rightPaneMode: rightPaneMode$1,
 			currentLecture: currentLecture$1,
-			currentVideoId: currentVideoId$1,
+			currentVideoId,
 			lectureCompareA: lectureCompareA$1,
 			lectureCompareB: lectureCompareB$1,
 			trendsRangeStart: trendsRangeStart$1,
@@ -8681,6 +8761,12 @@ var BookIndex = (function(exports) {
 			globalSearchQuery: globalSearchInput ? String(globalSearchInput.value || "") : "",
 			globalSearchScope: globalSearchScope$1
 		};
+	}
+	function sameViewState$1(a, b) {
+		if (!a || !b) return false;
+		const aFilters = Array.isArray(a.activeFilters) ? a.activeFilters.join("|") : "";
+		const bFilters = Array.isArray(b.activeFilters) ? b.activeFilters.join("|") : "";
+		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages$1()) === (b.currentKwicPageEnd || getTotalBookPages$1()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope$1(a.globalSearchScope) === normalizeGlobalSearchScope$1(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
 	}
 	function applyViewState$1(state) {
 		if (!state) return;
@@ -8715,7 +8801,7 @@ var BookIndex = (function(exports) {
 		setOnlyDiscussed(!!state.onlyDiscussed);
 		setOnlyQuestionCandidates(!!state.onlyQuestionCandidates);
 		setActiveFilters(Array.isArray(state.activeFilters) ? new Set(state.activeFilters.filter((x) => typeof x === "string")) : /* @__PURE__ */ new Set());
-		const targetSearchScope = Object.prototype.hasOwnProperty.call(state, "globalSearchScope") ? normalizeGlobalSearchScope(state.globalSearchScope) : normalizeGlobalSearchScope(globalSearchScope$1);
+		const targetSearchScope = Object.prototype.hasOwnProperty.call(state, "globalSearchScope") ? normalizeGlobalSearchScope$1(state.globalSearchScope) : normalizeGlobalSearchScope$1(globalSearchScope$1);
 		setGlobalSearchScope(targetSearchScope);
 		syncStateToGlobal();
 		if (typeof window !== "undefined") {
@@ -8731,30 +8817,30 @@ var BookIndex = (function(exports) {
 		}
 		if (typeof window !== "undefined" && typeof window.syncNavigationState === "function") window.syncNavigationState();
 	}
-	function pushHistoryState$1() {
+	function pushHistoryState() {
 		const snap = captureViewState$1();
-		if (sameViewState(historyStack$1.length ? historyStack$1[historyStack$1.length - 1] : null, snap)) return;
-		historyStack$1.push(snap);
-		if (historyStack$1.length > 150) historyStack$1.shift();
-		updateBackButton$1();
+		if (sameViewState$1(historyStack.length ? historyStack[historyStack.length - 1] : null, snap)) return;
+		historyStack.push(snap);
+		if (historyStack.length > 150) historyStack.shift();
+		updateBackButton();
 	}
-	function updateBackButton$1() {
+	function updateBackButton() {
 		if (typeof document === "undefined") return;
 		const btn = document.getElementById("back-btn");
 		if (!btn) return;
-		btn.hidden = historyStack$1.length <= 1;
+		btn.hidden = historyStack.length <= 1;
 	}
 	function goBackInApp$1() {
-		if (historyStack$1.length < 2) return;
-		historyStack$1.pop();
-		const prev = historyStack$1[historyStack$1.length - 1];
+		if (historyStack.length < 2) return;
+		historyStack.pop();
+		const prev = historyStack[historyStack.length - 1];
 		if (!prev) return;
 		setIsNavigatingHistory(true);
 		applyViewState$1(prev);
 		setIsNavigatingHistory(false);
 	}
 	function syncNavigationHashOnly$1() {
-		const prev = isNavigatingHistory$1;
+		const prev = isNavigatingHistory;
 		setIsNavigatingHistory(true);
 		if (typeof window !== "undefined" && typeof window.syncNavigationState === "function") window.syncNavigationState();
 		setIsNavigatingHistory(prev);
@@ -8763,8 +8849,8 @@ var BookIndex = (function(exports) {
 		if (typeof window !== "undefined" && typeof window.closeGlobalSearchResults === "function") window.closeGlobalSearchResults();
 		const parsedRoute = parseHashRoute$1(hash);
 		if (!parsedRoute) return false;
-		applyActiveBookFromQuery$1(parsedRoute.query);
-		const routedParts = routeVizAlias(parsedRoute.parts);
+		applyActiveBookFromQuery(parsedRoute.query);
+		const routedParts = routeVizAlias$1(parsedRoute.parts);
 		const entity = routedParts[0];
 		if (!entity || !ENTITY_TYPES$1[entity]) return false;
 		const tabCandidate = routedParts[1] || ENTITY_TYPES$1[entity].tabs[0];
@@ -8787,27 +8873,27 @@ var BookIndex = (function(exports) {
 		setCurrentGlossaryTerm("");
 		setPendingScholarAnchor("");
 		setCurrentScholarAnchor("");
-		const lecturePageIndex = parsePositiveRouteNumber(routedParts[2]);
+		const lecturePageIndex = parsePositiveRouteNumber$1(routedParts[2]);
 		if (entity === "materials" && tab === "lecture_pages" && lecturePageIndex !== null) state.currentLecture = lecturePageIndex;
 		if (entity === "materials" && tab === "video") {
 			const rawVideoId = routedParts[2] ? String(routedParts[2]) : "";
 			state.currentVideoId = /^[A-Za-z0-9_-]{6,32}$/.test(rawVideoId) ? rawVideoId : "";
 		}
 		if (entity === "materials" && tab === "lectures") {
-			const readingPage = parsePositiveRouteNumber(routeValueAfter(routedParts, "reading"));
+			const readingPage = parsePositiveRouteNumber$1(routeValueAfter$1(routedParts, "reading"));
 			if (readingPage !== null) {
 				if (typeof window !== "undefined") window.localStorage.setItem("Zalizniakiada.readingPage.v1", String(clampPageInBook$1(readingPage)));
 			}
 		}
 		if (entity === "materials" && tab === "glossary") {
-			const termValue = routeValueAfter(routedParts, "term");
+			const termValue = routeValueAfter$1(routedParts, "term");
 			if (termValue) {
 				setPendingGlossaryQuery(clampUiInput$1(termValue, 100).toLowerCase());
 				setCurrentGlossaryTerm(clampUiInput$1(termValue, 100).toLowerCase());
 			}
 		}
 		if (entity === "scholar" && tab === "scholar") {
-			const anchorValue = routeValueAfter(routedParts, "anchor");
+			const anchorValue = routeValueAfter$1(routedParts, "anchor");
 			if (anchorValue) {
 				const safeAnchor = String(anchorValue || "").replace(/[^a-z0-9_-]/gi, "").slice(0, 64);
 				if (safeAnchor) {
@@ -8818,13 +8904,13 @@ var BookIndex = (function(exports) {
 		}
 		if (entity === "scholar" && tab === "viz") {
 			setCurrentVizQueryString(parsedRoute.query);
-			const moduleValue = routeValueAfter(routedParts, "module");
+			const moduleValue = routeValueAfter$1(routedParts, "module");
 			if (moduleValue) setCurrentVizModule(String(moduleValue || "").trim() || currentVizModule$1);
 		} else setCurrentVizQueryString("");
 		if (entity === "scholar" && tab === "page_trends") {
 			const rangePos = routedParts.indexOf("range");
-			const rangeStart = parsePositiveRouteNumber(routedParts[rangePos + 1]);
-			const rangeEnd = parsePositiveRouteNumber(routedParts[rangePos + 2]);
+			const rangeStart = parsePositiveRouteNumber$1(routedParts[rangePos + 1]);
+			const rangeEnd = parsePositiveRouteNumber$1(routedParts[rangePos + 2]);
 			if (rangePos >= 0 && rangeStart !== null && rangeEnd !== null) {
 				state.trendsRangeStart = clampPageInBook$1(rangeStart);
 				state.trendsRangeEnd = clampPageInBook$1(rangeEnd);
@@ -8835,11 +8921,11 @@ var BookIndex = (function(exports) {
 				}
 			}
 		}
-		const queryValue = routeValueAfter(routedParts, "q");
+		const queryValue = routeValueAfter$1(routedParts, "q");
 		if (tab === "list" && queryValue) state.searchQuery = clampUiInput$1(queryValue, 100);
 		if (itemPos >= 0 && routedParts[itemPos + 1] && routedParts[itemPos + 2]) {
 			const itemType = ENTITY_TYPES$1[routedParts[itemPos + 1]] ? routedParts[itemPos + 1] : state.currentEntity;
-			const resolvedHead = resolveItemHeadFromHash$1(itemType, routedParts[itemPos + 2]);
+			const resolvedHead = resolveItemHeadFromHash(itemType, routedParts[itemPos + 2]);
 			state.currentEntity = itemType;
 			state.currentTab = "list";
 			state.selectedItemType = itemType;
@@ -8847,7 +8933,7 @@ var BookIndex = (function(exports) {
 			state.rightPaneMode = "card";
 		}
 		applyViewState$1(state);
-		if (!isNavigatingHistory$1) pushHistoryState$1();
+		if (!isNavigatingHistory) pushHistoryState();
 		syncNavigationHashOnly$1();
 		const routePath = `${state.currentEntity}/${state.currentTab}`;
 		let displayTitle = "";
@@ -8858,8 +8944,7 @@ var BookIndex = (function(exports) {
 			if (l && l.name) displayTitle = `${lectureTitle}: ${l.name}`;
 			else displayTitle = lectureTitle;
 		} else if (state.currentEntity === "materials" && state.currentTab === "video" && state.currentVideoId) {
-			const catalog = APP_DATA$1 && Array.isArray(APP_DATA$1.video_catalog) ? APP_DATA$1.video_catalog : [];
-			const hit = catalog.find((v) => v && v.id === state.currentVideoId);
+			const hit = (APP_DATA$1 && Array.isArray(APP_DATA$1.video_catalog) ? APP_DATA$1.video_catalog : []).find((v) => v && v.id === state.currentVideoId);
 			displayTitle = hit && hit.title ? String(hit.title) : `Видео ${state.currentVideoId}`;
 		}
 		updateSEOMetadata(routePath, displayTitle);
@@ -8911,9 +8996,9 @@ var BookIndex = (function(exports) {
 		return true;
 	}
 	function syncNavigationState$1() {
-		if (!isNavigatingHistory$1) pushHistoryState$1();
-		updateBackButton$1();
-		if (suppressHashSync$1) return;
+		if (!isNavigatingHistory) pushHistoryState();
+		updateBackButton();
+		if (suppressHashSync) return;
 		if (typeof window === "undefined" || !window.location) return;
 		const nextHash = buildHashFromState$1();
 		if (window.location.hash !== nextHash) {
@@ -8923,7 +9008,28 @@ var BookIndex = (function(exports) {
 	}
 	if (typeof window !== "undefined") {
 		window.ROUTE_SEO_METADATA = ROUTE_SEO_METADATA;
+		window.updateSEOMetadata = updateSEOMetadata;
+		window.encodeHashPart = encodeHashPart$1;
+		window.buildCanonicalHash = buildCanonicalHash$1;
+		window.parseHashRoute = parseHashRoute$1;
+		window.routeVizAlias = routeVizAlias$1;
+		window.routeValueAfter = routeValueAfter$1;
+		window.parsePositiveRouteNumber = parsePositiveRouteNumber$1;
+		window.buildHashFromState = buildHashFromState$1;
+		window.captureViewState = captureViewState$1;
+		window.sameViewState = sameViewState$1;
+		window.applyViewState = applyViewState$1;
+		window.pushHistoryState = pushHistoryState;
+		window.updateBackButton = updateBackButton;
+		window.goBackInApp = goBackInApp$1;
+		window.syncNavigationHashOnly = syncNavigationHashOnly$1;
+		window.applyHash = applyHash$1;
+		window.syncNavigationState = syncNavigationState$1;
+		window.updateStructuredData = updateStructuredData;
 	}
+	//#endregion
+	//#region src/runtime/legacy.js
+	var REPLACEMENT_CHAR = String.fromCharCode(65533);
 	var HOME_DECL_FACTORY_KEY = "__bookindexHomeDeclarativeFactory";
 	var TAB_LABELS = {
 		viz: "Визуализации",
@@ -8984,7 +9090,6 @@ var BookIndex = (function(exports) {
 	var visibleItemsCache = null;
 	var currentListSearchRaw = "";
 	var currentListSearchNorm = "";
-	var MAX_HASH_PARTS = 16;
 	var HASH_ROUTE_PREFIX = "v4";
 	var MAX_URL_LENGTH = 2048;
 	var GLOBAL_SEARCH_CACHE_MAX = 120;
@@ -9230,7 +9335,6 @@ var BookIndex = (function(exports) {
 			return `${prefix}${wrapAccentSafeInEscapedText(textPart)}`;
 		});
 	}
-	/** Append untrusted text via textContent; wrap accented tokens in .accent-safe spans (no innerHTML). */
 	function appendAccentSafeText(parent, text) {
 		if (!parent) return;
 		const source = String(text || "");
@@ -9257,7 +9361,6 @@ var BookIndex = (function(exports) {
 			parent.appendChild(span);
 		}
 	}
-	/** Highlight query matches with <mark> via DOM; text always through textContent. */
 	function appendHighlightedSearchText(parent, text, query) {
 		if (!parent) return;
 		const source = String(text || "");
@@ -9305,7 +9408,7 @@ var BookIndex = (function(exports) {
 	function buildContextLinkMatchTerms(head) {
 		const raw = String(head || "").trim();
 		if (!raw) return [];
-		const variants = new Set([raw]);
+		const variants = /* @__PURE__ */ new Set([raw]);
 		if (!/^[A-Za-zА-Яа-яЁё]+$/u.test(raw)) return Array.from(variants);
 		if (/ь$/iu.test(raw)) {
 			const stem = raw.slice(0, -1);
@@ -9459,7 +9562,6 @@ var BookIndex = (function(exports) {
 		if (cursor < text.length) html += renderAccentSafe(text.slice(cursor));
 		return html;
 	}
-	/** DOM twin of autoLinkEntitiesPlain — untrusted text via textContent only. */
 	function appendAutoLinkedEntitiesPlain(parent, rawText) {
 		if (!parent) return;
 		const text = String(rawText || "");
@@ -9501,14 +9603,10 @@ var BookIndex = (function(exports) {
 		if (cursor < raw.length) html += autoLinkEntitiesPlain(raw.slice(cursor));
 		return html;
 	}
-	/** DOM twin of autoLinkEntities for plain context strings (no pre-existing HTML anchors). */
 	function appendAutoLinkedEntities(parent, text) {
 		if (!parent) return;
 		const raw = String(text || "");
 		if (!raw) return;
-		// Context data is plain text; all insertion below goes through appendAccentSafeText/
-		// createTextNode (never innerHTML), so raw "<" characters are inserted as literal text
-		// and cannot be interpreted as markup. No regex-based tag stripping needed or attempted.
 		appendAutoLinkedEntitiesPlain(parent, raw);
 	}
 	function getPreferredContextSplitIndex(text) {
@@ -9533,7 +9631,6 @@ var BookIndex = (function(exports) {
 		if (!left || !right) return autoLinkEntities(raw);
 		return `${autoLinkEntities(left)}<br class="context-balance-break"><span class="context-line-two">${autoLinkEntities(right)}</span>`;
 	}
-	/** Priority path: card/KWIC-adjacent context text without data-bearing innerHTML. */
 	function appendContextTextWithLinks(parent, text) {
 		if (!parent) return;
 		const raw = String(text || "").replace(/\s+/g, " ").trim();
@@ -9992,50 +10089,6 @@ var BookIndex = (function(exports) {
 	function initDensityMode() {
 		applyDensityMode(getSavedDensityMode() || "research");
 	}
-	function applyViewState(state) {
-		if (!state) return;
-		currentEntity = ENTITY_TYPES[state.currentEntity] ? state.currentEntity : "home";
-		currentTab = state.currentTab || ENTITY_TYPES[currentEntity].tabs[0];
-		if (!ENTITY_TYPES[currentEntity].tabs.includes(currentTab)) currentTab = ENTITY_TYPES[currentEntity].tabs[0];
-		selectedItem = state.selectedItem || null;
-		selectedItemType = state.selectedItemType || null;
-		rightPaneMode = state.rightPaneMode || "histogram";
-		currentLecture = Number.isInteger(state.currentLecture) ? state.currentLecture : 0;
-		if (typeof window !== "undefined") window.currentVideoId = typeof state.currentVideoId === "string" ? state.currentVideoId : "";
-		lectureCompareA = Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1;
-		lectureCompareB = Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2;
-		trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
-		trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : getTotalBookPages();
-		searchQuery = typeof state.searchQuery === "string" ? state.searchQuery : "";
-		sortMostFrequentFirst = !!state.sortMostFrequentFirst;
-		currentGlossaryTerm = typeof state.currentGlossaryTerm === "string" ? state.currentGlossaryTerm : "";
-		currentScholarAnchor = typeof state.currentScholarAnchor === "string" ? state.currentScholarAnchor : "";
-		currentKwicSource = normalizeKwicSource(state.currentKwicSource);
-		currentKwicQuery = typeof state.currentKwicQuery === "string" ? clampUiInput(state.currentKwicQuery, MAX_LIST_QUERY_LENGTH) : "";
-		currentKwicSort = normalizeKwicSort(state.currentKwicSort);
-		const kwicRange = normalizePageRangeInBook(state.currentKwicPageStart, state.currentKwicPageEnd, 1, getTotalBookPages());
-		currentKwicPageStart = kwicRange.start;
-		currentKwicPageEnd = kwicRange.end;
-		if (currentEntity === "materials" && currentTab === "glossary" && currentGlossaryTerm) pendingGlossaryQuery = currentGlossaryTerm;
-		if (currentEntity === "scholar" && currentTab === "scholar" && currentScholarAnchor) pendingScholarAnchor = currentScholarAnchor;
-		onlyDiscussed = !!state.onlyDiscussed;
-		onlyQuestionCandidates = !!state.onlyQuestionCandidates;
-		activeFilters = new Set(Array.isArray(state.activeFilters) ? state.activeFilters.filter((x) => typeof x === "string") : []);
-		renderEntitySwitcher();
-		renderTabs();
-		renderContent();
-		const globalSearchInput = document.getElementById("global-search");
-		if (globalSearchInput) globalSearchInput.value = typeof state.globalSearchQuery === "string" ? state.globalSearchQuery : "";
-		globalSearchScope = Object.prototype.hasOwnProperty.call(state, "globalSearchScope") ? normalizeGlobalSearchScope(state.globalSearchScope) : normalizeGlobalSearchScope(globalSearchScope);
-		const globalSearchScopeSelect = document.getElementById("global-search-scope");
-		if (globalSearchScopeSelect && "value" in globalSearchScopeSelect) globalSearchScopeSelect.value = globalSearchScope;
-	}
-	function sameViewState(a, b) {
-		if (!a || !b) return false;
-		const aFilters = Array.isArray(a.activeFilters) ? a.activeFilters.join("|") : "";
-		const bFilters = Array.isArray(b.activeFilters) ? b.activeFilters.join("|") : "";
-		return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && (a.currentVideoId || "") === (b.currentVideoId || "") && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages()) === (b.currentKwicPageEnd || getTotalBookPages()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope(a.globalSearchScope) === normalizeGlobalSearchScope(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
-	}
 	function closeCardView() {
 		if (currentTab !== "list" || rightPaneMode !== "card") return false;
 		if (isMobileViewport()) {
@@ -10086,57 +10139,6 @@ var BookIndex = (function(exports) {
 	function buildCanonicalHash(parts) {
 		return "#" + [HASH_ROUTE_PREFIX, ...Array.isArray(parts) ? parts : []].map(encodeHashPart).join("/");
 	}
-	function parseHashRoute(hash) {
-		const cleanHash = String(hash || "").trim();
-		if (!cleanHash || cleanHash === "#") return null;
-		const queryStart = cleanHash.indexOf("?");
-		const hashPath = queryStart >= 0 ? cleanHash.slice(0, queryStart) : cleanHash;
-		const query = queryStart >= 0 ? cleanHash.slice(queryStart + 1) : "";
-		const rawParts = hashPath.replace(/^#/, "").split("/").filter(Boolean);
-		if (!rawParts.length || rawParts.length > MAX_HASH_PARTS + 1) return null;
-		const decodedParts = [];
-		for (const part of rawParts) {
-			let decoded = "";
-			try {
-				decoded = decodeURIComponent(part);
-			} catch (e) {
-				decoded = part;
-			}
-			decoded = String(decoded || "");
-			if (decoded.length > MAX_HASH_PART_LENGTH) return null;
-			decodedParts.push(decoded);
-		}
-		let parts = decodedParts[0] === HASH_ROUTE_PREFIX ? decodedParts.slice(1) : decodedParts;
-		if (parts[0] === "books" && parts[1]) {
-			const bookId = parts[1];
-			if (!getCorpusBooks().some((book) => book.book_id === bookId)) return null;
-			parts = parts.slice(2);
-		}
-		if (!parts.length || parts.length > MAX_HASH_PARTS) return null;
-		return {
-			parts,
-			query: query.slice(0, 240)
-		};
-	}
-	function routeVizAlias(parts) {
-		if (!Array.isArray(parts)) return parts;
-		if (parts.length === 1 && parts[0] === "viz") return ["scholar", "viz"];
-		if (parts[0] === "corpus" && parts[1] === "sources") return ["materials", "sources"];
-		if (parts[0] === "corpus" && parts[1] === "viz") return [
-			"scholar",
-			"viz",
-			...parts.slice(2)
-		];
-		return parts;
-	}
-	function routeValueAfter(parts, marker) {
-		const pos = Array.isArray(parts) ? parts.indexOf(marker) : -1;
-		return pos >= 0 ? parts[pos + 1] : "";
-	}
-	function parsePositiveRouteNumber(value) {
-		const raw = String(value || "");
-		return /^\d+$/.test(raw) ? parseInt(raw, 10) : null;
-	}
 	async function copyTextToClipboard(text) {
 		const value = String(text == null ? "" : text);
 		if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) try {
@@ -10158,11 +10160,6 @@ var BookIndex = (function(exports) {
 			return false;
 		}
 	}
-	// A2/B2: stable clean canonical URL for an entity (the prerendered page),
-	// derived from the same slug the app routes to.
-	// A2.4: when a bookId is given and the corpus has more than one book,
-	// append an optional ?book= scope so the copied link reproduces the
-	// same book-scoped view of a head merged across multiple books.
 	function buildCanonicalEntityUrl(type, head, bookId) {
 		const hash = buildItemHash(type, head);
 		const m = /list\/item\/([a-z_]+)\/(.+)$/.exec(String(hash || ""));
@@ -10173,19 +10170,16 @@ var BookIndex = (function(exports) {
 		if (!getCorpusBooks().some((book) => book.book_id === scopeId)) return base;
 		return `${base}?book=${encodeURIComponent(scopeId)}`;
 	}
-	// C4: prefilled GitHub issue form for entity corrections («сообщить об ошибке»).
-	// Query params match the field ids in .github/ISSUE_TEMPLATE/entity_correction.yml.
 	function buildEntityIssueUrl(type, head) {
 		const canonicalUrl = buildCanonicalEntityUrl(type, head);
 		const slugMatch = canonicalUrl ? /\/item\/[a-z_]+\/([^/]+)\/$/.exec(canonicalUrl) : null;
-		const params = new URLSearchParams({
+		return `https://github.com/gasyoun/BookIndex/issues/new?${new URLSearchParams({
 			template: "entity_correction.yml",
 			title: `[правка] ${head}`,
 			slug: slugMatch ? slugMatch[1] : "",
 			entity_type: type,
 			url: canonicalUrl || `${location.origin}${location.pathname}#${buildItemHash(type, head)}`
-		});
-		return `https://github.com/gasyoun/BookIndex/issues/new?${params.toString()}`;
+		}).toString()}`;
 	}
 	async function copyCurrentUrl() {
 		const canonicalHash = buildHashFromState();
@@ -10424,8 +10418,7 @@ var BookIndex = (function(exports) {
 	function ensureVizStateLoaded() {
 		const stateReady = typeof window !== "undefined" && typeof window.readVizParams === "function" && typeof window.writeVizParams === "function";
 		const shellReady = typeof window !== "undefined" && window.VizShell;
-		const statePromise = stateReady ? Promise.resolve() : loadVizScriptOnce(VIZ_STATE_SCRIPT_PATH);
-		return statePromise.then(() => {
+		return (stateReady ? Promise.resolve() : loadVizScriptOnce(VIZ_STATE_SCRIPT_PATH)).then(() => {
 			if (shellReady || typeof window !== "undefined" && window.VizShell) return;
 			return loadVizScriptOnce(VIZ_SHELL_SCRIPT_PATH);
 		});
@@ -11378,7 +11371,7 @@ var BookIndex = (function(exports) {
 		return true;
 	}
 	function normalizeCommandPaletteText(value) {
-		return normalizeSearchText(String(value === null || value === undefined ? "" : value).toLowerCase());
+		return normalizeSearchText(String(value === null || value === void 0 ? "" : value).toLowerCase());
 	}
 	function buildCommandPaletteCommands() {
 		const out = [];
@@ -11642,7 +11635,7 @@ var BookIndex = (function(exports) {
 			return true;
 		}
 		if (action.indexOf("density:") === 0) {
-			applyDensityMode(action.slice("density:".length));
+			applyDensityMode(action.slice(8));
 			return true;
 		}
 		if (action === "back") {
@@ -11679,8 +11672,7 @@ var BookIndex = (function(exports) {
 		}
 		if (e.key === "Enter") {
 			flushCommandPaletteQuery();
-			const idx = commandPaletteActiveIndex < 0 ? 0 : commandPaletteActiveIndex;
-			runCommandPaletteEntry(commandPaletteEntries[idx]);
+			runCommandPaletteEntry(commandPaletteEntries[commandPaletteActiveIndex < 0 ? 0 : commandPaletteActiveIndex]);
 			e.preventDefault();
 		}
 	}
@@ -11914,7 +11906,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "b3d6eed5bc5d" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "55ce4e6bcbf6" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -12890,7 +12882,7 @@ var BookIndex = (function(exports) {
 		"lexicon_reverse",
 		"lexicon_tech"
 	];
-	var QUALITY_SORT_ENTITY_KEYS = new Set([
+	var QUALITY_SORT_ENTITY_KEYS = /* @__PURE__ */ new Set([
 		"names",
 		"toponyms",
 		"ethnonyms",
@@ -13061,13 +13053,13 @@ var BookIndex = (function(exports) {
 		const contextPages = getQualityContextPageKeys(item && Object.prototype.hasOwnProperty.call(item, "__corpusContexts") ? item.__corpusContexts : item && item.contexts);
 		const pageSet = new Set(pageList);
 		const occurrenceSet = new Set(occurrencePages);
-		const evidenceSet = new Set([...occurrencePages, ...contextPages]);
+		const evidenceSet = /* @__PURE__ */ new Set([...occurrencePages, ...contextPages]);
 		if (!evidenceSet.size) return null;
 		const missingFromPageList = Array.from(evidenceSet).filter((page) => !pageSet.has(page)).sort((a, b) => a - b);
 		const missingFromEvidence = occurrencePages.length ? pageList.filter((page) => !occurrenceSet.has(page)).sort((a, b) => a - b) : [];
 		if (!missingFromPageList.length && !missingFromEvidence.length) return null;
 		return {
-			count: new Set([...missingFromPageList, ...missingFromEvidence]).size,
+			count: (/* @__PURE__ */ new Set([...missingFromPageList, ...missingFromEvidence])).size,
 			pageList,
 			occurrencePages,
 			contextPages,
@@ -13216,7 +13208,7 @@ var BookIndex = (function(exports) {
 					if (!itemsByHead.has(rawHead)) itemsByHead.set(rawHead, []);
 					itemsByHead.get(rawHead).push(item);
 				}
-				if (rawHead.startsWith("?") || rawHead.includes("�")) queues.suspicious_heads.push(createQualityQueueRecord("suspicious_heads", typeKey, item, "Заголовок начинается с ? или содержит символ замены.", { needsReview: item.needs_review === true })); // encoding-guard: allow-ufffd: the app tests for the character on purpose
+				if (rawHead.startsWith("?") || rawHead.includes(REPLACEMENT_CHAR)) queues.suspicious_heads.push(createQualityQueueRecord("suspicious_heads", typeKey, item, "Заголовок начинается с ? или содержит символ замены.", { needsReview: item.needs_review === true }));
 			}
 			for (const count of heads.values()) if (count > 1) totals.duplicateGroups += 1;
 			for (const [head, duplicates] of itemsByHead.entries()) {
@@ -13985,14 +13977,9 @@ var BookIndex = (function(exports) {
 		};
 		return SUBJECT_BY_LEXICON_INDEX;
 	}
-	// Reverse video links: entity (type + head) -> videos that reference it.
-	// Built lazily from video_catalog[].related_entities (the forward direction).
 	function videoBacklinkKey(type, head) {
-		const t = type === "subject_index" ? "subject" : String(type || "");
-		return t + "\0" + String(head || "");
+		return (type === "subject_index" ? "subject" : String(type || "")) + "\0" + String(head || "");
 	}
-	// video_catalog contains duplicate id entries; collapse to one per id (keeping
-	// the richest related_entities) so backlinks/counts are not inflated.
 	var DEDUPED_VIDEO_CATALOG = null;
 	function getDedupedVideoCatalog() {
 		if (DEDUPED_VIDEO_CATALOG) return DEDUPED_VIDEO_CATALOG;
@@ -14011,8 +13998,6 @@ var BookIndex = (function(exports) {
 	function getVideoBacklinkIndex() {
 		if (VIDEO_BACKLINK_INDEX) return VIDEO_BACKLINK_INDEX;
 		const catalog = getDedupedVideoCatalog();
-		// Do not memoize before the catalog module (99-extra) is loaded, otherwise
-		// an empty index would be cached permanently. Return a transient empty map.
 		if (!catalog.length) return /* @__PURE__ */ new Map();
 		const idx = /* @__PURE__ */ new Map();
 		for (const v of catalog) {
@@ -14022,21 +14007,20 @@ var BookIndex = (function(exports) {
 			for (const rel of rels) {
 				if (!rel || !rel.head || !rel.type) continue;
 				const key = videoBacklinkKey(rel.type, rel.head);
-				if (seen.has(key)) continue; // one video counts once per entity
+				if (seen.has(key)) continue;
 				seen.add(key);
 				if (!idx.has(key)) idx.set(key, []);
-				// carry the per-entity transcript timecode (B3.2), if any
-				idx.get(key).push({ v, t: Number.isFinite(rel.t) ? rel.t : null });
+				idx.get(key).push({
+					v,
+					t: Number.isFinite(rel.t) ? rel.t : null
+				});
 			}
 		}
-		// Newest first; stable tiebreak by title.
-		for (const list of idx.values()) {
-			list.sort((a, b) => {
-				const da = String(a.v.date || ""), db = String(b.v.date || "");
-				if (da !== db) return da < db ? 1 : -1;
-				return String(a.v.title || "").localeCompare(String(b.v.title || ""), "ru");
-			});
-		}
+		for (const list of idx.values()) list.sort((a, b) => {
+			const da = String(a.v.date || ""), db = String(b.v.date || "");
+			if (da !== db) return da < db ? 1 : -1;
+			return String(a.v.title || "").localeCompare(String(b.v.title || ""), "ru");
+		});
 		VIDEO_BACKLINK_INDEX = idx;
 		return VIDEO_BACKLINK_INDEX;
 	}
@@ -14075,7 +14059,11 @@ var BookIndex = (function(exports) {
 	function buildVideoDetailHash(id) {
 		const safe = sanitizeVideoId(id);
 		if (!safe) return buildCanonicalHash(["materials", "video"]);
-		return buildCanonicalHash(["materials", "video", safe]);
+		return buildCanonicalHash([
+			"materials",
+			"video",
+			safe
+		]);
 	}
 	function youtubeUrlWithT(url, t) {
 		const base = String(url || "");
@@ -14083,16 +14071,17 @@ var BookIndex = (function(exports) {
 		if (!Number.isFinite(t) || t <= 0) return base;
 		return base + (base.includes("?") ? "&" : "?") + "t=" + Math.floor(t) + "s";
 	}
-	// Inverse of getChapterRelatedVideos: book chapters that topically overlap a video.
-	// Honesty frame: these are thematic overlaps with book chapters, not recordings of them.
 	function getVideoRelatedChapters(video, limit = 8) {
 		if (!video) return [];
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
 		const out = [];
 		for (let i = 0; i < chapters.length; i++) {
-			const hits = getChapterRelatedVideos(i, 9999);
-			const found = hits.find((e) => e && e.v && (e.v.id === video.id || e.v.url === video.url));
-			if (found) out.push({ chapter: chapters[i], index: i, score: found.score });
+			const found = getChapterRelatedVideos(i, 9999).find((e) => e && e.v && (e.v.id === video.id || e.v.url === video.url));
+			if (found) out.push({
+				chapter: chapters[i],
+				index: i,
+				score: found.score
+			});
 		}
 		out.sort((a, b) => b.score - a.score || a.index - b.index);
 		return out.slice(0, limit);
@@ -14144,10 +14133,9 @@ var BookIndex = (function(exports) {
 			return;
 		}
 		const dur = formatVideoDuration(video.duration);
-		const dateStr = formatVideoDate(video.date);
-		const metaParts = [dateStr, dur ? `⏱ ${dur}` : ""].filter(Boolean);
+		const metaParts = [formatVideoDate(video.date), dur ? `⏱ ${dur}` : ""].filter(Boolean);
 		const rels = Array.isArray(video.related_entities) ? video.related_entities : [];
-		const seenRel = new Set();
+		const seenRel = /* @__PURE__ */ new Set();
 		const uniqRels = [];
 		for (const r of rels) {
 			if (!r || !r.head || !r.type) continue;
@@ -14155,7 +14143,11 @@ var BookIndex = (function(exports) {
 			const key = t + "\0" + r.head;
 			if (seenRel.has(key)) continue;
 			seenRel.add(key);
-			uniqRels.push({ type: t, head: r.head, t: Number.isFinite(r.t) ? r.t : null });
+			uniqRels.push({
+				type: t,
+				head: r.head,
+				t: Number.isFinite(r.t) ? r.t : null
+			});
 		}
 		const chapters = getVideoRelatedChapters(video, 8);
 		let chipsHtml = "";
@@ -14165,15 +14157,12 @@ var BookIndex = (function(exports) {
 			chipsHtml += `<a class="video-detail-chip" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type || "all", r.head))}"${chipTitle ? ` title="${escapeHtml(chipTitle)}"` : ""}>${escapeHtml(r.head)}${ytT != null ? `<span class="video-detail-chip-t">▸ ${escapeHtml(formatVideoDuration(ytT))}</span>` : ""}</a>`;
 		}
 		let chaptersHtml = "";
-		if (chapters.length) {
-			for (const c of chapters) {
-				const name = c.chapter && c.chapter.name ? c.chapter.name : `Глава ${c.index}`;
-				const pages = c.chapter ? `${c.chapter.start || ""}–${c.chapter.end || ""}` : "";
-				chaptersHtml += `<a class="video-detail-chapter" data-lecture-idx="${c.index}" href="${escapeHtml(buildLecturePageHash(c.index))}">${escapeHtml(name)}${pages ? ` <span class="video-detail-chapter-pages">стр. ${escapeHtml(String(pages))}</span>` : ""} <span class="video-detail-chapter-score">· ${c.score} совп.</span></a>`;
-			}
-		} else {
-			chaptersHtml = `<div class="video-detail-empty">Тематическое пересечение с главами книги не найдено (по связанным сущностям).</div>`;
+		if (chapters.length) for (const c of chapters) {
+			const name = c.chapter && c.chapter.name ? c.chapter.name : `Глава ${c.index}`;
+			const pages = c.chapter ? `${c.chapter.start || ""}–${c.chapter.end || ""}` : "";
+			chaptersHtml += `<a class="video-detail-chapter" data-lecture-idx="${c.index}" href="${escapeHtml(buildLecturePageHash(c.index))}">${escapeHtml(name)}${pages ? ` <span class="video-detail-chapter-pages">стр. ${escapeHtml(String(pages))}</span>` : ""} <span class="video-detail-chapter-score">· ${c.score} совп.</span></a>`;
 		}
+		else chaptersHtml = `<div class="video-detail-empty">Тематическое пересечение с главами книги не найдено (по связанным сущностям).</div>`;
 		const ytUrl = String(video.url || "");
 		container.innerHTML = `<div class="panel active video-detail" data-video-id="${escapeHtml(safeId)}"><div class="video-detail-inner">
     <a class="video-detail-back" href="${escapeHtml(galleryHash)}">← К видеогалерее</a>
@@ -14204,10 +14193,6 @@ var BookIndex = (function(exports) {
 			bindActionWithKeyboard(el, () => openLecturePage(parseInt(el.dataset.lectureIdx || "0", 10) || 0));
 		});
 	}
-
-	// V1c (H2125): in-app modal watch shell. External YouTube link remains the
-	// fallback everywhere; the modal never autoplays and tolerates an empty
-	// timecodes[] (D4 — do not invent chapter markers).
 	function isVideoModalOpen() {
 		const root = document.getElementById("video-player-modal");
 		if (!root) return false;
@@ -14239,12 +14224,9 @@ var BookIndex = (function(exports) {
 			time.textContent = formatVideoDuration(safeSeconds) || "0:00";
 			const label = document.createElement("span");
 			label.className = "video-modal-tc-label";
-			label.textContent = String((tc && tc.label) || "");
+			label.textContent = String(tc && tc.label || "");
 			item.appendChild(time);
 			item.appendChild(label);
-			// Step 4.6: no postMessage seek API is wired to the plain (no-autoplay)
-			// iframe embed, so each item stays a real external `?t=` deep link — no
-			// JS click handler needed; native <a> navigation + keyboard already work.
 			list.appendChild(item);
 		}
 	}
@@ -14256,10 +14238,8 @@ var BookIndex = (function(exports) {
 		if (!ytId) return;
 		const iframe = document.createElement("iframe");
 		iframe.className = "video-modal-iframe";
-		// autoplay=0: no autoplay on open per D3/D4 — playback starts on explicit
-		// user gesture (the visible YouTube play button inside the frame).
 		iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(ytId)}?autoplay=0&rel=0`;
-		iframe.title = String((video && video.title) || "Видео");
+		iframe.title = String(video && video.title || "Видео");
 		iframe.setAttribute("allowfullscreen", "");
 		iframe.setAttribute("allow", "fullscreen");
 		iframe.loading = "lazy";
@@ -14310,8 +14290,7 @@ var BookIndex = (function(exports) {
 	function getVideoModalFocusable() {
 		const root = document.getElementById("video-player-modal");
 		if (!root || typeof root.querySelectorAll !== "function") return [];
-		const selector = "a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex='-1'])";
-		return Array.from(root.querySelectorAll(selector)).filter((el) => el instanceof HTMLElement);
+		return Array.from(root.querySelectorAll("a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex='-1'])")).filter((el) => el instanceof HTMLElement);
 	}
 	function onVideoModalKeydown(e) {
 		if (!e || !isVideoModalOpen()) return;
@@ -14349,14 +14328,10 @@ var BookIndex = (function(exports) {
 			root._videoModalKeydownWired = true;
 		}
 	}
-
-	// B3.4: videos whose discussed entities overlap a book chapter's pages.
-	// These are TOPICALLY related public lectures, not recordings of this chapter.
 	var CHAPTER_VIDEO_CACHE = /* @__PURE__ */ new Map();
 	function getChapterRelatedVideos(chapterIdx, limit = 6) {
 		if (CHAPTER_VIDEO_CACHE.has(chapterIdx)) return CHAPTER_VIDEO_CACHE.get(chapterIdx).slice(0, limit);
-		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
-		const ch = chapters[chapterIdx];
+		const ch = (Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [])[chapterIdx];
 		const catalog = getDedupedVideoCatalog();
 		if (!ch || !catalog.length) {
 			CHAPTER_VIDEO_CACHE.set(chapterIdx, []);
@@ -14364,15 +14339,19 @@ var BookIndex = (function(exports) {
 		}
 		const start = parseInt(ch.start, 10) || 1;
 		const end = parseInt(ch.end, 10) || start;
-		const types = ["names", "toponyms", "ethnonyms", "languages", "subject_index"];
+		const types = [
+			"names",
+			"toponyms",
+			"ethnonyms",
+			"languages",
+			"subject_index"
+		];
 		const heads = /* @__PURE__ */ new Set();
-		for (const t of types) for (const it of (APP_DATA[t] || [])) {
-			for (const p of (it.page_list || [])) {
-				const pg = parseInt(p, 10);
-				if (Number.isFinite(pg) && pg >= start && pg <= end) {
-					heads.add(it.head);
-					break;
-				}
+		for (const t of types) for (const it of APP_DATA[t] || []) for (const p of it.page_list || []) {
+			const pg = parseInt(p, 10);
+			if (Number.isFinite(pg) && pg >= start && pg <= end) {
+				heads.add(it.head);
+				break;
 			}
 		}
 		const scored = [];
@@ -14380,13 +14359,14 @@ var BookIndex = (function(exports) {
 			if (!v || !v.url) continue;
 			const seen = /* @__PURE__ */ new Set();
 			let score = 0;
-			for (const rel of (v.related_entities || [])) {
-				if (rel && heads.has(rel.head) && !seen.has(rel.head)) {
-					seen.add(rel.head);
-					score += 1;
-				}
+			for (const rel of v.related_entities || []) if (rel && heads.has(rel.head) && !seen.has(rel.head)) {
+				seen.add(rel.head);
+				score += 1;
 			}
-			if (score > 0) scored.push({ v, score });
+			if (score > 0) scored.push({
+				v,
+				score
+			});
 		}
 		scored.sort((a, b) => b.score - a.score || String(b.v.date || "").localeCompare(String(a.v.date || "")));
 		CHAPTER_VIDEO_CACHE.set(chapterIdx, scored);
@@ -15063,20 +15043,16 @@ var BookIndex = (function(exports) {
 		const hasArrayContexts = Array.isArray(it.contexts) && it.contexts.length > 0;
 		const hasMapContexts = !hasArrayContexts && it.contexts && typeof it.contexts === "object" && !Array.isArray(it.contexts) && Object.keys(it.contexts).length > 0;
 		if (hasArrayContexts || hasMapContexts) html += "<div class=\"card-contexts-mount\" data-card-contexts-mount></div>";
-		// B5: reverse video links sit right after contexts, above the cross-link cluster.
 		const videoBacklinks = getVideoBacklinkIndex().get(videoBacklinkKey(eType, it.head)) || [];
 		if (videoBacklinks.length) {
-			const VIDEO_CARD_LIMIT = 8;
-			const shown = videoBacklinks.slice(0, VIDEO_CARD_LIMIT);
+			const shown = videoBacklinks.slice(0, 8);
 			const rest = videoBacklinks.length - shown.length;
 			html += `<h3>Видео <span class="card-video-count">${videoBacklinks.length}</span></h3><div class="card-video-links">`;
 			for (const entry of shown) {
 				const v = entry.v;
 				const hasT = Number.isFinite(entry.t) && entry.t > 0;
 				const url = hasT ? v.url + (v.url.includes("?") ? "&" : "?") + "t=" + entry.t + "s" : v.url;
-				const meta = hasT
-					? `<span class="card-video-dur card-video-at" title="упоминание на ${escapeHtml(formatVideoDuration(entry.t))}">▸ ${escapeHtml(formatVideoDuration(entry.t))}</span>`
-					: (formatVideoDuration(v.duration) ? `<span class="card-video-dur">${escapeHtml(formatVideoDuration(v.duration))}</span>` : "");
+				const meta = hasT ? `<span class="card-video-dur card-video-at" title="упоминание на ${escapeHtml(formatVideoDuration(entry.t))}">▸ ${escapeHtml(formatVideoDuration(entry.t))}</span>` : formatVideoDuration(v.duration) ? `<span class="card-video-dur">${escapeHtml(formatVideoDuration(v.duration))}</span>` : "";
 				html += `<a class="card-video-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
         <span class="card-video-title">${escapeHtml(v.title)}</span>
         ${meta}
@@ -15161,7 +15137,6 @@ var BookIndex = (function(exports) {
       </a>`;
 			html += "</div>";
 		}
-		// Authority records (A3) — grouped right after cross-links per B5.
 		const auth = it && it.authority;
 		if (auth && auth.wikidata) {
 			const authLinks = [];
@@ -15174,11 +15149,9 @@ var BookIndex = (function(exports) {
 						<div class="card-lod-grid">${authLinks.join("")}</div>
 					</div>`;
 		}
-		// Linguistic Database Interoperability (Linked Open Data)
 		let lodHtml = "";
 		if (eType === "languages") {
-			const langKey = String(it.head || "").toLowerCase().trim();
-			const info = LANGUAGE_LOD_MAP[langKey];
+			const info = LANGUAGE_LOD_MAP[String(it.head || "").toLowerCase().trim()];
 			if (info) {
 				const walsUrl = info.customWals || `https://wals.info/languoid/lect/wals_code_${info.wals}`;
 				const glottologUrl = `https://glottolog.org/resource/languoid/id/${info.glottolog}`;
@@ -15192,11 +15165,12 @@ var BookIndex = (function(exports) {
 					</div>
 				`;
 			}
-		} else if (["lexicon", "lexicon_tech", "lexicon_reverse"].includes(eType)) {
-			const cleanTerm = String(it.head || "")
-				.normalize("NFD")
-				.replace(/[\u0300-\u036f*?]/g, "")
-				.trim();
+		} else if ([
+			"lexicon",
+			"lexicon_tech",
+			"lexicon_reverse"
+		].includes(eType)) {
+			const cleanTerm = String(it.head || "").normalize("NFD").replace(/[\u0300-\u036f*?]/g, "").trim();
 			if (cleanTerm) {
 				const starlingUrl = `https://starlingdb.org/cgi-bin/response.cgi?root=config&morpho=0&basename=\\data\\ie\\vasmer&first=1&off=&text_word=${encodeURIComponent(cleanTerm)}&method_word=substring`;
 				const rncUrl = `https://ruscorpora.ru/results?q=${encodeURIComponent(cleanTerm)}`;
@@ -15211,9 +15185,7 @@ var BookIndex = (function(exports) {
 				`;
 			}
 		}
-		if (lodHtml) {
-			html += lodHtml;
-		}
+		if (lodHtml) html += lodHtml;
 		if (useTwoColumnCardLayout) html += "</div>";
 		html += buildCitationWidgetHtml("card");
 		html += "</div>";
@@ -15261,8 +15233,6 @@ var BookIndex = (function(exports) {
 		if (exportCardBtn) exportCardBtn.onclick = () => exportCurrentCardMarkdown();
 		const copyLinkBtn = document.getElementById("copy-card-link");
 		if (copyLinkBtn) copyLinkBtn.onclick = async () => {
-			// B2/A2: copy the stable clean canonical URL of this entity, not the hash route.
-			// A2.4: scope to the entity's own book when the corpus spans more than one.
 			const scopeBookId = String(it.book_id || it.bookId || getActiveBook().book_id || "");
 			const canonicalUrl = buildCanonicalEntityUrl(eType, it.head, scopeBookId);
 			const ok = canonicalUrl ? await copyTextToClipboard(canonicalUrl) : await copyCurrentUrl();
@@ -15425,13 +15395,13 @@ var BookIndex = (function(exports) {
 			svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${H - 20}" stroke="#8a7050" stroke-width="2"/>`;
 			for (let i = 0; i < withEpoch.length; i++) {
 				const n = withEpoch[i];
-				const y = padT + 10 + i * rowH;
+				const y = 30 + i * rowH;
 				const color = safeColor(COLORS[n.subcategory], "#888");
 				const epochLabel = n.epoch < 0 ? -n.epoch + " до н.э." : String(n.epoch);
-				svg += `<text x="${padL - 8}" y="${y + 4}" fill="#888" font-size="10" text-anchor="end">${epochLabel}</text>`;
+				svg += `<text x="92" y="${y + 4}" fill="#888" font-size="10" text-anchor="end">${epochLabel}</text>`;
 				svg += `<g class="timeline-point" data-name="${escapeHtml(n.head)}">
         <circle cx="${padL}" cy="${y}" r="5" fill="${color}" stroke="white" stroke-width="1.5"></circle>
-        <text x="${padL + 10}" y="${y + 4}" fill="#1a1a1a" font-size="12">${escapeHtml(n.head)}</text>
+        <text x="110" y="${y + 4}" fill="#1a1a1a" font-size="12">${escapeHtml(n.head)}</text>
       </g>`;
 			}
 			svg += "</svg>";
@@ -15467,16 +15437,16 @@ var BookIndex = (function(exports) {
 			for (let i = 0; i < ticks.length; i++) {
 				const t = ticks[i];
 				const x = padL + i / (ticks.length - 1) * (W - padL - padR);
-				svg += `<line x1="${x}" y1="${axisY - 6}" x2="${x}" y2="${axisY + 6}" stroke="#8a7050" stroke-width="2"/>`;
-				svg += `<line x1="${x}" y1="${axisY + 6}" x2="${x}" y2="${H - 5}" stroke="#f0e8d8" stroke-width="1" stroke-dasharray="2 3"/>`;
+				svg += `<line x1="${x}" y1="34" x2="${x}" y2="46" stroke="#8a7050" stroke-width="2"/>`;
+				svg += `<line x1="${x}" y1="46" x2="${x}" y2="${H - 5}" stroke="#f0e8d8" stroke-width="1" stroke-dasharray="2 3"/>`;
 				let label;
 				if (t < 0) label = -t + " до н.э.";
 				else if (t === 0) label = "0";
 				else label = String(t);
-				svg += `<text x="${x}" y="${axisY - 12}" fill="#5a3818" font-size="11" text-anchor="middle">${label}</text>`;
+				svg += `<text x="${x}" y="28" fill="#5a3818" font-size="11" text-anchor="middle">${label}</text>`;
 			}
 			for (const p of placed) {
-				const cy = axisY + 18 + p.level * rowH;
+				const cy = 58 + p.level * rowH;
 				const color = safeColor(COLORS[p.name.subcategory], "#888");
 				svg += `<line x1="${p.x}" y1="${axisY}" x2="${p.x}" y2="${cy - 5}" stroke="#d4c8b0" stroke-width="1"/>`;
 				svg += `<g class="timeline-point" data-name="${escapeHtml(p.name.head)}">
@@ -15605,11 +15575,11 @@ var BookIndex = (function(exports) {
 			const it = top[i];
 			const y = i * cellH + 8;
 			const label = it.head.length > 30 ? it.head.slice(0, 28) + "…" : it.head;
-			svg += `<text x="${labelW - 6}" y="${y + 4}" fill="#1a1a1a" font-size="10" text-anchor="end">${escapeHtml(label)}</text>`;
+			svg += `<text x="214" y="${y + 4}" fill="#1a1a1a" font-size="10" text-anchor="end">${escapeHtml(label)}</text>`;
 			const color = currentEntity === "names" ? safeColor(COLORS[it.subcategory], "#888") : "#5a3818";
 			for (const p of it.page_list || []) {
 				const x = labelW + (p - 1) * cellW;
-				svg += `<rect x="${x}" y="${y - 4}" width="${Math.max(2.5, cellW)}" height="${cellH - 4}" fill="${color}" opacity="0.85"><title>${escapeHtml(it.head)} · стр. ${p}</title></rect>`;
+				svg += `<rect x="${x}" y="${y - 4}" width="${Math.max(2.5, cellW)}" height="10" fill="${color}" opacity="0.85"><title>${escapeHtml(it.head)} · стр. ${p}</title></rect>`;
 			}
 		}
 		svg += "</svg>";
@@ -17051,8 +17021,7 @@ var BookIndex = (function(exports) {
 	}
 	function buildHomeIndexTaskEntries() {
 		const section = getNavSectionById("indexes");
-		const items = section && Array.isArray(section.items) ? section.items : [];
-		return items.filter((item) => item && item.entity && ENTITY_TYPES[item.entity]).map((item) => {
+		return (section && Array.isArray(section.items) ? section.items : []).filter((item) => item && item.entity && ENTITY_TYPES[item.entity]).map((item) => {
 			const conf = ENTITY_TYPES[item.entity];
 			const count = Array.isArray(conf && conf.items) ? conf.items.length : 0;
 			return {
@@ -17135,7 +17104,10 @@ var BookIndex = (function(exports) {
 				videoResults.appendChild(more);
 			}
 		};
-		if (videoForm) videoForm.onsubmit = (e) => { e.preventDefault(); runVideoSearch(); };
+		if (videoForm) videoForm.onsubmit = (e) => {
+			e.preventDefault();
+			runVideoSearch();
+		};
 		if (videoInput) videoInput.oninput = runVideoSearch;
 	}
 	function renderHomePanel(container) {
@@ -17156,8 +17128,7 @@ var BookIndex = (function(exports) {
 		const quoteClass = compactHome ? "home-featured-quote home-featured-quote-compact" : "home-featured-quote home-featured-quote-full";
 		const quoteTextClass = compactHome ? "home-featured-quote-clamp" : "";
 		const routeGridClass = compactHome || isDesktop ? "home-routes-grid home-routes-grid-compact" : "home-routes-grid";
-		const indexEntries = buildHomeIndexTaskEntries();
-		const indexOptionsHtml = indexEntries.map((entry) => `<option value="${escapeHtml(entry.entity)}">${escapeHtml(entry.label)}${entry.count ? ` (${entry.count})` : ""}</option>`).join("");
+		const indexOptionsHtml = buildHomeIndexTaskEntries().map((entry) => `<option value="${escapeHtml(entry.entity)}">${escapeHtml(entry.label)}${entry.count ? ` (${entry.count})` : ""}</option>`).join("");
 		let html = `<div class="panel active home-panel"><div class="home-panel-inner" data-home-inner-padding="${escapeHtml(homeInnerPadding)}">`;
 		html += `<div class="home-tasks">
     <div class="home-tasks-title">С чего начать?</div>
@@ -17196,8 +17167,6 @@ var BookIndex = (function(exports) {
       </form>
     </div>
   </div>`;
-		// U1 (H2127): the «Книга в цифрах» showcase is BUILT here but APPENDED after the
-		// task-shaped surfaces (routes, recents), so the home fold stays task-first.
 		let showcase = `<div class="home-stats-hero">
     <div class="home-stats-head">
       <h2 class="home-stats-title">Книга в цифрах</h2>
@@ -17360,13 +17329,18 @@ var BookIndex = (function(exports) {
 	function getChapterDensities() {
 		if (CHAPTER_DENSITY_CACHE) return CHAPTER_DENSITY_CACHE;
 		const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
-		const types = ["names", "toponyms", "ethnonyms", "languages", "lexicon", "subject_index"];
+		const types = [
+			"names",
+			"toponyms",
+			"ethnonyms",
+			"languages",
+			"lexicon",
+			"subject_index"
+		];
 		const perPage = /* @__PURE__ */ new Map();
-		for (const t of types) for (const it of (APP_DATA[t] || [])) {
-			for (const p of (it.page_list || [])) {
-				const page = parseInt(p, 10);
-				if (Number.isFinite(page)) perPage.set(page, (perPage.get(page) || 0) + 1);
-			}
+		for (const t of types) for (const it of APP_DATA[t] || []) for (const p of it.page_list || []) {
+			const page = parseInt(p, 10);
+			if (Number.isFinite(page)) perPage.set(page, (perPage.get(page) || 0) + 1);
 		}
 		const rows = chapters.map((ch) => {
 			let total = 0;
@@ -17374,7 +17348,14 @@ var BookIndex = (function(exports) {
 			const end = parseInt(ch.end, 10) || start;
 			for (let p = start; p <= end; p++) total += perPage.get(p) || 0;
 			const span = Math.max(1, end - start + 1);
-			return { name: ch.name || "", start, end, span, total, perPage: total / span };
+			return {
+				name: ch.name || "",
+				start,
+				end,
+				span,
+				total,
+				perPage: total / span
+			};
 		});
 		const maxPerPage = rows.reduce((m, r) => Math.max(m, r.perPage), 0) || 1;
 		for (const r of rows) r.intensity = r.perPage / maxPerPage;
@@ -17804,8 +17785,7 @@ var BookIndex = (function(exports) {
 				const ids = new Set(getChapterRelatedVideos(chapterIdx, 9999).map((e) => e.v.id));
 				vids = vids.filter((v) => ids.has(v.id));
 			}
-			if (q) vids = vids.filter((v) => String(v.title || "").toLowerCase().includes(q)
-				|| (v.related_entities || []).some((r) => String(r && r.head || "").toLowerCase().includes(q)));
+			if (q) vids = vids.filter((v) => String(v.title || "").toLowerCase().includes(q) || (v.related_entities || []).some((r) => String(r && r.head || "").toLowerCase().includes(q)));
 			vids.sort((a, b) => {
 				if (sort === "dur-desc") return (Number(b.duration) || 0) - (Number(a.duration) || 0);
 				if (sort === "dur-asc") return (Number(a.duration) || 0) - (Number(b.duration) || 0);
@@ -17856,8 +17836,7 @@ var BookIndex = (function(exports) {
 				const meta = document.createElement("div");
 				meta.className = "vg-card-meta";
 				const dur = formatVideoDuration(v.duration);
-				const dateLabel = formatVideoDate(v.date) || "дата неизвестна";
-				meta.textContent = [dateLabel, dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
+				meta.textContent = [formatVideoDate(v.date) || "дата неизвестна", dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
 				card.appendChild(meta);
 				if (v.url) {
 					const yt = document.createElement("a");
@@ -18258,7 +18237,7 @@ var BookIndex = (function(exports) {
 			announceUiMessage("BibTeX exported");
 		};
 	}
-	var GLOSSARY_TOKEN_STOPWORDS = new Set([
+	var GLOSSARY_TOKEN_STOPWORDS = /* @__PURE__ */ new Set([
 		"это",
 		"этот",
 		"эта",
@@ -18589,12 +18568,21 @@ var BookIndex = (function(exports) {
 	function loadLecturesKwic() {
 		if (LECTURES_KWIC_CACHE) return Promise.resolve(LECTURES_KWIC_CACHE);
 		if (lecturesKwicLoadPromise) return lecturesKwicLoadPromise;
-		const base = typeof document !== "undefined" && document.baseURI ? document.baseURI : (typeof location !== "undefined" ? location.href : "");
+		const base = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" ? location.href : "";
 		const url = new URL("./data/lectures_kwic.json", base).href;
-		lecturesKwicLoadPromise = fetch(url, { cache: "default" })
-			.then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
-			.then((d) => { LECTURES_KWIC_CACHE = d && Array.isArray(d.segments) ? d : { videos: [], segments: [] }; return LECTURES_KWIC_CACHE; })
-			.catch((e) => { lecturesKwicLoadPromise = null; throw e; });
+		lecturesKwicLoadPromise = fetch(url, { cache: "default" }).then((r) => {
+			if (!r.ok) throw new Error(`HTTP ${r.status}`);
+			return r.json();
+		}).then((d) => {
+			LECTURES_KWIC_CACHE = d && Array.isArray(d.segments) ? d : {
+				videos: [],
+				segments: []
+			};
+			return LECTURES_KWIC_CACHE;
+		}).catch((e) => {
+			lecturesKwicLoadPromise = null;
+			throw e;
+		});
 		return lecturesKwicLoadPromise;
 	}
 	function collectLecturesKwicRows(query) {
@@ -18605,8 +18593,6 @@ var BookIndex = (function(exports) {
 		const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH).trim();
 		if (normalizeHeadForMatch(q).length < 2) return rows;
 		const ql = q.toLowerCase();
-		// accent-tolerant: allow an optional combining mark after each query char
-		// so "победа" also matches the stressed transcript form "побе́да".
 		const pat = new RegExp(ql.split("").map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[\\u0300-\\u036f]?").join(""), "g");
 		const W = 64;
 		for (const seg of cache.segments) {
@@ -18644,7 +18630,7 @@ var BookIndex = (function(exports) {
 					rows._truncated = true;
 					return rows;
 				}
-				if (pat.lastIndex === idx) pat.lastIndex++; // guard against zero-width
+				if (pat.lastIndex === idx) pat.lastIndex++;
 				m = pat.exec(lower);
 			}
 		}
@@ -18781,9 +18767,7 @@ var BookIndex = (function(exports) {
 			const terms = new Set(rows.map((r) => r.term));
 			const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : "";
 			const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoId)).size : 0;
-			metaEl.textContent = currentKwicSource === "lectures"
-				? `Найдено ${rows.length} контекстов в ${lecturesCount} лекциях, источник: лекции.${truncText}`
-				: `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${sourceLabel}.${truncText}`;
+			metaEl.textContent = currentKwicSource === "lectures" ? `Найдено ${rows.length} контекстов в ${lecturesCount} лекциях, источник: лекции.${truncText}` : `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${sourceLabel}.${truncText}`;
 			resultsEl.textContent = "";
 			for (const r of rows) {
 				const row = document.createElement("div");
@@ -19079,20 +19063,60 @@ var BookIndex = (function(exports) {
 				meaning: "ограда, поселение (town / fence)",
 				branches: {
 					russian: [
-						{ state: "*gordъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова до разделения." },
-						{ state: "*gorodъ", law: "Восточнославянское полногласие", desc: "Группа -or- переходит в полногласное сочетание -оро-." },
-						{ state: "город", law: "Падение слабых редуцированных", desc: "Конечный слабый гласный -ъ полностью отпадает." }
+						{
+							state: "*gordъ",
+							law: "Исходная праславянская форма",
+							desc: "Праславянское начальное состояние слова до разделения."
+						},
+						{
+							state: "*gorodъ",
+							law: "Восточнославянское полногласие",
+							desc: "Группа -or- переходит в полногласное сочетание -оро-."
+						},
+						{
+							state: "город",
+							law: "Падение слабых редуцированных",
+							desc: "Конечный слабый гласный -ъ полностью отпадает."
+						}
 					],
 					polish: [
-						{ state: "*gordъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова до разделения." },
-						{ state: "*grodъ", law: "Лехитское неполногласие", desc: "Группа -or- переходит в неполногласное сочетание -ro-." },
-						{ state: "gród", law: "Падение редуцированных и сужение гласного", desc: "Утрата конечного -ъ и сужение гласного о -> ó перед звонким согласным." }
+						{
+							state: "*gordъ",
+							law: "Исходная праславянская форма",
+							desc: "Праславянское начальное состояние слова до разделения."
+						},
+						{
+							state: "*grodъ",
+							law: "Лехитское неполногласие",
+							desc: "Группа -or- переходит в неполногласное сочетание -ro-."
+						},
+						{
+							state: "gród",
+							law: "Падение редуцированных и сужение гласного",
+							desc: "Утрата конечного -ъ и сужение гласного о -> ó перед звонким согласным."
+						}
 					],
 					czech: [
-						{ state: "*gordъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова до разделения." },
-						{ state: "*gradъ", law: "Чешско-словацкое неполногласие", desc: "Группа -or- переходит в неполногласное сочетание -ra-." },
-						{ state: "*hradъ", law: "Спирантизация согласного g -> h", desc: "Древний взрывной согласный g переходит в придыхательный h." },
-						{ state: "hrad", law: "Падение редуцированных", desc: "Конечный редуцированный гласный -ъ отпадает." }
+						{
+							state: "*gordъ",
+							law: "Исходная праславянская форма",
+							desc: "Праславянское начальное состояние слова до разделения."
+						},
+						{
+							state: "*gradъ",
+							law: "Чешско-словацкое неполногласие",
+							desc: "Группа -or- переходит в неполногласное сочетание -ra-."
+						},
+						{
+							state: "*hradъ",
+							law: "Спирантизация согласного g -> h",
+							desc: "Древний взрывной согласный g переходит в придыхательный h."
+						},
+						{
+							state: "hrad",
+							law: "Падение редуцированных",
+							desc: "Конечный редуцированный гласный -ъ отпадает."
+						}
 					]
 				}
 			},
@@ -19101,19 +19125,55 @@ var BookIndex = (function(exports) {
 				meaning: "молоко (milk)",
 				branches: {
 					russian: [
-						{ state: "*melko", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
-						{ state: "*moloko", law: "Восточнославянское полногласие", desc: "Группа -el- переходит в полногласное сочетание -оло-." },
-						{ state: "молоко", law: "Закрепление современной формы", desc: "Формирование современного русского литературного произношения." }
+						{
+							state: "*melko",
+							law: "Исходная праславянская форма",
+							desc: "Праславянское начальное состояние слова."
+						},
+						{
+							state: "*moloko",
+							law: "Восточнославянское полногласие",
+							desc: "Группа -el- переходит в полногласное сочетание -оло-."
+						},
+						{
+							state: "молоко",
+							law: "Закрепление современной формы",
+							desc: "Формирование современного русского литературного произношения."
+						}
 					],
 					polish: [
-						{ state: "*melko", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
-						{ state: "*mleko", law: "Лехитское неполногласие", desc: "Группа -el- переходит в неполногласное сочетание -le-." },
-						{ state: "mleko", law: "Закрепление современной формы", desc: "Формирование современного польского литературного слова." }
+						{
+							state: "*melko",
+							law: "Исходная праславянская форма",
+							desc: "Праславянское начальное состояние слова."
+						},
+						{
+							state: "*mleko",
+							law: "Лехитское неполногласие",
+							desc: "Группа -el- переходит в неполногласное сочетание -le-."
+						},
+						{
+							state: "mleko",
+							law: "Закрепление современной формы",
+							desc: "Формирование современного польского литературного слова."
+						}
 					],
 					czech: [
-						{ state: "*melko", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
-						{ state: "*mleko", law: "Чешское неполногласие", desc: "Группа -el- переходит в неполногласное сочетание -le-." },
-						{ state: "mléko", law: "Долгота гласного", desc: "Вокализация с удлинением гласного звука: e -> é." }
+						{
+							state: "*melko",
+							law: "Исходная праславянская форма",
+							desc: "Праславянское начальное состояние слова."
+						},
+						{
+							state: "*mleko",
+							law: "Чешское неполногласие",
+							desc: "Группа -el- переходит в неполногласное сочетание -le-."
+						},
+						{
+							state: "mléko",
+							law: "Долгота гласного",
+							desc: "Вокализация с удлинением гласного звука: e -> é."
+						}
 					]
 				}
 			},
@@ -19122,36 +19182,64 @@ var BookIndex = (function(exports) {
 				meaning: "дорогой (dear / expensive)",
 				branches: {
 					russian: [
-						{ state: "*dorgъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
-						{ state: "*dorogъ", law: "Восточнославянское полногласие", desc: "Группа -or- переходит в полногласное сочетание -оро-." },
-						{ state: "дорогой", law: "Добавление флексии прилагательного", desc: "Падение конечного -ъ и оформление флексии мужского рода -ой." }
+						{
+							state: "*dorgъ",
+							law: "Исходная праславянская форма",
+							desc: "Праславянское начальное состояние слова."
+						},
+						{
+							state: "*dorogъ",
+							law: "Восточнославянское полногласие",
+							desc: "Группа -or- переходит в полногласное сочетание -оро-."
+						},
+						{
+							state: "дорогой",
+							law: "Добавление флексии прилагательного",
+							desc: "Падение конечного -ъ и оформление флексии мужского рода -ой."
+						}
 					],
 					polish: [
-						{ state: "*dorgъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
-						{ state: "*drogъ", law: "Лехитское неполногласие", desc: "Группа -or- переходит в неполногласное сочетание -ro-." },
-						{ state: "drogi", law: "Утрата редуцированного и флексия прилагательного", desc: "Конечный -ъ отпадает, добавляется окончание именительного падежа -i." }
+						{
+							state: "*dorgъ",
+							law: "Исходная праславянская форма",
+							desc: "Праславянское начальное состояние слова."
+						},
+						{
+							state: "*drogъ",
+							law: "Лехитское неполногласие",
+							desc: "Группа -or- переходит в неполногласное сочетание -ro-."
+						},
+						{
+							state: "drogi",
+							law: "Утрата редуцированного и флексия прилагательного",
+							desc: "Конечный -ъ отпадает, добавляется окончание именительного падежа -i."
+						}
 					],
 					czech: [
-						{ state: "*dorgъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
-						{ state: "*drahъ", law: "Чешское неполногласие и спирантизация", desc: "Группа -or- переходит в -ra-, согласный g переходит в h." },
-						{ state: "drahý", law: "Падение редуцированного и флексия прилагательного", desc: "Утрата конечного -ъ и присоединение окончательной флексии -ý." }
+						{
+							state: "*dorgъ",
+							law: "Исходная праславянская форма",
+							desc: "Праславянское начальное состояние слова."
+						},
+						{
+							state: "*drahъ",
+							law: "Чешское неполногласие и спирантизация",
+							desc: "Группа -or- переходит в -ra-, согласный g переходит в h."
+						},
+						{
+							state: "drahý",
+							law: "Падение редуцированного и флексия прилагательного",
+							desc: "Утрата конечного -ъ и присоединение окончательной флексии -ý."
+						}
 					]
 				}
 			}
 		];
-
-		const currentRoot = simData[currentSimRootIndex$1];
-		const maxSteps = Math.max(
-			currentRoot.branches.russian.length,
-			currentRoot.branches.polish.length,
-			currentRoot.branches.czech.length
-		);
-
+		const currentRoot = simData[currentSimRootIndex];
+		const maxSteps = Math.max(currentRoot.branches.russian.length, currentRoot.branches.polish.length, currentRoot.branches.czech.length);
 		let html = "<div class=\"panel active phonetic-panel\"><div class=\"phonetic-inner\">";
 		html += "<h2 class=\"phonetic-title\">Фонетические законы из лекций Зализняка</h2>";
 		html += "<div class=\"phonetic-intro\">Восемь ключевых фонетических законов, обсуждаемых в книге, с примерами из текста. Для каждого закона показан переход «было → стало» и пояснение.</div>";
-
-		// Inject Interactive Simulator
 		let simHtml = `
 		<div class="sim-container">
 			<h3 class="sim-title">
@@ -19164,23 +19252,19 @@ var BookIndex = (function(exports) {
 			<div class="sim-controls">
 				<label for="sim-root-select" class="sim-label">Выберите праславянский корень:</label>
 				<select id="sim-root-select" class="sim-select">`;
-		for (let i = 0; i < simData.length; i++) {
-			simHtml += `<option value="${i}"${i === currentSimRootIndex$1 ? ' selected' : ''}>${escapeHtml(simData[i].root)}</option>`;
-		}
+		for (let i = 0; i < simData.length; i++) simHtml += `<option value="${i}"${i === currentSimRootIndex ? " selected" : ""}>${escapeHtml(simData[i].root)}</option>`;
 		simHtml += `
 				</select>
-				<button id="sim-btn-prev" class="sim-btn" ${currentSimStep$1 <= 0 ? 'disabled' : ''}>\u2190 Назад</button>
-				<button id="sim-btn-next" class="sim-btn" ${currentSimStep$1 >= maxSteps - 1 ? 'disabled' : ''}>Вперед \u2192</button>
-				<span class="sim-step-indicator">Шаг: ${currentSimStep$1 + 1} из ${maxSteps}</span>
+				<button id="sim-btn-prev" class="sim-btn" ${currentSimStep <= 0 ? "disabled" : ""}>\u2190 Назад</button>
+				<button id="sim-btn-next" class="sim-btn" ${currentSimStep >= maxSteps - 1 ? "disabled" : ""}>Вперед \u2192</button>
+				<span class="sim-step-indicator">Шаг: ${currentSimStep + 1} из ${maxSteps}</span>
 			</div>
 			<div class="sim-grid">`;
-
 		const renderBranch = (title, stepsList) => {
-			const activeIndex = Math.min(currentSimStep$1, stepsList.length - 1);
+			const activeIndex = Math.min(currentSimStep, stepsList.length - 1);
 			const stepData = stepsList[activeIndex];
-			const isNewlyHighlighted = currentSimStep$1 === activeIndex;
 			return `
-				<div class="sim-branch-col ${isNewlyHighlighted ? 'highlighted' : ''}">
+				<div class="sim-branch-col ${currentSimStep === activeIndex ? "highlighted" : ""}">
 					<div class="sim-branch-title">${escapeHtml(title)}</div>
 					<div class="sim-word-state">${escapeHtml(stepData.state)}</div>
 					<div class="sim-law-name">${escapeHtml(stepData.law)}</div>
@@ -19188,18 +19272,14 @@ var BookIndex = (function(exports) {
 				</div>
 			`;
 		};
-
 		simHtml += renderBranch("Восточнославянская ветвь (Русский)", currentRoot.branches.russian);
 		simHtml += renderBranch("Лехитская подгруппа (Польский)", currentRoot.branches.polish);
 		simHtml += renderBranch("Чешско-словацкая подгруппа (Чешский)", currentRoot.branches.czech);
-
 		simHtml += `
 			</div>
 		</div>
 		`;
-
 		html += simHtml;
-
 		for (const law of laws) {
 			const lawMetaText = law.page ? `${law.discoverer} · ${law.year} · стр. ${law.page}` : `${law.discoverer} · ${law.year}`;
 			html += `<div class="phonetic-card">
@@ -19234,34 +19314,26 @@ var BookIndex = (function(exports) {
 		}
 		html += "</div></div>";
 		container.innerHTML = html;
-
-		// Bind events
 		const select = container.querySelector("#sim-root-select");
-		if (select) {
-			select.onchange = (e) => {
-				currentSimRootIndex$1 = parseInt(e.target.value, 10) || 0;
-				currentSimStep$1 = 0;
-				renderPhoneticLawsPanel(container);
-			};
-		}
+		if (select) select.onchange = (e) => {
+			currentSimRootIndex = parseInt(e.target.value, 10) || 0;
+			currentSimStep = 0;
+			renderPhoneticLawsPanel(container);
+		};
 		const btnPrev = container.querySelector("#sim-btn-prev");
-		if (btnPrev) {
-			btnPrev.onclick = () => {
-				if (currentSimStep$1 > 0) {
-					currentSimStep$1--;
-					renderPhoneticLawsPanel(container);
-				}
-			};
-		}
+		if (btnPrev) btnPrev.onclick = () => {
+			if (currentSimStep > 0) {
+				currentSimStep--;
+				renderPhoneticLawsPanel(container);
+			}
+		};
 		const btnNext = container.querySelector("#sim-btn-next");
-		if (btnNext) {
-			btnNext.onclick = () => {
-				if (currentSimStep$1 < maxSteps - 1) {
-					currentSimStep$1++;
-					renderPhoneticLawsPanel(container);
-				}
-			};
-		}
+		if (btnNext) btnNext.onclick = () => {
+			if (currentSimStep < maxSteps - 1) {
+				currentSimStep++;
+				renderPhoneticLawsPanel(container);
+			}
+		};
 	}
 	function countMentionsInRange(pageList, start, end) {
 		if (!Array.isArray(pageList) || start > end) return 0;
@@ -20108,87 +20180,188 @@ var BookIndex = (function(exports) {
 	}
 	function renderScholarPanel(container) {
 		const s = APP_DATA.scholar || {};
-
 		function hydrateToOldRussian(word) {
 			let clean = String(word || "").trim().toLowerCase();
-			if (!clean) return { result: "—", rules: [] };
-
+			if (!clean) return {
+				result: "—",
+				rules: []
+			};
 			const rules = [];
 			let current = clean;
-
 			const yatRoots = [
-				{ regex: /хлеб/g, replace: "хлѣб", name: "Корень *хлѣб-", desc: "Общеславянский ять в корне слова." },
-				{ regex: /вер/g, replace: "вѣр", name: "Корень *вѣр-", desc: "Общеславянский ять (вера, верный)." },
-				{ regex: /мест/g, replace: "мѣст", name: "Корень *мѣст-", desc: "Общеславянский ять (место, местный)." },
-				{ regex: /снег/g, replace: "снѣг", name: "Корень *снѣг-", desc: "Общеславянский ять (снег, снеговой)." },
-				{ regex: /бел/g, replace: "бѣл", name: "Корень *бѣл-", desc: "Общеславянский ять (белый, белок)." },
-				{ regex: /веч/g, replace: "вѣч", name: "Корень *вѣч-", desc: "Общеславянский ять (вече, вечный)." },
-				{ regex: /дед/g, replace: "дѣд", name: "Корень *дѣд-", desc: "Общеславянский ять (дед, дедушка)." },
-				{ regex: /грех/g, replace: "грѣх", name: "Корень *грѣх-", desc: "Общеславянский ять (грех, грешный)." },
-				{ regex: /звер/g, replace: "звѣр", name: "Корень *звѣр-", desc: "Общеславянский ять (зверь, звериный)." },
-				{ regex: /лес/g, replace: "лѣс", name: "Корень *лѣс-", desc: "Общеславянский ять (лес, лесной)." },
-				{ regex: /сен/g, replace: "сѣн", name: "Корень *сѣн-", desc: "Общеславянский ять (сено, сенокос)." },
-				{ regex: /цвет/g, replace: "цвѣт", name: "Корень *цвѣт-", desc: "Общеславянский ять (цвет, цветок)." },
-				{ regex: /тел/g, replace: "тѣл", name: "Корень *тѣл-", desc: "Общеславянский ять (тело, телесный)." },
-				{ regex: /дел/g, replace: "дѣл", name: "Корень *дѣл-", desc: "Общеславянский ять (дело, делать)." },
-				{ regex: /вед/g, replace: "вѣд", name: "Корень *вѣд-", desc: "Общеславянский ять (ведать, известный)." }
+				{
+					regex: /хлеб/g,
+					replace: "хлѣб",
+					name: "Корень *хлѣб-",
+					desc: "Общеславянский ять в корне слова."
+				},
+				{
+					regex: /вер/g,
+					replace: "вѣр",
+					name: "Корень *вѣр-",
+					desc: "Общеславянский ять (вера, верный)."
+				},
+				{
+					regex: /мест/g,
+					replace: "мѣст",
+					name: "Корень *мѣст-",
+					desc: "Общеславянский ять (место, местный)."
+				},
+				{
+					regex: /снег/g,
+					replace: "снѣг",
+					name: "Корень *снѣг-",
+					desc: "Общеславянский ять (снег, снеговой)."
+				},
+				{
+					regex: /бел/g,
+					replace: "бѣл",
+					name: "Корень *бѣл-",
+					desc: "Общеславянский ять (белый, белок)."
+				},
+				{
+					regex: /веч/g,
+					replace: "вѣч",
+					name: "Корень *вѣч-",
+					desc: "Общеславянский ять (вече, вечный)."
+				},
+				{
+					regex: /дед/g,
+					replace: "дѣд",
+					name: "Корень *дѣд-",
+					desc: "Общеславянский ять (дед, дедушка)."
+				},
+				{
+					regex: /грех/g,
+					replace: "грѣх",
+					name: "Корень *грѣх-",
+					desc: "Общеславянский ять (грех, грешный)."
+				},
+				{
+					regex: /звер/g,
+					replace: "звѣр",
+					name: "Корень *звѣр-",
+					desc: "Общеславянский ять (зверь, звериный)."
+				},
+				{
+					regex: /лес/g,
+					replace: "лѣс",
+					name: "Корень *лѣс-",
+					desc: "Общеславянский ять (лес, лесной)."
+				},
+				{
+					regex: /сен/g,
+					replace: "сѣн",
+					name: "Корень *сѣн-",
+					desc: "Общеславянский ять (сено, сенокос)."
+				},
+				{
+					regex: /цвет/g,
+					replace: "цвѣт",
+					name: "Корень *цвѣт-",
+					desc: "Общеславянский ять (цвет, цветок)."
+				},
+				{
+					regex: /тел/g,
+					replace: "тѣл",
+					name: "Корень *тѣл-",
+					desc: "Общеславянский ять (тело, телесный)."
+				},
+				{
+					regex: /дел/g,
+					replace: "дѣл",
+					name: "Корень *дѣл-",
+					desc: "Общеславянский ять (дело, делать)."
+				},
+				{
+					regex: /вед/g,
+					replace: "вѣд",
+					name: "Корень *вѣд-",
+					desc: "Общеславянский ять (ведать, известный)."
+				}
 			];
-
 			let triggeredYat = false;
-			for (const r of yatRoots) {
-				if (r.regex.test(current)) {
-					current = current.replace(r.regex, r.replace);
-					if (!triggeredYat) {
-						rules.push({
-							title: "Буква Ять (ѣ)",
-							desc: `Замена 'е' на 'ѣ' в корне слов: древний долгий гласный переднего ряда передан исторической графемой ѣ (ять). ${r.desc}`
-						});
-						triggeredYat = true;
-					}
+			for (const r of yatRoots) if (r.regex.test(current)) {
+				current = current.replace(r.regex, r.replace);
+				if (!triggeredYat) {
+					rules.push({
+						title: "Буква Ять (ѣ)",
+						desc: `Замена 'е' на 'ѣ' в корне слов: древний долгий гласный переднего ряда передан исторической графемой ѣ (ять). ${r.desc}`
+					});
+					triggeredYat = true;
 				}
 			}
-
 			const bigYusRoots = [
-				{ regex: /рук/g, replace: "рѫк", desc: "рука" },
-				{ regex: /суд/g, replace: "сѫд", desc: "суд" },
-				{ regex: /мук/g, replace: "мѫк", desc: "мука" },
-				{ regex: /голуб/g, replace: "голѫб", desc: "голубь" }
+				{
+					regex: /рук/g,
+					replace: "рѫк",
+					desc: "рука"
+				},
+				{
+					regex: /суд/g,
+					replace: "сѫд",
+					desc: "суд"
+				},
+				{
+					regex: /мук/g,
+					replace: "мѫк",
+					desc: "мука"
+				},
+				{
+					regex: /голуб/g,
+					replace: "голѫб",
+					desc: "голубь"
+				}
 			];
 			let triggeredBigYus = false;
-			for (const r of bigYusRoots) {
-				if (r.regex.test(current)) {
-					current = current.replace(r.regex, r.replace);
-					if (!triggeredBigYus) {
-						rules.push({
-							title: "Большой юс (ѫ)",
-							desc: "Замена 'у' на 'ѫ' (юс большой): перекодирование праславянского носового гласного *ǫ."
-						});
-						triggeredBigYus = true;
-					}
+			for (const r of bigYusRoots) if (r.regex.test(current)) {
+				current = current.replace(r.regex, r.replace);
+				if (!triggeredBigYus) {
+					rules.push({
+						title: "Большой юс (ѫ)",
+						desc: "Замена 'у' на 'ѫ' (юс большой): перекодирование праславянского носового гласного *ǫ."
+					});
+					triggeredBigYus = true;
 				}
 			}
-
 			const smallYusRoots = [
-				{ regex: /мяс/g, replace: "мѧс", desc: "мясо" },
-				{ regex: /пят/g, replace: "пѧт", desc: "пять" },
-				{ regex: /память/g, replace: "памѧть", desc: "память" },
-				{ regex: /зят/g, replace: "зѧт", desc: "зять" },
-				{ regex: /имя/g, replace: "имѧ", desc: "имя" }
+				{
+					regex: /мяс/g,
+					replace: "мѧс",
+					desc: "мясо"
+				},
+				{
+					regex: /пят/g,
+					replace: "пѧт",
+					desc: "пять"
+				},
+				{
+					regex: /память/g,
+					replace: "памѧть",
+					desc: "память"
+				},
+				{
+					regex: /зят/g,
+					replace: "зѧт",
+					desc: "зять"
+				},
+				{
+					regex: /имя/g,
+					replace: "имѧ",
+					desc: "имя"
+				}
 			];
 			let triggeredSmallYus = false;
-			for (const r of smallYusRoots) {
-				if (r.regex.test(current)) {
-					current = current.replace(r.regex, r.replace);
-					if (!triggeredSmallYus) {
-						rules.push({
-							title: "Малый юс (ѧ)",
-							desc: "Замена 'я' на 'ѧ' (юс малый): перекодирование праславянского носового гласного *ę."
-						});
-						triggeredSmallYus = true;
-					}
+			for (const r of smallYusRoots) if (r.regex.test(current)) {
+				current = current.replace(r.regex, r.replace);
+				if (!triggeredSmallYus) {
+					rules.push({
+						title: "Малый юс (ѧ)",
+						desc: "Замена 'я' на 'ѧ' (юс малый): перекодирование праславянского носового гласного *ę."
+					});
+					triggeredSmallYus = true;
 				}
 			}
-
 			if (current === "сон") {
 				current = "сън";
 				rules.push({
@@ -20202,44 +20375,35 @@ var BookIndex = (function(exports) {
 					desc: "Сверхкраткий гласный переднего ряда (ерь) в слове 'дьнь' (совр. 'день')."
 				});
 			}
-
-			const hardConsonants = /[бвгджзклмнпрстфхцчшщ]$/i;
-			if (hardConsonants.test(current)) {
+			if (/[бвгджзклмнпрстфхцчшщ]$/i.test(current)) {
 				current += "ъ";
 				rules.push({
 					title: "Конечный Ер (ъ)",
 					desc: "Слова, оканчивающиеся на твердый согласный, по закону открытого слога закрываются сверхкратким гласным 'ъ' (ер)."
 				});
-			} else if (current.endsWith("ь")) {
-				rules.push({
-					title: "Конечный Ерь (ь)",
-					desc: "Завершение на мягкий согласный передается с помощью сверхкратного гласного 'ь' (ерь)."
-				});
-			} else if (current.endsWith("я") && !triggeredSmallYus) {
+			} else if (current.endsWith("ь")) rules.push({
+				title: "Конечный Ерь (ь)",
+				desc: "Завершение на мягкий согласный передается с помощью сверхкратного гласного 'ь' (ерь)."
+			});
+			else if (current.endsWith("я") && !triggeredSmallYus) {
 				current = current.slice(0, -1) + "ѧ";
 				rules.push({
 					title: "Малый юс (ѧ) в исходе",
 					desc: "Конечное 'я' передано как юс малый (ѧ)."
 				});
 			}
-
 			return {
 				result: current,
-				rules: rules
+				rules
 			};
 		}
-
 		function highlightStressedVowel(word) {
 			if (!word || word === "—") return "—";
-			const vowelsRegex = /([аеиоуыэюяё][\u0301]?|[âêîôûàèìòùỳ])/gi;
-			return String(word).replace(vowelsRegex, (match) => {
-				if (match.includes("\u0301") || match.toLowerCase() === "ё" || /[âêîôûàèìòùỳ]/i.test(match)) {
-					return `<span class="accent-syllable-stressed">${match}</span>`;
-				}
+			return String(word).replace(/([аеиоуыэюяё][\u0301]?|[âêîôûàèìòùỳ])/gi, (match) => {
+				if (match.includes("́") || match.toLowerCase() === "ё" || /[âêîôûàèìòùỳ]/i.test(match)) return `<span class="accent-syllable-stressed">${match}</span>`;
 				return match;
 			});
 		}
-
 		const ACCENT_RECON_DATA = [
 			{
 				stem: "*gord-",
@@ -20252,27 +20416,92 @@ var BookIndex = (function(exports) {
 						name: "Праславянский",
 						desc: "Реконструированная система с праславянским тоническим и количественным ударением. Краткий циркумфлекс.",
 						forms: {
-							sg: { nom: "gôrdъ", gen: "gordà", dat: "gordû", acc: "gôrdъ", ins: "gordomь", loc: "gordê" },
-							pl: { nom: "gordỳ", gen: "gordôvъ", dat: "gordomъ", acc: "gordŷ", ins: "gordỳ", loc: "gordêxъ" },
-							du: { nom: "gordà", gen: "gordôu", dat: "gordomà", acc: "gordà", ins: "gordomà", loc: "gordôu" }
+							sg: {
+								nom: "gôrdъ",
+								gen: "gordà",
+								dat: "gordû",
+								acc: "gôrdъ",
+								ins: "gordomь",
+								loc: "gordê"
+							},
+							pl: {
+								nom: "gordỳ",
+								gen: "gordôvъ",
+								dat: "gordomъ",
+								acc: "gordŷ",
+								ins: "gordỳ",
+								loc: "gordêxъ"
+							},
+							du: {
+								nom: "gordà",
+								gen: "gordôu",
+								dat: "gordomà",
+								acc: "gordà",
+								ins: "gordomà",
+								loc: "gordôu"
+							}
 						}
 					},
 					{
 						name: "Берестяные грамоты",
 						desc: "Новгородская система XII–XIV вв. на основе берестяных грамот и исследований Зализняка. Ударение переносится на предлоги и клитики.",
 						forms: {
-							sg: { nom: "го́родъ", gen: "города́", gen_preposition: "о́коло города", dat: "го́роду", acc: "го́родъ", acc_preposition: "на́ городъ", ins: "го́родомь", loc: "го́роде" },
-							pl: { nom: "города́", gen: "городо́въ", dat: "города́мъ", acc: "городы́", ins: "городы́", loc: "городо́хъ" },
-							du: { nom: "города́", gen: "городо́вю", dat: "города́ма", acc: "города́", ins: "города́ма", loc: "городо́хъ" }
+							sg: {
+								nom: "го́родъ",
+								gen: "города́",
+								gen_preposition: "о́коло города",
+								dat: "го́роду",
+								acc: "го́родъ",
+								acc_preposition: "на́ городъ",
+								ins: "го́родомь",
+								loc: "го́роде"
+							},
+							pl: {
+								nom: "города́",
+								gen: "городо́въ",
+								dat: "города́мъ",
+								acc: "городы́",
+								ins: "городы́",
+								loc: "городо́хъ"
+							},
+							du: {
+								nom: "города́",
+								gen: "городо́вю",
+								dat: "города́ма",
+								acc: "города́",
+								ins: "города́ма",
+								loc: "городо́хъ"
+							}
 						}
 					},
 					{
 						name: "Современный русский",
 						desc: "Современная нормативная система русского языка. Включает подвижность ударения (го́род — города́). Двойственное число утрачено.",
 						forms: {
-							sg: { nom: "го́род", gen: "го́рода", dat: "го́роду", acc: "го́род", ins: "го́родом", loc: "го́роде" },
-							pl: { nom: "города́", gen: "городо́в", dat: "города́м", acc: "города́", ins: "города́ми", loc: "города́х" },
-							du: { nom: "—", gen: "—", dat: "—", acc: "—", ins: "—", loc: "—" }
+							sg: {
+								nom: "го́род",
+								gen: "го́рода",
+								dat: "го́роду",
+								acc: "го́род",
+								ins: "го́родом",
+								loc: "го́роде"
+							},
+							pl: {
+								nom: "города́",
+								gen: "городо́в",
+								dat: "города́м",
+								acc: "города́",
+								ins: "города́ми",
+								loc: "города́х"
+							},
+							du: {
+								nom: "—",
+								gen: "—",
+								dat: "—",
+								acc: "—",
+								ins: "—",
+								loc: "—"
+							}
 						}
 					}
 				]
@@ -20288,27 +20517,90 @@ var BookIndex = (function(exports) {
 						name: "Праславянский",
 						desc: "Праславянское конечное ударение. Слог с постоянным кратким или восходящим ударением.",
 						forms: {
-							sg: { nom: "ženà", gen: "ženỳ", dat: "ženè", acc: "ženù", ins: "ženòjǫ", loc: "ženè" },
-							pl: { nom: "ženỳ", gen: "ženâ", dat: "ženamà", acc: "ženŷ", ins: "ženamà", loc: "ženâxъ" },
-							du: { nom: "ženè", gen: "ženû", dat: "ženamà", acc: "ženè", ins: "ženamà", loc: "ženû" }
+							sg: {
+								nom: "ženà",
+								gen: "ženỳ",
+								dat: "ženè",
+								acc: "ženù",
+								ins: "ženòjǫ",
+								loc: "ženè"
+							},
+							pl: {
+								nom: "ženỳ",
+								gen: "ženâ",
+								dat: "ženamà",
+								acc: "ženŷ",
+								ins: "ženamà",
+								loc: "ženâxъ"
+							},
+							du: {
+								nom: "ženè",
+								gen: "ženû",
+								dat: "ženamà",
+								acc: "ženè",
+								ins: "ženamà",
+								loc: "ženû"
+							}
 						}
 					},
 					{
 						name: "Берестяные грамоты",
 						desc: "Древнерусская система XII–XIV вв. Постоянное ударение на гласную флексию, отражённое в берестяных грамотах.",
 						forms: {
-							sg: { nom: "жена́", gen: "жены́", dat: "жене́", acc: "жену́", ins: "жено́ю", loc: "жене́" },
-							pl: { nom: "же́ны", gen: "же́нъ", dat: "же́намъ", acc: "же́ны", ins: "же́нами", loc: "же́нахъ" },
-							du: { nom: "жене́", gen: "жену́", dat: "жена́ма", acc: "жене́", ins: "жена́ма", loc: "жену́" }
+							sg: {
+								nom: "жена́",
+								gen: "жены́",
+								dat: "жене́",
+								acc: "жену́",
+								ins: "жено́ю",
+								loc: "жене́"
+							},
+							pl: {
+								nom: "же́ны",
+								gen: "же́нъ",
+								dat: "же́намъ",
+								acc: "же́ны",
+								ins: "же́нами",
+								loc: "же́нахъ"
+							},
+							du: {
+								nom: "жене́",
+								gen: "жену́",
+								dat: "жена́ма",
+								acc: "жене́",
+								ins: "жена́ма",
+								loc: "жену́"
+							}
 						}
 					},
 					{
 						name: "Современный русский",
 						desc: "Современный русский литературный язык. В Paradigm B во множественном числе произошло смещение ударения на основу (жёны).",
 						forms: {
-							sg: { nom: "жена́", gen: "жены́", dat: "жене́", acc: "жену́", ins: "жено́й", loc: "жене́" },
-							pl: { nom: "жёны", gen: "жёны", dat: "жёнам", acc: "жёны", ins: "жёнами", loc: "жёнах" },
-							du: { nom: "—", gen: "—", dat: "—", acc: "—", ins: "—", loc: "—" }
+							sg: {
+								nom: "жена́",
+								gen: "жены́",
+								dat: "жене́",
+								acc: "жену́",
+								ins: "жено́й",
+								loc: "жене́"
+							},
+							pl: {
+								nom: "жёны",
+								gen: "жёны",
+								dat: "жёнам",
+								acc: "жёны",
+								ins: "жёнами",
+								loc: "жёнах"
+							},
+							du: {
+								nom: "—",
+								gen: "—",
+								dat: "—",
+								acc: "—",
+								ins: "—",
+								loc: "—"
+							}
 						}
 					}
 				]
@@ -20324,33 +20616,95 @@ var BookIndex = (function(exports) {
 						name: "Праславянский",
 						desc: "Праславянская баритонеза с восходящим акутовым ударением на корневом гласном.",
 						forms: {
-							sg: { nom: "vòlna", gen: "vòlny", dat: "vòlne", acc: "vòlnǫ", ins: "vòlnojǫ", loc: "vòlne" },
-							pl: { nom: "vòlny", gen: "vòlnъ", dat: "vòlnamъ", acc: "vòlny", ins: "vòlnami", loc: "vòlnaxъ" },
-							du: { nom: "vòlne", gen: "vòlnoju", dat: "vòlnama", acc: "vòlne", ins: "vòlnama", loc: "vòlnoju" }
+							sg: {
+								nom: "vòlna",
+								gen: "vòlny",
+								dat: "vòlne",
+								acc: "vòlnǫ",
+								ins: "vòlnojǫ",
+								loc: "vòlne"
+							},
+							pl: {
+								nom: "vòlny",
+								gen: "vòlnъ",
+								dat: "vòlnamъ",
+								acc: "vòlny",
+								ins: "vòlnami",
+								loc: "vòlnaxъ"
+							},
+							du: {
+								nom: "vòlne",
+								gen: "vòlnoju",
+								dat: "vòlnama",
+								acc: "vòlne",
+								ins: "vòlnama",
+								loc: "vòlnoju"
+							}
 						}
 					},
 					{
 						name: "Берестяные грамоты",
 						desc: "Древнерусская система. Полногласная основа 'волона' сохраняет ударение на первом слоге корня.",
 						forms: {
-							sg: { nom: "во́лона", gen: "во́лоны", dat: "во́лоне", acc: "во́лону", ins: "во́лоною", loc: "во́лоне" },
-							pl: { nom: "во́лоны", gen: "во́лонъ", dat: "во́лонамъ", acc: "во́лоны", ins: "во́лонами", loc: "во́лонахъ" },
-							du: { nom: "во́лоне", gen: "во́лону", dat: "во́лонама", acc: "во́лоне", ins: "во́лонама", loc: "во́лону" }
+							sg: {
+								nom: "во́лона",
+								gen: "во́лоны",
+								dat: "во́лоне",
+								acc: "во́лону",
+								ins: "во́лоною",
+								loc: "во́лоне"
+							},
+							pl: {
+								nom: "во́лоны",
+								gen: "во́лонъ",
+								dat: "во́лонамъ",
+								acc: "во́лоны",
+								ins: "во́лонами",
+								loc: "во́лонахъ"
+							},
+							du: {
+								nom: "во́лоне",
+								gen: "во́лону",
+								dat: "во́лонама",
+								acc: "во́лоне",
+								ins: "во́лонама",
+								loc: "во́лону"
+							}
 						}
 					},
 					{
 						name: "Современный русский",
 						desc: "Современный русский язык. Произошло стяжение полногласия, но ударение в Paradigm A по-прежнему стабильно стоит на корне.",
 						forms: {
-							sg: { nom: "во́лна", gen: "во́льны", dat: "во́лне", acc: "во́лну", ins: "во́лной", loc: "во́лне" },
-							pl: { nom: "во́лны", gen: "во́лн", dat: "во́лнам", acc: "во́лны", ins: "во́лнами", loc: "во́лнах" },
-							du: { nom: "—", gen: "—", dat: "—", acc: "—", ins: "—", loc: "—" }
+							sg: {
+								nom: "во́лна",
+								gen: "во́льны",
+								dat: "во́лне",
+								acc: "во́лну",
+								ins: "во́лной",
+								loc: "во́лне"
+							},
+							pl: {
+								nom: "во́лны",
+								gen: "во́лн",
+								dat: "во́лнам",
+								acc: "во́лны",
+								ins: "во́лнами",
+								loc: "во́лнах"
+							},
+							du: {
+								nom: "—",
+								gen: "—",
+								dat: "—",
+								acc: "—",
+								ins: "—",
+								loc: "—"
+							}
 						}
 					}
 				]
 			}
 		];
-
 		const scholarViewportWidth = typeof window !== "undefined" && typeof window.innerWidth === "number" ? window.innerWidth : 1280;
 		const reconstructionColumns = scholarViewportWidth >= 1280 ? 4 : scholarViewportWidth >= 980 ? 3 : scholarViewportWidth >= 680 ? 2 : 1;
 		let html = "<div class=\"panel active scholar-panel\"><div class=\"scholar-inner\">";
@@ -20604,11 +20958,8 @@ var BookIndex = (function(exports) {
     </div>
     <div id="accent-compare-box"></div>
   </div>`;
-
-		// Dynamic Accent Paradigm Reconstructor Widget
-		const currentReconRoot = ACCENT_RECON_DATA[currentAccentReconRootIndex$1];
-		const currentReconStage = currentReconRoot.stages[currentAccentReconStageIndex$1];
-
+		const currentReconRoot = ACCENT_RECON_DATA[currentAccentReconRootIndex];
+		const currentReconStage = currentReconRoot.stages[currentAccentReconStageIndex];
 		let reconHtml = `
 		<div class="accent-recon-container">
 			<h3 class="accent-recon-title">
@@ -20624,17 +20975,13 @@ var BookIndex = (function(exports) {
 				<div class="accent-recon-controls">
 					<label for="accent-recon-root-select" class="sim-label">Выберите корень:</label>
 					<select id="accent-recon-root-select" class="sim-select">`;
-		for (let i = 0; i < ACCENT_RECON_DATA.length; i++) {
-			reconHtml += `<option value="${i}"${i === currentAccentReconRootIndex$1 ? ' selected' : ''}>${escapeHtml(ACCENT_RECON_DATA[i].stem)} (${escapeHtml(ACCENT_RECON_DATA[i].meaning)})</option>`;
-		}
+		for (let i = 0; i < ACCENT_RECON_DATA.length; i++) reconHtml += `<option value="${i}"${i === currentAccentReconRootIndex ? " selected" : ""}>${escapeHtml(ACCENT_RECON_DATA[i].stem)} (${escapeHtml(ACCENT_RECON_DATA[i].meaning)})</option>`;
 		reconHtml += `
 					</select>
 
 					<label class="sim-label">Историческая стадия:</label>
 					<div class="accent-recon-stages">`;
-		for (let i = 0; i < currentReconRoot.stages.length; i++) {
-			reconHtml += `<button type="button" class="accent-recon-stage-btn${i === currentAccentReconStageIndex$1 ? ' active' : ''}" data-stage-idx="${i}">${escapeHtml(currentReconRoot.stages[i].name)}</button>`;
-		}
+		for (let i = 0; i < currentReconRoot.stages.length; i++) reconHtml += `<button type="button" class="accent-recon-stage-btn${i === currentAccentReconStageIndex ? " active" : ""}" data-stage-idx="${i}">${escapeHtml(currentReconRoot.stages[i].name)}</button>`;
 		reconHtml += `
 					</div>
 				</div>
@@ -20656,26 +21003,19 @@ var BookIndex = (function(exports) {
 								</tr>
 							</thead>
 							<tbody>`;
-
-		const cases = [
+		for (const [cKey, cName] of [
 			["nom", "Именительный (Nom)"],
 			["gen", "Родительный (Gen)"],
 			["dat", "Дательного (Dat)"],
 			["acc", "Винительный (Acc)"],
 			["ins", "Творительный (Ins)"],
 			["loc", "Местный (Loc)"]
-		];
-
-		for (const [cKey, cName] of cases) {
+		]) {
 			const sgForm = highlightStressedVowel(currentReconStage.forms.sg[cKey]);
 			const plForm = highlightStressedVowel(currentReconStage.forms.pl[cKey]);
 			const duForm = highlightStressedVowel(currentReconStage.forms.du[cKey]);
-
 			let extraSg = "";
-			if (currentReconStage.forms.sg[cKey + "_preposition"]) {
-				extraSg = `<br><span class="scholar-note">с предлогом: ${highlightStressedVowel(currentReconStage.forms.sg[cKey + "_preposition"])}</span>`;
-			}
-
+			if (currentReconStage.forms.sg[cKey + "_preposition"]) extraSg = `<br><span class="scholar-note">с предлогом: ${highlightStressedVowel(currentReconStage.forms.sg[cKey + "_preposition"])}</span>`;
 			reconHtml += `
 								<tr>
 									<th>${escapeHtml(cName)}</th>
@@ -20684,7 +21024,6 @@ var BookIndex = (function(exports) {
 									<td>${duForm}</td>
 								</tr>`;
 		}
-
 		reconHtml += `
 							</tbody>
 						</table>
@@ -20698,10 +21037,7 @@ var BookIndex = (function(exports) {
 		</div>
 		`;
 		html += reconHtml;
-
-		// Old East Slavic Orthography Hydrator Widget
-		const hydrated = hydrateToOldRussian(currentOrthoHydratorInput$1);
-
+		const hydrated = hydrateToOldRussian(currentOrthoHydratorInput);
 		let orthoHtml = `
 		<div class="ortho-hydrator-container" id="sch-orthography-hydrator">
 			<h3 class="accent-recon-title">
@@ -20714,7 +21050,7 @@ var BookIndex = (function(exports) {
 			<div class="ortho-hydrator-grid">
 				<div class="ortho-input-area">
 					<label for="ortho-input" class="sim-label">Введите слово на современном русском:</label>
-					<input type="text" id="ortho-input" class="ortho-input-control" value="${escapeHtml(currentOrthoHydratorInput$1)}" placeholder="Например: хлеб, рука, мясо, день...">
+					<input type="text" id="ortho-input" class="ortho-input-control" value="${escapeHtml(currentOrthoHydratorInput)}" placeholder="Например: хлеб, рука, мясо, день...">
 
 					<div class="ortho-presets-label">Популярные примеры (кликните для теста):</div>
 					<div class="ortho-presets-grid">
@@ -20734,17 +21070,12 @@ var BookIndex = (function(exports) {
 
 					<div class="ortho-presets-label">Выявленные орфографические соответствия:</div>
 					<div class="ortho-rules-list">`;
-		if (hydrated.rules.length === 0) {
-			orthoHtml += `<div class="scholar-table-empty">Слово сохранено в исходной графике (за исключением общих правил). Попробуйте ввести примеры из списка слева.</div>`;
-		} else {
-			for (const rule of hydrated.rules) {
-				orthoHtml += `
+		if (hydrated.rules.length === 0) orthoHtml += `<div class="scholar-table-empty">Слово сохранено в исходной графике (за исключением общих правил). Попробуйте ввести примеры из списка слева.</div>`;
+		else for (const rule of hydrated.rules) orthoHtml += `
 						<div class="ortho-rule-alert">
 							<div class="ortho-rule-title">${escapeHtml(rule.title)}</div>
 							<div>${escapeHtml(rule.desc)}</div>
 						</div>`;
-			}
-		}
 		orthoHtml += `
 					</div>
 				</div>
@@ -20967,45 +21298,34 @@ var BookIndex = (function(exports) {
 			};
 			renderAccentCompare();
 		}
-
-		// Bind events for Accent Reconstructor
 		const reconSelect = container.querySelector("#accent-recon-root-select");
-		if (reconSelect) {
-			reconSelect.onchange = (e) => {
-				currentAccentReconRootIndex$1 = parseInt(e.target.value, 10) || 0;
-				if (currentAccentReconStageIndex$1 >= ACCENT_RECON_DATA[currentAccentReconRootIndex$1].stages.length) {
-					currentAccentReconStageIndex$1 = 0;
-				}
-				renderScholarPanel(container);
-			};
-		}
+		if (reconSelect) reconSelect.onchange = (e) => {
+			currentAccentReconRootIndex = parseInt(e.target.value, 10) || 0;
+			if (currentAccentReconStageIndex >= ACCENT_RECON_DATA[currentAccentReconRootIndex].stages.length) currentAccentReconStageIndex = 0;
+			renderScholarPanel(container);
+		};
 		container.querySelectorAll(".accent-recon-stage-btn[data-stage-idx]").forEach((btn) => {
 			btn.onclick = () => {
-				currentAccentReconStageIndex$1 = parseInt(btn.dataset.stageIdx, 10) || 0;
+				currentAccentReconStageIndex = parseInt(btn.dataset.stageIdx, 10) || 0;
 				renderScholarPanel(container);
 			};
 		});
-
-		// Bind events for Orthography Hydrator
 		const orthoInput = container.querySelector("#ortho-input");
 		if (orthoInput) {
 			orthoInput.oninput = (e) => {
-				currentOrthoHydratorInput$1 = e.target.value;
-				const hyd = hydrateToOldRussian(currentOrthoHydratorInput$1);
+				currentOrthoHydratorInput = e.target.value;
+				const hyd = hydrateToOldRussian(currentOrthoHydratorInput);
 				const card = container.querySelector(".ortho-result-card");
 				if (card) card.textContent = hyd.result;
 				const list = container.querySelector(".ortho-rules-list");
 				if (list) {
-					if (hyd.rules.length === 0) {
-						list.innerHTML = `<div class="scholar-table-empty">Слово сохранено в исходной графике (за исключением общих правил). Попробуйте ввести примеры из списка слева.</div>`;
-					} else {
-						list.innerHTML = hyd.rules.map((rule) => `
+					if (hyd.rules.length === 0) list.innerHTML = `<div class="scholar-table-empty">Слово сохранено в исходной графике (за исключением общих правил). Попробуйте ввести примеры из списка слева.</div>`;
+					else list.innerHTML = hyd.rules.map((rule) => `
 							<div class="ortho-rule-alert">
 								<div class="ortho-rule-title">${escapeHtml(rule.title)}</div>
 								<div>${escapeHtml(rule.desc)}</div>
 							</div>
 						`).join("");
-					}
 				}
 			};
 			orthoInput.onfocus = () => {
@@ -21016,7 +21336,7 @@ var BookIndex = (function(exports) {
 		}
 		container.querySelectorAll(".ortho-preset-btn[data-preset]").forEach((btn) => {
 			btn.onclick = () => {
-				currentOrthoHydratorInput$1 = btn.dataset.preset;
+				currentOrthoHydratorInput = btn.dataset.preset;
 				renderScholarPanel(container);
 				const input = container.querySelector("#ortho-input");
 				if (input) input.focus();
@@ -21203,7 +21523,7 @@ var BookIndex = (function(exports) {
 				"font-weight": "bold"
 			});
 			for (const grp of fam.children) {
-				addPath(`M ${col1 + 180} ${fam.midY} C ${col2 - 20} ${fam.midY}, ${col2 - 20} ${grp.midY}, ${col2} ${grp.midY}`, {
+				addPath(`M 200 ${fam.midY} C 200 ${fam.midY}, 200 ${grp.midY}, ${col2} ${grp.midY}`, {
 					fill: "none",
 					stroke: famColor,
 					"stroke-width": 1.5,
@@ -21217,7 +21537,7 @@ var BookIndex = (function(exports) {
 				for (const lang of grp.children) {
 					const p = positioned.find((p) => p.famName === fam.name && p.grpName === grp.name && p.langName === lang.name);
 					if (!p) continue;
-					addPath(`M ${col2 + 240} ${grp.midY} C ${col3 - 20} ${grp.midY}, ${col3 - 20} ${p.y}, ${col3} ${p.y}`, {
+					addPath(`M 460 ${grp.midY} C 460 ${grp.midY}, 460 ${p.y}, ${col3} ${p.y}`, {
 						fill: "none",
 						stroke: famColor,
 						"stroke-width": 1,
@@ -21227,7 +21547,7 @@ var BookIndex = (function(exports) {
 					group.classList.add("language-tree-node");
 					group.dataset.lang = String(lang.name || "");
 					const circle = document.createElementNS(svgNs, "circle");
-					circle.setAttribute("cx", String(col3 - 6));
+					circle.setAttribute("cx", String(474));
 					circle.setAttribute("cy", String(p.y));
 					circle.setAttribute("r", "3");
 					circle.setAttribute("fill", famColor);
@@ -21497,19 +21817,17 @@ var BookIndex = (function(exports) {
 		} else {
 			const itemHead = window.selectedItem || "";
 			const itemType = window.selectedItemType || window.currentEntity || "";
-			// B2: page reference + correct book/edition + clean canonical URL (A2).
 			const dataKey = itemType === "subject" ? "subject_index" : itemType;
-			const list = (window.APP_DATA && window.APP_DATA[dataKey]) || [];
+			const list = window.APP_DATA && window.APP_DATA[dataKey] || [];
 			const rec = Array.isArray(list) ? list.find((x) => x && x.head === itemHead) : null;
 			let pages = rec ? sortUniquePages(rec.page_list || []) : [];
-			// fall back to per-book occurrence pages when page_list is empty
 			if (rec && !pages.length && rec.occurrences && typeof rec.occurrences === "object") {
 				const agg = [];
 				for (const occ of Object.values(rec.occurrences)) if (occ && Array.isArray(occ.pages)) agg.push(...occ.pages);
 				pages = sortUniquePages(agg);
 			}
-			const books = (window.APP_DATA && window.APP_DATA.corpus && window.APP_DATA.corpus.books) || [];
-			const bookId = rec && rec.book_id ? rec.book_id : (getActiveBook().book_id || "");
+			const books = window.APP_DATA && window.APP_DATA.corpus && window.APP_DATA.corpus.books || [];
+			const bookId = rec && rec.book_id ? rec.book_id : getActiveBook().book_id || "";
 			const book = books.find((b) => b && b.book_id === bookId) || {};
 			citationTitle = `Справочная статья «${escapeHtml(itemHead)}»` + (pages.length ? `. С. ${pages.join(", ")}` : "");
 			citationBook = escapeHtml(book.title || "Из жизни слов и языков: интерактивный академический справочник и корпус");
@@ -21593,8 +21911,6 @@ var BookIndex = (function(exports) {
 			}
 		};
 		updateDisplay();
-	}
-	function initLegacy() {
 	}
 	if (typeof window !== "undefined") {
 		window.activateNavTarget = activateNavTarget;
@@ -21920,6 +22236,88 @@ var BookIndex = (function(exports) {
 		window.wireSafeImageFallback = wireSafeImageFallback;
 		window.wrapAccentSafeInEscapedText = wrapAccentSafeInEscapedText;
 	}
+	var currentSimRootIndex = 0;
+	var currentSimStep = 0;
+	var currentAccentReconRootIndex = 0;
+	var currentAccentReconStageIndex = 0;
+	var currentOrthoHydratorInput = "хлеб";
+	var LANGUAGE_LOD_MAP = {
+		"русский": {
+			iso: "rus",
+			wals: "rus",
+			glottolog: "russ1263"
+		},
+		"санскрит": {
+			iso: "san",
+			wals: "skt",
+			glottolog: "sans1269"
+		},
+		"латынь": {
+			iso: "lat",
+			wals: "lat",
+			glottolog: "lati1261"
+		},
+		"латинский": {
+			iso: "lat",
+			wals: "lat",
+			glottolog: "lati1261"
+		},
+		"древнегреческий": {
+			iso: "grc",
+			wals: "grk",
+			glottolog: "anci1242"
+		},
+		"греческий": {
+			iso: "ell",
+			wals: "mgo",
+			glottolog: "mode1248"
+		},
+		"праславянский": {
+			iso: "sla",
+			wals: "psl",
+			glottolog: "prot1234",
+			customWals: "https://wals.info/languoid/lect/wals_code_psl"
+		},
+		"старославянский": {
+			iso: "chu",
+			wals: "ocs",
+			glottolog: "oldc1244"
+		},
+		"древнерусский": {
+			iso: "orv",
+			wals: "orv",
+			glottolog: "olde1240"
+		},
+		"литовский": {
+			iso: "lit",
+			wals: "lit",
+			glottolog: "lith1251"
+		},
+		"готский": {
+			iso: "got",
+			wals: "got",
+			glottolog: "goth1244"
+		},
+		"английский": {
+			iso: "eng",
+			wals: "eng",
+			glottolog: "engl1287"
+		},
+		"немецкий": {
+			iso: "deu",
+			wals: "ger",
+			glottolog: "stan1295"
+		},
+		"французский": {
+			iso: "fra",
+			wals: "fre",
+			glottolog: "stan1290"
+		}
+	};
+	var LECTURES_KWIC_CACHE = null;
+	var lecturesKwicLoadPromise = null;
+	//#endregion
+	//#region src/runtime/entry.js
 	var SMOKE_TEST_CONTRACTS = [
 		"function safeUrl(url, fallback = '#')",
 		"function safeImageUrl(url, fallback = '')",
@@ -21938,7 +22336,6 @@ var BookIndex = (function(exports) {
 		Object.assign(globalThis, data_exports);
 		Object.assign(globalThis, router_exports);
 	}
-	initLegacy();
 	if (typeof document !== "undefined") {
 		const content = document.getElementById("content");
 		if (content) content.innerHTML = "<div class=\"panel-empty-state\">Загрузка указателей…</div>";
@@ -21946,44 +22343,57 @@ var BookIndex = (function(exports) {
 	if (typeof window !== "undefined" && typeof window.registerAppServiceWorker === "function") window.registerAppServiceWorker();
 	setTimeout(() => {
 		(async () => {
+			console.log("[BOOT] Starting loadAppData...");
 			await loadAppData();
+			console.log("[BOOT] loadAppData finished. Starting normalizeAppData...");
 			normalizeAppData();
+			console.log("[BOOT] normalizeAppData finished. Starting initEntityTypes...");
 			initEntityTypes();
+			console.log("[BOOT] initEntityTypes finished.");
 			if (typeof window !== "undefined") {
+				console.log("[BOOT] Wiring UI components...");
 				if (typeof window.wireGlobalUI === "function") window.wireGlobalUI();
 				if (typeof window.initTheme === "function") window.initTheme();
 				if (typeof window.initDensityMode === "function") window.initDensityMode();
 				const initialHash = window.location.hash || "";
+				console.log("[BOOT] Initial Hash:", initialHash);
 				const restored = applyHash$1(initialHash);
+				console.log("[BOOT] applyHash restored:", restored);
 				if (!restored) {
+					console.log("[BOOT] Hash not restored, checking viewport/viewstate...");
 					if (typeof window.restoreViewState === "function" && typeof window.applyViewState === "function") {
 						const saved = window.restoreViewState();
+						console.log("[BOOT] Restored saved viewstate:", saved);
 						if (saved) {
 							window.applyViewState(saved);
 							syncNavigationState$1();
 						} else {
+							console.log("[BOOT] No saved viewstate, rendering defaults");
 							if (typeof window.renderEntitySwitcher === "function") window.renderEntitySwitcher();
 							if (typeof window.renderTabs === "function") window.renderTabs();
 							if (typeof window.renderContent === "function") window.renderContent();
 							syncNavigationState$1();
 						}
 					} else {
+						console.log("[BOOT] Viewstate restore functions missing, rendering defaults");
 						if (typeof window.renderEntitySwitcher === "function") window.renderEntitySwitcher();
 						if (typeof window.renderTabs === "function") window.renderTabs();
 						if (typeof window.renderContent === "function") window.renderContent();
 						syncNavigationState$1();
 					}
 				}
+				console.log("[BOOT] Complete.");
 			}
 		})().catch((error) => {
 			const message = error && error.message ? error.message : String(error || "Unknown data loading error");
 			if (typeof document !== "undefined") {
 				const content = document.getElementById("content");
-				if (content) content.innerHTML = `<div class="panel-empty-state">Не удалось загрузить данные справочника.<br><small>${escapeHtml$1(message)}</small></div>`;
+				if (content) content.innerHTML = `<div class="panel-empty-state">Не удалось загрузить данные справочника.<br><small>${message}</small></div>`;
 			}
 			console.error("[app-data] Boot failed:", error);
 		});
 	}, 10);
+	//#endregion
 	exports.SMOKE_TEST_CONTRACTS = SMOKE_TEST_CONTRACTS;
 	return exports;
 })({});

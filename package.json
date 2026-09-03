@@ -44,7 +44,9 @@
     "e2e": "playwright test",
     "e2e:headed": "playwright test --headed",
     "e2e:report": "playwright show-report",
-    "check:parity:runtime": "node scripts/check_runtime_parity.mjs"
+    "check:parity:runtime": "node scripts/check_runtime_parity.mjs",
+    "build:runtime": "vite build -c vite.runtime.config.mjs && node scripts/vite/copy-runtime-artifact.mjs",
+    "build:all": "npm run build:runtime && npm run build"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

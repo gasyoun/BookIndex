@@ -82,6 +82,32 @@ const CROSS_MODULE_BINDINGS = new Map([
 ]);
 
 const dryRun = process.argv.includes('--dry-run');
+const force = process.argv.includes('--force');
+
+// ONE-SHOT TOOL — it has already done its job, and re-running it now inverts the pipeline.
+// H3874 lifted src/runtime/ out of a hand-maintained v3_app.js. H4013 then made v3_app.js
+// build output again, so the artifact is now derived FROM src/runtime/. Regenerating the
+// source from the artifact at that point would be a round trip through the bundler:
+// rolldown's own normalisations (dropped trailing comments, re-emitted string literals)
+// would be written back into the source as if they were authored, and the next build would
+// differ again. It refuses when there is nothing to reconcile.
+if (!force) {
+  try {
+    const artifact = fs.readFileSync(ARTIFACT);
+    const built = fs.existsSync(BUILT) ? fs.readFileSync(BUILT) : null;
+    if (built && artifact.equals(built)) {
+      console.error('REFUSING: v3_app.js is already byte-identical to its build — src/runtime/ is');
+      console.error('the source of record and there is nothing to reconcile (H4013).');
+      console.error('Regenerating source from the artifact here would feed rolldown\'s own');
+      console.error('normalisations back into src/runtime/. Edit src/runtime/ and run:');
+      console.error('  npm run build:all');
+      console.error('Override with --force only to repair a genuinely diverged source tree.');
+      process.exit(3);
+    }
+  } catch {
+    // No artifact or no prior build — fall through and let the normal flow report.
+  }
+}
 
 // --------------------------------------------------------------------------------------
 // source-module parsing
