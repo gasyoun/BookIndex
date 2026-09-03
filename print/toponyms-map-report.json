@@ -15,7 +15,7 @@
   "chip_close_pairs": 0,
   "legend_parity_ok": true,
   "cis_anchored_ok": 4,
-  "areals_drawn_total": 9,
+  "areals_drawn_total": 12,
   "scale_bar_km": 1000,
   "page_mm": [
     290,
@@ -73,6 +73,32 @@
       "legend_parity_ok": true,
       "cis_anchored_ok": 4,
       "areals_drawn": 3
+    },
+    "Dmap": {
+      "sheet": "Dmap",
+      "labels_without_slot": 0,
+      "labels_in_fallback_slots": 0,
+      "escapes": 0,
+      "chip_close_pairs": 0,
+      "legend_rows_drawn": 0,
+      "legend_capacity": 0,
+      "legend_overflow": 0,
+      "legend_parity_ok": true,
+      "cis_anchored_ok": 4,
+      "areals_drawn": 3
+    },
+    "Dlegend": {
+      "sheet": "Dlegend",
+      "labels_without_slot": 0,
+      "labels_in_fallback_slots": 0,
+      "escapes": 0,
+      "chip_close_pairs": 0,
+      "legend_rows_drawn": 83,
+      "legend_capacity": 102,
+      "legend_overflow": 0,
+      "legend_parity_ok": true,
+      "cis_anchored_ok": 4,
+      "areals_drawn": 0
     }
   }
 }
