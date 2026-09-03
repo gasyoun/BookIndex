@@ -92,6 +92,15 @@ const sections = [
       { label: "B2 — легенда (83 записи)", svg: readFile("toponyms-map-b2-legend.svg"), pageW: 145 },
     ],
   },
+  {
+    num: 8,
+    title: "B3 — самое густое ядро «Русь» во врезке крупно; цифры не пересекаются и читаются безупречно",
+    note: "v4.17.15 · <a href='toponyms-map-b3.html'>toponyms-map-b3.html</a>",
+    files: [
+      { label: "B3 — карта", svg: readFile("toponyms-map-b3-map.svg"), pageW: 145 },
+      { label: "B3 — легенда (83 записи)", svg: readFile("toponyms-map-b3-legend.svg"), pageW: 145 },
+    ],
+  },
 ];
 
 const body = sections
