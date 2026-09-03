@@ -25,28 +25,30 @@ const SPREAD_H_MM = 215;
 const PAGE_W_MM = 145;
 const PAGE_H_MM = 215;
 
-const MAP_BOX_A = { x0: 8, y0: 15, x1: 208, y1: 154 };
+const MAP_BOX_A = { x0: 8, y0: 15, x1: 208, y1: 195 };
 const MAP_BOX_B = { x0: 8, y0: 20, x1: 137, y1: 198 };
 const INSET_BOX_C = { x0: 8, y0: 16, x1: 64, y1: 78 };
 
-// legend strip (sheet A): 3 columns under the map
-const LEG_HEADER_Y = 159.5;
-const LEG_ROWS_Y = 165.5;
-const LEG_Y1 = 206.5;
-const LEG_X0 = 8;
-const LEG_X1 = 208;
-const LEG_COLS = 3;
-// full-height side column (sheet A, 4th column in MG's terms)
+// full-height side legend column (sheets A and C): the whole numbered legend
 const SIDE_X0 = 212;
 const SIDE_X1 = 283;
-const SIDE_ROWS_Y = 21;
-// full-page legend (sheet B right page)
+const SIDE_TITLE_Y = 19;
+const SIDE_NOTE1_Y = 25;
+const SIDE_NOTE2_Y = 30;
+const SIDE_ROWS_Y = 34;
+const SIDE_ROWS_Y1 = 206;
+const SIDE_FONT_U = 10;
+const SIDE_PITCH_U = 11.5;
+// full-page legend (sheet B right page): 2 columns, large type, fills the page
 const PLEG_HEADER_Y = 20;
-const PLEG_ROWS_Y = 30;
+const PLEG_NOTE_Y = 27;
+const PLEG_ROWS_Y = 34;
 const PLEG_Y1 = 196;
 const PLEG_X0 = 8;
 const PLEG_X1 = 137;
-const PLEG_COLS = 3;
+const PLEG_COLS = 2;
+const PLEG_FONT_U = 11;
+const PLEG_PITCH_U = 17;
 
 const PAD_FRACTION = 0.09;
 const LABEL_FONT_U = 11.2;
@@ -310,14 +312,14 @@ function textBlockSvg(l, fontU) {
   );
 }
 
-function legendRowSvg(x, y, fontU, maxChars, g, maxLines = 2) {
+function legendRowSvg(x, y, fontU, maxChars, g, maxLines = 2, pitchU = LEGEND_ROW_H, lineDy = 11) {
   const expect = g.pages ? `стр. ${g.pages}` : "—";
   const rowText = `${g.number}. ${g.display} — ${expect}`;
   const lines = wrapText(rowText, maxChars, maxLines);
-  const rowH = LEGEND_ROW_H + (lines.length - 1) * 11;
+  const rowH = pitchU + (lines.length - 1) * lineDy;
   const svg =
-    `<text x="${f(x)}" y="${f(y)}" font-size="${LEGEND_FONT_U}" fill="#111111">` +
-    lines.map((line, li) => `<tspan x="${f(x)}" dy="${li === 0 ? 0 : 11}">${lineHtml(line)}</tspan>`).join("") +
+    `<text x="${f(x)}" y="${f(y)}" font-size="${fontU}" fill="#111111">` +
+    lines.map((line, li) => `<tspan x="${f(x)}" dy="${li === 0 ? 0 : lineDy}">${lineHtml(line)}</tspan>`).join("") +
     `</text>`;
   return { svg, rowH, parity: !g.pages || expect === `стр. ${g.pages}` };
 }
@@ -634,63 +636,86 @@ function renderSheet(cfg, world, landObj, groups, total) {
   // legend
   const numbered = groups.filter((g) => !g.discussed);
   if (cfg.legend === "spread") {
+    // MG visa fix: the whole numbered legend lives in ONE full-height side
+    // column (was: 3 short strip columns + a 7-row side column), and the map
+    // grows down into the freed strip area (MAP_BOX_A y1 154 -> 195).
     s.push(
-      `<text x="${LEG_X0 * U}" y="${f(LEG_HEADER_Y * U)}" font-size="12.6" font-weight="bold" fill="#111111">Легенда: топонимы по номерам</text>` +
-        `<text x="${SIDE_X1 * U}" y="${f(LEG_HEADER_Y * U)}" text-anchor="end" font-size="9.4" fill="#33302b">номер у точки на карте · страницы книги, где встречается название</text>`
+      `<text x="${SIDE_X0 * U}" y="${f(SIDE_TITLE_Y * U)}" font-size="11.5" font-weight="bold" fill="#111111">Легенда: топонимы</text>` +
+        `<text x="${SIDE_X0 * U}" y="${f(SIDE_NOTE1_Y * U)}" font-size="7.8" fill="#33302b">номер у точки на карте ·</text>` +
+        `<text x="${SIDE_X0 * U}" y="${f(SIDE_NOTE2_Y * U)}" font-size="7.8" fill="#33302b">страницы книги, где встречается название</text>`
     );
-    const stripColW = ((LEG_X1 - LEG_X0) * U) / LEG_COLS;
     const sideColW = (SIDE_X1 - SIDE_X0) * U;
-    const cursors = [LEG_ROWS_Y * U, LEG_ROWS_Y * U, LEG_ROWS_Y * U, SIDE_ROWS_Y * U];
-    const colMax = (w) => Math.floor((w - 12) / (LEGEND_FONT_U * CHAR_W));
+    const maxChars = Math.floor((sideColW - 12) / (SIDE_FONT_U * CHAR_W));
+    let cursor = SIDE_ROWS_Y * U;
+    const cursorY1 = SIDE_ROWS_Y1 * U;
     for (const g of numbered) {
-      let col = cursors[0] <= LEG_Y1 * U && cursors[0] <= cursors[1] ? 0 : cursors[1] <= LEG_Y1 * U && cursors[1] <= cursors[2] ? 1 : cursors[2] <= LEG_Y1 * U ? 2 : 3;
-      const maxCharsFor = (c) => colMax(c === 3 ? sideColW : stripColW);
-      let row = legendRowSvg(col === 3 ? SIDE_X0 * U : LEG_X0 * U + col * stripColW, cursors[col], LEGEND_FONT_U, maxCharsFor(col), g);
-      if (col !== 3 && cursors[col] + row.rowH > LEG_Y1 * U) {
-        col = 3;
-        row = legendRowSvg(SIDE_X0 * U, cursors[3], LEGEND_FONT_U, maxCharsFor(3), g);
-      }
+      const row = legendRowSvg(SIDE_X0 * U, cursor, SIDE_FONT_U, maxChars, g);
       if (!row.parity) stats.legend_parity_ok = false;
-      if (cursors[col] + row.rowH > (col === 3 ? LEG_Y1 : LEG_Y1) * U) {
+      if (cursor + row.rowH > cursorY1) {
         stats.legend_overflow += 1;
         continue;
       }
       s.push(row.svg);
       stats.legend_rows_drawn += 1;
-      cursors[col] += row.rowH;
+      cursor += row.rowH;
     }
-    stats.legend_capacity = 3 * Math.floor(((LEG_Y1 - LEG_ROWS_Y) * U) / LEGEND_ROW_H) + Math.floor(((LEG_Y1 - SIDE_ROWS_Y) * U) / LEGEND_ROW_H);
-    const keyY = (LEG_Y1 + 3.6) * U;
+    stats.legend_capacity = Math.floor((cursorY1 - SIDE_ROWS_Y * U) / SIDE_PITCH_U);
+    const keyY = 200.5 * U;
     s.push(
-      `<text x="${LEG_X0 * U}" y="${f(keyY)}" font-size="9" fill="#33302b">Заливка маркера · сплошная выноска — Западная Европа; контур · штриховая выноска — Русь, Византия, Восток; штриховой ареал — языковая зона</text>` +
+      `<text x="${cfg.mapBox.x0 * U}" y="${f(keyY)}" font-size="9" fill="#33302b">Заливка маркера · сплошная выноска — Западная Европа; контур · штриховая выноска — Русь, Византия, Восток; штриховой ареал — языковая зона</text>` +
         `<text x="${SIDE_X1 * U}" y="${f(keyY)}" text-anchor="end" font-size="8.2" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция</text>`
     );
     s.push(
-      `<text x="${LEG_X0 * U}" y="${f(keyY + 11)}" font-size="9" fill="#33302b">Пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц</text>`
+      `<text x="${cfg.mapBox.x0 * U}" y="${f(keyY + 11)}" font-size="9" fill="#33302b">Пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц</text>`
     );
   } else if (cfg.legend === "page") {
+    // MG visa fix: legend page filled edge to edge - two-pass layout wraps all
+    // rows first, then stretches the row pitch so the columns end at the page
+    // bottom instead of half-way down.
     s.push(
-      `<text x="${PLEG_X0 * U}" y="${f(PLEG_HEADER_Y * U)}" font-size="14" font-weight="bold" fill="#111111">Легенда: топонимы по номерам</text>` +
-        `<text x="${PLEG_X1 * U}" y="${f((PLEG_HEADER_Y + 8) * U)}" text-anchor="end" font-size="9" fill="#33302b">номер у точки на карте · страницы книги, где встречается название</text>`
+      `<text x="${PLEG_X0 * U}" y="${f(PLEG_HEADER_Y * U)}" font-size="15" font-weight="bold" fill="#111111">Легенда: топонимы по номерам</text>` +
+        `<text x="${PLEG_X1 * U}" y="${f(PLEG_NOTE_Y * U)}" text-anchor="end" font-size="9" fill="#33302b">номер у точки на карте · страницы книги, где встречается название</text>`
     );
     const colW = ((PLEG_X1 - PLEG_X0) * U) / PLEG_COLS;
-    const cursors = Array(PLEG_COLS).fill(PLEG_ROWS_Y * U);
-    for (let i = 0; i < numbered.length; i++) {
-      const g = numbered[i];
-      const col = cursors[0] <= PLEG_Y1 * U && cursors[0] <= Math.min(cursors[1], cursors[2]) ? 0 : cursors[1] <= PLEG_Y1 * U && cursors[1] <= cursors[2] ? 1 : 2;
+    const maxChars = Math.floor((colW - 12) / (PLEG_FONT_U * CHAR_W));
+    const wrapped = numbered.map((g) => {
+      const expect = g.pages ? `стр. ${g.pages}` : "—";
+      const lines = wrapText(`${g.number}. ${g.display} — ${expect}`, maxChars, 3);
+      return { g, lines, parity: !g.pages || expect === `стр. ${g.pages}` };
+    });
+    const totalLines = wrapped.reduce((acc, w) => acc + w.lines.length, 0);
+    const rowsAreaU = (PLEG_Y1 - PLEG_ROWS_Y) * U;
+    const perColLines = Math.ceil(totalLines / PLEG_COLS);
+    const pitch = Math.max(PLEG_FONT_U * 1.25, Math.min(rowsAreaU / perColLines, PLEG_FONT_U * 2.2));
+    const lineDy = Math.max(PLEG_FONT_U * 1.18, Math.min(pitch - PLEG_FONT_U * 0.25, PLEG_FONT_U * 1.6));
+    const colCap = Math.ceil(totalLines / PLEG_COLS);
+    let wi = 0;
+    let lineBudget = colCap;
+    for (let col = 0; col < PLEG_COLS; col++) {
+      let cursor = PLEG_ROWS_Y * U;
       const x = PLEG_X0 * U + col * colW;
-      const maxChars = Math.floor((colW - 12) / (LEGEND_FONT_U * CHAR_W));
-      const row = legendRowSvg(x, cursors[col], LEGEND_FONT_U, maxChars, g, 3);
-      if (!row.parity) stats.legend_parity_ok = false;
-      if (cursors[col] + row.rowH > PLEG_Y1 * U) {
-        stats.legend_overflow += 1;
-        continue;
+      while (wi < wrapped.length) {
+        const w = wrapped[wi];
+        if (!w.parity) stats.legend_parity_ok = false;
+        const rowH = (w.lines.length - 1) * lineDy + PLEG_FONT_U * 1.1;
+        if (col < PLEG_COLS - 1 && cursor + rowH > PLEG_ROWS_Y * U + lineBudget * pitch) break;
+        if (cursor + rowH > PLEG_Y1 * U) {
+          stats.legend_overflow += 1;
+          wi += 1;
+          continue;
+        }
+        s.push(
+          `<text x="${f(x)}" y="${f(cursor)}" font-size="${PLEG_FONT_U}" fill="#111111">` +
+            w.lines.map((line, li) => `<tspan x="${f(x)}" dy="${li === 0 ? 0 : f(lineDy)}">${lineHtml(line)}</tspan>`).join("") +
+            `</text>`
+        );
+        stats.legend_rows_drawn += 1;
+        cursor += w.lines.length * pitch;
+        wi += 1;
       }
-      s.push(row.svg);
-      stats.legend_rows_drawn += 1;
-      cursors[col] += row.rowH;
+      lineBudget += colCap;
     }
-    stats.legend_capacity = PLEG_COLS * Math.floor(((PLEG_Y1 - PLEG_ROWS_Y) * U) / LEGEND_ROW_H);
+    stats.legend_capacity = PLEG_COLS * colCap;
     const keyY = (PLEG_Y1 + 5) * U;
     s.push(
       `<text x="${PLEG_X0 * U}" y="${f(keyY)}" font-size="8.2" fill="#33302b">Заливка маркера · сплошная выноска — Западная Европа; контур маркера · штриховая выноска — Русь, Византия, Восток</text>` +
@@ -794,7 +819,7 @@ function render() {
       pageH: PAGE_H_MM,
       mapBox: MAP_BOX_B,
       fit: "all",
-      inset: { box: { x0: 8, y0: 18, x1: 60, y1: 80 } },
+      inset: { box: { x0: 73, y0: 128, x1: 137, y1: 196 } },
       legend: null,
       title: true,
       scaleBar: true,
