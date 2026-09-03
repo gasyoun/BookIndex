@@ -95,10 +95,19 @@ const sections = [
   {
     num: 8,
     title: "B3 — самое густое ядро «Русь» во врезке крупно; цифры не пересекаются и читаются безупречно",
-    note: "v4.17.15 · <a href='toponyms-map-b3.html'>toponyms-map-b3.html</a>",
+    note: "v4.17.16 · <a href='toponyms-map-b3.html'>toponyms-map-b3.html</a>",
     files: [
       { label: "B3 — карта", svg: readFile("toponyms-map-b3-map.svg"), pageW: 145 },
       { label: "B3 — легенда (83 записи)", svg: readFile("toponyms-map-b3-legend.svg"), pageW: 145 },
+    ],
+  },
+  {
+    num: 9,
+    title: "B4 — карта в полный рост + лупа «Русь» над Индийским океаном; цифры без наложений",
+    note: "v4.17.19 · <a href='toponyms-map-b4.html'>toponyms-map-b4.html</a>",
+    files: [
+      { label: "B4 — карта", svg: readFile("toponyms-map-b4-map.svg"), pageW: 145 },
+      { label: "B4 — легенда (83 записи)", svg: readFile("toponyms-map-b4-legend.svg"), pageW: 145 },
     ],
   },
 ];
