@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-MylGMuR5RLSnnITHKVMiZXXa212hcwYgKfN6qHIFhOw=' 'sha256-82uqEY3cwWNydPdKPVU5xmnxcXCY4Lbww2+iyDV06hk='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-K4+cbEtJzMgqbefQfAodlK0gGaxSjIaBCgSicbtfV9A=' 'sha256-rLn2pKURLuFEL2xYt/6b4TZe6jEhCKJvink7RvLYoGI='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -6777,7 +6777,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "55ce4e6bcbf6",
+  "build_id": "dd558103abb6",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -7096,7 +7096,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "55ce4e6bcbf6";
+	var APP_BUILD_ID$1 = "dd558103abb6";
 	var NORMALIZE_CACHE_LIMIT = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7970,8 +7970,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "55ce4e6bcbf6").trim();
-		if (buildId && buildId !== "55ce4e6bcbf6") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "dd558103abb6").trim();
+		if (buildId && buildId !== "dd558103abb6") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule(manifest, file) {
@@ -11917,7 +11917,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "55ce4e6bcbf6" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "dd558103abb6" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -22352,48 +22352,77 @@ var BookIndex = (function(exports) {
 		if (content) content.innerHTML = "<div class=\"panel-empty-state\">Загрузка указателей…</div>";
 	}
 	if (typeof window !== "undefined" && typeof window.registerAppServiceWorker === "function") window.registerAppServiceWorker();
+	/**
+	* Boot tracing, off by default.
+	*
+	* These lines exist for the one failure a thrown error never reports: a boot that *hangs*
+	* rather than throws. The catch below still logs a real exception unconditionally, but if
+	* `loadAppData()` never settles, this trace is the only thing that says how far it got.
+	* They used to print on every page load for every reader; H2586 deleted them from the
+	* generated artifact by hand, and H4013 brought them back when v3_app.js became build
+	* output again. Gating keeps the diagnostic without the noise.
+	*
+	* Turn on with `?bootlog=1` in the URL, or persistently:
+	*   localStorage.setItem('Zalizniakiada.debug.boot', '1')
+	*/
+	var BOOT_LOG_STORAGE_KEY = "Zalizniakiada.debug.boot";
+	function bootLogEnabled() {
+		if (typeof window === "undefined" || typeof console === "undefined") return false;
+		try {
+			if (/[?&]bootlog=1(?:&|$)/.test(window.location.search || "")) return true;
+		} catch {}
+		try {
+			return window.localStorage.getItem(BOOT_LOG_STORAGE_KEY) === "1";
+		} catch {
+			return false;
+		}
+	}
+	var BOOT_LOG = bootLogEnabled();
+	function bootLog(...args) {
+		if (BOOT_LOG) console.log("[BOOT]", ...args);
+	}
 	setTimeout(() => {
 		(async () => {
-			console.log("[BOOT] Starting loadAppData...");
+			bootLog("Starting loadAppData...");
 			await loadAppData();
-			console.log("[BOOT] loadAppData finished. Starting normalizeAppData...");
+			bootLog("loadAppData finished. Starting normalizeAppData...");
 			normalizeAppData();
-			console.log("[BOOT] normalizeAppData finished. Starting initEntityTypes...");
+			bootLog("normalizeAppData finished. Starting initEntityTypes...");
 			initEntityTypes();
-			console.log("[BOOT] initEntityTypes finished.");
+			bootLog("initEntityTypes finished.");
 			if (typeof window !== "undefined") {
-				console.log("[BOOT] Wiring UI components...");
+				bootLog("Wiring UI components...");
 				if (typeof window.wireGlobalUI === "function") window.wireGlobalUI();
 				if (typeof window.initTheme === "function") window.initTheme();
 				if (typeof window.initDensityMode === "function") window.initDensityMode();
 				const initialHash = window.location.hash || "";
-				console.log("[BOOT] Initial Hash:", initialHash);
+				bootLog("Initial Hash:", initialHash);
 				const restored = applyHash$1(initialHash);
-				console.log("[BOOT] applyHash restored:", restored);
+				bootLog("applyHash restored:", restored);
 				if (!restored) {
-					console.log("[BOOT] Hash not restored, checking viewport/viewstate...");
+					bootLog("Hash not restored, checking viewport/viewstate...");
 					if (typeof window.restoreViewState === "function" && typeof window.applyViewState === "function") {
 						const saved = window.restoreViewState();
-						console.log("[BOOT] Restored saved viewstate:", saved);
+						bootLog("Restored saved viewstate:", saved);
 						if (saved) {
 							window.applyViewState(saved);
 							syncNavigationState$1();
 						} else {
-							console.log("[BOOT] No saved viewstate, rendering defaults");
+							bootLog("No saved viewstate, rendering defaults");
 							if (typeof window.renderEntitySwitcher === "function") window.renderEntitySwitcher();
 							if (typeof window.renderTabs === "function") window.renderTabs();
 							if (typeof window.renderContent === "function") window.renderContent();
 							syncNavigationState$1();
 						}
 					} else {
-						console.log("[BOOT] Viewstate restore functions missing, rendering defaults");
+						bootLog("Viewstate restore functions missing, rendering defaults");
 						if (typeof window.renderEntitySwitcher === "function") window.renderEntitySwitcher();
 						if (typeof window.renderTabs === "function") window.renderTabs();
 						if (typeof window.renderContent === "function") window.renderContent();
 						syncNavigationState$1();
 					}
 				}
-				console.log("[BOOT] Complete.");
+				bootLog("Complete.");
 			}
 		})().catch((error) => {
 			const message = error && error.message ? error.message : String(error || "Unknown data loading error");

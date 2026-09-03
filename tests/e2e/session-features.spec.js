@@ -261,3 +261,33 @@ test.describe('lecture ↔ video link (B3.4)', () => {
     await expect(page.locator('.lecture-page-video').first()).toBeVisible();
   });
 });
+
+test.describe('boot tracing is opt-in (H4023)', () => {
+  // The [BOOT] trace printed on every page load for every reader once v3_app.js became
+  // build output again (H4013 re-introduced what H2586 had stripped from the artifact by
+  // hand). It is a diagnostic for a boot that HANGS rather than throws, so it is gated
+  // rather than deleted — these two tests are what keep it gated.
+  const bootMessages = (page) => {
+    const seen = [];
+    page.on('console', (msg) => {
+      if (msg.type() === 'log' && msg.text().includes('[BOOT]')) seen.push(msg.text());
+    });
+    return seen;
+  };
+
+  test('a normal page load prints nothing to the console', async ({ page }) => {
+    const seen = bootMessages(page);
+    await page.goto('/aaz-index.html#v4/home/home');
+    await expect(page.locator('#content')).toBeVisible();
+    expect(seen).toEqual([]);
+  });
+
+  test('?bootlog=1 turns the trace back on', async ({ page }) => {
+    const seen = bootMessages(page);
+    await page.goto('/aaz-index.html?bootlog=1#v4/home/home');
+    await expect(page.locator('#content')).toBeVisible();
+    await expect.poll(() => seen.length).toBeGreaterThan(0);
+    expect(seen.some((line) => line.includes('Starting loadAppData'))).toBe(true);
+    expect(seen.some((line) => line.includes('Complete.'))).toBe(true);
+  });
+});
