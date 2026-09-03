@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 <!-- entries land in changelog_queue/ -- appended via tools/changelog_queue_consume.py, consumed by cut_release.py at release-cut (H3355); direct bullets here are hook-blocked -->
 
+## [4.17.5] - 2026-09-03
+
+### Changed
+
+- **Toponym map variants A/B/C reworked per MG visa fixes (H3996):** (A/C) the entire numbered legend now lives in ONE full-height side column (1–46 top to bottom), and the map grew down into the freed strip area (map box y1 154→195 mm) — the column reads as a real full-height key, not a 7-row stub; (B) the legend page is filled edge to edge by a two-pass layout that wraps all rows first and stretches the row pitch to the page bottom (2 columns, 11 pt type), and the West-Europe inset moved from top-left to bottom-right under India where the frame is emptiest. Gates all green (0 overlaps / 0 escapes / parity 46/46 / CIS 4/4 / areals 3); visual check of all four sheets. (OxAlpha, `z-ai/glm-5.3-flash`)
+
 ## [4.17.4] - 2026-09-03
 
 ### Changed
