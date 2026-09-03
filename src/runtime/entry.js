@@ -46,50 +46,86 @@ if (typeof window !== 'undefined' && typeof window.registerAppServiceWorker === 
   window.registerAppServiceWorker();
 }
 
+/**
+ * Boot tracing, off by default.
+ *
+ * These lines exist for the one failure a thrown error never reports: a boot that *hangs*
+ * rather than throws. The catch below still logs a real exception unconditionally, but if
+ * `loadAppData()` never settles, this trace is the only thing that says how far it got.
+ * They used to print on every page load for every reader; H2586 deleted them from the
+ * generated artifact by hand, and H4013 brought them back when v3_app.js became build
+ * output again. Gating keeps the diagnostic without the noise.
+ *
+ * Turn on with `?bootlog=1` in the URL, or persistently:
+ *   localStorage.setItem('Zalizniakiada.debug.boot', '1')
+ */
+const BOOT_LOG_STORAGE_KEY = 'Zalizniakiada.debug.boot';
+
+function bootLogEnabled() {
+  if (typeof window === 'undefined' || typeof console === 'undefined') return false;
+  try {
+    if (/[?&]bootlog=1(?:&|$)/.test(window.location.search || '')) return true;
+  } catch {
+    // location can be unreadable in exotic embeddings; fall through to storage.
+  }
+  try {
+    return window.localStorage.getItem(BOOT_LOG_STORAGE_KEY) === '1';
+  } catch {
+    // Private mode or blocked site data — never let a diagnostic break boot.
+    return false;
+  }
+}
+
+const BOOT_LOG = bootLogEnabled();
+
+function bootLog(...args) {
+  if (BOOT_LOG) console.log('[BOOT]', ...args);
+}
+
 setTimeout(() => {
   (async () => {
-    console.log('[BOOT] Starting loadAppData...');
+    bootLog('Starting loadAppData...');
     await loadAppData();
-    console.log('[BOOT] loadAppData finished. Starting normalizeAppData...');
+    bootLog('loadAppData finished. Starting normalizeAppData...');
     normalizeAppData();
-    console.log('[BOOT] normalizeAppData finished. Starting initEntityTypes...');
+    bootLog('normalizeAppData finished. Starting initEntityTypes...');
     initEntityTypes();
-    console.log('[BOOT] initEntityTypes finished.');
+    bootLog('initEntityTypes finished.');
     
     if (typeof window !== 'undefined') {
-      console.log('[BOOT] Wiring UI components...');
+      bootLog('Wiring UI components...');
       if (typeof window.wireGlobalUI === 'function') window.wireGlobalUI();
       if (typeof window.initTheme === 'function') window.initTheme();
       if (typeof window.initDensityMode === 'function') window.initDensityMode();
       
       const initialHash = window.location.hash || '';
-      console.log('[BOOT] Initial Hash:', initialHash);
+      bootLog('Initial Hash:', initialHash);
       const restored = applyHash(initialHash);
-      console.log('[BOOT] applyHash restored:', restored);
+      bootLog('applyHash restored:', restored);
       if (!restored) {
-        console.log('[BOOT] Hash not restored, checking viewport/viewstate...');
+        bootLog('Hash not restored, checking viewport/viewstate...');
         if (typeof window.restoreViewState === 'function' && typeof window.applyViewState === 'function') {
           const saved = window.restoreViewState();
-          console.log('[BOOT] Restored saved viewstate:', saved);
+          bootLog('Restored saved viewstate:', saved);
           if (saved) {
             window.applyViewState(saved);
             syncNavigationState();
           } else {
-            console.log('[BOOT] No saved viewstate, rendering defaults');
+            bootLog('No saved viewstate, rendering defaults');
             if (typeof window.renderEntitySwitcher === 'function') window.renderEntitySwitcher();
             if (typeof window.renderTabs === 'function') window.renderTabs();
             if (typeof window.renderContent === 'function') window.renderContent();
             syncNavigationState();
           }
         } else {
-          console.log('[BOOT] Viewstate restore functions missing, rendering defaults');
+          bootLog('Viewstate restore functions missing, rendering defaults');
           if (typeof window.renderEntitySwitcher === 'function') window.renderEntitySwitcher();
           if (typeof window.renderTabs === 'function') window.renderTabs();
           if (typeof window.renderContent === 'function') window.renderContent();
           syncNavigationState();
         }
       }
-      console.log('[BOOT] Complete.');
+      bootLog('Complete.');
     }
   })().catch((error) => {
     const message = error && error.message ? error.message : String(error || 'Unknown data loading error');
