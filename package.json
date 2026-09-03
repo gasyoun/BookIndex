@@ -1,6 +1,6 @@
 {
   "name": "bookindex-aaz",
-  "version": "4.17.11",
+  "version": "4.17.12",
   "private": true,
   "description": "E2E smoke checks for aaz-index standalone app",
   "scripts": {
