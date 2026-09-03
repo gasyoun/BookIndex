@@ -53,7 +53,8 @@ npm run check:parity:runtime    # builds the runtime, fails if a declaration wou
 Rules that follow from this:
 
 - Runtime behaviour changes belong in `src/runtime/`, then rebuild. Do not hand-edit `v3_app.js` — that is what broke parity the first time.
-- `treeshake` / `minify` / code-splitting are no longer forbidden, but measure each one and run Playwright against the **rebuilt** runtime before believing it. A declaration census alone passed while the video route was fully broken ([FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) §5).
+- `treeshake` / `minify` / code-splitting are no longer forbidden, and H4012 priced all three — **do not re-measure them.** `treeshake` −3 B gzip (safe, pointless: no dead code); `minify: true` −35 394 B gzip but **declined by МГ 03-09-2026 as "not worth"** (it mangles names, so the parity gate cannot check it, and it ends the committed artifact's diff readability); code-splitting unavailable (the IIFE lib format forces `codeSplitting` off, and there are no dynamic `import()` boundaries). Re-open `minify` only if a new feature pushes the runtime back toward its 162 000 B ceiling. Numbers: [docs/RESULTS_BUNDLER_LEVERS_MEASURED_2026-09-03.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_BUNDLER_LEVERS_MEASURED_2026-09-03.md).
+- Whatever you do change here, run Playwright against the **rebuilt** runtime before believing it — a declaration census alone passed while the video route was fully broken ([FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) §5).
 - A state variable and its setter live in the **same** module and are exported. Across modules the bundler links only through a real `import`; a free identifier stays an unresolved global and forces a collision rename (`currentVideoId` → `currentVideoId$1`), silently splitting one variable into two.
 - `treeshake: false` does **not** keep an unexported, unreferenced module-level binding. Declarations read only from `legacy.js` must live in `legacy.js`.
 - `dist-runtime/` is build output and is not tracked.
@@ -109,7 +110,7 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 
 - Python: 3.12 (CI). Ensure `sys.stdout.reconfigure(encoding='utf-8')` and `encoding='utf-8'` on subprocess calls per global rule.
 - Node: 24 (CI).
-- Current release is `v4.15.4` in [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md), [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff), and [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) (2026-08-28, H3566 resync — `v4.3.0` was the first tagged GitHub release since `v4.2.0`). Keep all three in the same release sweep going forward; they have drifted twice before (H1825, H3566).
+- Current release is `v4.17.3` in [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md), [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff), and [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) (2026-09-03). Keep all four — `package-lock.json` included — in the same release sweep; they have drifted three times now (H1825, H3566, and again at v4.17.2, where `cut_release.py` synced CHANGELOG + CITATION but left `package.json`/`-lock` behind by hand-fix). Entries land as one file per change under `changelog_queue/`, consumed by `cut_release.py` at the cut; direct bullets under `## [Unreleased]` are hook-blocked.
 
 ## Issue conventions (Codex regulation)
 
