@@ -1,0 +1,25 @@
+{
+  "page": "llsh-qr-page",
+  "title_display": "Видеозаписи выступлений А. А. Зализняка на Летней лингвистической школе",
+  "source_line": "mathnet.ru",
+  "trim_mm": { "width": 145, "height": 215 },
+  "qr": { "error_correction": "M", "border_modules": 4 },
+  "provenance": {
+    "titles_urls_source": "https://samskrtam.ru/llsh",
+    "titles_urls_verified": "2026-09-03",
+    "years_venues_source": "BookIndex docs/history/audit_llsh_and_bibliography_h_ask.py (LLSH canonical list)"
+  },
+  "talks": [
+    { "year": 2007, "venue": "Дубна, Ратмино", "title": "Новгородские берестяные грамоты", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=237&option_lang=rus" },
+    { "year": 2008, "venue": "Дубна", "title": "О Велесовой книге", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=238&option_lang=rus" },
+    { "year": 2009, "venue": "Дубна", "title": "Контуры истории русского ударения", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=5106&option_lang=rus" },
+    { "year": 2010, "venue": "Дубна", "title": "О происхождении слов", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=5107&option_lang=rus" },
+    { "year": 2011, "venue": "Дубна", "title": "Механизмы экспрессивности в языке", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=5109&option_lang=rus" },
+    { "year": 2012, "venue": "Дубна", "title": "Контуры истории русского языка", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=5120&option_lang=rus" },
+    { "year": 2013, "venue": "Дубна", "title": "Коротко об арабском языке", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=9319&option_lang=rus" },
+    { "year": 2014, "venue": "Дубна", "title": "Как изменяется внешняя сторона слова", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=9317&option_lang=rus" },
+    { "year": 2015, "venue": "Дубна", "title": "Эпизод из истории русского ударения", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=11930&option_lang=rus" },
+    { "year": 2016, "venue": "Вороново", "title": "Ещё раз о жизни слов", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=14482&option_lang=rus" },
+    { "year": 2017, "venue": "Вороново", "title": "Живые механизмы современного русского ударения", "url": "https://www.mathnet.ru/php/seminars.phtml?presentid=17669&option_lang=rus" }
+  ]
+}

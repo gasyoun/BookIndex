@@ -96,6 +96,20 @@ _Created: 26-07-2026 · Last updated: 03-09-2026_
   автораспознавание «готово» у 119, человеческая вычитка (read1+) у 13 — не путать с устаревшим «27 из 176»
   (26-07-2026). Реестр перезапусков: [docs/LECTURE_TRANSCRIPT_INGEST_H1598_NOOP_24.07.2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/LECTURE_TRANSCRIPT_INGEST_H1598_NOOP_24.07.2026.md).
 
+## Смежная полоса: QR-лист ЛЛШ (вклейка-кандидат)
+
+**Добавлено 03-09-2026** (OxAlpha `z-ai/glm-5.3-flash`, прямой заказ владельца): отдельная печатная полоса
+**«Видеозаписи выступлений А. А. Зализняка на Летней лингвистической школе»** — 60×90/16, обрезной
+145×215 мм; сетка 3×4 = клетка-заголовок (+ строка «mathnet.ru») и 11 QR на видеозаписи докладов
+Math-Net.Ru, подписи — только названия. Формулировка честная: mathnet хостит **видеозаписи**,
+а не «авторизованные расшифровки» (те — на elementy.ru, страница [samskrtam.ru/mt](https://samskrtam.ru/mt)).
+Данные: [data/print/llsh_qr_page.json](https://github.com/gasyoun/BookIndex/blob/main/data/print/llsh_qr_page.json)
+(паритет с [samskrtam.ru/llsh](https://samskrtam.ru/llsh) 11/11 проверен 03-09-2026; «доп. материалы»
+исключены решением владельца). Регенератор: [scripts/print/llsh_qr_page.py](https://github.com/gasyoun/BookIndex/blob/main/scripts/print/llsh_qr_page.py)
+(segno, офлайн) → [print/llsh-qr-page.svg](https://github.com/gasyoun/BookIndex/blob/main/print/llsh-qr-page.svg),
+[print/llsh-qr-page.pdf](https://github.com/gasyoun/BookIndex/blob/main/print/llsh-qr-page.pdf)
+(Georgia вшита, MediaBox 144,95×214,88 мм) + preview 300 dpi. Смок: декод 11/11 с рендера 300 dpi (pyzbar).
+
 ## Дальнейшие шаги
 
 1. Человек выбирает полосу 8 (и решает про запасной макет) — строка `@DECIDE` заведена в
