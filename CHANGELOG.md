@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.17.1] - 2026-09-03
+### Changed
+
+- **Toponym map print lane rebuilt into three visa-ready variants (H3996, MG-approved).** (A) spread 290×215 with the 4th legend column now a full-height right-hand column (bottom strip shrunk to 3 columns under the map); (B) [print/toponyms-map-b-map.pdf](https://github.com/gasyoun/BookIndex/blob/main/print/toponyms-map-b-map.pdf) single page 145×215 map + facing [legend page](https://github.com/gasyoun/BookIndex/blob/main/print/toponyms-map-b-legend.svg) in 3 columns (MG: «не на разворот, а на страницу»); (C) [spread with a West-Europe inset](https://github.com/gasyoun/BookIndex/blob/main/print/toponyms-map-c.svg) (~56×62 mm, larger scale) that vacates the crowded Europe corner. Region line classes per MG ruling: solid leaders/filled markers = Западная Европа (27 heads), dashed = Русь, Византия, Восток and all former-CIS/south/Asia entries (line_class on all 98 toponyms; east chip borders dashed for b/w legibility). Former-CIS labels (Украина, Чернигов, Литва, Литовское княжество Великое) carry `label_anchor` into the empty 60–75°E pocket — out of Africa, onto RF territory as MG asked. OLA-style dashed+hatched areals drawn for all three linguistic zones (ростовско-суздальско-рязанская, псковская, киевско-черниговская) from `areal` polygons in the data. Data strings fixed: «Ростово-Суздальская земля» (обе прописные), «Ростовско-суздальско-рязанская…» (stray post-hyphen space removed). «стр.» set in italic everywhere (labels + legend). Generator [toponyms_print_map.mjs](https://github.com/gasyoun/BookIndex/blob/main/scripts/print/toponyms_print_map.mjs) emits 4 SVGs + 3 print HTMLs + review page + report; smoke gates now include escapes=0, legend parity 46/46 per legend sheet, CIS anchors ≥55°E, areals drawn — all green.
+
 ## [4.17.0] - 2026-09-03
 ### Added
 
