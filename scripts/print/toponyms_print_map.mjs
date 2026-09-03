@@ -5,9 +5,13 @@
 //   B  print/toponyms-map-b-map.svg      page 145x215, map only
 //      print/toponyms-map-b-legend.svg   page 145x215, legend only (facing page)
 //   C  print/toponyms-map-c.svg          spread 290x215, east main map + West-Europe inset
-//   D  print/toponyms-map-d-map.svg      page 145x215, EVERY group numbered (no text labels),
-//      print/toponyms-map-d-legend.svg   page 145x215, compact 2-column legend (all groups),
-//                                        inset = Rus magnifier (Kiev -> Novgorod)   [MG 03-09-2026]
+//   D  print/toponyms-map-d-map.svg      page 145x215, TWO-PANEL chips-only page
+//      (D2, MG 03-09-2026 rev 2): dense zoom "Русь и Западная Евразия" on top,
+//      world overview locator at the bottom; every group numbered, chips live
+//      on exactly ONE panel;
+//      print/toponyms-map-d-legend.svg   page 145x215, compact 2-column legend (all groups).
+//      Every D sheet carries a visible version stamp (D_STAMP) - MG refers to
+//      versions in feedback; removed before print.
 // Offline, deterministic, no npm deps (d3 + topojson-client are vendored UMD bundles).
 
 import { createRequire } from "node:module";
@@ -53,11 +57,16 @@ const PLEG_COLS = 2;
 const PLEG_FONT_U = 11;
 const PLEG_PITCH_U = 17;
 
-// sheet D: every group numbered, chips-only map, compact legend, Rus inset
-const DMAP_BOX = { x0: 8, y0: 20, x1: 137, y1: 198 };
-const D_INSET_BOX = { x0: 46, y0: 123, x1: 70, y1: 190 };
-const D_INSET_GEO = { lat0: 47, lat1: 61, lon0: 25, lon1: 34.5 };
-const D_INSET_CAPTION = "Русь · врезка";
+// sheet D2 (MG 03-09-2026 rev 2): two-panel chips-only page - dense zoom on
+// top (Europe + Rus core), world overview locator at the bottom; every group
+// is numbered and lives on EXACTLY ONE panel; legend page unchanged (83 rows).
+// D_STAMP = visible version stamp for MG feedback; removed before print.
+const D_DENSE_BOX = { x0: 8, y0: 20, x1: 137, y1: 138 };
+const D_DENSE_GEO = { lat0: 44.5, lat1: 64.5, lon0: -2.5, lon1: 45.5 };
+const D_OVER_BOX = { x0: 8, y0: 142, x1: 137, y1: 196 };
+const D_DENSE_CAPTION = "Русь и Западная Евразия · крупный план";
+const D_OVER_CAPTION = "Обзор: остальные названия мест";
+const D_STAMP = "вариант D2 · v4.17.8 · 03-09-2026";
 const DLEG_HEADER_Y = 20;
 const DLEG_NOTE_Y = 26;
 const DLEG_ROWS_Y = 32;
@@ -373,16 +382,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
       `<pattern id="hatch-${cfg.key}" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="5" stroke="#6a655c" stroke-width="0.7"/></pattern></defs>`
   );
 
-  const inGeoBox = (g) =>
-    g.lat >= cfg.insetGeo.lat0 && g.lat <= cfg.insetGeo.lat1 && g.lon >= cfg.insetGeo.lon0 && g.lon <= cfg.insetGeo.lon1;
-  const insetMembers = cfg.inset
-    ? groups.filter((g) => (cfg.insetGeo ? inGeoBox(g) : g.lineClass === "west"))
-    : [];
-  const insetSet = new Set(insetMembers);
+  const inMain = groups.filter((g) => (cfg.inset ? g.lineClass !== "west" : true));
   // the frame is always fitted to ALL points so every sheet shares the same geography;
-  // on inset sheets the inset members simply do not render on the main map
-  // (sheet D keeps them: chips are small, the inset is a magnifier on top)
-  const inMain = cfg.inset ? (cfg.insetKeepMain ? groups : groups.filter((g) => !insetSet.has(g))) : groups;
+  // on inset sheets the west points simply do not render on the main map
   const { projection, geopath, box } = buildProjection(cfg.mapBox, groups.map((g) => [g.lon, g.lat]), PAD_FRACTION);
   for (const g of groups) {
     [g.px, g.py] = projection([g.lon, g.lat]);
@@ -442,27 +444,25 @@ function renderSheet(cfg, world, landObj, groups, total) {
   }
   stats.chip_close_pairs = chipClosePairs;
 
-  // inset (sheets C/D): inset members live here at a larger scale
+  // inset (sheet C): west points live here at a larger scale
   let insetCtx = null;
   if (cfg.inset) {
-    const members = insetMembers;
+    const west = groups.filter((g) => g.lineClass === "west");
     const ib = {
       x0: cfg.inset.box.x0 * U,
       y0: cfg.inset.box.y0 * U,
       x1: cfg.inset.box.x1 * U,
       y1: cfg.inset.box.y1 * U,
     };
-    const inset = buildProjection(cfg.inset.box, members.map((g) => [g.lon, g.lat]), 0.12);
-    for (const g of members) {
+    const inset = buildProjection(cfg.inset.box, west.map((g) => [g.lon, g.lat]), 0.12);
+    for (const g of west) {
       [g.ipx, g.ipy] = inset.projection([g.lon, g.lat]);
     }
-    insetCtx = { members, inset, ib };
+    insetCtx = { west, inset, ib };
     placed.push({ x0: ib.x0 - 3, x1: ib.x1 + 3, y0: ib.y0 - 3, y1: ib.y1 + 3 });
   }
 
-  // discussed labels on the main map (east classes; west live in the inset on sheet C);
-  // sheet D is chips-only: every group is numbered, the legend carries names + pages
-  if (!cfg.chipsOnly) {
+  // discussed labels on the main map (east classes; west live in the inset on sheet C)
   const mainLabeled = inMain
     .filter((x) => x.discussed)
     .map((g) => ({
@@ -538,11 +538,10 @@ function renderSheet(cfg, world, landObj, groups, total) {
       }
     }
   }
-  }
 
   // markers + chips on the main map
   for (const g of inMain) {
-    if (g.discussed && !cfg.chipsOnly) {
+    if (g.discussed) {
       if (g.lineClass === "west") {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="2.8" fill="#ffffff" stroke="#111111" stroke-width="1.1"/>`);
       } else {
@@ -556,10 +555,8 @@ function renderSheet(cfg, world, landObj, groups, total) {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="10.5" fill="none" stroke="#111111" stroke-width="0.55" stroke-dasharray="2.2 1.8"/>`);
       }
       const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
-      const chipFill = g.discussed ? "#111111" : "#ffffff";
-      const chipTextFill = g.discussed ? "#ffffff" : "#111111";
       s.push(
-        `<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="7" fill="${chipFill}" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.px2)}" y="${f(g.py2 + 2.5)}" text-anchor="middle" font-size="7.2" fill="${chipTextFill}">${g.number}</text>`
+        `<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="7" fill="#ffffff" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.px2)}" y="${f(g.py2 + 2.5)}" text-anchor="middle" font-size="7.2" fill="#111111">${g.number}</text>`
       );
     }
   }
@@ -572,27 +569,13 @@ function renderSheet(cfg, world, landObj, groups, total) {
 
   // inset content above everything in its box
   if (insetCtx) {
-    const { members, inset, ib } = insetCtx;
+    const { west, inset, ib } = insetCtx;
     s.push(`<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(ib.y1 - ib.y0)}" fill="#ffffff"/>`);
     s.push(`<g clip-path="url(#inset-clip-${cfg.key})">`);
     s.push(`<path d="${inset.geopath(landObj)}" fill="#e9e5dc" stroke="#4a4640" stroke-width="0.9" stroke-linejoin="round" fill-rule="evenodd"/>`);
     s.push(`<path d="${inset.geopath(graticule)}" fill="none" stroke="#cdc8be" stroke-width="0.45"/>`);
     const iPlaced = [];
-    for (const g of members) {
-      if (cfg.chipsOnly) {
-        // sheet D: the inset is a chips magnifier - same numbered chips, larger scale
-        if (g.conditional) {
-          s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="10.5" fill="none" stroke="#111111" stroke-width="0.55" stroke-dasharray="2.2 1.8"/>`);
-        }
-        const chipDashD = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
-        const iFill = g.discussed ? "#111111" : "#ffffff";
-        const iTextFill = g.discussed ? "#ffffff" : "#111111";
-        s.push(
-          `<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="7" fill="${iFill}" stroke="#111111" stroke-width="0.6"${chipDashD}/><text x="${f(g.ipx)}" y="${f(g.ipy + 2.5)}" text-anchor="middle" font-size="7.2" fill="${iTextFill}">${g.number}</text>`
-        );
-        iPlaced.push({ x0: g.ipx - 8, x1: g.ipx + 8, y0: g.ipy - 8, y1: g.ipy + 8 });
-        continue;
-      }
+    for (const g of west) {
       if (!g.discussed) {
         const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
         s.push(
@@ -609,7 +592,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
         iPlaced.push({ x0: g.ipx - 4, x1: g.ipx + 4, y0: g.ipy - 4, y1: g.ipy + 4 });
       }
     }
-    const iLabeled = (cfg.chipsOnly ? [] : members)
+    const iLabeled = west
       .filter((g) => g.discussed)
       .map((g) => ({ g, width: Math.max(...wrapText(g.mapName, 20, 2).map((l) => textW(l, INSET_LABEL_FONT_U))) }))
       .sort((a, b) => b.width - a.width);
@@ -626,7 +609,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     s.push(`</g>`);
     s.push(
       `<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(ib.y1 - ib.y0)}" fill="none" stroke="#111111" stroke-width="1.2"/>` +
-        `<text x="${f((ib.x0 + ib.x1) / 2)}" y="${f(ib.y1 - 6)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b">${esc(cfg.insetCaption || WEST_CAPTION)}</text>`
+        `<text x="${f((ib.x0 + ib.x1) / 2)}" y="${f(ib.y1 - 6)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b">${esc(WEST_CAPTION)}</text>`
     );
   }
 
@@ -772,6 +755,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
       `<text x="${DLEG_X0 * U}" y="${f(DLEG_HEADER_Y * U)}" font-size="13.5" font-weight="bold" fill="#111111">Легенда: топонимы по номерам</text>` +
         `<text x="${DLEG_X1 * U}" y="${f(DLEG_NOTE_Y * U)}" text-anchor="end" font-size="8.2" fill="#33302b">залитый номер — обсуждается в книге · контурный — упоминается</text>`
     );
+    if (cfg.stamp) {
+      s.push(`<text x="${DLEG_X1 * U}" y="${f(DLEG_HEADER_Y * U)}" text-anchor="end" font-size="7.2" fill="#55524c">${esc(cfg.stamp)}</text>`);
+    }
     const colW = ((DLEG_X1 - DLEG_X0) * U) / DLEG_COLS;
     const maxChars = Math.floor((colW - 10) / (DLEG_FONT_U * CHAR_W));
     const wrapped = groups.map((g) => {
@@ -818,16 +804,16 @@ function renderSheet(cfg, world, landObj, groups, total) {
     stats.legend_capacity = DLEG_COLS * Math.floor(rowsAreaU / pitch);
     const keyY = (DLEG_Y1 + 5) * U;
     s.push(
-      `<text x="${DLEG_X0 * U}" y="${f(keyY)}" font-size="7.6" fill="#33302b">Залитый маркер — обсуждается в книге, контурный — упоминается; штриховая выноска/контур — Русь, Византия, Восток; сплошные — Западная Европа</text>` +
-        `<text x="${DLEG_X0 * U}" y="${f(keyY + 9)}" font-size="7.6" fill="#33302b">Штриховой ареал — языковая зона · пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц · врезка «Русь» — увеличено</text>` +
-        `<text x="${DLEG_X0 * U}" y="${f(keyY + 18)}" font-size="7.4" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция</text>`
+      `<text x="${DLEG_X0 * U}" y="${f(keyY)}" font-size="7.6" fill="#33302b">Залитый маркер — обсуждается в книге, контурный — упоминается; штриховой контур — Русь, Византия, Восток</text>` +
+        `<text x="${DLEG_X0 * U}" y="${f(keyY + 9)}" font-size="7.6" fill="#33302b">Штриховой ареал — языковая зона · пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц</text>` +
+        `<text x="${DLEG_X0 * U}" y="${f(keyY + 18)}" font-size="7.4" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция · крупный план — верхняя панель карты</text>`
     );
   }
 
   // title + subtitle
   if (cfg.title) {
     s.push(`<text x="${8 * U}" y="${8.4 * U}" font-size="23" font-weight="bold" fill="#111111">Карта топонимов книги</text>`);
-    const sub = cfg.subtitle || `«Из жизни слов и языков» · ${total} названий мест: обсуждаемые в книге подписаны с номерами страниц${cfg.legend ? ", остальные раскрывает легенда" : ", номера раскрывает легенда на соседней странице"}`;
+    const sub = `«Из жизни слов и языков» · ${total} названий мест: обсуждаемые в книге подписаны с номерами страниц${cfg.legend ? ", остальные раскрывает легенда" : ", номера раскрывает легенда на соседней странице"}`;
     if (cfg.pageW < 200) {
       const subLines = wrapText(sub, 66, 2);
       s.push(
@@ -839,6 +825,209 @@ function renderSheet(cfg, world, landObj, groups, total) {
       s.push(`<text x="${8 * U}" y="${(8.4 * U + 13).toFixed(1)}" font-size="11" fill="#33302b">${esc(sub)}</text>`);
     }
   }
+
+  s.push("</svg>");
+  return { svg: s.join("\n"), stats };
+}
+
+// ---------------------------------------------------------------------------
+// sheet D2 renderer: two-panel chips-only page (dense zoom + world overview)
+// ---------------------------------------------------------------------------
+
+function chipSvgD(x, y, g, r, font) {
+  const dash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
+  const fill = g.discussed ? "#111111" : "#ffffff";
+  const textFill = g.discussed ? "#ffffff" : "#111111";
+  const ring = g.conditional
+    ? `<circle cx="${f(x)}" cy="${f(y)}" r="${f(r * 1.5)}" fill="none" stroke="#111111" stroke-width="0.55" stroke-dasharray="2.2 1.8"/>`
+    : "";
+  return (
+    ring +
+    `<circle cx="${f(x)}" cy="${f(y)}" r="${r}" fill="${fill}" stroke="#111111" stroke-width="0.6"${dash}/><text x="${f(x)}" y="${f(y + font * 0.35)}" text-anchor="middle" font-size="${font}" fill="${textFill}">${g.number}</text>`
+  );
+}
+
+function relaxD(members, box, r) {
+  const pts = members.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, stay: false }));
+  const x0 = box.x0 + 6;
+  const x1 = box.x1 - 6;
+  const y0 = box.y0 + 6;
+  const y1 = box.y1 - 6;
+  for (let it = 0; it < RELAX_ITERATIONS; it++) {
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const a = pts[i];
+        const b = pts[j];
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
+        let d = Math.hypot(dx, dy);
+        const minD = r * 2 + RELAX_GAP;
+        if (d === 0) {
+          dx = 0.5;
+          dy = 0.5;
+          d = Math.hypot(dx, dy);
+        }
+        if (d < minD) {
+          const push = ((minD - d) / d) * 0.3;
+          a.x -= dx * push;
+          a.y -= dy * push;
+          b.x += dx * push;
+          b.y += dy * push;
+        }
+      }
+    }
+    for (const p of pts) {
+      p.x = Math.min(Math.max(p.x, x0), x1);
+      p.y = Math.min(Math.max(p.y, y0), y1);
+    }
+  }
+  for (const p of pts) {
+    let dx = p.x - p.ox;
+    let dy = p.y - p.oy;
+    const d = Math.hypot(dx, dy);
+    if (d > DISPLACE_CAP) {
+      dx *= DISPLACE_CAP / d;
+      dy *= DISPLACE_CAP / d;
+    }
+    p.g.px2 = p.ox + dx;
+    p.g.py2 = p.oy + dy;
+    p.g.displaced = Math.hypot(p.g.px2 - p.ox, p.g.py2 - p.oy) > 5;
+  }
+}
+
+function renderSheetD(cfg, world, landObj, groups, total) {
+  const stats = {
+    sheet: cfg.key,
+    labels_without_slot: 0,
+    labels_in_fallback_slots: 0,
+    escapes: 0,
+    chip_close_pairs: 0,
+    legend_rows_drawn: 0,
+    legend_capacity: 0,
+    legend_overflow: 0,
+    legend_parity_ok: true,
+    cis_anchored_ok: 0,
+    areals_drawn: 0,
+  };
+  const pageWU = cfg.pageW * U;
+  const pageHU = cfg.pageH * U;
+  const s = [];
+  s.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${pageWU} ${pageHU}" font-family="Georgia, 'Times New Roman', serif">`);
+  s.push(`<rect width="${pageWU}" height="${pageHU}" fill="#ffffff"/>`);
+  s.push(
+    `<defs>` +
+      `<clipPath id="map-clip-${cfg.key}-d"><rect x="${f(D_DENSE_BOX.x0 * U)}" y="${f(D_DENSE_BOX.y0 * U)}" width="${f((D_DENSE_BOX.x1 - D_DENSE_BOX.x0) * U)}" height="${f((D_DENSE_BOX.y1 - D_DENSE_BOX.y0) * U)}"/></clipPath>` +
+      `<clipPath id="map-clip-${cfg.key}-o"><rect x="${f(D_OVER_BOX.x0 * U)}" y="${f(D_OVER_BOX.y0 * U)}" width="${f((D_OVER_BOX.x1 - D_OVER_BOX.x0) * U)}" height="${f((D_OVER_BOX.y1 - D_OVER_BOX.y0) * U)}"/></clipPath>` +
+      `<pattern id="hatch-${cfg.key}" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="5" stroke="#6a655c" stroke-width="0.7"/></pattern>` +
+      `</defs>`
+  );
+
+  const inDense = (g) =>
+    g.lat >= D_DENSE_GEO.lat0 && g.lat <= D_DENSE_GEO.lat1 && g.lon >= D_DENSE_GEO.lon0 && g.lon <= D_DENSE_GEO.lon1;
+  const dense = groups.filter(inDense);
+  const far = groups.filter((g) => !inDense(g));
+  const graticule = d3.geoGraticule().step([10, 10])();
+
+  const drawPanel = (panelKey, boxMm, members, opts) => {
+    const { projection, geopath, box } = buildProjection(boxMm, members.map((g) => [g.lon, g.lat]), PAD_FRACTION);
+    for (const g of members) {
+      [g.px, g.py] = projection([g.lon, g.lat]);
+    }
+    s.push(`<g clip-path="url(#map-clip-${cfg.key}-${panelKey})">`);
+    s.push(`<path d="${geopath(landObj)}" fill="#e9e5dc" stroke="#4a4640" stroke-width="0.9" stroke-linejoin="round" fill-rule="evenodd"/>`);
+    s.push(`<path d="${geopath(graticule)}" fill="none" stroke="#cdc8be" stroke-width="0.45"/>`);
+    for (const g of members) {
+      if (!g.areal) continue;
+      const pts = g.areal.map(([lon, lat]) => projection([lon, lat]));
+      if (pts.some((p) => !p || Number.isNaN(p[0]))) continue;
+      const d = pts.map((p, i) => `${i === 0 ? "M" : "L"}${f(p[0])},${f(p[1])}`).join("") + "Z";
+      s.push(`<path d="${d}" fill="url(#hatch-${cfg.key})" fill-opacity="0.30" stroke="#3d3a34" stroke-width="0.9" stroke-dasharray="5 3"/>`);
+      stats.areals_drawn += 1;
+    }
+    relaxD(members, box, opts.chipR);
+    for (const g of members) {
+      if (g.displaced) {
+        const dash = LINE_DASH[g.lineClass];
+        s.push(`<line x1="${f(g.px)}" y1="${f(g.py)}" x2="${f(g.px2)}" y2="${f(g.py2)}" stroke="#55524c" stroke-width="0.4"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`);
+        s.push(`<circle cx="${f(g.px)}" cy="${f(g.py)}" r="1.7" fill="none" stroke="#111111" stroke-width="0.5"/>`);
+      }
+    }
+    let closePairs = 0;
+    for (let i = 0; i < members.length; i++) {
+      for (let j = i + 1; j < members.length; j++) {
+        const a = members[i];
+        const b = members[j];
+        const d = Math.hypot(a.px2 - b.px2, a.py2 - b.py2);
+        if (d < opts.chipR * 2 - 1) {
+          closePairs += 1;
+          stats.chip_close_pair = `${a.primary.head} <-> ${b.primary.head} d=${d.toFixed(1)}`;
+        }
+      }
+    }
+    stats.chip_close_pairs += closePairs;
+    for (const g of members) {
+      s.push(chipSvgD(g.px2, g.py2, g, opts.chipR, opts.chipFont));
+    }
+    if (opts.scaleBarKm) {
+      const refLat = 50;
+      const c0 = projection([30, refLat]);
+      const c1 = projection([31, refLat]);
+      const kmPerUnit = (111.32 * Math.cos((refLat * Math.PI) / 180)) / Math.abs(c1[0] - c0[0]);
+      const barKm = opts.scaleBarKm;
+      const barU = barKm / kmPerUnit;
+      const barX = box.x0 + 12;
+      const barY = box.y0 + (box.y1 - box.y0) - 12;
+      s.push(
+        `<rect x="${f(barX)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#111111"/>` +
+          `<rect x="${f(barX + barU / 4)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/>` +
+          `<rect x="${f(barX + barU / 2)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#111111"/>` +
+          `<rect x="${f(barX + (barU * 3) / 4)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/>` +
+          `<text x="${f(barX)}" y="${f(barY + 6.5)}" font-size="7" fill="#111111">0</text>` +
+          `<text x="${f(barX + barU / 2)}" y="${f(barY + 6.5)}" text-anchor="middle" font-size="7" fill="#111111">${barKm / 2}</text>` +
+          `<text x="${f(barX + barU)}" y="${f(barY + 6.5)}" text-anchor="middle" font-size="7" fill="#111111">${barKm}</text>` +
+          `<text x="${f(barX + barU + 8)}" y="${f(barY + 6.5)}" font-size="7" fill="#111111">км</text>`
+      );
+    }
+    s.push(`</g>`);
+    s.push(
+      `<rect x="${f(box.x0)}" y="${f(box.y0)}" width="${f(box.x1 - box.x0)}" height="${f(box.y1 - box.y0)}" fill="none" stroke="#111111" stroke-width="1.6"/>` +
+        `<rect x="${f(box.x0 + 5)}" y="${f(box.y0 + 5)}" width="${f(box.x1 - box.x0 - 10)}" height="${f(box.y1 - box.y0 - 10)}" fill="none" stroke="#111111" stroke-width="0.45"/>`
+    );
+    s.push(
+      `<text x="${f(box.x0 + (box.x1 - box.x0) / 2)}" y="${f(box.y1 - 6)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b" stroke="#ffffff" stroke-width="1.6" paint-order="stroke" stroke-linejoin="round">${esc(opts.caption)}</text>`
+    );
+  };
+
+  drawPanel("d", D_DENSE_BOX, dense, { caption: D_DENSE_CAPTION, scaleBarKm: 500, chipR: 7, chipFont: 7.2 });
+  drawPanel("o", D_OVER_BOX, far, { caption: D_OVER_CAPTION, scaleBarKm: 0, chipR: 4.5, chipFont: 5 });
+
+  // CIS anchors must sit east of 55E (MG ruling); chips do not use anchors,
+  // the data property is still gated
+  for (const g of groups) {
+    if (g.anchor && g.anchor.lon >= 55) stats.cis_anchored_ok += 1;
+  }
+
+  // title + subtitle + version stamp
+  s.push(`<text x="${8 * U}" y="${8.4 * U}" font-size="23" font-weight="bold" fill="#111111">Карта топонимов книги</text>`);
+  const subLines = wrapText(cfg.subtitle, 66, 2);
+  s.push(
+    `<text x="${8 * U}" y="${(8.4 * U + 11).toFixed(1)}" font-size="10" fill="#33302b">` +
+      subLines.map((l, i) => `<tspan x="${8 * U}" dy="${i === 0 ? 0 : 12.5}">${esc(l)}</tspan>`).join("") +
+      `</text>`
+  );
+  s.push(`<text x="${137 * U}" y="${8.4 * U}" text-anchor="end" font-size="7.2" fill="#55524c">${esc(cfg.stamp)}</text>`);
+
+  // key
+  const keyY = 199 * U;
+  s.push(
+    `<text x="${8 * U}" y="${f(keyY)}" font-size="7.6" fill="#33302b">Заливка чипа — обсуждается в книге, контур — упоминается; «—» — без страниц</text>`
+  );
+  s.push(
+    `<text x="${8 * U}" y="${f(keyY + 7)}" font-size="7.6" fill="#33302b">Штриховой контур — Русь, Византия, Восток; штриховой ареал — языковая зона</text>`
+  );
+  s.push(
+    `<text x="${8 * U}" y="${f(keyY + 14)}" font-size="7.6" fill="#33302b">Пунктирное кольцо — условное расположение («Велесова книга»); тонкая линия — чип сдвинут</text>`
+  );
 
   s.push("</svg>");
   return { svg: s.join("\n"), stats };
@@ -954,17 +1143,15 @@ function render() {
       key: "Dmap",
       pageW: PAGE_W_MM,
       pageH: PAGE_H_MM,
-      mapBox: DMAP_BOX,
+      mapBox: D_DENSE_BOX,
       fit: "all",
-      inset: { box: D_INSET_BOX },
-      insetGeo: D_INSET_GEO,
-      insetKeepMain: true,
-      insetCaption: D_INSET_CAPTION,
+      inset: null,
       legend: null,
-      chipsOnly: true,
+      renderer: "d2",
       title: true,
       subtitle: `«Из жизни слов и языков» · ${total} названий мест: у каждой точки номер — его раскрывает легенда на соседней странице`,
-      scaleBar: true,
+      stamp: D_STAMP,
+      scaleBar: false,
       svgFile: "toponyms-map-d-map.svg",
     },
     {
@@ -977,6 +1164,7 @@ function render() {
       legend: "page-compact",
       noMap: true,
       title: false,
+      stamp: D_STAMP,
       scaleBar: false,
       svgFile: "toponyms-map-d-legend.svg",
     },
@@ -990,7 +1178,8 @@ function render() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const rendered = [];
   for (const cfg of sheets) {
-    const { svg, stats } = renderSheet(cfg, world, land, cfg.key.startsWith("D") ? dGroups : groups, total);
+    const sheetRenderer = cfg.renderer === "d2" ? renderSheetD : renderSheet;
+    const { svg, stats } = sheetRenderer(cfg, world, land, cfg.key.startsWith("D") ? dGroups : groups, total);
     fs.writeFileSync(path.join(OUT_DIR, cfg.svgFile), svg, "utf-8");
     rendered.push({ cfg, svg, stats });
     console.log(cfg.key, JSON.stringify(stats));
@@ -1034,10 +1223,10 @@ function render() {
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-d.html"),
     reviewHtml(
-      "Карта топонимов — вариант D: все точки номерные, врезка «Русь»",
+      "Карта топонимов — вариант D2: крупный план «Русь и Западная Евразия» + обзор",
       [
-        { title: "D — страница (карта): все группы номерные, врезка «Русь» (Киев → Новгород)", pageW: PAGE_W_MM, svg: rendered[4].svg },
-        { title: "D — соседняя страница: легенда, все группы по номерам (плотная вёрстка)", pageW: PAGE_W_MM, svg: rendered[5].svg },
+        { title: `D2 — страница (карта): крупный план «Русь и Западная Евразия» + обзорный локатор, все группы номерные · ${D_STAMP}`, pageW: PAGE_W_MM, svg: rendered[4].svg },
+        { title: `D2 — соседняя страница: легенда, все группы по номерам (плотная вёрстка) · ${D_STAMP}`, pageW: PAGE_W_MM, svg: rendered[5].svg },
       ]
     ),
     "utf-8"
