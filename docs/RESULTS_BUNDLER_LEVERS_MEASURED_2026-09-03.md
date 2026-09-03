@@ -104,10 +104,13 @@ script back toward its 162 000 B ceiling; today it sits at 154.8 KiB (97.9 % ful
 
 `treeshake` needs no ruling — at −3 B there is nothing to decide either way.
 
-**Still open, and deliberately not read into that ruling:** whether to ship the plain build in
-place of the hand-maintained artifact for its free 2 196 B gzip. That is a different trade — it
-buys less, costs no readability, and its price is re-adding the `console.log` scaffolding and
-the three `$1` duplicates H2586 hand-removed. It was not put to a human in those terms, so it
-is parked rather than declined.
+**The other trade was taken (МГ, 03-09-2026): «take it».** Shipping the plain build in place of
+the hand-maintained artifact was a different question — it buys less, costs no readability, and
+its price is the returning `console.log` scaffolding and the three `$1` duplicates H2586
+hand-removed. Done in H4013: `v3_app.js` is build output again, `npm run build:runtime` is the
+entry point it never had, and the parity gate was upgraded from counting declaration names to
+asserting byte-identity. Measured after: runtime script 154.8 → **152.7 KiB** gzip, standalone
+HTML 181.0 → **178.8 KiB**, 197/197 green. The accepted cost is 13 `console` statements back in
+production, nine of them `[BOOT]` progress lines from `entry.js`.
 
 _Dr. Mārcis Gasūns_

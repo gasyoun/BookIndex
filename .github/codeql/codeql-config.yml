@@ -1,13 +1,18 @@
 name: BookIndex CodeQL config
 
-# CodeQL must analyse only hand-written JavaScript source (v3_app.js, scripts/, src/,
-# tests/, top-level configs). The directories below are committed BUILD ARTIFACTS, not
-# source: scripts/prerender.mjs (run by `npm run build`) emits ~700 prerendered
-# index.html pages, and EACH inlines the full ~632 KiB v3_app.js plus JSON-LD and a
-# redirect script. Extracting JS from all of them blows past the 10-minute job cap, so
-# every run on main was cancelled ("The operation was canceled"). Their JS is identical
-# to v3_app.js, which is already analysed on its own, so excluding them loses no coverage.
+# CodeQL must analyse only hand-written JavaScript source (src/, scripts/, tests/,
+# top-level configs). Everything below is a committed BUILD ARTIFACT, not source:
+# scripts/prerender.mjs (run by `npm run build`) emits ~700 prerendered index.html pages,
+# and EACH inlines the full ~652 KiB runtime plus JSON-LD and a redirect script.
+# Extracting JS from all of them blows past the 10-minute job cap, so every run on main
+# was cancelled ("The operation was canceled"). Their JS is a copy of src/runtime/, which
+# is analysed on its own, so excluding them loses no coverage.
 paths-ignore:
+  # v3_app.js became build output again in H4013 (src/runtime/ -> v3_app.js). While it was
+  # hand-maintained it WAS the source and had to be scanned; now it is a second copy of
+  # src/runtime/, so scanning it only reports every finding twice — once at its real
+  # location in src/runtime/ and once here — and pays the extraction cost again.
+  - v3_app.js
   - aaz-index.html
   # Prerendered category pages: <cat>/list/index.html and <cat>/list/item/**/index.html
   # (all, names, toponyms, ethnonyms, languages, lexicon, lexicon_reverse, lexicon_tech,

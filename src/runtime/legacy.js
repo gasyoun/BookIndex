@@ -12,6 +12,13 @@
 // bindings (state/utils/data/router) as free identifiers, which the bundler resolves in the
 // flattened IIFE scope.
 
+// U+FFFD, built from its code point rather than written as a literal. The quality queue
+// below tests heads for the replacement character on purpose, but a literal one in a
+// generated file trips scripts/check_encoding.py, whose allowlist marker is per-line and
+// does not survive bundling (rolldown drops trailing line comments). Composing it here
+// keeps the mojibake guard strict over v3_app.js instead of needing an exception.
+var REPLACEMENT_CHAR = String.fromCharCode(0xfffd);
+
 var HOME_DECL_FACTORY_KEY = "__bookindexHomeDeclarativeFactory";
 var TAB_LABELS = {
   viz: "Визуализации",
@@ -4292,7 +4299,7 @@ function buildCorpusQualityState() {
         if (!itemsByHead.has(rawHead)) itemsByHead.set(rawHead, []);
         itemsByHead.get(rawHead).push(item);
       }
-      if (rawHead.startsWith("?") || rawHead.includes("�")) queues.suspicious_heads.push(createQualityQueueRecord("suspicious_heads", typeKey, item, "Заголовок начинается с ? или содержит символ замены.", { needsReview: item.needs_review === true })); // encoding-guard: allow-ufffd: the app tests for the character on purpose
+      if (rawHead.startsWith("?") || rawHead.includes(REPLACEMENT_CHAR)) queues.suspicious_heads.push(createQualityQueueRecord("suspicious_heads", typeKey, item, "Заголовок начинается с ? или содержит символ замены.", { needsReview: item.needs_review === true }));
     }
     for (const count of heads.values()) if (count > 1) totals.duplicateGroups += 1;
     for (const [head, duplicates] of itemsByHead.entries()) {
