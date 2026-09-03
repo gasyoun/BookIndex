@@ -190,5 +190,5 @@
 <rect x="44.00" y="559.60" width="10.50" height="3" fill="#111111"/><rect x="54.50" y="559.60" width="10.50" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/><rect x="65.00" y="559.60" width="10.50" height="3" fill="#111111"/><rect x="75.50" y="559.60" width="10.50" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/><text x="44.00" y="570.50" font-size="7" fill="#111111">0</text><text x="65.00" y="570.50" text-anchor="middle" font-size="7" fill="#111111">500</text><text x="86.00" y="570.50" text-anchor="middle" font-size="7" fill="#111111">1000</text><text x="94.00" y="570.50" font-size="7" fill="#111111">км</text>
 <text x="32" y="33.6" font-size="23" font-weight="bold" fill="#111111">Карта топонимов книги</text>
 <text x="32" y="44.6" font-size="10" fill="#33302b"><tspan x="32" dy="0">«Из жизни слов и языков» · 98 названий мест: обсуждаемые подписаны</tspan><tspan x="32" dy="12.5">названием, страницы — в легенде на соседней странице, у остальных номер</tspan></text>
-<text x="548" y="33.6" text-anchor="end" font-size="7.2" fill="#55524c">вариант B3 · v4.17.15 · 04-09-2026</text>
+<text x="548" y="33.6" text-anchor="end" font-size="7.2" fill="#55524c">вариант B3 · v4.17.16 · 04-09-2026</text>
 </svg>

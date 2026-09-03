@@ -119,7 +119,7 @@ const B3_INSET_PAD = 0.06;
 const B3_INSET_CHIP_R = 6.5;
 const B3_INSET_CHIP_FONT = 6.8;
 const B3_INSET_CAPTION = "Русь · крупный план";
-const B3_STAMP = "вариант B3 · v4.17.15 · 04-09-2026";
+const B3_STAMP = "вариант B3 · v4.17.16 · 04-09-2026";
 
 function markerRadU(g) {
   return g.discussed ? 2.8 : 7;
