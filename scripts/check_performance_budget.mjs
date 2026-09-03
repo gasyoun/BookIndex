@@ -60,6 +60,10 @@ const budgets = [
     //                                     boundaries to split at anyway
     // Shipping the plain build in place of the hand-maintained artifact is worth
     // 2 196 B gzip on its own. None was applied: each is a human trade, not a win.
+    // RULING (МГ, 03-09-2026): `minify` DECLINED — "not worth". 35.4 KB gzip does not
+    // pay for an unreadable committed artifact plus a parity gate rebuilt around a
+    // mangled bundle. Do not re-open it on size grounds alone; only a new feature that
+    // pushes this ceiling back toward full is a reason to revisit.
     // Moving the hard-coded scholarly tables into the data layer remains the other
     // route, and is a content-model decision.
     // Detail: docs/RESULTS_BUNDLER_LEVERS_MEASURED_2026-09-03.md,

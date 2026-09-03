@@ -91,12 +91,23 @@ The swap-and-run step is the point. A build that passes the parity gate can stil
 — that is exactly how H3874's first draft shipped a dead video-detail route past a green
 gate.
 
-## What is left for a human
+## Ruling — `minify` declined (МГ, 03-09-2026)
 
-Nothing here is a silent win, so nothing was applied. The open choice is whether 35.4 KB
-gzip is worth a `v3_app.js` nobody can read in a diff, plus reworking the parity gate around
-a mangled bundle. Recorded in
-[.ai_state.md](https://github.com/gasyoun/BookIndex/blob/main/.ai_state.md) as the standing
-next action.
+Nothing here was a silent win, so nothing was applied pending a decision. The decision came
+back **«not worth»**: the 35.4 KB gzip does not buy enough to pay for a committed `v3_app.js`
+that nobody can read in a diff, plus rebuilding the parity gate around a mangled bundle.
+
+**So `minify` stays off, and this question is closed — do not re-open it on size grounds
+alone.** What would legitimately re-open it is a new feature large enough to push the runtime
+script back toward its 162 000 B ceiling; today it sits at 154.8 KiB (97.9 % full) shipped, or
+118.0 KiB (74.5 %) minified. Until that pressure exists, the 35.4 KB has no one to spend it on.
+
+`treeshake` needs no ruling — at −3 B there is nothing to decide either way.
+
+**Still open, and deliberately not read into that ruling:** whether to ship the plain build in
+place of the hand-maintained artifact for its free 2 196 B gzip. That is a different trade — it
+buys less, costs no readability, and its price is re-adding the `console.log` scaffolding and
+the three `$1` duplicates H2586 hand-removed. It was not put to a human in those terms, so it
+is parked rather than declined.
 
 _Dr. Mārcis Gasūns_
