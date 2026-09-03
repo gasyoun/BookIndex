@@ -501,106 +501,154 @@ export function applyDescriptionEditorialConventions() {
 }
 
 export function initEntityTypes() {
-  const entityTypesConf = {
+  setEntityTypes({
     home: {
-      title: 'Главная',
+      title: "Главная",
       items: [],
-      tabs: ['home'],
+      tabs: ["home"]
     },
     materials: {
-      title: 'Материалы',
+      title: "Материалы",
       items: [],
-      tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','kwic','gallery','russian_evolution','phonetic_laws','tasks','sources'],
+      tabs: [
+        "lectures",
+        "lecture_compare",
+        "lecture_pages",
+        "further_reading",
+        "glossary",
+        "kwic",
+        "gallery",
+        "video",
+        "russian_evolution",
+        "phonetic_laws",
+        "tasks",
+        "sources"
+      ]
     },
     scholar: {
-      title: 'Профессиональный аппарат',
+      title: "Профессиональный аппарат",
       items: [],
-      tabs: ['scholar','chronology','page_trends','viz'],
+      tabs: [
+        "scholar",
+        "chronology",
+        "page_trends",
+        "viz"
+      ]
     },
     all: {
-      title: 'Сводный указатель',
+      title: "Сводный указатель",
       items: null,
-      tabs: ['list'],
+      tabs: ["list"]
     },
     names: {
-      title: 'Имена',
+      title: "Имена",
       items: APP_DATA.names,
       edges: APP_DATA.edges,
-      tabs: ['list','cards','histogram','timeline','heatmap','graph'],
+      tabs: [
+        "list",
+        "cards",
+        "histogram",
+        "timeline",
+        "heatmap",
+        "graph"
+      ]
     },
     toponyms: {
-      title: 'Топонимы',
+      title: "Топонимы",
       items: APP_DATA.toponyms,
-      tabs: ['list','cards','histogram','epochs','map','heatmap'],
+      tabs: [
+        "list",
+        "cards",
+        "histogram",
+        "epochs",
+        "map",
+        "heatmap"
+      ]
     },
     ethnonyms: {
-      title: 'Этнонимы',
+      title: "Этнонимы",
       items: APP_DATA.ethnonyms,
-      tabs: ['list','cards','histogram','map','heatmap'],
+      tabs: [
+        "list",
+        "cards",
+        "histogram",
+        "map",
+        "heatmap"
+      ]
     },
     languages: {
-      title: 'Языки',
+      title: "Языки",
       items: APP_DATA.languages,
-      tabs: ['list','cards','histogram','families','tree','map','heatmap'],
+      tabs: [
+        "list",
+        "cards",
+        "histogram",
+        "families",
+        "tree",
+        "map",
+        "heatmap"
+      ]
     },
     lexicon: {
-      title: 'Лексика',
+      title: "Лексика",
       items: APP_DATA.lexicon,
-      tabs: ['list','histogram'],
+      tabs: ["list", "histogram"]
     },
     lexicon_reverse: {
-      title: 'Лексика (обратная)',
+      title: "Лексика (обратная)",
       items: APP_DATA.lexicon_reverse,
-      tabs: ['list'],
+      tabs: ["list"]
     },
     lexicon_tech: {
-      title: 'Реконструкции',
+      title: "Реконструкции",
       items: APP_DATA.lexicon_tech,
-      tabs: ['list'],
+      tabs: ["list"]
     },
     subject: {
-      title: 'Предметный',
+      title: "Предметный",
       items: APP_DATA.subject_index || [],
-      tabs: ['list','histogram','heatmap'],
-    },
-  };
-  setEntityTypes(entityTypesConf);
+      tabs: [
+        "list",
+        "histogram",
+        "heatmap"
+      ]
+    }
+  });
   ENTITY_TYPES.all.items = buildAllItems();
-  for (const key of Object.keys(ENTITY_TYPES)) {
-    indexItems(ENTITY_TYPES[key].items);
-  }
+  for (const key of Object.keys(ENTITY_TYPES)) indexItems(ENTITY_TYPES[key].items);
   buildDataIndexes();
-  invalidateAggregateCache('entity-types-init');
+  invalidateAggregateCache("entity-types-init");
 }
 
-export const TAB_LABELS = {
-  viz: 'Визуализации',
-  list: 'Список',
-  cards: 'Карточки',
-  histogram: 'По лекциям',
-  timeline: 'Шкала',
-  heatmap: 'Тепловая карта',
-  graph: 'Граф связей',
-  map: 'Карта мира',
-  epochs: 'Эпохи',
-  families: 'Граф языков',
-  tree: 'Древо языков',
-  home: 'Главная',
-  home_decl: 'Декларативная',
-  sources: 'Корпус',
-  lectures: 'Лекции',
-  lecture_compare: 'Сравнение лекций',
-  lecture_pages: 'Страница лекции',
-  tasks: 'Проверьте себя',
-  further_reading: 'Что почитать ещё',
-  glossary: 'Глоссарий',
-  kwic: 'KWIC',
-  gallery: 'Галерея лингвистов',
-  russian_evolution: 'Русский во времени',
-  phonetic_laws: 'Фонетические законы',
-  scholar: 'Профессиональный аппарат',
-  chronology: 'Хронология открытий',
-  page_trends: 'Динамика по страницам',
+export var TAB_LABELS = {
+  viz: "Визуализации",
+  list: "Список",
+  cards: "Карточки",
+  histogram: "По лекциям",
+  timeline: "Шкала",
+  heatmap: "Тепловая карта",
+  graph: "Граф связей",
+  map: "Карта мира",
+  epochs: "Эпохи",
+  families: "Граф языков",
+  tree: "Древо языков",
+  home: "Главная",
+  home_decl: "Декларативная",
+  sources: "Корпус",
+  lectures: "Лекции",
+  lecture_compare: "Сравнение лекций",
+  lecture_pages: "Страница лекции",
+  tasks: "Проверьте себя",
+  further_reading: "Что почитать ещё",
+  glossary: "Глоссарий",
+  kwic: "KWIC",
+  gallery: "Галерея лингвистов",
+  video: "Видеогалерея",
+  russian_evolution: "Русский во времени",
+  phonetic_laws: "Фонетические законы",
+  scholar: "Профессиональный аппарат",
+  chronology: "Хронология открытий",
+  page_trends: "Динамика по страницам"
 };
 
 export function buildAllItems() {

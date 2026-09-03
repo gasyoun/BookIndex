@@ -20,7 +20,7 @@
     "export:tei:check": "python scripts/export_tei.py --check",
     "kwic:build": "python scripts/build_lectures_kwic.py",
     "authority:retier": "python scripts/retier_authority_candidates.py",
-    "check": "npm run typecheck && npm run check:js && npm run check:ui && npm run check:e2e",
+    "check": "npm run typecheck && npm run check:js && npm run check:parity:runtime && npm run check:ui && npm run check:e2e",
     "check:a11y": "node scripts/check_lighthouse_a11y.mjs",
     "check:deploy": "node scripts/check_live_deploy.mjs",
     "check:perf": "node scripts/check_performance_budget.mjs",
@@ -43,11 +43,13 @@
     "serve:static": "node scripts/dev/static-server.mjs 4173",
     "e2e": "playwright test",
     "e2e:headed": "playwright test --headed",
-    "e2e:report": "playwright show-report"
+    "e2e:report": "playwright show-report",
+    "check:parity:runtime": "node scripts/check_runtime_parity.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
+    "acorn": "^8.18.0",
     "chrome-launcher": "^1.2.1",
     "lighthouse": "^13.4.1",
     "typescript": "^7.0.2",
