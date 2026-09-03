@@ -1,6 +1,10 @@
 // Print-ready vector toponym map for the Zaliznyak book companion.
-// H3974 — renders print/toponyms-map.svg + print/toponyms-map-print.html
-// from data/modules/11-toponyms.json + vendored Natural Earth land TopoJSON.
+// H3996 - renders THREE print sheets from data/modules/11-toponyms.json
+// + vendored Natural Earth land TopoJSON:
+//   A  print/toponyms-map.svg            spread 290x215, map + full-height side legend column
+//   B  print/toponyms-map-b-map.svg      page 145x215, map only
+//      print/toponyms-map-b-legend.svg   page 145x215, legend only (facing page)
+//   C  print/toponyms-map-c.svg          spread 290x215, east main map + West-Europe inset
 // Offline, deterministic, no npm deps (d3 + topojson-client are vendored UMD bundles).
 
 import { createRequire } from "node:module";
@@ -16,17 +20,37 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
 const OUT_DIR = path.join(ROOT, "print");
 
 const U = 4;
-const PAGE_W_MM = 290;
+const SPREAD_W_MM = 290;
+const SPREAD_H_MM = 215;
+const PAGE_W_MM = 145;
 const PAGE_H_MM = 215;
-const MAP_BOX = { x0: 8, y0: 15, x1: 208, y1: 154 };
-const LEGEND_HEADER_Y = 159.5;
-const LEGEND_ROWS_Y = 165.5;
-const LEGEND_Y1 = 206.5;
-const LEGEND_X0 = 8;
-const LEGEND_X1 = 283;
-const LEGEND_COLS = 4;
+
+const MAP_BOX_A = { x0: 8, y0: 15, x1: 208, y1: 154 };
+const MAP_BOX_B = { x0: 8, y0: 20, x1: 137, y1: 198 };
+const INSET_BOX_C = { x0: 8, y0: 16, x1: 64, y1: 78 };
+
+// legend strip (sheet A): 3 columns under the map
+const LEG_HEADER_Y = 159.5;
+const LEG_ROWS_Y = 165.5;
+const LEG_Y1 = 206.5;
+const LEG_X0 = 8;
+const LEG_X1 = 208;
+const LEG_COLS = 3;
+// full-height side column (sheet A, 4th column in MG's terms)
+const SIDE_X0 = 212;
+const SIDE_X1 = 283;
+const SIDE_ROWS_Y = 21;
+// full-page legend (sheet B right page)
+const PLEG_HEADER_Y = 20;
+const PLEG_ROWS_Y = 30;
+const PLEG_Y1 = 196;
+const PLEG_X0 = 8;
+const PLEG_X1 = 137;
+const PLEG_COLS = 3;
+
 const PAD_FRACTION = 0.09;
 const LABEL_FONT_U = 11.2;
+const INSET_LABEL_FONT_U = 8.5;
 const LEGEND_FONT_U = 9.9;
 const LEGEND_ROW_H = 11.6;
 const CHAR_W = 0.64;
@@ -35,12 +59,15 @@ const RELAX_GAP = 4.5;
 const RELAX_ITERATIONS = 500;
 const DISPLACE_CAP = 88;
 
+const LINE_DASH = { west: null, east: "4.4 2.6" };
+const WEST_CAPTION = "Западная Европа · врезка";
+
 function markerRadU(g) {
   return g.discussed ? 2.8 : 7;
 }
 
 function relaxAll(groups, box) {
-  const pts = groups.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, r: markerRadU(g) }));
+  const pts = groups.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, r: markerRadU(g), stay: false }));
   const x0 = box.x0 + 6;
   const x1 = box.x1 - 6;
   const y0 = box.y0 + 6;
@@ -69,11 +96,22 @@ function relaxAll(groups, box) {
       }
     }
     for (const p of pts) {
+      if (p.stay) {
+        p.x = p.ox;
+        p.y = p.oy;
+        continue;
+      }
       p.x = Math.min(Math.max(p.x, x0), x1);
       p.y = Math.min(Math.max(p.y, y0), y1);
     }
   }
   for (const p of pts) {
+    if (p.stay) {
+      p.g.px2 = p.ox;
+      p.g.py2 = p.oy;
+      p.g.displaced = false;
+      continue;
+    }
     let dx = p.x - p.ox;
     let dy = p.y - p.oy;
     const d = Math.hypot(dx, dy);
@@ -87,10 +125,21 @@ function relaxAll(groups, box) {
   }
 }
 
-
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const f = (n) => Number(n).toFixed(2);
+
+// italicize the word «стр.» (MG ruling H3996) — «стр.» is always followed by a space in our strings
+function lineHtml(line) {
+  const parts = String(line).split(/(^|[\s·])(стр\.)(?=\s)/g);
+  if (parts.length === 1) return esc(line);
+  let out = "";
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 3 === 2) out += `<tspan font-style="italic">${esc(parts[i])}</tspan>`;
+    else out += esc(parts[i]);
+  }
+  return out;
+}
 
 function compressPages(sortedUniq) {
   const out = [];
@@ -98,7 +147,7 @@ function compressPages(sortedUniq) {
   while (i < sortedUniq.length) {
     let j = i;
     while (j + 1 < sortedUniq.length && sortedUniq[j + 1] - sortedUniq[j] === 1) j++;
-    out.push(i === j ? `${sortedUniq[i]}` : `${sortedUniq[i]}–${sortedUniq[j]}`);
+    out.push(i === j ? `${sortedUniq[i]}` : `${sortedUniq[i]}-${sortedUniq[j]}`);
     i = j + 1;
   }
   return out;
@@ -127,6 +176,9 @@ function loadGroups() {
       [...members].sort((a, b) => (b.head || "").length - (a.head || "").length)[0];
     const names = [...members].sort((a, b) => a.head.localeCompare(b.head, "ru")).map((m) => m.head);
     const shortest = [...names].sort((a, b) => a.length - b.length)[0];
+    const anchor = members.map((m) => m.label_anchor).find((a) => a) || null;
+    const areal = members.map((m) => m.areal).find((a) => a) || null;
+    const lineClass = members.map((m) => m.line_class).find((c) => c) || "east";
     groups.push({
       members,
       names,
@@ -139,6 +191,9 @@ function loadGroups() {
       epoch: members.map((m) => m.epoch_class).find((e) => e) || null,
       lat: members[0].lat,
       lon: members[0].lon,
+      lineClass,
+      anchor,
+      areal,
     });
   }
   groups.sort((a, b) => a.primary.head.localeCompare(b.primary.head, "ru"));
@@ -176,7 +231,7 @@ function buildProjection(boxMm, points, padFraction) {
 
 const textW = (t, fontU) => t.length * fontU * CHAR_W;
 
-function placeLabel(g, px, py, lines, placed, box, fontU) {
+function placeLabel(g, px, py, lines, placed, box, fontU, clipBox) {
   const widest = Math.max(...lines.map((l) => textW(l, fontU)));
   const lineH = fontU * 1.22;
   const blockH = lines.length * lineH;
@@ -199,6 +254,7 @@ function placeLabel(g, px, py, lines, placed, box, fontU) {
     [0.45, 1, "middle"],
     [-0.45, 1, "middle"],
   ];
+  const cb = clipBox || box;
   for (const r of [startR, startR + 12, startR + 26, startR + 42, startR + 60, startR + 85, startR + 115, startR + 150]) {
     for (const [dx, dy, anchor] of dirs) {
       const lx2 = dx !== 0 ? px + dx * r : px;
@@ -227,7 +283,7 @@ function placeLabel(g, px, py, lines, placed, box, fontU) {
         by0 = ly - lineH * 0.8;
         by1 = by0 + blockH;
       }
-      if (bx0 < box.x0 + 2 || bx1 > box.x1 - 2 || by0 < box.y0 + 2 || by1 > box.y1 - 2) continue;
+      if (bx0 < cb.x0 + 2 || bx1 > cb.x1 - 2 || by0 < cb.y0 + 2 || by1 > cb.y1 - 2) continue;
       const P = 2.5;
       let clash = false;
       for (const b of placed) {
@@ -249,51 +305,137 @@ function placeLabel(g, px, py, lines, placed, box, fontU) {
 function textBlockSvg(l, fontU) {
   return (
     `<text x="${f(l.x)}" y="${f(l.y)}" text-anchor="${l.anchor}" font-size="${fontU}" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round">` +
-    l.lines.map((line, i) => `<tspan x="${f(l.x)}" dy="${i === 0 ? 0 : f(l.lineH)}">${esc(line)}</tspan>`).join("") +
+    l.lines.map((line, i) => `<tspan x="${f(l.x)}" dy="${i === 0 ? 0 : f(l.lineH)}">${lineHtml(line)}</tspan>`).join("") +
     `</text>`
   );
 }
 
-function render() {
-  const { groups, total } = loadGroups();
-  for (const g of groups) g.nPages = g.pages ? g.pages.split(", ").length : 0;
+function legendRowSvg(x, y, fontU, maxChars, g, maxLines = 2) {
+  const expect = g.pages ? `стр. ${g.pages}` : "—";
+  const rowText = `${g.number}. ${g.display} — ${expect}`;
+  const lines = wrapText(rowText, maxChars, maxLines);
+  const rowH = LEGEND_ROW_H + (lines.length - 1) * 11;
+  const svg =
+    `<text x="${f(x)}" y="${f(y)}" font-size="${LEGEND_FONT_U}" fill="#111111">` +
+    lines.map((line, li) => `<tspan x="${f(x)}" dy="${li === 0 ? 0 : 11}">${lineHtml(line)}</tspan>`).join("") +
+    `</text>`;
+  return { svg, rowH, parity: !g.pages || expect === `стр. ${g.pages}` };
+}
 
-  const { projection, geopath, box } = buildProjection(MAP_BOX, groups.map((g) => [g.lon, g.lat]), PAD_FRACTION);
+// ---------------------------------------------------------------------------
+// sheet renderer
+// ---------------------------------------------------------------------------
+
+function renderSheet(cfg, world, landObj, groups, total) {
+  const stats = {
+    sheet: cfg.key,
+    labels_without_slot: 0,
+    labels_in_fallback_slots: 0,
+    escapes: 0,
+    chip_close_pairs: 0,
+    legend_rows_drawn: 0,
+    legend_capacity: 0,
+    legend_overflow: 0,
+    legend_parity_ok: true,
+    cis_anchored_ok: 0,
+    areals_drawn: 0,
+  };
+
+  const pageWU = cfg.pageW * U;
+  const pageHU = cfg.pageH * U;
+  const s = [];
+  s.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${pageWU} ${pageHU}" font-family="Georgia, 'Times New Roman', serif">`);
+  s.push(`<rect width="${pageWU}" height="${pageHU}" fill="#ffffff"/>`);
+  s.push(
+    `<defs><clipPath id="map-clip-${cfg.key}"><rect x="${f(cfg.mapBox.x0 * U)}" y="${f(cfg.mapBox.y0 * U)}" width="${f((cfg.mapBox.x1 - cfg.mapBox.x0) * U)}" height="${f((cfg.mapBox.y1 - cfg.mapBox.y0) * U)}"/></clipPath>` +
+      (cfg.inset
+        ? `<clipPath id="inset-clip-${cfg.key}"><rect x="${f(cfg.inset.box.x0 * U)}" y="${f(cfg.inset.box.y0 * U)}" width="${f((cfg.inset.box.x1 - cfg.inset.box.x0) * U)}" height="${f((cfg.inset.box.y1 - cfg.inset.box.y0) * U)}"/></clipPath>`
+        : "") +
+      `<pattern id="hatch-${cfg.key}" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="5" stroke="#6a655c" stroke-width="0.7"/></pattern></defs>`
+  );
+
+  const inMain = groups.filter((g) => (cfg.inset ? g.lineClass !== "west" : true));
+  // the frame is always fitted to ALL points so every sheet shares the same geography;
+  // on inset sheets the west points simply do not render on the main map
+  const { projection, geopath, box } = buildProjection(cfg.mapBox, groups.map((g) => [g.lon, g.lat]), PAD_FRACTION);
   for (const g of groups) {
     [g.px, g.py] = projection([g.lon, g.lat]);
+    g.anchorPx = g.anchor ? projection([g.anchor.lon, g.anchor.lat]) : null;
   }
 
-  const world = JSON.parse(fs.readFileSync(path.join(ROOT, "vendor/land-50m.json"), "utf-8"));
-  const land = topojson.feature(world, world.objects.land);
+  const mapClip = `url(#map-clip-${cfg.key})`;
+  const frame = { x: box.x0, y: box.y0, w: box.x1 - box.x0, h: box.y1 - box.y0 };
   const graticule = d3.geoGraticule().step([10, 10])();
 
+  if (cfg.noMap) {
+    s.push(
+      `<rect x="${f(6 * U)}" y="${f(6 * U)}" width="${f((cfg.pageW - 12) * U)}" height="${f((cfg.pageH - 12) * U)}" fill="none" stroke="#111111" stroke-width="1.6"/>` +
+        `<rect x="${f(6 * U + 5)}" y="${f(6 * U + 5)}" width="${f((cfg.pageW - 12) * U - 10)}" height="${f((cfg.pageH - 12) * U - 10)}" fill="none" stroke="#111111" stroke-width="0.45"/>`
+    );
+  } else {
+  s.push(`<g clip-path="${mapClip}">`);
+  s.push(`<path d="${geopath(landObj)}" fill="#e9e5dc" stroke="#4a4640" stroke-width="0.9" stroke-linejoin="round" fill-rule="evenodd"/>`);
+  s.push(`<path d="${geopath(graticule)}" fill="none" stroke="#cdc8be" stroke-width="0.45"/>`);
+
+  // OLA-style areals: dashed outline + light hatching, under everything else
+  for (const g of inMain) {
+    if (!g.areal) continue;
+    const pts = g.areal.map(([lon, lat]) => projection([lon, lat]));
+    if (pts.some((p) => !p || Number.isNaN(p[0]))) continue;
+    const d = pts.map((p, i) => `${i === 0 ? "M" : "L"}${f(p[0])},${f(p[1])}`).join("") + "Z";
+    s.push(`<path d="${d}" fill="url(#hatch-${cfg.key})" fill-opacity="0.30" stroke="#3d3a34" stroke-width="0.9" stroke-dasharray="5 3"/>`);
+    stats.areals_drawn += 1;
+  }
+
+  relaxAll(inMain, box);
+
   const placed = [];
-  const markers = [];
-  const chips = [];
   const labels = [];
   const leaders = [];
-  let collisions = 0;
 
-  relaxAll(groups, box);
-
-  for (const g of groups) {
-    const r = markerRadU(g) + (g.conditional ? 3.2 : 0) + 2.5;
-    placed.push({ x0: g.px2 - r, x1: g.px2 + r, y0: g.py2 - r, y1: g.py2 + r });
-  }
-  let chipClosePairs = 0;
-  for (let i = 0; i < groups.length; i++) {
-    for (let j = i + 1; j < groups.length; j++) {
-      const a = groups[i];
-      const b = groups[j];
-      const d = Math.hypot(a.px2 - b.px2, a.py2 - b.py2);
-      if (d < markerRadU(a) + markerRadU(b) - 1) chipClosePairs += 1;
+  // displaced chips keep a thin link to the true spot
+  for (const g of inMain) {
+    if (g.displaced) {
+      const dash = LINE_DASH[g.lineClass];
+      s.push(`<line x1="${f(g.px)}" y1="${f(g.py)}" x2="${f(g.px2)}" y2="${f(g.py2)}" stroke="#55524c" stroke-width="0.4"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`);
+      s.push(`<circle cx="${f(g.px)}" cy="${f(g.py)}" r="1.7" fill="none" stroke="#111111" stroke-width="0.5"/>`);
     }
   }
-  for (const g of groups) {
-    markers.push(g);
-    if (!g.discussed) chips.push(g);
+
+  let chipClosePairs = 0;
+  for (let i = 0; i < inMain.length; i++) {
+    for (let j = i + 1; j < inMain.length; j++) {
+      const a = inMain[i];
+      const b = inMain[j];
+      const d = Math.hypot(a.px2 - b.px2, a.py2 - b.py2);
+      if (d < markerRadU(a) + markerRadU(b) - 1) {
+        chipClosePairs += 1;
+        stats.chip_close_pair = `${a.primary.head} (${a.px.toFixed(0)},${a.py.toFixed(0)}) <-> ${b.primary.head} (${b.px.toFixed(0)},${b.py.toFixed(0)}) d=${d.toFixed(1)}`;
+      }
+    }
   }
-  const labeledGroups = groups
+  stats.chip_close_pairs = chipClosePairs;
+
+  // inset (sheet C): west points live here at a larger scale
+  let insetCtx = null;
+  if (cfg.inset) {
+    const west = groups.filter((g) => g.lineClass === "west");
+    const ib = {
+      x0: cfg.inset.box.x0 * U,
+      y0: cfg.inset.box.y0 * U,
+      x1: cfg.inset.box.x1 * U,
+      y1: cfg.inset.box.y1 * U,
+    };
+    const inset = buildProjection(cfg.inset.box, west.map((g) => [g.lon, g.lat]), 0.12);
+    for (const g of west) {
+      [g.ipx, g.ipy] = inset.projection([g.lon, g.lat]);
+    }
+    insetCtx = { west, inset, ib };
+    placed.push({ x0: ib.x0 - 3, x1: ib.x1 + 3, y0: ib.y0 - 3, y1: ib.y1 + 3 });
+  }
+
+  // discussed labels on the main map (east classes; west live in the inset on sheet C)
+  const mainLabeled = inMain
     .filter((x) => x.discussed)
     .map((g) => ({
       g,
@@ -303,19 +445,30 @@ function render() {
       ),
     }))
     .sort((a, b) => b.width - a.width || a.g.primary.head.localeCompare(b.g.primary.head, "ru"));
-  let fallbackUsed = 0;
-  for (const { g } of labeledGroups) {
+
+  const buildLines = (g) => {
     const lines = wrapText(g.mapName, 26, 2);
     if (g.pages) {
       lines.push(...wrapText(g.pages, 34, 3).map((l, i) => (i === 0 ? `стр. ${l}` : l)));
     } else if (g.conditional) {
-      lines.push("расположение условно");
+      lines.push("условная координата");
     }
     if (lines.length > MAX_LABEL_LINES) {
       lines.length = MAX_LABEL_LINES;
-      lines[MAX_LABEL_LINES - 1] += "…";
+      lines[MAX_LABEL_LINES - 1] += ":";
     }
-    const pos = placeLabel(g, g.px2, g.py2, lines, placed, box, LABEL_FONT_U);
+    return lines;
+  };
+
+  const pushLeader = (g, x2, y2) => {
+    const dash = LINE_DASH[g.lineClass];
+    leaders.push({ x1: g.px2, y1: g.py2, x2, y2, dash });
+  };
+
+  for (const { g } of mainLabeled) {
+    const lines = buildLines(g);
+    const origin = g.anchorPx ? { x: g.anchorPx[0], y: g.anchorPx[1] } : { x: g.px2, y: g.py2 };
+    const pos = placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U);
     if (!pos) {
       const widest = Math.max(...lines.map((l) => textW(l, LABEL_FONT_U)));
       const blockH = lines.length * LABEL_FONT_U * 1.22;
@@ -333,191 +486,423 @@ function render() {
             }
           }
           if (clash) continue;
-          const dist = Math.hypot(gx - g.px2, gy - g.py2);
+          const dist = Math.hypot(gx - origin.x, gy - origin.y);
           if (!best || dist < best.dist) best = { ...bb, dist };
         }
       }
       if (best) {
         placed.push({ x0: best.x0, x1: best.x1, y0: best.y0, y1: best.y1 });
         labels.push({ g, x: best.x0, y: best.y0 + LABEL_FONT_U * 0.85, anchor: "start", lines, lineH: LABEL_FONT_U * 1.22 });
-        leaders.push({ x1: g.px2, y1: g.py2, x2: best.x0 - 2, y2: best.y0 + LABEL_FONT_U * 0.4 });
-        fallbackUsed += 1;
+        pushLeader(g, best.x0 - 2, best.y0 + LABEL_FONT_U * 0.4);
+        stats.labels_in_fallback_slots += 1;
       } else {
-        collisions += 1;
-        const lx = Math.min(Math.max(g.px2 + 12, box.x0 + 60), box.x1 - 60);
-        const ly = Math.min(Math.max(g.py2 - 12, box.y0 + 16), box.y1 - 8);
+        stats.labels_without_slot += 1;
+        const lx = Math.min(Math.max(origin.x + 12, box.x0 + 60), box.x1 - 60);
+        const ly = Math.min(Math.max(origin.y - 12, box.y0 + 16), box.y1 - 8);
         labels.push({ g, x: lx, y: ly, anchor: "middle", lines, lineH: LABEL_FONT_U * 1.22 });
-        leaders.push({ x1: g.px2, y1: g.py2, x2: lx, y2: ly - 4 });
+        pushLeader(g, lx, ly - 4);
       }
     } else {
       labels.push({ g, ...pos });
       const lx = pos.anchor === "end" ? pos.x - textW(lines[0], LABEL_FONT_U) : pos.anchor === "middle" ? pos.x - textW(lines[0], LABEL_FONT_U) / 2 : pos.x;
-      const nearDisplaced = Math.hypot(lx - g.px2, pos.y - g.py2) > 24;
-      if (nearDisplaced || g.displaced) {
-        leaders.push({ x1: g.px2, y1: g.py2, x2: lx, y2: pos.y - 2 });
+      if (g.anchorPx || Math.hypot(lx - g.px2, pos.y - g.py2) > 24 || g.displaced) {
+        pushLeader(g, lx, pos.y - 2);
       }
     }
   }
 
-  const frame = { x: box.x0, y: box.y0, w: box.x1 - box.x0, h: box.y1 - box.y0 };
-  const c0 = projection([30, 45]);
-  const c1 = projection([31, 45]);
-  const kmPerUnit = (111.32 * Math.cos((45 * Math.PI) / 180)) / Math.abs(c1[0] - c0[0]);
-  const barKm = 1000;
-  const barU = barKm / kmPerUnit;
-  const barX = frame.x + 12;
-  const barY = frame.y + frame.h - 12;
-
-  const s = [];
-  s.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${PAGE_W_MM * U} ${PAGE_H_MM * U}" font-family="Georgia, 'Times New Roman', serif">`);
-  s.push(`<rect width="${PAGE_W_MM * U}" height="${PAGE_H_MM * U}" fill="#ffffff"/>`);
-  s.push(`<defs><clipPath id="map-clip"><rect x="${f(frame.x)}" y="${f(frame.y)}" width="${f(frame.w)}" height="${f(frame.h)}"/></clipPath></defs>`);
-
-  s.push(
-    `<text x="${8 * U}" y="${8.4 * U}" font-size="23" font-weight="bold" fill="#111111">Карта топонимов книги</text>` +
-      `<text x="${8 * U}" y="${(8.4 * U + 13).toFixed(1)}" font-size="11" fill="#33302b">«Из жизни слов и языков» · ${total} названий мест: обсуждаемые в книге подписаны с номерами страниц, остальные раскрывает легенда ниже</text>`
-  );
-
-  s.push(`<g clip-path="url(#map-clip)">`);
-  s.push(`<path d="${geopath(land)}" fill="#e9e5dc" stroke="#4a4640" stroke-width="0.9" stroke-linejoin="round" fill-rule="evenodd"/>`);
-  s.push(`<path d="${geopath(graticule)}" fill="none" stroke="#cdc8be" stroke-width="0.45"/>`);
-  for (const g of groups) {
-    if (g.displaced) {
-      s.push(`<line x1="${f(g.px)}" y1="${f(g.py)}" x2="${f(g.px2)}" y2="${f(g.py2)}" stroke="#55524c" stroke-width="0.4"/>`);
-      s.push(`<circle cx="${f(g.px)}" cy="${f(g.py)}" r="1.7" fill="none" stroke="#111111" stroke-width="0.5"/>`);
-    }
-  }
-  for (const g of markers) {
+  // markers + chips on the main map
+  for (const g of inMain) {
     if (g.discussed) {
-      s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="2.8" fill="#111111" stroke="#ffffff" stroke-width="0.7"/>`);
+      if (g.lineClass === "west") {
+        s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="2.8" fill="#ffffff" stroke="#111111" stroke-width="1.1"/>`);
+      } else {
+        s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="2.8" fill="#111111" stroke="#ffffff" stroke-width="0.7"/>`);
+      }
       if (g.conditional) {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="6" fill="none" stroke="#111111" stroke-width="0.55" stroke-dasharray="2.2 1.8"/>`);
       }
+    } else {
+      if (g.conditional) {
+        s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="10.5" fill="none" stroke="#111111" stroke-width="0.55" stroke-dasharray="2.2 1.8"/>`);
+      }
+      const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
+      s.push(
+        `<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="7" fill="#ffffff" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.px2)}" y="${f(g.py2 + 2.5)}" text-anchor="middle" font-size="7.2" fill="#111111">${g.number}</text>`
+      );
     }
   }
   for (const l of leaders) {
-    s.push(`<line x1="${f(l.x1)}" y1="${f(l.y1)}" x2="${f(l.x2)}" y2="${f(l.y2)}" stroke="#55524c" stroke-width="0.4"/>`);
-  }
-  for (const g of chips) {
-    if (g.conditional) {
-      s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="10.5" fill="none" stroke="#111111" stroke-width="0.55" stroke-dasharray="2.2 1.8"/>`);
-    }
-    s.push(
-      `<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="7" fill="#ffffff" stroke="#111111" stroke-width="0.6"/><text x="${f(g.px2)}" y="${f(g.py2 + 2.5)}" text-anchor="middle" font-size="7.2" fill="#111111">${g.number}</text>`
-    );
+    s.push(`<line x1="${f(l.x1)}" y1="${f(l.y1)}" x2="${f(l.x2)}" y2="${f(l.y2)}" stroke="#55524c" stroke-width="0.4"${l.dash ? ` stroke-dasharray="${l.dash}"` : ""}/>`);
   }
   for (const l of labels) {
     s.push(textBlockSvg(l, LABEL_FONT_U));
   }
+
+  // inset content above everything in its box
+  if (insetCtx) {
+    const { west, inset, ib } = insetCtx;
+    s.push(`<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(ib.y1 - ib.y0)}" fill="#ffffff"/>`);
+    s.push(`<g clip-path="url(#inset-clip-${cfg.key})">`);
+    s.push(`<path d="${inset.geopath(landObj)}" fill="#e9e5dc" stroke="#4a4640" stroke-width="0.9" stroke-linejoin="round" fill-rule="evenodd"/>`);
+    s.push(`<path d="${inset.geopath(graticule)}" fill="none" stroke="#cdc8be" stroke-width="0.45"/>`);
+    const iPlaced = [];
+    for (const g of west) {
+      if (!g.discussed) {
+        const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
+        s.push(
+          `<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="7" fill="#ffffff" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.ipx)}" y="${f(g.ipy + 2.5)}" text-anchor="middle" font-size="7.2" fill="#111111">${g.number}</text>`
+        );
+        iPlaced.push({ x0: g.ipx - 8, x1: g.ipx + 8, y0: g.ipy - 8, y1: g.ipy + 8 });
+      } else {
+        const g2 = { ...g, px2: g.ipx, py2: g.ipy, anchor: null };
+        if (g2.lineClass === "west") {
+          s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="2.8" fill="#ffffff" stroke="#111111" stroke-width="1.1"/>`);
+        } else {
+          s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="2.8" fill="#111111" stroke="#ffffff" stroke-width="0.7"/>`);
+        }
+        iPlaced.push({ x0: g.ipx - 4, x1: g.ipx + 4, y0: g.ipy - 4, y1: g.ipy + 4 });
+      }
+    }
+    const iLabeled = west
+      .filter((g) => g.discussed)
+      .map((g) => ({ g, width: Math.max(...wrapText(g.mapName, 20, 2).map((l) => textW(l, INSET_LABEL_FONT_U))) }))
+      .sort((a, b) => b.width - a.width);
+    for (const { g } of iLabeled) {
+      const lines = wrapText(g.mapName, 20, 2);
+      const pos = placeLabel(g, g.ipx, g.ipy, lines, iPlaced, ib, INSET_LABEL_FONT_U, ib);
+      if (pos) {
+        s.push(textBlockSvg({ g, ...pos }, INSET_LABEL_FONT_U));
+      } else {
+        stats.labels_without_slot += 1;
+        s.push(textBlockSvg({ g, x: g.ipx + 10, y: g.ipy, anchor: "start", lines, lineH: INSET_LABEL_FONT_U * 1.22 }, INSET_LABEL_FONT_U));
+      }
+    }
+    s.push(`</g>`);
+    s.push(
+      `<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(ib.y1 - ib.y0)}" fill="none" stroke="#111111" stroke-width="1.2"/>` +
+        `<text x="${f((ib.x0 + ib.x1) / 2)}" y="${f(ib.y1 - 6)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b">${esc(WEST_CAPTION)}</text>`
+    );
+  }
+
   s.push(`</g>`);
 
+  // escapes: every label rect must sit inside its frame
+  for (const l of labels) {
+    const widest = Math.max(...l.lines.map((line) => textW(line, LABEL_FONT_U)));
+    const bx0 = l.anchor === "end" ? l.x - widest : l.anchor === "middle" ? l.x - widest / 2 : l.x;
+    const by0 = l.y - l.lineH * 0.8;
+    if (bx0 < box.x0 || bx0 + widest > box.x1 || by0 < box.y0 || by0 + l.lines.length * l.lineH > box.y1) stats.escapes += 1;
+  }
+
+  // frame
   s.push(
     `<rect x="${f(frame.x)}" y="${f(frame.y)}" width="${f(frame.w)}" height="${f(frame.h)}" fill="none" stroke="#111111" stroke-width="1.6"/>` +
       `<rect x="${f(frame.x + 5)}" y="${f(frame.y + 5)}" width="${f(frame.w - 10)}" height="${f(frame.h - 10)}" fill="none" stroke="#111111" stroke-width="0.45"/>`
   );
-
-  s.push(
-    `<rect x="${f(barX)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#111111"/>` +
-      `<rect x="${f(barX + barU / 4)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/>` +
-      `<rect x="${f(barX + barU / 2)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#111111"/>` +
-      `<rect x="${f(barX + (barU * 3) / 4)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/>` +
-      `<text x="${f(barX)}" y="${f(barY + 6.5)}" font-size="7" fill="#111111">0</text>` +
-      `<text x="${f(barX + barU / 2)}" y="${f(barY + 6.5)}" text-anchor="middle" font-size="7" fill="#111111">${barKm / 2}</text>` +
-      `<text x="${f(barX + barU)}" y="${f(barY + 6.5)}" text-anchor="middle" font-size="7" fill="#111111">${barKm}</text>` +
-      `<text x="${f(barX + barU + 8)}" y="${f(barY + 6.5)}" font-size="7" fill="#111111">км</text>`
-  );
-
-  s.push(
-    `<text x="${LEGEND_X0 * U}" y="${f(LEGEND_HEADER_Y * U)}" font-size="12.6" font-weight="bold" fill="#111111">Легенда: топонимы по номерам</text>` +
-      `<text x="${(LEGEND_X1 * U).toFixed(1)}" y="${f(LEGEND_HEADER_Y * U)}" text-anchor="end" font-size="9.4" fill="#33302b">номер у точки на карте · страницы книги, где встречается название</text>`
-  );
-  const numbered = groups.filter((g) => !g.discussed);
-  const colW = ((LEGEND_X1 - LEGEND_X0) * U) / LEGEND_COLS;
-  const rowsPerCol = Math.ceil(numbered.length / LEGEND_COLS);
-  const colCursors = Array(LEGEND_COLS).fill(LEGEND_ROWS_Y * U);
-  let rowsDrawn = 0;
-  let legendOverflow = 0;
-  let legendParityOk = true;
-  for (let i = 0; i < numbered.length; i++) {
-    const g = numbered[i];
-    const col = Math.floor(i / rowsPerCol);
-    const x = LEGEND_X0 * U + col * colW;
-    const y = colCursors[col];
-    const expect = g.pages ? `стр. ${g.pages}` : "—";
-    const maxChars = Math.floor((colW - 12) / (LEGEND_FONT_U * CHAR_W));
-    const rowText = `${g.number}. ${g.display} — ${expect}`;
-    const lines = wrapText(rowText, maxChars, 2);
-    const rowH = LEGEND_ROW_H + (lines.length - 1) * 11;
-    if (y + rowH > LEGEND_Y1 * U) {
-      legendOverflow += 1;
-      continue;
-    }
-    rowsDrawn += 1;
-    s.push(
-      `<text x="${f(x)}" y="${f(y)}" font-size="${LEGEND_FONT_U}" fill="#111111">` +
-        lines
-          .map(
-            (line, li) =>
-              `<tspan x="${f(x)}" dy="${li === 0 ? 0 : 11}">${esc(line)}</tspan>`
-          )
-          .join("") +
-        `</text>`
-    );
-    if (g.pages && expect !== `стр. ${g.pages}`) legendParityOk = false;
-    colCursors[col] = y + rowH;
   }
 
-  const keyY = (LEGEND_Y1 + 3.6) * U;
-  s.push(
-    `<text x="${LEGEND_X0 * U}" y="${f(keyY)}" font-size="9" fill="#33302b">Точка — место из книги · номер в кружке — см. легенду · пунктир — условное расположение («Велесова книга») · «—» — без страниц</text>`
-  );
-  s.push(
-    `<text x="${(LEGEND_X1 * U).toFixed(1)}" y="${f(keyY)}" text-anchor="end" font-size="8.2" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция</text>`
-  );
+  // scale bar
+  if (cfg.scaleBar) {
+    const refLat = 45;
+    const c0 = projection([30, refLat]);
+    const c1 = projection([31, refLat]);
+    const kmPerUnit = (111.32 * Math.cos((refLat * Math.PI) / 180)) / Math.abs(c1[0] - c0[0]);
+    const barKm = 1000;
+    const barU = barKm / kmPerUnit;
+    const barX = frame.x + 12;
+    const barY = frame.y + frame.h - 12;
+    s.push(
+      `<rect x="${f(barX)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#111111"/>` +
+        `<rect x="${f(barX + barU / 4)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/>` +
+        `<rect x="${f(barX + barU / 2)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#111111"/>` +
+        `<rect x="${f(barX + (barU * 3) / 4)}" y="${f(barY - 4.4)}" width="${f(barU / 4)}" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/>` +
+        `<text x="${f(barX)}" y="${f(barY + 6.5)}" font-size="7" fill="#111111">0</text>` +
+        `<text x="${f(barX + barU / 2)}" y="${f(barY + 6.5)}" text-anchor="middle" font-size="7" fill="#111111">${barKm / 2}</text>` +
+        `<text x="${f(barX + barU)}" y="${f(barY + 6.5)}" text-anchor="middle" font-size="7" fill="#111111">${barKm}</text>` +
+        `<text x="${f(barX + barU + 8)}" y="${f(barY + 6.5)}" font-size="7" fill="#111111">км</text>`
+    );
+  }
+
+  // CIS anchors must sit east of 55E (MG: former-CIS labels move onto RF territory)
+  for (const g of inMain) {
+    if (g.anchor && g.anchorPx) {
+      if (g.anchor.lon >= 55) stats.cis_anchored_ok += 1;
+    }
+  }
+
+  // legend
+  const numbered = groups.filter((g) => !g.discussed);
+  if (cfg.legend === "spread") {
+    s.push(
+      `<text x="${LEG_X0 * U}" y="${f(LEG_HEADER_Y * U)}" font-size="12.6" font-weight="bold" fill="#111111">Легенда: топонимы по номерам</text>` +
+        `<text x="${SIDE_X1 * U}" y="${f(LEG_HEADER_Y * U)}" text-anchor="end" font-size="9.4" fill="#33302b">номер у точки на карте · страницы книги, где встречается название</text>`
+    );
+    const stripColW = ((LEG_X1 - LEG_X0) * U) / LEG_COLS;
+    const sideColW = (SIDE_X1 - SIDE_X0) * U;
+    const cursors = [LEG_ROWS_Y * U, LEG_ROWS_Y * U, LEG_ROWS_Y * U, SIDE_ROWS_Y * U];
+    const colMax = (w) => Math.floor((w - 12) / (LEGEND_FONT_U * CHAR_W));
+    for (const g of numbered) {
+      let col = cursors[0] <= LEG_Y1 * U && cursors[0] <= cursors[1] ? 0 : cursors[1] <= LEG_Y1 * U && cursors[1] <= cursors[2] ? 1 : cursors[2] <= LEG_Y1 * U ? 2 : 3;
+      const maxCharsFor = (c) => colMax(c === 3 ? sideColW : stripColW);
+      let row = legendRowSvg(col === 3 ? SIDE_X0 * U : LEG_X0 * U + col * stripColW, cursors[col], LEGEND_FONT_U, maxCharsFor(col), g);
+      if (col !== 3 && cursors[col] + row.rowH > LEG_Y1 * U) {
+        col = 3;
+        row = legendRowSvg(SIDE_X0 * U, cursors[3], LEGEND_FONT_U, maxCharsFor(3), g);
+      }
+      if (!row.parity) stats.legend_parity_ok = false;
+      if (cursors[col] + row.rowH > (col === 3 ? LEG_Y1 : LEG_Y1) * U) {
+        stats.legend_overflow += 1;
+        continue;
+      }
+      s.push(row.svg);
+      stats.legend_rows_drawn += 1;
+      cursors[col] += row.rowH;
+    }
+    stats.legend_capacity = 3 * Math.floor(((LEG_Y1 - LEG_ROWS_Y) * U) / LEGEND_ROW_H) + Math.floor(((LEG_Y1 - SIDE_ROWS_Y) * U) / LEGEND_ROW_H);
+    const keyY = (LEG_Y1 + 3.6) * U;
+    s.push(
+      `<text x="${LEG_X0 * U}" y="${f(keyY)}" font-size="9" fill="#33302b">Заливка маркера · сплошная выноска — Западная Европа; контур · штриховая выноска — Русь, Византия, Восток; штриховой ареал — языковая зона</text>` +
+        `<text x="${SIDE_X1 * U}" y="${f(keyY)}" text-anchor="end" font-size="8.2" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция</text>`
+    );
+    s.push(
+      `<text x="${LEG_X0 * U}" y="${f(keyY + 11)}" font-size="9" fill="#33302b">Пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц</text>`
+    );
+  } else if (cfg.legend === "page") {
+    s.push(
+      `<text x="${PLEG_X0 * U}" y="${f(PLEG_HEADER_Y * U)}" font-size="14" font-weight="bold" fill="#111111">Легенда: топонимы по номерам</text>` +
+        `<text x="${PLEG_X1 * U}" y="${f((PLEG_HEADER_Y + 8) * U)}" text-anchor="end" font-size="9" fill="#33302b">номер у точки на карте · страницы книги, где встречается название</text>`
+    );
+    const colW = ((PLEG_X1 - PLEG_X0) * U) / PLEG_COLS;
+    const cursors = Array(PLEG_COLS).fill(PLEG_ROWS_Y * U);
+    for (let i = 0; i < numbered.length; i++) {
+      const g = numbered[i];
+      const col = cursors[0] <= PLEG_Y1 * U && cursors[0] <= Math.min(cursors[1], cursors[2]) ? 0 : cursors[1] <= PLEG_Y1 * U && cursors[1] <= cursors[2] ? 1 : 2;
+      const x = PLEG_X0 * U + col * colW;
+      const maxChars = Math.floor((colW - 12) / (LEGEND_FONT_U * CHAR_W));
+      const row = legendRowSvg(x, cursors[col], LEGEND_FONT_U, maxChars, g, 3);
+      if (!row.parity) stats.legend_parity_ok = false;
+      if (cursors[col] + row.rowH > PLEG_Y1 * U) {
+        stats.legend_overflow += 1;
+        continue;
+      }
+      s.push(row.svg);
+      stats.legend_rows_drawn += 1;
+      cursors[col] += row.rowH;
+    }
+    stats.legend_capacity = PLEG_COLS * Math.floor(((PLEG_Y1 - PLEG_ROWS_Y) * U) / LEGEND_ROW_H);
+    const keyY = (PLEG_Y1 + 5) * U;
+    s.push(
+      `<text x="${PLEG_X0 * U}" y="${f(keyY)}" font-size="8.2" fill="#33302b">Заливка маркера · сплошная выноска — Западная Европа; контур маркера · штриховая выноска — Русь, Византия, Восток</text>` +
+        `<text x="${PLEG_X0 * U}" y="${f(keyY + 10)}" font-size="8.2" fill="#33302b">Штриховой ареал — языковая зона · пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц</text>` +
+        `<text x="${PLEG_X0 * U}" y="${f(keyY + 20)}" font-size="8" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция</text>`
+    );
+  }
+
+  // title + subtitle
+  if (cfg.title) {
+    s.push(`<text x="${8 * U}" y="${8.4 * U}" font-size="23" font-weight="bold" fill="#111111">Карта топонимов книги</text>`);
+    const sub = `«Из жизни слов и языков» · ${total} названий мест: обсуждаемые в книге подписаны с номерами страниц${cfg.legend ? ", остальные раскрывает легенда" : ", номера раскрывает легенда на соседней странице"}`;
+    if (cfg.pageW < 200) {
+      const subLines = wrapText(sub, 66, 2);
+      s.push(
+        `<text x="${8 * U}" y="${(8.4 * U + 11).toFixed(1)}" font-size="10" fill="#33302b">` +
+          subLines.map((l, i) => `<tspan x="${8 * U}" dy="${i === 0 ? 0 : 12.5}">${esc(l)}</tspan>`).join("") +
+          `</text>`
+      );
+    } else {
+      s.push(`<text x="${8 * U}" y="${(8.4 * U + 13).toFixed(1)}" font-size="11" fill="#33302b">${esc(sub)}</text>`);
+    }
+  }
 
   s.push("</svg>");
-  const svg = s.join("\n");
-  fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.writeFileSync(path.join(OUT_DIR, "toponyms-map.svg"), svg, "utf-8");
+  return { svg: s.join("\n"), stats };
+}
 
-  const html = `<!doctype html>
+// ---------------------------------------------------------------------------
+
+function pageHtml(title, pageW, pageH, svgs) {
+  return `<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<title>Карта топонимов книги — печатный макет (H3974)</title>
+<title>${esc(title)}</title>
 <style>
-  @page { size: ${PAGE_W_MM}mm ${PAGE_H_MM}mm; margin: 0; }
+  @page { size: ${pageW}mm ${pageH}mm; margin: 0; }
   html, body { margin: 0; padding: 0; background: #888; }
-  svg { display: block; width: ${PAGE_W_MM}mm; height: ${PAGE_H_MM}mm; background: #fff; }
+  svg { display: block; width: ${pageW}mm; height: ${pageH}mm; background: #fff; }
+  .sheet { page-break-after: always; }
+  .sheet:last-child { page-break-after: auto; }
   @media print { html, body { background: #fff; } }
 </style>
 </head>
 <body>
-${svg}
+${svgs.map((svg) => `<div class="sheet">${svg}</div>`).join("\n")}
 </body>
 </html>
 `;
-  fs.writeFileSync(path.join(OUT_DIR, "toponyms-map-print.html"), html, "utf-8");
+}
 
+function reviewHtml(title, sheets) {
+  return `<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>${esc(title)}</title>
+<style>
+  body { margin: 0; padding: 16px; background: #55524c; font-family: Georgia, serif; }
+  h2 { color: #fff; font-size: 15px; margin: 18px 0 6px; }
+  .wrap { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.5); margin-bottom: 8px; }
+  .w-spread { width: 1100px; }
+  .w-page { width: 550px; }
+  svg { display: block; width: 100%; height: auto; }
+</style>
+</head>
+<body>
+${sheets
+  .map(
+    (sh) => `<h2>${esc(sh.title)}</h2><div class="wrap ${sh.pageW > 200 ? "w-spread" : "w-page"}">${sh.svg}</div>`
+  )
+  .join("\n")}
+</body>
+</html>
+`;
+}
+
+function render() {
+  const { groups, total } = loadGroups();
+  const world = JSON.parse(fs.readFileSync(path.join(ROOT, "vendor/land-50m.json"), "utf-8"));
+  const land = topojson.feature(world, world.objects.land);
+  const numbered = groups.filter((g) => !g.discussed);
+
+  const sheets = [
+    {
+      key: "A",
+      pageW: SPREAD_W_MM,
+      pageH: SPREAD_H_MM,
+      mapBox: MAP_BOX_A,
+      fit: "all",
+      inset: null,
+      legend: "spread",
+      title: true,
+      scaleBar: true,
+      svgFile: "toponyms-map.svg",
+    },
+    {
+      key: "Bmap",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: MAP_BOX_B,
+      fit: "all",
+      inset: { box: { x0: 8, y0: 18, x1: 60, y1: 80 } },
+      legend: null,
+      title: true,
+      scaleBar: true,
+      svgFile: "toponyms-map-b-map.svg",
+    },
+    {
+      key: "Blegend",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: { x0: 0, y0: 0, x1: PAGE_W_MM, y1: PAGE_H_MM },
+      fit: "all",
+      inset: null,
+      legend: "page",
+      noMap: true,
+      title: false,
+      scaleBar: false,
+      svgFile: "toponyms-map-b-legend.svg",
+    },
+    {
+      key: "C",
+      pageW: SPREAD_W_MM,
+      pageH: SPREAD_H_MM,
+      mapBox: MAP_BOX_A,
+      fit: "all",
+      inset: { box: INSET_BOX_C },
+      legend: "spread",
+      title: true,
+      scaleBar: true,
+      svgFile: "toponyms-map-c.svg",
+    },
+  ];
+
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  const rendered = [];
+  for (const cfg of sheets) {
+    const { svg, stats } = renderSheet(cfg, world, land, groups, total);
+    fs.writeFileSync(path.join(OUT_DIR, cfg.svgFile), svg, "utf-8");
+    rendered.push({ cfg, svg, stats });
+    console.log(cfg.key, JSON.stringify(stats));
+  }
+
+  const byKey = Object.fromEntries(rendered.map((r) => [r.cfg.key, r.stats]));
+
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-print.html"),
+    pageHtml("Карта топонимов книги — печатный макет (H3996)", SPREAD_W_MM, SPREAD_H_MM, [rendered[0].svg]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b-print.html"),
+    pageHtml("Карта топонимов книги — страница + легенда (H3996)", PAGE_W_MM, PAGE_H_MM, [rendered[1].svg, rendered[2].svg]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-c-print.html"),
+    pageHtml("Карта топонимов книги — разворот с врезкой (H3996)", SPREAD_W_MM, SPREAD_H_MM, [rendered[3].svg]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map.html"),
+    reviewHtml(
+      "Карта топонимов книги — все листы (H3996)",
+      [
+        { title: "A — разворот: карта + легенда (4-й столбец в полный рост)", pageW: SPREAD_W_MM, svg: rendered[0].svg },
+        { title: "B — страница (карта) + соседняя страница (легенда)", pageW: PAGE_W_MM, svg: rendered[1].svg },
+        { title: "B — легенда, правая страница", pageW: PAGE_W_MM, svg: rendered[2].svg },
+        { title: "C — разворот с врезкой Западной Европы", pageW: SPREAD_W_MM, svg: rendered[3].svg },
+      ]
+    ),
+    "utf-8"
+  );
+
+  const A = byKey.A;
   const report = {
     total_toponyms: total,
     coordinate_groups: groups.length,
     labeled_groups: groups.filter((g) => g.discussed).length,
     numbered_groups: numbered.length,
-    legend_rows_drawn: rowsDrawn,
-    legend_capacity: rowsPerCol * LEGEND_COLS,
-    legend_overflow: legendOverflow,
-    labels_without_slot: collisions,
-    labels_in_fallback_slots: fallbackUsed,
-    chip_close_pairs: chipClosePairs,
-    legend_parity_ok: legendParityOk,
-    scale_bar_km: barKm,
-    page_mm: [PAGE_W_MM, PAGE_H_MM],
+    west_groups: groups.filter((g) => g.lineClass === "west").length,
+    east_groups: groups.filter((g) => g.lineClass !== "west").length,
+    cis_anchored: groups.filter((g) => g.anchor).length,
+    areals: groups.filter((g) => g.areal).length,
+    legend_rows_drawn: A.legend_rows_drawn,
+    legend_capacity: A.legend_capacity,
+    legend_overflow: A.legend_overflow,
+    labels_without_slot: rendered.reduce((acc, r) => acc + r.stats.labels_without_slot, 0),
+    labels_in_fallback_slots: rendered.reduce((acc, r) => acc + r.stats.labels_in_fallback_slots, 0),
+    chip_close_pairs: Math.max(...rendered.map((r) => r.stats.chip_close_pairs)),
+    legend_parity_ok: rendered.every((r) => r.stats.legend_parity_ok),
+    cis_anchored_ok: A.cis_anchored_ok,
+    areals_drawn_total: rendered.reduce((acc, r) => acc + r.stats.areals_drawn, 0),
+    scale_bar_km: 1000,
+    page_mm: [SPREAD_W_MM, SPREAD_H_MM],
+    sheets: byKey,
   };
   fs.writeFileSync(path.join(OUT_DIR, "toponyms-map-report.json"), JSON.stringify(report, null, 2) + "\n", "utf-8");
   console.log(JSON.stringify(report, null, 2));
 
-  const hardFail = collisions > 0 || legendOverflow > 0 || rowsDrawn !== numbered.length || !legendParityOk || chipClosePairs > 0;
+  const hardFail =
+    report.labels_without_slot > 0 ||
+    report.legend_overflow > 0 ||
+    A.legend_rows_drawn !== numbered.length ||
+    rendered[2].stats.legend_rows_drawn !== numbered.length ||
+    !report.legend_parity_ok ||
+    report.chip_close_pairs > 0 ||
+    report.cis_anchored_ok !== report.cis_anchored ||
+    report.areals_drawn_total < 3 ||
+    rendered.some((r) => r.stats.escapes > 0);
   if (hardFail) {
     console.error("FAIL: see report fields above");
     process.exit(1);
