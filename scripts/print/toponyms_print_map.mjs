@@ -57,16 +57,19 @@ const PLEG_COLS = 2;
 const PLEG_FONT_U = 11;
 const PLEG_PITCH_U = 17;
 
-// sheet D2 (MG 03-09-2026 rev 2): two-panel chips-only page - dense zoom on
-// top (Europe + Rus core), world overview locator at the bottom; every group
-// is numbered and lives on EXACTLY ONE panel; legend page unchanged (83 rows).
-// D_STAMP = visible version stamp for MG feedback; removed before print.
-const D_DENSE_BOX = { x0: 8, y0: 20, x1: 137, y1: 138 };
-const D_DENSE_GEO = { lat0: 44.5, lat1: 64.5, lon0: -2.5, lon1: 45.5 };
-const D_OVER_BOX = { x0: 8, y0: 142, x1: 137, y1: 196 };
-const D_DENSE_CAPTION = "Русь и Западная Евразия · крупный план";
-const D_OVER_CAPTION = "Обзор: остальные названия мест";
-const D_STAMP = "вариант D2 · v4.17.8 · 03-09-2026";
+// sheet D3 (MG 03-09-2026 rev 3): two-panel chips-only page. The dense zoom
+// grows to North Africa + Murmansk/Kola (lat 25-68, lon -10-55); Центральная
+// Африка stays on the overview and the zoom shows its chip at the frame's
+// south edge with a leader-arrow running to the true (off-frame) spot. Every
+// group is numbered and lives on EXACTLY ONE panel (the pointer chip excepted,
+// it mirrors the overview). Versioned URLs: this revision writes d3-* files,
+// older URLs stay frozen. D_STAMP = visible version stamp, removed before print.
+const D_DENSE_BOX = { x0: 8, y0: 20, x1: 137, y1: 150 };
+const D_DENSE_GEO = { lat0: 25, lat1: 68, lon0: -10, lon1: 55 };
+const D_OVER_BOX = { x0: 8, y0: 154, x1: 137, y1: 196 };
+const D_DENSE_CAPTION = "Русь, Европа и Северная Африка · крупный план";
+const D_OVER_CAPTION = "Обзор: Африка, Азия и Атлантика";
+const D_STAMP = "вариант D3 · v4.17.9 · 03-09-2026";
 const DLEG_HEADER_Y = 20;
 const DLEG_NOTE_Y = 26;
 const DLEG_ROWS_Y = 32;
@@ -924,8 +927,11 @@ function renderSheetD(cfg, world, landObj, groups, total) {
 
   const inDense = (g) =>
     g.lat >= D_DENSE_GEO.lat0 && g.lat <= D_DENSE_GEO.lat1 && g.lon >= D_DENSE_GEO.lon0 && g.lon <= D_DENSE_GEO.lon1;
+  // Центральная Африка stays on the overview; the zoom shows a pointer chip
+  // with a leader-arrow (MG: «с верхней части Африки стрелочку»)
+  const isCentralAfrica = (g) => g.primary.head === "Центральная Африка";
   const dense = groups.filter(inDense);
-  const far = groups.filter((g) => !inDense(g));
+  const far = groups.filter((g) => !inDense(g) && !isCentralAfrica(g));
   const graticule = d3.geoGraticule().step([10, 10])();
 
   const drawPanel = (panelKey, boxMm, members, opts) => {
@@ -993,13 +999,40 @@ function renderSheetD(cfg, world, landObj, groups, total) {
       `<rect x="${f(box.x0)}" y="${f(box.y0)}" width="${f(box.x1 - box.x0)}" height="${f(box.y1 - box.y0)}" fill="none" stroke="#111111" stroke-width="1.6"/>` +
         `<rect x="${f(box.x0 + 5)}" y="${f(box.y0 + 5)}" width="${f(box.x1 - box.x0 - 10)}" height="${f(box.y1 - box.y0 - 10)}" fill="none" stroke="#111111" stroke-width="0.45"/>`
     );
-    s.push(
-      `<text x="${f(box.x0 + (box.x1 - box.x0) / 2)}" y="${f(box.y1 - 6)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b" stroke="#ffffff" stroke-width="1.6" paint-order="stroke" stroke-linejoin="round">${esc(opts.caption)}</text>`
-    );
+    if (opts.captionTop) {
+      s.push(
+        `<text x="${f(box.x0 + 32)}" y="${f(box.y0 + 36)}" font-size="9.5" font-weight="bold" fill="#33302b" stroke="#ffffff" stroke-width="1.6" paint-order="stroke" stroke-linejoin="round">${esc(opts.caption)}</text>`
+      );
+    } else {
+      s.push(
+        `<text x="${f(box.x0 + (box.x1 - box.x0) / 2)}" y="${f(box.y1 - 6)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b" stroke="#ffffff" stroke-width="1.6" paint-order="stroke" stroke-linejoin="round">${esc(opts.caption)}</text>`
+      );
+    }
+    return { projection, box };
   };
 
-  drawPanel("d", D_DENSE_BOX, dense, { caption: D_DENSE_CAPTION, scaleBarKm: 500, chipR: 7, chipFont: 7.2 });
-  drawPanel("o", D_OVER_BOX, far, { caption: D_OVER_CAPTION, scaleBarKm: 0, chipR: 4.5, chipFont: 5 });
+  const denseCtx = drawPanel("d", D_DENSE_BOX, dense, { caption: D_DENSE_CAPTION, captionTop: true, scaleBarKm: 500, chipR: 7, chipFont: 7.2 });
+
+  // pointer chip: Центральная Африка sits south of the zoom frame; its chip is
+  // drawn just inside the frame's south edge with a leader running to the true
+  // (off-frame) spot, exiting at the frame as an arrowhead
+  const gCA = groups.find(isCentralAfrica);
+  if (gCA) {
+    const { projection, box } = denseCtx;
+    const [tx, ty] = projection([gCA.lon, gCA.lat]);
+    const r = 7;
+    const cx = Math.min(Math.max(tx, box.x0 + r + 4), box.x1 - r - 4);
+    const cy = box.y1 - 16;
+    s.push(`<g clip-path="url(#map-clip-${cfg.key}-d)">`);
+    s.push(`<line x1="${f(cx)}" y1="${f(cy + r)}" x2="${f(tx)}" y2="${f(ty)}" stroke="#55524c" stroke-width="0.6" stroke-dasharray="3 2"/>`);
+    s.push(`</g>`);
+    const exitT = (box.y1 - (cy + r)) / (ty - (cy + r));
+    const exX = cx + (tx - cx) * exitT;
+    s.push(`<path d="M ${f(exX - 3)} ${f(box.y1 - 5)} L ${f(exX + 3)} ${f(box.y1 - 5)} L ${f(exX)} ${f(box.y1 - 0.5)} Z" fill="#33302b"/>`);
+    s.push(chipSvgD(cx, cy, gCA, r, 7.2));
+  }
+
+  drawPanel("o", D_OVER_BOX, far, { caption: D_OVER_CAPTION, captionTop: true, scaleBarKm: 0, chipR: 5, chipFont: 5.5 });
 
   // CIS anchors must sit east of 55E (MG ruling); chips do not use anchors,
   // the data property is still gated
@@ -1023,10 +1056,10 @@ function renderSheetD(cfg, world, landObj, groups, total) {
     `<text x="${8 * U}" y="${f(keyY)}" font-size="7.6" fill="#33302b">Заливка чипа — обсуждается в книге, контур — упоминается; «—» — без страниц</text>`
   );
   s.push(
-    `<text x="${8 * U}" y="${f(keyY + 7)}" font-size="7.6" fill="#33302b">Штриховой контур — Русь, Византия, Восток; штриховой ареал — языковая зона</text>`
+    `<text x="${8 * U}" y="${f(keyY + 7)}" font-size="7.6" fill="#33302b">Штриховой контур — Русь, Византия, Восток; пунктирное кольцо — условное расположение («Велесова книга»)</text>`
   );
   s.push(
-    `<text x="${8 * U}" y="${f(keyY + 14)}" font-size="7.6" fill="#33302b">Пунктирное кольцо — условное расположение («Велесова книга»); тонкая линия — чип сдвинут</text>`
+    `<text x="${8 * U}" y="${f(keyY + 14)}" font-size="7.6" fill="#33302b">Штриховой ареал — языковая зона; стрелка у нижней рамки — точка южнее (обзор); тонкая линия — чип сдвинут</text>`
   );
 
   s.push("</svg>");
@@ -1152,7 +1185,7 @@ function render() {
       subtitle: `«Из жизни слов и языков» · ${total} названий мест: у каждой точки номер — его раскрывает легенда на соседней странице`,
       stamp: D_STAMP,
       scaleBar: false,
-      svgFile: "toponyms-map-d-map.svg",
+      svgFile: "toponyms-map-d3-map.svg",
     },
     {
       key: "Dlegend",
@@ -1166,7 +1199,7 @@ function render() {
       title: false,
       stamp: D_STAMP,
       scaleBar: false,
-      svgFile: "toponyms-map-d-legend.svg",
+      svgFile: "toponyms-map-d3-legend.svg",
     },
   ];
 
@@ -1216,17 +1249,17 @@ function render() {
     "utf-8"
   );
   fs.writeFileSync(
-    path.join(OUT_DIR, "toponyms-map-d-print.html"),
-    pageHtml("Карта топонимов книги — вариант D: карта + плотная легенда", PAGE_W_MM, PAGE_H_MM, [rendered[4].svg, rendered[5].svg]),
+    path.join(OUT_DIR, "toponyms-map-d3-print.html"),
+    pageHtml("Карта топонимов книги — вариант D3: крупный план + обзор", PAGE_W_MM, PAGE_H_MM, [rendered[4].svg, rendered[5].svg]),
     "utf-8"
   );
   fs.writeFileSync(
-    path.join(OUT_DIR, "toponyms-map-d.html"),
+    path.join(OUT_DIR, "toponyms-map-d3.html"),
     reviewHtml(
-      "Карта топонимов — вариант D2: крупный план «Русь и Западная Евразия» + обзор",
+      "Карта топонимов — вариант D3: крупный план «Русь, Европа и Северная Африка» + обзор",
       [
-        { title: `D2 — страница (карта): крупный план «Русь и Западная Евразия» + обзорный локатор, все группы номерные · ${D_STAMP}`, pageW: PAGE_W_MM, svg: rendered[4].svg },
-        { title: `D2 — соседняя страница: легенда, все группы по номерам (плотная вёрстка) · ${D_STAMP}`, pageW: PAGE_W_MM, svg: rendered[5].svg },
+        { title: `D3 — страница (карта): крупный план «Русь, Европа и Северная Африка» + обзорный локатор, все группы номерные · ${D_STAMP}`, pageW: PAGE_W_MM, svg: rendered[4].svg },
+        { title: `D3 — соседняя страница: легенда, все группы по номерам (плотная вёрстка) · ${D_STAMP}`, pageW: PAGE_W_MM, svg: rendered[5].svg },
       ]
     ),
     "utf-8"
