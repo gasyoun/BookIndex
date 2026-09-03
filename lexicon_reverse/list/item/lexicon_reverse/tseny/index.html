@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-2SaISl/kSMhSbMLCzL45XsSIq0ym8TpC/m0b6XLrPXs=' 'sha256-S+30cYJ9ltQbDPamjgqHfDSqpI6oGq0ZSm4cMh0Ne/4='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-UXw2RE9Ti6Jyi6hjNaFXIavbWoHlGXi0T9hm13GXCZo=' 'sha256-TWufAzLQmX5mYfcynObBqCA0iRmO0cxBvz/NIn9KXfA='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -6729,7 +6729,7 @@
         <button type="button" class="citation-tab-btn" data-style="chicago">Chicago</button>
       </div>
       <div class="citation-box-container">
-        <div class="citation-box" id="citation-widget-card-tseny-box" aria-live="polite">Зализняк А. А. Справочная статья «це́ны» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/tseny/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/tseny/</a> (дата обращения: 03.09.2026).</div>
+        <div class="citation-box" id="citation-widget-card-tseny-box" aria-live="polite">Зализняк А. А. Справочная статья «це́ны» // Из жизни слов и языков: интерактивный академический справочник и корпус, 2026. — URL: <a href="https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/tseny/" target="_blank">https://gasyoun.github.io/BookIndex/lexicon_reverse/list/item/lexicon_reverse/tseny/</a> (дата обращения: 04.09.2026).</div>
         <button type="button" class="citation-copy-btn" id="citation-widget-card-tseny-copy-btn">Копировать</button>
       </div>
     </div>
@@ -6764,7 +6764,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "7a79eac969e3",
+  "build_id": "1325a557ea2a",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6869,8 +6869,8 @@
       "keys": [
         "scholar"
       ],
-      "bytes": 42811,
-      "sha256": "7aeGo+sJSl4ITu0zKLpiGz+pyO6KEXgJVrXjnddE/uk="
+      "bytes": 48139,
+      "sha256": "nNck4TpH3Av23VNyYGI6OoauzNEUDRX8KU3rgqBApts="
     },
     {
       "file": "99-extra.json",
@@ -7083,7 +7083,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "7a79eac969e3";
+	var APP_BUILD_ID$1 = "1325a557ea2a";
 	var NORMALIZE_CACHE_LIMIT = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -8011,8 +8011,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "7a79eac969e3").trim();
-		if (buildId && buildId !== "7a79eac969e3") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "1325a557ea2a").trim();
+		if (buildId && buildId !== "1325a557ea2a") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule(manifest, file) {
@@ -11958,7 +11958,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "7a79eac969e3" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "1325a557ea2a" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -12084,13 +12084,13 @@ var BookIndex = (function(exports) {
 		const out = [];
 		let idx = 0;
 		for (const group of groups) {
-			const lecture = normalizeBibtexText(group && group.lecture);
+			const section = normalizeBibtexText(group && (group.title || group.lecture));
 			const works = Array.isArray(group && group.works) ? group.works : [];
 			for (const work of works) {
 				const title = normalizeBibtexText(work && work.title);
 				if (!title) continue;
 				const noteParts = [];
-				if (lecture) noteParts.push(`Lecture: ${lecture}`);
+				if (section) noteParts.push(`Lecture: ${section}`);
 				if (activeBookLabel) noteParts.push(`Источник корпуса: ${activeBookLabel}`);
 				if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
 				if (work && work.note) noteParts.push(String(work.note));
@@ -12102,7 +12102,7 @@ var BookIndex = (function(exports) {
 					note: noteParts.join(". "),
 					howpublished: "BookIndex scholar bibliography",
 					keywords: `bookindex,scholar,bibliography,corpus,${activeBookId}`,
-					keySeed: `${lecture || "lecture"}-${title}`
+					keySeed: `${section || "lecture"}-${title}`
 				}, idx));
 				idx += 1;
 			}
@@ -12292,7 +12292,7 @@ var BookIndex = (function(exports) {
 			parts.push("### Библиография по лекциям");
 			parts.push("");
 			for (const lecture of s.bibliography) {
-				parts.push(`#### ${lecture.lecture || "Лекция"}`);
+				parts.push(`#### ${lecture.title || lecture.lecture || "Лекция"}`);
 				parts.push("");
 				for (const work of lecture.works || []) {
 					const suffix = work.year ? ` (${work.year})` : "";
@@ -20782,8 +20782,9 @@ var BookIndex = (function(exports) {
 		html += "<div class=\"scholar-section-intro\">Каждая лекция в книге — выжимка из академических работ Зализняка. Здесь — ключевые публикации, где темы изложены подробнее. PDF-подборка: <a class=\"related-link\" href=\"https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017\" target=\"_blank\" rel=\"noopener noreferrer\">страница ИСл РАН ↗</a>.</div>";
 		html += "<div class=\"scholar-action-row\"><button id=\"export-scholar-biblio-bib\" class=\"scholar-action-button\">Экспорт BibTeX (.bib)</button></div>";
 		for (const lec of s.bibliography || []) {
+			const biblioBlockTitle = lec.title ? escapeHtml(lec.title) : `Лекция «${escapeHtml(lec.lecture)}»`;
 			html += `<div class="scholar-card">
-      <div class="scholar-card-title">Лекция «${escapeHtml(lec.lecture)}»</div>`;
+      <div class="scholar-card-title">${biblioBlockTitle}</div>`;
 			for (const w of lec.works) html += `<div class="scholar-work">
         <strong>${escapeHtml(w.title)}</strong> (${escapeHtml(String(w.year))})${w.url ? ` <a class="related-link" href="${escapeHtml(safeUrl(w.url))}" target="_blank" rel="noopener noreferrer">PDF/страница ↗</a>` : ""}<br>
         <span class="scholar-note">${escapeHtml(w.note)}</span>

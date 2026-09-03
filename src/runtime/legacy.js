@@ -3123,13 +3123,13 @@ function collectScholarBibliographyBibEntries() {
   const out = [];
   let idx = 0;
   for (const group of groups) {
-    const lecture = normalizeBibtexText(group && group.lecture);
+    const section = normalizeBibtexText(group && (group.title || group.lecture));
     const works = Array.isArray(group && group.works) ? group.works : [];
     for (const work of works) {
       const title = normalizeBibtexText(work && work.title);
       if (!title) continue;
       const noteParts = [];
-      if (lecture) noteParts.push(`Lecture: ${lecture}`);
+      if (section) noteParts.push(`Lecture: ${section}`);
       if (activeBookLabel) noteParts.push(`Источник корпуса: ${activeBookLabel}`);
       if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
       if (work && work.note) noteParts.push(String(work.note));
@@ -3141,7 +3141,7 @@ function collectScholarBibliographyBibEntries() {
         note: noteParts.join(". "),
         howpublished: "BookIndex scholar bibliography",
         keywords: `bookindex,scholar,bibliography,corpus,${activeBookId}`,
-        keySeed: `${lecture || "lecture"}-${title}`
+        keySeed: `${section || "lecture"}-${title}`
       }, idx));
       idx += 1;
     }
@@ -3331,7 +3331,7 @@ function appendScholarMarkdown(parts) {
     parts.push("### Библиография по лекциям");
     parts.push("");
     for (const lecture of s.bibliography) {
-      parts.push(`#### ${lecture.lecture || "Лекция"}`);
+      parts.push(`#### ${lecture.title || lecture.lecture || "Лекция"}`);
       parts.push("");
       for (const work of lecture.works || []) {
         const suffix = work.year ? ` (${work.year})` : "";
@@ -11446,8 +11446,9 @@ function renderScholarPanel(container) {
   html += "<div class=\"scholar-section-intro\">Каждая лекция в книге — выжимка из академических работ Зализняка. Здесь — ключевые публикации, где темы изложены подробнее. PDF-подборка: <a class=\"related-link\" href=\"https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017\" target=\"_blank\" rel=\"noopener noreferrer\">страница ИСл РАН ↗</a>.</div>";
   html += "<div class=\"scholar-action-row\"><button id=\"export-scholar-biblio-bib\" class=\"scholar-action-button\">Экспорт BibTeX (.bib)</button></div>";
   for (const lec of s.bibliography || []) {
+    const biblioBlockTitle = lec.title ? escapeHtml(lec.title) : `Лекция «${escapeHtml(lec.lecture)}»`;
     html += `<div class="scholar-card">
-      <div class="scholar-card-title">Лекция «${escapeHtml(lec.lecture)}»</div>`;
+      <div class="scholar-card-title">${biblioBlockTitle}</div>`;
     for (const w of lec.works) html += `<div class="scholar-work">
         <strong>${escapeHtml(w.title)}</strong> (${escapeHtml(String(w.year))})${w.url ? ` <a class="related-link" href="${escapeHtml(safeUrl(w.url))}" target="_blank" rel="noopener noreferrer">PDF/страница ↗</a>` : ""}<br>
         <span class="scholar-note">${escapeHtml(w.note)}</span>
