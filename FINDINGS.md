@@ -1,6 +1,6 @@
 # FINDINGS — BookIndex local registry
 
-_Created: 28-08-2026 · Last updated: 29-08-2026_
+_Created: 28-08-2026 · Last updated: 03-09-2026_
 
 Repo-local gotchas from the Zalizniakiada corpus, KWIC concordance, and
 video↔chapter crosswalk pipelines — neither org-infra (→ [Uprava/FINDINGS.md](https://github.com/gasyoun/Uprava/blob/main/FINDINGS.md))
@@ -42,11 +42,21 @@ opposite verdict. Source: [CHANGELOG.md](https://github.com/gasyoun/BookIndex/bl
 
 ## §3. `v3_app.js` stopped being build output and became the source of record — rebuilding it silently deletes four shipped features
 
+> **Resolved 03-09-2026 (H3874).** `src/runtime/` was reconciled from the artifact and a
+> rebuild no longer loses anything: 87 missing top-level declarations → 0, and the suite
+> passes 197/197 against the *rebuilt* runtime. `npm run check:parity:runtime`
+> ([scripts/check_runtime_parity.mjs](https://github.com/gasyoun/BookIndex/blob/main/scripts/check_runtime_parity.mjs))
+> is now a CI step that fails if the two drift apart again, so the bundler levers below are
+> no longer forbidden. Keep reading for what the trap was — and note the one that outlived
+> it, in §5. Detail: [docs/RESULTS_RUNTIME_SOURCE_PARITY_H3874_2026-09-03.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_RUNTIME_SOURCE_PARITY_H3874_2026-09-03.md).
+
 [vite.runtime.config.mjs](https://github.com/gasyoun/BookIndex/blob/main/vite.runtime.config.mjs)
 builds `v3_app.js` from `src/runtime/entry.js`, and the config's own comments
 explain why it keeps `minify: false` and `treeshake: false`. Running that build
 on 28-08-2026 produced **565.56 kB against a committed 677 875 B — 61 top-level
-functions missing**: the Ctrl+K command palette (H1824), the video
+functions missing** (re-measured against a fresh build in H3874: **87 top-level
+declarations, 64 of them functions**, plus 17 statements that had diverged in
+place): the Ctrl+K command palette (H1824), the video
 gallery/detail/modal trio (H2123–H2125), the home task tile (H2127) and the
 KWIC lecture rows. `src/runtime/legacy.js` was last written by `e30dc3f34`
 (H1821, 30-07-2026); every feature after it went straight into the generated
@@ -159,6 +169,43 @@ with p90 = 1.00, and the one human-confirmed duplicate (`040 → 005`) scores
 against `title_display` «Семинар 22, 25.03.2017` — the overlay's title override
 disagrees with the source row on both the seminar number and the date. That is
 a separate defect from the `duplicate_of` question and is not fixed here.
+
+## §5. A declaration census cannot prove runtime parity — moving a binding away from its readers keeps every name and still breaks the feature
+
+Reconciling `src/runtime/` with the artifact in H3874 (§3) restored all 87
+missing top-level declarations, and the parity gate went green. The video
+detail route was still broken, and five Playwright tests caught it.
+
+The cause is a bundler rule worth knowing before touching this tree.
+`setCurrentVideoId` had been placed next to its only caller in
+[src/runtime/core/router.js](https://github.com/gasyoun/BookIndex/blob/main/src/runtime/core/router.js),
+while the variable it assigns, `currentVideoId`, lived in
+[src/runtime/core/state.js](https://github.com/gasyoun/BookIndex/blob/main/src/runtime/core/state.js).
+Modules are linked only through a real `import`; without one the assignment is
+a write to an *unresolved global*, and rolldown then renames the module binding
+it would otherwise collide with — `currentVideoId` became `currentVideoId$1`
+precisely so the two would **not** be the same variable. The setter wrote to
+`window.currentVideoId`; `buildHashFromState`, `captureViewState` and
+`applyHash` read `currentVideoId$1`, which stayed `""` forever. Every name was
+present, every count matched, the gate passed.
+
+Two consequences for this repo:
+
+1. **A name-level gate is necessary but not sufficient.** The parity check
+   proves nothing was *deleted*; only running the suite against the rebuilt
+   runtime proves it still *works*. Build `aaz-index.html` from
+   `dist-runtime/v3_app.js` and run `npx playwright test` before believing a
+   source-tree change to `src/runtime/`.
+2. **A state variable and its setter belong in the same module, exported.**
+   That is the pattern the rest of `core/state.js` already follows. The
+   `CROSS_MODULE_BINDINGS` table in
+   [scripts/dev/reconcile_runtime_source.mjs](https://github.com/gasyoun/BookIndex/blob/main/scripts/dev/reconcile_runtime_source.mjs)
+   pins the exception so a re-run cannot re-introduce it.
+
+Related trap in the same family: `treeshake: false` does **not** keep an
+unexported, unreferenced module-level binding. That is why the pre-H3874
+`legacy.js` had lost its 62 `legacy_*` functions, and why declarations read
+only from `legacy.js` have to live there rather than in a core module.
 
 ## Record a gotcha found here
 

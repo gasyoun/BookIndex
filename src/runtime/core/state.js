@@ -257,7 +257,7 @@ export function setGlobalSearchScope(val) {
 
 // Attaches dynamic properties to window for backward compatibility with external scripts
 export function syncStateToGlobal() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   window.APP_DATA = APP_DATA;
   window.currentEntity = currentEntity;
   window.currentTab = currentTab;
@@ -270,6 +270,7 @@ export function syncStateToGlobal() {
   window.selectedItemType = selectedItemType;
   window.rightPaneMode = rightPaneMode;
   window.currentLecture = currentLecture;
+  window.currentVideoId = currentVideoId;
   window.lectureCompareA = lectureCompareA;
   window.lectureCompareB = lectureCompareB;
   window.trendsRangeStart = trendsRangeStart;
@@ -298,43 +299,44 @@ export function syncStateToGlobal() {
 }
 
 export function syncStateFromGlobal() {
-  if (typeof window === 'undefined') return;
-  if (window.currentEntity !== undefined) currentEntity = window.currentEntity;
-  if (window.currentTab !== undefined) currentTab = window.currentTab;
-  if (window.activeFilters !== undefined) activeFilters = window.activeFilters;
-  if (window.onlyDiscussed !== undefined) onlyDiscussed = window.onlyDiscussed;
-  if (window.onlyQuestionCandidates !== undefined) onlyQuestionCandidates = window.onlyQuestionCandidates;
-  if (window.searchQuery !== undefined) searchQuery = window.searchQuery;
-  if (window.sortMostFrequentFirst !== undefined) sortMostFrequentFirst = window.sortMostFrequentFirst;
-  if (window.selectedItem !== undefined) selectedItem = window.selectedItem;
-  if (window.selectedItemType !== undefined) selectedItemType = window.selectedItemType;
-  if (window.rightPaneMode !== undefined) rightPaneMode = window.rightPaneMode;
-  if (window.currentLecture !== undefined) currentLecture = window.currentLecture;
-  if (window.lectureCompareA !== undefined) lectureCompareA = window.lectureCompareA;
-  if (window.lectureCompareB !== undefined) lectureCompareB = window.lectureCompareB;
-  if (window.trendsRangeStart !== undefined) trendsRangeStart = window.trendsRangeStart;
-  if (window.trendsRangeEnd !== undefined) trendsRangeEnd = window.trendsRangeEnd;
-  if (window.currentVizModule !== undefined) currentVizModule = window.currentVizModule;
-  if (window.currentKwicSource !== undefined) currentKwicSource = window.currentKwicSource;
-  if (window.currentKwicQuery !== undefined) currentKwicQuery = window.currentKwicQuery;
-  if (window.currentKwicSort !== undefined) currentKwicSort = window.currentKwicSort;
-  if (window.currentKwicPageStart !== undefined) currentKwicPageStart = window.currentKwicPageStart;
-  if (window.currentKwicPageEnd !== undefined) currentKwicPageEnd = window.currentKwicPageEnd;
-  if (window.globalSearchScope !== undefined) globalSearchScope = window.globalSearchScope;
-  if (window.pendingGlossaryQuery !== undefined) pendingGlossaryQuery = window.pendingGlossaryQuery;
-  if (window.currentGlossaryTerm !== undefined) currentGlossaryTerm = window.currentGlossaryTerm;
-  if (window.pendingScholarAnchor !== undefined) pendingScholarAnchor = window.pendingScholarAnchor;
-  if (window.currentScholarAnchor !== undefined) currentScholarAnchor = window.currentScholarAnchor;
-  if (window.currentVizQueryString !== undefined) currentVizQueryString = window.currentVizQueryString;
-  if (window.pendingKwicTerm !== undefined) pendingKwicTerm = window.pendingKwicTerm;
-  if (window.graphStrongOnly !== undefined) graphStrongOnly = window.graphStrongOnly;
-  if (window.nameGraphMinEdgeWeight !== undefined) nameGraphMinEdgeWeight = window.nameGraphMinEdgeWeight;
-  if (window.historyStack !== undefined) historyStack = window.historyStack;
-  if (window.isNavigatingHistory !== undefined) isNavigatingHistory = window.isNavigatingHistory;
-  if (window.suppressHashSync !== undefined) suppressHashSync = window.suppressHashSync;
-  if (window.expectedHash !== undefined) expectedHash = window.expectedHash;
-  if (window.globalSearchTimer !== undefined) globalSearchTimer = window.globalSearchTimer;
-  if (window.globalSearchActiveIndex !== undefined) globalSearchActiveIndex = window.globalSearchActiveIndex;
+  if (typeof window === "undefined") return;
+  if (window.currentEntity !== void 0) currentEntity = window.currentEntity;
+  if (window.currentTab !== void 0) currentTab = window.currentTab;
+  if (window.activeFilters !== void 0) activeFilters = window.activeFilters;
+  if (window.onlyDiscussed !== void 0) onlyDiscussed = window.onlyDiscussed;
+  if (window.onlyQuestionCandidates !== void 0) onlyQuestionCandidates = window.onlyQuestionCandidates;
+  if (window.searchQuery !== void 0) searchQuery = window.searchQuery;
+  if (window.sortMostFrequentFirst !== void 0) sortMostFrequentFirst = window.sortMostFrequentFirst;
+  if (window.selectedItem !== void 0) selectedItem = window.selectedItem;
+  if (window.selectedItemType !== void 0) selectedItemType = window.selectedItemType;
+  if (window.rightPaneMode !== void 0) rightPaneMode = window.rightPaneMode;
+  if (window.currentLecture !== void 0) currentLecture = window.currentLecture;
+  if (window.currentVideoId !== void 0) currentVideoId = String(window.currentVideoId || "");
+  if (window.lectureCompareA !== void 0) lectureCompareA = window.lectureCompareA;
+  if (window.lectureCompareB !== void 0) lectureCompareB = window.lectureCompareB;
+  if (window.trendsRangeStart !== void 0) trendsRangeStart = window.trendsRangeStart;
+  if (window.trendsRangeEnd !== void 0) trendsRangeEnd = window.trendsRangeEnd;
+  if (window.currentVizModule !== void 0) currentVizModule = window.currentVizModule;
+  if (window.currentKwicSource !== void 0) currentKwicSource = window.currentKwicSource;
+  if (window.currentKwicQuery !== void 0) currentKwicQuery = window.currentKwicQuery;
+  if (window.currentKwicSort !== void 0) currentKwicSort = window.currentKwicSort;
+  if (window.currentKwicPageStart !== void 0) currentKwicPageStart = window.currentKwicPageStart;
+  if (window.currentKwicPageEnd !== void 0) currentKwicPageEnd = window.currentKwicPageEnd;
+  if (window.globalSearchScope !== void 0) globalSearchScope = window.globalSearchScope;
+  if (window.pendingGlossaryQuery !== void 0) pendingGlossaryQuery = window.pendingGlossaryQuery;
+  if (window.currentGlossaryTerm !== void 0) currentGlossaryTerm = window.currentGlossaryTerm;
+  if (window.pendingScholarAnchor !== void 0) pendingScholarAnchor = window.pendingScholarAnchor;
+  if (window.currentScholarAnchor !== void 0) currentScholarAnchor = window.currentScholarAnchor;
+  if (window.currentVizQueryString !== void 0) currentVizQueryString = window.currentVizQueryString;
+  if (window.pendingKwicTerm !== void 0) pendingKwicTerm = window.pendingKwicTerm;
+  if (window.graphStrongOnly !== void 0) graphStrongOnly = window.graphStrongOnly;
+  if (window.nameGraphMinEdgeWeight !== void 0) nameGraphMinEdgeWeight = window.nameGraphMinEdgeWeight;
+  if (window.historyStack !== void 0) historyStack = window.historyStack;
+  if (window.isNavigatingHistory !== void 0) isNavigatingHistory = window.isNavigatingHistory;
+  if (window.suppressHashSync !== void 0) suppressHashSync = window.suppressHashSync;
+  if (window.expectedHash !== void 0) expectedHash = window.expectedHash;
+  if (window.globalSearchTimer !== void 0) globalSearchTimer = window.globalSearchTimer;
+  if (window.globalSearchActiveIndex !== void 0) globalSearchActiveIndex = window.globalSearchActiveIndex;
 }
 
 if (typeof window !== 'undefined') {
@@ -393,3 +395,10 @@ if (typeof window !== 'undefined') {
   window.PAGE_TO_CHAPTER = PAGE_TO_CHAPTER;
 }
 
+// Restored from v3_app.js by H3874 — declarations the artifact grew and this module
+// never did (the video route's current-id binding and its setter).
+export var currentVideoId = "";
+export function setCurrentVideoId(val) {
+  currentVideoId = String(val || "");
+  if (typeof window !== "undefined") window.currentVideoId = currentVideoId;
+}

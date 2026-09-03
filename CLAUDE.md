@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 09-05-2026 · Last updated: 28-08-2026_
+_Created: 09-05-2026 · Last updated: 03-09-2026_
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -41,6 +41,22 @@ Implications:
 - Do not switch production to `src/entry.js` unless the full Playwright suite proves parity first.
 - `scripts/viz/*.js` are loaded separately by the page, **not** through `bundle.js`. They have their own `npm run check:js` syntax check.
 - Vendored libraries (`vendor/fuse.basic.min.js`, `vendor/d3.v7.min.js`, `vendor/alpinejs.cdn.min.js`, `vendor/leaflet.css`, `vendor/leaflet.js`) are loaded locally by `v3_template.html`, not from a CDN.
+
+## The runtime source tree (`src/runtime/`) and its parity gate
+
+Separately from `scripts/bundle.js` above, `vite.runtime.config.mjs` builds `v3_app.js` from `src/runtime/entry.js` (rolldown, `minify: false`, `treeshake: false`). Between H1821 and H3874 that tree was a **stale fork**: four shipped features and dozens of diverged statements existed only in the generated `v3_app.js`, so a rebuild silently deleted them while the size budget scored the loss as a win ([FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) §3). H3874 reconciled it; `src/runtime/legacy.js` is now **generated** from the artifact by `scripts/dev/reconcile_runtime_source.mjs`.
+
+```sh
+npm run check:parity:runtime    # builds the runtime, fails if a declaration would be lost
+```
+
+Rules that follow from this:
+
+- Runtime behaviour changes belong in `src/runtime/`, then rebuild. Do not hand-edit `v3_app.js` — that is what broke parity the first time.
+- `treeshake` / `minify` / code-splitting are no longer forbidden, but measure each one and run Playwright against the **rebuilt** runtime before believing it. A declaration census alone passed while the video route was fully broken ([FINDINGS.md](https://github.com/gasyoun/BookIndex/blob/main/FINDINGS.md) §5).
+- A state variable and its setter live in the **same** module and are exported. Across modules the bundler links only through a real `import`; a free identifier stays an unresolved global and forces a collision rename (`currentVideoId` → `currentVideoId$1`), silently splitting one variable into two.
+- `treeshake: false` does **not** keep an unexported, unreferenced module-level binding. Declarations read only from `legacy.js` must live in `legacy.js`.
+- `dist-runtime/` is build output and is not tracked.
 
 ## Data: `app_data.json` ↔ `data/modules/`
 

@@ -1,1120 +1,250 @@
-// Данные парсятся из <script type="application/json"> (с fallback для тестов/legacy-сборки)
-// [modularized] const APP_DATA_SCRIPT_TAG_ID = 'app-data-json';
-// [modularized] const APP_DATA_GLOBAL_FALLBACK_KEY = '__APP_DATA_STRING__';
-// [modularized] const APP_DATA_MODULES_BASE_URL = './data/modules/';
-/** @typedef {import('./types/app-data').AppData} AppDataShape */
-/** @type {AppDataShape | null} */
-// [modularized] let APP_DATA = null;
-// [modularized] // [modularized] grouped labels colors
-// [modularized] const APP_DATA_SCHEMA_CURRENT = 2;
-// [modularized] const KWIC_MAX_SNIPPETS_PER_PAGE = 24;
-// [modularized] const KWIC_MAX_SNIPPET_LENGTH = 420;
-// [modularized] const KWIC_MAX_ROWS = 1200;
-// [modularized] const DEFAULT_TOTAL_PAGES = 424;
-// [modularized] const APP_BUILD_ID = '__APP_BUILD_ID__';
-const DESCRIPTION_FIELDS_WITH_NORMALIZED_YO = new Set([
-  'desc',
-  'about',
-  'why',
-  'why_read',
-  'description',
-  'definition',
-  'main_idea',
-  'tagline',
-  'event',
-]);
-const LECTURE_WHY_READ_BROTHER_BRAT =
-  'Чтобы понять, почему «brother» и «брат» — родственники, а не дети «санскрита», и как это узнают ученые.';
-const HOME_DECL_FACTORY_KEY = '__bookindexHomeDeclarativeFactory';
+// GENERATED FROM v3_app.js by scripts/dev/reconcile_runtime_source.mjs (H3874).
+//
+// The legacy UI / render layer of the runtime bundle. Between H1821 and H3874 this file was
+// a stale fork of the committed v3_app.js: four shipped features and dozens of diverged
+// statements lived only in the generated artifact, so rebuilding deleted them
+// (FINDINGS.md §3). It was regenerated from the artifact to end that split.
+//
+// Edit this file and rebuild the artifact; `npm run check:parity:runtime` fails if the two
+// drift apart again. Do not hand-edit v3_app.js.
+//
+// Like the pre-H3874 file, this module deliberately has no imports: it reads the core
+// bindings (state/utils/data/router) as free identifiers, which the bundler resolves in the
+// flattened IIFE scope.
 
-/* [modularized] */ function legacy_getEmbeddedAppDataText() {
-  if (typeof document !== 'undefined' && typeof document.getElementById === 'function') {
-    const node = document.getElementById(APP_DATA_SCRIPT_TAG_ID);
-    if (node && typeof node.textContent === 'string') {
-      const raw = node.textContent.trim();
-      if (raw) return raw;
-    }
-  }
-  const fallback = (typeof globalThis !== 'undefined' && typeof globalThis[APP_DATA_GLOBAL_FALLBACK_KEY] === 'string')
-    ? globalThis[APP_DATA_GLOBAL_FALLBACK_KEY]
-    : '';
-  return String(fallback || '').trim();
-}
-
-/**
- * Hydrate global APP_DATA references from an already parsed payload.
- * @returns {AppDataShape}
- */
-/* [modularized] */ function legacy_hydrateAppData(data) {
-  clearGlobalSearchCaches();
-  APP_DATA = /** @type {AppDataShape} */ (data);
-  if (typeof window !== 'undefined') {
-    window.APP_DATA = APP_DATA;
-    window.__vizCache = {};
-    window.VIZ_MODULES = window.VIZ_MODULES || {};
-  } else if (typeof globalThis !== 'undefined') {
-    globalThis.APP_DATA = APP_DATA;
-    globalThis.__vizCache = {};
-  }
-  vizCacheWarmPromise = null;
-  vizScriptLoadPromises = new Map();
-  cleanupActiveVizModule();
-  migrateAppDataSchema(APP_DATA);
-  LABELS = APP_DATA.labels;
-  COLORS = APP_DATA.colors;
-  EPOCH_LABELS = APP_DATA.epoch_labels;
-  EPOCH_COLORS = APP_DATA.epoch_colors;
-  FAMILY_COLORS = APP_DATA.family_colors;
-  return APP_DATA;
-}
-
-/* [modularized] */ function legacy_isAppDataModuleManifest(value) {
-  return !!(
-    value
-    && typeof value === 'object'
-    && !Array.isArray(value)
-    && value.mode === 'modules'
-    && Array.isArray(value.modules)
-  );
-}
-
-/* [modularized] */ function legacy_appDataModuleUrl(manifest, file) {
-  const base = String((manifest && manifest.base_url) || APP_DATA_MODULES_BASE_URL);
-  const rootUrl = (typeof document !== 'undefined' && document.baseURI)
-    ? document.baseURI
-    : (typeof location !== 'undefined' && location.href ? location.href : 'http://localhost/');
-  const url = new URL(String(file || ''), new URL(base, rootUrl));
-  const buildId = String((manifest && manifest.build_id) || APP_BUILD_ID || '').trim();
-  const unresolvedBuildId = '__APP_' + 'BUILD_ID__';
-  if (buildId && buildId !== unresolvedBuildId) url.searchParams.set('v', buildId);
-  return url.href;
-}
-
-async /* [modularized] */ function legacy_fetchAppDataModule(manifest, file) {
-  const url = appDataModuleUrl(manifest, file);
-  const response = await fetch(url, { cache: 'default' });
-  if (!response.ok) {
-    throw new Error(`Failed to load app data module ${file}: HTTP ${response.status}`);
-  }
-  const payload = await response.json();
-  if (!payload || Array.isArray(payload) || typeof payload !== 'object') {
-    throw new Error(`App data module must be a JSON object: ${file}`);
-  }
-  return payload;
-}
-
-async /* [modularized] */ function legacy_loadAppDataFromModules(manifest) {
-  const modules = (manifest.modules || []).filter((entry) => entry && entry.file);
-  if (!modules.length) throw new Error('App data module manifest is empty');
-  const payloads = await Promise.all(modules.map((entry) => fetchAppDataModule(manifest, entry.file)));
-  const merged = {};
-  const seen = new Set();
-  for (const payload of payloads) {
-    for (const [key, value] of Object.entries(payload)) {
-      if (seen.has(key)) throw new Error(`Duplicate app data key in modules: ${key}`);
-      seen.add(key);
-      merged[key] = value;
-    }
-  }
-  const keyOrder = Array.isArray(manifest.key_order) ? manifest.key_order : [];
-  if (!keyOrder.length) return merged;
-  const ordered = {};
-  for (const key of keyOrder) {
-    if (Object.prototype.hasOwnProperty.call(merged, key)) ordered[key] = merged[key];
-  }
-  for (const [key, value] of Object.entries(merged)) {
-    if (!Object.prototype.hasOwnProperty.call(ordered, key)) ordered[key] = value;
-  }
-  return ordered;
-}
-
-/**
- * Parse embedded APP_DATA payload and hydrate global references.
- * @returns {AppDataShape}
- */
-/* [modularized] */ function legacy_parseAppData() {
-  const payload = getEmbeddedAppDataText();
-  if (!payload) throw new Error('Embedded app data not found');
-  const data = JSON.parse(payload);
-  if (isAppDataModuleManifest(data)) {
-    throw new Error('Embedded app data contains a module manifest; use loadAppData() instead');
-  }
-  return hydrateAppData(data);
-}
-
-async /* [modularized] */ function legacy_loadAppData() {
-  const payload = getEmbeddedAppDataText();
-  if (!payload) throw new Error('Embedded app data not found');
-  const parsed = JSON.parse(payload);
-  const data = isAppDataModuleManifest(parsed)
-    ? await loadAppDataFromModules(parsed)
-    : parsed;
-  return hydrateAppData(data);
-}
-
-/* [modularized] */ function legacy_migrateAppDataSchema(data) {
-  if (!data || typeof data !== 'object') return;
-  let version = Number.isInteger(data.schema_version) ? data.schema_version : 1;
-  data.schema_migrations = Array.isArray(data.schema_migrations) ? data.schema_migrations : [];
-
-  if (version < 2) {
-    const marker = '1->2: editorial_flags_and_sources';
-    if (!data.schema_migrations.includes(marker)) data.schema_migrations.push(marker);
-    data.schema_version = 2;
-    version = 2;
-  }
-
-  if (version > APP_DATA_SCHEMA_CURRENT && typeof console !== 'undefined' && typeof console.warn === 'function') {
-    console.warn(`[schema] app_data schema_version ${version} is newer than supported ${APP_DATA_SCHEMA_CURRENT}`);
-  }
-}
-
-/* [modularized] */ function legacy_buildDefaultCorpusRegistry() {
-  const stats = APP_DATA && APP_DATA.book_stats && typeof APP_DATA.book_stats === 'object'
-    ? APP_DATA.book_stats
-    : {};
-  const pages = Number.isFinite(Number(stats.total_pages)) ? Number(stats.total_pages) : DEFAULT_TOTAL_PAGES;
-  return {
-    schema_version: 1,
-    active_book_id: 'mumintroll',
-    books: [
-      {
-        book_id: 'mumintroll',
-        title: 'Из жизни слов и языков',
-        author: 'А. А. Зализняк',
-        year: 2026,
-        edition: 'Альпина нон-фикшн',
-        status: 'active',
-        source_type: 'book',
-        pages_total: pages,
-        default_route: '#v4/home/home',
-        content_modules: ['app_data.json'],
-      },
-    ],
-    source_types: [
-      {
-        type: 'book',
-        title: 'Книги',
-        status: 'active',
-      },
-      {
-        type: 'video_catalog',
-        title: 'Видеокаталог',
-        status: 'planned',
-        planned_count: 200,
-        supports: ['timecodes', 'transcripts'],
-      },
-    ],
-  };
-}
-
-/* [modularized] */ function legacy_normalizeCorpusRegistry() {
-  if (!APP_DATA || typeof APP_DATA !== 'object') return;
-  const defaults = buildDefaultCorpusRegistry();
-  const raw = APP_DATA.corpus && typeof APP_DATA.corpus === 'object' ? APP_DATA.corpus : {};
-  const books = Array.isArray(raw.books) && raw.books.length ? raw.books : defaults.books;
-  const sourceTypes = Array.isArray(raw.source_types) && raw.source_types.length ? raw.source_types : defaults.source_types;
-  APP_DATA.corpus = {
-    ...defaults,
-    ...raw,
-    books,
-    source_types: sourceTypes,
-  };
-  const activeId = typeof APP_DATA.corpus.active_book_id === 'string' ? APP_DATA.corpus.active_book_id : '';
-  if (!books.some(book => book && book.book_id === activeId)) {
-    APP_DATA.corpus.active_book_id = defaults.active_book_id;
-  }
-
-  if (typeof inflateOccurrences === 'function') {
-    inflateOccurrences(APP_DATA.corpus.active_book_id);
-  }
-}
-
-/* [modularized] */ function legacy_normalizeAppData() {
-  if (!APP_DATA) return;
-
-  APP_DATA.labels = APP_DATA.labels || {};
-  APP_DATA.colors = APP_DATA.colors || {};
-  normalizeCorpusRegistry();
-
-  // Legacy compatibility: older datasets may still use schoolchild/lecture_host.
-  APP_DATA.labels.literator = 'Носитель языка';
-  APP_DATA.labels.schoolchild = 'Участник лекции';
-  APP_DATA.labels.lecture_host = 'Участник лекции';
-  APP_DATA.labels.participant = APP_DATA.labels.participant || APP_DATA.labels.schoolchild || APP_DATA.labels.lecture_host || 'Участник лекции';
-  APP_DATA.colors.participant = APP_DATA.colors.participant || APP_DATA.colors.schoolchild || APP_DATA.colors.lecture_host || '#16a085';
-
-  const names = Array.isArray(APP_DATA.names) ? APP_DATA.names : [];
-  for (const n of names) {
-    if (n.subcategory === 'schoolchild' || n.subcategory === 'lecture_host') n.subcategory = 'participant';
-  }
-
-  const editorialKeys = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse', 'lexicon_tech', 'subject_index'];
-  for (const key of editorialKeys) {
-    const arr = Array.isArray(APP_DATA[key]) ? APP_DATA[key] : [];
-    for (const item of arr) {
-      normalizeEditorialFlags(item);
-      normalizeItemSources(item);
-      normalizeItemContexts(item);
-    }
-  }
-
-  const stats = APP_DATA.book_stats || (APP_DATA.book_stats = {});
-  if (Array.isArray(APP_DATA.lectures) && stats.lectures == null) stats.lectures = APP_DATA.lectures.length;
-  if (stats.has_preface == null) {
-    const firstName = (APP_DATA.lectures || [])[0]?.name || '';
-    stats.has_preface = firstName.toLowerCase().includes('предислов');
-  }
-
-  const currentTop = stats.top_name && names.find(n => n.head === stats.top_name.head);
-  if (!stats.top_name || (currentTop && currentTop.is_moderator)) {
-    const topNonModerator = [...names]
-      .filter(n => !n.is_moderator)
-      .sort((a, b) => ((b.page_list || []).length - (a.page_list || []).length))[0];
-    if (topNonModerator) {
-      stats.top_name = {
-        head: topNonModerator.head,
-        count: (topNonModerator.page_list || []).length,
-      };
-    }
-  }
-
-  APP_DATA.routes = Array.isArray(APP_DATA.routes) ? APP_DATA.routes : [];
-  APP_DATA.further_reading = Array.isArray(APP_DATA.further_reading) ? APP_DATA.further_reading : [];
-  APP_DATA.featured_quote = APP_DATA.featured_quote || { text: '', page: '', lecture: '' };
-
-  const scholar = APP_DATA.scholar || (APP_DATA.scholar = {});
-  scholar.bibliography = Array.isArray(scholar.bibliography) ? scholar.bibliography : [];
-  scholar.birch_grammar = Array.isArray(scholar.birch_grammar) ? scholar.birch_grammar : [];
-  scholar.accent_paradigms = Array.isArray(scholar.accent_paradigms) ? scholar.accent_paradigms : [];
-  scholar.sound_correspondences = Array.isArray(scholar.sound_correspondences) ? scholar.sound_correspondences : [];
-  scholar.visualization_ideas = Array.isArray(scholar.visualization_ideas) ? scholar.visualization_ideas : [];
-  scholar.slovo_links = Array.isArray(scholar.slovo_links) ? scholar.slovo_links : [];
-
-  applyDescriptionEditorialConventions();
-}
-
-/* [modularized] */ function legacy_normalizeEditorialFlags(item) {
-  if (!item || typeof item !== 'object') return;
-  const raw = (item.editorial_flags && typeof item.editorial_flags === 'object') ? item.editorial_flags : {};
-  const head = String(item.head || '').trim();
-  const suspectByLegacy = head.startsWith('?') || item.needs_review === true;
-  const flags = {
-    verified: raw.verified === true || item.verified === true,
-    suspect: raw.suspect === true || suspectByLegacy,
-    source_confirmed: raw.source_confirmed === true || item.source_confirmed === true || !!item.wiki,
-  };
-  const note = (typeof raw.note === 'string' && raw.note.trim())
-    ? raw.note.trim()
-    : ((typeof item.note === 'string' && item.note.trim()) ? item.note.trim() : '');
-  if (note) flags.note = note;
-  item.editorial_flags = flags;
-}
-
-/* [modularized] */ function legacy_getFirstContextQuote(item) {
-  const entries = getContextEntries(item, 1, 5000);
-  for (const entry of entries) {
-    const snippets = Array.isArray(entry.snippets) ? entry.snippets : [];
-    for (const raw of snippets) {
-      const text = String(raw || '').replace(/\s+/g, ' ').trim();
-      if (text) return text;
-    }
-  }
-  return '';
-}
-
-/* [modularized] */ function legacy_normalizeItemSources(item) {
-  if (!item || typeof item !== 'object') return;
-  const arr = Array.isArray(item.sources) ? item.sources : [];
-  const normalized = [];
-  for (const src of arr) {
-    if (!src || typeof src !== 'object') continue;
-    const label = String(src.label || '').trim();
-    const url = String(src.url || '').trim();
-    const quote = String(src.quote || '').trim();
-    const page = src.page != null ? String(src.page).trim() : '';
-    if (!label && !url && !quote && !page) continue;
-    normalized.push({ label, url, quote, page });
-  }
-  if (!normalized.length && item.wiki) {
-    normalized.push({ label: 'Wikipedia', url: String(item.wiki), quote: '', page: '' });
-  }
-  if (normalized.length && !normalized.some(s => s.quote)) {
-    const firstQuote = getFirstContextQuote(item);
-    if (firstQuote) normalized[0].quote = firstQuote;
-  }
-  item.sources = normalized;
-}
-
-/* [modularized] */ function legacy_normalizeContextSnippet(raw) {
-  const text = String(raw == null ? '' : raw).replace(/\s+/g, ' ').trim();
-  if (!text) return '';
-  if (text.length <= KWIC_MAX_SNIPPET_LENGTH) return text;
-  return text.slice(0, KWIC_MAX_SNIPPET_LENGTH).trim();
-}
-
-/* [modularized] */ function legacy_normalizeItemContexts(item) {
-  if (!item || typeof item !== 'object') return;
-  const src = item.contexts;
-  if (!src || typeof src !== 'object') {
-    item.contexts = {};
-    return;
-  }
-  if (Array.isArray(src)) {
-    item.contexts = src.map(normalizeContextSnippet).filter(Boolean);
-    return;
-  }
-  const normalized = {};
-  for (const [pageRaw, snippets] of Object.entries(src)) {
-    const page = parseInt(String(pageRaw || ''), 10);
-    if (!Number.isFinite(page) || page < 1 || page > 5000) continue;
-    if (!Array.isArray(snippets)) continue;
-    const out = [];
-    for (const raw of snippets) {
-      const snippet = normalizeContextSnippet(raw);
-      if (!snippet) continue;
-      out.push(snippet);
-      if (out.length >= KWIC_MAX_SNIPPETS_PER_PAGE) break;
-    }
-    if (out.length) normalized[String(page)] = out;
-  }
-  item.contexts = normalized;
-}
-
-/* [modularized] */ function legacy_getContextEntries(itemOrContexts, pageStart = 1, pageEnd = 5000, explicitPageList = null) {
-  const source = itemOrContexts && typeof itemOrContexts === 'object' && Object.prototype.hasOwnProperty.call(itemOrContexts, 'contexts')
-    ? itemOrContexts.contexts
-    : itemOrContexts;
-  const pageSource = Array.isArray(explicitPageList)
-    ? explicitPageList
-    : (itemOrContexts && Array.isArray(itemOrContexts.page_list) ? itemOrContexts.page_list : []);
-  if (Array.isArray(source)) {
-    const snippets = [];
-    for (const raw of source) {
-      const snippet = normalizeContextSnippet(raw);
-      if (!snippet) continue;
-      snippets.push(snippet);
-      if (snippets.length >= KWIC_MAX_SNIPPETS_PER_PAGE) break;
-    }
-    if (!snippets.length) return [];
-    const pages = pageSource
-      .map((page) => parseInt(String(page || ''), 10))
-      .filter((page) => Number.isFinite(page) && page >= 1);
-    const page = pages.find((candidate) => candidate >= pageStart && candidate <= pageEnd);
-    if (pages.length && !page) return [];
-    return [{ page: page || Math.max(1, pageStart), snippets }];
-  }
-  const safe = source && typeof source === 'object' ? source : {};
-  const entries = [];
-  for (const [pageRaw, snippets] of Object.entries(safe)) {
-    const page = parseInt(String(pageRaw || ''), 10);
-    if (!Number.isFinite(page) || page < pageStart || page > pageEnd) continue;
-    if (!Array.isArray(snippets)) continue;
-    const normalizedSnippets = [];
-    for (const raw of snippets) {
-      const snippet = normalizeContextSnippet(raw);
-      if (!snippet) continue;
-      normalizedSnippets.push(snippet);
-      if (normalizedSnippets.length >= KWIC_MAX_SNIPPETS_PER_PAGE) break;
-    }
-    if (!normalizedSnippets.length) continue;
-    entries.push({ page, snippets: normalizedSnippets });
-  }
-  return entries;
-}
-
-/* [modularized] */ function legacy_normalizeDescriptionYoText(value) {
-  return String(value == null ? '' : value)
-    .replace(/е\u0308/g, 'е')
-    .replace(/Е\u0308/g, 'Е')
-    .replace(/ё/g, 'е')
-    .replace(/Ё/g, 'Е');
-}
-
-/* [modularized] */ function legacy_normalizeDescriptionYoInNode(node) {
-  if (!node || typeof node !== 'object') return;
-  if (Array.isArray(node)) {
-    for (const item of node) normalizeDescriptionYoInNode(item);
-    return;
-  }
-  for (const [key, value] of Object.entries(node)) {
-    if (typeof value === 'string' && DESCRIPTION_FIELDS_WITH_NORMALIZED_YO.has(key)) {
-      node[key] = normalizeDescriptionYoText(value);
-      continue;
-    }
-    if (value && typeof value === 'object') normalizeDescriptionYoInNode(value);
-  }
-}
-
-/* [modularized] */ function legacy_applyDescriptionEditorialConventions() {
-  normalizeDescriptionYoInNode(APP_DATA);
-
-  const lectures = Array.isArray(APP_DATA?.lectures) ? APP_DATA.lectures : [];
-  if (
-    lectures[2] &&
-    typeof lectures[2].why_read === 'string' &&
-    lectures[2].why_read.includes('brother') &&
-    lectures[2].why_read.includes('брат')
-  ) {
-    lectures[2].why_read = LECTURE_WHY_READ_BROTHER_BRAT;
-  }
-}
-
-// =========================================================
-// КОНФИГУРАЦИЯ ТИПОВ СУЩНОСТЕЙ — строится после парсинга
-// =========================================================
-// [modularized] let ENTITY_TYPES = null;
-// [modularized] // [modularized] ITEM_INDEX_EXACT
-// [modularized] // [modularized] ITEM_INDEX_NORMALIZED
-// [modularized] // [modularized] CHAPTER_ITEM_INDEX
-// [modularized] // [modularized] ITEM_HASH_SLUG_BY_HEAD
-// [modularized] // [modularized] ITEM_HASH_HEAD_BY_SLUG
-// [modularized] // [modularized] PAGE_TO_CHAPTER
-
-/* [modularized] */ function legacy_initEntityTypes() {
-  ENTITY_TYPES = {
-  home: {
-    title: 'Главная',
-    items: [],
-    tabs: ['home'],
-  },
-  materials: {
-    title: 'Материалы',
-    items: [],
-    tabs: ['lectures','lecture_compare','lecture_pages','further_reading','glossary','kwic','gallery','russian_evolution','phonetic_laws','tasks','sources'],
-  },
-  scholar: {
-    title: 'Профессиональный аппарат',
-    items: [],
-    tabs: ['scholar','chronology','page_trends','viz'],
-  },
-  all: {
-    title: 'Сводный указатель',
-    items: null,
-    tabs: ['list'],
-  },
-  names: {
-    title: 'Имена',
-    items: APP_DATA.names,
-    edges: APP_DATA.edges,
-    tabs: ['list','cards','histogram','timeline','heatmap','graph'],
-  },
-  toponyms: {
-    title: 'Топонимы',
-    items: APP_DATA.toponyms,
-    tabs: ['list','cards','histogram','epochs','map','heatmap'],
-  },
-  ethnonyms: {
-    title: 'Этнонимы',
-    items: APP_DATA.ethnonyms,
-    tabs: ['list','cards','histogram','map','heatmap'],
-  },
-  languages: {
-    title: 'Языки',
-    items: APP_DATA.languages,
-    tabs: ['list','cards','histogram','families','tree','map','heatmap'],
-  },
-  lexicon: {
-    title: 'Лексика',
-    items: APP_DATA.lexicon,
-    tabs: ['list','histogram'],
-  },
-  lexicon_reverse: {
-    title: 'Лексика (обратная)',
-    items: APP_DATA.lexicon_reverse,
-    tabs: ['list'],
-  },
-  lexicon_tech: {
-    title: 'Реконструкции',
-    items: APP_DATA.lexicon_tech,
-    tabs: ['list'],
-  },
-  subject: {
-    title: 'Предметный',
-    items: APP_DATA.subject_index || [],
-    tabs: ['list','histogram','heatmap'],
-  },
-  };
-  ENTITY_TYPES.all.items = buildAllItems();
-  for (const key of Object.keys(ENTITY_TYPES)) {
-    indexItems(ENTITY_TYPES[key].items);
-  }
-  buildDataIndexes();
-  invalidateAggregateCache('entity-types-init');
-}
-
-const TAB_LABELS = {
-  viz: 'Визуализации',
-  list: 'Список',
-  cards: 'Карточки',
-  histogram: 'По лекциям',
-  timeline: 'Шкала',
-  heatmap: 'Тепловая карта',
-  graph: 'Граф связей',
-  map: 'Карта мира',
-  epochs: 'Эпохи',
-  families: 'Граф языков',
-  tree: 'Древо языков',
-  home: 'Главная',
-  home_decl: 'Декларативная',
-  sources: 'Корпус',
-  lectures: 'Лекции',
-  lecture_compare: 'Сравнение лекций',
-  lecture_pages: 'Страница лекции',
-  tasks: 'Проверьте себя',
-  further_reading: 'Что почитать ещё',
-  glossary: 'Глоссарий',
-  kwic: 'KWIC',
-  gallery: 'Галерея лингвистов',
-  russian_evolution: 'Русский во времени',
-  phonetic_laws: 'Фонетические законы',
-  scholar: 'Профессиональный аппарат',
-  chronology: 'Хронология открытий',
-  page_trends: 'Динамика по страницам',
+var HOME_DECL_FACTORY_KEY = "__bookindexHomeDeclarativeFactory";
+var TAB_LABELS = {
+  viz: "Визуализации",
+  list: "Список",
+  cards: "Карточки",
+  histogram: "По лекциям",
+  timeline: "Шкала",
+  heatmap: "Тепловая карта",
+  graph: "Граф связей",
+  map: "Карта мира",
+  epochs: "Эпохи",
+  families: "Граф языков",
+  tree: "Древо языков",
+  home: "Главная",
+  home_decl: "Декларативная",
+  sources: "Корпус",
+  lectures: "Лекции",
+  lecture_compare: "Сравнение лекций",
+  lecture_pages: "Страница лекции",
+  tasks: "Проверьте себя",
+  further_reading: "Что почитать ещё",
+  glossary: "Глоссарий",
+  kwic: "KWIC",
+  gallery: "Галерея лингвистов",
+  video: "Видеогалерея",
+  russian_evolution: "Русский во времени",
+  phonetic_laws: "Фонетические законы",
+  scholar: "Профессиональный аппарат",
+  chronology: "Хронология открытий",
+  page_trends: "Динамика по страницам"
 };
-
-// Единый сводный словник: все элементы из всех типов с пометкой
-/* [modularized] */ function legacy_buildAllItems() {
-  const all = [];
-  function add(items, type, typeLabel) {
-    for (const it of items) {
-      all.push({...it, _entityType: type, _entityLabel: typeLabel});
-    }
-  }
-  add(APP_DATA.names, 'names', 'имя');
-  add(APP_DATA.toponyms, 'toponyms', 'топоним');
-  add(APP_DATA.ethnonyms, 'ethnonyms', 'этноним');
-  add(APP_DATA.languages, 'languages', 'язык');
-  add(APP_DATA.lexicon, 'lexicon', 'лексема');
-  add(APP_DATA.lexicon_tech, 'lexicon_tech', 'реконструкция');
-  add(APP_DATA.lexicon_reverse, 'lexicon_reverse', 'лексема (обр.)');
-  add(APP_DATA.subject_index || [], 'subject', 'понятие');
-  return all;
-}
-
-/* [modularized] */ function legacy_indexItems(items) {
-  if (!items) return;
-  for (const it of items) {
-    if (!it._search) {
-      const raw = String(it.head || '');
-      it._search = raw.toLowerCase();
-      it._searchNorm = normalizeHeadForMatch(raw);
-    }
-  }
-}
-
-/* [modularized] */ function legacy_buildDataIndexes() {
-  ITEM_INDEX_EXACT = new Map();
-  ITEM_INDEX_NORMALIZED = new Map();
-  CHAPTER_ITEM_INDEX = new Map();
-  ITEM_HASH_SLUG_BY_HEAD = new Map();
-  ITEM_HASH_HEAD_BY_SLUG = new Map();
-  PAGE_TO_CHAPTER = new Map();
-
-  const chapters = Array.isArray(APP_DATA?.chapters) ? APP_DATA.chapters : [];
-  const pageToChapter = new Map();
-  for (const ch of chapters) {
-    for (let p = ch.start; p <= ch.end; p++) {
-      pageToChapter.set(p, ch.name);
-      PAGE_TO_CHAPTER.set(p, ch);
-    }
-  }
-
-  for (const [type, conf] of Object.entries(ENTITY_TYPES || {})) {
-    if (!conf || !Array.isArray(conf.items)) continue;
-    const exact = new Map();
-    const normalized = new Map();
-    const byChapter = new Map();
-    for (const ch of chapters) byChapter.set(ch.name, []);
-
-    for (const it of conf.items) {
-      if (!it || !it.head) continue;
-      if (!exact.has(it.head)) exact.set(it.head, it);
-      const nHead = normalizeHeadForMatch(it.head);
-      if (nHead && !normalized.has(nHead)) normalized.set(nHead, it);
-
-      if (chapters.length) {
-        const seenChapters = new Set();
-        for (const p of (it.page_list || [])) {
-          const chName = pageToChapter.get(p);
-          if (!chName || seenChapters.has(chName)) continue;
-          seenChapters.add(chName);
-          byChapter.get(chName).push(it);
-        }
-      }
-    }
-    ITEM_INDEX_EXACT.set(type, exact);
-    ITEM_INDEX_NORMALIZED.set(type, normalized);
-    CHAPTER_ITEM_INDEX.set(type, byChapter);
-    const slugIndexes = buildHashSlugIndexesForItems(conf.items);
-    ITEM_HASH_SLUG_BY_HEAD.set(type, slugIndexes.byHead);
-    ITEM_HASH_HEAD_BY_SLUG.set(type, slugIndexes.bySlug);
-  }
-}
-
-/* [modularized] */ function legacy_getIndexedItem(type, head) {
-  if (!type || !head) return null;
-  const exact = ITEM_INDEX_EXACT.get(type);
-  if (exact && exact.has(head)) return exact.get(head);
-  const nHead = normalizeHeadForMatch(head);
-  const normalized = ITEM_INDEX_NORMALIZED.get(type);
-  if (nHead && normalized && normalized.has(nHead)) return normalized.get(nHead);
-  return null;
-}
-
-/* [modularized] */ function legacy_normalizeHashSlug(value) {
-  if (value === null || value === undefined) return '';
-  let text = String(value).trim().toLowerCase();
-  if (!text) return '';
-  if (typeof text.normalize === 'function') text = text.normalize('NFD');
-  text = text.replace(/[\u0300-\u036f]/g, '');
-
-  let out = '';
-  for (const ch of text) {
-    const code = ch.charCodeAt(0);
-    const isAsciiAlpha = code >= 97 && code <= 122;
-    const isAsciiDigit = code >= 48 && code <= 57;
-    if (isAsciiAlpha || isAsciiDigit) {
-      out += ch;
-      continue;
-    }
-    if (Object.prototype.hasOwnProperty.call(CYRILLIC_TO_LATIN_MAP, ch)) {
-      out += CYRILLIC_TO_LATIN_MAP[ch];
-      continue;
-    }
-    out += '-';
-  }
-  out = out
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .replace(/-{2,}/g, '-');
-  if (!out) return '';
-  if (out.length > MAX_HASH_SLUG_LENGTH) {
-    out = out.slice(0, MAX_HASH_SLUG_LENGTH).replace(/-+$/g, '');
-  }
-  return out;
-}
-
-/* [modularized] */ function legacy_buildHashSlugIndexesForItems(items) {
-  const byHead = new Map();
-  const bySlug = new Map();
-  if (!Array.isArray(items)) return { byHead, bySlug };
-
-  for (const it of items) {
-    const head = String(it && it.head ? it.head : '').trim();
-    if (!head || byHead.has(head)) continue;
-
-    const baseRaw = normalizeHashSlug(head);
-    const base = baseRaw || 'item';
-    let slug = base;
-    let suffix = 2;
-    while (bySlug.has(slug) && bySlug.get(slug) !== head) {
-      const suffixToken = `-${suffix}`;
-      const keep = Math.max(1, MAX_HASH_SLUG_LENGTH - suffixToken.length);
-      const trimmedBase = (base.slice(0, keep).replace(/-+$/g, '') || 'item');
-      slug = `${trimmedBase}${suffixToken}`;
-      suffix += 1;
-    }
-    byHead.set(head, slug);
-    if (!bySlug.has(slug)) bySlug.set(slug, head);
-  }
-  return { byHead, bySlug };
-}
-
-/* [modularized] */ function legacy_encodeItemHeadForHash(type, head) {
-  const resolved = resolveExistingHead(type, head);
-  const byHead = ITEM_HASH_SLUG_BY_HEAD.get(type);
-  if (byHead && byHead.has(resolved)) return byHead.get(resolved);
-  const fallbackSlug = normalizeHashSlug(resolved);
-  return fallbackSlug || resolved;
-}
-
-/* [modularized] */ function legacy_resolveItemHeadFromHash(type, encodedHead) {
-  const raw = clampUiInput(encodedHead, MAX_HASH_PART_LENGTH);
-  if (!raw) return '';
-
-  const exact = getIndexedItem(type, raw);
-  if (exact) return exact.head;
-
-  const bySlug = ITEM_HASH_HEAD_BY_SLUG.get(type);
-  if (bySlug) {
-    if (bySlug.has(raw)) return bySlug.get(raw);
-    const normalizedSlug = normalizeHashSlug(raw);
-    if (normalizedSlug && bySlug.has(normalizedSlug)) return bySlug.get(normalizedSlug);
-  }
-
-  return resolveExistingHead(type, raw);
-}
-
 function getChapterIndexedItems(type, chapterName) {
   const map = CHAPTER_ITEM_INDEX.get(type);
   if (!map) return null;
   const arr = map.get(chapterName);
   return Array.isArray(arr) ? arr : null;
 }
-
-// [modularized] let currentEntity = 'home';
-// [modularized] let currentTab = 'home';
-// [modularized] let activeFilters = new Set();
-// [modularized] let onlyDiscussed = false;
-// [modularized] let onlyQuestionCandidates = false;
-// [modularized] let searchQuery = '';
-// [modularized] let sortMostFrequentFirst = false;
-// [modularized] let selectedItem = null;
-// [modularized] let selectedItemType = null; // тип сущности выбранного — нужно для сводного
-// [modularized] let rightPaneMode = 'histogram'; // 'histogram' до выбора, 'card' после
-// [modularized] let graphStrongOnly = false;     // Фильтр графа языковых семей: только вес ≥ 50
-// [modularized] let nameGraphMinEdgeWeight = 0.1;
-// [modularized] let currentLecture = 0;
-// [modularized] let lectureCompareA = 1;
-// [modularized] let lectureCompareB = 2;
-// [modularized] let trendsRangeStart = 1;
-// [modularized] let trendsRangeEnd = DEFAULT_TOTAL_PAGES;
-// [modularized] let historyStack = [];
-// [modularized] let isNavigatingHistory = false;
-// [modularized] let suppressHashSync = false;
-// [modularized] let expectedHash = null;
-// [modularized] let globalSearchTimer = null;
-// [modularized] let globalSearchActiveIndex = -1;
-// [modularized] let globalSearchScope = 'corpus';
-// [modularized] let pendingGlossaryQuery = '';
-// [modularized] let currentGlossaryTerm = '';
-// [modularized] let pendingScholarAnchor = '';
-// [modularized] let currentScholarAnchor = '';
-// [modularized] let currentVizModule = 'viz03';
-// [modularized] let currentVizQueryString = '';
-// [modularized] let currentKwicSource = 'lexicon';
-// [modularized] let currentKwicQuery = '';
-// [modularized] let currentKwicSort = 'left';
-// [modularized] let currentKwicPageStart = 1;
-// [modularized] let currentKwicPageEnd = DEFAULT_TOTAL_PAGES;
-// [modularized] let pendingKwicTerm = '';
-const UI_STATE_STORAGE_KEY = 'Zalizniakiada.ui.v1';
-const UI_STATE_SCHEMA_VERSION = 3;
-const THEME_STORAGE_KEY = 'Zalizniakiada.theme.v1';
-const DENSITY_STORAGE_KEY = 'Zalizniakiada.density.v1';
-const READING_PAGE_STORAGE_KEY = 'Zalizniakiada.readingPage.v1';
-const RECENT_ITEMS_STORAGE_KEY = 'Zalizniakiada.recentItems.v1';
-const TASKS_PROGRESS_STORAGE_KEY = 'Zalizniakiada.tasksProgress.v1';
-const TASKS_PROGRESS_SCHEMA_VERSION = 1;
-const TASKS_HISTORY_LIMIT = 80;
-let globalKeyHandlersWired = false;
-let visibleItemsCache = null;
-let currentListSearchRaw = '';
-let currentListSearchNorm = '';
-const MAX_HASH_PARTS = 16;
-// [modularized] const MAX_HASH_PART_LENGTH = 220;
-const HASH_ROUTE_PREFIX = 'v4';
-// [modularized] const MAX_HASH_SLUG_LENGTH = 96;
-// [modularized] const MAX_LIST_QUERY_LENGTH = 80;
-// [modularized] const MAX_GLOBAL_QUERY_LENGTH = 80;
-const MAX_URL_LENGTH = 2048;
-const GLOBAL_SEARCH_CACHE_MAX = 120;
-const GLOBAL_SEARCH_FUSE_LIMIT = 80;
-// [modularized] const NORMALIZE_CACHE_LIMIT = 8000;
-// [modularized] let normalizeHeadCache = new Map();
-let globalSearchCache = new Map();
-let globalSearchFuse = null;
-let globalSearchFuseSignature = '';
-let globalSearchFuseDisabled = false;
-// [modularized] const AGGREGATE_CACHE_MAX = 80;
-// [modularized] let aggregateCache = new Map();
-let nameGraphWorker = null;
-let nameGraphWorkerBlobUrl = null;
-let nameGraphWorkerRequestId = 0;
-let nameGraphRenderToken = 0;
-// [modularized] let nameGraphLayoutPromiseCache = new Map();
-let familiesGraphWorker = null;
-let familiesGraphWorkerBlobUrl = null;
-let familiesGraphWorkerRequestId = 0;
-let familiesGraphRenderToken = 0;
-// [modularized] let familiesGraphLayoutPromiseCache = new Map();
-let workersLifecycleWired = false;
-let contextEntityLinkEntriesCache = null;
-
-/* [modularized] */ function legacy_getCorpusRegistry() {
-  if (!APP_DATA || !APP_DATA.corpus || typeof APP_DATA.corpus !== 'object') {
-    return buildDefaultCorpusRegistry();
-  }
-  return APP_DATA.corpus;
-}
-
-/* [modularized] */ function legacy_getCorpusBooks() {
-  const books = getCorpusRegistry().books;
-  return Array.isArray(books) ? books.filter(book => book && typeof book.book_id === 'string') : [];
-}
-
-/* [modularized] */ function legacy_getActiveBook() {
-  const registry = getCorpusRegistry();
-  const books = getCorpusBooks();
-  return books.find(book => book.book_id === registry.active_book_id) || books[0] || buildDefaultCorpusRegistry().books[0];
-}
-
-/* [modularized] */ function legacy_applyActiveBookFromQuery(query) {
-  const rawQuery = String(query || '').trim();
-  if (!rawQuery) return;
-  const params = new URLSearchParams(rawQuery);
-  const bookId = String(params.get('books') || params.get('book') || '').trim();
-  if (!bookId) return;
-  const registry = getCorpusRegistry();
-  if (!getCorpusBooks().some(book => book.book_id === bookId)) return;
-  registry.active_book_id = bookId;
-  inflateOccurrences(bookId);
-}
-
+var UI_STATE_STORAGE_KEY = "Zalizniakiada.ui.v1";
+var UI_STATE_SCHEMA_VERSION = 3;
+var THEME_STORAGE_KEY = "Zalizniakiada.theme.v1";
+var DENSITY_STORAGE_KEY = "Zalizniakiada.density.v1";
+var READING_PAGE_STORAGE_KEY = "Zalizniakiada.readingPage.v1";
+var RECENT_ITEMS_STORAGE_KEY = "Zalizniakiada.recentItems.v1";
+var TASKS_PROGRESS_STORAGE_KEY = "Zalizniakiada.tasksProgress.v1";
+var TASKS_PROGRESS_SCHEMA_VERSION = 1;
+var TASKS_HISTORY_LIMIT = 80;
+var globalKeyHandlersWired = false;
+var COMMAND_PALETTE_MAX_RESULTS = 40;
+var COMMAND_PALETTE_CONTENT_LIMIT = 10;
+var COMMAND_PALETTE_RECENT_LIMIT = 5;
+var commandPaletteCommandsCache = null;
+var commandPaletteEntries = [];
+var commandPaletteActiveIndex = -1;
+var commandPaletteReturnFocus = null;
+var commandPaletteTimer = null;
+var videoModalReturnFocus = null;
+var videoModalCurrentId = "";
+var visibleItemsCache = null;
+var currentListSearchRaw = "";
+var currentListSearchNorm = "";
+var MAX_HASH_PARTS = 16;
+var HASH_ROUTE_PREFIX = "v4";
+var MAX_URL_LENGTH = 2048;
+var GLOBAL_SEARCH_CACHE_MAX = 120;
+var GLOBAL_SEARCH_FUSE_LIMIT = 80;
+var globalSearchCache = /* @__PURE__ */ new Map();
+var globalSearchFuse = null;
+var globalSearchFuseSignature = "";
+var globalSearchFuseDisabled = false;
+var nameGraphWorker = null;
+var nameGraphWorkerBlobUrl = null;
+var nameGraphWorkerRequestId = 0;
+var nameGraphRenderToken = 0;
+var familiesGraphWorker = null;
+var familiesGraphWorkerBlobUrl = null;
+var familiesGraphWorkerRequestId = 0;
+var familiesGraphRenderToken = 0;
+var workersLifecycleWired = false;
+var contextEntityLinkEntriesCache = null;
 function preserveCorpusQualityEvidence(item) {
-  if (!item || typeof item !== 'object') return;
-  if (!Object.prototype.hasOwnProperty.call(item, '__corpusPageList')) {
-    Object.defineProperty(item, '__corpusPageList', {
-      value: Array.isArray(item.page_list) ? item.page_list.slice() : [],
-      writable: true,
-      configurable: true,
-    });
-  }
-  if (!Object.prototype.hasOwnProperty.call(item, '__corpusContexts')) {
-    Object.defineProperty(item, '__corpusContexts', {
-      value: item.contexts,
-      writable: true,
-      configurable: true,
-    });
-  }
+  if (!item || typeof item !== "object") return;
+  if (!Object.prototype.hasOwnProperty.call(item, "__corpusPageList")) Object.defineProperty(item, "__corpusPageList", {
+    value: Array.isArray(item.page_list) ? item.page_list.slice() : [],
+    writable: true,
+    configurable: true
+  });
+  if (!Object.prototype.hasOwnProperty.call(item, "__corpusContexts")) Object.defineProperty(item, "__corpusContexts", {
+    value: item.contexts,
+    writable: true,
+    configurable: true
+  });
 }
-
 function inflateOccurrences(bookId) {
   if (!APP_DATA) return;
-  const categories = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse', 'lexicon_tech', 'subject_index'];
-  for (const cat of categories) {
+  for (const cat of [
+    "names",
+    "toponyms",
+    "ethnonyms",
+    "languages",
+    "lexicon",
+    "lexicon_reverse",
+    "lexicon_tech",
+    "subject_index"
+  ]) {
     if (!Array.isArray(APP_DATA[cat])) continue;
-    for (const it of APP_DATA[cat]) {
-      if (it.occurrences && typeof it.occurrences === 'object') {
-        preserveCorpusQualityEvidence(it);
-        const occ = it.occurrences[bookId] || { pages: [], contexts: [] };
-        it.page_list = occ.pages || [];
-        it.contexts = occ.contexts || [];
-      }
+    for (const it of APP_DATA[cat]) if (it.occurrences && typeof it.occurrences === "object") {
+      preserveCorpusQualityEvidence(it);
+      const occ = it.occurrences[bookId] || {
+        pages: [],
+        contexts: []
+      };
+      it.page_list = occ.pages || [];
+      it.contexts = occ.contexts || [];
     }
   }
 }
-
 function getPlannedVideoCatalogSource() {
   const sourceTypes = getCorpusRegistry().source_types;
   if (!Array.isArray(sourceTypes)) return null;
-  return sourceTypes.find(source => source && source.type === 'video_catalog') || null;
+  return sourceTypes.find((source) => source && source.type === "video_catalog") || null;
 }
-
 function normalizeGlobalSearchScope(scope) {
-  return scope === 'corpus' ? 'corpus' : 'current';
+  return scope === "corpus" ? "corpus" : "current";
 }
-
 function getGlobalSearchScopeLabel(scope = globalSearchScope) {
-  return normalizeGlobalSearchScope(scope) === 'corpus' ? 'везде' : 'текущая книга';
+  return normalizeGlobalSearchScope(scope) === "corpus" ? "везде" : "текущая книга";
 }
-
 function getBookLabelForSearch(bookId) {
-  const id = String(bookId || '').trim();
-  const book = getCorpusBooks().find(item => item.book_id === id) || getActiveBook();
-  return String(book.short_title || book.title || book.book_id || 'текущая книга');
+  const id = String(bookId || "").trim();
+  const book = getCorpusBooks().find((item) => item.book_id === id) || getActiveBook();
+  return String(book.short_title || book.title || book.book_id || "текущая книга");
 }
-
 function enrichGlobalSearchRecord(record) {
-  if (!record || typeof record !== 'object') return record;
+  if (!record || typeof record !== "object") return record;
   const activeBook = getActiveBook();
   const bookId = record.bookId || activeBook.book_id;
   return {
-    sourceType: 'book',
+    sourceType: "book",
     ...record,
-    bookId,
+    bookId
   };
 }
-
 function filterGlobalSearchMatchesForScope(matches, scope = globalSearchScope) {
   if (!Array.isArray(matches)) return [];
-  if (normalizeGlobalSearchScope(scope) === 'corpus') return matches.map(enrichGlobalSearchRecord);
+  if (normalizeGlobalSearchScope(scope) === "corpus") return matches.map(enrichGlobalSearchRecord);
   const activeBookId = getActiveBook().book_id;
-  return matches
-    .map(enrichGlobalSearchRecord)
-    .filter(match => !match.bookId || match.bookId === activeBookId);
+  return matches.map(enrichGlobalSearchRecord).filter((match) => !match.bookId || match.bookId === activeBookId);
 }
-let subjectCrosslinksLookupCache = null;
-let reverseEdgesCache = null;
-let SUBJECT_BY_LEXICON_INDEX = null;
-let vizCacheWarmPromise = null;
-let currentVizCleanup = null;
-let vizScriptLoadPromises = new Map();
-const VIZ_CACHE_WORKER_PATH = './scripts/viz/build-viz-cache-worker.js';
-const VIZ_STATE_SCRIPT_PATH = './scripts/viz/viz-state.js';
-const VIZ_SCRIPT_BY_MODULE = Object.freeze({
-  viz01: './scripts/viz/map-timeline.js',
-  viz02: './scripts/viz/cooccurrence-graph.js',
-  viz03: './scripts/viz/discovery-timeline.js',
-  viz04: './scripts/viz/heatmap-matrix.js',
-  viz05: './scripts/viz/narrative-sankey.js',
-  viz06: './scripts/viz/lang-chord.js',
-  viz07: './scripts/viz/term-bump-chart.js',
-  viz08: './scripts/viz/research-map.js',
+var subjectCrosslinksLookupCache = null;
+var reverseEdgesCache = null;
+var SUBJECT_BY_LEXICON_INDEX = null;
+var VIDEO_BACKLINK_INDEX = null;
+var vizCacheWarmPromise = null;
+var currentVizCleanup = null;
+var vizScriptLoadPromises = /* @__PURE__ */ new Map();
+var VIZ_CACHE_WORKER_PATH = "./scripts/viz/build-viz-cache-worker.js";
+var VIZ_STATE_SCRIPT_PATH = "./scripts/viz/viz-state.js";
+var VIZ_SHELL_SCRIPT_PATH = "./scripts/viz/viz-shell.js";
+var VIZ_SCRIPT_BY_MODULE = Object.freeze({
+  viz01: "./scripts/viz/map-timeline.js",
+  viz02: "./scripts/viz/cooccurrence-graph.js",
+  viz03: "./scripts/viz/discovery-timeline.js",
+  viz04: "./scripts/viz/heatmap-matrix.js",
+  viz05: "./scripts/viz/narrative-sankey.js",
+  viz06: "./scripts/viz/lang-chord.js",
+  viz07: "./scripts/viz/term-bump-chart.js",
+  viz08: "./scripts/viz/research-map.js"
 });
-const VIZ_RENDERER_BY_MODULE = Object.freeze({
-  viz01: 'renderMapTimeline',
-  viz02: 'renderCooccurrenceGraph',
-  viz03: 'renderDiscoveryTimeline',
-  viz04: 'renderHeatmapMatrix',
-  viz05: 'renderNarrativeSankey',
-  viz06: 'renderLangChord',
-  viz07: 'renderTermBumpChart',
-  viz08: 'renderResearchMap',
+var VIZ_RENDERER_BY_MODULE = Object.freeze({
+  viz01: "renderMapTimeline",
+  viz02: "renderCooccurrenceGraph",
+  viz03: "renderDiscoveryTimeline",
+  viz04: "renderHeatmapMatrix",
+  viz05: "renderNarrativeSankey",
+  viz06: "renderLangChord",
+  viz07: "renderTermBumpChart",
+  viz08: "renderResearchMap"
 });
-/* [modularized] CYRILLIC_TO_LATIN_MAP */
-
-// =========================================================
-// УТИЛИТЫ
-// =========================================================
-/* [modularized] */ function legacy_nowMs() {
-  if (typeof performance !== 'undefined' && typeof performance.now === 'function') return performance.now();
-  return Date.now();
-}
-
-/* [modularized] */ function legacy_safeSetAttr(el, name, value) {
-  if (!el || typeof el.setAttribute !== 'function') return;
-  el.setAttribute(name, value);
-}
-
-/* [modularized] */ function legacy_perfDebug(label, ms, meta = '') {
-  if (typeof console === 'undefined' || typeof console.debug !== 'function') return;
-  const extra = meta ? ` · ${meta}` : '';
-  console.debug(`[perf] ${label}: ${ms.toFixed(1)}ms${extra}`);
-}
-
-/* [modularized] */ function legacy_deterministicUnitFromString(text, salt = 0) {
-  const src = String(text || '');
-  let h = (2166136261 ^ (salt >>> 0)) >>> 0;
-  for (let i = 0; i < src.length; i++) {
-    h ^= src.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  h ^= h >>> 13;
-  h = Math.imul(h, 1274126177);
-  h ^= h >>> 16;
-  return (h >>> 0) / 4294967295;
-}
-
-/* [modularized] */ function legacy_getDataSignature() {
-  if (!APP_DATA) return 'none';
-  return [
-    (APP_DATA.names || []).length,
-    (APP_DATA.toponyms || []).length,
-    (APP_DATA.ethnonyms || []).length,
-    (APP_DATA.languages || []).length,
-    (APP_DATA.lexicon || []).length,
-    (APP_DATA.lexicon_reverse || []).length,
-    (APP_DATA.lexicon_tech || []).length,
-    (APP_DATA.edges || []).length,
-    (APP_DATA.language_edges || []).length,
-    (APP_DATA.chapters || []).length,
-  ].join('-');
-}
-
-/* [modularized] */ function legacy_getCachedAggregate(kind, key, computeFn) {
-  const fullKey = `${kind}::${key}`;
-  if (aggregateCache.has(fullKey)) {
-    perfDebug(`${kind} cache`, 0, 'hit');
-    return aggregateCache.get(fullKey);
-  }
-  const t0 = nowMs();
-  const value = computeFn();
-  const dt = nowMs() - t0;
-  rememberBoundedCacheValue(aggregateCache, fullKey, value, AGGREGATE_CACHE_MAX);
-  perfDebug(`${kind} cache`, dt, 'miss');
-  return value;
-}
-
-/* [modularized] */ function legacy_invalidateAggregateCache(reason = '') {
-  const hadAny = (
-    aggregateCache.size > 0 ||
-    nameGraphLayoutPromiseCache.size > 0 ||
-    familiesGraphLayoutPromiseCache.size > 0
-  );
-  aggregateCache.clear();
-  nameGraphLayoutPromiseCache.clear();
-  familiesGraphLayoutPromiseCache.clear();
-  if (hadAny) perfDebug('aggregate cache reset', 0, reason || 'clear');
-}
-
-/* [modularized] */ function legacy_escapeHtml(s) {
-  if (s === null || s === undefined) return '';
-  let text = String(s);
-  if (typeof text.normalize === 'function') text = text.normalize('NFC');
-  return text.replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-/* [modularized] */ function legacy_escapeYamlDoubleQuoted(value) {
-  return normalizeBibtexText(value)
-    .replace(/\\/g, '\\\\')
-    .replace(/"/g, '\\"')
-    .replace(/\r/g, '\\r')
-    .replace(/\n/g, '\\n')
-    .replace(/\t/g, '\\t');
-}
-
-/* [modularized] */ function legacy_escapeMarkdownTableCell(value) {
-  return String(value || '')
-    .replace(/\\/g, '\\\\')
-    .replace(/\|/g, '\\|')
-    .replace(/\r?\n/g, ' ');
-}
-
-function safeUrl(url, fallback = '#') {
-  if (url === null || url === undefined) return fallback;
+function safeUrl(url, fallback = "#") {
+  if (url === null || url === void 0) return fallback;
   const raw = String(url).trim();
   if (!raw) return fallback;
   if (raw.length > MAX_URL_LENGTH) return fallback;
-  if (raw.startsWith('//')) return fallback;
-  if (raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) return raw;
-  if (raw.startsWith('#')) return raw;
+  if (raw.startsWith("//")) return fallback;
+  if (raw.startsWith("/") || raw.startsWith("./") || raw.startsWith("../")) return raw;
+  if (raw.startsWith("#")) return raw;
   try {
-    const base = (typeof window !== 'undefined' && window.location && window.location.href)
-      ? window.location.href
-      : 'https://example.invalid/';
+    const base = typeof window !== "undefined" && window.location && window.location.href ? window.location.href : "https://example.invalid/";
     const parsed = new URL(raw, base);
-    if (!['http:', 'https:', 'mailto:', 'tel:'].includes(parsed.protocol)) return fallback;
+    if (![
+      "http:",
+      "https:",
+      "mailto:",
+      "tel:"
+    ].includes(parsed.protocol)) return fallback;
     return parsed.href;
   } catch (e) {
     return fallback;
   }
 }
-
-function safeImageUrl(url, fallback = '') {
-  if (url === null || url === undefined) return fallback;
+function safeImageUrl(url, fallback = "") {
+  if (url === null || url === void 0) return fallback;
   const raw = String(url).trim();
   if (!raw) return fallback;
   if (raw.length > MAX_URL_LENGTH) return fallback;
-  if (raw.startsWith('//')) return fallback;
-  if (raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) return raw;
+  if (raw.startsWith("//")) return fallback;
+  if (raw.startsWith("/") || raw.startsWith("./") || raw.startsWith("../")) return raw;
   if (/^data:image\/(?:png|jpe?g|gif|webp|avif);/i.test(raw)) return raw;
   try {
-    const base = (typeof window !== 'undefined' && window.location && window.location.href)
-      ? window.location.href
-      : 'https://example.invalid/';
+    const base = typeof window !== "undefined" && window.location && window.location.href ? window.location.href : "https://example.invalid/";
     const parsed = new URL(raw, base);
-    if (!['http:', 'https:', 'blob:'].includes(parsed.protocol)) return fallback;
+    if (![
+      "http:",
+      "https:",
+      "blob:"
+    ].includes(parsed.protocol)) return fallback;
     return parsed.href;
   } catch (e) {
     return fallback;
   }
 }
-
 function wireSafeImageFallback(root) {
-  if (!root || typeof root.querySelectorAll !== 'function') return;
-  root.querySelectorAll('img').forEach(img => {
-    if (!img || img.dataset.fallbackWired === '1') return;
-    img.dataset.fallbackWired = '1';
-    img.addEventListener('error', () => {
+  if (!root || typeof root.querySelectorAll !== "function") return;
+  root.querySelectorAll("img").forEach((img) => {
+    if (!img || img.dataset.fallbackWired === "1") return;
+    img.dataset.fallbackWired = "1";
+    img.addEventListener("error", () => {
       img.hidden = true;
     }, { once: true });
   });
 }
-
-function safeColor(value, fallback = '#888') {
-  if (value === null || value === undefined) return fallback;
+function safeColor(value, fallback = "#888") {
+  if (value === null || value === void 0) return fallback;
   const raw = String(value).trim();
   if (!raw) return fallback;
   if (/^#[0-9a-f]{3,8}$/i.test(raw)) return raw;
@@ -1123,151 +253,146 @@ function safeColor(value, fallback = '#888') {
   if (/^[a-z]{3,20}$/i.test(raw)) return raw;
   return fallback;
 }
-
 function applyDataDrivenStyles(root) {
-  const scope = root && typeof root.querySelectorAll === 'function' ? root : document;
-  if (!scope || typeof scope.querySelectorAll !== 'function') return;
+  const scope = root && typeof root.querySelectorAll === "function" ? root : document;
+  if (!scope || typeof scope.querySelectorAll !== "function") return;
   const clamp = (value, min, max, fallback) => {
-    const number = Number.parseFloat(String(value || ''));
+    const number = Number.parseFloat(String(value || ""));
     if (!Number.isFinite(number)) return fallback;
     return Math.max(min, Math.min(max, number));
   };
-  scope.querySelectorAll('[data-bar-width-pct]').forEach((el) => {
+  scope.querySelectorAll("[data-bar-width-pct]").forEach((el) => {
     el.style.width = `${clamp(el.dataset.barWidthPct, 0, 100, 0)}%`;
   });
-  scope.querySelectorAll('[data-epoch-color]').forEach((el) => {
-    el.style.setProperty('--epoch-color', safeColor(el.dataset.epochColor, '#8a7050'));
+  scope.querySelectorAll("[data-epoch-color]").forEach((el) => {
+    el.style.setProperty("--epoch-color", safeColor(el.dataset.epochColor, "#8a7050"));
   });
-  scope.querySelectorAll('[data-family-color]').forEach((el) => {
-    el.style.background = safeColor(el.dataset.familyColor, '#888');
+  scope.querySelectorAll("[data-family-color]").forEach((el) => {
+    el.style.background = safeColor(el.dataset.familyColor, "#888");
   });
-  scope.querySelectorAll('[data-home-decl-padding]').forEach((el) => {
-    el.style.setProperty('--home-decl-padding', el.dataset.homeDeclPadding || '14px 20px');
+  scope.querySelectorAll("[data-home-decl-padding]").forEach((el) => {
+    el.style.setProperty("--home-decl-padding", el.dataset.homeDeclPadding || "14px 20px");
   });
-  scope.querySelectorAll('[data-home-inner-padding]').forEach((el) => {
-    el.style.setProperty('--home-inner-padding', el.dataset.homeInnerPadding || '14px 20px');
+  scope.querySelectorAll("[data-home-inner-padding]").forEach((el) => {
+    el.style.setProperty("--home-inner-padding", el.dataset.homeInnerPadding || "14px 20px");
   });
-  scope.querySelectorAll('[data-home-facts-space]').forEach((el) => {
-    el.style.setProperty('--home-facts-space', `${clamp(el.dataset.homeFactsSpace, 0, 40, 14)}px`);
-    el.style.setProperty('--home-facts-line-height', String(clamp(el.dataset.homeFactsLineHeight, 1, 2.5, 1.7)));
+  scope.querySelectorAll("[data-home-facts-space]").forEach((el) => {
+    el.style.setProperty("--home-facts-space", `${clamp(el.dataset.homeFactsSpace, 0, 40, 14)}px`);
+    el.style.setProperty("--home-facts-line-height", String(clamp(el.dataset.homeFactsLineHeight, 1, 2.5, 1.7)));
   });
-  scope.querySelectorAll('[data-home-featured-padding]').forEach((el) => {
-    el.style.setProperty('--home-featured-padding', `${clamp(el.dataset.homeFeaturedPadding, 0, 40, 10)}px`);
+  scope.querySelectorAll("[data-home-featured-padding]").forEach((el) => {
+    el.style.setProperty("--home-featured-padding", `${clamp(el.dataset.homeFeaturedPadding, 0, 40, 10)}px`);
   });
-  scope.querySelectorAll('[data-scholar-recon-columns]').forEach((el) => {
-    el.style.setProperty('--scholar-recon-columns', String(clamp(el.dataset.scholarReconColumns, 1, 6, 3)));
+  scope.querySelectorAll("[data-scholar-recon-columns]").forEach((el) => {
+    el.style.setProperty("--scholar-recon-columns", String(clamp(el.dataset.scholarReconColumns, 1, 6, 3)));
   });
 }
-
 function getCategoryColorClass(subcategory) {
-  const key = String(subcategory || 'other').replace(/_/g, '-');
-  return ['linguist', 'literator', 'historical', 'participant', 'schoolchild', 'lecture-host', 'edition-staff'].includes(key)
-    ? `cat-color-${key}`
-    : 'cat-color-other';
+  const key = String(subcategory || "other").replace(/_/g, "-");
+  return [
+    "linguist",
+    "literator",
+    "historical",
+    "participant",
+    "schoolchild",
+    "lecture-host",
+    "edition-staff"
+  ].includes(key) ? `cat-color-${key}` : "cat-color-other";
 }
-
-function safeIcon(icon, fallback = '•') {
-  if (icon === null || icon === undefined) return fallback;
+function safeIcon(icon, fallback = "•") {
+  if (icon === null || icon === void 0) return fallback;
   const raw = String(icon).trim();
   if (!raw) return fallback;
-  const clean = raw.replace(/[<>]/g, '').slice(0, 8);
+  const clean = raw.replace(/[<>]/g, "").slice(0, 8);
   return escapeHtml(clean || fallback);
 }
-
-/* [modularized] */ function legacy_clampUiInput(value, maxLen) {
-  const limit = Number.isFinite(maxLen) && maxLen > 0 ? maxLen : 80;
-  return String(value || '').trim().slice(0, limit);
-}
-
-/* [modularized] */ function legacy_getTotalBookPages() {
-  return Math.max(1, parseInt(APP_DATA?.book_stats?.total_pages || DEFAULT_TOTAL_PAGES, 10) || DEFAULT_TOTAL_PAGES);
-}
-
-/* [modularized] */ function legacy_normalizeKwicSource(source) {
-  return source === 'glossary' ? 'glossary' : 'lexicon';
-}
-
-/* [modularized] */ function legacy_normalizeKwicSort(mode) {
-  return ['left', 'right', 'page'].includes(mode) ? mode : 'left';
-}
-
-/* [modularized] */ function legacy_clampPageInBook(value) {
-  const total = getTotalBookPages();
-  const raw = Number.isFinite(value) ? value : parseInt(String(value || ''), 10);
-  if (!Number.isFinite(raw)) return 1;
-  return Math.max(1, Math.min(total, raw));
-}
-
-/* [modularized] */ function legacy_normalizePageRangeInBook(startValue, endValue, fallbackStart = 1, fallbackEnd = null) {
-  const resolvedFallbackEnd = fallbackEnd == null ? getTotalBookPages() : fallbackEnd;
-  const start = startValue == null ? clampPageInBook(fallbackStart) : clampPageInBook(startValue);
-  const end = endValue == null ? clampPageInBook(resolvedFallbackEnd) : clampPageInBook(endValue);
-  return start <= end ? { start, end } : { start: end, end: start };
-}
-
-/* [modularized] */ function legacy_announceUiMessage(message) {
-  if (typeof document === 'undefined' || !document.body) return;
-  const text = String(message || '').trim();
-  if (!text) return;
-  let live = document.getElementById('ui-live-status');
-  if (!live) {
-    live = document.createElement('div');
-    live.id = 'ui-live-status';
-    safeSetAttr(live, 'aria-live', 'polite');
-    safeSetAttr(live, 'aria-atomic', 'true');
-    live.style.position = 'fixed';
-    live.style.width = '1px';
-    live.style.height = '1px';
-    live.style.margin = '-1px';
-    live.style.padding = '0';
-    live.style.border = '0';
-    live.style.overflow = 'hidden';
-    live.style.clip = 'rect(0 0 0 0)';
-    live.style.whiteSpace = 'nowrap';
-    document.body.appendChild(live);
-  }
-  live.textContent = '';
-  setTimeout(() => { live.textContent = text; }, 0);
-}
-
-/* [modularized] */ function legacy_shuffleArray(input) {
-  const arr = Array.isArray(input) ? [...input] : [];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const tmp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
-  }
-  return arr;
-}
-
-const ACCENT_SAFE_TOKEN_RE = /([^\s,;()[\]{}<>]*[\u0300-\u036f][^\s,;()[\]{}<>]*)/g;
-
+var ACCENT_SAFE_TOKEN_RE = /([^\s,;()[\]{}<>]*[\u0300-\u036f][^\s,;()[\]{}<>]*)/g;
 function wrapAccentSafeInEscapedText(escapedText) {
-  return String(escapedText || '').replace(ACCENT_SAFE_TOKEN_RE, '<span class="accent-safe">$1</span>');
+  return String(escapedText || "").replace(ACCENT_SAFE_TOKEN_RE, "<span class=\"accent-safe\">$1</span>");
 }
-
 function renderAccentSafe(s) {
   return wrapAccentSafeInEscapedText(escapeHtml(s));
 }
-
 function renderAccentSafeInHtmlTextNodes(html) {
-  return String(html || '').replace(/(^|>)([^<>]+)(?=<|$)/g, (match, prefix, textPart) => {
+  return String(html || "").replace(/(^|>)([^<>]+)(?=<|$)/g, (match, prefix, textPart) => {
     return `${prefix}${wrapAccentSafeInEscapedText(textPart)}`;
   });
 }
-
-function escapeRegexLiteral(s) {
-  return String(s || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function appendAccentSafeText(parent, text) {
+  if (!parent) return;
+  const source = String(text || "");
+  if (!source) return;
+  const re = new RegExp(ACCENT_SAFE_TOKEN_RE.source, "g");
+  let last = 0;
+  let m;
+  let matched = false;
+  while ((m = re.exec(source)) !== null) {
+    matched = true;
+    if (m.index > last) parent.appendChild(document.createTextNode(source.slice(last, m.index)));
+    const span = document.createElement("span");
+    span.className = "accent-safe";
+    span.textContent = m[0] || "";
+    parent.appendChild(span);
+    last = m.index + (m[0] || "").length;
+  }
+  if (last < source.length) parent.appendChild(document.createTextNode(source.slice(last)));
+  if (!matched && /[\u0300-\u036f]/.test(source)) {
+    while (parent.firstChild) parent.removeChild(parent.firstChild);
+    const span = document.createElement("span");
+    span.className = "accent-safe";
+    span.textContent = source;
+    parent.appendChild(span);
+  }
 }
-
+function appendHighlightedSearchText(parent, text, query) {
+  if (!parent) return;
+  const source = String(text || "");
+  const q = String(query || "").trim();
+  if (!source) return;
+  if (!q) {
+    parent.appendChild(document.createTextNode(source));
+    return;
+  }
+  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  let re;
+  try {
+    re = new RegExp(esc, "ig");
+  } catch (e) {
+    parent.appendChild(document.createTextNode(source));
+    return;
+  }
+  let last = 0;
+  let m;
+  while ((m = re.exec(source)) !== null) {
+    const idx = m.index;
+    const seg = m[0] || "";
+    if (idx > last) parent.appendChild(document.createTextNode(source.slice(last, idx)));
+    if (seg) {
+      const mark = document.createElement("mark");
+      mark.textContent = seg;
+      parent.appendChild(mark);
+    }
+    last = idx + seg.length;
+    if (!seg.length) re.lastIndex += 1;
+  }
+  if (last < source.length) parent.appendChild(document.createTextNode(source.slice(last)));
+}
+function setStaticEmptyMessage(host, className, message) {
+  if (!host) return;
+  host.textContent = "";
+  const div = document.createElement("div");
+  div.className = className;
+  div.textContent = message;
+  host.appendChild(div);
+}
+function escapeRegexLiteral(s) {
+  return String(s || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 function buildContextLinkMatchTerms(head) {
-  const raw = String(head || '').trim();
+  const raw = String(head || "").trim();
   if (!raw) return [];
   const variants = new Set([raw]);
-  const simpleWord = /^[A-Za-zА-Яа-яЁё]+$/u.test(raw);
-  if (!simpleWord) return Array.from(variants);
-
+  if (!/^[A-Za-zА-Яа-яЁё]+$/u.test(raw)) return Array.from(variants);
   if (/ь$/iu.test(raw)) {
     const stem = raw.slice(0, -1);
     if (stem) {
@@ -1277,14 +402,12 @@ function buildContextLinkMatchTerms(head) {
       variants.add(`${stem}ью`);
     }
   }
-
   if (/т$/iu.test(raw)) {
     variants.add(`${raw}а`);
     variants.add(`${raw}у`);
     variants.add(`${raw}е`);
     variants.add(`${raw}ом`);
   }
-
   if (/(ий|ой)$/iu.test(raw)) {
     const stem = raw.slice(0, -2);
     if (stem.length >= 3) {
@@ -1301,26 +424,21 @@ function buildContextLinkMatchTerms(head) {
       variants.add(`${stem}ыми`);
     }
   }
-
   return Array.from(variants);
 }
-
 function getContextEntityLinkEntries() {
-  if (Array.isArray(contextEntityLinkEntriesCache) && contextEntityLinkEntriesCache.length) {
-    return contextEntityLinkEntriesCache;
-  }
+  if (Array.isArray(contextEntityLinkEntriesCache) && contextEntityLinkEntriesCache.length) return contextEntityLinkEntriesCache;
   const out = [];
-  const seen = new Set();
-  const sources = [
-    ['names', 'names'],
-    ['toponyms', 'toponyms'],
-    ['ethnonyms', 'ethnonyms'],
-    ['languages', 'languages'],
-  ];
-  for (const [dataKey, entityType] of sources) {
+  const seen = /* @__PURE__ */ new Set();
+  for (const [dataKey, entityType] of [
+    ["names", "names"],
+    ["toponyms", "toponyms"],
+    ["ethnonyms", "ethnonyms"],
+    ["languages", "languages"]
+  ]) {
     const list = Array.isArray(APP_DATA && APP_DATA[dataKey]) ? APP_DATA[dataKey] : [];
     for (const it of list) {
-      const head = String(it && it.head ? it.head : '').trim();
+      const head = String(it && it.head ? it.head : "").trim();
       if (!head) continue;
       const matchTerms = buildContextLinkMatchTerms(head);
       for (const term of matchTerms) {
@@ -1334,14 +452,14 @@ function getContextEntityLinkEntries() {
           head,
           matchText: term,
           norm,
-          length: term.length,
+          length: term.length
         });
       }
     }
   }
   const glossary = Array.isArray(APP_DATA && APP_DATA.glossary) ? APP_DATA.glossary : [];
   for (const g of glossary) {
-    const head = String(g && (g.term || g.head) ? (g.term || g.head) : '').trim();
+    const head = String(g && (g.term || g.head) ? g.term || g.head : "").trim();
     if (!head) continue;
     const norm = normalizeHeadForMatch(head);
     if (!norm) continue;
@@ -1349,91 +467,118 @@ function getContextEntityLinkEntries() {
     if (seen.has(uniq)) continue;
     seen.add(uniq);
     out.push({
-      type: 'glossary',
+      type: "glossary",
       head,
       matchText: head,
       norm,
       length: head.length,
-      href: buildGlossaryTermHash(head),
+      href: buildGlossaryTermHash(head)
     });
   }
-  out.sort((a, b) => (b.length - a.length) || compareHeadsRu(a.head, b.head));
+  out.sort((a, b) => b.length - a.length || compareHeadsRu(a.head, b.head));
   contextEntityLinkEntriesCache = out;
   return out;
 }
-
 function isContextLinkWordChar(ch) {
-  return /[A-Za-zА-Яа-яЁё0-9]/.test(String(ch || ''));
+  return /[A-Za-zА-Яа-яЁё0-9]/.test(String(ch || ""));
 }
-
 function hasContextLinkBoundaries(text, start, end) {
-  const prev = start > 0 ? text[start - 1] : '';
-  const next = end < text.length ? text[end] : '';
+  const prev = start > 0 ? text[start - 1] : "";
+  const next = end < text.length ? text[end] : "";
   if (prev && isContextLinkWordChar(prev)) return false;
   if (next && isContextLinkWordChar(next)) return false;
   return true;
 }
-
-function autoLinkEntitiesPlain(rawText) {
-  const text = String(rawText || '');
-  if (!text) return '';
+function collectContextLinkMatches(text) {
+  const source = String(text || "");
+  if (!source) return [];
   const entries = getContextEntityLinkEntries();
-  if (!entries.length) return renderAccentSafe(text);
-  const occupied = new Array(text.length).fill(false);
+  if (!entries.length) return [];
+  const occupied = new Array(source.length).fill(false);
   const matches = [];
   for (const entry of entries) {
     let re = null;
     try {
-      re = new RegExp(escapeRegexLiteral(entry.matchText || entry.head || ''), 'giu');
+      re = new RegExp(escapeRegexLiteral(entry.matchText || entry.head || ""), "giu");
     } catch (e) {
       continue;
     }
     let m = null;
-    while ((m = re.exec(text)) !== null) {
-      const value = String(m[0] || '');
+    while ((m = re.exec(source)) !== null) {
+      const value = String(m[0] || "");
       if (!value) break;
       const start = m.index;
       const end = start + value.length;
-      if (start < 0 || end <= start || end > text.length) continue;
-      if (!hasContextLinkBoundaries(text, start, end)) continue;
+      if (start < 0 || end <= start || end > source.length) continue;
+      if (!hasContextLinkBoundaries(source, start, end)) continue;
       let overlap = false;
-      for (let i = start; i < end; i++) {
-        if (occupied[i]) {
-          overlap = true;
-          break;
-        }
+      for (let i = start; i < end; i++) if (occupied[i]) {
+        overlap = true;
+        break;
       }
       if (overlap) continue;
       for (let i = start; i < end; i++) occupied[i] = true;
-      matches.push({ start, end, value, entry });
+      matches.push({
+        start,
+        end,
+        value,
+        entry
+      });
     }
   }
-  if (!matches.length) return renderAccentSafe(text);
   matches.sort((a, b) => a.start - b.start);
-  let html = '';
+  return matches;
+}
+function autoLinkEntitiesPlain(rawText) {
+  const text = String(rawText || "");
+  if (!text) return "";
+  const matches = collectContextLinkMatches(text);
+  if (!matches.length) return renderAccentSafe(text);
+  let html = "";
   let cursor = 0;
   for (const hit of matches) {
     if (hit.start > cursor) html += renderAccentSafe(text.slice(cursor, hit.start));
-    const href = hit.entry.href || (hit.entry.type === 'glossary'
-      ? buildGlossaryTermHash(hit.entry.head)
-      : buildItemHash(hit.entry.type, hit.entry.head));
+    const href = hit.entry.href || (hit.entry.type === "glossary" ? buildGlossaryTermHash(hit.entry.head) : buildItemHash(hit.entry.type, hit.entry.head));
     html += `<a href="${escapeHtml(href)}" class="ctx-link" data-type="${escapeHtml(hit.entry.type)}" data-head="${escapeHtml(hit.entry.head)}">${renderAccentSafe(hit.value)}</a>`;
     cursor = hit.end;
   }
   if (cursor < text.length) html += renderAccentSafe(text.slice(cursor));
   return html;
 }
-
+function appendAutoLinkedEntitiesPlain(parent, rawText) {
+  if (!parent) return;
+  const text = String(rawText || "");
+  if (!text) return;
+  const matches = collectContextLinkMatches(text);
+  if (!matches.length) {
+    appendAccentSafeText(parent, text);
+    return;
+  }
+  let cursor = 0;
+  for (const hit of matches) {
+    if (hit.start > cursor) appendAccentSafeText(parent, text.slice(cursor, hit.start));
+    const href = hit.entry.href || (hit.entry.type === "glossary" ? buildGlossaryTermHash(hit.entry.head) : buildItemHash(hit.entry.type, hit.entry.head));
+    const link = document.createElement("a");
+    link.className = "ctx-link";
+    link.href = href;
+    link.dataset.type = String(hit.entry.type || "");
+    link.dataset.head = String(hit.entry.head || "");
+    appendAccentSafeText(link, hit.value);
+    parent.appendChild(link);
+    cursor = hit.end;
+  }
+  if (cursor < text.length) appendAccentSafeText(parent, text.slice(cursor));
+}
 function autoLinkEntities(text) {
-  const raw = String(text || '');
-  if (!raw) return '';
+  const raw = String(text || "");
+  if (!raw) return "";
   const anchorTagRe = /<a\b[^>]*>[\s\S]*?<\/a>/gi;
-  let html = '';
+  let html = "";
   let cursor = 0;
   let m = null;
   while ((m = anchorTagRe.exec(raw)) !== null) {
     const start = m.index;
-    const full = String(m[0] || '');
+    const full = String(m[0] || "");
     if (start > cursor) html += autoLinkEntitiesPlain(raw.slice(cursor, start));
     html += full;
     cursor = start + full.length;
@@ -1441,186 +586,240 @@ function autoLinkEntities(text) {
   if (cursor < raw.length) html += autoLinkEntitiesPlain(raw.slice(cursor));
   return html;
 }
-
+function appendAutoLinkedEntities(parent, text) {
+  if (!parent) return;
+  const raw = String(text || "");
+  if (!raw) return;
+  // Context data is plain text; all insertion below goes through appendAccentSafeText/
+  // createTextNode (never innerHTML), so raw "<" characters are inserted as literal text
+  // and cannot be interpreted as markup. No regex-based tag stripping needed or attempted.
+  appendAutoLinkedEntitiesPlain(parent, raw);
+}
 function getPreferredContextSplitIndex(text) {
-  const raw = String(text || '').replace(/\s+/g, ' ').trim();
-  if (!raw || raw.startsWith('…')) return -1;
+  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  if (!raw || raw.startsWith("…")) return -1;
   if (raw.length < 68 || raw.length > 170) return -1;
   const dashMatch = raw.match(/\s+—\s+/u);
-  if (!dashMatch || typeof dashMatch.index !== 'number') return -1;
+  if (!dashMatch || typeof dashMatch.index !== "number") return -1;
   const splitIdx = dashMatch.index + 1;
   const leftLen = splitIdx;
   const rightLen = raw.length - splitIdx;
   if (leftLen < 28 || rightLen < 24) return -1;
   return splitIdx;
 }
-
 function renderContextTextWithLinks(text) {
-  const raw = String(text || '').replace(/\s+/g, ' ').trim();
-  if (!raw) return '';
+  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  if (!raw) return "";
   const splitIdx = getPreferredContextSplitIndex(raw);
-  if (splitIdx < 1 || splitIdx >= raw.length) {
-    return autoLinkEntities(raw);
-  }
+  if (splitIdx < 1 || splitIdx >= raw.length) return autoLinkEntities(raw);
   const left = raw.slice(0, splitIdx).trimEnd();
   const right = raw.slice(splitIdx).trimStart();
   if (!left || !right) return autoLinkEntities(raw);
   return `${autoLinkEntities(left)}<br class="context-balance-break"><span class="context-line-two">${autoLinkEntities(right)}</span>`;
 }
-
+function appendContextTextWithLinks(parent, text) {
+  if (!parent) return;
+  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  if (!raw) return;
+  const splitIdx = getPreferredContextSplitIndex(raw);
+  if (splitIdx < 1 || splitIdx >= raw.length) {
+    appendAutoLinkedEntities(parent, raw);
+    return;
+  }
+  const left = raw.slice(0, splitIdx).trimEnd();
+  const right = raw.slice(splitIdx).trimStart();
+  if (!left || !right) {
+    appendAutoLinkedEntities(parent, raw);
+    return;
+  }
+  appendAutoLinkedEntities(parent, left);
+  const br = document.createElement("br");
+  br.className = "context-balance-break";
+  parent.appendChild(br);
+  const lineTwo = document.createElement("span");
+  lineTwo.className = "context-line-two";
+  appendAutoLinkedEntities(lineTwo, right);
+  parent.appendChild(lineTwo);
+}
+function fillCardContextsMount(mount, it) {
+  if (!mount || !it) return;
+  mount.textContent = "";
+  const title = document.createElement("h3");
+  title.textContent = "Контексты упоминаний (KWIC)";
+  mount.appendChild(title);
+  if (Array.isArray(it.contexts) && it.contexts.length > 0) {
+    for (const ctx of it.contexts.slice(0, 10)) {
+      const item = document.createElement("div");
+      item.className = "context-item";
+      const text = document.createElement("div");
+      text.className = "context-text";
+      appendContextTextWithLinks(text, ctx);
+      item.appendChild(text);
+      mount.appendChild(item);
+    }
+    return;
+  }
+  if (it.contexts && typeof it.contexts === "object") {
+    const ctxKeys = Object.keys(it.contexts).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+    for (const pg of ctxKeys.slice(0, 10)) {
+      const ctxs = it.contexts[pg];
+      if (!Array.isArray(ctxs) || !ctxs.length) continue;
+      for (const ctx of ctxs.slice(0, 1)) {
+        const item = document.createElement("div");
+        item.className = "context-item";
+        const page = document.createElement("div");
+        page.className = "context-page";
+        page.textContent = `стр. ${pg}`;
+        item.appendChild(page);
+        const text = document.createElement("div");
+        text.className = "context-text";
+        appendContextTextWithLinks(text, ctx);
+        item.appendChild(text);
+        mount.appendChild(item);
+      }
+    }
+  }
+}
 function highlightInContext(text, head) {
   if (!head) return renderAccentSafe(text);
-  const parts = head.split(/[\s,]/);
-  const surname = parts[0];
+  const surname = head.split(/[\s,]/)[0];
   if (!surname || surname.length < 3) return renderAccentSafe(text);
-  const stem = surname.length > 5 ? surname.slice(0, -2) : surname;
-  const escStem = stem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escStem = (surname.length > 5 ? surname.slice(0, -2) : surname).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   try {
-    const re = new RegExp(escStem + '[А-Яа-яёЁA-Za-z]{0,5}', 'gi');
-    const highlighted = escapeHtml(text).replace(re, m => '<mark>' + m + '</mark>');
-    return renderAccentSafeInHtmlTextNodes(highlighted);
+    const re = new RegExp(escStem + "[А-Яа-яёЁA-Za-z]{0,5}", "gi");
+    return renderAccentSafeInHtmlTextNodes(escapeHtml(text).replace(re, (m) => "<mark>" + m + "</mark>"));
   } catch (e) {
     return renderAccentSafe(text);
   }
 }
-
 function getFirstLetter(head) {
   const normalized = normalizeHeadForMatch(head);
-  if (!normalized) return '#';
+  if (!normalized) return "#";
   for (const ch of normalized) {
-    if (/[a-zа-я]/i.test(ch)) return ch.toUpperCase().replace('Ё', 'Е');
-    if (/[0-9]/.test(ch)) return '#';
+    if (/[a-zа-я]/i.test(ch)) return ch.toUpperCase().replace("Ё", "Е");
+    if (/[0-9]/.test(ch)) return "#";
   }
-  return '#';
+  return "#";
 }
-
 function getRightEdgeSortKey(head) {
-  const normalized = normalizeHeadForMatch(head).replace(/\s+/g, ' ').trim();
-  if (!normalized) return '';
-  return Array.from(normalized).reverse().join('');
+  const normalized = normalizeHeadForMatch(head).replace(/\s+/g, " ").trim();
+  if (!normalized) return "";
+  return Array.from(normalized).reverse().join("");
 }
-
 function getLastLetter(head) {
   const normalized = normalizeHeadForMatch(head);
-  if (!normalized) return '#';
+  if (!normalized) return "#";
   for (let idx = normalized.length - 1; idx >= 0; idx--) {
     const ch = normalized[idx];
-    if (/[a-zа-я]/i.test(ch)) return ch.toUpperCase().replace('Ё', 'Е');
-    if (/[0-9]/.test(ch)) return '#';
+    if (/[a-zа-я]/i.test(ch)) return ch.toUpperCase().replace("Ё", "Е");
+    if (/[0-9]/.test(ch)) return "#";
   }
-  return '#';
+  return "#";
 }
-
 function pluralPages(n) {
-  if (n === 1) return 'странице';
-  return 'страницах';
+  if (n === 1) return "странице";
+  return "страницах";
 }
-
 function countItemMentions(it) {
   return Array.isArray(it && it.page_list) ? it.page_list.length : 0;
 }
-
 function getItemFrequencyScore(it, typeHint = currentEntity) {
-  const itemType = it && it._entityType ? it._entityType : typeHint;
-  if (itemType === 'lexicon') return countItemMentions(it);
+  if ((it && it._entityType ? it._entityType : typeHint) === "lexicon") return countItemMentions(it);
   return Array.isArray(it && it.page_list) ? it.page_list.length : 0;
 }
-
 function sortUniquePages(pages) {
-  const uniq = new Set();
+  const uniq = /* @__PURE__ */ new Set();
   for (const raw of Array.isArray(pages) ? pages : []) {
-    const page = Number.isFinite(raw) ? raw : parseInt(String(raw || ''), 10);
+    const page = Number.isFinite(raw) ? raw : parseInt(String(raw || ""), 10);
     if (!Number.isFinite(page) || page <= 0) continue;
     uniq.add(page);
   }
   return Array.from(uniq).sort((a, b) => a - b);
 }
-
 function buildCardPageLinksHtml(pages, maxLinks = 28) {
   const list = sortUniquePages(pages);
-  if (!list.length) return '';
+  if (!list.length) return "";
   const shown = list.slice(0, Math.max(1, maxLinks));
   let html = shown.map((page) => {
     return `<a class="card-page-link related-link page-ref-link" data-page="${page}" href="${escapeHtml(buildReadingNowHash(page))}">стр. ${page}</a>`;
-  }).join(', ');
+  }).join(", ");
   const hiddenCount = list.length - shown.length;
   if (hiddenCount > 0) html += ` <span class="scholar-muted-meta">и ещё ${hiddenCount}</span>`;
   return html;
 }
-
 function groupPagesByLecture(pages) {
   const list = sortUniquePages(pages);
   if (!list.length) return [];
   const out = [];
-  const byKey = new Map();
+  const byKey = /* @__PURE__ */ new Map();
   for (const page of list) {
     const chapter = PAGE_TO_CHAPTER.get(page) || null;
-    const key = chapter ? `chapter::${chapter.name}` : 'chapter::__other__';
+    const key = chapter ? `chapter::${chapter.name}` : "chapter::__other__";
     let row = byKey.get(key);
     if (!row) {
-      row = { chapter, pages: [] };
+      row = {
+        chapter,
+        pages: []
+      };
       byKey.set(key, row);
       out.push(row);
     }
     row.pages.push(page);
   }
   out.sort((a, b) => {
-    const aStart = a.chapter && Number.isFinite(a.chapter.start) ? a.chapter.start : Number.POSITIVE_INFINITY;
-    const bStart = b.chapter && Number.isFinite(b.chapter.start) ? b.chapter.start : Number.POSITIVE_INFINITY;
-    return aStart - bStart;
+    return (a.chapter && Number.isFinite(a.chapter.start) ? a.chapter.start : Number.POSITIVE_INFINITY) - (b.chapter && Number.isFinite(b.chapter.start) ? b.chapter.start : Number.POSITIVE_INFINITY);
   });
   return out;
 }
-
 function buildLecturePageBreakdownHtml(pages) {
   const groups = groupPagesByLecture(pages);
-  if (!groups.length) return '';
-  let rows = '';
+  if (!groups.length) return "";
+  let rows = "";
   for (const grp of groups) {
-    const chapterName = grp.chapter ? String(grp.chapter.name || '').trim() : '';
+    const chapterName = grp.chapter ? String(grp.chapter.name || "").trim() : "";
     const lectureIdx = chapterName ? findLectureIndexByName(chapterName) : -1;
-    const lectureLabel = lectureIdx >= 0
-      ? `<a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}">${escapeHtml(chapterName)}</a>`
-      : `<span>${escapeHtml(chapterName || 'Вне диапазонов лекций')}</span>`;
+    const lectureLabel = lectureIdx >= 0 ? `<a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}">${escapeHtml(chapterName)}</a>` : `<span>${escapeHtml(chapterName || "Вне диапазонов лекций")}</span>`;
     const pageLinks = buildCardPageLinksHtml(grp.pages, 18);
     rows += `<div class="pages-by-lecture-row"><span class="pages-by-lecture-lecture">${lectureLabel}</span><span class="pages-by-lecture-sep">:</span><span class="pages-by-lecture-pages">${pageLinks}</span></div>`;
   }
   return `<div class="pages-by-lecture"><strong>По лекциям:</strong>${rows}</div>`;
 }
-
 function renderTextWithPageLinks(text, options = {}) {
-  const raw = String(text == null ? '' : text);
-  if (!raw) return '';
-  const classNameRaw = String(options.className || 'card-page-link related-link');
+  const raw = String(text == null ? "" : text);
+  if (!raw) return "";
+  const classNameRaw = String(options.className || "card-page-link related-link");
   const className = /\bpage-ref-link\b/.test(classNameRaw) ? classNameRaw : `${classNameRaw} page-ref-link`;
-  const rangeTarget = String(options.rangeTarget || 'trends');
+  const rangeTarget = String(options.rangeTarget || "trends");
   const matcher = /\b\u0441\u0442\u0440\.?\s*(\d{1,4})(?:\s*[\u2013\u2014-]\s*(\d{1,4}))?/giu;
-  let out = '';
+  let out = "";
   let cursor = 0;
   let match = null;
   while ((match = matcher.exec(raw)) !== null) {
-    const hit = String(match[0] || '');
+    const hit = String(match[0] || "");
     const idx = Number.isFinite(match.index) ? match.index : raw.indexOf(hit, cursor);
     if (idx > cursor) out += escapeHtml(raw.slice(cursor, idx));
-    const startRaw = parseInt(String(match[1] || ''), 10);
-    const endRaw = match[2] ? parseInt(String(match[2] || ''), 10) : startRaw;
+    const startRaw = parseInt(String(match[1] || ""), 10);
+    const endRaw = match[2] ? parseInt(String(match[2] || ""), 10) : startRaw;
     const start = clampPageInBook(Number.isFinite(startRaw) ? startRaw : 1);
     const end = clampPageInBook(Number.isFinite(endRaw) ? endRaw : start);
     const lo = Math.min(start, end);
     const hi = Math.max(start, end);
     const hasRange = hi > lo;
-    const href = (hasRange && rangeTarget === 'trends')
-      ? buildCanonicalHash(['scholar', 'page_trends', 'range', String(lo), String(hi)])
-      : buildReadingNowHash(lo);
-    out += `<a class="${escapeHtml(className)}" data-page="${lo}"${hasRange ? ` data-page-end="${hi}"` : ''} href="${escapeHtml(href)}">${escapeHtml(hit)}</a>`;
+    const href = hasRange && rangeTarget === "trends" ? buildCanonicalHash([
+      "scholar",
+      "page_trends",
+      "range",
+      String(lo),
+      String(hi)
+    ]) : buildReadingNowHash(lo);
+    out += `<a class="${escapeHtml(className)}" data-page="${lo}"${hasRange ? ` data-page-end="${hi}"` : ""} href="${escapeHtml(href)}">${escapeHtml(hit)}</a>`;
     cursor = idx + hit.length;
   }
   if (cursor < raw.length) out += escapeHtml(raw.slice(cursor));
   return out;
 }
-
 function captureViewState() {
-  const globalSearchInput = (typeof document !== 'undefined') ? document.getElementById('global-search') : null;
+  const globalSearchInput = typeof document !== "undefined" ? document.getElementById("global-search") : null;
   return {
     version: UI_STATE_SCHEMA_VERSION,
     currentEntity,
@@ -1629,6 +828,7 @@ function captureViewState() {
     selectedItemType,
     rightPaneMode,
     currentLecture,
+    currentVideoId: typeof window !== "undefined" ? String(window.currentVideoId || "") : "",
     lectureCompareA,
     lectureCompareB,
     trendsRangeStart,
@@ -1645,81 +845,69 @@ function captureViewState() {
     currentKwicPageStart,
     currentKwicPageEnd,
     activeFilters: Array.from(activeFilters),
-    globalSearchQuery: globalSearchInput ? String(globalSearchInput.value || '') : '',
-    globalSearchScope,
+    globalSearchQuery: globalSearchInput ? String(globalSearchInput.value || "") : "",
+    globalSearchScope
   };
 }
-
 function persistViewState() {
-  if (typeof localStorage === 'undefined') return;
+  if (typeof localStorage === "undefined") return;
   try {
     localStorage.setItem(UI_STATE_STORAGE_KEY, JSON.stringify(captureViewState()));
   } catch (e) {}
 }
-
 function restoreViewState() {
-  if (typeof localStorage === 'undefined') return null;
+  if (typeof localStorage === "undefined") return null;
   try {
     const raw = localStorage.getItem(UI_STATE_STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== 'object') return null;
+    if (!parsed || typeof parsed !== "object") return null;
     if (parsed.version !== UI_STATE_SCHEMA_VERSION) {
-      // Soft reset for incompatible storage schema.
       localStorage.removeItem(UI_STATE_STORAGE_KEY);
       return null;
     }
     if (!ENTITY_TYPES[parsed.currentEntity]) return null;
     const tabs = ENTITY_TYPES[parsed.currentEntity].tabs || [];
     if (!tabs.includes(parsed.currentTab)) parsed.currentTab = tabs[0];
-    if (parsed.rightPaneMode !== 'card' && parsed.rightPaneMode !== 'histogram') parsed.rightPaneMode = 'histogram';
+    if (parsed.rightPaneMode !== "card" && parsed.rightPaneMode !== "histogram") parsed.rightPaneMode = "histogram";
     if (!Number.isInteger(parsed.currentLecture)) parsed.currentLecture = 0;
     if (!Number.isInteger(parsed.lectureCompareA)) parsed.lectureCompareA = 1;
     if (!Number.isInteger(parsed.lectureCompareB)) parsed.lectureCompareB = 2;
     if (!Number.isInteger(parsed.trendsRangeStart)) parsed.trendsRangeStart = 1;
     if (!Number.isInteger(parsed.trendsRangeEnd)) parsed.trendsRangeEnd = getTotalBookPages();
-    if (typeof parsed.searchQuery !== 'string') parsed.searchQuery = '';
+    if (typeof parsed.searchQuery !== "string") parsed.searchQuery = "";
     parsed.sortMostFrequentFirst = !!parsed.sortMostFrequentFirst;
-    if (typeof parsed.currentGlossaryTerm !== 'string') parsed.currentGlossaryTerm = '';
-    if (typeof parsed.currentScholarAnchor !== 'string') parsed.currentScholarAnchor = '';
+    if (typeof parsed.currentGlossaryTerm !== "string") parsed.currentGlossaryTerm = "";
+    if (typeof parsed.currentScholarAnchor !== "string") parsed.currentScholarAnchor = "";
     parsed.currentKwicSource = normalizeKwicSource(parsed.currentKwicSource);
-    parsed.currentKwicQuery = typeof parsed.currentKwicQuery === 'string'
-      ? clampUiInput(parsed.currentKwicQuery, MAX_LIST_QUERY_LENGTH)
-      : '';
+    parsed.currentKwicQuery = typeof parsed.currentKwicQuery === "string" ? clampUiInput(parsed.currentKwicQuery, MAX_LIST_QUERY_LENGTH) : "";
     parsed.currentKwicSort = normalizeKwicSort(parsed.currentKwicSort);
-    const kwicRange = normalizePageRangeInBook(
-      parsed.currentKwicPageStart,
-      parsed.currentKwicPageEnd,
-      1,
-      getTotalBookPages()
-    );
+    const kwicRange = normalizePageRangeInBook(parsed.currentKwicPageStart, parsed.currentKwicPageEnd, 1, getTotalBookPages());
     parsed.currentKwicPageStart = kwicRange.start;
     parsed.currentKwicPageEnd = kwicRange.end;
     parsed.onlyDiscussed = !!parsed.onlyDiscussed;
     parsed.onlyQuestionCandidates = !!parsed.onlyQuestionCandidates;
     if (!Array.isArray(parsed.activeFilters)) parsed.activeFilters = [];
-    parsed.activeFilters = parsed.activeFilters.filter(x => typeof x === 'string');
-    if (typeof parsed.globalSearchQuery !== 'string') parsed.globalSearchQuery = '';
+    parsed.activeFilters = parsed.activeFilters.filter((x) => typeof x === "string");
+    if (typeof parsed.globalSearchQuery !== "string") parsed.globalSearchQuery = "";
     parsed.globalSearchScope = normalizeGlobalSearchScope(parsed.globalSearchScope);
     return parsed;
   } catch (e) {
     return null;
   }
 }
-
 function createEmptyTasksProgress() {
   return {
     version: TASKS_PROGRESS_SCHEMA_VERSION,
     totalAnswered: 0,
     totalCorrect: 0,
     byTask: {},
-    history: [],
+    history: []
   };
 }
-
 function hashString32(text) {
-  const src = String(text || '');
-  let h = 2166136261 >>> 0;
+  const src = String(text || "");
+  let h = 2166136261;
   for (let i = 0; i < src.length; i++) {
     h ^= src.charCodeAt(i);
     h = Math.imul(h, 16777619);
@@ -1729,52 +917,42 @@ function hashString32(text) {
   h ^= h >>> 13;
   return h >>> 0;
 }
-
 function getTaskStorageId(task, fallbackIndex = 0) {
-  const existing = String(task && task._storageId ? task._storageId : '').trim();
+  const existing = String(task && task._storageId ? task._storageId : "").trim();
   if (existing) return existing.slice(0, 120);
-  const preferred = String(task && task.id ? task.id : '').trim();
+  const preferred = String(task && task.id ? task.id : "").trim();
   if (preferred) return preferred.slice(0, 120);
-  const question = String(task && task.question ? task.question : '');
-  const options = Array.isArray(task && task.options) ? task.options.join('|') : '';
-  const entityType = String(task && task.entity && task.entity.type ? task.entity.type : '');
-  const entityHead = String(task && task.entity && task.entity.head ? task.entity.head : '');
-  const entityIndex = String(task && task.entity && task.entity.index != null ? task.entity.index : '');
-  const coreSeed = `${question}|${options}|${entityType}|${entityHead}|${entityIndex}`.trim();
-  const seed = coreSeed || `idx:${fallbackIndex}`;
-  return `task_${hashString32(seed).toString(36)}`;
+  return `task_${hashString32(`${String(task && task.question ? task.question : "")}|${Array.isArray(task && task.options) ? task.options.join("|") : ""}|${String(task && task.entity && task.entity.type ? task.entity.type : "")}|${String(task && task.entity && task.entity.head ? task.entity.head : "")}|${String(task && task.entity && task.entity.index != null ? task.entity.index : "")}`.trim() || `idx:${fallbackIndex}`).toString(36)}`;
 }
-
 function normalizeTasksProgress(raw) {
   const out = createEmptyTasksProgress();
-  if (!raw || typeof raw !== 'object') return out;
+  if (!raw || typeof raw !== "object") return out;
   if (raw.version !== TASKS_PROGRESS_SCHEMA_VERSION) return out;
   const answered = parseInt(raw.totalAnswered || 0, 10);
   const correct = parseInt(raw.totalCorrect || 0, 10);
   out.totalAnswered = Math.max(0, Number.isFinite(answered) ? answered : 0);
   out.totalCorrect = Math.max(0, Math.min(out.totalAnswered, Number.isFinite(correct) ? correct : 0));
-
-  const byTask = raw.byTask && typeof raw.byTask === 'object' && !Array.isArray(raw.byTask)
-    ? raw.byTask
-    : {};
+  const byTask = raw.byTask && typeof raw.byTask === "object" && !Array.isArray(raw.byTask) ? raw.byTask : {};
   for (const [taskIdRaw, statRaw] of Object.entries(byTask)) {
-    const taskId = String(taskIdRaw || '').trim().slice(0, 120);
-    if (!taskId || !statRaw || typeof statRaw !== 'object') continue;
+    const taskId = String(taskIdRaw || "").trim().slice(0, 120);
+    if (!taskId || !statRaw || typeof statRaw !== "object") continue;
     const itemAnswered = parseInt(statRaw.answered || 0, 10);
     const itemCorrect = parseInt(statRaw.correct || 0, 10);
     const answeredSafe = Math.max(0, Number.isFinite(itemAnswered) ? itemAnswered : 0);
     const correctSafe = Math.max(0, Math.min(answeredSafe, Number.isFinite(itemCorrect) ? itemCorrect : 0));
-    out.byTask[taskId] = { answered: answeredSafe, correct: correctSafe };
+    out.byTask[taskId] = {
+      answered: answeredSafe,
+      correct: correctSafe
+    };
   }
-
   const history = Array.isArray(raw.history) ? raw.history : [];
   out.history = [];
   for (const row of history) {
-    if (!row || typeof row !== 'object') continue;
-    const taskId = String(row.taskId || '').trim().slice(0, 120);
-    const question = String(row.question || '').trim().slice(0, 240);
-    const selected = String(row.selected || '').trim().slice(0, 240);
-    const correctAnswer = String(row.correctAnswer || '').trim().slice(0, 240);
+    if (!row || typeof row !== "object") continue;
+    const taskId = String(row.taskId || "").trim().slice(0, 120);
+    const question = String(row.question || "").trim().slice(0, 240);
+    const selected = String(row.selected || "").trim().slice(0, 240);
+    const correctAnswer = String(row.correctAnswer || "").trim().slice(0, 240);
     const at = Number.isFinite(row.at) ? row.at : parseInt(row.at || 0, 10);
     if (!taskId || !question || !Number.isFinite(at) || at <= 0) continue;
     out.history.push({
@@ -1783,15 +961,14 @@ function normalizeTasksProgress(raw) {
       selected,
       correctAnswer,
       isCorrect: row.isCorrect === true,
-      at,
+      at
     });
     if (out.history.length >= TASKS_HISTORY_LIMIT) break;
   }
   return out;
 }
-
 function getStoredTasksProgress() {
-  if (typeof localStorage === 'undefined') return createEmptyTasksProgress();
+  if (typeof localStorage === "undefined") return createEmptyTasksProgress();
   try {
     const raw = localStorage.getItem(TASKS_PROGRESS_STORAGE_KEY);
     if (!raw) return createEmptyTasksProgress();
@@ -1800,205 +977,155 @@ function getStoredTasksProgress() {
     return createEmptyTasksProgress();
   }
 }
-
 function persistTasksProgress(progress) {
-  if (typeof localStorage === 'undefined') return;
+  if (typeof localStorage === "undefined") return;
   try {
     localStorage.setItem(TASKS_PROGRESS_STORAGE_KEY, JSON.stringify(normalizeTasksProgress(progress)));
   } catch (e) {}
 }
-
 function clearStoredTasksProgress() {
-  if (typeof localStorage === 'undefined') return;
+  if (typeof localStorage === "undefined") return;
   try {
     localStorage.removeItem(TASKS_PROGRESS_STORAGE_KEY);
   } catch (e) {}
 }
-
 function recordTaskAnswer(task, selectedOption, isCorrect) {
   const progress = getStoredTasksProgress();
   const taskId = getTaskStorageId(task, Number.isInteger(task && task._taskIndex) ? task._taskIndex : 0);
-  const question = String(task && task.question ? task.question : '').trim().slice(0, 240);
-  const selected = String(selectedOption || '').trim().slice(0, 240);
-  const correctAnswer = Array.isArray(task && task.options) && Number.isInteger(task.correct)
-    ? String(task.options[task.correct] || '').trim().slice(0, 240)
-    : '';
-
+  const question = String(task && task.question ? task.question : "").trim().slice(0, 240);
+  const selected = String(selectedOption || "").trim().slice(0, 240);
+  const correctAnswer = Array.isArray(task && task.options) && Number.isInteger(task.correct) ? String(task.options[task.correct] || "").trim().slice(0, 240) : "";
   progress.totalAnswered += 1;
   if (isCorrect) progress.totalCorrect += 1;
-
-  const slot = progress.byTask[taskId] || { answered: 0, correct: 0 };
+  const slot = progress.byTask[taskId] || {
+    answered: 0,
+    correct: 0
+  };
   slot.answered += 1;
   if (isCorrect) slot.correct += 1;
   progress.byTask[taskId] = slot;
-
   progress.history.unshift({
     taskId,
     question,
     selected,
     correctAnswer,
     isCorrect: isCorrect === true,
-    at: Date.now(),
+    at: Date.now()
   });
-  if (progress.history.length > TASKS_HISTORY_LIMIT) {
-    progress.history = progress.history.slice(0, TASKS_HISTORY_LIMIT);
-  }
+  if (progress.history.length > TASKS_HISTORY_LIMIT) progress.history = progress.history.slice(0, TASKS_HISTORY_LIMIT);
   persistTasksProgress(progress);
   return progress;
 }
-
 function initTheme() {
-  if (typeof document === 'undefined' || !document.body) return;
+  if (typeof document === "undefined" || !document.body) return;
   const body = document.body;
-  if (body.classList && typeof body.classList.remove === 'function') {
-    body.classList.remove('theme-dark');
-  } else {
-    const parts = String(body.className || '').split(/\s+/).filter(Boolean).filter(c => c !== 'theme-dark');
-    body.className = parts.join(' ');
-  }
-  if (typeof localStorage !== 'undefined') {
-    try { localStorage.setItem(THEME_STORAGE_KEY, 'light'); } catch (e) {}
-  }
+  if (body.classList && typeof body.classList.remove === "function") body.classList.remove("theme-dark");
+  else body.className = String(body.className || "").split(/\s+/).filter(Boolean).filter((c) => c !== "theme-dark").join(" ");
+  if (typeof localStorage !== "undefined") try {
+    localStorage.setItem(THEME_STORAGE_KEY, "light");
+  } catch (e) {}
 }
-
 function prefersReducedMotion() {
-  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false;
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") return false;
   try {
-    return !!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return !!window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   } catch (e) {
     return false;
   }
 }
-
 function normalizeDensityMode(mode) {
-  return ['compact', 'reader', 'research'].includes(mode) ? mode : 'research';
+  return [
+    "compact",
+    "reader",
+    "research"
+  ].includes(mode) ? mode : "research";
 }
-
 function getSavedDensityMode() {
-  if (typeof localStorage === 'undefined') return null;
+  if (typeof localStorage === "undefined") return null;
   try {
-    const raw = localStorage.getItem(DENSITY_STORAGE_KEY);
-    return normalizeDensityMode(raw);
+    return normalizeDensityMode(localStorage.getItem(DENSITY_STORAGE_KEY));
   } catch (e) {
     return null;
   }
 }
-
 function applyDensityMode(mode) {
-  if (typeof document === 'undefined' || !document.body) return;
+  if (typeof document === "undefined" || !document.body) return;
   const nextMode = normalizeDensityMode(mode);
   const body = document.body;
-  const classes = ['density-compact', 'density-reader', 'density-research'];
+  const classes = [
+    "density-compact",
+    "density-reader",
+    "density-research"
+  ];
   const nextClass = `density-${nextMode}`;
-
-  if (body.classList && typeof body.classList.add === 'function' && typeof body.classList.remove === 'function') {
+  if (body.classList && typeof body.classList.add === "function" && typeof body.classList.remove === "function") {
     for (const cls of classes) body.classList.remove(cls);
     body.classList.add(nextClass);
   } else {
-    const parts = String(body.className || '').split(/\s+/).filter(Boolean).filter(c => !classes.includes(c));
+    const parts = String(body.className || "").split(/\s+/).filter(Boolean).filter((c) => !classes.includes(c));
     parts.push(nextClass);
-    body.className = parts.join(' ');
+    body.className = parts.join(" ");
   }
-
-  if (typeof localStorage !== 'undefined') {
-    try { localStorage.setItem(DENSITY_STORAGE_KEY, nextMode); } catch (e) {}
-  }
-  const select = document.getElementById('density-select');
-  if (select && 'value' in select) select.value = nextMode;
+  if (typeof localStorage !== "undefined") try {
+    localStorage.setItem(DENSITY_STORAGE_KEY, nextMode);
+  } catch (e) {}
+  const select = document.getElementById("density-select");
+  if (select && "value" in select) select.value = nextMode;
 }
-
 function initDensityMode() {
-  const saved = getSavedDensityMode();
-  applyDensityMode(saved || 'research');
+  applyDensityMode(getSavedDensityMode() || "research");
 }
-
 function applyViewState(state) {
   if (!state) return;
-  currentEntity = ENTITY_TYPES[state.currentEntity] ? state.currentEntity : 'home';
+  currentEntity = ENTITY_TYPES[state.currentEntity] ? state.currentEntity : "home";
   currentTab = state.currentTab || ENTITY_TYPES[currentEntity].tabs[0];
   if (!ENTITY_TYPES[currentEntity].tabs.includes(currentTab)) currentTab = ENTITY_TYPES[currentEntity].tabs[0];
   selectedItem = state.selectedItem || null;
   selectedItemType = state.selectedItemType || null;
-  rightPaneMode = state.rightPaneMode || 'histogram';
+  rightPaneMode = state.rightPaneMode || "histogram";
   currentLecture = Number.isInteger(state.currentLecture) ? state.currentLecture : 0;
+  if (typeof window !== "undefined") window.currentVideoId = typeof state.currentVideoId === "string" ? state.currentVideoId : "";
   lectureCompareA = Number.isInteger(state.lectureCompareA) ? state.lectureCompareA : 1;
   lectureCompareB = Number.isInteger(state.lectureCompareB) ? state.lectureCompareB : 2;
   trendsRangeStart = Number.isInteger(state.trendsRangeStart) ? state.trendsRangeStart : 1;
   trendsRangeEnd = Number.isInteger(state.trendsRangeEnd) ? state.trendsRangeEnd : getTotalBookPages();
-  searchQuery = typeof state.searchQuery === 'string' ? state.searchQuery : '';
+  searchQuery = typeof state.searchQuery === "string" ? state.searchQuery : "";
   sortMostFrequentFirst = !!state.sortMostFrequentFirst;
-  currentGlossaryTerm = typeof state.currentGlossaryTerm === 'string' ? state.currentGlossaryTerm : '';
-  currentScholarAnchor = typeof state.currentScholarAnchor === 'string' ? state.currentScholarAnchor : '';
+  currentGlossaryTerm = typeof state.currentGlossaryTerm === "string" ? state.currentGlossaryTerm : "";
+  currentScholarAnchor = typeof state.currentScholarAnchor === "string" ? state.currentScholarAnchor : "";
   currentKwicSource = normalizeKwicSource(state.currentKwicSource);
-  currentKwicQuery = typeof state.currentKwicQuery === 'string'
-    ? clampUiInput(state.currentKwicQuery, MAX_LIST_QUERY_LENGTH)
-    : '';
+  currentKwicQuery = typeof state.currentKwicQuery === "string" ? clampUiInput(state.currentKwicQuery, MAX_LIST_QUERY_LENGTH) : "";
   currentKwicSort = normalizeKwicSort(state.currentKwicSort);
-  const kwicRange = normalizePageRangeInBook(
-    state.currentKwicPageStart,
-    state.currentKwicPageEnd,
-    1,
-    getTotalBookPages()
-  );
+  const kwicRange = normalizePageRangeInBook(state.currentKwicPageStart, state.currentKwicPageEnd, 1, getTotalBookPages());
   currentKwicPageStart = kwicRange.start;
   currentKwicPageEnd = kwicRange.end;
-  if (currentEntity === 'materials' && currentTab === 'glossary' && currentGlossaryTerm) {
-    pendingGlossaryQuery = currentGlossaryTerm;
-  }
-  if (currentEntity === 'scholar' && currentTab === 'scholar' && currentScholarAnchor) {
-    pendingScholarAnchor = currentScholarAnchor;
-  }
+  if (currentEntity === "materials" && currentTab === "glossary" && currentGlossaryTerm) pendingGlossaryQuery = currentGlossaryTerm;
+  if (currentEntity === "scholar" && currentTab === "scholar" && currentScholarAnchor) pendingScholarAnchor = currentScholarAnchor;
   onlyDiscussed = !!state.onlyDiscussed;
   onlyQuestionCandidates = !!state.onlyQuestionCandidates;
-  activeFilters = new Set(Array.isArray(state.activeFilters) ? state.activeFilters.filter(x => typeof x === 'string') : []);
+  activeFilters = new Set(Array.isArray(state.activeFilters) ? state.activeFilters.filter((x) => typeof x === "string") : []);
   renderEntitySwitcher();
   renderTabs();
   renderContent();
-  const globalSearchInput = document.getElementById('global-search');
-  if (globalSearchInput) globalSearchInput.value = typeof state.globalSearchQuery === 'string' ? state.globalSearchQuery : '';
-  globalSearchScope = Object.prototype.hasOwnProperty.call(state, 'globalSearchScope')
-    ? normalizeGlobalSearchScope(state.globalSearchScope)
-    : normalizeGlobalSearchScope(globalSearchScope);
-  const globalSearchScopeSelect = document.getElementById('global-search-scope');
-  if (globalSearchScopeSelect && 'value' in globalSearchScopeSelect) globalSearchScopeSelect.value = globalSearchScope;
+  const globalSearchInput = document.getElementById("global-search");
+  if (globalSearchInput) globalSearchInput.value = typeof state.globalSearchQuery === "string" ? state.globalSearchQuery : "";
+  globalSearchScope = Object.prototype.hasOwnProperty.call(state, "globalSearchScope") ? normalizeGlobalSearchScope(state.globalSearchScope) : normalizeGlobalSearchScope(globalSearchScope);
+  const globalSearchScopeSelect = document.getElementById("global-search-scope");
+  if (globalSearchScopeSelect && "value" in globalSearchScopeSelect) globalSearchScopeSelect.value = globalSearchScope;
 }
-
 function sameViewState(a, b) {
   if (!a || !b) return false;
-  const aFilters = Array.isArray(a.activeFilters) ? a.activeFilters.join('|') : '';
-  const bFilters = Array.isArray(b.activeFilters) ? b.activeFilters.join('|') : '';
-  return a.currentEntity === b.currentEntity &&
-    a.currentTab === b.currentTab &&
-    a.selectedItem === b.selectedItem &&
-    a.selectedItemType === b.selectedItemType &&
-    a.rightPaneMode === b.rightPaneMode &&
-    a.currentLecture === b.currentLecture &&
-    a.lectureCompareA === b.lectureCompareA &&
-    a.lectureCompareB === b.lectureCompareB &&
-    a.trendsRangeStart === b.trendsRangeStart &&
-    a.trendsRangeEnd === b.trendsRangeEnd &&
-    (a.currentGlossaryTerm || '') === (b.currentGlossaryTerm || '') &&
-    (a.currentScholarAnchor || '') === (b.currentScholarAnchor || '') &&
-    (a.currentKwicSource || 'lexicon') === (b.currentKwicSource || 'lexicon') &&
-    (a.currentKwicQuery || '') === (b.currentKwicQuery || '') &&
-    (a.currentKwicSort || 'left') === (b.currentKwicSort || 'left') &&
-    (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) &&
-    (a.currentKwicPageEnd || getTotalBookPages()) === (b.currentKwicPageEnd || getTotalBookPages()) &&
-    (a.searchQuery || '') === (b.searchQuery || '') &&
-    normalizeGlobalSearchScope(a.globalSearchScope) === normalizeGlobalSearchScope(b.globalSearchScope) &&
-    !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst &&
-    !!a.onlyDiscussed === !!b.onlyDiscussed &&
-    !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates &&
-    aFilters === bFilters;
+  const aFilters = Array.isArray(a.activeFilters) ? a.activeFilters.join("|") : "";
+  const bFilters = Array.isArray(b.activeFilters) ? b.activeFilters.join("|") : "";
+  return a.currentEntity === b.currentEntity && a.currentTab === b.currentTab && a.selectedItem === b.selectedItem && a.selectedItemType === b.selectedItemType && a.rightPaneMode === b.rightPaneMode && a.currentLecture === b.currentLecture && (a.currentVideoId || "") === (b.currentVideoId || "") && a.lectureCompareA === b.lectureCompareA && a.lectureCompareB === b.lectureCompareB && a.trendsRangeStart === b.trendsRangeStart && a.trendsRangeEnd === b.trendsRangeEnd && (a.currentGlossaryTerm || "") === (b.currentGlossaryTerm || "") && (a.currentScholarAnchor || "") === (b.currentScholarAnchor || "") && (a.currentKwicSource || "lexicon") === (b.currentKwicSource || "lexicon") && (a.currentKwicQuery || "") === (b.currentKwicQuery || "") && (a.currentKwicSort || "left") === (b.currentKwicSort || "left") && (a.currentKwicPageStart || 1) === (b.currentKwicPageStart || 1) && (a.currentKwicPageEnd || getTotalBookPages()) === (b.currentKwicPageEnd || getTotalBookPages()) && (a.searchQuery || "") === (b.searchQuery || "") && normalizeGlobalSearchScope(a.globalSearchScope) === normalizeGlobalSearchScope(b.globalSearchScope) && !!a.sortMostFrequentFirst === !!b.sortMostFrequentFirst && !!a.onlyDiscussed === !!b.onlyDiscussed && !!a.onlyQuestionCandidates === !!b.onlyQuestionCandidates && aFilters === bFilters;
 }
-
 function closeCardView() {
-  if (currentTab !== 'list' || rightPaneMode !== 'card') return false;
+  if (currentTab !== "list" || rightPaneMode !== "card") return false;
   if (isMobileViewport()) {
     closeMobileSheet();
     return true;
   }
-  rightPaneMode = 'histogram';
+  rightPaneMode = "histogram";
   selectedItem = null;
   selectedItemType = null;
   renderList();
@@ -2006,329 +1133,177 @@ function closeCardView() {
   syncNavigationState();
   return true;
 }
-
 function openMaterialsLectures() {
-  currentEntity = 'materials';
-  currentTab = 'lectures';
+  currentEntity = "materials";
+  currentTab = "lectures";
   selectedItem = null;
   selectedItemType = null;
-  rightPaneMode = 'histogram';
+  rightPaneMode = "histogram";
   renderEntitySwitcher();
   renderTabs();
   renderContent();
   syncNavigationState();
 }
-
 function getEntityDisplayLabel(entity) {
   const map = {
-    home: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f',
-    names: '\u0418\u043c\u0435\u043d\u0430',
-    toponyms: '\u0422\u043e\u043f\u043e\u043d\u0438\u043c\u044b',
-    ethnonyms: '\u042d\u0442\u043d\u043e\u043d\u0438\u043c\u044b',
-    languages: '\u042f\u0437\u044b\u043a\u0438',
-    lexicon: '\u041b\u0435\u043a\u0441\u0438\u043a\u0430',
-    lexicon_reverse: '\u041b\u0435\u043a\u0441\u0438\u043a\u0430 (\u043e\u0431\u0440\u0430\u0442\u043d\u0430\u044f)',
-    lexicon_tech: '\u0420\u0435\u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438\u0438',
-    subject: '\u041f\u0440\u0435\u0434\u043c\u0435\u0442\u043d\u044b\u0439 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c',
-    materials: '\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b',
-    scholar: '\u041f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b\u044c\u043d\u044b\u0439 \u0430\u043f\u043f\u0430\u0440\u0430\u0442',
-    all: '\u0421\u0432\u043e\u0434\u043d\u044b\u0439 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c',
+    home: "Главная",
+    names: "Имена",
+    toponyms: "Топонимы",
+    ethnonyms: "Этнонимы",
+    languages: "Языки",
+    lexicon: "Лексика",
+    lexicon_reverse: "Лексика (обратная)",
+    lexicon_tech: "Реконструкции",
+    subject: "Предметный указатель",
+    materials: "Материалы",
+    scholar: "Профессиональный аппарат",
+    all: "Сводный указатель"
   };
   if (map[entity]) return map[entity];
   if (ENTITY_TYPES[entity] && ENTITY_TYPES[entity].title) return ENTITY_TYPES[entity].title;
-  return String(entity || '');
+  return String(entity || "");
 }
-
 function encodeHashPart(value) {
   return encodeURIComponent(String(value));
 }
-
 function buildCanonicalHash(parts) {
-  const safeParts = [HASH_ROUTE_PREFIX, ...(Array.isArray(parts) ? parts : [])];
-  return '#' + safeParts.map(encodeHashPart).join('/');
+  return "#" + [HASH_ROUTE_PREFIX, ...Array.isArray(parts) ? parts : []].map(encodeHashPart).join("/");
 }
-
 function parseHashRoute(hash) {
-  const cleanHash = String(hash || '').trim();
-  if (!cleanHash || cleanHash === '#') return null;
-  const queryStart = cleanHash.indexOf('?');
+  const cleanHash = String(hash || "").trim();
+  if (!cleanHash || cleanHash === "#") return null;
+  const queryStart = cleanHash.indexOf("?");
   const hashPath = queryStart >= 0 ? cleanHash.slice(0, queryStart) : cleanHash;
-  const query = queryStart >= 0 ? cleanHash.slice(queryStart + 1) : '';
-  const rawParts = hashPath.replace(/^#/, '').split('/').filter(Boolean);
+  const query = queryStart >= 0 ? cleanHash.slice(queryStart + 1) : "";
+  const rawParts = hashPath.replace(/^#/, "").split("/").filter(Boolean);
   if (!rawParts.length || rawParts.length > MAX_HASH_PARTS + 1) return null;
-
   const decodedParts = [];
   for (const part of rawParts) {
-    let decoded = '';
-    try { decoded = decodeURIComponent(part); } catch (e) { decoded = part; }
-    decoded = String(decoded || '');
+    let decoded = "";
+    try {
+      decoded = decodeURIComponent(part);
+    } catch (e) {
+      decoded = part;
+    }
+    decoded = String(decoded || "");
     if (decoded.length > MAX_HASH_PART_LENGTH) return null;
     decodedParts.push(decoded);
   }
-
   let parts = decodedParts[0] === HASH_ROUTE_PREFIX ? decodedParts.slice(1) : decodedParts;
-  if (parts[0] === 'books' && parts[1]) {
+  if (parts[0] === "books" && parts[1]) {
     const bookId = parts[1];
-    const knownBook = getCorpusBooks().some(book => book.book_id === bookId);
-    if (!knownBook) return null;
+    if (!getCorpusBooks().some((book) => book.book_id === bookId)) return null;
     parts = parts.slice(2);
   }
   if (!parts.length || parts.length > MAX_HASH_PARTS) return null;
-  return { parts, query: query.slice(0, 240) };
+  return {
+    parts,
+    query: query.slice(0, 240)
+  };
 }
-
 function routeVizAlias(parts) {
   if (!Array.isArray(parts)) return parts;
-  if (parts.length === 1 && parts[0] === 'viz') return ['scholar', 'viz'];
-  if (parts[0] === 'corpus' && parts[1] === 'sources') return ['materials', 'sources'];
-  if (parts[0] === 'corpus' && parts[1] === 'viz') return ['scholar', 'viz', ...parts.slice(2)];
+  if (parts.length === 1 && parts[0] === "viz") return ["scholar", "viz"];
+  if (parts[0] === "corpus" && parts[1] === "sources") return ["materials", "sources"];
+  if (parts[0] === "corpus" && parts[1] === "viz") return [
+    "scholar",
+    "viz",
+    ...parts.slice(2)
+  ];
   return parts;
 }
-
 function routeValueAfter(parts, marker) {
   const pos = Array.isArray(parts) ? parts.indexOf(marker) : -1;
-  return pos >= 0 ? parts[pos + 1] : '';
+  return pos >= 0 ? parts[pos + 1] : "";
 }
-
 function parsePositiveRouteNumber(value) {
-  const raw = String(value || '');
+  const raw = String(value || "");
   return /^\d+$/.test(raw) ? parseInt(raw, 10) : null;
 }
-
-/* [modularized] */ function legacy_buildHashFromState() {
-  const parts = [currentEntity, currentTab];
-  if (currentEntity === 'materials' && currentTab === 'lectures') {
-    const readingPage = getSavedReadingPage();
-    if (Number.isFinite(readingPage)) {
-      parts.push('reading', String(clampPageInBook(readingPage)));
-    }
-  }
-  if (currentEntity === 'materials' && currentTab === 'lecture_pages') {
-    parts.push(String(Math.max(0, currentLecture)));
-  }
-  if (currentEntity === 'materials' && currentTab === 'glossary' && currentGlossaryTerm) {
-    parts.push('term', currentGlossaryTerm);
-  }
-  if (currentEntity === 'scholar' && currentTab === 'scholar' && currentScholarAnchor) {
-    parts.push('anchor', currentScholarAnchor);
-  }
-  if (currentEntity === 'scholar' && currentTab === 'page_trends') {
-    const start = clampPageInBook(trendsRangeStart);
-    const end = clampPageInBook(trendsRangeEnd);
-    parts.push('range', String(Math.min(start, end)), String(Math.max(start, end)));
-  }
-  if (currentEntity === 'scholar' && currentTab === 'viz' && currentVizModule) {
-    parts.push('module', String(currentVizModule));
-  }
-  if (currentTab === 'list' && searchQuery && !selectedItem) {
-    parts.push('q', searchQuery);
-  }
-  if (selectedItem && rightPaneMode === 'card') {
-    const itemType = selectedItemType || currentEntity;
-    const itemHashHead = encodeItemHeadForHash(itemType, selectedItem);
-    parts.push('item', itemType, itemHashHead);
-  }
-  const hash = buildCanonicalHash(parts);
-  if (currentEntity === 'scholar' && currentTab === 'viz' && currentVizQueryString) {
-    return `${hash}?${currentVizQueryString}`;
-  }
-  return hash;
-}
-
-/* [modularized] */ function legacy_pushHistoryState() {
-  const snap = captureViewState();
-  const last = historyStack.length ? historyStack[historyStack.length - 1] : null;
-  if (sameViewState(last, snap)) return;
-  historyStack.push(snap);
-  if (historyStack.length > 150) historyStack.shift();
-  updateBackButton();
-}
-
-/* [modularized] */ function legacy_updateBackButton() {
-  const btn = document.getElementById('back-btn');
-  if (!btn) return;
-  btn.hidden = historyStack.length <= 1;
-}
-
-async function copyCurrentUrl() {
-  const canonicalHash = buildHashFromState();
-  const activeBookId = getActiveBook().book_id || '';
-  const shareHash = activeBookId
-    ? (() => {
-      const [path, query = ''] = canonicalHash.split('?');
-      const params = new URLSearchParams(query);
-      params.set('books', activeBookId);
-      const qs = params.toString();
-      return qs ? `${path}?${qs}` : path;
-    })()
-    : canonicalHash;
-  const canonicalUrl = (() => {
-    if (typeof window === 'undefined' || !window.location) return shareHash;
-    const href = String(window.location.href || '');
-    const hashPos = href.indexOf('#');
-    const base = hashPos >= 0 ? href.slice(0, hashPos) : href;
-    return base + shareHash;
-  })();
-  if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
-    try {
-      await navigator.clipboard.writeText(canonicalUrl);
-      return true;
-    } catch (e) {}
-  }
+async function copyTextToClipboard(text) {
+  const value = String(text == null ? "" : text);
+  if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) try {
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch (e) {}
   try {
-    const ta = document.createElement('textarea');
-    ta.value = canonicalUrl;
-    ta.setAttribute('readonly', '');
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
+    const ta = document.createElement("textarea");
+    ta.value = value;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
     document.body.appendChild(ta);
     ta.select();
-    const ok = document.execCommand('copy');
+    const ok = document.execCommand("copy");
     document.body.removeChild(ta);
     return !!ok;
   } catch (e) {
     return false;
   }
 }
-
-/* [modularized] */ function legacy_syncNavigationState() {
-  if (!isNavigatingHistory) pushHistoryState();
-  updateBackButton();
-  persistViewState();
-  if (suppressHashSync) return;
-  if (typeof window === 'undefined' || !window.location) return;
-  const nextHash = buildHashFromState();
-  if (window.location.hash !== nextHash) {
-    expectedHash = nextHash;
-    window.location.hash = nextHash;
+function buildCanonicalEntityUrl(type, head, bookId) {
+  const hash = buildItemHash(type, head);
+  const m = /list\/item\/([a-z_]+)\/(.+)$/.exec(String(hash || ""));
+  if (!m) return null;
+  const base = `https://gasyoun.github.io/BookIndex/${m[1]}/list/item/${m[1]}/${m[2]}/`;
+  const scopeId = String(bookId || "").trim();
+  if (!scopeId || getCorpusBooks().length < 2) return base;
+  if (!getCorpusBooks().some((book) => book.book_id === scopeId)) return base;
+  return `${base}?book=${encodeURIComponent(scopeId)}`;
+}
+function buildEntityIssueUrl(type, head) {
+  const canonicalUrl = buildCanonicalEntityUrl(type, head);
+  const slugMatch = canonicalUrl ? /\/item\/[a-z_]+\/([^/]+)\/$/.exec(canonicalUrl) : null;
+  const params = new URLSearchParams({
+    template: "entity_correction.yml",
+    title: `[правка] ${head}`,
+    slug: slugMatch ? slugMatch[1] : "",
+    entity_type: type,
+    url: canonicalUrl || `${location.origin}${location.pathname}#${buildItemHash(type, head)}`
+  });
+  return `https://github.com/gasyoun/BookIndex/issues/new?${params.toString()}`;
+}
+async function copyCurrentUrl() {
+  const canonicalHash = buildHashFromState();
+  const activeBookId = getActiveBook().book_id || "";
+  const shareHash = activeBookId ? (() => {
+    const [path, query = ""] = canonicalHash.split("?");
+    const params = new URLSearchParams(query);
+    params.set("books", activeBookId);
+    const qs = params.toString();
+    return qs ? `${path}?${qs}` : path;
+  })() : canonicalHash;
+  const canonicalUrl = (() => {
+    if (typeof window === "undefined" || !window.location) return shareHash;
+    const href = String(window.location.href || "");
+    const hashPos = href.indexOf("#");
+    return (hashPos >= 0 ? href.slice(0, hashPos) : href) + shareHash;
+  })();
+  if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) try {
+    await navigator.clipboard.writeText(canonicalUrl);
+    return true;
+  } catch (e) {}
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = canonicalUrl;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return !!ok;
+  } catch (e) {
+    return false;
   }
 }
-
-/* [modularized] */ function legacy_syncNavigationHashOnly() {
-  const prev = isNavigatingHistory;
-  isNavigatingHistory = true;
-  syncNavigationState();
-  isNavigatingHistory = prev;
-}
-
-/* [modularized] */ function legacy_applyHash(hash) {
-  closeGlobalSearchResults();
-  const parsedRoute = parseHashRoute(hash);
-  if (!parsedRoute) return false;
-  applyActiveBookFromQuery(parsedRoute.query);
-  const routedParts = routeVizAlias(parsedRoute.parts);
-
-  const entity = routedParts[0];
-  if (!ENTITY_TYPES[entity]) return false;
-  const tabCandidate = routedParts[1] || ENTITY_TYPES[entity].tabs[0];
-  const tab = ENTITY_TYPES[entity].tabs.includes(tabCandidate) ? tabCandidate : ENTITY_TYPES[entity].tabs[0];
-  const itemPos = routedParts.indexOf('item');
-
-  const state = {
-    currentEntity: entity,
-    currentTab: tab,
-    selectedItem: null,
-    selectedItemType: null,
-    rightPaneMode: 'histogram',
-    currentLecture: 0,
-    trendsRangeStart: 1,
-    trendsRangeEnd: getTotalBookPages(),
-    searchQuery: '',
-    currentScholarAnchor: '',
-  };
-  pendingGlossaryQuery = '';
-  currentGlossaryTerm = '';
-  pendingScholarAnchor = '';
-  currentScholarAnchor = '';
-
-  const lecturePageIndex = parsePositiveRouteNumber(routedParts[2]);
-  if (entity === 'materials' && tab === 'lecture_pages' && lecturePageIndex !== null) {
-    state.currentLecture = lecturePageIndex;
-  }
-  if (entity === 'materials' && tab === 'lectures') {
-    const readingPage = parsePositiveRouteNumber(routeValueAfter(routedParts, 'reading'));
-    if (readingPage !== null) {
-      saveReadingPage(clampPageInBook(readingPage));
-    }
-  }
-  if (entity === 'materials' && tab === 'glossary') {
-    const termValue = routeValueAfter(routedParts, 'term');
-    if (termValue) {
-      pendingGlossaryQuery = clampUiInput(termValue, MAX_LIST_QUERY_LENGTH).toLowerCase();
-      currentGlossaryTerm = pendingGlossaryQuery;
-    }
-  }
-  if (entity === 'scholar' && tab === 'scholar') {
-    const anchorValue = routeValueAfter(routedParts, 'anchor');
-    if (anchorValue) {
-      const rawAnchor = String(anchorValue || '');
-      const safeAnchor = rawAnchor.replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
-      if (safeAnchor) {
-        pendingScholarAnchor = safeAnchor;
-        state.currentScholarAnchor = safeAnchor;
-      }
-    }
-  }
-  if (entity === 'scholar' && tab === 'viz') {
-    currentVizQueryString = parsedRoute.query;
-    const moduleValue = routeValueAfter(routedParts, 'module');
-    if (moduleValue) {
-      currentVizModule = String(moduleValue || '').trim() || currentVizModule;
-    }
-  } else {
-    currentVizQueryString = '';
-  }
-  if (entity === 'scholar' && tab === 'page_trends') {
-    const rangePos = routedParts.indexOf('range');
-    const rangeStart = parsePositiveRouteNumber(routedParts[rangePos + 1]);
-    const rangeEnd = parsePositiveRouteNumber(routedParts[rangePos + 2]);
-    if (rangePos >= 0 && rangeStart !== null && rangeEnd !== null) {
-      state.trendsRangeStart = clampPageInBook(rangeStart);
-      state.trendsRangeEnd = clampPageInBook(rangeEnd);
-      if (state.trendsRangeStart > state.trendsRangeEnd) {
-        [state.trendsRangeStart, state.trendsRangeEnd] = [state.trendsRangeEnd, state.trendsRangeStart];
-      }
-    }
-  }
-  const queryValue = routeValueAfter(routedParts, 'q');
-  if (tab === 'list' && queryValue) {
-    state.searchQuery = clampUiInput(queryValue, MAX_LIST_QUERY_LENGTH);
-  }
-
-  if (itemPos >= 0 && routedParts[itemPos + 1] && routedParts[itemPos + 2]) {
-    const itemType = ENTITY_TYPES[routedParts[itemPos + 1]] ? routedParts[itemPos + 1] : state.currentEntity;
-    const resolvedHead = resolveItemHeadFromHash(itemType, routedParts[itemPos + 2]);
-    state.currentEntity = itemType;
-    state.currentTab = 'list';
-    state.selectedItemType = itemType;
-    state.selectedItem = resolvedHead || clampUiInput(routedParts[itemPos + 2], MAX_HASH_PART_LENGTH);
-    state.rightPaneMode = 'card';
-  }
-
-  applyViewState(state);
-  if (!isNavigatingHistory) pushHistoryState();
-  syncNavigationHashOnly();
-  return true;
-}
-
-/* [modularized] */ function legacy_goBackInApp() {
-  if (historyStack.length < 2) return;
-  historyStack.pop();
-  const prev = historyStack[historyStack.length - 1];
-  if (!prev) return;
-  isNavigatingHistory = true;
-  applyViewState(prev);
-  syncNavigationState();
-  isNavigatingHistory = false;
-}
-
 function rememberBoundedCacheValue(cache, key, value, maxSize, options = {}) {
-  if (!cache || typeof cache.set !== 'function') return value;
+  if (!cache || typeof cache.set !== "function") return value;
   const limit = Number(maxSize || 0);
   if (limit > 0 && cache.size >= limit) {
-    if (options && options.clearWhenFull && typeof cache.clear === 'function') {
-      cache.clear();
-    } else if (typeof cache.keys === 'function' && typeof cache.delete === 'function') {
+    if (options && options.clearWhenFull && typeof cache.clear === "function") cache.clear();
+    else if (typeof cache.keys === "function" && typeof cache.delete === "function") {
       const firstKey = cache.keys().next();
       if (!firstKey.done) cache.delete(firstKey.value);
     }
@@ -2336,245 +1311,180 @@ function rememberBoundedCacheValue(cache, key, value, maxSize, options = {}) {
   cache.set(key, value);
   return value;
 }
-
-/* [modularized] */ function legacy_normalizeHeadForMatch(value) {
-  if (value === null || value === undefined) return '';
-  const raw = String(value);
-  const cached = normalizeHeadCache.get(raw);
-  if (cached !== undefined) return cached;
-  let s = raw.trim().toLowerCase();
-  if (typeof s.normalize === 'function') s = s.normalize('NFD');
-  s = s.replace(/[\u0300-\u036f]/g, '').replace(/ё/g, 'е');
-  s = s.replace(/^[?]+/, '').replace(/[^a-zа-я0-9]+/gi, ' ').trim();
-  rememberBoundedCacheValue(normalizeHeadCache, raw, s, NORMALIZE_CACHE_LIMIT, { clearWhenFull: true });
-  return s;
-}
-
-/* [modularized] */ function legacy_compareHeadsRu(aHead, bHead) {
-  const aRaw = String(aHead || '');
-  const bRaw = String(bHead || '');
-  const aNorm = normalizeHeadForMatch(aRaw);
-  const bNorm = normalizeHeadForMatch(bRaw);
-  const primary = aNorm.localeCompare(bNorm, 'ru', { sensitivity: 'base', numeric: true });
-  if (primary !== 0) return primary;
-  return aRaw.localeCompare(bRaw, 'ru', { sensitivity: 'base', numeric: true });
-}
-
-/* [modularized] */ function legacy_compareItemsByHead(a, b) {
-  const aType = a && a._entityType ? a._entityType : currentEntity;
-  const bType = b && b._entityType ? b._entityType : currentEntity;
-  if (aType === 'lexicon_reverse' && bType === 'lexicon_reverse') {
-    const primary = compareHeadsRu(getRightEdgeSortKey(a && a.head), getRightEdgeSortKey(b && b.head));
-    if (primary !== 0) return primary;
-  }
-  return compareHeadsRu(a && a.head, b && b.head);
-}
-
-/* [modularized] */ function legacy_resolveExistingHead(type, head) {
-  const conf = ENTITY_TYPES[type];
-  if (!conf || !Array.isArray(conf.items)) return head;
-  const indexed = getIndexedItem(type, head);
-  if (indexed) return indexed.head;
-  const nHead = normalizeHeadForMatch(head);
-  if (!nHead) return head;
-  const loose = conf.items.find(it => {
-    const n = normalizeHeadForMatch(it.head);
-    return n.includes(nHead) || nHead.includes(n);
-  });
-  return loose ? loose.head : head;
-}
-
 function navigateToItem(type, head) {
   closeGlobalSearchResults();
   const targetType = ENTITY_TYPES[type] ? type : currentEntity;
   currentEntity = targetType;
-  currentTab = 'list';
+  currentTab = "list";
   selectedItem = resolveExistingHead(targetType, head);
   selectedItemType = targetType;
-  currentGlossaryTerm = '';
-  currentScholarAnchor = '';
-  pendingScholarAnchor = '';
+  currentGlossaryTerm = "";
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
   rememberRecentItem(selectedItemType, selectedItem);
-  rightPaneMode = 'card';
+  rightPaneMode = "card";
   renderEntitySwitcher();
   renderTabs();
   renderContent();
   syncNavigationState();
 }
-
 function bindActionWithKeyboard(el, handler) {
-  if (!el || typeof handler !== 'function') return;
-  const tag = String(el.tagName || '').toLowerCase();
-  if (tag !== 'a' && tag !== 'button') {
-    safeSetAttr(el, 'role', 'button');
-    safeSetAttr(el, 'tabindex', '0');
+  if (!el || typeof handler !== "function") return;
+  const tag = String(el.tagName || "").toLowerCase();
+  if (tag !== "a" && tag !== "button") {
+    safeSetAttr(el, "role", "button");
+    safeSetAttr(el, "tabindex", "0");
   }
   el.onclick = (e) => {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (e && typeof e.preventDefault === "function") e.preventDefault();
     handler();
   };
   el.onkeydown = (e) => {
-    const key = e && e.key ? String(e.key) : '';
-    if (key === 'Enter' || key === ' ') {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    const key = e && e.key ? String(e.key) : "";
+    if (key === "Enter" || key === " ") {
+      if (e && typeof e.preventDefault === "function") e.preventDefault();
       handler();
     }
   };
 }
-
-function bindNavigateLinks(root, selector, defaultType = 'all') {
-  if (!root || typeof root.querySelectorAll !== 'function') return;
-  root.querySelectorAll(selector).forEach(el => {
+function bindNavigateLinks(root, selector, defaultType = "all") {
+  if (!root || typeof root.querySelectorAll !== "function") return;
+  root.querySelectorAll(selector).forEach((el) => {
     if (!el) return;
     bindActionWithKeyboard(el, () => {
       const t = el.dataset && el.dataset.type ? el.dataset.type : defaultType;
-      const h = el.dataset && el.dataset.head ? el.dataset.head : '';
+      const h = el.dataset && el.dataset.head ? el.dataset.head : "";
       if (!h) return;
       navigateToItem(t || defaultType, h);
     });
   });
 }
-
 function openLecturePage(index) {
   closeGlobalSearchResults();
-  currentEntity = 'materials';
-  currentTab = 'lecture_pages';
+  currentEntity = "materials";
+  currentTab = "lecture_pages";
   currentLecture = Math.max(0, index || 0);
   selectedItem = null;
   selectedItemType = null;
-  currentGlossaryTerm = '';
-  currentScholarAnchor = '';
-  pendingScholarAnchor = '';
-  rightPaneMode = 'histogram';
+  currentGlossaryTerm = "";
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
+  rightPaneMode = "histogram";
   renderEntitySwitcher();
   renderTabs();
   renderContent();
   syncNavigationState();
 }
-
 function buildLecturePageHash(index) {
-  const idx = Math.max(0, parseInt(String(index || '0'), 10) || 0);
-  return buildCanonicalHash(['materials', 'lecture_pages', String(idx)]);
+  return buildCanonicalHash([
+    "materials",
+    "lecture_pages",
+    String(Math.max(0, parseInt(String(index || "0"), 10) || 0))
+  ]);
 }
-
 function openGlossaryTerm(term) {
   closeGlobalSearchResults();
-  const q = String(term || '').trim().toLowerCase();
+  const q = String(term || "").trim().toLowerCase();
   if (!q) return;
   pendingGlossaryQuery = q;
   currentGlossaryTerm = q;
-  if (typeof window !== 'undefined') window._pendingGlossaryTerm = q;
-  currentScholarAnchor = '';
-  pendingScholarAnchor = '';
-  currentEntity = 'materials';
-  currentTab = 'glossary';
+  if (typeof window !== "undefined") window._pendingGlossaryTerm = q;
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
+  currentEntity = "materials";
+  currentTab = "glossary";
   selectedItem = null;
   selectedItemType = null;
-  rightPaneMode = 'histogram';
+  rightPaneMode = "histogram";
   renderEntitySwitcher();
   renderTabs();
   renderContent();
   syncNavigationState();
 }
-
 function navigateTo(entity, view, payload) {
   const targetEntity = ENTITY_TYPES[entity] ? entity : currentEntity;
-  const mode = String(view || '').toLowerCase();
-  if (mode === 'card') {
-    navigateToItem(targetEntity, payload || '');
+  if (String(view || "").toLowerCase() === "card") {
+    navigateToItem(targetEntity, payload || "");
     return;
   }
   closeGlobalSearchResults();
   currentEntity = targetEntity;
-  currentTab = 'list';
+  currentTab = "list";
   selectedItem = null;
   selectedItemType = null;
-  currentGlossaryTerm = '';
-  currentScholarAnchor = '';
-  pendingScholarAnchor = '';
-  rightPaneMode = 'histogram';
-  searchQuery = clampUiInput(payload || '', MAX_LIST_QUERY_LENGTH);
+  currentGlossaryTerm = "";
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
+  rightPaneMode = "histogram";
+  searchQuery = clampUiInput(payload || "", MAX_LIST_QUERY_LENGTH);
   renderEntitySwitcher();
   renderTabs();
   renderContent();
   syncNavigationState();
 }
-
 function openKwicTerm(term) {
   closeGlobalSearchResults();
   const q = clampUiInput(term, MAX_LIST_QUERY_LENGTH);
   if (!q) return;
   pendingKwicTerm = q;
-  if (typeof window !== 'undefined') window._pendingKwicTerm = q;
-  currentKwicSource = 'lexicon';
+  if (typeof window !== "undefined") window._pendingKwicTerm = q;
+  currentKwicSource = "lexicon";
   currentKwicQuery = q;
-  currentEntity = 'materials';
-  currentTab = 'kwic';
+  currentEntity = "materials";
+  currentTab = "kwic";
   selectedItem = null;
   selectedItemType = null;
-  currentGlossaryTerm = '';
-  currentScholarAnchor = '';
-  pendingScholarAnchor = '';
-  rightPaneMode = 'histogram';
+  currentGlossaryTerm = "";
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
+  rightPaneMode = "histogram";
   renderEntitySwitcher();
   renderTabs();
   renderContent();
   syncNavigationState();
 }
-
 function getVizRegistry() {
-  if (typeof window === 'undefined') return {};
+  if (typeof window === "undefined") return {};
   window.VIZ_MODULES = window.VIZ_MODULES || {};
   return window.VIZ_MODULES;
 }
-
 function setVizQueryString(query) {
-  currentVizQueryString = String(query || '').slice(0, 240);
+  currentVizQueryString = String(query || "").slice(0, 240);
 }
-
-if (typeof window !== 'undefined') {
-  window.setVizQueryString = setVizQueryString;
-}
-
+if (typeof window !== "undefined") window.setVizQueryString = setVizQueryString;
 function cleanupActiveVizModule() {
-  if (typeof currentVizCleanup !== 'function') return;
+  if (typeof currentVizCleanup !== "function") return;
   try {
     currentVizCleanup();
   } catch (e) {}
   currentVizCleanup = null;
 }
-
 function loadVizScriptOnce(src) {
-  const path = String(src || '').trim();
+  const path = String(src || "").trim();
   if (!path) return Promise.resolve();
   if (vizScriptLoadPromises.has(path)) return vizScriptLoadPromises.get(path);
-  if (typeof document === 'undefined') {
+  if (typeof document === "undefined") {
     const done = Promise.resolve();
     vizScriptLoadPromises.set(path, done);
     return done;
   }
-
-  const existing = Array.from(document.querySelectorAll('script[src]')).find((node) => {
+  if (Array.from(document.querySelectorAll("script[src]")).find((node) => {
     try {
-      const resolved = new URL(node.getAttribute('src') || '', window.location.href).pathname;
-      const wanted = new URL(path, window.location.href).pathname;
-      return resolved === wanted;
+      return new URL(node.getAttribute("src") || "", window.location.href).pathname === new URL(path, window.location.href).pathname;
     } catch (e) {
       return false;
     }
-  });
-  if (existing) {
+  })) {
     const done = Promise.resolve();
     vizScriptLoadPromises.set(path, done);
     return done;
   }
-
   const promise = new Promise((resolve, reject) => {
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     script.src = path;
     script.async = true;
     script.onload = () => resolve();
-    script.onerror = () => reject(new Error(`Failed to load ${path}`));
+    script.onerror = () => reject(/* @__PURE__ */ new Error(`Failed to load ${path}`));
     document.head.appendChild(script);
   }).catch((err) => {
     vizScriptLoadPromises.delete(path);
@@ -2583,243 +1493,250 @@ function loadVizScriptOnce(src) {
   vizScriptLoadPromises.set(path, promise);
   return promise;
 }
-
 function ensureVizCoreLoaded() {
-  if (typeof buildVizCache === 'function') return Promise.resolve();
-  return loadVizScriptOnce('./scripts/viz/build-viz-cache.js');
+  if (typeof buildVizCache === "function") return Promise.resolve();
+  return loadVizScriptOnce("./scripts/viz/build-viz-cache.js");
 }
-
 function ensureVizStateLoaded() {
-  if (typeof window !== 'undefined' && typeof window.readVizParams === 'function' && typeof window.writeVizParams === 'function') {
-    return Promise.resolve();
-  }
-  return loadVizScriptOnce(VIZ_STATE_SCRIPT_PATH);
+  const stateReady = typeof window !== "undefined" && typeof window.readVizParams === "function" && typeof window.writeVizParams === "function";
+  const shellReady = typeof window !== "undefined" && window.VizShell;
+  const statePromise = stateReady ? Promise.resolve() : loadVizScriptOnce(VIZ_STATE_SCRIPT_PATH);
+  return statePromise.then(() => {
+    if (shellReady || typeof window !== "undefined" && window.VizShell) return;
+    return loadVizScriptOnce(VIZ_SHELL_SCRIPT_PATH);
+  });
 }
-
 function ensureVizModuleLoaded(moduleId) {
-  const moduleKey = String(moduleId || '').trim();
+  const moduleKey = String(moduleId || "").trim();
   const rendererName = VIZ_RENDERER_BY_MODULE[moduleKey];
   const registry = getVizRegistry();
-  if (rendererName && typeof registry[rendererName] === 'function') return Promise.resolve();
+  if (rendererName && typeof registry[rendererName] === "function") return Promise.resolve();
   const scriptPath = VIZ_SCRIPT_BY_MODULE[moduleKey];
   if (!scriptPath) return Promise.resolve();
   return loadVizScriptOnce(scriptPath);
 }
-
 function buildVizHash(moduleId) {
-  const moduleKey = String(moduleId || currentVizModule || 'viz03').trim();
-  const hash = buildCanonicalHash(['scholar', 'viz', 'module', moduleKey]);
+  const moduleKey = String(moduleId || currentVizModule || "viz03").trim();
+  const hash = buildCanonicalHash([
+    "scholar",
+    "viz",
+    "module",
+    moduleKey
+  ]);
   if (moduleKey === currentVizModule && currentVizQueryString) return `${hash}?${currentVizQueryString}`;
   return hash;
 }
-
 function buildCorpusVizHash(moduleId) {
-  const moduleKey = String(moduleId || currentVizModule || 'viz03').trim();
+  const moduleKey = String(moduleId || currentVizModule || "viz03").trim();
   const activeBook = getActiveBook();
-  const params = new URLSearchParams(currentVizQueryString || '');
-  if (activeBook && activeBook.book_id) params.set('books', activeBook.book_id);
+  const params = new URLSearchParams(currentVizQueryString || "");
+  if (activeBook && activeBook.book_id) params.set("books", activeBook.book_id);
   const query = params.toString();
-  const hash = buildCanonicalHash(['corpus', 'viz', 'module', moduleKey]);
+  const hash = buildCanonicalHash([
+    "corpus",
+    "viz",
+    "module",
+    moduleKey
+  ]);
   return query ? `${hash}?${query}` : hash;
 }
-
 function warmupVizCacheInWorker() {
-  return ensureVizCoreLoaded()
-    .catch(() => null)
-    .then(() => {
-      if (typeof buildVizCache !== 'function') return null;
-      const globalObj = (typeof window !== 'undefined') ? window : globalThis;
-      globalObj.__vizCache = globalObj.__vizCache || {};
-      if (globalObj.__vizCache._built) return globalObj.__vizCache;
-      if (vizCacheWarmPromise) return vizCacheWarmPromise;
-
-      const runFallback = () => {
-        try {
-          const cache = buildVizCache(APP_DATA || {});
-          return Promise.resolve(cache);
-        } catch (e) {
-          return Promise.resolve(null);
-        }
-      };
-
-      if (typeof Worker === 'undefined') {
-        vizCacheWarmPromise = runFallback();
-        return vizCacheWarmPromise;
+  return ensureVizCoreLoaded().catch(() => null).then(() => {
+    if (typeof buildVizCache !== "function") return null;
+    const globalObj = typeof window !== "undefined" ? window : globalThis;
+    globalObj.__vizCache = globalObj.__vizCache || {};
+    if (globalObj.__vizCache._built) return globalObj.__vizCache;
+    if (vizCacheWarmPromise) return vizCacheWarmPromise;
+    const runFallback = () => {
+      try {
+        const cache = buildVizCache(APP_DATA || {});
+        return Promise.resolve(cache);
+      } catch (e) {
+        return Promise.resolve(null);
       }
-
-      vizCacheWarmPromise = new Promise((resolve) => {
-        let worker = null;
-        let settled = false;
-        const finish = (cacheValue) => {
-          if (settled) return;
-          settled = true;
-          if (worker) {
-            try { worker.terminate(); } catch (e) {}
+    };
+    if (typeof Worker === "undefined") {
+      vizCacheWarmPromise = runFallback();
+      return vizCacheWarmPromise;
+    }
+    vizCacheWarmPromise = new Promise((resolve) => {
+      let worker = null;
+      let settled = false;
+      const finish = (cacheValue) => {
+        if (settled) return;
+        settled = true;
+        if (worker) try {
+          worker.terminate();
+        } catch (e) {}
+        resolve(cacheValue || globalObj.__vizCache || null);
+      };
+      const timer = setTimeout(() => {
+        runFallback().then((cache) => finish(cache));
+      }, 3e3);
+      try {
+        worker = new Worker(VIZ_CACHE_WORKER_PATH);
+        worker.onmessage = (event) => {
+          clearTimeout(timer);
+          const payload = event && event.data ? event.data : {};
+          if (payload.ok && payload.cache && typeof payload.cache === "object") {
+            globalObj.__vizCache = payload.cache;
+            globalObj.__vizCache._built = true;
+            globalObj.__vizCache._worker = true;
+            finish(globalObj.__vizCache);
+            return;
           }
-          resolve(cacheValue || globalObj.__vizCache || null);
-        };
-        const timer = setTimeout(() => {
           runFallback().then((cache) => finish(cache));
-        }, 3000);
-        try {
-          worker = new Worker(VIZ_CACHE_WORKER_PATH);
-          worker.onmessage = (event) => {
-            clearTimeout(timer);
-            const payload = event && event.data ? event.data : {};
-            if (payload.ok && payload.cache && typeof payload.cache === 'object') {
-              globalObj.__vizCache = payload.cache;
-              globalObj.__vizCache._built = true;
-              globalObj.__vizCache._worker = true;
-              finish(globalObj.__vizCache);
-              return;
-            }
-            runFallback().then((cache) => finish(cache));
-          };
-          worker.onerror = () => {
-            clearTimeout(timer);
-            runFallback().then((cache) => finish(cache));
-          };
-          worker.postMessage({ type: 'build', appData: APP_DATA || {} });
-        } catch (e) {
+        };
+        worker.onerror = () => {
           clearTimeout(timer);
           runFallback().then((cache) => finish(cache));
-        }
-      });
-
-      return vizCacheWarmPromise;
+        };
+        worker.postMessage({
+          type: "build",
+          appData: APP_DATA || {}
+        });
+      } catch (e) {
+        clearTimeout(timer);
+        runFallback().then((cache) => finish(cache));
+      }
     });
-}
-
-function buildGlossaryTermHash(term) {
-  const q = String(term || '').trim().toLowerCase();
-  if (!q) return buildCanonicalHash(['materials', 'glossary']);
-  return buildCanonicalHash(['materials', 'glossary', 'term', q]);
-}
-
-function buildListSearchHash(entity, query) {
-  const e = ENTITY_TYPES[entity] ? entity : 'all';
-  const q = String(query || '').trim();
-  if (!q) return buildCanonicalHash([e, 'list']);
-  return buildCanonicalHash([e, 'list', 'q', q]);
-}
-
-function buildItemHash(type, head) {
-  const t = ENTITY_TYPES[type] ? type : 'all';
-  const encodedHead = encodeItemHeadForHash(t, head);
-  return buildCanonicalHash([t, 'list', 'item', t, encodedHead]);
-}
-
-function buildScholarAnchorHash(anchorId) {
-  const safeAnchor = String(anchorId || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
-  if (!safeAnchor) return buildCanonicalHash(['scholar', 'scholar']);
-  return buildCanonicalHash(['scholar', 'scholar', 'anchor', safeAnchor]);
-}
-
-function buildLectureTermHash(term) {
-  const raw = String(term || '').trim();
-  if (!raw) return buildCanonicalHash(['materials', 'glossary']);
-  const q = raw.toLowerCase();
-  const glossary = APP_DATA.glossary || [];
-  const hasGlossaryHit = glossary.some(g => {
-    const gt = String(g.term || '').toLowerCase();
-    return gt.includes(q) || q.includes(gt);
+    return vizCacheWarmPromise;
   });
-  if (hasGlossaryHit) return buildGlossaryTermHash(raw);
-  return buildListSearchHash('all', raw);
 }
-
+function buildGlossaryTermHash(term) {
+  const q = String(term || "").trim().toLowerCase();
+  if (!q) return buildCanonicalHash(["materials", "glossary"]);
+  return buildCanonicalHash([
+    "materials",
+    "glossary",
+    "term",
+    q
+  ]);
+}
+function buildListSearchHash(entity, query) {
+  const e = ENTITY_TYPES[entity] ? entity : "all";
+  const q = String(query || "").trim();
+  if (!q) return buildCanonicalHash([e, "list"]);
+  return buildCanonicalHash([
+    e,
+    "list",
+    "q",
+    q
+  ]);
+}
+function buildItemHash(type, head) {
+  const t = ENTITY_TYPES[type] ? type : "all";
+  return buildCanonicalHash([
+    t,
+    "list",
+    "item",
+    t,
+    encodeItemHeadForHash(t, head)
+  ]);
+}
+function buildScholarAnchorHash(anchorId) {
+  const safeAnchor = String(anchorId || "").replace(/[^a-z0-9_-]/gi, "").slice(0, 64);
+  if (!safeAnchor) return buildCanonicalHash(["scholar", "scholar"]);
+  return buildCanonicalHash([
+    "scholar",
+    "scholar",
+    "anchor",
+    safeAnchor
+  ]);
+}
+function buildLectureTermHash(term) {
+  const raw = String(term || "").trim();
+  if (!raw) return buildCanonicalHash(["materials", "glossary"]);
+  const q = raw.toLowerCase();
+  if ((APP_DATA.glossary || []).some((g) => {
+    const gt = String(g.term || "").toLowerCase();
+    return gt.includes(q) || q.includes(gt);
+  })) return buildGlossaryTermHash(raw);
+  return buildListSearchHash("all", raw);
+}
 function findLectureIndexByName(name) {
-  const needle = String(name || '').trim().toLowerCase();
+  const needle = String(name || "").trim().toLowerCase();
   if (!needle) return -1;
   const lectures = Array.isArray(APP_DATA?.lectures) ? APP_DATA.lectures : [];
   for (let i = 0; i < lectures.length; i++) {
-    const lectureName = String(lectures[i]?.name || '').trim().toLowerCase();
+    const lectureName = String(lectures[i]?.name || "").trim().toLowerCase();
     if (lectureName && (lectureName === needle || lectureName.includes(needle) || needle.includes(lectureName))) return i;
   }
   return -1;
 }
-
 function openLectureTerm(term) {
   closeGlobalSearchResults();
-  const raw = String(term || '').trim();
+  const raw = String(term || "").trim();
   if (!raw) return;
   const q = raw.toLowerCase();
-  const glossary = APP_DATA.glossary || [];
-  const hasGlossaryHit = glossary.some(g => {
-    const gt = String(g.term || '').toLowerCase();
+  if ((APP_DATA.glossary || []).some((g) => {
+    const gt = String(g.term || "").toLowerCase();
     return gt.includes(q) || q.includes(gt);
-  });
-
-  if (hasGlossaryHit) {
+  })) {
     openGlossaryTerm(raw);
     return;
   }
-
-  currentEntity = 'all';
-  currentTab = 'list';
-  currentGlossaryTerm = '';
-  currentScholarAnchor = '';
-  pendingScholarAnchor = '';
+  currentEntity = "all";
+  currentTab = "list";
+  currentGlossaryTerm = "";
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
   activeFilters.clear();
   onlyDiscussed = false;
   searchQuery = raw;
   selectedItem = null;
   selectedItemType = null;
-  rightPaneMode = 'histogram';
+  rightPaneMode = "histogram";
   renderEntitySwitcher();
   renderTabs();
   renderContent();
   syncNavigationState();
 }
-
 function buildSearchSnippet(item, query) {
-  const q = (query || '').trim().toLowerCase();
-  if (!q || !item) return '';
+  const q = (query || "").trim().toLowerCase();
+  if (!q || !item) return "";
   const entries = getContextEntries(item, 1, getTotalBookPages());
   for (const entry of entries) {
     const ctxs = Array.isArray(entry.snippets) ? entry.snippets : [];
     for (const raw of ctxs) {
-      const text = String(raw || '').replace(/\s+/g, ' ').trim();
+      const text = String(raw || "").replace(/\s+/g, " ").trim();
       if (!text) continue;
-      const low = text.toLowerCase();
-      const idx = low.indexOf(q);
+      const idx = text.toLowerCase().indexOf(q);
       if (idx < 0) continue;
       const start = Math.max(0, idx - 42);
       const end = Math.min(text.length, idx + q.length + 42);
-      const left = start > 0 ? '…' : '';
-      const right = end < text.length ? '…' : '';
+      const left = start > 0 ? "…" : "";
+      const right = end < text.length ? "…" : "";
       return `${left}${text.slice(start, end)}${right}`;
     }
   }
-  return '';
+  return "";
 }
-
 function highlightSearchMatch(text, query) {
-  const source = String(text || '');
-  const q = String(query || '').trim();
+  const source = String(text || "");
+  const q = String(query || "").trim();
   if (!q) return escapeHtml(source);
-  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   let re;
   try {
-    re = new RegExp(esc, 'ig');
+    re = new RegExp(esc, "ig");
   } catch (e) {
     return escapeHtml(source);
   }
-  let out = '';
+  let out = "";
   let last = 0;
   let m;
   while ((m = re.exec(source)) !== null) {
     const idx = m.index;
-    const seg = m[0] || '';
+    const seg = m[0] || "";
     out += escapeHtml(source.slice(last, idx));
-    out += '<mark>' + escapeHtml(seg) + '</mark>';
+    out += "<mark>" + escapeHtml(seg) + "</mark>";
     last = idx + seg.length;
     if (!seg.length) re.lastIndex += 1;
   }
   out += escapeHtml(source.slice(last));
   return out;
 }
-
 function getGlobalSearchMatchesLegacy(query) {
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
   const qNorm = normalizeSearchText(q);
@@ -2829,119 +1746,153 @@ function getGlobalSearchMatchesLegacy(query) {
   const cached = globalSearchCache.get(searchKey);
   if (cached) return cached;
   const out = [];
-  const push = (kind, type, head, meta, lectureIndex, snippet, routeHash = '') => {
+  const push = (kind, type, head, meta, lectureIndex, snippet, routeHash = "") => {
     if (!head) return;
     const score = head.toLowerCase().startsWith(q) ? 0 : 1;
-    out.push(enrichGlobalSearchRecord({ kind, type, head, meta, lectureIndex, snippet, routeHash, score }));
+    out.push(enrichGlobalSearchRecord({
+      kind,
+      type,
+      head,
+      meta,
+      lectureIndex,
+      snippet,
+      routeHash,
+      score
+    }));
   };
-
   const typedSources = [
-    { type: 'names', kind: 'имя', items: APP_DATA.names || [] },
-    { type: 'toponyms', kind: 'топоним', items: APP_DATA.toponyms || [] },
-    { type: 'ethnonyms', kind: 'этноним', items: APP_DATA.ethnonyms || [] },
-    { type: 'languages', kind: 'язык', items: APP_DATA.languages || [] },
-    { type: 'lexicon', kind: 'лексема', items: APP_DATA.lexicon || [] },
-    { type: 'subject', kind: 'понятие', items: APP_DATA.subject_index || [] },
-  ];
-  for (const src of typedSources) {
-    for (const it of src.items) {
-      const h = (it.head || '').toLowerCase();
-      if (h.includes(q)) {
-        const snippet = buildSearchSnippet(it, q);
-        push(src.kind, src.type, it.head, `${(it.page_list || []).length} стр.`, null, snippet);
-      }
+    {
+      type: "names",
+      kind: "имя",
+      items: APP_DATA.names || []
+    },
+    {
+      type: "toponyms",
+      kind: "топоним",
+      items: APP_DATA.toponyms || []
+    },
+    {
+      type: "ethnonyms",
+      kind: "этноним",
+      items: APP_DATA.ethnonyms || []
+    },
+    {
+      type: "languages",
+      kind: "язык",
+      items: APP_DATA.languages || []
+    },
+    {
+      type: "lexicon",
+      kind: "лексема",
+      items: APP_DATA.lexicon || []
+    },
+    {
+      type: "subject",
+      kind: "понятие",
+      items: APP_DATA.subject_index || []
     }
+  ];
+  for (const src of typedSources) for (const it of src.items) if ((it.head || "").toLowerCase().includes(q)) {
+    const snippet = buildSearchSnippet(it, q);
+    push(src.kind, src.type, it.head, `${(it.page_list || []).length} стр.`, null, snippet);
   }
-
   const glossary = APP_DATA.glossary || [];
   for (const g of glossary) {
-    const term = String(g.term || '').trim();
-    const def = String(g.definition || '').trim();
+    const term = String(g.term || "").trim();
+    const def = String(g.definition || "").trim();
     if (!term) continue;
-    const hay = (term + ' ' + def).toLowerCase();
-    if (!hay.includes(q)) continue;
-    push('термин', 'glossary', term, 'глоссарий', null, def);
+    if (!(term + " " + def).toLowerCase().includes(q)) continue;
+    push("термин", "glossary", term, "глоссарий", null, def);
   }
-
   const lectures = APP_DATA.lectures || [];
   for (let i = 0; i < lectures.length; i++) {
     const l = lectures[i];
-    if ((l.name || '').toLowerCase().includes(q) || (l.main_idea || '').toLowerCase().includes(q)) {
-      const snippet = (l.main_idea || '').trim();
-      push('лекция', 'lecture', l.name, `стр. ${l.pages || ''}`, i, snippet);
+    if ((l.name || "").toLowerCase().includes(q) || (l.main_idea || "").toLowerCase().includes(q)) {
+      const snippet = (l.main_idea || "").trim();
+      push("лекция", "lecture", l.name, `стр. ${l.pages || ""}`, i, snippet);
     }
   }
-
   if (qNorm.length >= 2) {
     const routeRecords = buildGlobalSearchRouteRecords();
     for (const route of routeRecords) {
-      const hay = `${route.searchHead || ''} ${route.searchSecondary || ''}`.trim();
+      const hay = `${route.searchHead || ""} ${route.searchSecondary || ""}`.trim();
       if (!hay || !hay.includes(qNorm)) continue;
-      push(route.kind, route.type, route.head, route.meta, null, route.snippet, route.routeHash || '');
+      push(route.kind, route.type, route.head, route.meta, null, route.snippet, route.routeHash || "");
     }
   }
-
   out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
-  const sliced = filterGlobalSearchMatchesForScope(out, scope).slice(0, 40);
-  return rememberBoundedCacheValue(globalSearchCache, searchKey, sliced, GLOBAL_SEARCH_CACHE_MAX);
+  return rememberBoundedCacheValue(globalSearchCache, searchKey, filterGlobalSearchMatchesForScope(out, scope).slice(0, 40), GLOBAL_SEARCH_CACHE_MAX);
 }
-
 function resetGlobalSearchFuseState() {
   globalSearchFuse = null;
-  globalSearchFuseSignature = '';
+  globalSearchFuseSignature = "";
   globalSearchFuseDisabled = false;
 }
-
 function clearGlobalSearchCaches() {
-  if (globalSearchCache && typeof globalSearchCache.clear === 'function') {
-    globalSearchCache.clear();
-  }
+  if (globalSearchCache && typeof globalSearchCache.clear === "function") globalSearchCache.clear();
   resetGlobalSearchFuseState();
 }
-
 function normalizeSearchText(value) {
-  return normalizeHeadForMatch(value).replace(/\s+/g, ' ').trim();
+  return normalizeHeadForMatch(value).replace(/\s+/g, " ").trim();
 }
-
 function buildGlobalSearchSecondaryForItem(item) {
   const parts = [];
-  if (!item || typeof item !== 'object') return '';
-  if (Array.isArray(item.subs) && item.subs.length) parts.push(item.subs.join(' '));
-  if (Array.isArray(item.synonyms) && item.synonyms.length) parts.push(item.synonyms.join(' '));
-  if (Array.isArray(item.aliases) && item.aliases.length) parts.push(item.aliases.join(' '));
+  if (!item || typeof item !== "object") return "";
+  if (Array.isArray(item.subs) && item.subs.length) parts.push(item.subs.join(" "));
+  if (Array.isArray(item.synonyms) && item.synonyms.length) parts.push(item.synonyms.join(" "));
+  if (Array.isArray(item.aliases) && item.aliases.length) parts.push(item.aliases.join(" "));
   if (item.category) parts.push(item.category);
   if (item.subcategory) parts.push(item.subcategory);
   if (item.family) parts.push(item.family);
   if (item.group) parts.push(item.group);
   const quote = getFirstContextQuote(item);
   if (quote) parts.push(quote);
-  return normalizeSearchText(parts.join(' '));
+  return normalizeSearchText(parts.join(" "));
 }
-
 function buildGlobalSearchRouteRecords() {
   if (!ENTITY_TYPES) return [];
   const records = [];
-  const seenHashes = new Set();
+  const seenHashes = /* @__PURE__ */ new Set();
   const routeAliases = {
-    'home/home': ['главная', 'домашняя панель', 'kpi', 'обзор'],
-    'materials/lectures': ['лекции', 'содержание лекций'],
-    'materials/lecture_compare': ['сравнение лекций', 'сопоставление лекций'],
-    'materials/lecture_pages': ['страница лекции', 'лекция по страницам'],
-    'materials/further_reading': ['что почитать еще', 'дополнительное чтение', 'рекомендуемая литература'],
-    'materials/glossary': ['глоссарий', 'термины'],
-    'materials/kwic': ['kwic', 'конкорданс', 'контексты'],
-    'materials/gallery': ['галерея лингвистов'],
-    'materials/russian_evolution': ['русский во времени', 'эволюция русского'],
-    'materials/phonetic_laws': ['фонетические законы', 'историческая фонетика'],
-    'materials/tasks': ['проверьте себя', 'тест', 'викторина'],
-    'scholar/scholar': ['профессиональный аппарат', 'аппарат для специалистов'],
-    'scholar/chronology': ['хронология открытий', 'лингвистические открытия'],
-    'scholar/page_trends': ['динамика по страницам', 'тренды по страницам'],
-    'scholar/viz': ['визуализации', 'аналитические графики', '#viz'],
+    "home/home": [
+      "главная",
+      "домашняя панель",
+      "kpi",
+      "обзор"
+    ],
+    "materials/lectures": ["лекции", "содержание лекций"],
+    "materials/lecture_compare": ["сравнение лекций", "сопоставление лекций"],
+    "materials/lecture_pages": ["страница лекции", "лекция по страницам"],
+    "materials/further_reading": [
+      "что почитать еще",
+      "дополнительное чтение",
+      "рекомендуемая литература"
+    ],
+    "materials/glossary": ["глоссарий", "термины"],
+    "materials/kwic": [
+      "kwic",
+      "конкорданс",
+      "контексты"
+    ],
+    "materials/gallery": ["галерея лингвистов"],
+    "materials/russian_evolution": ["русский во времени", "эволюция русского"],
+    "materials/phonetic_laws": ["фонетические законы", "историческая фонетика"],
+    "materials/tasks": [
+      "проверьте себя",
+      "тест",
+      "викторина"
+    ],
+    "scholar/scholar": ["профессиональный аппарат", "аппарат для специалистов"],
+    "scholar/chronology": ["хронология открытий", "лингвистические открытия"],
+    "scholar/page_trends": ["динамика по страницам", "тренды по страницам"],
+    "scholar/viz": [
+      "визуализации",
+      "аналитические графики",
+      "#viz"
+    ]
   };
-
-  const pushRoute = ({ head, routeHash, meta = 'раздел интерфейса', snippet = '', aliases = [], kind = 'раздел' }) => {
-    const hash = String(routeHash || '').trim();
+  const pushRoute = ({ head, routeHash, meta = "раздел интерфейса", snippet = "", aliases = [], kind = "раздел" }) => {
+    const hash = String(routeHash || "").trim();
     if (!head || !hash || seenHashes.has(hash)) return;
     const searchHead = normalizeSearchText(head);
     if (!searchHead) return;
@@ -2949,171 +1900,239 @@ function buildGlobalSearchRouteRecords() {
     const searchSecondary = normalizeSearchText([
       meta,
       snippet,
-      hash.replace(/^#/, '').replace(/[\/_]+/g, ' '),
-      ...(Array.isArray(aliases) ? aliases : []),
-    ].join(' '));
+      hash.replace(/^#/, "").replace(/[\/_]+/g, " "),
+      ...Array.isArray(aliases) ? aliases : []
+    ].join(" "));
     records.push({
       kind,
-      type: 'route',
+      type: "route",
       head,
       meta,
       lectureIndex: null,
       snippet,
       routeHash: hash,
       searchHead,
-      searchSecondary,
+      searchSecondary
     });
   };
-
   for (const [entityKey, conf] of Object.entries(ENTITY_TYPES || {})) {
     if (!conf || !Array.isArray(conf.tabs) || !conf.tabs.length) continue;
-    const entityTitle = String(conf.title || entityKey || '').trim();
+    const entityTitle = String(conf.title || entityKey || "").trim();
     for (const tab of conf.tabs) {
-      const tabLabel = String(TAB_LABELS[tab] || tab || '').trim();
+      const tabLabel = String(TAB_LABELS[tab] || tab || "").trim();
       if (!tabLabel) continue;
       const routeKey = `${entityKey}/${tab}`;
       const routeHash = buildCanonicalHash([entityKey, tab]);
-      const head = routeKey === 'home/home'
-        ? entityTitle
-        : `${entityTitle}: ${tabLabel}`;
+      const head = routeKey === "home/home" ? entityTitle : `${entityTitle}: ${tabLabel}`;
       const aliases = [
         entityKey,
         tab,
         entityTitle,
         tabLabel,
-        ...(routeAliases[routeKey] || []),
+        ...routeAliases[routeKey] || []
       ];
       pushRoute({
         head,
         routeHash,
-        meta: 'раздел интерфейса',
+        meta: "раздел интерфейса",
         snippet: `${entityTitle} / ${tabLabel}`,
-        aliases,
+        aliases
       });
     }
   }
-
-  const scholarSections = [
-    { id: 'sch-biblio', title: 'Библиография работ Зализняка', aliases: ['библиография', 'работы зализняка'] },
-    { id: 'sch-extended_cards', title: 'Ключевые лингвисты', aliases: ['лингвисты', 'карточки лингвистов'] },
-    { id: 'sch-controversies', title: 'Спорные вопросы', aliases: ['дискуссии', 'спорные места'] },
-    { id: 'sch-original', title: 'Оригинальные формы по языкам', aliases: ['оригинальные формы', 'формы по языкам'] },
-    { id: 'sch-birch', title: 'Конкорданс берестяных грамот', aliases: ['берестяные грамоты', 'конкорданс грамот'] },
-    { id: 'sch-chronology', title: 'Хронология лингвистических открытий', aliases: ['хронология', 'открытия'] },
-    { id: 'sch-isoglosses', title: 'Изоглоссы русских диалектов', aliases: ['изоглоссы', 'диалекты'] },
-    { id: 'sch-slovo', title: 'Подлинность «Слова о полку Игореве»', aliases: ['слово о полку игореве', 'подлинность слова'] },
-    { id: 'sch-accents', title: 'Акцентологические парадигмы', aliases: ['акцентные парадигмы', 'акцентология', 'ударение'] },
-    { id: 'sch-correspondences', title: 'Фонетические соответствия', aliases: ['сравнительная таблица', 'фонетическая таблица'] },
-    { id: 'sch-reconstructions', title: 'Реконструкции', aliases: ['исторические реконструкции'] },
-  ];
-  for (const section of scholarSections) {
-    pushRoute({
-      head: `Профессиональный аппарат: ${section.title}`,
-      routeHash: buildCanonicalHash(['scholar', 'scholar', 'anchor', section.id]),
-      meta: 'секция раздела',
-      snippet: `Профессиональный аппарат / ${section.title}`,
+  for (const section of [
+    {
+      id: "sch-biblio",
+      title: "Библиография работ Зализняка",
+      aliases: ["библиография", "работы зализняка"]
+    },
+    {
+      id: "sch-extended_cards",
+      title: "Ключевые лингвисты",
+      aliases: ["лингвисты", "карточки лингвистов"]
+    },
+    {
+      id: "sch-controversies",
+      title: "Спорные вопросы",
+      aliases: ["дискуссии", "спорные места"]
+    },
+    {
+      id: "sch-original",
+      title: "Оригинальные формы по языкам",
+      aliases: ["оригинальные формы", "формы по языкам"]
+    },
+    {
+      id: "sch-birch",
+      title: "Конкорданс берестяных грамот",
+      aliases: ["берестяные грамоты", "конкорданс грамот"]
+    },
+    {
+      id: "sch-chronology",
+      title: "Хронология лингвистических открытий",
+      aliases: ["хронология", "открытия"]
+    },
+    {
+      id: "sch-isoglosses",
+      title: "Изоглоссы русских диалектов",
+      aliases: ["изоглоссы", "диалекты"]
+    },
+    {
+      id: "sch-slovo",
+      title: "Подлинность «Слова о полку Игореве»",
+      aliases: ["слово о полку игореве", "подлинность слова"]
+    },
+    {
+      id: "sch-accents",
+      title: "Акцентологические парадигмы",
       aliases: [
-        'профессиональный аппарат',
-        section.id,
-        section.id.replace(/^sch-/, '').replace(/[_-]+/g, ' '),
-        ...(section.aliases || []),
-      ],
-    });
-  }
+        "акцентные парадигмы",
+        "акцентология",
+        "ударение"
+      ]
+    },
+    {
+      id: "sch-correspondences",
+      title: "Фонетические соответствия",
+      aliases: ["сравнительная таблица", "фонетическая таблица"]
+    },
+    {
+      id: "sch-reconstructions",
+      title: "Реконструкции",
+      aliases: ["исторические реконструкции"]
+    }
+  ]) pushRoute({
+    head: `Профессиональный аппарат: ${section.title}`,
+    routeHash: buildCanonicalHash([
+      "scholar",
+      "scholar",
+      "anchor",
+      section.id
+    ]),
+    meta: "секция раздела",
+    snippet: `Профессиональный аппарат / ${section.title}`,
+    aliases: [
+      "профессиональный аппарат",
+      section.id,
+      section.id.replace(/^sch-/, "").replace(/[_-]+/g, " "),
+      ...section.aliases || []
+    ]
+  });
   return records;
 }
-
 function buildGlobalSearchFuseRecords() {
   if (!APP_DATA) return [];
   const records = [];
-  const activeBook = getActiveBook();
-  const activeBookId = activeBook.book_id || 'mumintroll';
+  const activeBookId = getActiveBook().book_id || "mumintroll";
   const typedSources = [
-    { type: 'names', kind: LABELS && LABELS.name ? LABELS.name : 'name', items: APP_DATA.names || [] },
-    { type: 'toponyms', kind: LABELS && LABELS.place ? LABELS.place : 'toponym', items: APP_DATA.toponyms || [] },
-    { type: 'ethnonyms', kind: LABELS && LABELS.ethnos ? LABELS.ethnos : 'ethnonym', items: APP_DATA.ethnonyms || [] },
-    { type: 'languages', kind: LABELS && LABELS.language ? LABELS.language : 'language', items: APP_DATA.languages || [] },
-    { type: 'lexicon', kind: LABELS && LABELS.lexeme ? LABELS.lexeme : 'lexeme', items: APP_DATA.lexicon || [] },
-    { type: 'subject', kind: LABELS && LABELS.subject ? LABELS.subject : 'subject', items: APP_DATA.subject_index || [] },
-  ];
-  for (const src of typedSources) {
-    for (const it of src.items) {
-      const head = String(it && it.head ? it.head : '').trim();
-      if (!head) continue;
-      const searchHead = normalizeSearchText(head);
-      if (!searchHead) continue;
-      const pageCount = Array.isArray(it.page_list) ? it.page_list.length : 0;
-      records.push({
-        kind: src.kind,
-        type: src.type,
-        head,
-        meta: pageCount ? `${pageCount} \u0441\u0442\u0440.` : '',
-        lectureIndex: null,
-        snippet: getFirstContextQuote(it),
-        bookId: activeBookId,
-        sourceType: 'book',
-        searchHead,
-        searchSecondary: buildGlobalSearchSecondaryForItem(it),
-      });
+    {
+      type: "names",
+      kind: LABELS && LABELS.name ? LABELS.name : "name",
+      items: APP_DATA.names || []
+    },
+    {
+      type: "toponyms",
+      kind: LABELS && LABELS.place ? LABELS.place : "toponym",
+      items: APP_DATA.toponyms || []
+    },
+    {
+      type: "ethnonyms",
+      kind: LABELS && LABELS.ethnos ? LABELS.ethnos : "ethnonym",
+      items: APP_DATA.ethnonyms || []
+    },
+    {
+      type: "languages",
+      kind: LABELS && LABELS.language ? LABELS.language : "language",
+      items: APP_DATA.languages || []
+    },
+    {
+      type: "lexicon",
+      kind: LABELS && LABELS.lexeme ? LABELS.lexeme : "lexeme",
+      items: APP_DATA.lexicon || []
+    },
+    {
+      type: "subject",
+      kind: LABELS && LABELS.subject ? LABELS.subject : "subject",
+      items: APP_DATA.subject_index || []
     }
+  ];
+  for (const src of typedSources) for (const it of src.items) {
+    const head = String(it && it.head ? it.head : "").trim();
+    if (!head) continue;
+    const searchHead = normalizeSearchText(head);
+    if (!searchHead) continue;
+    const pageCount = Array.isArray(it.page_list) ? it.page_list.length : 0;
+    records.push({
+      kind: src.kind,
+      type: src.type,
+      head,
+      meta: pageCount ? `${pageCount} \u0441\u0442\u0440.` : "",
+      lectureIndex: null,
+      snippet: getFirstContextQuote(it),
+      bookId: activeBookId,
+      sourceType: "book",
+      searchHead,
+      searchSecondary: buildGlobalSearchSecondaryForItem(it)
+    });
   }
-
   const glossary = APP_DATA.glossary || [];
   for (const g of glossary) {
-    const term = String(g && g.term ? g.term : '').trim();
+    const term = String(g && g.term ? g.term : "").trim();
     if (!term) continue;
-    const definition = String(g.definition || '').trim();
+    const definition = String(g.definition || "").trim();
     const searchHead = normalizeSearchText(term);
     if (!searchHead) continue;
     records.push({
-      kind: '\u0442\u0435\u0440\u043c\u0438\u043d',
-      type: 'glossary',
+      kind: "термин",
+      type: "glossary",
       head: term,
-      meta: '\u0433\u043b\u043e\u0441\u0441\u0430\u0440\u0438\u0439',
+      meta: "глоссарий",
       lectureIndex: null,
       snippet: definition,
       bookId: activeBookId,
-      sourceType: 'book',
+      sourceType: "book",
       searchHead,
-      searchSecondary: normalizeSearchText(definition),
+      searchSecondary: normalizeSearchText(definition)
     });
   }
-
   const lectures = APP_DATA.lectures || [];
   for (let i = 0; i < lectures.length; i++) {
     const l = lectures[i] || {};
-    const name = String(l.name || '').trim();
+    const name = String(l.name || "").trim();
     if (!name) continue;
-    const terms = Array.isArray(l.terms) ? l.terms.join(' ') : '';
-    const facts = Array.isArray(l.key_facts) ? l.key_facts.join(' ') : '';
-    const snippet = String(l.main_idea || '').trim();
+    const terms = Array.isArray(l.terms) ? l.terms.join(" ") : "";
+    const facts = Array.isArray(l.key_facts) ? l.key_facts.join(" ") : "";
+    const snippet = String(l.main_idea || "").trim();
     const searchHead = normalizeSearchText(name);
     if (!searchHead) continue;
     records.push({
-      kind: '\u043b\u0435\u043a\u0446\u0438\u044f',
-      type: 'lecture',
+      kind: "лекция",
+      type: "lecture",
       head: name,
-      meta: `\u0441\u0442\u0440. ${l.pages || ''}`,
+      meta: `\u0441\u0442\u0440. ${l.pages || ""}`,
       lectureIndex: i,
       snippet,
       bookId: activeBookId,
-      sourceType: 'book',
+      sourceType: "book",
       searchHead,
-      searchSecondary: normalizeSearchText([l.main_idea || '', terms, l.why_read || '', facts].join(' ')),
+      searchSecondary: normalizeSearchText([
+        l.main_idea || "",
+        terms,
+        l.why_read || "",
+        facts
+      ].join(" "))
     });
   }
   const routeRecords = buildGlobalSearchRouteRecords();
   if (routeRecords.length) records.push(...routeRecords.map(enrichGlobalSearchRecord));
   return records;
 }
-
 function ensureGlobalSearchFuse() {
   if (globalSearchFuseDisabled) return false;
-  if (typeof Fuse !== 'function') {
+  if (typeof Fuse !== "function") {
     globalSearchFuseDisabled = true;
     return false;
   }
-  const signature = `${getDataSignature()}::${(APP_DATA && APP_DATA.glossary ? APP_DATA.glossary.length : 0)}::${(APP_DATA && APP_DATA.lectures ? APP_DATA.lectures.length : 0)}`;
+  const signature = `${getDataSignature()}::${APP_DATA && APP_DATA.glossary ? APP_DATA.glossary.length : 0}::${APP_DATA && APP_DATA.lectures ? APP_DATA.lectures.length : 0}`;
   if (globalSearchFuse && globalSearchFuseSignature === signature) return true;
   try {
     const records = buildGlobalSearchFuseRecords();
@@ -3121,41 +2140,43 @@ function ensureGlobalSearchFuse() {
     globalSearchFuse = new Fuse(records, {
       includeScore: true,
       shouldSort: true,
-      threshold: 0.36,
+      threshold: .36,
       ignoreLocation: true,
       distance: 140,
       minMatchCharLength: 2,
-      keys: [
-        { name: 'searchHead', weight: 0.78 },
-        { name: 'searchSecondary', weight: 0.22 },
-      ],
+      keys: [{
+        name: "searchHead",
+        weight: .78
+      }, {
+        name: "searchSecondary",
+        weight: .22
+      }]
     });
     globalSearchFuseSignature = signature;
     return true;
   } catch (e) {
     globalSearchFuse = null;
-    globalSearchFuseSignature = '';
+    globalSearchFuseSignature = "";
     return false;
   }
 }
-
 function getGlobalSearchMatchesFuzzy(queryNorm) {
   if (!queryNorm || queryNorm.length < 2) return [];
   if (!ensureGlobalSearchFuse()) return [];
   const rows = globalSearchFuse.search(queryNorm, { limit: GLOBAL_SEARCH_FUSE_LIMIT });
   if (!rows.length) return [];
-  const dedupe = new Set();
+  const dedupe = /* @__PURE__ */ new Set();
   const out = [];
   for (const row of rows) {
     const item = row && row.item ? row.item : null;
     if (!item || !item.head) continue;
-    const key = `${item.type}::${item.bookId || ''}::${item.head}::${item.lectureIndex === null ? '' : item.lectureIndex}`;
+    const key = `${item.type}::${item.bookId || ""}::${item.head}::${item.lectureIndex === null ? "" : item.lectureIndex}`;
     if (dedupe.has(key)) continue;
     dedupe.add(key);
     let score = Number.isFinite(row.score) ? row.score : 1;
-    const headNorm = item.searchHead || '';
-    if (headNorm.startsWith(queryNorm)) score -= 0.12;
-    else if (headNorm.includes(queryNorm)) score -= 0.06;
+    const headNorm = item.searchHead || "";
+    if (headNorm.startsWith(queryNorm)) score -= .12;
+    else if (headNorm.includes(queryNorm)) score -= .06;
     out.push(enrichGlobalSearchRecord({
       kind: item.kind,
       type: item.type,
@@ -3163,16 +2184,15 @@ function getGlobalSearchMatchesFuzzy(queryNorm) {
       meta: item.meta,
       lectureIndex: item.lectureIndex,
       snippet: item.snippet,
-      routeHash: item.routeHash || '',
-      bookId: item.bookId || '',
-      sourceType: item.sourceType || 'book',
-      score,
+      routeHash: item.routeHash || "",
+      bookId: item.bookId || "",
+      sourceType: item.sourceType || "book",
+      score
     }));
   }
   out.sort((a, b) => a.score - b.score || compareHeadsRu(a.head, b.head));
   return out.slice(0, 40);
 }
-
 function getGlobalSearchMatches(query) {
   const qRaw = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH).toLowerCase();
   const qNorm = normalizeSearchText(qRaw);
@@ -3187,138 +2207,114 @@ function getGlobalSearchMatches(query) {
   } catch (e) {
     matches = [];
   }
-  if (!Array.isArray(matches) || !matches.length) {
-    matches = getGlobalSearchMatchesLegacy(qRaw);
-  }
+  if (!Array.isArray(matches) || !matches.length) matches = getGlobalSearchMatchesLegacy(qRaw);
   const scoped = filterGlobalSearchMatchesForScope(matches, scope);
-  const sliced = Array.isArray(scoped) ? scoped.slice(0, 40) : [];
-  return rememberBoundedCacheValue(globalSearchCache, searchKey, sliced, GLOBAL_SEARCH_CACHE_MAX);
+  return rememberBoundedCacheValue(globalSearchCache, searchKey, Array.isArray(scoped) ? scoped.slice(0, 40) : [], GLOBAL_SEARCH_CACHE_MAX);
 }
-
 function closeGlobalSearchResults() {
-  const box = document.getElementById('global-search-results');
+  const box = document.getElementById("global-search-results");
   if (!box) return;
-  const input = document.getElementById('global-search');
+  const input = document.getElementById("global-search");
   const searchWrap = getGlobalSearchWrap(input);
-  if (searchWrap && searchWrap.classList) searchWrap.classList.remove('search-results-open');
-  if (box.classList && typeof box.classList.remove === 'function') {
-    box.classList.remove('open');
-  } else {
-    box.className = String(box.className || '').replace(/\bopen\b/g, '').replace(/\s+/g, ' ').trim();
-  }
-  box.innerHTML = '';
+  if (searchWrap && searchWrap.classList) searchWrap.classList.remove("search-results-open");
+  if (box.classList && typeof box.classList.remove === "function") box.classList.remove("open");
+  else box.className = String(box.className || "").replace(/\bopen\b/g, "").replace(/\s+/g, " ").trim();
+  box.innerHTML = "";
   box._matches = [];
   globalSearchActiveIndex = -1;
   if (input) {
-    safeSetAttr(input, 'aria-expanded', 'false');
-    safeSetAttr(input, 'aria-activedescendant', '');
+    safeSetAttr(input, "aria-expanded", "false");
+    safeSetAttr(input, "aria-activedescendant", "");
   }
 }
-
 function getGlobalSearchWrap(input) {
-  if (input && typeof input.closest === 'function') {
-    const wrap = input.closest('.header-search');
+  if (input && typeof input.closest === "function") {
+    const wrap = input.closest(".header-search");
     if (wrap) return wrap;
   }
-  if (typeof document !== 'undefined' && typeof document.querySelector === 'function') {
-    return document.querySelector('.header-search');
-  }
+  if (typeof document !== "undefined" && typeof document.querySelector === "function") return document.querySelector(".header-search");
   return null;
 }
-
 function setGlobalSearchActiveItem(box, idx, scrollIntoView = true) {
-  if (!box || typeof box.querySelectorAll !== 'function') return;
-  const input = document.getElementById('global-search');
-  const rows = Array.from(box.querySelectorAll('.header-search-item'));
+  if (!box || typeof box.querySelectorAll !== "function") return;
+  const input = document.getElementById("global-search");
+  const rows = Array.from(box.querySelectorAll(".header-search-item"));
   if (!rows.length) {
     globalSearchActiveIndex = -1;
-    if (input) safeSetAttr(input, 'aria-activedescendant', '');
+    if (input) safeSetAttr(input, "aria-activedescendant", "");
     return;
   }
   const clamped = Math.max(0, Math.min(idx, rows.length - 1));
   rows.forEach((row, i) => {
     const active = i === clamped;
     if (!row.id) row.id = `global-search-item-${i}`;
-    row.classList.toggle('active', active);
-    safeSetAttr(row, 'aria-selected', active ? 'true' : 'false');
+    row.classList.toggle("active", active);
+    safeSetAttr(row, "aria-selected", active ? "true" : "false");
   });
   globalSearchActiveIndex = clamped;
-  if (input) safeSetAttr(input, 'aria-activedescendant', rows[clamped].id || '');
-  if (scrollIntoView && typeof rows[clamped].scrollIntoView === 'function') {
-    rows[clamped].scrollIntoView({ block: 'nearest' });
-  }
+  if (input) safeSetAttr(input, "aria-activedescendant", rows[clamped].id || "");
+  if (scrollIntoView && typeof rows[clamped].scrollIntoView === "function") rows[clamped].scrollIntoView({ block: "nearest" });
 }
-
 function openGlobalSearchMatch(match) {
   if (!match) return;
-  if (match.type === 'lecture') openLecturePage(match.lectureIndex || 0);
-  else if (match.type === 'glossary') openGlossaryTerm(match.head || '');
-  else if (match.type === 'route' && match.routeHash) {
-    const targetHashRaw = String(match.routeHash || '').trim();
-    const targetHash = targetHashRaw.startsWith('#') ? targetHashRaw : `#${targetHashRaw}`;
-    if (typeof window !== 'undefined' && window.location) {
-      if (window.location.hash === targetHash) {
-        applyHash(targetHash);
-      } else {
-        applyHash(targetHash);
-        expectedHash = targetHash;
-        window.location.hash = targetHash;
-      }
-    } else {
+  if (match.type === "lecture") openLecturePage(match.lectureIndex || 0);
+  else if (match.type === "glossary") openGlossaryTerm(match.head || "");
+  else if (match.type === "route" && match.routeHash) {
+    const targetHashRaw = String(match.routeHash || "").trim();
+    const targetHash = targetHashRaw.startsWith("#") ? targetHashRaw : `#${targetHashRaw}`;
+    if (typeof window !== "undefined" && window.location) if (window.location.hash === targetHash) applyHash(targetHash);
+    else {
       applyHash(targetHash);
+      expectedHash = targetHash;
+      window.location.hash = targetHash;
     }
-  }
-  else navigateToItem(match.type, match.head);
-  const input = document.getElementById('global-search');
-  if (input) input.value = '';
+    else applyHash(targetHash);
+  } else navigateToItem(match.type, match.head);
+  const input = document.getElementById("global-search");
+  if (input) input.value = "";
   closeGlobalSearchResults();
 }
-
 function appendGlobalSearchResult(box, match, idx, query) {
   if (!box || !match) return;
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
-  const row = document.createElement('div');
-  row.className = 'header-search-item';
+  const row = document.createElement("div");
+  row.className = "header-search-item";
   row.dataset.idx = String(idx);
-  safeSetAttr(row, 'role', 'option');
-  safeSetAttr(row, 'aria-selected', 'false');
-
-  const head = document.createElement('span');
-  head.innerHTML = highlightSearchMatch(match.head, q);
-  const kind = document.createElement('span');
-  kind.className = 'kind';
-  kind.textContent = String(match.kind || '');
+  safeSetAttr(row, "role", "option");
+  safeSetAttr(row, "aria-selected", "false");
+  const head = document.createElement("span");
+  appendHighlightedSearchText(head, match.head, q);
+  const kind = document.createElement("span");
+  kind.className = "kind";
+  kind.textContent = String(match.kind || "");
   row.appendChild(head);
   row.appendChild(kind);
-
   const metaParts = [];
   const bookLabel = getBookLabelForSearch(match.bookId);
   if (bookLabel) metaParts.push(bookLabel);
-  if (match.meta) metaParts.push(String(match.meta || ''));
+  if (match.meta) metaParts.push(String(match.meta || ""));
   if (metaParts.length) {
-    const meta = document.createElement('div');
-    meta.className = 'search-meta';
-    meta.textContent = metaParts.join(' · ');
+    const meta = document.createElement("div");
+    meta.className = "search-meta";
+    meta.textContent = metaParts.join(" · ");
     row.appendChild(meta);
   }
   if (match.snippet) {
-    const snippet = document.createElement('div');
-    snippet.className = 'search-snippet';
-    snippet.innerHTML = highlightSearchMatch(match.snippet, q);
+    const snippet = document.createElement("div");
+    snippet.className = "search-snippet";
+    appendHighlightedSearchText(snippet, match.snippet, q);
     row.appendChild(snippet);
   }
   box.appendChild(row);
 }
-
 function appendGlobalSearchSourceGroup(box, label) {
   if (!box || !label) return;
-  const group = document.createElement('div');
-  group.className = 'header-search-group';
-  safeSetAttr(group, 'role', 'presentation');
+  const group = document.createElement("div");
+  group.className = "header-search-group";
+  safeSetAttr(group, "role", "presentation");
   group.textContent = label;
   box.appendChild(group);
 }
-
 function renderGlobalSearchEmpty(box, query) {
   if (!box) return false;
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
@@ -3326,76 +2322,66 @@ function renderGlobalSearchEmpty(box, query) {
     closeGlobalSearchResults();
     return false;
   }
-  const input = document.getElementById('global-search');
+  const input = document.getElementById("global-search");
   const searchWrap = getGlobalSearchWrap(input);
   const scope = normalizeGlobalSearchScope(globalSearchScope);
-  const empty = document.createElement('div');
-  empty.className = 'header-search-empty';
-  empty.textContent = scope === 'corpus'
-    ? '\u0412\u043e \u0432\u0441\u0435\u043c \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u043e\u043c \u043d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e.'
-    : '\u0412 \u0442\u0435\u043a\u0443\u0449\u0435\u0439 \u043a\u043d\u0438\u0433\u0435 \u043d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e.';
-  box.textContent = '';
+  const empty = document.createElement("div");
+  empty.className = "header-search-empty";
+  empty.textContent = scope === "corpus" ? "Во всем доступном ничего не найдено." : "В текущей книге ничего не найдено.";
+  box.textContent = "";
   appendGlobalSearchScopeControl(box, q);
   box.appendChild(empty);
   box._matches = [];
   globalSearchActiveIndex = -1;
-  box.classList.add('open');
-  if (searchWrap && searchWrap.classList) searchWrap.classList.add('search-results-open');
+  box.classList.add("open");
+  if (searchWrap && searchWrap.classList) searchWrap.classList.add("search-results-open");
   if (input) {
-    safeSetAttr(input, 'aria-expanded', 'true');
-    safeSetAttr(input, 'aria-activedescendant', '');
+    safeSetAttr(input, "aria-expanded", "true");
+    safeSetAttr(input, "aria-activedescendant", "");
   }
   return true;
 }
-
-function appendGlobalSearchScopeControl(box, query = '') {
+function appendGlobalSearchScopeControl(box, query = "") {
   if (!box) return null;
-  const toolbar = document.createElement('div');
-  toolbar.className = 'header-search-results-toolbar';
-  safeSetAttr(toolbar, 'role', 'presentation');
-
-  const label = document.createElement('span');
-  label.className = 'header-search-results-label';
-  label.textContent = '\u0418\u0441\u043a\u0430\u0442\u044c:';
+  const toolbar = document.createElement("div");
+  toolbar.className = "header-search-results-toolbar";
+  safeSetAttr(toolbar, "role", "presentation");
+  const label = document.createElement("span");
+  label.className = "header-search-results-label";
+  label.textContent = "Искать:";
   toolbar.appendChild(label);
-
-  const select = document.createElement('select');
-  select.className = 'search-results-scope';
-  select.id = 'global-search-scope';
-  safeSetAttr(select, 'aria-label', '\u041e\u0431\u043b\u0430\u0441\u0442\u044c \u043f\u043e\u0438\u0441\u043a\u0430');
-  safeSetAttr(select, 'title', '\u041e\u0431\u043b\u0430\u0441\u0442\u044c \u043f\u043e\u0438\u0441\u043a\u0430');
-
-  const allOption = document.createElement('option');
-  allOption.value = 'corpus';
-  allOption.textContent = '\u0432\u0435\u0437\u0434\u0435';
+  const select = document.createElement("select");
+  select.className = "search-results-scope";
+  select.id = "global-search-scope";
+  safeSetAttr(select, "aria-label", "Область поиска");
+  safeSetAttr(select, "title", "Область поиска");
+  const allOption = document.createElement("option");
+  allOption.value = "corpus";
+  allOption.textContent = "везде";
   select.appendChild(allOption);
-
-  const currentOption = document.createElement('option');
-  currentOption.value = 'current';
-  currentOption.textContent = '\u0442\u0435\u043a\u0443\u0449\u0430\u044f \u043a\u043d\u0438\u0433\u0430';
+  const currentOption = document.createElement("option");
+  currentOption.value = "current";
+  currentOption.textContent = "текущая книга";
   select.appendChild(currentOption);
-
   select.value = normalizeGlobalSearchScope(globalSearchScope);
   select.onchange = (e) => {
     const target = e && e.target;
-    if (!target || typeof target.value !== 'string') return;
+    if (!target || typeof target.value !== "string") return;
     globalSearchScope = normalizeGlobalSearchScope(target.value);
     clearGlobalSearchCaches();
-    const input = document.getElementById('global-search');
+    const input = document.getElementById("global-search");
     const q = input ? clampUiInput(input.value || query, MAX_GLOBAL_QUERY_LENGTH) : clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
     if (input && input.value !== q) input.value = q;
     renderGlobalSearchResults(getGlobalSearchMatches(q), q);
     persistViewState();
   };
-
   toolbar.appendChild(select);
   box.appendChild(toolbar);
   return select;
 }
-
-function renderGlobalSearchResults(matches, query = '') {
-  const box = document.getElementById('global-search-results');
-  const input = document.getElementById('global-search');
+function renderGlobalSearchResults(matches, query = "") {
+  const box = document.getElementById("global-search-results");
+  const input = document.getElementById("global-search");
   const searchWrap = getGlobalSearchWrap(input);
   if (!box) return;
   if (!matches.length) {
@@ -3403,16 +2389,16 @@ function renderGlobalSearchResults(matches, query = '') {
     return;
   }
   const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
-  safeSetAttr(box, 'role', 'listbox');
-  box.textContent = '';
+  safeSetAttr(box, "role", "listbox");
+  box.textContent = "";
   appendGlobalSearchScopeControl(box, q);
-  const groupedBySource = normalizeGlobalSearchScope(globalSearchScope) === 'corpus';
-  let lastBookId = '';
+  const groupedBySource = normalizeGlobalSearchScope(globalSearchScope) === "corpus";
+  let lastBookId = "";
   matches.forEach((m, idx) => {
     if (groupedBySource) {
-      const bookId = m && m.bookId ? String(m.bookId) : '';
+      const bookId = m && m.bookId ? String(m.bookId) : "";
       if (bookId !== lastBookId) {
-        appendGlobalSearchSourceGroup(box, getBookLabelForSearch(bookId) || '\u0418\u0441\u0442\u043e\u0447\u043d\u0438\u043a \u043a\u043e\u0440\u043f\u0443\u0441\u0430');
+        appendGlobalSearchSourceGroup(box, getBookLabelForSearch(bookId) || "Источник корпуса");
         lastBookId = bookId;
       }
     }
@@ -3420,34 +2406,32 @@ function renderGlobalSearchResults(matches, query = '') {
   });
   box._matches = matches;
   globalSearchActiveIndex = -1;
-  box.classList.add('open');
-  if (searchWrap && searchWrap.classList) searchWrap.classList.add('search-results-open');
-  if (input) safeSetAttr(input, 'aria-expanded', 'true');
-  box.querySelectorAll('.header-search-item').forEach(row => {
+  box.classList.add("open");
+  if (searchWrap && searchWrap.classList) searchWrap.classList.add("search-results-open");
+  if (input) safeSetAttr(input, "aria-expanded", "true");
+  box.querySelectorAll(".header-search-item").forEach((row) => {
     row.onclick = () => {
-      const m = (box._matches || [])[parseInt(row.dataset.idx || '0', 10)];
+      const m = (box._matches || [])[parseInt(row.dataset.idx || "0", 10)];
       openGlobalSearchMatch(m);
     };
   });
 }
-
 function shouldIgnoreGlobalHotkeys(e) {
   if (!e || e.ctrlKey || e.metaKey || e.altKey) return true;
   const target = e.target;
   if (!(target instanceof HTMLElement)) return false;
-  const tag = (target.tagName || '').toUpperCase();
-  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
+  const tag = (target.tagName || "").toUpperCase();
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
   if (target.isContentEditable) return true;
   return false;
 }
-
 function moveListSelection(delta) {
-  if (currentTab !== 'list') return false;
-  const list = document.getElementById('name-list');
+  if (currentTab !== "list") return false;
+  const list = document.getElementById("name-list");
   if (!list) return false;
-  const rows = Array.from(list.querySelectorAll('.name-item[data-head]'));
+  const rows = Array.from(list.querySelectorAll(".name-item[data-head]"));
   if (!rows.length) return false;
-  let idx = rows.findIndex(r => (r.dataset.head || '') === (selectedItem || '') && (r.dataset.type || currentEntity) === (selectedItemType || currentEntity));
+  let idx = rows.findIndex((r) => (r.dataset.head || "") === (selectedItem || "") && (r.dataset.type || currentEntity) === (selectedItemType || currentEntity));
   if (idx < 0) idx = delta > 0 ? -1 : 0;
   idx += delta;
   if (idx < 0) idx = 0;
@@ -3455,56 +2439,404 @@ function moveListSelection(delta) {
   const row = rows[idx];
   if (!row) return false;
   const rowType = row.dataset.type || currentEntity;
-  const it = getIndexedItem(rowType, row.dataset.head || '');
+  const it = getIndexedItem(rowType, row.dataset.head || "");
   if (!it) return false;
   selectListItem(it, rowType);
-  if (typeof row.scrollIntoView === 'function') row.scrollIntoView({ block: 'nearest' });
+  if (typeof row.scrollIntoView === "function") row.scrollIntoView({ block: "nearest" });
   return true;
 }
-
 function stepLecture(delta) {
-  if (currentEntity !== 'materials' || currentTab !== 'lecture_pages') return false;
+  if (currentEntity !== "materials" || currentTab !== "lecture_pages") return false;
   const lectures = APP_DATA.lectures || [];
   const next = currentLecture + delta;
   if (next < 0 || next >= lectures.length) return false;
   openLecturePage(next);
   return true;
 }
-
-function onGlobalKeydown(e) {
-  if (shouldIgnoreGlobalHotkeys(e)) return;
-  if (e.key === '/') {
-    const globalInput = document.getElementById('global-search');
-    if (globalInput && typeof globalInput.focus === 'function') {
+function normalizeCommandPaletteText(value) {
+  return normalizeSearchText(String(value === null || value === undefined ? "" : value).toLowerCase());
+}
+function buildCommandPaletteCommands() {
+  const out = [];
+  const seen = /* @__PURE__ */ new Set();
+  NAV_SECTIONS.forEach((section) => {
+    (section.items || []).forEach((item) => {
+      if (!item || !item.entity || !ENTITY_TYPES[item.entity]) return;
+      const tabs = ENTITY_TYPES[item.entity].tabs || [];
+      const tab = tabs.includes(item.tab) ? item.tab : tabs[0] || "";
+      const key = `${item.entity}::${tab}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      out.push({
+        kind: "nav",
+        label: String(item.label || ""),
+        group: String(section.label || ""),
+        entity: item.entity,
+        tab
+      });
+    });
+  });
+  out.push({
+    kind: "action",
+    label: "Поиск по сайту",
+    group: "Действия",
+    action: "focusGlobalSearch"
+  });
+  out.push({
+    kind: "action",
+    label: "Плотность: плотно",
+    group: "Действия",
+    action: "density:compact"
+  });
+  out.push({
+    kind: "action",
+    label: "Плотность: чтение",
+    group: "Действия",
+    action: "density:reader"
+  });
+  out.push({
+    kind: "action",
+    label: "Плотность: исследование",
+    group: "Действия",
+    action: "density:research"
+  });
+  out.push({
+    kind: "action",
+    label: "Назад",
+    group: "Действия",
+    action: "back"
+  });
+  return out;
+}
+function getCommandPaletteCommands() {
+  if (!commandPaletteCommandsCache) commandPaletteCommandsCache = buildCommandPaletteCommands();
+  return commandPaletteCommandsCache;
+}
+function scoreCommandPaletteCandidate(haystack, queryNorm) {
+  if (!queryNorm) return 0;
+  if (!haystack) return -1;
+  const at = haystack.indexOf(queryNorm);
+  if (at === 0) return 100;
+  if (at > 0) return 70 - Math.min(at, 30);
+  let cursor = 0;
+  for (const ch of queryNorm) {
+    const found = haystack.indexOf(ch, cursor);
+    if (found < 0) return -1;
+    cursor = found + 1;
+  }
+  return 20;
+}
+function getCommandPaletteRecentEntries() {
+  const out = [];
+  loadRecentItems().forEach((rec) => {
+    if (!rec || !rec.type || !rec.head) return;
+    if (!ENTITY_TYPES[rec.type]) return;
+    out.push({
+      kind: "recent",
+      label: String(rec.head),
+      group: "Недавние",
+      meta: getEntityDisplayLabel(rec.type),
+      entityType: rec.type,
+      head: String(rec.head)
+    });
+  });
+  return out;
+}
+function getCommandPaletteEntries(query) {
+  const raw = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
+  const qNorm = normalizeCommandPaletteText(raw);
+  const scored = [];
+  getCommandPaletteCommands().forEach((cmd) => {
+    const score = scoreCommandPaletteCandidate(normalizeCommandPaletteText(`${cmd.label} ${cmd.group}`), qNorm);
+    if (score < 0) return;
+    scored.push(Object.assign({}, cmd, { score }));
+  });
+  scored.sort((a, b) => b.score - a.score);
+  if (!qNorm) return getCommandPaletteRecentEntries().slice(0, COMMAND_PALETTE_RECENT_LIMIT).concat(scored).slice(0, COMMAND_PALETTE_MAX_RESULTS);
+  let content = [];
+  try {
+    content = getGlobalSearchMatches(raw) || [];
+  } catch (e) {
+    content = [];
+  }
+  const contentEntries = content.slice(0, COMMAND_PALETTE_CONTENT_LIMIT).map((match) => ({
+    kind: "content",
+    label: String(match && match.head ? match.head : ""),
+    group: "Содержание",
+    meta: String(match && match.kind ? match.kind : ""),
+    match
+  })).filter((entry) => !!entry.label);
+  return scored.slice(0, COMMAND_PALETTE_MAX_RESULTS - contentEntries.length).concat(contentEntries);
+}
+function appendCommandPaletteRow(list, entry, idx, query) {
+  const row = document.createElement("div");
+  row.className = "command-palette-item";
+  row.id = `command-palette-item-${idx}`;
+  row.dataset.idx = String(idx);
+  row.dataset.kind = String(entry.kind || "");
+  safeSetAttr(row, "role", "option");
+  safeSetAttr(row, "aria-selected", "false");
+  const label = document.createElement("span");
+  label.className = "command-palette-item-label";
+  appendHighlightedSearchText(label, entry.label, query);
+  row.appendChild(label);
+  const badge = document.createElement("span");
+  badge.className = "command-palette-item-group";
+  badge.textContent = entry.meta ? `${entry.group} · ${entry.meta}` : String(entry.group || "");
+  row.appendChild(badge);
+  row._entry = entry;
+  list.appendChild(row);
+}
+function renderCommandPaletteResults(query) {
+  const list = document.getElementById("command-palette-list");
+  if (!list) return;
+  const q = clampUiInput(query, MAX_GLOBAL_QUERY_LENGTH);
+  const entries = getCommandPaletteEntries(q);
+  list.textContent = "";
+  commandPaletteEntries = entries;
+  commandPaletteActiveIndex = -1;
+  if (!entries.length) {
+    const empty = document.createElement("div");
+    empty.className = "command-palette-empty";
+    empty.textContent = "Ничего не найдено";
+    list.appendChild(empty);
+    const inputEl = document.getElementById("command-palette-input");
+    if (inputEl) safeSetAttr(inputEl, "aria-activedescendant", "");
+    return;
+  }
+  let lastGroup = "";
+  entries.forEach((entry, idx) => {
+    const group = String(entry.group || "");
+    if (group && group !== lastGroup) {
+      const head = document.createElement("div");
+      head.className = "command-palette-group";
+      head.textContent = group;
+      list.appendChild(head);
+      lastGroup = group;
+    }
+    appendCommandPaletteRow(list, entry, idx, q);
+  });
+  setCommandPaletteActiveItem(0, false);
+}
+function setCommandPaletteActiveItem(idx, scrollIntoView = true) {
+  const list = document.getElementById("command-palette-list");
+  const input = document.getElementById("command-palette-input");
+  if (!list || typeof list.querySelectorAll !== "function") return;
+  const rows = Array.from(list.querySelectorAll(".command-palette-item"));
+  if (!rows.length) {
+    commandPaletteActiveIndex = -1;
+    if (input) safeSetAttr(input, "aria-activedescendant", "");
+    return;
+  }
+  let next = idx;
+  if (next < 0) next = rows.length - 1;
+  if (next >= rows.length) next = 0;
+  rows.forEach((row, i) => {
+    const active = i === next;
+    row.classList.toggle("active", active);
+    safeSetAttr(row, "aria-selected", active ? "true" : "false");
+  });
+  commandPaletteActiveIndex = next;
+  if (input) safeSetAttr(input, "aria-activedescendant", rows[next].id || "");
+  if (scrollIntoView && typeof rows[next].scrollIntoView === "function") rows[next].scrollIntoView({ block: "nearest" });
+}
+function isCommandPaletteOpen() {
+  const root = document.getElementById("command-palette");
+  if (!root) return false;
+  if (root.classList && typeof root.classList.contains === "function") return root.classList.contains("open");
+  return /\bopen\b/.test(String(root.className || ""));
+}
+function openCommandPalette() {
+  const root = document.getElementById("command-palette");
+  const input = document.getElementById("command-palette-input");
+  if (!root || !input) return false;
+  if (isCommandPaletteOpen()) {
+    if (typeof input.focus === "function") input.focus();
+    return true;
+  }
+  commandPaletteReturnFocus = typeof document !== "undefined" && document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  if (typeof root.removeAttribute === "function") root.removeAttribute("hidden");
+  if (root.classList && typeof root.classList.add === "function") root.classList.add("open");
+  safeSetAttr(root, "aria-hidden", "false");
+  input.value = "";
+  renderCommandPaletteResults("");
+  if (typeof input.focus === "function") input.focus();
+  return true;
+}
+function closeCommandPalette(restoreFocus = true) {
+  const root = document.getElementById("command-palette");
+  if (!root) return false;
+  if (!isCommandPaletteOpen()) return false;
+  if (commandPaletteTimer) {
+    clearTimeout(commandPaletteTimer);
+    commandPaletteTimer = null;
+  }
+  if (root.classList && typeof root.classList.remove === "function") root.classList.remove("open");
+  safeSetAttr(root, "aria-hidden", "true");
+  if (typeof root.setAttribute === "function") root.setAttribute("hidden", "");
+  const list = document.getElementById("command-palette-list");
+  if (list) list.textContent = "";
+  const input = document.getElementById("command-palette-input");
+  if (input) {
+    input.value = "";
+    safeSetAttr(input, "aria-activedescendant", "");
+  }
+  commandPaletteEntries = [];
+  commandPaletteActiveIndex = -1;
+  const returnTo = commandPaletteReturnFocus;
+  commandPaletteReturnFocus = null;
+  if (restoreFocus && returnTo && typeof returnTo.focus === "function") returnTo.focus();
+  return true;
+}
+function toggleCommandPalette() {
+  if (isCommandPaletteOpen()) return closeCommandPalette();
+  return openCommandPalette();
+}
+function runCommandPaletteEntry(entry) {
+  if (!entry) return false;
+  closeCommandPalette(false);
+  if (entry.kind === "nav") {
+    activateNavTarget(entry.entity, entry.tab);
+    return true;
+  }
+  if (entry.kind === "recent") {
+    navigateToItem(entry.entityType, entry.head);
+    return true;
+  }
+  if (entry.kind === "content") {
+    openGlobalSearchMatch(entry.match);
+    return true;
+  }
+  if (entry.kind !== "action") return false;
+  const action = String(entry.action || "");
+  if (action === "focusGlobalSearch") {
+    const globalInput = document.getElementById("global-search");
+    if (globalInput && typeof globalInput.focus === "function") {
       globalInput.focus();
-      if (typeof globalInput.select === 'function') globalInput.select();
+      if (typeof globalInput.select === "function") globalInput.select();
+    }
+    return true;
+  }
+  if (action.indexOf("density:") === 0) {
+    applyDensityMode(action.slice("density:".length));
+    return true;
+  }
+  if (action === "back") {
+    goBackInApp();
+    return true;
+  }
+  return false;
+}
+function flushCommandPaletteQuery() {
+  if (!commandPaletteTimer) return;
+  clearTimeout(commandPaletteTimer);
+  commandPaletteTimer = null;
+  const input = document.getElementById("command-palette-input");
+  renderCommandPaletteResults(input ? input.value : "");
+}
+function onCommandPaletteKeydown(e) {
+  if (!e) return;
+  if (e.key === "Escape") {
+    closeCommandPalette();
+    e.preventDefault();
+    return;
+  }
+  if (e.key === "ArrowDown") {
+    flushCommandPaletteQuery();
+    setCommandPaletteActiveItem(commandPaletteActiveIndex + 1);
+    e.preventDefault();
+    return;
+  }
+  if (e.key === "ArrowUp") {
+    flushCommandPaletteQuery();
+    setCommandPaletteActiveItem(commandPaletteActiveIndex - 1);
+    e.preventDefault();
+    return;
+  }
+  if (e.key === "Enter") {
+    flushCommandPaletteQuery();
+    const idx = commandPaletteActiveIndex < 0 ? 0 : commandPaletteActiveIndex;
+    runCommandPaletteEntry(commandPaletteEntries[idx]);
+    e.preventDefault();
+  }
+}
+function wireCommandPalette() {
+  const root = document.getElementById("command-palette");
+  const input = document.getElementById("command-palette-input");
+  const list = document.getElementById("command-palette-list");
+  if (!root || !input || !list) return;
+  safeSetAttr(root, "aria-hidden", isCommandPaletteOpen() ? "false" : "true");
+  input.oninput = () => {
+    if (commandPaletteTimer) clearTimeout(commandPaletteTimer);
+    commandPaletteTimer = setTimeout(() => {
+      commandPaletteTimer = null;
+      const q = clampUiInput(input.value, MAX_GLOBAL_QUERY_LENGTH);
+      if (input.value !== q) input.value = q;
+      renderCommandPaletteResults(q);
+    }, 80);
+  };
+  input.onkeydown = onCommandPaletteKeydown;
+  list.onclick = (e) => {
+    const target = e && e.target;
+    if (!(target instanceof HTMLElement)) return;
+    const row = target.closest(".command-palette-item");
+    if (!row) return;
+    runCommandPaletteEntry(row._entry || commandPaletteEntries[parseInt(row.dataset.idx || "0", 10)]);
+  };
+  const backdrop = document.getElementById("command-palette-backdrop");
+  if (backdrop) backdrop.onclick = () => closeCommandPalette();
+  const openBtn = document.getElementById("command-palette-btn");
+  if (openBtn) openBtn.onclick = () => openCommandPalette();
+}
+function isCommandPaletteHotkey(e) {
+  if (!e || e.altKey) return false;
+  if (!e.ctrlKey && !e.metaKey) return false;
+  return String(e.key || "").toLowerCase() === "k";
+}
+function onGlobalKeydown(e) {
+  if (isCommandPaletteHotkey(e)) {
+    if (toggleCommandPalette()) e.preventDefault();
+    return;
+  }
+  if (e && e.key === "Escape" && isCommandPaletteOpen()) {
+    closeCommandPalette();
+    e.preventDefault();
+    return;
+  }
+  if (e && e.key === "Escape" && isVideoModalOpen()) {
+    closeVideoModal();
+    e.preventDefault();
+    return;
+  }
+  if (shouldIgnoreGlobalHotkeys(e)) return;
+  if (e.key === "/") {
+    const globalInput = document.getElementById("global-search");
+    if (globalInput && typeof globalInput.focus === "function") {
+      globalInput.focus();
+      if (typeof globalInput.select === "function") globalInput.select();
       e.preventDefault();
     }
     return;
   }
-  if (e.key === 'ArrowDown') {
+  if (e.key === "ArrowDown") {
     if (moveListSelection(1)) e.preventDefault();
     return;
   }
-  if (e.key === 'ArrowUp') {
+  if (e.key === "ArrowUp") {
     if (moveListSelection(-1)) e.preventDefault();
     return;
   }
-  if (e.key === 'ArrowLeft') {
+  if (e.key === "ArrowLeft") {
     if (navigateCardByDelta(-1) || stepLecture(-1)) e.preventDefault();
     return;
   }
-  if (e.key === 'ArrowRight') {
+  if (e.key === "ArrowRight") {
     if (navigateCardByDelta(1) || stepLecture(1)) e.preventDefault();
     return;
   }
-  if (e.key === 'Escape') {
-    const box = document.getElementById('global-search-results');
-    const isOpen = !!(box && (
-      (box.classList && typeof box.classList.contains === 'function' && box.classList.contains('open')) ||
-      /\bopen\b/.test(String(box.className || ''))
-    ));
-    if (isOpen) {
+  if (e.key === "Escape") {
+    const box = document.getElementById("global-search-results");
+    if (!!(box && (box.classList && typeof box.classList.contains === "function" && box.classList.contains("open") || /\bopen\b/.test(String(box.className || ""))))) {
       closeGlobalSearchResults();
       e.preventDefault();
       return;
@@ -3512,85 +2844,74 @@ function onGlobalKeydown(e) {
     if (closeCardView()) e.preventDefault();
   }
 }
-
 function wireGlobalUI() {
   wireGraphWorkersLifecycle();
-  const backBtn = document.getElementById('back-btn');
+  wireCommandPalette();
+  wireVideoModal();
+  const backBtn = document.getElementById("back-btn");
   if (backBtn) backBtn.onclick = () => goBackInApp();
-  const densitySelect = document.getElementById('density-select');
+  const densitySelect = document.getElementById("density-select");
   if (densitySelect) {
-    if ('value' in densitySelect) densitySelect.value = getSavedDensityMode() || 'research';
+    if ("value" in densitySelect) densitySelect.value = getSavedDensityMode() || "research";
     densitySelect.onchange = (e) => {
       const target = e && e.target;
-      if (!target || typeof target.value !== 'string') return;
+      if (!target || typeof target.value !== "string") return;
       applyDensityMode(target.value);
     };
   }
-  const homeLink = document.getElementById('home-link');
-  if (homeLink) {
-    homeLink.onclick = (e) => {
-      if (e) e.preventDefault();
-      switchEntity('home');
-    };
-  }
-
-  const entitySwitcher = document.getElementById('entity-switcher');
-  if (entitySwitcher) {
-    entitySwitcher.onclick = (e) => {
-      const target = e && e.target;
-      if (!(target instanceof HTMLElement)) return;
-      const btn = target.closest('.entity-btn');
-      if (!btn) return;
-      const section = getNavSectionById(btn.dataset.navSection || '');
-      activateNavTarget(btn.dataset.defaultEntity || section.defaultEntity, btn.dataset.defaultTab || section.defaultTab);
-    };
-  }
-
-  const tabs = document.getElementById('tabs');
-  if (tabs) {
-    tabs.onclick = (e) => {
-      const target = e && e.target;
-      if (!(target instanceof HTMLElement)) return;
-      const btn = target.closest('.tab');
-      if (!btn) return;
-      if (btn.dataset.action === 'focusGlobalSearch') {
-        const globalInput = document.getElementById('global-search');
-        if (globalInput && typeof globalInput.focus === 'function') {
-          globalInput.focus();
-          if (typeof globalInput.select === 'function') globalInput.select();
-        }
-        return;
+  const homeLink = document.getElementById("home-link");
+  if (homeLink) homeLink.onclick = (e) => {
+    if (e) e.preventDefault();
+    switchEntity("home");
+  };
+  const entitySwitcher = document.getElementById("entity-switcher");
+  if (entitySwitcher) entitySwitcher.onclick = (e) => {
+    const target = e && e.target;
+    if (!(target instanceof HTMLElement)) return;
+    const btn = target.closest(".entity-btn");
+    if (!btn) return;
+    const section = getNavSectionById(btn.dataset.navSection || "");
+    activateNavTarget(btn.dataset.defaultEntity || section.defaultEntity, btn.dataset.defaultTab || section.defaultTab);
+  };
+  const tabs = document.getElementById("tabs");
+  if (tabs) tabs.onclick = (e) => {
+    const target = e && e.target;
+    if (!(target instanceof HTMLElement)) return;
+    const btn = target.closest(".tab");
+    if (!btn) return;
+    if (btn.dataset.action === "focusGlobalSearch") {
+      const globalInput = document.getElementById("global-search");
+      if (globalInput && typeof globalInput.focus === "function") {
+        globalInput.focus();
+        if (typeof globalInput.select === "function") globalInput.select();
       }
-      const entity = btn.dataset.entity || currentEntity;
-      const tab = btn.dataset.tab;
-      if (!entity || !ENTITY_TYPES[entity]) return;
-      if (!tab || !ENTITY_TYPES[entity].tabs.includes(tab)) return;
-      activateNavTarget(entity, tab);
-    };
-  }
-
-  const viewTabs = document.getElementById('view-tabs');
-  if (viewTabs) {
-    viewTabs.onclick = (e) => {
-      const target = e && e.target;
-      if (!(target instanceof HTMLElement)) return;
-      const btn = target.closest('.view-tab');
-      if (!btn) return;
-      const tab = btn.dataset.tab;
-      if (!tab || !ENTITY_TYPES[currentEntity].tabs.includes(tab)) return;
-      switchTab(tab);
-    };
-  }
-
-  const input = document.getElementById('global-search');
-  const box = document.getElementById('global-search-results');
+      return;
+    }
+    const entity = btn.dataset.entity || currentEntity;
+    const tab = btn.dataset.tab;
+    if (!entity || !ENTITY_TYPES[entity]) return;
+    if (!tab || !ENTITY_TYPES[entity].tabs.includes(tab)) return;
+    activateNavTarget(entity, tab);
+  };
+  const viewTabs = document.getElementById("view-tabs");
+  if (viewTabs) viewTabs.onclick = (e) => {
+    const target = e && e.target;
+    if (!(target instanceof HTMLElement)) return;
+    const btn = target.closest(".view-tab");
+    if (!btn) return;
+    const tab = btn.dataset.tab;
+    if (!tab || !ENTITY_TYPES[currentEntity].tabs.includes(tab)) return;
+    switchTab(tab);
+  };
+  const input = document.getElementById("global-search");
+  const box = document.getElementById("global-search-results");
   if (input && box) {
-    safeSetAttr(input, 'role', 'combobox');
-    safeSetAttr(input, 'aria-autocomplete', 'list');
-    safeSetAttr(input, 'aria-expanded', 'false');
-    safeSetAttr(input, 'aria-controls', 'global-search-results');
-    safeSetAttr(input, 'aria-activedescendant', '');
-    safeSetAttr(box, 'role', 'listbox');
+    safeSetAttr(input, "role", "combobox");
+    safeSetAttr(input, "aria-autocomplete", "list");
+    safeSetAttr(input, "aria-expanded", "false");
+    safeSetAttr(input, "aria-controls", "global-search-results");
+    safeSetAttr(input, "aria-activedescendant", "");
+    safeSetAttr(box, "role", "listbox");
     input.oninput = () => {
       if (globalSearchTimer) clearTimeout(globalSearchTimer);
       globalSearchTimer = setTimeout(() => {
@@ -3600,83 +2921,62 @@ function wireGlobalUI() {
       }, 100);
     };
     input.onkeydown = (e) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         closeGlobalSearchResults();
         input.blur();
         return;
       }
-      if (e.key === 'ArrowDown') {
-        if (!box.classList.contains('open')) {
+      if (e.key === "ArrowDown") {
+        if (!box.classList.contains("open")) {
           const q = clampUiInput(input.value, MAX_GLOBAL_QUERY_LENGTH);
           renderGlobalSearchResults(getGlobalSearchMatches(q), q);
         }
-        if (box.classList.contains('open')) {
+        if (box.classList.contains("open")) {
           setGlobalSearchActiveItem(box, globalSearchActiveIndex + 1);
           e.preventDefault();
         }
         return;
       }
-      if (e.key === 'ArrowUp') {
-        if (box.classList.contains('open')) {
-          const base = globalSearchActiveIndex < 0 ? 0 : globalSearchActiveIndex;
-          setGlobalSearchActiveItem(box, base - 1);
+      if (e.key === "ArrowUp") {
+        if (box.classList.contains("open")) {
+          setGlobalSearchActiveItem(box, (globalSearchActiveIndex < 0 ? 0 : globalSearchActiveIndex) - 1);
           e.preventDefault();
         }
         return;
       }
-      if (e.key === 'Enter') {
+      if (e.key === "Enter") {
         let matches = [];
-        if (box.classList.contains('open')) {
-          matches = Array.isArray(box._matches) ? box._matches : [];
-        } else {
-          const q = clampUiInput(input.value, MAX_GLOBAL_QUERY_LENGTH);
-          matches = getGlobalSearchMatches(q);
-        }
+        if (box.classList.contains("open")) matches = Array.isArray(box._matches) ? box._matches : [];
+        else matches = getGlobalSearchMatches(clampUiInput(input.value, MAX_GLOBAL_QUERY_LENGTH));
         if (!matches.length) return;
         const idx = globalSearchActiveIndex < 0 ? 0 : globalSearchActiveIndex;
         openGlobalSearchMatch(matches[idx]);
         e.preventDefault();
       }
     };
-    if (typeof document.addEventListener === 'function') {
-      document.addEventListener('click', (e) => {
-        if (!box.classList.contains('open')) return;
-        const target = e.target;
-        if (!(target instanceof HTMLElement)) return;
-        if (!target.closest('.header-search')) {
-          closeGlobalSearchResults();
-        }
-      });
-    }
-  }
-
-  if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
-    window.addEventListener('hashchange', () => {
-      const currentHash = (window.location && typeof window.location.hash === 'string') ? window.location.hash : '';
-      if (expectedHash && currentHash === expectedHash) {
-        expectedHash = null;
-        return;
-      }
-      applyHash(currentHash);
+    if (typeof document.addEventListener === "function") document.addEventListener("click", (e) => {
+      if (!box.classList.contains("open")) return;
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (!target.closest(".header-search")) closeGlobalSearchResults();
     });
   }
-  if (!globalKeyHandlersWired && typeof document !== 'undefined' && typeof document.addEventListener === 'function') {
-    document.addEventListener('keydown', onGlobalKeydown);
+  if (typeof window !== "undefined" && typeof window.addEventListener === "function") window.addEventListener("hashchange", () => {
+    const currentHash = window.location && typeof window.location.hash === "string" ? window.location.hash : "";
+    if (expectedHash && currentHash === expectedHash) {
+      expectedHash = null;
+      return;
+    }
+    applyHash(currentHash);
+  });
+  if (!globalKeyHandlersWired && typeof document !== "undefined" && typeof document.addEventListener === "function") {
+    document.addEventListener("keydown", onGlobalKeydown);
     globalKeyHandlersWired = true;
   }
 }
-
-/* [modularized] */ function legacy_slugify(text) {
-  return String(text || '')
-    .toLowerCase()
-    .replace(/[^a-zа-яё0-9]+/gi, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 80) || 'item';
-}
-
-function downloadTextFile(filename, text, mimeType = 'text/markdown;charset=utf-8') {
+function downloadTextFile(filename, text, mimeType = "text/markdown;charset=utf-8") {
   const blob = new Blob([text], { type: mimeType });
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = filename;
   document.body.appendChild(a);
@@ -3686,154 +2986,132 @@ function downloadTextFile(filename, text, mimeType = 'text/markdown;charset=utf-
     a.remove();
   }, 0);
 }
-
 function registerAppServiceWorker() {
-  if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
-  if (!('serviceWorker' in navigator)) return;
-  const buildIdRaw = String(APP_BUILD_ID || '').trim();
-  const unresolvedBuildId = '__APP_' + 'BUILD_ID__';
-  const buildId = buildIdRaw && buildIdRaw !== unresolvedBuildId ? buildIdRaw : 'dev';
-  const swUrl = `./sw.js?v=${encodeURIComponent(buildId)}`;
+  if (typeof window === "undefined" || typeof navigator === "undefined") return;
+  if (!("serviceWorker" in navigator)) return;
+  const buildIdRaw = String(APP_BUILD_ID || "").trim();
+  const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "__APP_BUILD_ID__" ? buildIdRaw : "dev")}`;
   const register = () => {
     const hadController = !!navigator.serviceWorker.controller;
-    navigator.serviceWorker.register(swUrl, { scope: './', updateViaCache: 'none' })
-      .then((registration) => {
-        if (registration && typeof registration.update === 'function') {
-          registration.update().catch(() => {});
-        }
-        if (registration && registration.waiting && typeof registration.waiting.postMessage === 'function') {
-          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-        }
-        if (registration && typeof registration.addEventListener === 'function') {
-          registration.addEventListener('updatefound', () => {
-            const next = registration.installing;
-            if (!next || typeof next.addEventListener !== 'function') return;
-            next.addEventListener('statechange', () => {
-              if (next.state === 'installed' && navigator.serviceWorker.controller && typeof next.postMessage === 'function') {
-                next.postMessage({ type: 'SKIP_WAITING' });
-              }
-            });
-          });
-        }
-        if (hadController && typeof navigator.serviceWorker.addEventListener === 'function') {
-          let reloaded = false;
-          navigator.serviceWorker.addEventListener('controllerchange', () => {
-            if (reloaded) return;
-            reloaded = true;
-            if (window && window.location && typeof window.location.reload === 'function') {
-              window.location.reload();
-            }
-          });
-        }
-      })
-      .catch(() => {});
+    navigator.serviceWorker.register(swUrl, {
+      scope: "./",
+      updateViaCache: "none"
+    }).then((registration) => {
+      if (registration && typeof registration.update === "function") registration.update().catch(() => {});
+      if (registration && registration.waiting && typeof registration.waiting.postMessage === "function") registration.waiting.postMessage({ type: "SKIP_WAITING" });
+      if (registration && typeof registration.addEventListener === "function") registration.addEventListener("updatefound", () => {
+        const next = registration.installing;
+        if (!next || typeof next.addEventListener !== "function") return;
+        next.addEventListener("statechange", () => {
+          if (next.state === "installed" && navigator.serviceWorker.controller && typeof next.postMessage === "function") next.postMessage({ type: "SKIP_WAITING" });
+        });
+      });
+      if (hadController && typeof navigator.serviceWorker.addEventListener === "function") {
+        let reloaded = false;
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (reloaded) return;
+          reloaded = true;
+          if (window && window.location && typeof window.location.reload === "function") window.location.reload();
+        });
+      }
+    }).catch(() => {});
   };
-  if (typeof document !== 'undefined' && document.readyState === 'complete') {
+  if (typeof document !== "undefined" && document.readyState === "complete") {
     register();
     return;
   }
-  if (typeof window.addEventListener === 'function') {
-    window.addEventListener('load', register, { once: true });
-  } else {
-    register();
-  }
+  if (typeof window.addEventListener === "function") window.addEventListener("load", register, { once: true });
+  else register();
 }
-
-/* [modularized] */ function legacy_normalizeBibtexText(value) {
-  return String(value == null ? '' : value).replace(/\s+/g, ' ').trim();
-}
-
 function escapeBibtexValue(value) {
-  return normalizeBibtexText(value)
-    .replace(/\\/g, '\\\\')
-    .replace(/[{}]/g, '\\$&');
+  return normalizeBibtexText(value).replace(/\\/g, "\\\\").replace(/[{}]/g, "\\$&");
 }
-
 function buildBibtexKey(seed, year, index = 0) {
-  const base = slugify(seed || `ref-${index + 1}`)
-    .replace(/[^a-z0-9-]/gi, '')
-    .replace(/-/g, '')
-    .toLowerCase();
-  const yearPart = String(year == null ? '' : year).replace(/[^0-9a-z]/gi, '').slice(0, 8).toLowerCase();
+  const base = slugify(seed || `ref-${index + 1}`).replace(/[^a-z0-9-]/gi, "").replace(/-/g, "").toLowerCase();
+  const yearPart = String(year == null ? "" : year).replace(/[^0-9a-z]/gi, "").slice(0, 8).toLowerCase();
   const raw = `${base || `ref${index + 1}`}${yearPart}`;
   return /^[a-z]/i.test(raw) ? raw : `ref${raw}`;
 }
-
 function buildBibtexEntry(fields, index = 0) {
   const title = normalizeBibtexText(fields?.title) || `Untitled source ${index + 1}`;
-  const author = normalizeBibtexText(fields?.author) || 'Unknown';
-  const year = normalizeBibtexText(fields?.year) || 'n.d.';
+  const author = normalizeBibtexText(fields?.author) || "Unknown";
+  const year = normalizeBibtexText(fields?.year) || "n.d.";
   const key = buildBibtexKey(fields?.keySeed || title, year, index);
   const out = [
-    ['author', author],
-    ['title', title],
-    ['year', year],
+    ["author", author],
+    ["title", title],
+    ["year", year]
   ];
   const url = normalizeBibtexText(fields?.url);
   const note = normalizeBibtexText(fields?.note);
   const howpublished = normalizeBibtexText(fields?.howpublished);
   const keywords = normalizeBibtexText(fields?.keywords);
-  if (url) out.push(['url', url]);
-  if (howpublished) out.push(['howpublished', howpublished]);
-  if (note) out.push(['note', note]);
-  if (keywords) out.push(['keywords', keywords]);
-
+  if (url) out.push(["url", url]);
+  if (howpublished) out.push(["howpublished", howpublished]);
+  if (note) out.push(["note", note]);
+  if (keywords) out.push(["keywords", keywords]);
   const lines = [`@misc{${key},`];
   for (let i = 0; i < out.length; i++) {
     const [field, value] = out[i];
-    const comma = i === out.length - 1 ? '' : ',';
+    const comma = i === out.length - 1 ? "" : ",";
     lines.push(`  ${field} = {${escapeBibtexValue(value)}}${comma}`);
   }
-  lines.push('}');
-  return lines.join('\n');
+  lines.push("}");
+  return lines.join("\n");
 }
-
 function downloadBibtexFile(filename, entries) {
   const rows = Array.isArray(entries) ? entries.filter(Boolean) : [];
   if (!rows.length) return;
-  downloadTextFile(filename, `${rows.join('\n\n')}\n`, 'application/x-bibtex;charset=utf-8');
+  downloadTextFile(filename, `${rows.join("\n\n")}\n`, "application/x-bibtex;charset=utf-8");
 }
-
-function guessAuthorAndTitle(rawTitle, fallbackAuthor = 'Unknown') {
+function guessAuthorAndTitle(rawTitle, fallbackAuthor = "Unknown") {
   const text = normalizeBibtexText(rawTitle);
   const m = text.match(/^(.{2,80}?)\s*(?:-|\u2013|\u2014)\s*(.+)$/);
-  if (!m) return { author: fallbackAuthor, title: text };
+  if (!m) return {
+    author: fallbackAuthor,
+    title: text
+  };
   const maybeAuthor = normalizeBibtexText(m[1]);
   const maybeTitle = normalizeBibtexText(m[2]);
-  if (!maybeAuthor || !maybeTitle) return { author: fallbackAuthor, title: text };
-  if (maybeAuthor.split(/\s+/).length > 8) return { author: fallbackAuthor, title: text };
-  return { author: maybeAuthor, title: maybeTitle };
+  if (!maybeAuthor || !maybeTitle) return {
+    author: fallbackAuthor,
+    title: text
+  };
+  if (maybeAuthor.split(/\s+/).length > 8) return {
+    author: fallbackAuthor,
+    title: text
+  };
+  return {
+    author: maybeAuthor,
+    title: maybeTitle
+  };
 }
-
 function buildCardSourceBibEntry(item, itemType, src, index = 0) {
-  if (!src || typeof src !== 'object') return '';
-  const label = normalizeBibtexText(src.label || 'Source');
-  const activeBook = getActiveBook();
-  const activeBookId = activeBook.book_id || '';
+  if (!src || typeof src !== "object") return "";
+  const label = normalizeBibtexText(src.label || "Source");
+  const activeBookId = getActiveBook().book_id || "";
   const activeBookLabel = getBookLabelForSearch(activeBookId);
   const noteParts = [];
-  if (item && item.head) noteParts.push(`BookIndex card: ${item.head} (${itemType || 'item'})`);
+  if (item && item.head) noteParts.push(`BookIndex card: ${item.head} (${itemType || "item"})`);
   if (activeBookLabel) noteParts.push(`Источник корпуса: ${activeBookLabel}`);
   if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
   if (src.page != null && String(src.page).trim()) noteParts.push(`page ${String(src.page).trim()}`);
   if (src.quote) noteParts.push(String(src.quote));
   return buildBibtexEntry({
-    author: 'Unknown',
+    author: "Unknown",
     title: label,
-    year: '',
-    url: String(src.url || ''),
-    note: noteParts.join('. '),
-    howpublished: 'BookIndex card source',
-    keywords: `bookindex,${itemType || 'item'},source,corpus,${activeBookId}`,
-    keySeed: `${item && item.head ? item.head : 'card'}-${label}-${index + 1}`,
+    year: "",
+    url: String(src.url || ""),
+    note: noteParts.join(". "),
+    howpublished: "BookIndex card source",
+    keywords: `bookindex,${itemType || "item"},source,corpus,${activeBookId}`,
+    keySeed: `${item && item.head ? item.head : "card"}-${label}-${index + 1}`
   }, index);
 }
-
 function collectScholarBibliographyBibEntries() {
   const s = APP_DATA && APP_DATA.scholar ? APP_DATA.scholar : {};
   const groups = Array.isArray(s.bibliography) ? s.bibliography : [];
-  const activeBook = getActiveBook();
-  const activeBookId = activeBook.book_id || '';
+  const activeBookId = getActiveBook().book_id || "";
   const activeBookLabel = getBookLabelForSearch(activeBookId);
   const out = [];
   let idx = 0;
@@ -3849,25 +3127,23 @@ function collectScholarBibliographyBibEntries() {
       if (activeBookId) noteParts.push(`book_id: ${activeBookId}`);
       if (work && work.note) noteParts.push(String(work.note));
       out.push(buildBibtexEntry({
-        author: normalizeBibtexText(work && (work.author || work.authors)) || 'A. A. Zaliznyak',
+        author: normalizeBibtexText(work && (work.author || work.authors)) || "A. A. Zaliznyak",
         title,
-        year: String(work && work.year != null ? work.year : ''),
-        url: String(work && work.url ? work.url : ''),
-        note: noteParts.join('. '),
-        howpublished: 'BookIndex scholar bibliography',
+        year: String(work && work.year != null ? work.year : ""),
+        url: String(work && work.url ? work.url : ""),
+        note: noteParts.join(". "),
+        howpublished: "BookIndex scholar bibliography",
         keywords: `bookindex,scholar,bibliography,corpus,${activeBookId}`,
-        keySeed: `${lecture || 'lecture'}-${title}`,
+        keySeed: `${lecture || "lecture"}-${title}`
       }, idx));
       idx += 1;
     }
   }
   return out;
 }
-
 function collectFurtherReadingBibEntries() {
   const sections = Array.isArray(APP_DATA && APP_DATA.further_reading) ? APP_DATA.further_reading : [];
-  const activeBook = getActiveBook();
-  const activeBookId = activeBook.book_id || '';
+  const activeBookId = getActiveBook().book_id || "";
   const activeBookLabel = getBookLabelForSearch(activeBookId);
   const out = [];
   let idx = 0;
@@ -3877,7 +3153,7 @@ function collectFurtherReadingBibEntries() {
     for (const book of books) {
       const rawTitle = normalizeBibtexText(book && book.title);
       if (!rawTitle) continue;
-      const parsed = guessAuthorAndTitle(rawTitle, normalizeBibtexText(book && (book.author || book.authors)) || 'Unknown');
+      const parsed = guessAuthorAndTitle(rawTitle, normalizeBibtexText(book && (book.author || book.authors)) || "Unknown");
       const noteParts = [];
       if (topic) noteParts.push(`Topic: ${topic}`);
       if (activeBookLabel) noteParts.push(`Источник корпуса: ${activeBookLabel}`);
@@ -3886,70 +3162,67 @@ function collectFurtherReadingBibEntries() {
       out.push(buildBibtexEntry({
         author: parsed.author,
         title: parsed.title,
-        year: String(book && book.year != null ? book.year : ''),
-        url: String(book && book.url ? book.url : ''),
-        note: noteParts.join('. '),
-        howpublished: 'BookIndex further reading',
+        year: String(book && book.year != null ? book.year : ""),
+        url: String(book && book.url ? book.url : ""),
+        note: noteParts.join(". "),
+        howpublished: "BookIndex further reading",
         keywords: `bookindex,further_reading,corpus,${activeBookId}`,
-        keySeed: `${topic || 'topic'}-${parsed.title}`,
+        keySeed: `${topic || "topic"}-${parsed.title}`
       }, idx));
       idx += 1;
     }
   }
   return out;
 }
-
 function getItemByTypeAndHead(type, head) {
   return getIndexedItem(type, head);
 }
-
 function itemToMarkdown(it, type) {
-  const pages = (it.page_list || []);
-  const bookId = String(it.book_id || it.bookId || getActiveBook().book_id || '');
+  const pages = it.page_list || [];
+  const bookId = String(it.book_id || it.bookId || getActiveBook().book_id || "");
   const bookLabel = getBookLabelForSearch(bookId);
   const yaml = [
-    '---',
+    "---",
     `title: "${escapeYamlDoubleQuoted(it.head)}"`,
     `type: "${escapeYamlDoubleQuoted(type)}"`,
     `source: "${escapeYamlDoubleQuoted(bookLabel)}"`,
     `book_id: "${escapeYamlDoubleQuoted(bookId)}"`,
-    `discussed: ${it.discussed ? 'true' : 'false'}`,
+    `discussed: ${it.discussed ? "true" : "false"}`,
     `pages_count: ${pages.length}`,
-    '---',
-    '',
-  ].join('\n');
+    "---",
+    ""
+  ].join("\n");
   const lines = [];
   lines.push(`# ${it.head}`);
-  lines.push('');
+  lines.push("");
   lines.push(`Тип: **${type}**`);
-  lines.push('');
+  lines.push("");
   if (bookLabel) {
     lines.push(`Источник: **${bookLabel}**`);
-    lines.push('');
+    lines.push("");
   }
-  lines.push(`Страницы: ${it.pages || it.head_pages || pages.join(', ') || '—'}`);
-  lines.push('');
+  lines.push(`Страницы: ${it.pages || it.head_pages || pages.join(", ") || "—"}`);
+  lines.push("");
   if (it.is_moderator && it.moderator_note) {
     lines.push(`> Примечание: ${it.moderator_note}`);
-    lines.push('');
+    lines.push("");
   }
   if (it.chapters && it.chapters.length) {
-    lines.push('## Лекции');
+    lines.push("## Лекции");
     for (const ch of it.chapters) lines.push(`- [[${ch}]]`);
-    lines.push('');
+    lines.push("");
   }
   const ctxKeys = it.contexts ? Object.keys(it.contexts).sort((a, b) => Number(a) - Number(b)).slice(0, 10) : [];
   if (ctxKeys.length) {
-    lines.push('## Контексты');
+    lines.push("## Контексты");
     for (const pg of ctxKeys) {
       const sample = (it.contexts[pg] || [])[0];
       if (sample) lines.push(`- стр. ${pg}: ${sample}`);
     }
-    lines.push('');
+    lines.push("");
   }
-  return yaml + lines.join('\n');
+  return yaml + lines.join("\n");
 }
-
 function exportCurrentCardMarkdown() {
   if (!selectedItem || !selectedItemType) return;
   const it = getItemByTypeAndHead(selectedItemType, selectedItem);
@@ -3957,429 +3230,500 @@ function exportCurrentCardMarkdown() {
   const md = itemToMarkdown(it, selectedItemType);
   downloadTextFile(`${slugify(selectedItem)}.md`, md);
 }
-
 function exportCurrentSectionMarkdown() {
   const conf = ENTITY_TYPES[currentEntity];
   if (!conf || !Array.isArray(conf.items)) return;
-  const activeBook = getActiveBook();
-  const activeBookId = activeBook.book_id || '';
+  const activeBookId = getActiveBook().book_id || "";
   const activeBookLabel = getBookLabelForSearch(activeBookId);
   const blocks = [];
   blocks.push(`# Раздел: ${conf.title}`);
-  blocks.push('');
+  blocks.push("");
   if (activeBookLabel) {
     blocks.push(`Источник: **${activeBookLabel}**`);
-    blocks.push('');
+    blocks.push("");
   }
   blocks.push(`Всего карточек: ${conf.items.length}`);
-  blocks.push('');
+  blocks.push("");
   for (const it of conf.items) {
     const refType = it._entityType || currentEntity;
-    const itemBookId = String(it.book_id || it.bookId || activeBookId || '');
+    const itemBookId = String(it.book_id || it.bookId || activeBookId || "");
     const itemBookLabel = getBookLabelForSearch(itemBookId);
     blocks.push(`## [[${it.head}]]`);
     blocks.push(`- Тип: ${refType}`);
     if (itemBookLabel) blocks.push(`- Источник: ${itemBookLabel}`);
     if (itemBookId) blocks.push(`- book_id: ${itemBookId}`);
-    blocks.push(`- Страницы: ${it.pages || it.head_pages || (it.page_list || []).join(', ') || '—'}`);
-    blocks.push('');
+    blocks.push(`- Страницы: ${it.pages || it.head_pages || (it.page_list || []).join(", ") || "—"}`);
+    blocks.push("");
   }
-  downloadTextFile(`${slugify(currentEntity)}-section.md`, blocks.join('\n'));
+  downloadTextFile(`${slugify(currentEntity)}-section.md`, blocks.join("\n"));
 }
-
 function lectureToMarkdown(lecture, index) {
   const lines = [];
-  const title = index === 0 ? 'Предисловие' : `Лекция ${index}`;
-  lines.push(`### ${title}: ${lecture.name || 'Без названия'}`);
-  lines.push('');
+  const title = index === 0 ? "Предисловие" : `Лекция ${index}`;
+  lines.push(`### ${title}: ${lecture.name || "Без названия"}`);
+  lines.push("");
   if (lecture.pages) lines.push(`Страницы: ${lecture.pages}`);
   if (lecture.main_idea) {
-    lines.push('');
+    lines.push("");
     lines.push(lecture.main_idea);
   }
   if (Array.isArray(lecture.key_facts) && lecture.key_facts.length) {
-    lines.push('');
-    lines.push('Ключевые факты:');
+    lines.push("");
+    lines.push("Ключевые факты:");
     for (const fact of lecture.key_facts) lines.push(`- ${fact}`);
   }
   if (Array.isArray(lecture.terms) && lecture.terms.length) {
-    lines.push('');
-    lines.push(`Термины: ${lecture.terms.join(', ')}`);
+    lines.push("");
+    lines.push(`Термины: ${lecture.terms.join(", ")}`);
   }
   if (lecture.why_read) {
-    lines.push('');
+    lines.push("");
     lines.push(`Почему читать: ${lecture.why_read}`);
   }
-  lines.push('');
-  return lines.join('\n');
+  lines.push("");
+  return lines.join("\n");
 }
-
 function routeToMarkdown(route) {
   const lines = [];
-  lines.push(`### ${route.title || 'Маршрут'}`);
-  lines.push('');
+  lines.push(`### ${route.title || "Маршрут"}`);
+  lines.push("");
   if (route.desc) lines.push(route.desc);
   if (route.pages) {
-    lines.push('');
+    lines.push("");
     lines.push(`Страницы: ${route.pages}`);
   }
   if (Array.isArray(route.lectures) && route.lectures.length) {
-    lines.push('');
-    lines.push(`Лекции: ${route.lectures.join(', ')}`);
+    lines.push("");
+    lines.push(`Лекции: ${route.lectures.join(", ")}`);
   }
   if (Array.isArray(route.entities) && route.entities.length) {
-    lines.push('');
-    lines.push('Опорные элементы:');
-    for (const entity of route.entities) {
-      lines.push(`- [${entity.type}] ${entity.head}`);
-    }
+    lines.push("");
+    lines.push("Опорные элементы:");
+    for (const entity of route.entities) lines.push(`- [${entity.type}] ${entity.head}`);
   }
-  lines.push('');
-  return lines.join('\n');
+  lines.push("");
+  return lines.join("\n");
 }
-
 function glossaryEntryToMarkdown(entry) {
   const lines = [];
-  lines.push(`### ${entry.term || 'Термин'}`);
-  lines.push('');
+  lines.push(`### ${entry.term || "Термин"}`);
+  lines.push("");
   if (entry.definition) lines.push(entry.definition);
   if (entry.url) {
-    lines.push('');
+    lines.push("");
     lines.push(`Источник: ${entry.url}`);
   }
-  lines.push('');
-  return lines.join('\n');
+  lines.push("");
+  return lines.join("\n");
 }
-
 function appendScholarMarkdown(parts) {
   const s = APP_DATA.scholar || {};
-  parts.push('## Профессиональный аппарат');
-  parts.push('');
-
+  parts.push("## Профессиональный аппарат");
+  parts.push("");
   if (Array.isArray(s.bibliography) && s.bibliography.length) {
-    parts.push('### Библиография по лекциям');
-    parts.push('');
+    parts.push("### Библиография по лекциям");
+    parts.push("");
     for (const lecture of s.bibliography) {
-      parts.push(`#### ${lecture.lecture || 'Лекция'}`);
-      parts.push('');
+      parts.push(`#### ${lecture.lecture || "Лекция"}`);
+      parts.push("");
       for (const work of lecture.works || []) {
-        const suffix = work.year ? ` (${work.year})` : '';
-        parts.push(`- ${work.title || 'Работа'}${suffix}`);
+        const suffix = work.year ? ` (${work.year})` : "";
+        parts.push(`- ${work.title || "Работа"}${suffix}`);
         if (work.note) parts.push(`  ${work.note}`);
         if (work.url) parts.push(`  ${work.url}`);
       }
-      parts.push('');
+      parts.push("");
     }
   }
-
   if (Array.isArray(s.controversies) && s.controversies.length) {
-    parts.push('### Спорные вопросы');
-    parts.push('');
-    for (const item of s.controversies) {
-      parts.push(`- ${item.topic}: ${item.description}${item.page ? ` (стр. ${item.page})` : ''}`);
-    }
-    parts.push('');
+    parts.push("### Спорные вопросы");
+    parts.push("");
+    for (const item of s.controversies) parts.push(`- ${item.topic}: ${item.description}${item.page ? ` (стр. ${item.page})` : ""}`);
+    parts.push("");
   }
-
   const originalForms = s.original_forms || {};
   const originalOrder = [
-    ['sanskrit', 'Санскрит'],
-    ['greek', 'Древнегреческий'],
-    ['latin', 'Латинский'],
-    ['arabic', 'Арабский'],
-    ['old_russian', 'Древнерусский'],
+    ["sanskrit", "Санскрит"],
+    ["greek", "Древнегреческий"],
+    ["latin", "Латинский"],
+    ["arabic", "Арабский"],
+    ["old_russian", "Древнерусский"]
   ];
-  const hasOriginalForms = originalOrder.some(([key]) => Array.isArray(originalForms[key]) && originalForms[key].length);
-  if (hasOriginalForms) {
-    parts.push('### Оригинальные формы');
-    parts.push('');
+  if (originalOrder.some(([key]) => Array.isArray(originalForms[key]) && originalForms[key].length)) {
+    parts.push("### Оригинальные формы");
+    parts.push("");
     for (const [key, label] of originalOrder) {
       const forms = Array.isArray(originalForms[key]) ? originalForms[key] : [];
       if (!forms.length) continue;
       parts.push(`#### ${label}`);
-      parts.push('');
+      parts.push("");
       for (const form of forms) {
-        const tail = form.page ? ` (стр. ${form.page})` : '';
+        const tail = form.page ? ` (стр. ${form.page})` : "";
         parts.push(`- ${form.form} — ${form.translation}${tail}`);
       }
-      parts.push('');
+      parts.push("");
     }
   }
-
   if (Array.isArray(s.birch_grammar) && s.birch_grammar.length) {
-    parts.push('### Конкорданс берестяных грамот');
-    parts.push('');
+    parts.push("### Конкорданс берестяных грамот");
+    parts.push("");
     for (const item of s.birch_grammar) {
-      const bits = [`№${item.num}`, item.year, item.content].filter(Boolean);
-      const tail = item.page ? ` (стр. ${item.page})` : '';
-      parts.push(`- ${bits.join(' — ')}${tail}`);
+      const bits = [
+        `№${item.num}`,
+        item.year,
+        item.content
+      ].filter(Boolean);
+      const tail = item.page ? ` (стр. ${item.page})` : "";
+      parts.push(`- ${bits.join(" — ")}${tail}`);
     }
-    parts.push('');
+    parts.push("");
   }
-
   if (Array.isArray(s.chronology) && s.chronology.length) {
-    parts.push('### Хронология');
-    parts.push('');
-    for (const event of s.chronology) {
-      parts.push(`- ${event.year}: ${event.event}${event.page ? ` (стр. ${event.page})` : ''}`);
-    }
-    parts.push('');
+    parts.push("### Хронология");
+    parts.push("");
+    for (const event of s.chronology) parts.push(`- ${event.year}: ${event.event}${event.page ? ` (стр. ${event.page})` : ""}`);
+    parts.push("");
   }
-
   if (Array.isArray(s.isoglosses) && s.isoglosses.length) {
-    parts.push('### Изоглоссы');
-    parts.push('');
-    for (const item of s.isoglosses) {
-      parts.push(`- ${item.name}: ${item.description}${item.page ? ` (стр. ${item.page})` : ''}`);
-    }
-    parts.push('');
+    parts.push("### Изоглоссы");
+    parts.push("");
+    for (const item of s.isoglosses) parts.push(`- ${item.name}: ${item.description}${item.page ? ` (стр. ${item.page})` : ""}`);
+    parts.push("");
   }
-
   if (s.slovo) {
-    parts.push('### «Слово о полку Игореве»');
-    parts.push('');
+    parts.push("### «Слово о полку Игореве»");
+    parts.push("");
     if (s.slovo.thesis) parts.push(s.slovo.thesis);
     if (s.slovo.context) {
-      parts.push('');
+      parts.push("");
       parts.push(`Контекст: ${s.slovo.context}`);
     }
     if (s.slovo.opponents) {
-      parts.push('');
+      parts.push("");
       parts.push(`Оппоненты: ${s.slovo.opponents}`);
     }
     if (Array.isArray(s.slovo.arguments) && s.slovo.arguments.length) {
-      parts.push('');
-      parts.push('Тезисы:');
-      for (const item of s.slovo.arguments) {
-        parts.push(`- ${item.name}: ${item.detail}${item.page ? ` (стр. ${item.page})` : ''}`);
-      }
+      parts.push("");
+      parts.push("Тезисы:");
+      for (const item of s.slovo.arguments) parts.push(`- ${item.name}: ${item.detail}${item.page ? ` (стр. ${item.page})` : ""}`);
     }
     if (Array.isArray(s.slovo.counterarguments) && s.slovo.counterarguments.length) {
-      parts.push('');
-      parts.push('Контраргументы:');
-      for (const item of s.slovo.counterarguments) {
-        parts.push(`- ${item.name}: ${item.detail}${item.page ? ` (стр. ${item.page})` : ''}`);
-      }
+      parts.push("");
+      parts.push("Контраргументы:");
+      for (const item of s.slovo.counterarguments) parts.push(`- ${item.name}: ${item.detail}${item.page ? ` (стр. ${item.page})` : ""}`);
     }
     if (Array.isArray(s.slovo_reading) && s.slovo_reading.length) {
-      parts.push('');
-      parts.push('Что читать дальше:');
-      for (const item of s.slovo_reading) {
-        parts.push(`- ${item.title}${item.note ? ` — ${item.note}` : ''}${item.url ? ` (${item.url})` : ''}`);
-      }
+      parts.push("");
+      parts.push("Что читать дальше:");
+      for (const item of s.slovo_reading) parts.push(`- ${item.title}${item.note ? ` — ${item.note}` : ""}${item.url ? ` (${item.url})` : ""}`);
     }
-    parts.push('');
+    parts.push("");
   }
-
   if (Array.isArray(s.accent_paradigms) && s.accent_paradigms.length) {
-    parts.push('### Акцентные парадигмы');
-    parts.push('');
+    parts.push("### Акцентные парадигмы");
+    parts.push("");
     for (const paradigm of s.accent_paradigms) {
       parts.push(`- Тип ${paradigm.type}: ${paradigm.description}`);
-      for (const example of paradigm.examples || []) {
-        parts.push(`  ${example.word} — ${example.forms}`);
-      }
+      for (const example of paradigm.examples || []) parts.push(`  ${example.word} — ${example.forms}`);
     }
-    parts.push('');
+    parts.push("");
   }
-
   if (Array.isArray(s.sound_correspondences) && s.sound_correspondences.length) {
-    parts.push('### Фонетические соответствия');
-    parts.push('');
+    parts.push("### Фонетические соответствия");
+    parts.push("");
     for (const row of s.sound_correspondences) {
-      const languages = [row.rus, row.lat, row.gre, row.san, row.eng, row.ger].filter(Boolean).join(' | ');
+      const languages = [
+        row.rus,
+        row.lat,
+        row.gre,
+        row.san,
+        row.eng,
+        row.ger
+      ].filter(Boolean).join(" | ");
       parts.push(`- ${row.pie} → ${languages} — ${row.meaning}`);
     }
-    parts.push('');
+    parts.push("");
   }
-
   const recon = APP_DATA.lexicon_tech || [];
   if (recon.length) {
-    parts.push('### Реконструкции');
-    parts.push('');
-    for (const item of recon) {
-      parts.push(`- ${item.head} (${(item.page_list || []).length} стр.)`);
-    }
-    parts.push('');
+    parts.push("### Реконструкции");
+    parts.push("");
+    for (const item of recon) parts.push(`- ${item.head} (${(item.page_list || []).length} стр.)`);
+    parts.push("");
   }
 }
-
 function exportWholeSiteMarkdown() {
   const stats = APP_DATA.book_stats || {};
   const featured = APP_DATA.featured_quote || {};
-  const activeBook = getActiveBook();
-  const activeBookId = activeBook.book_id || '';
+  const activeBookId = getActiveBook().book_id || "";
   const activeBookLabel = getBookLabelForSearch(activeBookId);
   const parts = [];
-  parts.push('# Зализнякиада');
-  parts.push('');
+  parts.push("# Зализнякиада");
+  parts.push("");
   if (activeBookLabel) {
     parts.push(`Источник: **${activeBookLabel}**`);
     parts.push(`book_id: ${activeBookId}`);
-    parts.push('');
+    parts.push("");
   }
-  parts.push('## Обзор');
-  parts.push('');
+  parts.push("## Обзор");
+  parts.push("");
   const overviewBits = [
-    stats.total_pages ? `Страниц: ${stats.total_pages}` : '',
-    stats.lectures ? `Лекций: ${stats.lectures}` : '',
-    stats.names ? `Имен: ${stats.names}` : '',
-    stats.languages ? `Языков: ${stats.languages}` : '',
-    stats.toponyms ? `Топонимов: ${stats.toponyms}` : '',
-    stats.ethnonyms ? `Этнонимов: ${stats.ethnonyms}` : '',
-    stats.lexicon ? `Лексем: ${stats.lexicon}` : '',
-    stats.subject_index ? `Понятий: ${stats.subject_index}` : '',
+    stats.total_pages ? `Страниц: ${stats.total_pages}` : "",
+    stats.lectures ? `Лекций: ${stats.lectures}` : "",
+    stats.names ? `Имен: ${stats.names}` : "",
+    stats.languages ? `Языков: ${stats.languages}` : "",
+    stats.toponyms ? `Топонимов: ${stats.toponyms}` : "",
+    stats.ethnonyms ? `Этнонимов: ${stats.ethnonyms}` : "",
+    stats.lexicon ? `Лексем: ${stats.lexicon}` : "",
+    stats.subject_index ? `Понятий: ${stats.subject_index}` : ""
   ].filter(Boolean);
   for (const bit of overviewBits) parts.push(`- ${bit}`);
   if (featured.text) {
-    parts.push('');
-    parts.push(`Цитата: «${featured.text}»${featured.page ? ` (стр. ${featured.page})` : ''}`);
+    parts.push("");
+    parts.push(`Цитата: «${featured.text}»${featured.page ? ` (стр. ${featured.page})` : ""}`);
   }
-  parts.push('');
-
+  parts.push("");
   if (Array.isArray(APP_DATA.routes) && APP_DATA.routes.length) {
-    parts.push('## Маршруты');
-    parts.push('');
+    parts.push("## Маршруты");
+    parts.push("");
     for (const route of APP_DATA.routes) parts.push(routeToMarkdown(route));
   }
-
   if (Array.isArray(APP_DATA.lectures) && APP_DATA.lectures.length) {
-    parts.push('## Лекции');
-    parts.push('');
-    for (let i = 0; i < APP_DATA.lectures.length; i++) {
-      parts.push(lectureToMarkdown(APP_DATA.lectures[i], i));
-    }
+    parts.push("## Лекции");
+    parts.push("");
+    for (let i = 0; i < APP_DATA.lectures.length; i++) parts.push(lectureToMarkdown(APP_DATA.lectures[i], i));
   }
-
   if (Array.isArray(APP_DATA.further_reading) && APP_DATA.further_reading.length) {
-    parts.push('## Что почитать ещё');
-    parts.push('');
+    parts.push("## Что почитать ещё");
+    parts.push("");
     for (const topic of APP_DATA.further_reading) {
-      parts.push(`### ${topic.topic || 'Тема'}`);
-      parts.push('');
+      parts.push(`### ${topic.topic || "Тема"}`);
+      parts.push("");
       for (const book of topic.books || []) {
-        const suffix = book.year ? ` (${book.year})` : '';
-        parts.push(`- ${book.title || 'Книга'}${suffix}${book.why ? ` — ${book.why}` : ''}`);
+        const suffix = book.year ? ` (${book.year})` : "";
+        parts.push(`- ${book.title || "Книга"}${suffix}${book.why ? ` — ${book.why}` : ""}`);
       }
-      parts.push('');
+      parts.push("");
     }
   }
-
   if (Array.isArray(APP_DATA.glossary) && APP_DATA.glossary.length) {
-    parts.push('## Глоссарий');
-    parts.push('');
+    parts.push("## Глоссарий");
+    parts.push("");
     for (const entry of APP_DATA.glossary) parts.push(glossaryEntryToMarkdown(entry));
   }
-
   appendScholarMarkdown(parts);
-
-  const exportOrder = ['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse', 'lexicon_tech', 'subject'];
-  for (const key of exportOrder) {
+  for (const key of [
+    "names",
+    "toponyms",
+    "ethnonyms",
+    "languages",
+    "lexicon",
+    "lexicon_reverse",
+    "lexicon_tech",
+    "subject"
+  ]) {
     const conf = ENTITY_TYPES[key];
     if (!conf || !Array.isArray(conf.items)) continue;
     parts.push(`## ${conf.title}`);
-    parts.push('');
+    parts.push("");
     parts.push(`Всего карточек: ${conf.items.length}`);
-    parts.push('');
+    parts.push("");
     for (const it of conf.items) {
       parts.push(itemToMarkdown(it, key));
-      parts.push('');
+      parts.push("");
     }
   }
-  downloadTextFile('zaliznyakiada-site.md', parts.join('\n'));
+  downloadTextFile("zaliznyakiada-site.md", parts.join("\n"));
 }
-
-// =========================================================
-// ШАПКА: ПЕРЕКЛЮЧАТЕЛИ
-// =========================================================
-const NAV_SECTIONS = Object.freeze([
+var NAV_SECTIONS = Object.freeze([
   {
-    id: 'home',
-    label: 'Главная',
-    defaultEntity: 'home',
-    defaultTab: 'home',
-    items: [
-      { label: 'Главная', entity: 'home', tab: 'home' },
-    ],
+    id: "home",
+    label: "Главная",
+    defaultEntity: "home",
+    defaultTab: "home",
+    items: [{
+      label: "Главная",
+      entity: "home",
+      tab: "home"
+    }]
   },
   {
-    id: 'indexes',
-    label: 'Указатели',
-    defaultEntity: 'all',
-    defaultTab: 'list',
-    entities: ['all', 'subject', 'names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'lexicon_reverse'],
-    items: [
-      { label: 'Сводный указатель', entity: 'all', tab: 'list' },
-      { label: 'Предметный', entity: 'subject', tab: 'list' },
-      { label: 'Имена', entity: 'names', tab: 'list' },
-      { label: 'Топонимы', entity: 'toponyms', tab: 'list' },
-      { label: 'Этнонимы', entity: 'ethnonyms', tab: 'list' },
-      { label: 'Языки', entity: 'languages', tab: 'list' },
-      { label: 'Лексика', entity: 'lexicon', tab: 'list' },
-      { label: 'Лексика с конца', entity: 'lexicon_reverse', tab: 'list' },
+    id: "indexes",
+    label: "Указатели",
+    defaultEntity: "all",
+    defaultTab: "list",
+    entities: [
+      "all",
+      "subject",
+      "names",
+      "toponyms",
+      "ethnonyms",
+      "languages",
+      "lexicon",
+      "lexicon_reverse"
     ],
+    items: [
+      {
+        label: "Сводный указатель",
+        entity: "all",
+        tab: "list"
+      },
+      {
+        label: "Предметный",
+        entity: "subject",
+        tab: "list"
+      },
+      {
+        label: "Имена",
+        entity: "names",
+        tab: "list"
+      },
+      {
+        label: "Топонимы",
+        entity: "toponyms",
+        tab: "list"
+      },
+      {
+        label: "Этнонимы",
+        entity: "ethnonyms",
+        tab: "list"
+      },
+      {
+        label: "Языки",
+        entity: "languages",
+        tab: "list"
+      },
+      {
+        label: "Лексика",
+        entity: "lexicon",
+        tab: "list"
+      },
+      {
+        label: "Лексика с конца",
+        entity: "lexicon_reverse",
+        tab: "list"
+      }
+    ]
   },
   {
-    id: 'materials',
-    label: 'Материалы',
-    defaultEntity: 'materials',
-    defaultTab: 'lectures',
+    id: "materials",
+    label: "Материалы",
+    defaultEntity: "materials",
+    defaultTab: "lectures",
     items: [
-      { label: 'Лекции', entity: 'materials', tab: 'lectures' },
-      { label: 'Страница лекции', entity: 'materials', tab: 'lecture_pages' },
-      { label: 'Сравнение лекций', entity: 'materials', tab: 'lecture_compare' },
-      { label: 'Что почитать ещё', entity: 'materials', tab: 'further_reading' },
-      { label: 'Корпус', entity: 'materials', tab: 'sources' },
-    ],
+      {
+        label: "Лекции",
+        entity: "materials",
+        tab: "lectures"
+      },
+      {
+        label: "Страница лекции",
+        entity: "materials",
+        tab: "lecture_pages"
+      },
+      {
+        label: "Сравнение лекций",
+        entity: "materials",
+        tab: "lecture_compare"
+      },
+      {
+        label: "Что почитать ещё",
+        entity: "materials",
+        tab: "further_reading"
+      },
+      {
+        label: "Корпус",
+        entity: "materials",
+        tab: "sources"
+      }
+    ]
   },
   {
-    id: 'apparatus',
-    label: 'Аппарат',
-    defaultEntity: 'scholar',
-    defaultTab: 'scholar',
+    id: "apparatus",
+    label: "Аппарат",
+    defaultEntity: "scholar",
+    defaultTab: "scholar",
     items: [
-      { label: 'Профессиональный аппарат', entity: 'scholar', tab: 'scholar' },
-      { label: 'Хронология открытий', entity: 'scholar', tab: 'chronology' },
-      { label: 'Динамика по страницам', entity: 'scholar', tab: 'page_trends' },
-      { label: 'Визуализации', entity: 'scholar', tab: 'viz' },
-    ],
+      {
+        label: "Профессиональный аппарат",
+        entity: "scholar",
+        tab: "scholar"
+      },
+      {
+        label: "Хронология открытий",
+        entity: "scholar",
+        tab: "chronology"
+      },
+      {
+        label: "Динамика по страницам",
+        entity: "scholar",
+        tab: "page_trends"
+      },
+      {
+        label: "Визуализации",
+        entity: "scholar",
+        tab: "viz"
+      }
+    ]
   },
   {
-    id: 'tools',
-    label: 'Инструменты',
-    defaultEntity: 'materials',
-    defaultTab: 'kwic',
+    id: "tools",
+    label: "Инструменты",
+    defaultEntity: "materials",
+    defaultTab: "kwic",
     items: [
-      { label: 'Поиск', action: 'focusGlobalSearch' },
-      { label: 'KWIC', entity: 'materials', tab: 'kwic' },
-      { label: 'Глоссарий', entity: 'materials', tab: 'glossary' },
-      { label: 'Галерея лингвистов', entity: 'materials', tab: 'gallery' },
-      { label: 'Русский во времени', entity: 'materials', tab: 'russian_evolution' },
-      { label: 'Фонетические законы', entity: 'materials', tab: 'phonetic_laws' },
-    ],
+      {
+        label: "Поиск",
+        action: "focusGlobalSearch"
+      },
+      {
+        label: "KWIC",
+        entity: "materials",
+        tab: "kwic"
+      },
+      {
+        label: "Глоссарий",
+        entity: "materials",
+        tab: "glossary"
+      },
+      {
+        label: "Галерея лингвистов",
+        entity: "materials",
+        tab: "gallery"
+      },
+      {
+        label: "Русский во времени",
+        entity: "materials",
+        tab: "russian_evolution"
+      },
+      {
+        label: "Фонетические законы",
+        entity: "materials",
+        tab: "phonetic_laws"
+      }
+    ]
   },
   {
-    id: 'practice',
-    label: 'Практикум',
-    defaultEntity: 'materials',
-    defaultTab: 'tasks',
-    items: [
-      { label: 'Проверьте себя', entity: 'materials', tab: 'tasks' },
-    ],
-  },
+    id: "practice",
+    label: "Практикум",
+    defaultEntity: "materials",
+    defaultTab: "tasks",
+    items: [{
+      label: "Проверьте себя",
+      entity: "materials",
+      tab: "tasks"
+    }]
+  }
 ]);
-
 function getNavSectionById(id) {
-  return NAV_SECTIONS.find(section => section.id === id) || NAV_SECTIONS[0];
+  return NAV_SECTIONS.find((section) => section.id === id) || NAV_SECTIONS[0];
 }
-
 function getActiveNavSection() {
-  return NAV_SECTIONS.find(section => {
+  return NAV_SECTIONS.find((section) => {
     if (Array.isArray(section.entities) && section.entities.includes(currentEntity)) return true;
-    return section.items.some(item => item.entity === currentEntity && (!item.tab || item.tab === currentTab));
+    return section.items.some((item) => item.entity === currentEntity && (!item.tab || item.tab === currentTab));
   }) || NAV_SECTIONS[0];
 }
-
 function activateNavTarget(entity, tab) {
   if (!entity || !ENTITY_TYPES[entity]) return;
   const tabs = ENTITY_TYPES[entity].tabs || [];
@@ -4388,138 +3732,126 @@ function activateNavTarget(entity, tab) {
   invalidateVisibleItemsCache();
   currentEntity = entity;
   currentTab = nextTab;
-  currentGlossaryTerm = '';
-  currentScholarAnchor = '';
-  pendingScholarAnchor = '';
+  currentGlossaryTerm = "";
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
   activeFilters.clear();
   onlyDiscussed = false;
   onlyQuestionCandidates = false;
-  searchQuery = '';
+  searchQuery = "";
   sortMostFrequentFirst = false;
   selectedItem = null;
   selectedItemType = null;
-  rightPaneMode = 'histogram';
+  rightPaneMode = "histogram";
   renderEntitySwitcher();
   renderTabs();
   renderContent();
-  if (currentEntity === 'scholar' && currentTab === 'viz') {
-    warmupVizCacheInWorker();
-  }
+  if (currentEntity === "scholar" && currentTab === "viz") warmupVizCacheInWorker();
   syncNavigationState();
 }
-
 function renderEntitySwitcher() {
-  const container = document.getElementById('entity-switcher');
-  container.innerHTML = '';
-  safeSetAttr(container, 'role', 'toolbar');
-  safeSetAttr(container, 'aria-label', 'Основные разделы');
+  const container = document.getElementById("entity-switcher");
+  container.innerHTML = "";
+  safeSetAttr(container, "role", "toolbar");
+  safeSetAttr(container, "aria-label", "Основные разделы");
   const activeSection = getActiveNavSection();
   for (const section of NAV_SECTIONS) {
-    const btn = document.createElement('button');
+    const btn = document.createElement("button");
     const isActive = section.id === activeSection.id;
-    btn.className = 'entity-btn nav-section-btn' + (isActive ? ' active' : '');
+    btn.className = "entity-btn nav-section-btn" + (isActive ? " active" : "");
     btn.dataset.navSection = section.id;
     if (section.defaultEntity) btn.dataset.defaultEntity = section.defaultEntity;
     if (section.defaultTab) btn.dataset.defaultTab = section.defaultTab;
-    safeSetAttr(btn, 'aria-pressed', isActive ? 'true' : 'false');
+    safeSetAttr(btn, "aria-pressed", isActive ? "true" : "false");
     btn.textContent = section.label;
     container.appendChild(btn);
   }
 }
-
 function renderTabs() {
-  const container = document.getElementById('tabs');
-  container.innerHTML = '';
-  safeSetAttr(container, 'role', 'tablist');
-  safeSetAttr(container, 'aria-label', 'Раздел');
+  const container = document.getElementById("tabs");
+  container.innerHTML = "";
+  safeSetAttr(container, "role", "tablist");
+  safeSetAttr(container, "aria-label", "Раздел");
   const section = getActiveNavSection();
   if (section.items.length <= 1) {
     renderViewTabs();
     return;
   }
   for (const item of section.items) {
-    const btn = document.createElement('button');
+    const btn = document.createElement("button");
     const isActive = item.entity === currentEntity && (!item.tab || item.tab === currentTab);
-    btn.className = 'tab' + (isActive ? ' active' : '');
+    btn.className = "tab" + (isActive ? " active" : "");
     if (item.entity) btn.dataset.entity = item.entity;
     if (item.tab) btn.dataset.tab = item.tab;
     if (item.action) btn.dataset.action = item.action;
-    safeSetAttr(btn, 'role', 'tab');
-    safeSetAttr(btn, 'aria-selected', isActive ? 'true' : 'false');
+    safeSetAttr(btn, "role", "tab");
+    safeSetAttr(btn, "aria-selected", isActive ? "true" : "false");
     btn.textContent = item.label;
     container.appendChild(btn);
   }
   renderViewTabs();
 }
-
 function shouldRenderViewTabs() {
   const section = getActiveNavSection();
-  if (!section || section.id !== 'indexes') return false;
+  if (!section || section.id !== "indexes") return false;
   const conf = ENTITY_TYPES[currentEntity];
   return !!(conf && Array.isArray(conf.tabs) && conf.tabs.length > 1);
 }
-
 function renderViewTabs() {
-  const container = document.getElementById('view-tabs');
+  const container = document.getElementById("view-tabs");
   if (!container) return;
-  container.innerHTML = '';
+  container.innerHTML = "";
   if (!shouldRenderViewTabs()) return;
   const conf = ENTITY_TYPES[currentEntity];
-  safeSetAttr(container, 'role', 'tablist');
-  safeSetAttr(container, 'aria-label', '\u0420\u0435\u0436\u0438\u043c\u044b \u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u0430');
+  safeSetAttr(container, "role", "tablist");
+  safeSetAttr(container, "aria-label", "Режимы просмотра");
   for (const tab of conf.tabs) {
-    const btn = document.createElement('button');
+    const btn = document.createElement("button");
     const isActive = tab === currentTab;
-    btn.className = 'view-tab' + (isActive ? ' active' : '');
+    btn.className = "view-tab" + (isActive ? " active" : "");
     btn.dataset.tab = tab;
-    safeSetAttr(btn, 'role', 'tab');
-    safeSetAttr(btn, 'aria-selected', isActive ? 'true' : 'false');
+    safeSetAttr(btn, "role", "tab");
+    safeSetAttr(btn, "aria-selected", isActive ? "true" : "false");
     btn.textContent = TAB_LABELS[tab] || tab;
     container.appendChild(btn);
   }
 }
-
 function renderIndexSectionSummary() {
   const section = getActiveNavSection();
-  if (!section || section.id !== 'indexes') return '';
-  const chips = section.items
-    .filter(item => item.entity && ENTITY_TYPES[item.entity] && Array.isArray(ENTITY_TYPES[item.entity].items))
-    .map(item => {
-      const conf = ENTITY_TYPES[item.entity];
-      const isActive = item.entity === currentEntity;
-      const count = conf.items.length;
-      return `<button type="button" class="index-section-summary-chip${isActive ? ' active' : ''}" data-entity="${escapeHtml(item.entity)}" data-tab="list" aria-pressed="${isActive ? 'true' : 'false'}">
+  if (!section || section.id !== "indexes") return "";
+  const chips = section.items.filter((item) => item.entity && ENTITY_TYPES[item.entity] && Array.isArray(ENTITY_TYPES[item.entity].items)).map((item) => {
+    const conf = ENTITY_TYPES[item.entity];
+    const isActive = item.entity === currentEntity;
+    const count = conf.items.length;
+    return `<button type="button" class="index-section-summary-chip${isActive ? " active" : ""}" data-entity="${escapeHtml(item.entity)}" data-tab="list" aria-pressed="${isActive ? "true" : "false"}">
         <span>${escapeHtml(item.label)}</span>
         <span class="index-section-summary-count">${count}</span>
       </button>`;
-    })
-    .join('');
-  if (!chips) return '';
+  }).join("");
+  if (!chips) return "";
   return `<div class="index-section-summary" aria-label="\u0421\u0432\u043e\u0434\u043a\u0430 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u0435\u0439">
     <span class="index-section-summary-title">\u0423\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u0438</span>
     ${chips}
   </div>`;
 }
-
 function invalidateVisibleItemsCache() {
   visibleItemsCache = null;
 }
-
 function switchEntity(key) {
   closeGlobalSearchResults();
   invalidateVisibleItemsCache();
   currentEntity = key;
-  currentGlossaryTerm = '';
-  currentScholarAnchor = '';
-  pendingScholarAnchor = '';
+  currentGlossaryTerm = "";
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
   activeFilters.clear();
   onlyDiscussed = false;
   onlyQuestionCandidates = false;
-  searchQuery = '';
+  searchQuery = "";
   sortMostFrequentFirst = false;
   selectedItem = null;
   selectedItemType = null;
-  rightPaneMode = 'histogram';
+  rightPaneMode = "histogram";
   const tabs = ENTITY_TYPES[key].tabs;
   if (!tabs.includes(currentTab)) currentTab = tabs[0];
   renderEntitySwitcher();
@@ -4527,25 +3859,22 @@ function switchEntity(key) {
   renderContent();
   syncNavigationState();
 }
-
 function switchTab(tab) {
   closeGlobalSearchResults();
   invalidateVisibleItemsCache();
   currentTab = tab;
-  if (!(currentEntity === 'materials' && tab === 'glossary')) currentGlossaryTerm = '';
-  if (!(currentEntity === 'scholar' && tab === 'scholar')) {
-    currentScholarAnchor = '';
-    pendingScholarAnchor = '';
+  if (!(currentEntity === "materials" && tab === "glossary")) currentGlossaryTerm = "";
+  if (!(currentEntity === "scholar" && tab === "scholar")) {
+    currentScholarAnchor = "";
+    pendingScholarAnchor = "";
   }
+  if (!(currentEntity === "materials" && tab === "video")) setUiCurrentVideoId("");
   renderTabs();
   renderContent();
-  if (currentEntity === 'scholar' && currentTab === 'viz') {
-    warmupVizCacheInWorker();
-  }
+  if (currentEntity === "scholar" && currentTab === "viz") warmupVizCacheInWorker();
   syncNavigationState();
 }
-
-const CONTENT_RENDERERS = Object.freeze({
+var CONTENT_RENDERERS = Object.freeze({
   home: renderHomePanel,
   home_decl: renderHomePanelDeclarative,
   sources: renderCorpusSourcesPanel,
@@ -4557,6 +3886,7 @@ const CONTENT_RENDERERS = Object.freeze({
   glossary: renderGlossaryPanel,
   kwic: renderKwicPanel,
   gallery: renderGalleryPanel,
+  video: renderVideoGalleryPanel,
   russian_evolution: renderRussianEvolutionPanel,
   phonetic_laws: renderPhoneticLawsPanel,
   scholar: renderScholarPanel,
@@ -4572,93 +3902,141 @@ const CONTENT_RENDERERS = Object.freeze({
   map: renderMapPanel,
   epochs: renderEpochsPanel,
   families: renderFamiliesPanel,
-  tree: renderTreePanel,
+  tree: renderTreePanel
 });
-
 function renderContent() {
-  const container = document.getElementById('content');
+  const container = document.getElementById("content");
   if (!container) return;
-  if (!(currentEntity === 'scholar' && currentTab === 'viz')) cleanupActiveVizModule();
-  container.innerHTML = '';
-  if (currentTab !== 'list') setMobileSheetOpen(false);
-  if (currentTab !== 'graph') nameGraphRenderToken += 1;
-  if (currentTab !== 'families') familiesGraphRenderToken += 1;
+  if (!(currentEntity === "scholar" && currentTab === "viz")) cleanupActiveVizModule();
+  container.innerHTML = "";
+  if (currentTab !== "list") setMobileSheetOpen(false);
+  if (currentTab !== "graph") nameGraphRenderToken += 1;
+  if (currentTab !== "families") familiesGraphRenderToken += 1;
   const render = CONTENT_RENDERERS[currentTab];
   if (render) render(container);
 }
-
 function createCorpusMetric(label, value) {
-  const node = document.createElement('div');
-  node.className = 'corpus-metric';
-  const valueNode = document.createElement('strong');
-  valueNode.textContent = String(value || '0');
-  const labelNode = document.createElement('span');
-  labelNode.textContent = String(label || '');
+  const node = document.createElement("div");
+  node.className = "corpus-metric";
+  const valueNode = document.createElement("strong");
+  valueNode.textContent = String(value || "0");
+  const labelNode = document.createElement("span");
+  labelNode.textContent = String(label || "");
   node.appendChild(valueNode);
   node.appendChild(labelNode);
   return node;
 }
-
 function formatCoveragePercent(count, total) {
-  if (!total) return '0%';
-  return `${Math.round((count / total) * 100)}%`;
+  if (!total) return "0%";
+  return `${Math.round(count / total * 100)}%`;
 }
-
 function clampQualityPercent(value) {
   return Math.max(0, Math.min(100, value));
 }
-
 function formatQualityPercent(value) {
   const numeric = Number(value);
-  if (!Number.isFinite(numeric)) return '0%';
+  if (!Number.isFinite(numeric)) return "0%";
   const rounded = Math.round(numeric * 10) / 10;
   return `${Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1)}%`;
 }
-
-const QUALITY_QUEUE_LIMIT = 50;
-const V47_CONTEXT_BASELINE_PCT = 17.8;
-const V47_CONTEXT_TARGET_MIN_PCT = 35;
-const V47_CONTEXT_TARGET_MAX_PCT = 40;
-const V47_QUEUE_TYPES_TOTAL = 8;
-const V47_QUEUE_WORKFLOW_WEIGHT_PCT = 40;
-const V47_CONTEXT_GROWTH_WEIGHT_PCT = 40;
-const QUALITY_ENTITY_ORDER = ['lexicon', 'subject', 'lexicon_reverse', 'lexicon_tech', 'names', 'toponyms', 'ethnonyms', 'languages'];
-const QUALITY_CROSS_BOOK_ENTITY_ORDER = ['names', 'toponyms', 'ethnonyms', 'languages', 'subject', 'lexicon', 'lexicon_reverse', 'lexicon_tech'];
-const QUALITY_SORT_ENTITY_KEYS = new Set(['names', 'toponyms', 'ethnonyms', 'languages', 'lexicon', 'subject']);
-const QUALITY_QUEUE_DEFS = [
-  { key: 'duplicate_heads', label: 'Возможные дубли', empty: 'Дубли заголовков не найдены.' },
-  { key: 'cross_book_duplicate_candidates', label: 'Межкнижные кандидаты', empty: 'Межкнижные дубли не найдены.' },
-  { key: 'suspicious_heads', label: 'Подозрительные заголовки', empty: 'Подозрительные заголовки не найдены.' },
-  { key: 'sort_inversions', label: 'Нарушения сортировки', empty: 'Нарушения сортировки не найдены.' },
-  { key: 'needs_page_verification', label: 'Проверить страницы', empty: 'Кандидаты для сверки страниц не найдены.' },
-  { key: 'missing_context', label: 'Нет контекста', empty: 'Все элементы имеют контексты.' },
-  { key: 'missing_pages', label: 'Нет страниц', empty: 'Все элементы имеют страницы.' },
-  { key: 'missing_source', label: 'Нет источника', empty: 'Все элементы имеют источник.' },
+var QUALITY_QUEUE_LIMIT = 50;
+var V47_CONTEXT_BASELINE_PCT = 17.8;
+var V47_CONTEXT_TARGET_MIN_PCT = 35;
+var V47_CONTEXT_TARGET_MAX_PCT = 40;
+var V47_QUEUE_TYPES_TOTAL = 8;
+var V47_QUEUE_WORKFLOW_WEIGHT_PCT = 40;
+var V47_CONTEXT_GROWTH_WEIGHT_PCT = 40;
+var QUALITY_ENTITY_ORDER = [
+  "lexicon",
+  "subject",
+  "lexicon_reverse",
+  "lexicon_tech",
+  "names",
+  "toponyms",
+  "ethnonyms",
+  "languages"
 ];
-const QUALITY_TIER_LABELS = Object.freeze({ high: 'высокий', medium: 'средний', low: 'низкий' });
-
+var QUALITY_CROSS_BOOK_ENTITY_ORDER = [
+  "names",
+  "toponyms",
+  "ethnonyms",
+  "languages",
+  "subject",
+  "lexicon",
+  "lexicon_reverse",
+  "lexicon_tech"
+];
+var QUALITY_SORT_ENTITY_KEYS = new Set([
+  "names",
+  "toponyms",
+  "ethnonyms",
+  "languages",
+  "lexicon",
+  "subject"
+]);
+var QUALITY_QUEUE_DEFS = [
+  {
+    key: "duplicate_heads",
+    label: "Возможные дубли",
+    empty: "Дубли заголовков не найдены."
+  },
+  {
+    key: "cross_book_duplicate_candidates",
+    label: "Межкнижные кандидаты",
+    empty: "Межкнижные дубли не найдены."
+  },
+  {
+    key: "suspicious_heads",
+    label: "Подозрительные заголовки",
+    empty: "Подозрительные заголовки не найдены."
+  },
+  {
+    key: "sort_inversions",
+    label: "Нарушения сортировки",
+    empty: "Нарушения сортировки не найдены."
+  },
+  {
+    key: "needs_page_verification",
+    label: "Проверить страницы",
+    empty: "Кандидаты для сверки страниц не найдены."
+  },
+  {
+    key: "missing_context",
+    label: "Нет контекста",
+    empty: "Все элементы имеют контексты."
+  },
+  {
+    key: "missing_pages",
+    label: "Нет страниц",
+    empty: "Все элементы имеют страницы."
+  },
+  {
+    key: "missing_source",
+    label: "Нет источника",
+    empty: "Все элементы имеют источник."
+  }
+];
+var QUALITY_TIER_LABELS = Object.freeze({
+  high: "высокий",
+  medium: "средний",
+  low: "низкий"
+});
 function getQualityEntityPriority(entity) {
   const idx = QUALITY_ENTITY_ORDER.indexOf(entity);
   return idx >= 0 ? idx : QUALITY_ENTITY_ORDER.length;
 }
-
 function getQualityCrossBookEntityPriority(entity) {
   const idx = QUALITY_CROSS_BOOK_ENTITY_ORDER.indexOf(entity);
   return idx >= 0 ? idx : QUALITY_CROSS_BOOK_ENTITY_ORDER.length;
 }
-
 function normalizeQualitySortKey(value) {
-  let s = String(value || '').replace(/ё/g, 'е').replace(/Ё/g, 'Е');
-  if (typeof s.normalize === 'function') s = s.normalize('NFKD');
-  return s
-    .replace(/[\u0300-\u036f\u0483-\u0489\u200c-\u200f\ufeff]/g, '')
-    .toLocaleLowerCase('ru');
+  let s = String(value || "").replace(/ё/g, "е").replace(/Ё/g, "Е");
+  if (typeof s.normalize === "function") s = s.normalize("NFKD");
+  return s.replace(/[\u0300-\u036f\u0483-\u0489\u200c-\u200f\ufeff]/g, "").toLocaleLowerCase("ru");
 }
-
 function normalizeQualityCandidateKey(value) {
-  return normalizeSearchText(value).replace(/\s+/g, ' ').trim();
+  return normalizeSearchText(value).replace(/\s+/g, " ").trim();
 }
-
 function compareQualityHeads(a, b) {
   const aKey = normalizeQualitySortKey(a);
   const bKey = normalizeQualitySortKey(b);
@@ -4666,9 +4044,8 @@ function compareQualityHeads(a, b) {
   if (aKey > bKey) return 1;
   return 0;
 }
-
 function compareQualityQueueItems(a, b) {
-  if (a.queue === 'missing_context' && b.queue === 'missing_context') {
+  if (a.queue === "missing_context" && b.queue === "missing_context") {
     const priorityDiff = Number(b.priorityScore || 0) - Number(a.priorityScore || 0);
     if (priorityDiff !== 0) return priorityDiff;
   }
@@ -4676,115 +4053,94 @@ function compareQualityQueueItems(a, b) {
   if (entityDiff !== 0) return entityDiff;
   const headDiff = compareQualityHeads(a.head, b.head);
   if (headDiff !== 0) return headDiff;
-  const rawDiff = String(a.head || '').localeCompare(String(b.head || ''), 'ru', { sensitivity: 'base', numeric: true });
+  const rawDiff = String(a.head || "").localeCompare(String(b.head || ""), "ru", {
+    sensitivity: "base",
+    numeric: true
+  });
   if (rawDiff !== 0) return rawDiff;
-  return String(a.queue || '').localeCompare(String(b.queue || ''));
+  return String(a.queue || "").localeCompare(String(b.queue || ""));
 }
-
 function compareCrossBookCandidateRecords(a, b) {
   const entityDiff = getQualityCrossBookEntityPriority(a.entity) - getQualityCrossBookEntityPriority(b.entity);
   if (entityDiff !== 0) return entityDiff;
   const headDiff = compareQualityHeads(a.head, b.head);
   if (headDiff !== 0) return headDiff;
-  return String(a.entity || '').localeCompare(String(b.entity || ''));
+  return String(a.entity || "").localeCompare(String(b.entity || ""));
 }
-
 function countQualityContextSnippets(contexts) {
-  if (Array.isArray(contexts)) return contexts.filter(raw => String(raw || '').trim()).length;
-  if (!contexts || typeof contexts !== 'object') return 0;
+  if (Array.isArray(contexts)) return contexts.filter((raw) => String(raw || "").trim()).length;
+  if (!contexts || typeof contexts !== "object") return 0;
   let total = 0;
   for (const snippets of Object.values(contexts)) {
     if (!Array.isArray(snippets)) continue;
-    total += snippets.filter(raw => String(raw || '').trim()).length;
+    total += snippets.filter((raw) => String(raw || "").trim()).length;
   }
   return total;
 }
-
 function countItemQualityContextSnippets(item) {
-  if (!item || typeof item !== 'object') return 0;
-  const directContexts = Object.prototype.hasOwnProperty.call(item, '__corpusContexts') ? item.__corpusContexts : item.contexts;
-  const direct = countQualityContextSnippets(directContexts);
+  if (!item || typeof item !== "object") return 0;
+  const direct = countQualityContextSnippets(Object.prototype.hasOwnProperty.call(item, "__corpusContexts") ? item.__corpusContexts : item.contexts);
   let occurrence = 0;
-  const occurrences = item.occurrences && typeof item.occurrences === 'object' ? item.occurrences : {};
+  const occurrences = item.occurrences && typeof item.occurrences === "object" ? item.occurrences : {};
   for (const occ of Object.values(occurrences)) {
-    if (!occ || typeof occ !== 'object') continue;
+    if (!occ || typeof occ !== "object") continue;
     occurrence += countQualityContextSnippets(occ.contexts);
   }
   return Math.max(direct, occurrence);
 }
-
 function itemHasQualitySource(item) {
-  return !!(
-    (Array.isArray(item && item.sources) && item.sources.length)
-    || (item && item.occurrences && typeof item.occurrences === 'object' && Object.keys(item.occurrences).length)
-    || typeof (item && item.book_id) === 'string'
-  );
+  return !!(Array.isArray(item && item.sources) && item.sources.length || item && item.occurrences && typeof item.occurrences === "object" && Object.keys(item.occurrences).length || typeof (item && item.book_id) === "string");
 }
-
 function getItemQualityPages(item) {
   const sourcePages = item && Array.isArray(item.__corpusPageList) ? item.__corpusPageList : item && item.page_list;
   if (!Array.isArray(sourcePages)) return [];
-  const pages = sourcePages
-    .map(raw => Number(raw))
-    .filter(page => Number.isFinite(page));
+  const pages = sourcePages.map((raw) => Number(raw)).filter((page) => Number.isFinite(page));
   return Array.from(new Set(pages)).sort((a, b) => a - b);
 }
-
 function getQualityContextPageKeys(contexts) {
-  if (!contexts || typeof contexts !== 'object' || Array.isArray(contexts)) return [];
-  const pages = Object.keys(contexts)
-    .map(raw => Number(raw))
-    .filter(page => Number.isFinite(page));
+  if (!contexts || typeof contexts !== "object" || Array.isArray(contexts)) return [];
+  const pages = Object.keys(contexts).map((raw) => Number(raw)).filter((page) => Number.isFinite(page));
   return Array.from(new Set(pages)).sort((a, b) => a - b);
 }
-
 function getItemQualityOccurrencePages(item) {
-  const pages = new Set();
-  const occurrences = item && item.occurrences && typeof item.occurrences === 'object' ? item.occurrences : {};
+  const pages = /* @__PURE__ */ new Set();
+  const occurrences = item && item.occurrences && typeof item.occurrences === "object" ? item.occurrences : {};
   for (const occurrence of Object.values(occurrences)) {
-    if (!occurrence || typeof occurrence !== 'object') continue;
-    if (Array.isArray(occurrence.pages)) {
-      for (const raw of occurrence.pages) {
-        const page = Number(raw);
-        if (Number.isFinite(page)) pages.add(page);
-      }
+    if (!occurrence || typeof occurrence !== "object") continue;
+    if (Array.isArray(occurrence.pages)) for (const raw of occurrence.pages) {
+      const page = Number(raw);
+      if (Number.isFinite(page)) pages.add(page);
     }
     for (const page of getQualityContextPageKeys(occurrence.contexts)) pages.add(page);
   }
   return Array.from(pages).sort((a, b) => a - b);
 }
-
 function getItemQualityBooks(item) {
-  const books = new Set();
-  const occurrences = item && item.occurrences && typeof item.occurrences === 'object' ? item.occurrences : {};
+  const books = /* @__PURE__ */ new Set();
+  const occurrences = item && item.occurrences && typeof item.occurrences === "object" ? item.occurrences : {};
   for (const bookId of Object.keys(occurrences)) {
-    const trimmed = String(bookId || '').trim();
+    const trimmed = String(bookId || "").trim();
     if (trimmed) books.add(trimmed);
   }
-  const bookId = String(item && item.book_id ? item.book_id : '').trim();
+  const bookId = String(item && item.book_id ? item.book_id : "").trim();
   if (bookId) books.add(bookId);
   return Array.from(books).sort();
 }
-
 function summarizeQualityPages(pages) {
-  if (!Array.isArray(pages) || !pages.length) return '0 страниц';
-  if (pages.length <= 6) return pages.join(', ');
-  return `${pages.length} страниц; первые: ${pages.slice(0, 5).join(', ')}`;
+  if (!Array.isArray(pages) || !pages.length) return "0 страниц";
+  if (pages.length <= 6) return pages.join(", ");
+  return `${pages.length} страниц; первые: ${pages.slice(0, 5).join(", ")}`;
 }
-
 function getQualityPageVerificationDetails(item) {
   const pageList = getItemQualityPages(item);
   const occurrencePages = getItemQualityOccurrencePages(item);
-  const directContexts = item && Object.prototype.hasOwnProperty.call(item, '__corpusContexts') ? item.__corpusContexts : item && item.contexts;
-  const contextPages = getQualityContextPageKeys(directContexts);
+  const contextPages = getQualityContextPageKeys(item && Object.prototype.hasOwnProperty.call(item, "__corpusContexts") ? item.__corpusContexts : item && item.contexts);
   const pageSet = new Set(pageList);
   const occurrenceSet = new Set(occurrencePages);
   const evidenceSet = new Set([...occurrencePages, ...contextPages]);
   if (!evidenceSet.size) return null;
-  const missingFromPageList = Array.from(evidenceSet).filter(page => !pageSet.has(page)).sort((a, b) => a - b);
-  const missingFromEvidence = occurrencePages.length
-    ? pageList.filter(page => !occurrenceSet.has(page)).sort((a, b) => a - b)
-    : [];
+  const missingFromPageList = Array.from(evidenceSet).filter((page) => !pageSet.has(page)).sort((a, b) => a - b);
+  const missingFromEvidence = occurrencePages.length ? pageList.filter((page) => !occurrenceSet.has(page)).sort((a, b) => a - b) : [];
   if (!missingFromPageList.length && !missingFromEvidence.length) return null;
   return {
     count: new Set([...missingFromPageList, ...missingFromEvidence]).size,
@@ -4797,17 +4153,14 @@ function getQualityPageVerificationDetails(item) {
     occurrencePagesSummary: summarizeQualityPages(occurrencePages),
     contextPagesSummary: summarizeQualityPages(contextPages),
     missingFromPageListSummary: summarizeQualityPages(missingFromPageList),
-    missingFromEvidenceSummary: summarizeQualityPages(missingFromEvidence),
+    missingFromEvidenceSummary: summarizeQualityPages(missingFromEvidence)
   };
 }
-
 function buildQualityInheritedContextIndex() {
-  const index = new Map();
-  const lexicon = Array.isArray(ENTITY_TYPES && ENTITY_TYPES.lexicon && ENTITY_TYPES.lexicon.items)
-    ? ENTITY_TYPES.lexicon.items
-    : [];
+  const index = /* @__PURE__ */ new Map();
+  const lexicon = Array.isArray(ENTITY_TYPES && ENTITY_TYPES.lexicon && ENTITY_TYPES.lexicon.items) ? ENTITY_TYPES.lexicon.items : [];
   for (const item of lexicon) {
-    if (!item || typeof item !== 'object') continue;
+    if (!item || typeof item !== "object") continue;
     const key = normalizeQualityCandidateKey(item.head);
     if (!key) continue;
     const snippets = countItemQualityContextSnippets(item);
@@ -4815,30 +4168,32 @@ function buildQualityInheritedContextIndex() {
     const existing = index.get(key);
     if (existing && existing.contextSnippets >= snippets) continue;
     index.set(key, {
-      entity: 'lexicon',
-      head: String(item.head || '').trim(),
-      canonicalId: typeof item.canonical_id === 'string' ? item.canonical_id : '',
+      entity: "lexicon",
+      head: String(item.head || "").trim(),
+      canonicalId: typeof item.canonical_id === "string" ? item.canonical_id : "",
       contextSnippets: snippets,
-      route: buildItemHash('lexicon', item.head),
+      route: buildItemHash("lexicon", item.head)
     });
   }
   return index;
 }
-
 function getEffectiveQualityContextInfo(typeKey, item, inheritedContextIndex) {
   const directSnippets = countItemQualityContextSnippets(item);
-  if (directSnippets > 0 || typeKey !== 'lexicon_reverse') {
-    return { snippets: directSnippets, inherited: false };
-  }
+  if (directSnippets > 0 || typeKey !== "lexicon_reverse") return {
+    snippets: directSnippets,
+    inherited: false
+  };
   const inherited = inheritedContextIndex.get(normalizeQualityCandidateKey(item && item.head));
-  if (!inherited) return { snippets: 0, inherited: false };
+  if (!inherited) return {
+    snippets: 0,
+    inherited: false
+  };
   return {
     snippets: inherited.contextSnippets,
     inherited: true,
-    from: inherited,
+    from: inherited
   };
 }
-
 function getContextPriorityInfo(typeKey, item) {
   const bases = {
     lexicon: 100,
@@ -4848,28 +4203,24 @@ function getContextPriorityInfo(typeKey, item) {
     names: 45,
     toponyms: 40,
     ethnonyms: 40,
-    languages: 40,
+    languages: 40
   };
   const pages = getItemQualityPages(item);
-  const score = (bases[typeKey] || 20)
-    + Math.min(pages.length, 20)
-    + (item && item.discussed === true ? 5 : 0)
-    + (item && item.needs_review === true ? 5 : 0);
-  let reason = 'Низкий приоритет: контекстный пробел после лексики и предметного указателя.';
-  if (typeKey === 'lexicon') reason = 'Главный приоритет v4.7: расширить контексты лексики.';
-  else if (typeKey === 'subject') reason = 'Главный приоритет v4.7: расширить контексты предметного указателя.';
-  else if (typeKey === 'lexicon_reverse') reason = 'Приоритет v4.7: элементы обратного указателя не покрыты наследованием из лексики.';
-  else if (typeKey === 'lexicon_tech') reason = 'Приоритет v4.7: технический/OCR-термин требует сверки источника.';
+  const score = (bases[typeKey] || 20) + Math.min(pages.length, 20) + (item && item.discussed === true ? 5 : 0) + (item && item.needs_review === true ? 5 : 0);
+  let reason = "Низкий приоритет: контекстный пробел после лексики и предметного указателя.";
+  if (typeKey === "lexicon") reason = "Главный приоритет v4.7: расширить контексты лексики.";
+  else if (typeKey === "subject") reason = "Главный приоритет v4.7: расширить контексты предметного указателя.";
+  else if (typeKey === "lexicon_reverse") reason = "Приоритет v4.7: элементы обратного указателя не покрыты наследованием из лексики.";
+  else if (typeKey === "lexicon_tech") reason = "Приоритет v4.7: технический/OCR-термин требует сверки источника.";
   return {
     priorityScore: score,
-    priorityTier: score >= 105 ? 'high' : score >= 80 ? 'medium' : 'low',
+    priorityTier: score >= 105 ? "high" : score >= 80 ? "medium" : "low",
     priorityReason: reason,
-    priorityPagesCount: pages.length,
+    priorityPagesCount: pages.length
   };
 }
-
 function createQualityQueueRecord(queue, entity, item, reason, extra = {}) {
-  const head = String(item && item.head ? item.head : '').trim();
+  const head = String(item && item.head ? item.head : "").trim();
   const pages = getItemQualityPages(item);
   const out = {
     queue,
@@ -4880,13 +4231,12 @@ function createQualityQueueRecord(queue, entity, item, reason, extra = {}) {
     pagesSummary: summarizeQualityPages(pages),
     contextSnippets: countItemQualityContextSnippets(item),
     sourcePresent: itemHasQualitySource(item),
-    route: head ? buildItemHash(entity, head) : '',
-    ...extra,
+    route: head ? buildItemHash(entity, head) : "",
+    ...extra
   };
-  if (item && typeof item.canonical_id === 'string' && item.canonical_id) out.canonicalId = item.canonical_id;
+  if (item && typeof item.canonical_id === "string" && item.canonical_id) out.canonicalId = item.canonical_id;
   return out;
 }
-
 function buildCorpusQualityState() {
   const totals = {
     items: 0,
@@ -4895,55 +4245,37 @@ function buildCorpusQualityState() {
     withEffectiveContexts: 0,
     withInheritedContexts: 0,
     withSources: 0,
-    duplicateGroups: 0,
+    duplicateGroups: 0
   };
-  const queues = Object.fromEntries(QUALITY_QUEUE_DEFS.map(def => [def.key, []]));
+  const queues = Object.fromEntries(QUALITY_QUEUE_DEFS.map((def) => [def.key, []]));
   const itemsByEntity = {};
-  const crossBookCandidates = new Map();
+  const crossBookCandidates = /* @__PURE__ */ new Map();
   const inheritedContextIndex = buildQualityInheritedContextIndex();
-
   for (const typeKey of QUALITY_ENTITY_ORDER) {
     const conf = ENTITY_TYPES && ENTITY_TYPES[typeKey];
     const items = Array.isArray(conf && conf.items) ? conf.items : [];
     itemsByEntity[typeKey] = items;
     if (!items.length) continue;
-    const heads = new Map();
-    const itemsByHead = new Map();
+    const heads = /* @__PURE__ */ new Map();
+    const itemsByHead = /* @__PURE__ */ new Map();
     for (const item of items) {
-      if (!item || typeof item !== 'object') continue;
+      if (!item || typeof item !== "object") continue;
       totals.items += 1;
       const pages = getItemQualityPages(item);
       const contextSnippets = countItemQualityContextSnippets(item);
       const effectiveContext = getEffectiveQualityContextInfo(typeKey, item, inheritedContextIndex);
       const hasSource = itemHasQualitySource(item);
       if (pages.length) totals.withPages += 1;
-      else queues.missing_pages.push(createQualityQueueRecord('missing_pages', typeKey, item, 'Нет записей page_list.'));
+      else queues.missing_pages.push(createQualityQueueRecord("missing_pages", typeKey, item, "Нет записей page_list."));
       if (contextSnippets > 0) totals.withContexts += 1;
       if (effectiveContext.snippets > 0) totals.withEffectiveContexts += 1;
       if (effectiveContext.inherited) totals.withInheritedContexts += 1;
-      else if (contextSnippets <= 0) queues.missing_context.push(createQualityQueueRecord(
-        'missing_context',
-        typeKey,
-        item,
-        'Нет прямых контекстов или контекстов из occurrence.',
-        getContextPriorityInfo(typeKey, item)
-      ));
-      if (hasSource) {
-        totals.withSources += 1;
-      } else {
-        queues.missing_source.push(createQualityQueueRecord('missing_source', typeKey, item, 'Нет источников, записей упоминаний или идентификатора книги.'));
-      }
+      else if (contextSnippets <= 0) queues.missing_context.push(createQualityQueueRecord("missing_context", typeKey, item, "Нет прямых контекстов или контекстов из occurrence.", getContextPriorityInfo(typeKey, item)));
+      if (hasSource) totals.withSources += 1;
+      else queues.missing_source.push(createQualityQueueRecord("missing_source", typeKey, item, "Нет источников, записей упоминаний или идентификатора книги."));
       const pageVerificationDetails = getQualityPageVerificationDetails(item);
-      if (pageVerificationDetails) {
-        queues.needs_page_verification.push(createQualityQueueRecord(
-          'needs_page_verification',
-          typeKey,
-          item,
-          'page_list расходится со страницами в occurrence или контекстах.',
-          pageVerificationDetails
-        ));
-      }
-      const rawHead = String(item.head || '').trim();
+      if (pageVerificationDetails) queues.needs_page_verification.push(createQualityQueueRecord("needs_page_verification", typeKey, item, "page_list расходится со страницами в occurrence или контекстах.", pageVerificationDetails));
+      const rawHead = String(item.head || "").trim();
       const head = normalizeSearchText(rawHead);
       if (head) heads.set(head, (heads.get(head) || 0) + 1);
       const candidateKey = normalizeQualityCandidateKey(rawHead);
@@ -4953,60 +4285,47 @@ function buildCorpusQualityState() {
           entity: typeKey,
           head: rawHead,
           item,
-          books: getItemQualityBooks(item),
+          books: getItemQualityBooks(item)
         });
       }
       if (rawHead) {
         if (!itemsByHead.has(rawHead)) itemsByHead.set(rawHead, []);
         itemsByHead.get(rawHead).push(item);
       }
-      if (rawHead.startsWith('?') || rawHead.includes('\ufffd')) {
-        queues.suspicious_heads.push(createQualityQueueRecord(
-          'suspicious_heads',
-          typeKey,
-          item,
-          'Заголовок начинается с ? или содержит символ замены.',
-          { needsReview: item.needs_review === true }
-        ));
-      }
+      if (rawHead.startsWith("?") || rawHead.includes("�")) queues.suspicious_heads.push(createQualityQueueRecord("suspicious_heads", typeKey, item, "Заголовок начинается с ? или содержит символ замены.", { needsReview: item.needs_review === true })); // encoding-guard: allow-ufffd: the app tests for the character on purpose
     }
-    for (const count of heads.values()) {
-      if (count > 1) totals.duplicateGroups += 1;
-    }
+    for (const count of heads.values()) if (count > 1) totals.duplicateGroups += 1;
     for (const [head, duplicates] of itemsByHead.entries()) {
       if (duplicates.length <= 1) continue;
       const pages = Array.from(new Set(duplicates.flatMap(getItemQualityPages))).sort((a, b) => a - b);
-      const canonicalIds = Array.from(new Set(duplicates.map(it => it && it.canonical_id).filter(Boolean))).sort();
+      const canonicalIds = Array.from(new Set(duplicates.map((it) => it && it.canonical_id).filter(Boolean))).sort();
       queues.duplicate_heads.push({
-        queue: 'duplicate_heads',
+        queue: "duplicate_heads",
         entity: typeKey,
         head,
-        reason: 'Один и тот же заголовок встречается в этом списке несколько раз.',
+        reason: "Один и тот же заголовок встречается в этом списке несколько раз.",
         count: duplicates.length,
         canonicalIds,
         pagesCount: pages.length,
         pagesSummary: summarizeQualityPages(pages),
-        route: buildItemHash(typeKey, head),
+        route: buildItemHash(typeKey, head)
       });
     }
   }
-
   for (const [normalizedHead, records] of crossBookCandidates.entries()) {
-    const books = Array.from(new Set(records.flatMap(record => record.books || []))).sort();
+    const books = Array.from(new Set(records.flatMap((record) => record.books || []))).sort();
     if (books.length <= 1) continue;
-    const sortedRecords = records.slice().sort(compareCrossBookCandidateRecords);
-    const preferred = sortedRecords[0] || {};
-    const pages = Array.from(new Set(records.flatMap(record => getItemQualityPages(record.item)))).sort((a, b) => a - b);
-    const canonicalIds = Array.from(new Set(records.map(record => record.item && record.item.canonical_id).filter(Boolean))).sort();
-    const entities = Array.from(new Set(records.map(record => record.entity).filter(Boolean)))
-      .sort((a, b) => getQualityEntityPriority(a) - getQualityEntityPriority(b) || String(a).localeCompare(String(b)));
-    const heads = Array.from(new Set(records.map(record => record.head).filter(Boolean))).sort(compareQualityHeads);
-    const route = preferred.head ? buildItemHash(preferred.entity, preferred.head) : '';
+    const preferred = records.slice().sort(compareCrossBookCandidateRecords)[0] || {};
+    const pages = Array.from(new Set(records.flatMap((record) => getItemQualityPages(record.item)))).sort((a, b) => a - b);
+    const canonicalIds = Array.from(new Set(records.map((record) => record.item && record.item.canonical_id).filter(Boolean))).sort();
+    const entities = Array.from(new Set(records.map((record) => record.entity).filter(Boolean))).sort((a, b) => getQualityEntityPriority(a) - getQualityEntityPriority(b) || String(a).localeCompare(String(b)));
+    const heads = Array.from(new Set(records.map((record) => record.head).filter(Boolean))).sort(compareQualityHeads);
+    const route = preferred.head ? buildItemHash(preferred.entity, preferred.head) : "";
     queues.cross_book_duplicate_candidates.push({
-      queue: 'cross_book_duplicate_candidates',
-      entity: preferred.entity || '',
+      queue: "cross_book_duplicate_candidates",
+      entity: preferred.entity || "",
       head: preferred.head || normalizedHead,
-      reason: 'Одинаковый нормализованный заголовок встречается в нескольких книгах; проверьте канонические связи и алиасы.',
+      reason: "Одинаковый нормализованный заголовок встречается в нескольких книгах; проверьте канонические связи и алиасы.",
       count: records.length,
       books,
       entities,
@@ -5016,148 +4335,132 @@ function buildCorpusQualityState() {
       pagesCount: pages.length,
       pagesSummary: summarizeQualityPages(pages),
       route,
-      canonicalId: preferred.item && typeof preferred.item.canonical_id === 'string' ? preferred.item.canonical_id : '',
+      canonicalId: preferred.item && typeof preferred.item.canonical_id === "string" ? preferred.item.canonical_id : ""
     });
   }
-
   for (const typeKey of QUALITY_ENTITY_ORDER) {
     if (!QUALITY_SORT_ENTITY_KEYS.has(typeKey)) continue;
     const items = Array.isArray(itemsByEntity[typeKey]) ? itemsByEntity[typeKey] : [];
-    const heads = items.map(item => String(item && item.head ? item.head : '').trim()).filter(Boolean);
-    const byHead = new Map(items.map(item => [String(item && item.head ? item.head : '').trim(), item]));
+    const heads = items.map((item) => String(item && item.head ? item.head : "").trim()).filter(Boolean);
+    const byHead = new Map(items.map((item) => [String(item && item.head ? item.head : "").trim(), item]));
     for (let i = 1; i < heads.length; i++) {
       const previous = heads[i - 1];
       const current = heads[i];
       if (compareQualityHeads(previous, current) <= 0) continue;
       const item = byHead.get(current) || { head: current };
-      queues.sort_inversions.push(createQualityQueueRecord(
-        'sort_inversions',
-        typeKey,
-        item,
-        `Нарушение сортировки после «${previous}».`,
-        { index: i, previous, current }
-      ));
+      queues.sort_inversions.push(createQualityQueueRecord("sort_inversions", typeKey, item, `Нарушение сортировки после «${previous}».`, {
+        index: i,
+        previous,
+        current
+      }));
     }
   }
-
-  for (const items of Object.values(queues)) {
-    items.sort(compareQualityQueueItems);
-  }
+  for (const items of Object.values(queues)) items.sort(compareQualityQueueItems);
   const metrics = {
     ...totals,
     pagesCoverage: formatCoveragePercent(totals.withPages, totals.items),
     contextsCoverage: formatCoveragePercent(totals.withContexts, totals.items),
     effectiveContextsCoverage: formatCoveragePercent(totals.withEffectiveContexts, totals.items),
-    sourcesCoverage: formatCoveragePercent(totals.withSources, totals.items),
+    sourcesCoverage: formatCoveragePercent(totals.withSources, totals.items)
   };
-  const contextCoverageValue = totals.items ? Math.round((totals.withContexts / totals.items) * 1000) / 10 : 0;
-  const effectiveContextCoverageValue = totals.items ? Math.round((totals.withEffectiveContexts / totals.items) * 1000) / 10 : contextCoverageValue;
+  const contextCoverageValue = totals.items ? Math.round(totals.withContexts / totals.items * 1e3) / 10 : 0;
+  const effectiveContextCoverageValue = totals.items ? Math.round(totals.withEffectiveContexts / totals.items * 1e3) / 10 : contextCoverageValue;
   const remainingGrowth = V47_CONTEXT_TARGET_MIN_PCT - V47_CONTEXT_BASELINE_PCT;
-  const contextGrowthProgress = remainingGrowth > 0
-    ? clampQualityPercent(((effectiveContextCoverageValue - V47_CONTEXT_BASELINE_PCT) * 100) / remainingGrowth)
-    : 0;
-  const progress = {
-    phaseEstimatePercent: Math.round((
-      V47_QUEUE_WORKFLOW_WEIGHT_PCT
-      + (V47_CONTEXT_GROWTH_WEIGHT_PCT * contextGrowthProgress / 100)
-    ) * 10) / 10,
-    queueWorkflowPercent: 100,
-    queueTypesDone: V47_QUEUE_TYPES_TOTAL,
-    queueTypesTotal: V47_QUEUE_TYPES_TOTAL,
-    contextCoveragePercent: contextCoverageValue,
-    effectiveContextCoveragePercent: effectiveContextCoverageValue,
-    inheritedContextItems: totals.withInheritedContexts,
-    contextEntryPackTargets: Math.min(25, queues.missing_context.length),
-    contextTargetMinPercent: V47_CONTEXT_TARGET_MIN_PCT,
-    contextTargetMaxPercent: V47_CONTEXT_TARGET_MAX_PCT,
-    contextTargetMinProgressPercent: clampQualityPercent((effectiveContextCoverageValue * 100) / V47_CONTEXT_TARGET_MIN_PCT),
-    contextTargetMaxProgressPercent: clampQualityPercent((effectiveContextCoverageValue * 100) / V47_CONTEXT_TARGET_MAX_PCT),
-    contextGrowthProgressPercent: Math.round(contextGrowthProgress * 10) / 10,
+  const contextGrowthProgress = remainingGrowth > 0 ? clampQualityPercent((effectiveContextCoverageValue - V47_CONTEXT_BASELINE_PCT) * 100 / remainingGrowth) : 0;
+  return {
+    metrics,
+    queues,
+    progress: {
+      phaseEstimatePercent: Math.round((V47_QUEUE_WORKFLOW_WEIGHT_PCT + V47_CONTEXT_GROWTH_WEIGHT_PCT * contextGrowthProgress / 100) * 10) / 10,
+      queueWorkflowPercent: 100,
+      queueTypesDone: V47_QUEUE_TYPES_TOTAL,
+      queueTypesTotal: V47_QUEUE_TYPES_TOTAL,
+      contextCoveragePercent: contextCoverageValue,
+      effectiveContextCoveragePercent: effectiveContextCoverageValue,
+      inheritedContextItems: totals.withInheritedContexts,
+      contextEntryPackTargets: Math.min(25, queues.missing_context.length),
+      contextTargetMinPercent: V47_CONTEXT_TARGET_MIN_PCT,
+      contextTargetMaxPercent: V47_CONTEXT_TARGET_MAX_PCT,
+      contextTargetMinProgressPercent: clampQualityPercent(effectiveContextCoverageValue * 100 / V47_CONTEXT_TARGET_MIN_PCT),
+      contextTargetMaxProgressPercent: clampQualityPercent(effectiveContextCoverageValue * 100 / V47_CONTEXT_TARGET_MAX_PCT),
+      contextGrowthProgressPercent: Math.round(contextGrowthProgress * 10) / 10
+    }
   };
-  return { metrics, queues, progress };
 }
-
 function buildCorpusQualityMetrics() {
   return buildCorpusQualityState().metrics;
 }
-
 function getQualityEntityLabel(entity) {
-  return getEntityDisplayLabel(entity) || String(entity || '');
+  return getEntityDisplayLabel(entity) || String(entity || "");
 }
-
 function renderQualityQueueItem(item) {
-  const row = item.route ? document.createElement('a') : document.createElement('div');
-  row.className = 'quality-queue-item';
+  const row = item.route ? document.createElement("a") : document.createElement("div");
+  row.className = "quality-queue-item";
   if (item.route) {
     row.href = item.route;
     row.onclick = (event) => {
       event.preventDefault();
-      applyHash(row.getAttribute('href') || '#v4/materials/sources');
+      applyHash(row.getAttribute("href") || "#v4/materials/sources");
     };
   }
-  const head = document.createElement('span');
-  head.className = 'quality-queue-head';
-  head.textContent = item.head || '(без заголовка)';
-  const meta = document.createElement('span');
-  meta.className = 'quality-queue-meta';
+  const head = document.createElement("span");
+  head.className = "quality-queue-head";
+  head.textContent = item.head || "(без заголовка)";
+  const meta = document.createElement("span");
+  meta.className = "quality-queue-meta";
   const details = [];
   if (item.entity) details.push(getQualityEntityLabel(item.entity));
-  if (item.priorityTier) {
-    details.push(`приоритет: ${QUALITY_TIER_LABELS[item.priorityTier] || item.priorityTier}${item.priorityScore ? ` ${item.priorityScore}` : ''}`);
-  }
+  if (item.priorityTier) details.push(`приоритет: ${QUALITY_TIER_LABELS[item.priorityTier] || item.priorityTier}${item.priorityScore ? ` ${item.priorityScore}` : ""}`);
   if (item.count) details.push(`×${item.count}`);
-  if (Array.isArray(item.books) && item.books.length) details.push(`книги: ${item.books.join(', ')}`);
-  if (Array.isArray(item.entities) && item.entities.length) details.push(`разделы: ${item.entities.map(getQualityEntityLabel).join(', ')}`);
+  if (Array.isArray(item.books) && item.books.length) details.push(`книги: ${item.books.join(", ")}`);
+  if (Array.isArray(item.entities) && item.entities.length) details.push(`разделы: ${item.entities.map(getQualityEntityLabel).join(", ")}`);
   if (item.previous) details.push(`после: ${item.previous}`);
   if (item.missingFromPageListSummary) details.push(`нет в page_list: ${item.missingFromPageListSummary}`);
-  if (item.missingFromEvidenceSummary && item.missingFromEvidenceSummary !== '0 страниц') details.push(`нет в свидетельствах: ${item.missingFromEvidenceSummary}`);
+  if (item.missingFromEvidenceSummary && item.missingFromEvidenceSummary !== "0 страниц") details.push(`нет в свидетельствах: ${item.missingFromEvidenceSummary}`);
   if (item.pagesSummary) details.push(`страницы: ${item.pagesSummary}`);
   if (Number.isFinite(item.contextSnippets)) details.push(`контексты: ${item.contextSnippets}`);
-  meta.textContent = details.join(' · ');
-  const reason = document.createElement('span');
-  reason.className = 'quality-queue-reason';
-  reason.textContent = item.priorityReason || item.reason || '';
+  meta.textContent = details.join(" · ");
+  const reason = document.createElement("span");
+  reason.className = "quality-queue-reason";
+  reason.textContent = item.priorityReason || item.reason || "";
   row.appendChild(head);
   row.appendChild(meta);
   row.appendChild(reason);
   return row;
 }
-
 function renderQualityQueues(section, queues) {
-  const wrap = document.createElement('div');
-  wrap.className = 'quality-queues';
-  const title = document.createElement('h4');
-  title.className = 'quality-queues-title';
-  title.textContent = 'Редакторские очереди';
+  const wrap = document.createElement("div");
+  wrap.className = "quality-queues";
+  const title = document.createElement("h4");
+  title.className = "quality-queues-title";
+  title.textContent = "Редакторские очереди";
   wrap.appendChild(title);
-
   for (const def of QUALITY_QUEUE_DEFS) {
     const items = Array.isArray(queues && queues[def.key]) ? queues[def.key] : [];
-    const details = document.createElement('details');
-    details.className = 'quality-queue';
+    const details = document.createElement("details");
+    details.className = "quality-queue";
     details.dataset.queue = def.key;
-    const summary = document.createElement('summary');
-    const label = document.createElement('span');
+    const summary = document.createElement("summary");
+    const label = document.createElement("span");
     label.textContent = def.label;
-    const count = document.createElement('strong');
+    const count = document.createElement("strong");
     count.textContent = String(items.length);
     summary.appendChild(label);
     summary.appendChild(count);
     details.appendChild(summary);
-
-    const list = document.createElement('div');
-    list.className = 'quality-queue-items';
+    const list = document.createElement("div");
+    list.className = "quality-queue-items";
     if (items.length) {
       for (const item of items.slice(0, QUALITY_QUEUE_LIMIT)) list.appendChild(renderQualityQueueItem(item));
       if (items.length > QUALITY_QUEUE_LIMIT) {
-        const more = document.createElement('div');
-        more.className = 'quality-queue-more';
+        const more = document.createElement("div");
+        more.className = "quality-queue-more";
         more.textContent = `Показано ${QUALITY_QUEUE_LIMIT} из ${items.length}.`;
         list.appendChild(more);
       }
     } else {
-      const empty = document.createElement('div');
-      empty.className = 'quality-queue-empty';
+      const empty = document.createElement("div");
+      empty.className = "quality-queue-empty";
       empty.textContent = def.empty;
       list.appendChild(empty);
     }
@@ -5166,273 +4469,225 @@ function renderQualityQueues(section, queues) {
   }
   section.appendChild(wrap);
 }
-
 function renderQualityProgress(section, progress) {
   if (!progress) return;
-  const wrap = document.createElement('div');
-  wrap.className = 'corpus-quality-progress';
-  wrap.appendChild(createCorpusMetric('оценка v4.7', `~${formatQualityPercent(progress.phaseEstimatePercent)}`));
-  wrap.appendChild(createCorpusMetric('очереди', formatQualityPercent(progress.queueWorkflowPercent)));
-  wrap.appendChild(createCorpusMetric(
-    'цель по контекстам',
-    `${formatQualityPercent(progress.contextTargetMinProgressPercent)} из ${formatQualityPercent(progress.contextTargetMinPercent)}`
-  ));
-  wrap.appendChild(createCorpusMetric(
-    'унаследованные контексты',
-    String(progress.inheritedContextItems || 0)
-  ));
-  wrap.appendChild(createCorpusMetric(
-    'пакет контекстов',
-    `${progress.contextEntryPackTargets || 0} целей`
-  ));
-  wrap.appendChild(createCorpusMetric(
-    'рост контекстов',
-    `${formatQualityPercent(progress.contextGrowthProgressPercent)} от базы`
-  ));
+  const wrap = document.createElement("div");
+  wrap.className = "corpus-quality-progress";
+  wrap.appendChild(createCorpusMetric("оценка v4.7", `~${formatQualityPercent(progress.phaseEstimatePercent)}`));
+  wrap.appendChild(createCorpusMetric("очереди", formatQualityPercent(progress.queueWorkflowPercent)));
+  wrap.appendChild(createCorpusMetric("цель по контекстам", `${formatQualityPercent(progress.contextTargetMinProgressPercent)} из ${formatQualityPercent(progress.contextTargetMinPercent)}`));
+  wrap.appendChild(createCorpusMetric("унаследованные контексты", String(progress.inheritedContextItems || 0)));
+  wrap.appendChild(createCorpusMetric("пакет контекстов", `${progress.contextEntryPackTargets || 0} целей`));
+  wrap.appendChild(createCorpusMetric("рост контекстов", `${formatQualityPercent(progress.contextGrowthProgressPercent)} от базы`));
   section.appendChild(wrap);
 }
-
 function renderCorpusQualityPanel(panel) {
   if (!panel) return;
   const state = buildCorpusQualityState();
   const metrics = state.metrics;
-  const section = document.createElement('section');
-  section.className = 'corpus-quality-panel';
-  const title = document.createElement('h3');
-  title.className = 'corpus-section-title';
-  title.textContent = '\u041a\u0430\u0447\u0435\u0441\u0442\u0432\u043e \u0434\u0430\u043d\u043d\u044b\u0445';
+  const section = document.createElement("section");
+  section.className = "corpus-quality-panel";
+  const title = document.createElement("h3");
+  title.className = "corpus-section-title";
+  title.textContent = "Качество данных";
   section.appendChild(title);
-
-  const grid = document.createElement('div');
-  grid.className = 'corpus-metrics-row corpus-quality-metrics';
-  grid.appendChild(createCorpusMetric('\u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432', metrics.items));
-  grid.appendChild(createCorpusMetric('покрытие страниц', metrics.pagesCoverage));
-  grid.appendChild(createCorpusMetric('покрытие контекстов', metrics.contextsCoverage));
-  grid.appendChild(createCorpusMetric('эффективные контексты', metrics.effectiveContextsCoverage));
-  grid.appendChild(createCorpusMetric('покрытие источников', metrics.sourcesCoverage));
-  grid.appendChild(createCorpusMetric('группы дублей', metrics.duplicateGroups));
+  const grid = document.createElement("div");
+  grid.className = "corpus-metrics-row corpus-quality-metrics";
+  grid.appendChild(createCorpusMetric("элементов", metrics.items));
+  grid.appendChild(createCorpusMetric("покрытие страниц", metrics.pagesCoverage));
+  grid.appendChild(createCorpusMetric("покрытие контекстов", metrics.contextsCoverage));
+  grid.appendChild(createCorpusMetric("эффективные контексты", metrics.effectiveContextsCoverage));
+  grid.appendChild(createCorpusMetric("покрытие источников", metrics.sourcesCoverage));
+  grid.appendChild(createCorpusMetric("группы дублей", metrics.duplicateGroups));
   section.appendChild(grid);
   renderQualityProgress(section, state.progress);
-
-  const note = document.createElement('p');
-  note.className = 'corpus-quality-note';
-  note.textContent = 'Быстрый runtime-срез готовности импорта; подробный отчёт и JSON очередей: scripts/content_report.py.';
+  const note = document.createElement("p");
+  note.className = "corpus-quality-note";
+  note.textContent = "Быстрый runtime-срез готовности импорта; подробный отчёт и JSON очередей: scripts/content_report.py.";
   section.appendChild(note);
   renderQualityQueues(section, state.queues);
   panel.appendChild(section);
 }
-
 function getSourceStatusLabel(status) {
-  const map = {
-    active: 'активен',
-    planned: 'запланирован',
-    published: 'опубликован',
-    draft: 'черновик',
-    imported: 'импортирован',
-  };
-  return map[String(status || '')] || String(status || 'активен');
+  return {
+    active: "активен",
+    planned: "запланирован",
+    published: "опубликован",
+    draft: "черновик",
+    imported: "импортирован"
+  }[String(status || "")] || String(status || "активен");
 }
-
 function getSourceTypeLabel(type) {
-  const map = {
-    book: 'книга',
-    video_catalog: 'видеокаталог',
-  };
-  return map[String(type || '')] || String(type || '');
+  return {
+    book: "книга",
+    video_catalog: "видеокаталог"
+  }[String(type || "")] || String(type || "");
 }
-
 function getSourceSupportLabel(value) {
-  const map = {
-    pages: 'страницы',
-    citations: 'цитирование',
-    timecodes: 'тайм-коды',
-    transcripts: 'стенограммы',
-    media: 'медиа',
-    search: 'поиск',
-    cards: 'карточки',
-  };
-  return map[String(value || '')] || String(value || '');
+  return {
+    pages: "страницы",
+    citations: "цитирование",
+    timecodes: "тайм-коды",
+    transcripts: "стенограммы",
+    media: "медиа",
+    search: "поиск",
+    cards: "карточки"
+  }[String(value || "")] || String(value || "");
 }
-
 function createCorpusSourceCard(source, options = {}) {
-  const card = document.createElement('article');
-  card.className = 'corpus-source-card';
+  const card = document.createElement("article");
+  card.className = "corpus-source-card";
   if (source.status) card.dataset.status = String(source.status);
-
-  const top = document.createElement('div');
-  top.className = 'corpus-source-top';
-  const title = document.createElement('h3');
-  title.textContent = String(source.title || source.book_id || source.type || 'Источник');
-  const badge = document.createElement('span');
-  badge.className = 'corpus-source-badge';
+  const top = document.createElement("div");
+  top.className = "corpus-source-top";
+  const title = document.createElement("h3");
+  title.textContent = String(source.title || source.book_id || source.type || "Источник");
+  const badge = document.createElement("span");
+  badge.className = "corpus-source-badge";
   badge.textContent = getSourceStatusLabel(source.status);
   top.appendChild(title);
   top.appendChild(badge);
   card.appendChild(top);
-
-  const meta = document.createElement('div');
-  meta.className = 'corpus-source-meta';
+  const meta = document.createElement("div");
+  meta.className = "corpus-source-meta";
   const metaParts = [];
   if (source.author) metaParts.push(source.author);
   if (source.year) metaParts.push(String(source.year));
   if (source.edition) metaParts.push(source.edition);
   if (source.source_type) metaParts.push(getSourceTypeLabel(source.source_type));
   if (options.kindLabel) metaParts.push(options.kindLabel);
-  meta.textContent = metaParts.join(' · ') || 'метаданные источника';
+  meta.textContent = metaParts.join(" · ") || "метаданные источника";
   card.appendChild(meta);
-
   if (source.description) {
-    const description = document.createElement('p');
-    description.className = 'corpus-source-description';
+    const description = document.createElement("p");
+    description.className = "corpus-source-description";
     description.textContent = String(source.description);
     card.appendChild(description);
   }
-
-  const facts = document.createElement('div');
-  facts.className = 'corpus-source-facts';
-  if (source.pages_total) facts.appendChild(createCorpusMetric('страниц', source.pages_total));
-  if (source.planned_count) facts.appendChild(createCorpusMetric('единиц', source.planned_count));
-  if (Array.isArray(source.supports) && source.supports.length) {
-    facts.appendChild(createCorpusMetric('поддержка', source.supports.map(getSourceSupportLabel).join(', ')));
-  }
-  if (Array.isArray(source.content_modules) && source.content_modules.length) {
-    facts.appendChild(createCorpusMetric('модули', source.content_modules.length));
-  }
+  const facts = document.createElement("div");
+  facts.className = "corpus-source-facts";
+  if (source.pages_total) facts.appendChild(createCorpusMetric("страниц", source.pages_total));
+  if (source.planned_count) facts.appendChild(createCorpusMetric("единиц", source.planned_count));
+  if (Array.isArray(source.supports) && source.supports.length) facts.appendChild(createCorpusMetric("поддержка", source.supports.map(getSourceSupportLabel).join(", ")));
+  if (Array.isArray(source.content_modules) && source.content_modules.length) facts.appendChild(createCorpusMetric("модули", source.content_modules.length));
   if (facts.childNodes.length) card.appendChild(facts);
-
   if (source.default_route) {
-    const actions = document.createElement('div');
-    actions.className = 'corpus-source-actions';
-    const link = document.createElement('a');
+    const actions = document.createElement("div");
+    actions.className = "corpus-source-actions";
+    const link = document.createElement("a");
     link.href = String(source.default_route);
-    link.textContent = 'Открыть';
+    link.textContent = "Открыть";
     link.onclick = (event) => {
       event.preventDefault();
       if (source.book_id) {
         getCorpusRegistry().active_book_id = source.book_id;
         inflateOccurrences(source.book_id);
       }
-      applyHash(link.getAttribute('href') || '#v4/home/home');
+      applyHash(link.getAttribute("href") || "#v4/home/home");
     };
     actions.appendChild(link);
     card.appendChild(actions);
   }
-
   return card;
 }
-
 function renderCorpusSourcesPanel(container) {
-  const panel = document.createElement('div');
-  panel.className = 'panel corpus-panel active';
-
+  const panel = document.createElement("div");
+  panel.className = "panel corpus-panel active";
   const registry = getCorpusRegistry();
   const books = getCorpusBooks();
   const sourceTypes = Array.isArray(registry.source_types) ? registry.source_types : [];
   const plannedVideo = getPlannedVideoCatalogSource();
-
-  const header = document.createElement('div');
-  header.className = 'corpus-panel-header';
-  const title = document.createElement('h2');
-  title.textContent = 'Источники корпуса';
-  const subtitle = document.createElement('p');
-  subtitle.textContent = 'Текущая книга, будущие книги и видеокаталог используют один корпусный слой навигации, поиска и цитирования.';
+  const header = document.createElement("div");
+  header.className = "corpus-panel-header";
+  const title = document.createElement("h2");
+  title.textContent = "Источники корпуса";
+  const subtitle = document.createElement("p");
+  subtitle.textContent = "Текущая книга, будущие книги и видеокаталог используют один корпусный слой навигации, поиска и цитирования.";
   header.appendChild(title);
   header.appendChild(subtitle);
   panel.appendChild(header);
-
-  const metrics = document.createElement('div');
-  metrics.className = 'corpus-metrics-row';
-  metrics.appendChild(createCorpusMetric('книг сейчас', books.length));
-  metrics.appendChild(createCorpusMetric('активный источник', getActiveBook().title || getActiveBook().book_id));
-  metrics.appendChild(createCorpusMetric('типов источников', sourceTypes.length));
-  metrics.appendChild(createCorpusMetric('план видео', plannedVideo && plannedVideo.planned_count ? plannedVideo.planned_count : 0));
+  const metrics = document.createElement("div");
+  metrics.className = "corpus-metrics-row";
+  metrics.appendChild(createCorpusMetric("книг сейчас", books.length));
+  metrics.appendChild(createCorpusMetric("активный источник", getActiveBook().title || getActiveBook().book_id));
+  metrics.appendChild(createCorpusMetric("типов источников", sourceTypes.length));
+  metrics.appendChild(createCorpusMetric("план видео", plannedVideo && plannedVideo.planned_count ? plannedVideo.planned_count : 0));
   panel.appendChild(metrics);
   renderCorpusQualityPanel(panel);
-
-  const booksTitle = document.createElement('h3');
-  booksTitle.className = 'corpus-section-title';
-  booksTitle.textContent = 'Книги';
+  const booksTitle = document.createElement("h3");
+  booksTitle.className = "corpus-section-title";
+  booksTitle.textContent = "Книги";
   panel.appendChild(booksTitle);
-
-  const booksGrid = document.createElement('div');
-  booksGrid.className = 'corpus-sources-grid';
-  books.forEach(book => booksGrid.appendChild(createCorpusSourceCard(book)));
+  const booksGrid = document.createElement("div");
+  booksGrid.className = "corpus-sources-grid";
+  books.forEach((book) => booksGrid.appendChild(createCorpusSourceCard(book)));
   panel.appendChild(booksGrid);
-
-  const sourceTypesTitle = document.createElement('h3');
-  sourceTypesTitle.className = 'corpus-section-title';
-  sourceTypesTitle.textContent = 'Типы источников';
+  const sourceTypesTitle = document.createElement("h3");
+  sourceTypesTitle.className = "corpus-section-title";
+  sourceTypesTitle.textContent = "Типы источников";
   panel.appendChild(sourceTypesTitle);
-
-  const typesGrid = document.createElement('div');
-  typesGrid.className = 'corpus-sources-grid corpus-source-types-grid';
-  sourceTypes.forEach(type => {
+  const typesGrid = document.createElement("div");
+  typesGrid.className = "corpus-sources-grid corpus-source-types-grid";
+  sourceTypes.forEach((type) => {
     const source = {
       ...type,
       title: type.title || type.label || type.type,
-      description: type.type === 'video_catalog'
-        ? 'Будущий каталог видео Зализняка с тайм-кодами и стенограммами.'
-        : '',
+      description: type.type === "video_catalog" ? "Будущий каталог видео Зализняка с тайм-кодами и стенограммами." : ""
     };
-    typesGrid.appendChild(createCorpusSourceCard(source, { kindLabel: 'тип источника' }));
+    typesGrid.appendChild(createCorpusSourceCard(source, { kindLabel: "тип источника" }));
   });
   panel.appendChild(typesGrid);
-
   container.appendChild(panel);
 }
-
-// =========================================================
-// СПИСОК + КАРТОЧКА (или гистограмма по умолчанию)
-// =========================================================
 function renderListPanel(container) {
   const conf = ENTITY_TYPES[currentEntity];
-  const isReverseLexicon = currentEntity === 'lexicon_reverse';
-
-  let catChips = '';
-  if (currentEntity === 'names') {
+  const isReverseLexicon = currentEntity === "lexicon_reverse";
+  let catChips = "";
+  if (currentEntity === "names") {
     const cats = {};
     for (const it of conf.items) {
-      const sub = it.subcategory || 'other';
+      const sub = it.subcategory || "other";
       cats[sub] = (cats[sub] || 0) + 1;
     }
-    const order = ['linguist','literator','historical','participant','edition_staff'];
-    catChips = '<div class="filter-row">';
+    const order = [
+      "linguist",
+      "literator",
+      "historical",
+      "participant",
+      "edition_staff"
+    ];
+    catChips = "<div class=\"filter-row\">";
     for (const sub of order) {
       if (!cats[sub]) continue;
-      catChips += `<button class="filter-chip ${activeFilters.has(sub)?'active':''}" data-subcat="${sub}">
+      catChips += `<button class="filter-chip ${activeFilters.has(sub) ? "active" : ""}" data-subcat="${sub}">
         <span class="dot ${getCategoryColorClass(sub)}"></span>${LABELS[sub]} (${cats[sub]})
       </button>`;
     }
-    catChips += '</div>';
+    catChips += "</div>";
   }
-  const canFilterCandidates = currentEntity === 'names' || currentEntity === 'all';
-  const candidateTotal = canFilterCandidates ? conf.items.filter(it => (it.head || '').startsWith('?')).length : 0;
-  const candidateBtnHtml = canFilterCandidates
-    ? `<button class="filter-chip ${onlyQuestionCandidates ? 'active' : ''}" id="only-question-btn">только ?-кандидаты (${candidateTotal})</button>`
-    : '';
-  const sortMostFrequentBtnHtml = Array.isArray(conf.items) && conf.items.length > 1
-    ? `<div class="filter-row"><button class="filter-chip ${sortMostFrequentFirst ? 'active' : ''}" id="sort-most-frequent-btn">наиболее частотные сверху</button></div>`
-    : '';
-
+  const canFilterCandidates = currentEntity === "names" || currentEntity === "all";
+  const candidateTotal = canFilterCandidates ? conf.items.filter((it) => (it.head || "").startsWith("?")).length : 0;
+  const candidateBtnHtml = canFilterCandidates ? `<button class="filter-chip ${onlyQuestionCandidates ? "active" : ""}" id="only-question-btn">только ?-кандидаты (${candidateTotal})</button>` : "";
+  const sortMostFrequentBtnHtml = Array.isArray(conf.items) && conf.items.length > 1 ? `<div class="filter-row"><button class="filter-chip ${sortMostFrequentFirst ? "active" : ""}" id="sort-most-frequent-btn">наиболее частотные сверху</button></div>` : "";
   container.innerHTML = `
     <div class="panel active">
-      <div class="list-card-layout${isReverseLexicon ? ' reverse-fullwidth' : ''}">
+      <div class="list-card-layout${isReverseLexicon ? " reverse-fullwidth" : ""}">
         <div class="left-pane">
           ${renderIndexSectionSummary()}
           <div class="filters">
             <div class="filters-top-row">
               <div class="filters-search">
-                <input type="text" id="search-input" placeholder="${currentEntity==='all'?'Поиск по всем указателям…':'Поиск…'}" value="${escapeHtml(searchQuery)}" autofocus />
+                <input type="text" id="search-input" placeholder="${currentEntity === "all" ? "Поиск по всем указателям…" : "Поиск…"}" value="${escapeHtml(searchQuery)}" autofocus />
               </div>
-              <button class="filter-chip ${onlyDiscussed?'active':''}" id="only-discussed-btn">только обсуждаемые (≥2 стр.)</button>
+              <button class="filter-chip ${onlyDiscussed ? "active" : ""}" id="only-discussed-btn">только обсуждаемые (≥2 стр.)</button>
             </div>
             ${sortMostFrequentBtnHtml}
             ${catChips}
-            ${candidateBtnHtml ? `<div class="filter-row">${candidateBtnHtml}</div>` : ''}
+            ${candidateBtnHtml ? `<div class="filter-row">${candidateBtnHtml}</div>` : ""}
           </div>
           <div class="name-list" id="name-list"></div>
         </div>
-        <div class="right-pane${isReverseLexicon ? ' reverse-right-pane' : ''}">
+        <div class="right-pane${isReverseLexicon ? " reverse-right-pane" : ""}">
           <div class="right-pane-tools">
             <button class="filter-chip" id="export-section-md">экспорт раздела .md</button>
           </div>
@@ -5449,29 +4704,25 @@ function renderListPanel(container) {
       </div>
     </div>
   `;
-
-  const searchInput = document.getElementById('search-input');
-  const indexSummary = container.querySelector('.index-section-summary');
-  if (indexSummary) {
-    indexSummary.onclick = (e) => {
-      const target = e && e.target;
-      if (!(target instanceof HTMLElement)) return;
-      const btn = target.closest('.index-section-summary-chip');
-      if (!btn) return;
-      const entity = btn.dataset.entity;
-      const tab = btn.dataset.tab || 'list';
-      if (!entity || !ENTITY_TYPES[entity]) return;
-      if (!ENTITY_TYPES[entity].tabs.includes(tab)) return;
-      activateNavTarget(entity, tab);
-    };
-  }
+  const searchInput = document.getElementById("search-input");
+  const indexSummary = container.querySelector(".index-section-summary");
+  if (indexSummary) indexSummary.onclick = (e) => {
+    const target = e && e.target;
+    if (!(target instanceof HTMLElement)) return;
+    const btn = target.closest(".index-section-summary-chip");
+    if (!btn) return;
+    const entity = btn.dataset.entity;
+    const tab = btn.dataset.tab || "list";
+    if (!entity || !ENTITY_TYPES[entity]) return;
+    if (!ENTITY_TYPES[entity].tabs.includes(tab)) return;
+    activateNavTarget(entity, tab);
+  };
   let searchTimeout = null;
-  if (searchInput) safeSetAttr(searchInput, 'aria-label', '\u041f\u043e\u0438\u0441\u043a \u043f\u043e \u0441\u043f\u0438\u0441\u043a\u0443');
+  if (searchInput) safeSetAttr(searchInput, "aria-label", "Поиск по списку");
   searchInput.oninput = (e) => {
     const val = clampUiInput(e.target.value, MAX_LIST_QUERY_LENGTH);
     if (e.target.value !== val) e.target.value = val;
     if (searchTimeout) clearTimeout(searchTimeout);
-    // Для коротких запросов задержка больше — не дергаем рендер при печати
     const delay = val.length < 3 ? 250 : 120;
     searchTimeout = setTimeout(() => {
       searchQuery = val;
@@ -5481,23 +4732,23 @@ function renderListPanel(container) {
     }, delay);
   };
   searchInput.focus();
-  const nameListEl = document.getElementById('name-list');
+  const nameListEl = document.getElementById("name-list");
   if (nameListEl) {
     nameListEl.onclick = (e) => {
       const target = e.target;
       if (!(target instanceof HTMLElement)) return;
-      const badge = target.closest('.crosslink-badge[data-type][data-head]');
+      const badge = target.closest(".crosslink-badge[data-type][data-head]");
       if (badge && nameListEl.contains(badge)) {
-        if (typeof e.preventDefault === 'function') e.preventDefault();
-        if (typeof e.stopPropagation === 'function') e.stopPropagation();
-        const t = badge.dataset.type || '';
-        const h = badge.dataset.head || '';
+        if (typeof e.preventDefault === "function") e.preventDefault();
+        if (typeof e.stopPropagation === "function") e.stopPropagation();
+        const t = badge.dataset.type || "";
+        const h = badge.dataset.head || "";
         if (t && h) navigateToItem(t, h);
         return;
       }
-      const row = target.closest('.name-item[data-head]');
+      const row = target.closest(".name-item[data-head]");
       if (!row || !nameListEl.contains(row)) return;
-      const head = row.dataset.head || '';
+      const head = row.dataset.head || "";
       const rowType = row.dataset.type || currentEntity;
       const it = getIndexedItem(rowType, head);
       if (!it) return;
@@ -5505,20 +4756,20 @@ function renderListPanel(container) {
     };
     nameListEl.onkeydown = (e) => {
       const key = e.key;
-      if (key !== 'Enter' && key !== ' ') return;
+      if (key !== "Enter" && key !== " ") return;
       const target = e.target;
       if (!(target instanceof HTMLElement)) return;
-      const badge = target.closest('.crosslink-badge[data-type][data-head]');
+      const badge = target.closest(".crosslink-badge[data-type][data-head]");
       if (badge && nameListEl.contains(badge)) {
         e.preventDefault();
-        const t = badge.dataset.type || '';
-        const h = badge.dataset.head || '';
+        const t = badge.dataset.type || "";
+        const h = badge.dataset.head || "";
         if (t && h) navigateToItem(t, h);
         return;
       }
-      const row = target.closest('.name-item[data-head]');
+      const row = target.closest(".name-item[data-head]");
       if (!row || !nameListEl.contains(row)) return;
-      const head = row.dataset.head || '';
+      const head = row.dataset.head || "";
       const rowType = row.dataset.type || currentEntity;
       const it = getIndexedItem(rowType, head);
       if (!it) return;
@@ -5526,56 +4777,49 @@ function renderListPanel(container) {
       selectListItem(it, rowType);
     };
   }
-
-  document.getElementById('only-discussed-btn').onclick = (e) => {
+  document.getElementById("only-discussed-btn").onclick = (e) => {
     onlyDiscussed = !onlyDiscussed;
-    e.target.classList.toggle('active', onlyDiscussed);
+    e.target.classList.toggle("active", onlyDiscussed);
     invalidateVisibleItemsCache();
     renderList();
     persistViewState();
   };
-  const onlyQuestionBtn = document.getElementById('only-question-btn');
-  if (onlyQuestionBtn) {
-    onlyQuestionBtn.onclick = (e) => {
-      onlyQuestionCandidates = !onlyQuestionCandidates;
-      e.target.classList.toggle('active', onlyQuestionCandidates);
-      invalidateVisibleItemsCache();
-      renderList();
-      persistViewState();
-    };
-  }
-  const sortMostFrequentBtn = document.getElementById('sort-most-frequent-btn');
-  if (sortMostFrequentBtn) {
-    sortMostFrequentBtn.onclick = (e) => {
-      sortMostFrequentFirst = !sortMostFrequentFirst;
-      e.target.classList.toggle('active', sortMostFrequentFirst);
-      invalidateVisibleItemsCache();
-      renderList();
-      persistViewState();
-    };
-  }
-  const exportSectionBtn = document.getElementById('export-section-md');
+  const onlyQuestionBtn = document.getElementById("only-question-btn");
+  if (onlyQuestionBtn) onlyQuestionBtn.onclick = (e) => {
+    onlyQuestionCandidates = !onlyQuestionCandidates;
+    e.target.classList.toggle("active", onlyQuestionCandidates);
+    invalidateVisibleItemsCache();
+    renderList();
+    persistViewState();
+  };
+  const sortMostFrequentBtn = document.getElementById("sort-most-frequent-btn");
+  if (sortMostFrequentBtn) sortMostFrequentBtn.onclick = (e) => {
+    sortMostFrequentFirst = !sortMostFrequentFirst;
+    e.target.classList.toggle("active", sortMostFrequentFirst);
+    invalidateVisibleItemsCache();
+    renderList();
+    persistViewState();
+  };
+  const exportSectionBtn = document.getElementById("export-section-md");
   if (exportSectionBtn) exportSectionBtn.onclick = () => exportCurrentSectionMarkdown();
-  const sheetCloseBtn = document.getElementById('mobile-sheet-close');
+  const sheetCloseBtn = document.getElementById("mobile-sheet-close");
   if (sheetCloseBtn) sheetCloseBtn.onclick = () => closeMobileSheet();
-  const sheetBackdrop = document.getElementById('mobile-card-backdrop');
+  const sheetBackdrop = document.getElementById("mobile-card-backdrop");
   if (sheetBackdrop) sheetBackdrop.onclick = () => closeMobileSheet();
-  container.querySelectorAll('.filter-chip[data-subcat]').forEach(chip => {
+  container.querySelectorAll(".filter-chip[data-subcat]").forEach((chip) => {
     chip.onclick = () => {
       const sub = chip.dataset.subcat;
       if (activeFilters.has(sub)) activeFilters.delete(sub);
       else activeFilters.add(sub);
-      chip.classList.toggle('active');
+      chip.classList.toggle("active");
       invalidateVisibleItemsCache();
       renderList();
       persistViewState();
     };
   });
-
   renderList();
   renderRightContent();
 }
-
 function itemMatchesFilters(it) {
   if (searchQuery) {
     const qRaw = currentListSearchRaw || searchQuery.toLowerCase();
@@ -5584,40 +4828,35 @@ function itemMatchesFilters(it) {
     const hitNorm = qNorm && it._searchNorm && it._searchNorm.includes(qNorm);
     if (!hitRaw && !hitNorm) return false;
   }
-  if (currentEntity === 'names' && activeFilters.size > 0) {
+  if (currentEntity === "names" && activeFilters.size > 0) {
     if (!activeFilters.has(it.subcategory)) return false;
   }
-  if (onlyQuestionCandidates && !(it.head || '').startsWith('?')) return false;
+  if (onlyQuestionCandidates && !(it.head || "").startsWith("?")) return false;
   if (onlyDiscussed && !it.discussed) return false;
   return true;
 }
-
 function buildVisibleItemsCacheKey() {
-  const filters = Array.from(activeFilters).sort().join('|');
+  const filters = Array.from(activeFilters).sort().join("|");
   const conf = ENTITY_TYPES[currentEntity];
   const itemCount = conf && Array.isArray(conf.items) ? conf.items.length : 0;
   return [
     currentEntity,
-    searchQuery || '',
-    sortMostFrequentFirst ? 'freq-desc' : 'alpha',
-    onlyDiscussed ? '1' : '0',
-    onlyQuestionCandidates ? '1' : '0',
+    searchQuery || "",
+    sortMostFrequentFirst ? "freq-desc" : "alpha",
+    onlyDiscussed ? "1" : "0",
+    onlyQuestionCandidates ? "1" : "0",
     filters,
     String(itemCount),
-    selectedItem || '',
-    selectedItemType || '',
-  ].join('::');
+    selectedItem || "",
+    selectedItemType || ""
+  ].join("::");
 }
-
 function getVisibleItemsForCurrentEntity() {
   const cacheKey = buildVisibleItemsCacheKey();
-  if (visibleItemsCache && visibleItemsCache.key === cacheKey) {
-    return visibleItemsCache.value;
-  }
-
-  const items = (ENTITY_TYPES[currentEntity] && ENTITY_TYPES[currentEntity].items) || [];
-  currentListSearchRaw = searchQuery ? searchQuery.toLowerCase() : '';
-  currentListSearchNorm = searchQuery ? normalizeHeadForMatch(searchQuery) : '';
+  if (visibleItemsCache && visibleItemsCache.key === cacheKey) return visibleItemsCache.value;
+  const items = ENTITY_TYPES[currentEntity] && ENTITY_TYPES[currentEntity].items || [];
+  currentListSearchRaw = searchQuery ? searchQuery.toLowerCase() : "";
+  currentListSearchNorm = searchQuery ? normalizeHeadForMatch(searchQuery) : "";
   let filtered = items.filter(itemMatchesFilters);
   filtered.sort((a, b) => {
     if (sortMostFrequentFirst) {
@@ -5626,34 +4865,41 @@ function getVisibleItemsForCurrentEntity() {
     }
     return compareItemsByHead(a, b);
   });
-  const candidateCount = filtered.reduce((acc, it) => acc + (((it.head || '').startsWith('?')) ? 1 : 0), 0);
-  const maxResults = currentEntity === 'all' ? 5000 : (currentEntity === 'lexicon_reverse' ? 2500 : 800);
+  const candidateCount = filtered.reduce((acc, it) => acc + ((it.head || "").startsWith("?") ? 1 : 0), 0);
+  const maxResults = currentEntity === "all" ? 5e3 : currentEntity === "lexicon_reverse" ? 2500 : 800;
   let truncated = false;
   if (filtered.length > maxResults) {
     const fullFiltered = filtered;
     filtered = fullFiltered.slice(0, maxResults);
     if (selectedItem) {
-      const selected = fullFiltered.find(it => {
+      const selected = fullFiltered.find((it) => {
         if (!it || it.head !== selectedItem) return false;
-        if (currentEntity !== 'all') return true;
+        if (currentEntity !== "all") return true;
         return (it._entityType || currentEntity) === (selectedItemType || currentEntity);
       });
       if (selected && !filtered.includes(selected)) filtered.push(selected);
     }
     truncated = true;
   }
-  const value = { filtered, truncated, maxResults, candidateCount };
-  visibleItemsCache = { key: cacheKey, value };
+  const value = {
+    filtered,
+    truncated,
+    maxResults,
+    candidateCount
+  };
+  visibleItemsCache = {
+    key: cacheKey,
+    value
+  };
   return value;
 }
-
 function navigateCardByDelta(delta) {
-  if (currentTab !== 'list' || rightPaneMode !== 'card') return false;
+  if (currentTab !== "list" || rightPaneMode !== "card") return false;
   const { filtered } = getVisibleItemsForCurrentEntity();
   if (!filtered.length) return false;
-  let idx = filtered.findIndex(it => {
+  let idx = filtered.findIndex((it) => {
     if (!it || it.head !== selectedItem) return false;
-    if (currentEntity !== 'all') return true;
+    if (currentEntity !== "all") return true;
     return (it._entityType || currentEntity) === (selectedItemType || currentEntity);
   });
   if (idx < 0) idx = delta > 0 ? -1 : filtered.length;
@@ -5664,27 +4910,33 @@ function navigateCardByDelta(delta) {
   selectListItem(next, next._entityType || currentEntity);
   return true;
 }
-
 function getCardNavigationState() {
   const { filtered } = getVisibleItemsForCurrentEntity();
-  if (!filtered.length) return { canPrev: false, canNext: false };
-  const idx = filtered.findIndex(it => {
+  if (!filtered.length) return {
+    canPrev: false,
+    canNext: false
+  };
+  const idx = filtered.findIndex((it) => {
     if (!it || it.head !== selectedItem) return false;
-    if (currentEntity !== 'all') return true;
+    if (currentEntity !== "all") return true;
     return (it._entityType || currentEntity) === (selectedItemType || currentEntity);
   });
-  if (idx < 0) return { canPrev: false, canNext: false };
-  return { canPrev: idx > 0, canNext: idx < filtered.length - 1 };
+  if (idx < 0) return {
+    canPrev: false,
+    canNext: false
+  };
+  return {
+    canPrev: idx > 0,
+    canNext: idx < filtered.length - 1
+  };
 }
-
 function normalizeSubjectCrosslinkHead(value) {
-  return String(value || '').trim().toLocaleLowerCase('ru');
+  return String(value || "").trim().toLocaleLowerCase("ru");
 }
-
 function pickBestCrosslinkByPageOverlap(subjectPages, pageIndex) {
   const pages = Array.isArray(subjectPages) ? subjectPages : [];
-  if (!pages.length || !(pageIndex instanceof Map)) return '';
-  const scoreByHead = new Map();
+  if (!pages.length || !(pageIndex instanceof Map)) return "";
+  const scoreByHead = /* @__PURE__ */ new Map();
   for (const rawPage of pages) {
     const page = parseInt(rawPage, 10);
     if (!Number.isFinite(page)) continue;
@@ -5695,7 +4947,7 @@ function pickBestCrosslinkByPageOverlap(subjectPages, pageIndex) {
       scoreByHead.set(head, (scoreByHead.get(head) || 0) + 1);
     }
   }
-  let bestHead = '';
+  let bestHead = "";
   let bestScore = -1;
   for (const [head, score] of scoreByHead.entries()) {
     if (score > bestScore) {
@@ -5707,26 +4959,25 @@ function pickBestCrosslinkByPageOverlap(subjectPages, pageIndex) {
   }
   return bestHead;
 }
-
 function getSubjectCrosslinksLookup() {
   if (subjectCrosslinksLookupCache) return subjectCrosslinksLookupCache;
   const typeMeta = {
-    lexicon: '\u041b\u0435\u043a\u0441\u0438\u043a\u043e\u043d',
-    names: '\u041f\u0435\u0440\u0441\u043e\u043d\u0430\u043b\u0438\u0438',
-    languages: '\u042f\u0437\u044b\u043a\u0438',
+    lexicon: "Лексикон",
+    names: "Персоналии",
+    languages: "Языки"
   };
   const sources = [
-    ['lexicon', APP_DATA.lexicon || []],
-    ['names', APP_DATA.names || []],
-    ['languages', APP_DATA.languages || []],
+    ["lexicon", APP_DATA.lexicon || []],
+    ["names", APP_DATA.names || []],
+    ["languages", APP_DATA.languages || []]
   ];
   const exactLookup = {};
   const pageLookup = {};
   for (const [type, list] of sources) {
-    exactLookup[type] = new Map();
-    pageLookup[type] = new Map();
+    exactLookup[type] = /* @__PURE__ */ new Map();
+    pageLookup[type] = /* @__PURE__ */ new Map();
     for (const it of Array.isArray(list) ? list : []) {
-      const head = String(it && it.head ? it.head : '').trim();
+      const head = String(it && it.head ? it.head : "").trim();
       if (!head) continue;
       const exactKey = normalizeSubjectCrosslinkHead(head);
       if (!exactKey) continue;
@@ -5741,10 +4992,10 @@ function getSubjectCrosslinksLookup() {
       }
     }
   }
-  const bySubject = new Map();
+  const bySubject = /* @__PURE__ */ new Map();
   const subjects = Array.isArray(APP_DATA.subject_index) ? APP_DATA.subject_index : [];
   for (const subj of subjects) {
-    const head = String(subj && subj.head ? subj.head : '').trim();
+    const head = String(subj && subj.head ? subj.head : "").trim();
     if (!head) continue;
     const subjectNorm = normalizeHeadForMatch(head);
     if (!subjectNorm) continue;
@@ -5752,14 +5003,22 @@ function getSubjectCrosslinksLookup() {
     const links = [];
     for (const [type] of sources) {
       const exactHeads = exactLookup[type].get(exactKey) || [];
-      if (exactHeads.length) links.push({ type, label: typeMeta[type], head: exactHeads[0] });
+      if (exactHeads.length) links.push({
+        type,
+        label: typeMeta[type],
+        head: exactHeads[0]
+      });
     }
     if (!links.length) {
       const subjectPages = sortUniquePages(subj.page_list || []);
       for (const [type] of sources) {
         const fallbackHead = pickBestCrosslinkByPageOverlap(subjectPages, pageLookup[type]);
         if (!fallbackHead) continue;
-        links.push({ type, label: typeMeta[type], head: fallbackHead });
+        links.push({
+          type,
+          label: typeMeta[type],
+          head: fallbackHead
+        });
       }
     }
     if (links.length) bySubject.set(subjectNorm, links);
@@ -5767,7 +5026,6 @@ function getSubjectCrosslinksLookup() {
   subjectCrosslinksLookupCache = { bySubject };
   return subjectCrosslinksLookupCache;
 }
-
 function buildSubjectCrosslinks(head) {
   const norm = normalizeHeadForMatch(head);
   if (!norm) return [];
@@ -5776,14 +5034,13 @@ function buildSubjectCrosslinks(head) {
   const links = lookup.bySubject.get(norm);
   return Array.isArray(links) ? links : [];
 }
-
 function getSubjectByLexiconIndex() {
   if (SUBJECT_BY_LEXICON_INDEX) return SUBJECT_BY_LEXICON_INDEX;
   const idx = {};
-  const byPage = new Map();
+  const byPage = /* @__PURE__ */ new Map();
   const subjects = Array.isArray(APP_DATA && APP_DATA.subject_index) ? APP_DATA.subject_index : [];
   for (const s of subjects) {
-    const head = String(s && s.head ? s.head : '').trim();
+    const head = String(s && s.head ? s.head : "").trim();
     if (!head) continue;
     const key = normalizeHeadForMatch(head);
     if (!key) continue;
@@ -5797,99 +5054,478 @@ function getSubjectByLexiconIndex() {
       byPage.get(page).push(head);
     }
   }
-  for (const key of Object.keys(idx)) {
-    idx[key].sort(compareHeadsRu);
-  }
-  SUBJECT_BY_LEXICON_INDEX = { exact: idx, byPage };
+  for (const key of Object.keys(idx)) idx[key].sort(compareHeadsRu);
+  SUBJECT_BY_LEXICON_INDEX = {
+    exact: idx,
+    byPage
+  };
   return SUBJECT_BY_LEXICON_INDEX;
 }
-
+function videoBacklinkKey(type, head) {
+  const t = type === "subject_index" ? "subject" : String(type || "");
+  return t + "\0" + String(head || "");
+}
+var DEDUPED_VIDEO_CATALOG = null;
+function getDedupedVideoCatalog() {
+  if (DEDUPED_VIDEO_CATALOG) return DEDUPED_VIDEO_CATALOG;
+  const catalog = Array.isArray(APP_DATA && APP_DATA.video_catalog) ? APP_DATA.video_catalog : [];
+  if (!catalog.length) return [];
+  const byId = /* @__PURE__ */ new Map();
+  for (const v of catalog) {
+    if (!v || !v.url) continue;
+    const key = v.id || v.url;
+    const prev = byId.get(key);
+    if (!prev || (v.related_entities || []).length > (prev.related_entities || []).length) byId.set(key, v);
+  }
+  DEDUPED_VIDEO_CATALOG = Array.from(byId.values());
+  return DEDUPED_VIDEO_CATALOG;
+}
+function getVideoBacklinkIndex() {
+  if (VIDEO_BACKLINK_INDEX) return VIDEO_BACKLINK_INDEX;
+  const catalog = getDedupedVideoCatalog();
+  // Do not memoize before the catalog module (99-extra) is loaded, otherwise
+  // an empty index would be cached permanently. Return a transient empty map.
+  if (!catalog.length) return /* @__PURE__ */ new Map();
+  const idx = /* @__PURE__ */ new Map();
+  for (const v of catalog) {
+    if (!v || !v.url) continue;
+    const rels = Array.isArray(v.related_entities) ? v.related_entities : [];
+    const seen = /* @__PURE__ */ new Set();
+    for (const rel of rels) {
+      if (!rel || !rel.head || !rel.type) continue;
+      const key = videoBacklinkKey(rel.type, rel.head);
+      if (seen.has(key)) continue; // one video counts once per entity
+      seen.add(key);
+      if (!idx.has(key)) idx.set(key, []);
+      // carry the per-entity transcript timecode (B3.2), if any
+      idx.get(key).push({ v, t: Number.isFinite(rel.t) ? rel.t : null });
+    }
+  }
+  // Newest first; stable tiebreak by title.
+  for (const list of idx.values()) {
+    list.sort((a, b) => {
+      const da = String(a.v.date || ""), db = String(b.v.date || "");
+      if (da !== db) return da < db ? 1 : -1;
+      return String(a.v.title || "").localeCompare(String(b.v.title || ""), "ru");
+    });
+  }
+  VIDEO_BACKLINK_INDEX = idx;
+  return VIDEO_BACKLINK_INDEX;
+}
+function formatVideoDuration(sec) {
+  const total = Number(sec);
+  if (!Number.isFinite(total) || total <= 0) return "";
+  const h = Math.floor(total / 3600);
+  const m = Math.floor(total % 3600 / 60);
+  const s = Math.floor(total % 60);
+  const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
+  return (h > 0 ? h + ":" : "") + mm + ":" + String(s).padStart(2, "0");
+}
+function sanitizeVideoId(raw) {
+  const id = String(raw || "").trim();
+  return /^[A-Za-z0-9_-]{6,32}$/.test(id) ? id : "";
+}
+function getCurrentVideoId() {
+  if (typeof window !== "undefined" && window.currentVideoId != null) return String(window.currentVideoId || "");
+  return "";
+}
+function setUiCurrentVideoId(id) {
+  const safe = sanitizeVideoId(id);
+  if (typeof window !== "undefined") window.currentVideoId = safe;
+  return safe;
+}
+function findVideoById(id) {
+  const key = sanitizeVideoId(id);
+  if (!key) return null;
+  const catalog = getDedupedVideoCatalog();
+  for (const v of catalog) {
+    if (!v) continue;
+    if (v.id === key || v.url === key) return v;
+  }
+  return null;
+}
+function buildVideoDetailHash(id) {
+  const safe = sanitizeVideoId(id);
+  if (!safe) return buildCanonicalHash(["materials", "video"]);
+  return buildCanonicalHash(["materials", "video", safe]);
+}
+function youtubeUrlWithT(url, t) {
+  const base = String(url || "");
+  if (!base) return "";
+  if (!Number.isFinite(t) || t <= 0) return base;
+  return base + (base.includes("?") ? "&" : "?") + "t=" + Math.floor(t) + "s";
+}
+function getVideoRelatedChapters(video, limit = 8) {
+  if (!video) return [];
+  const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+  const out = [];
+  for (let i = 0; i < chapters.length; i++) {
+    const hits = getChapterRelatedVideos(i, 9999);
+    const found = hits.find((e) => e && e.v && (e.v.id === video.id || e.v.url === video.url));
+    if (found) out.push({ chapter: chapters[i], index: i, score: found.score });
+  }
+  out.sort((a, b) => b.score - a.score || a.index - b.index);
+  return out.slice(0, limit);
+}
+function openVideoDetail(id) {
+  closeGlobalSearchResults();
+  currentEntity = "materials";
+  currentTab = "video";
+  setUiCurrentVideoId(id);
+  selectedItem = null;
+  selectedItemType = null;
+  currentGlossaryTerm = "";
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
+  rightPaneMode = "histogram";
+  renderEntitySwitcher();
+  renderTabs();
+  renderContent();
+  syncNavigationState();
+}
+function openVideoGallery() {
+  closeGlobalSearchResults();
+  currentEntity = "materials";
+  currentTab = "video";
+  setUiCurrentVideoId("");
+  selectedItem = null;
+  selectedItemType = null;
+  currentGlossaryTerm = "";
+  currentScholarAnchor = "";
+  pendingScholarAnchor = "";
+  rightPaneMode = "histogram";
+  renderEntitySwitcher();
+  renderTabs();
+  renderContent();
+  syncNavigationState();
+}
+function renderVideoDetailPanel(container, videoId) {
+  const safeId = sanitizeVideoId(videoId);
+  const video = findVideoById(safeId);
+  const galleryHash = buildCanonicalHash(["materials", "video"]);
+  if (!video) {
+    container.innerHTML = `<div class="panel active video-detail"><div class="video-detail-inner">
+    <a class="video-detail-back" href="${escapeHtml(galleryHash)}">← К видеогалерее</a>
+    <h2 class="video-detail-title">Видео не найдено</h2>
+    <div class="video-detail-intro">В каталоге нет записи с id «${escapeHtml(safeId || videoId || "")}».</div>
+  </div></div>`;
+    const back = container.querySelector(".video-detail-back");
+    if (back) bindActionWithKeyboard(back, () => openVideoGallery());
+    return;
+  }
+  const dur = formatVideoDuration(video.duration);
+  const dateStr = formatVideoDate(video.date);
+  const metaParts = [dateStr, dur ? `⏱ ${dur}` : ""].filter(Boolean);
+  const rels = Array.isArray(video.related_entities) ? video.related_entities : [];
+  const seenRel = new Set();
+  const uniqRels = [];
+  for (const r of rels) {
+    if (!r || !r.head || !r.type) continue;
+    const t = r.type === "subject_index" ? "subject" : r.type;
+    const key = t + "\0" + r.head;
+    if (seenRel.has(key)) continue;
+    seenRel.add(key);
+    uniqRels.push({ type: t, head: r.head, t: Number.isFinite(r.t) ? r.t : null });
+  }
+  const chapters = getVideoRelatedChapters(video, 8);
+  let chipsHtml = "";
+  for (const r of uniqRels.slice(0, 24)) {
+    const ytT = Number.isFinite(r.t) && r.t > 0 ? r.t : null;
+    const chipTitle = ytT != null ? `упоминание ≈ ${formatVideoDuration(ytT)}` : "";
+    chipsHtml += `<a class="video-detail-chip" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type || "all", r.head))}"${chipTitle ? ` title="${escapeHtml(chipTitle)}"` : ""}>${escapeHtml(r.head)}${ytT != null ? `<span class="video-detail-chip-t">▸ ${escapeHtml(formatVideoDuration(ytT))}</span>` : ""}</a>`;
+  }
+  let chaptersHtml = "";
+  if (chapters.length) {
+    for (const c of chapters) {
+      const name = c.chapter && c.chapter.name ? c.chapter.name : `Глава ${c.index}`;
+      const pages = c.chapter ? `${c.chapter.start || ""}–${c.chapter.end || ""}` : "";
+      chaptersHtml += `<a class="video-detail-chapter" data-lecture-idx="${c.index}" href="${escapeHtml(buildLecturePageHash(c.index))}">${escapeHtml(name)}${pages ? ` <span class="video-detail-chapter-pages">стр. ${escapeHtml(String(pages))}</span>` : ""} <span class="video-detail-chapter-score">· ${c.score} совп.</span></a>`;
+    }
+  } else {
+    chaptersHtml = `<div class="video-detail-empty">Тематическое пересечение с главами книги не найдено (по связанным сущностям).</div>`;
+  }
+  const ytUrl = String(video.url || "");
+  container.innerHTML = `<div class="panel active video-detail" data-video-id="${escapeHtml(safeId)}"><div class="video-detail-inner">
+    <a class="video-detail-back" href="${escapeHtml(galleryHash)}">← К видеогалерее</a>
+    <h2 class="video-detail-title">${escapeHtml(String(video.title || ""))}</h2>
+    <div class="video-detail-meta">${escapeHtml(metaParts.join(" · "))}</div>
+    <div class="video-detail-actions">
+      <button type="button" class="video-detail-watch" data-video-id="${escapeHtml(safeId)}">Смотреть</button>
+      <a class="video-detail-yt" href="${escapeHtml(ytUrl)}" target="_blank" rel="noopener noreferrer">Смотреть на YouTube</a>
+    </div>
+    <div class="video-detail-section">
+      <h3 class="video-detail-section-title">Связанные сущности <span class="video-detail-count">${uniqRels.length}</span></h3>
+      <div class="video-detail-chips">${chipsHtml || `<div class="video-detail-empty">Связанные сущности не размечены.</div>`}</div>
+    </div>
+    <div class="video-detail-section">
+      <h3 class="video-detail-section-title">Пересечение с главами книги</h3>
+      <div class="video-detail-chapter-note">Публичная лекция на YouTube — не запись главы из книги «Из жизни слов и языков». Ниже главы книги, с которыми у видео есть тематическое пересечение по размеченным сущностям (урок Уитни: совпадение тем ≠ тождество текста).</div>
+      <div class="video-detail-chapters">${chaptersHtml}</div>
+    </div>
+  </div></div>`;
+  const back = container.querySelector(".video-detail-back");
+  if (back) bindActionWithKeyboard(back, () => openVideoGallery());
+  const watchBtn = container.querySelector(".video-detail-watch");
+  if (watchBtn) watchBtn.onclick = () => openVideoModal(watchBtn.dataset.videoId || "");
+  container.querySelectorAll(".video-detail-chip").forEach((chip) => {
+    bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
+  });
+  container.querySelectorAll(".video-detail-chapter").forEach((el) => {
+    bindActionWithKeyboard(el, () => openLecturePage(parseInt(el.dataset.lectureIdx || "0", 10) || 0));
+  });
+}
+function isVideoModalOpen() {
+  const root = document.getElementById("video-player-modal");
+  if (!root) return false;
+  if (root.classList && typeof root.classList.contains === "function") return root.classList.contains("open");
+  return /\bopen\b/.test(String(root.className || ""));
+}
+function renderVideoModalTimecodes(video) {
+  const list = document.getElementById("video-modal-tc-list");
+  if (!list) return;
+  list.textContent = "";
+  const timecodes = Array.isArray(video && video.timecodes) ? video.timecodes : [];
+  if (!timecodes.length) {
+    const empty = document.createElement("div");
+    empty.className = "video-modal-tc-empty";
+    empty.textContent = "Разметка глав пока не загружена.";
+    list.appendChild(empty);
+    return;
+  }
+  for (const tc of timecodes) {
+    const seconds = Number(tc && tc.time);
+    const safeSeconds = Number.isFinite(seconds) && seconds >= 0 ? Math.floor(seconds) : 0;
+    const item = document.createElement("a");
+    item.className = "video-modal-tc-item";
+    item.href = youtubeUrlWithT(video.url, safeSeconds) || "#";
+    item.target = "_blank";
+    item.rel = "noopener noreferrer";
+    const time = document.createElement("span");
+    time.className = "video-modal-tc-time";
+    time.textContent = formatVideoDuration(safeSeconds) || "0:00";
+    const label = document.createElement("span");
+    label.className = "video-modal-tc-label";
+    label.textContent = String((tc && tc.label) || "");
+    item.appendChild(time);
+    item.appendChild(label);
+    // Step 4.6: no postMessage seek API is wired to the plain (no-autoplay)
+    // iframe embed, so each item stays a real external `?t=` deep link — no
+    // JS click handler needed; native <a> navigation + keyboard already work.
+    list.appendChild(item);
+  }
+}
+function renderVideoModalPlayer(video) {
+  const host = document.getElementById("video-modal-player-host");
+  if (!host) return;
+  host.textContent = "";
+  const ytId = sanitizeVideoId(video && video.id);
+  if (!ytId) return;
+  const iframe = document.createElement("iframe");
+  iframe.className = "video-modal-iframe";
+  // autoplay=0: no autoplay on open per D3/D4 — playback starts on explicit
+  // user gesture (the visible YouTube play button inside the frame).
+  iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(ytId)}?autoplay=0&rel=0`;
+  iframe.title = String((video && video.title) || "Видео");
+  iframe.setAttribute("allowfullscreen", "");
+  iframe.setAttribute("allow", "fullscreen");
+  iframe.loading = "lazy";
+  host.appendChild(iframe);
+}
+function openVideoModal(id) {
+  const video = findVideoById(id);
+  if (!video) return false;
+  const root = document.getElementById("video-player-modal");
+  if (!root) return false;
+  if (isVideoModalOpen() && videoModalCurrentId === sanitizeVideoId(id)) return true;
+  videoModalCurrentId = sanitizeVideoId(id);
+  videoModalReturnFocus = typeof document !== "undefined" && document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  const titleEl = document.getElementById("video-modal-title");
+  if (titleEl) titleEl.textContent = String(video.title || "");
+  renderVideoModalPlayer(video);
+  renderVideoModalTimecodes(video);
+  if (typeof root.removeAttribute === "function") root.removeAttribute("hidden");
+  if (root.classList && typeof root.classList.add === "function") root.classList.add("open");
+  safeSetAttr(root, "aria-hidden", "false");
+  const content = document.getElementById("content");
+  if (content) safeSetAttr(content, "aria-hidden", "true");
+  const header = document.querySelector("header");
+  if (header) safeSetAttr(header, "aria-hidden", "true");
+  const closeBtn = document.getElementById("video-modal-close");
+  if (closeBtn && typeof closeBtn.focus === "function") closeBtn.focus();
+  return true;
+}
+function closeVideoModal(restoreFocus = true) {
+  const root = document.getElementById("video-player-modal");
+  if (!root) return false;
+  if (!isVideoModalOpen()) return false;
+  if (root.classList && typeof root.classList.remove === "function") root.classList.remove("open");
+  safeSetAttr(root, "aria-hidden", "true");
+  if (typeof root.setAttribute === "function") root.setAttribute("hidden", "");
+  const host = document.getElementById("video-modal-player-host");
+  if (host) host.textContent = "";
+  const content = document.getElementById("content");
+  if (content) safeSetAttr(content, "aria-hidden", "false");
+  const header = document.querySelector("header");
+  if (header) safeSetAttr(header, "aria-hidden", "false");
+  videoModalCurrentId = "";
+  const returnTo = videoModalReturnFocus;
+  videoModalReturnFocus = null;
+  if (restoreFocus && returnTo && typeof returnTo.focus === "function") returnTo.focus();
+  return true;
+}
+function getVideoModalFocusable() {
+  const root = document.getElementById("video-player-modal");
+  if (!root || typeof root.querySelectorAll !== "function") return [];
+  const selector = "a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex='-1'])";
+  return Array.from(root.querySelectorAll(selector)).filter((el) => el instanceof HTMLElement);
+}
+function onVideoModalKeydown(e) {
+  if (!e || !isVideoModalOpen()) return;
+  if (e.key === "Escape") {
+    closeVideoModal();
+    e.preventDefault();
+    return;
+  }
+  if (e.key !== "Tab") return;
+  const focusable = getVideoModalFocusable();
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  const active = document.activeElement;
+  if (e.shiftKey) {
+    if (active === first || !focusable.includes(active)) {
+      last.focus();
+      e.preventDefault();
+    }
+  } else if (active === last) {
+    first.focus();
+    e.preventDefault();
+  }
+}
+function wireVideoModal() {
+  const root = document.getElementById("video-player-modal");
+  if (!root) return;
+  safeSetAttr(root, "aria-hidden", isVideoModalOpen() ? "false" : "true");
+  const backdrop = document.getElementById("video-modal-backdrop");
+  if (backdrop) backdrop.onclick = () => closeVideoModal();
+  const closeBtn = document.getElementById("video-modal-close");
+  if (closeBtn) closeBtn.onclick = () => closeVideoModal();
+  if (!root._videoModalKeydownWired) {
+    root.addEventListener("keydown", onVideoModalKeydown);
+    root._videoModalKeydownWired = true;
+  }
+}
+var CHAPTER_VIDEO_CACHE = /* @__PURE__ */ new Map();
+function getChapterRelatedVideos(chapterIdx, limit = 6) {
+  if (CHAPTER_VIDEO_CACHE.has(chapterIdx)) return CHAPTER_VIDEO_CACHE.get(chapterIdx).slice(0, limit);
+  const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+  const ch = chapters[chapterIdx];
+  const catalog = getDedupedVideoCatalog();
+  if (!ch || !catalog.length) {
+    CHAPTER_VIDEO_CACHE.set(chapterIdx, []);
+    return [];
+  }
+  const start = parseInt(ch.start, 10) || 1;
+  const end = parseInt(ch.end, 10) || start;
+  const types = ["names", "toponyms", "ethnonyms", "languages", "subject_index"];
+  const heads = /* @__PURE__ */ new Set();
+  for (const t of types) for (const it of (APP_DATA[t] || [])) {
+    for (const p of (it.page_list || [])) {
+      const pg = parseInt(p, 10);
+      if (Number.isFinite(pg) && pg >= start && pg <= end) {
+        heads.add(it.head);
+        break;
+      }
+    }
+  }
+  const scored = [];
+  for (const v of catalog) {
+    if (!v || !v.url) continue;
+    const seen = /* @__PURE__ */ new Set();
+    let score = 0;
+    for (const rel of (v.related_entities || [])) {
+      if (rel && heads.has(rel.head) && !seen.has(rel.head)) {
+        seen.add(rel.head);
+        score += 1;
+      }
+    }
+    if (score > 0) scored.push({ v, score });
+  }
+  scored.sort((a, b) => b.score - a.score || String(b.v.date || "").localeCompare(String(a.v.date || "")));
+  CHAPTER_VIDEO_CACHE.set(chapterIdx, scored);
+  return scored.slice(0, limit);
+}
 function appendListItemContent(item, it, itemType, showTypeLabel) {
   if (!item || !it) return;
-  const isNameItem = itemType === 'names' || (currentEntity === 'all' && itemType === 'names');
-  if (isNameItem && it.subcategory) {
-    const dot = document.createElement('span');
+  if ((itemType === "names" || currentEntity === "all" && itemType === "names") && it.subcategory) {
+    const dot = document.createElement("span");
     dot.className = `cat-dot ${getCategoryColorClass(it.subcategory)}`;
     item.appendChild(dot);
   }
-
-  const head = document.createElement('span');
-  head.className = `head ${it.discussed ? 'discussed' : ''}${itemType === 'lexicon_reverse' ? ' reverse-head' : ''}`;
-  head.innerHTML = renderAccentSafe(it.head);
-  if (/[\u0300-\u036f]/.test(String(it.head || '')) && !head.querySelector('.accent-safe')) {
-    head.innerHTML = `<span class="accent-safe">${escapeHtml(it.head)}</span>`;
-  }
-
-  const typeLabel = document.createElement('span');
-  typeLabel.className = 'entity-type-tag';
-  typeLabel.textContent = it._entityLabel || '';
-
-  const moderatorMark = document.createElement('span');
-  moderatorMark.className = 'moderator-mark';
-  moderatorMark.textContent = '· мод.';
-
-  const pagesCount = document.createElement('span');
-  pagesCount.className = `pages-count${itemType === 'lexicon_reverse' ? ' reverse-pages-count' : ''}`;
+  const head = document.createElement("span");
+  head.className = `head ${it.discussed ? "discussed" : ""}${itemType === "lexicon_reverse" ? " reverse-head" : ""}`;
+  appendAccentSafeText(head, it.head);
+  const typeLabel = document.createElement("span");
+  typeLabel.className = "entity-type-tag";
+  typeLabel.textContent = it._entityLabel || "";
+  const moderatorMark = document.createElement("span");
+  moderatorMark.className = "moderator-mark";
+  moderatorMark.textContent = "· мод.";
+  const pagesCount = document.createElement("span");
+  pagesCount.className = `pages-count${itemType === "lexicon_reverse" ? " reverse-pages-count" : ""}`;
   pagesCount.textContent = String((it.page_list || []).length);
-
-  const bookChip = document.createElement('span');
-  bookChip.className = 'list-book-chip';
+  const bookChip = document.createElement("span");
+  bookChip.className = "list-book-chip";
   const sourceLabel = getBookLabelForSearch(it.book_id || it.bookId || getActiveBook().book_id);
   bookChip.textContent = sourceLabel;
   const hoverParts = [];
   if (it._entityLabel) hoverParts.push(`Указатель: ${it._entityLabel}`);
   if (sourceLabel) hoverParts.push(`Источник: ${sourceLabel}`);
-  if (hoverParts.length) safeSetAttr(item, 'title', hoverParts.join('\n'));
-
-  if (itemType === 'lexicon_reverse') {
+  if (hoverParts.length) safeSetAttr(item, "title", hoverParts.join("\n"));
+  if (itemType === "lexicon_reverse") {
     item.appendChild(pagesCount);
     item.appendChild(head);
-  } else {
-    item.appendChild(head);
-  }
-  if (showTypeLabel && typeLabel.textContent && currentEntity !== 'all') item.appendChild(typeLabel);
+  } else item.appendChild(head);
+  if (showTypeLabel && typeLabel.textContent && currentEntity !== "all") item.appendChild(typeLabel);
   if (it.is_moderator) item.appendChild(moderatorMark);
-  if (itemType !== 'lexicon_reverse' && currentEntity !== 'all') item.appendChild(bookChip);
-  if (itemType !== 'lexicon_reverse') item.appendChild(pagesCount);
-
-  if (itemType === 'subject' && currentEntity !== 'all') {
+  if (itemType !== "lexicon_reverse" && currentEntity !== "all") item.appendChild(bookChip);
+  if (itemType !== "lexicon_reverse") item.appendChild(pagesCount);
+  if (itemType === "subject" && currentEntity !== "all") {
     const links = buildSubjectCrosslinks(it.head);
     if (links.length) {
-      const crosslinks = document.createElement('div');
-      crosslinks.className = 'subject-crosslinks';
-      const label = document.createElement('span');
-      label.className = 'crosslinks-label';
-      label.textContent = 'Смотрите также:';
+      const crosslinks = document.createElement("div");
+      crosslinks.className = "subject-crosslinks";
+      const label = document.createElement("span");
+      label.className = "crosslinks-label";
+      label.textContent = "Смотрите также:";
       crosslinks.appendChild(label);
       for (const lnk of links) {
-        const link = document.createElement('a');
-        link.className = 'crosslink-badge';
+        const link = document.createElement("a");
+        link.className = "crosslink-badge";
         link.href = buildItemHash(lnk.type, lnk.head);
-        link.dataset.type = String(lnk.type || '');
-        link.dataset.head = String(lnk.head || '');
-        link.textContent = `${lnk.label || ''}: ${lnk.head || ''}`;
+        link.dataset.type = String(lnk.type || "");
+        link.dataset.head = String(lnk.head || "");
+        link.textContent = `${lnk.label || ""}: ${lnk.head || ""}`;
         crosslinks.appendChild(link);
       }
       item.appendChild(crosslinks);
     }
   }
 }
-
 function selectListItem(it, fallbackType) {
   selectedItem = it.head;
   selectedItemType = it._entityType || fallbackType || currentEntity;
   rememberRecentItem(selectedItemType, selectedItem);
-  rightPaneMode = 'card';
+  rightPaneMode = "card";
   renderList();
   renderRightContent();
   syncNavigationState();
 }
-
 function appendItemsWithLetters(list, items, fallbackType) {
   const rows = buildListRowsWithLetters(items);
-  const tmp = document.createElement('div');
+  const tmp = document.createElement("div");
   for (const row of rows) appendListRow(tmp, row, fallbackType, 1);
-  if (typeof document.createDocumentFragment === 'function') {
+  if (typeof document.createDocumentFragment === "function") {
     const frag = document.createDocumentFragment();
     while (tmp.firstChild) frag.appendChild(tmp.firstChild);
     list.appendChild(frag);
@@ -5897,73 +5533,70 @@ function appendItemsWithLetters(list, items, fallbackType) {
   }
   while (tmp.firstChild) list.appendChild(tmp.firstChild);
 }
-
 function buildListRowsWithLetters(items) {
   const rows = [];
   let prevLetter = null;
   for (const it of items) {
     const itemType = it && it._entityType ? it._entityType : currentEntity;
-    const letter = itemType === 'lexicon_reverse' ? getLastLetter(it.head) : getFirstLetter(it.head);
+    const letter = itemType === "lexicon_reverse" ? getLastLetter(it.head) : getFirstLetter(it.head);
     if (letter !== prevLetter) {
-      rows.push({ kind: 'header', letter, itemType });
+      rows.push({
+        kind: "header",
+        letter,
+        itemType
+      });
       prevLetter = letter;
     }
-    rows.push({ kind: 'item', it });
+    rows.push({
+      kind: "item",
+      it
+    });
   }
   return rows;
 }
-
 function appendListRow(list, row, fallbackType, reverseColumns) {
-  if (row.kind === 'header') {
-    const h = document.createElement('div');
-    h.className = 'letter-header' + ((row.itemType || fallbackType || currentEntity) === 'lexicon_reverse' ? ' reverse-letter-header' : '');
+  if (row.kind === "header") {
+    const h = document.createElement("div");
+    h.className = "letter-header" + ((row.itemType || fallbackType || currentEntity) === "lexicon_reverse" ? " reverse-letter-header" : "");
     h.textContent = row.letter;
     if (reverseColumns > 1) {
-      h.style.breakInside = 'avoid-column';
-      h.style.webkitColumnBreakInside = 'avoid';
+      h.style.breakInside = "avoid-column";
+      h.style.webkitColumnBreakInside = "avoid";
     }
     list.appendChild(h);
     return false;
   }
   const it = row.it;
-  const item = document.createElement('div');
-  const isSelected = selectedItem === it.head && (currentEntity !== 'all' || selectedItemType === it._entityType);
+  const item = document.createElement("div");
+  const isSelected = selectedItem === it.head && (currentEntity !== "all" || selectedItemType === it._entityType);
   const itemType = it._entityType || fallbackType || currentEntity;
-  item.className = 'name-item' + (isSelected ? ' selected' : '') + (itemType === 'lexicon_reverse' ? ' name-item-reverse' : '');
-  safeSetAttr(item, 'role', 'button');
+  item.className = "name-item" + (isSelected ? " selected" : "") + (itemType === "lexicon_reverse" ? " name-item-reverse" : "");
+  safeSetAttr(item, "role", "button");
   item.tabIndex = 0;
-  safeSetAttr(item, 'aria-label', `${it.head || ''} (${(it.page_list || []).length})`);
-  item.dataset.head = it.head || '';
+  safeSetAttr(item, "aria-label", `${it.head || ""} (${(it.page_list || []).length})`);
+  item.dataset.head = it.head || "";
   item.dataset.type = itemType;
-  appendListItemContent(item, it, itemType, currentEntity === 'all');
+  appendListItemContent(item, it, itemType, currentEntity === "all");
   if (reverseColumns > 1) {
-    item.style.breakInside = 'avoid-column';
-    item.style.webkitColumnBreakInside = 'avoid';
+    item.style.breakInside = "avoid-column";
+    item.style.webkitColumnBreakInside = "avoid";
   }
   list.appendChild(item);
   return true;
 }
-
 function renderListProgressive(list, items, fallbackType, reverseColumns) {
   const rows = buildListRowsWithLetters(items);
-  const chunkRows = currentEntity === 'all' ? 900 : 650;
+  const chunkRows = currentEntity === "all" ? 900 : 650;
   let cursor = 0;
   let shownItems = 0;
-  const selectedRowIndex = selectedItem
-    ? rows.findIndex(r => r.kind === 'item' && r.it && r.it.head === selectedItem && (currentEntity !== 'all' || selectedItemType === r.it._entityType))
-    : -1;
+  const selectedRowIndex = selectedItem ? rows.findIndex((r) => r.kind === "item" && r.it && r.it.head === selectedItem && (currentEntity !== "all" || selectedItemType === r.it._entityType)) : -1;
   const firstTarget = selectedRowIndex >= 0 ? Math.max(chunkRows, selectedRowIndex + 24) : chunkRows;
-
-  const hint = document.createElement('div');
-  hint.style.cssText = 'padding:8px 10px;color:#888;font-size:11px;text-align:center;';
-  if (reverseColumns > 1) hint.style.columnSpan = 'all';
-
+  const hint = document.createElement("div");
+  hint.style.cssText = "padding:8px 10px;color:#888;font-size:11px;text-align:center;";
+  if (reverseColumns > 1) hint.style.columnSpan = "all";
   const updateHint = () => {
-    hint.textContent = cursor < rows.length
-      ? `Показано ${shownItems} из ${items.length}. Прокрутите вниз для подгрузки.`
-      : `Показано ${shownItems} элементов.`;
+    hint.textContent = cursor < rows.length ? `Показано ${shownItems} из ${items.length}. Прокрутите вниз для подгрузки.` : `Показано ${shownItems} элементов.`;
   };
-
   const appendChunk = (limitRows) => {
     const target = Math.min(rows.length, cursor + limitRows);
     while (cursor < target) {
@@ -5973,29 +5606,24 @@ function renderListProgressive(list, items, fallbackType, reverseColumns) {
     updateHint();
     if (!hint.parentNode) list.appendChild(hint);
   };
-
   appendChunk(firstTarget);
   scrollSelectedItemIntoView(list);
-
   if (cursor >= rows.length) return;
-
   const onScroll = () => {
     if (list.scrollTop + list.clientHeight < list.scrollHeight - 220) return;
     appendChunk(chunkRows);
     if (cursor >= rows.length) {
-      list.removeEventListener('scroll', onScroll);
+      list.removeEventListener("scroll", onScroll);
       list._progressiveScrollHandler = null;
     }
   };
   list._progressiveScrollHandler = onScroll;
-  list.addEventListener('scroll', onScroll);
+  list.addEventListener("scroll", onScroll);
 }
-
 function rowIndexForOffset(offsets, y) {
   if (!offsets || offsets.length < 2) return 0;
   if (y <= 0) return 0;
-  const lastVal = offsets[offsets.length - 1];
-  if (y >= lastVal) return Math.max(0, offsets.length - 2);
+  if (y >= offsets[offsets.length - 1]) return Math.max(0, offsets.length - 2);
   let lo = 0, hi = offsets.length - 1;
   while (lo < hi) {
     const mid = Math.floor((lo + hi + 1) / 2);
@@ -6004,7 +5632,6 @@ function rowIndexForOffset(offsets, y) {
   }
   return Math.max(0, Math.min(offsets.length - 2, lo));
 }
-
 function renderListVirtualized(list, items, fallbackType) {
   const rows = buildListRowsWithLetters(items);
   const HEADER_H = 24;
@@ -6012,34 +5639,27 @@ function renderListVirtualized(list, items, fallbackType) {
   const OVERSCAN_PX = 500;
   const offsets = new Array(rows.length + 1);
   offsets[0] = 0;
-  for (let i = 0; i < rows.length; i++) {
-    offsets[i + 1] = offsets[i] + (rows[i].kind === 'header' ? HEADER_H : ITEM_H);
-  }
+  for (let i = 0; i < rows.length; i++) offsets[i + 1] = offsets[i] + (rows[i].kind === "header" ? HEADER_H : ITEM_H);
   const totalHeight = offsets[offsets.length - 1];
-  const topSpacer = document.createElement('div');
-  const viewport = document.createElement('div');
-  const bottomSpacer = document.createElement('div');
-  topSpacer.style.height = '0px';
+  const topSpacer = document.createElement("div");
+  const viewport = document.createElement("div");
+  const bottomSpacer = document.createElement("div");
+  topSpacer.style.height = "0px";
   bottomSpacer.style.height = `${Math.max(0, totalHeight)}px`;
-  viewport.style.willChange = 'contents';
-
-  list.innerHTML = '';
+  viewport.style.willChange = "contents";
+  list.innerHTML = "";
   list.appendChild(topSpacer);
   list.appendChild(viewport);
   list.appendChild(bottomSpacer);
-
   let prevStart = -1;
   let prevEnd = -1;
-  const selectedRowIndex = selectedItem
-    ? rows.findIndex(r => r.kind === 'item' && r.it && r.it.head === selectedItem && (currentEntity !== 'all' || selectedItemType === r.it._entityType))
-    : -1;
+  const selectedRowIndex = selectedItem ? rows.findIndex((r) => r.kind === "item" && r.it && r.it.head === selectedItem && (currentEntity !== "all" || selectedItemType === r.it._entityType)) : -1;
   if (selectedRowIndex >= 0) {
     const top = offsets[selectedRowIndex];
     const bottom = offsets[selectedRowIndex + 1];
     if (top < list.scrollTop) list.scrollTop = top;
     else if (bottom > list.scrollTop + list.clientHeight) list.scrollTop = Math.max(0, bottom - list.clientHeight);
   }
-
   const renderWindow = () => {
     const vh = Math.max(200, list.clientHeight || 0);
     const fromY = Math.max(0, list.scrollTop - OVERSCAN_PX);
@@ -6051,36 +5671,31 @@ function renderListVirtualized(list, items, fallbackType) {
     prevEnd = end;
     topSpacer.style.height = `${offsets[start]}px`;
     bottomSpacer.style.height = `${Math.max(0, totalHeight - offsets[end])}px`;
-    viewport.innerHTML = '';
+    viewport.innerHTML = "";
     for (let i = start; i < end; i++) appendListRow(viewport, rows[i], fallbackType, 1);
   };
-
   const onScroll = () => {
     if (list._virtualRaf) return;
-    list._virtualRaf = (typeof requestAnimationFrame === 'function')
-      ? requestAnimationFrame(() => {
-          list._virtualRaf = 0;
-          renderWindow();
-        })
-      : 0;
+    list._virtualRaf = typeof requestAnimationFrame === "function" ? requestAnimationFrame(() => {
+      list._virtualRaf = 0;
+      renderWindow();
+    }) : 0;
     if (!list._virtualRaf) renderWindow();
   };
   list._virtualScrollHandler = onScroll;
-  list.addEventListener('scroll', onScroll);
+  list.addEventListener("scroll", onScroll);
   renderWindow();
 }
-
 function scrollSelectedItemIntoView(list) {
   if (!list || !selectedItem) return;
-  const selected = list.querySelector('.name-item.selected');
-  if (!selected || typeof selected.scrollIntoView !== 'function') return;
-  selected.scrollIntoView({ block: 'nearest' });
+  const selected = list.querySelector(".name-item.selected");
+  if (!selected || typeof selected.scrollIntoView !== "function") return;
+  selected.scrollIntoView({ block: "nearest" });
 }
-
 function getListColumnCount(entity, size) {
-  if (typeof window === 'undefined' || typeof window.innerWidth !== 'number') return 1;
+  if (typeof window === "undefined" || typeof window.innerWidth !== "number") return 1;
   const w = window.innerWidth;
-  if (entity === 'lexicon_reverse') {
+  if (entity === "lexicon_reverse") {
     if (size < 120) return 1;
     if (w >= 1800) return 6;
     if (w >= 1600) return 5;
@@ -6089,243 +5704,199 @@ function getListColumnCount(entity, size) {
     if (w >= 950) return 2;
     return 1;
   }
-  if (entity === 'all') {
+  if (entity === "all") {
     if (w >= 900) return 2;
     return 1;
   }
   return 1;
 }
-
 function renderList() {
-  const list = document.getElementById('name-list');
+  const list = document.getElementById("name-list");
   if (!list) return;
   if (list._virtualScrollHandler) {
-    list.removeEventListener('scroll', list._virtualScrollHandler);
+    list.removeEventListener("scroll", list._virtualScrollHandler);
     list._virtualScrollHandler = null;
   }
-  if (list._virtualRaf && typeof cancelAnimationFrame === 'function') {
+  if (list._virtualRaf && typeof cancelAnimationFrame === "function") {
     cancelAnimationFrame(list._virtualRaf);
     list._virtualRaf = 0;
   }
   if (list._progressiveScrollHandler) {
-    list.removeEventListener('scroll', list._progressiveScrollHandler);
+    list.removeEventListener("scroll", list._progressiveScrollHandler);
     list._progressiveScrollHandler = null;
   }
   const { filtered, truncated, maxResults: MAX_RESULTS, candidateCount } = getVisibleItemsForCurrentEntity();
-  const candidateBtn = document.getElementById('only-question-btn');
+  const candidateBtn = document.getElementById("only-question-btn");
   if (candidateBtn) candidateBtn.textContent = `только ?-кандидаты (${candidateCount})`;
-
-  list.innerHTML = '';
+  list.innerHTML = "";
   list.dataset.entity = currentEntity;
   const listColumns = getListColumnCount(currentEntity, filtered.length);
-  const useVirtual = filtered.length > 1000 && currentEntity === 'lexicon';
+  const useVirtual = filtered.length > 1e3 && currentEntity === "lexicon";
   if (listColumns > 1 && !useVirtual) {
     list.style.columnCount = String(listColumns);
-    list.style.columnGap = currentEntity === 'lexicon_reverse' ? '8px' : '12px';
-    list.style.paddingRight = '4px';
+    list.style.columnGap = currentEntity === "lexicon_reverse" ? "8px" : "12px";
+    list.style.paddingRight = "4px";
   } else {
-    list.style.columnCount = '';
-    list.style.columnGap = '';
-    list.style.paddingRight = '';
+    list.style.columnCount = "";
+    list.style.columnGap = "";
+    list.style.paddingRight = "";
   }
-  const useProgressive = !useVirtual && filtered.length > 1200 && ['all', 'lexicon', 'lexicon_reverse'].includes(currentEntity);
-  if (useVirtual) {
-    renderListVirtualized(list, filtered, currentEntity);
-  } else if (useProgressive) {
-    renderListProgressive(list, filtered, currentEntity, listColumns);
-  } else {
+  const useProgressive = !useVirtual && filtered.length > 1200 && [
+    "all",
+    "lexicon",
+    "lexicon_reverse"
+  ].includes(currentEntity);
+  if (useVirtual) renderListVirtualized(list, filtered, currentEntity);
+  else if (useProgressive) renderListProgressive(list, filtered, currentEntity, listColumns);
+  else {
     appendItemsWithLetters(list, filtered, currentEntity);
-    if (listColumns > 1) {
-      list.querySelectorAll('.letter-header, .name-item').forEach(el => {
-        el.style.breakInside = 'avoid-column';
-        el.style.webkitColumnBreakInside = 'avoid';
-      });
-    }
+    if (listColumns > 1) list.querySelectorAll(".letter-header, .name-item").forEach((el) => {
+      el.style.breakInside = "avoid-column";
+      el.style.webkitColumnBreakInside = "avoid";
+    });
     scrollSelectedItemIntoView(list);
   }
-
   if (truncated) {
-    const more = document.createElement('div');
-    more.className = 'list-truncated-message';
-    if (listColumns > 1) more.style.columnSpan = 'all';
+    const more = document.createElement("div");
+    more.className = "list-truncated-message";
+    if (listColumns > 1) more.style.columnSpan = "all";
     more.textContent = `Показано первые ${MAX_RESULTS} результатов. Уточните запрос для сужения.`;
     list.appendChild(more);
   }
-  if (filtered.length === 0) {
-    list.innerHTML = '<div class="list-empty-message">Ничего не найдено</div>';
-  }
+  if (filtered.length === 0) list.innerHTML = "<div class=\"list-empty-message\">Ничего не найдено</div>";
 }
-
 function renderRightContent() {
-  const right = getRightContentHost();
-  if (!right) return;
-  if (rightPaneMode === 'card' && selectedItem) {
-    renderCardInRight();
-  } else {
-    renderHistogramInRight();
-  }
-  if (isMobileViewport()) {
-    setMobileSheetOpen(rightPaneMode === 'card' && !!selectedItem);
-  } else {
-    setMobileSheetOpen(false);
-  }
+  if (!getRightContentHost()) return;
+  if (rightPaneMode === "card" && selectedItem) renderCardInRight();
+  else renderHistogramInRight();
+  if (isMobileViewport()) setMobileSheetOpen(rightPaneMode === "card" && !!selectedItem);
+  else setMobileSheetOpen(false);
 }
-
 function isMobileViewport() {
-  return typeof window !== 'undefined' && typeof window.innerWidth === 'number' && window.innerWidth <= 900;
+  return typeof window !== "undefined" && typeof window.innerWidth === "number" && window.innerWidth <= 900;
 }
-
 function getRightContentHost() {
   if (isMobileViewport()) {
-    const mobile = document.getElementById('mobile-sheet-content');
+    const mobile = document.getElementById("mobile-sheet-content");
     if (mobile) return mobile;
   }
-  return document.getElementById('right-content');
+  return document.getElementById("right-content");
 }
-
 function setMobileSheetOpen(open) {
-  const backdrop = document.getElementById('mobile-card-backdrop');
-  const sheet = document.getElementById('mobile-card-sheet');
-  if (!backdrop || !sheet || typeof document === 'undefined') return;
-  if (backdrop.classList && typeof backdrop.classList.toggle === 'function') {
-    backdrop.classList.toggle('open', !!open);
-  }
-  if (sheet.classList && typeof sheet.classList.toggle === 'function') {
-    sheet.classList.toggle('open', !!open);
-  }
-  if (document.body && document.body.classList && typeof document.body.classList.toggle === 'function') {
-    document.body.classList.toggle('mobile-sheet-lock', !!open);
-  }
+  const backdrop = document.getElementById("mobile-card-backdrop");
+  const sheet = document.getElementById("mobile-card-sheet");
+  if (!backdrop || !sheet || typeof document === "undefined") return;
+  if (backdrop.classList && typeof backdrop.classList.toggle === "function") backdrop.classList.toggle("open", !!open);
+  if (sheet.classList && typeof sheet.classList.toggle === "function") sheet.classList.toggle("open", !!open);
+  if (document.body && document.body.classList && typeof document.body.classList.toggle === "function") document.body.classList.toggle("mobile-sheet-lock", !!open);
 }
-
 function closeMobileSheet() {
   if (!isMobileViewport()) return;
-  if (!(rightPaneMode === 'card' && selectedItem)) {
+  if (!(rightPaneMode === "card" && selectedItem)) {
     setMobileSheetOpen(false);
     return;
   }
-  rightPaneMode = 'histogram';
+  rightPaneMode = "histogram";
   selectedItem = null;
   selectedItemType = null;
   renderList();
   renderRightContent();
   syncNavigationState();
 }
-
 function getEntityItems(entityKey) {
-  if (entityKey === 'all') return ENTITY_TYPES.all.items || [];
-  return (ENTITY_TYPES[entityKey] && ENTITY_TYPES[entityKey].items) || [];
+  if (entityKey === "all") return ENTITY_TYPES.all.items || [];
+  return ENTITY_TYPES[entityKey] && ENTITY_TYPES[entityKey].items || [];
 }
-
 function getItemsForChapter(entityKey, chapter) {
   const items = getEntityItems(entityKey);
   const indexed = getChapterIndexedItems(entityKey, chapter.name);
-  const filtered = indexed ? [...indexed] : items.filter(it => {
-    for (const p of (it.page_list || [])) {
-      if (p >= chapter.start && p <= chapter.end) return true;
-    }
+  const filtered = indexed ? [...indexed] : items.filter((it) => {
+    for (const p of it.page_list || []) if (p >= chapter.start && p <= chapter.end) return true;
     return false;
   });
   filtered.sort(compareItemsByHead);
   return filtered;
 }
-
 function getFocusedHistogramItem(entityKey) {
   if (!selectedItem || !entityKey) return null;
-  const type = selectedItemType || entityKey;
-  if (type !== entityKey) return null;
+  if ((selectedItemType || entityKey) !== entityKey) return null;
   return findItemByHeadAndType(selectedItem, entityKey);
 }
-
 function getHistogramSubjectLabel(entityKey) {
-  const map = {
-    names: 'имён',
-    toponyms: 'топонимов',
-    ethnonyms: 'этнонимов',
-    languages: 'языков',
-    lexicon: 'лексем',
-    lexicon_reverse: 'лексем (обратный список)',
-    lexicon_tech: 'реконструированных форм',
-    subject: 'понятий',
-    all: 'элементов',
-  };
-  return map[entityKey] || 'элементов';
+  return {
+    names: "имён",
+    toponyms: "топонимов",
+    ethnonyms: "этнонимов",
+    languages: "языков",
+    lexicon: "лексем",
+    lexicon_reverse: "лексем (обратный список)",
+    lexicon_tech: "реконструированных форм",
+    subject: "понятий",
+    all: "элементов"
+  }[entityKey] || "элементов";
 }
-
 function buildHistogramIntroText(entityKey, focusedItem) {
-  if (focusedItem && focusedItem.head) {
-    return `Распределение упоминаний «${focusedItem.head}» по лекциям книги (по страницам внутри каждой лекции).`;
-  }
-  if (entityKey === 'lexicon_reverse') return '';
+  if (focusedItem && focusedItem.head) return `Распределение упоминаний «${focusedItem.head}» по лекциям книги (по страницам внутри каждой лекции).`;
+  if (entityKey === "lexicon_reverse") return "";
   return `Распределение ${getHistogramSubjectLabel(entityKey)} по лекциям книги: сколько элементов раздела встречается в каждой лекции. Кликните по столбцу — увидите элементы соответствующей лекции.`;
 }
-
 function getChapterHistogramStats(entityKey, focusedItem = null) {
-  const focusKey = focusedItem && focusedItem.head ? normalizeHeadForMatch(focusedItem.head) : '*';
-  const key = `${entityKey}::${focusKey}::${getDataSignature()}`;
-  return getCachedAggregate('histogram', key, () => {
+  const key = `${entityKey}::${focusedItem && focusedItem.head ? normalizeHeadForMatch(focusedItem.head) : "*"}::${getDataSignature()}`;
+  return getCachedAggregate("histogram", key, () => {
     const counts = {};
     const chapters = Array.isArray(APP_DATA?.chapters) ? APP_DATA.chapters : [];
     if (focusedItem && Array.isArray(focusedItem.page_list)) {
       const pages = sortUniquePages(focusedItem.page_list);
       for (const ch of chapters) {
         let c = 0;
-        for (const p of pages) {
-          if (p >= ch.start && p <= ch.end) c += 1;
-        }
+        for (const p of pages) if (p >= ch.start && p <= ch.end) c += 1;
         counts[ch.name] = c;
       }
-    } else {
-      for (const ch of chapters) {
-        const indexed = getChapterIndexedItems(entityKey, ch.name);
-        counts[ch.name] = indexed ? indexed.length : 0;
-      }
+    } else for (const ch of chapters) {
+      const indexed = getChapterIndexedItems(entityKey, ch.name);
+      counts[ch.name] = indexed ? indexed.length : 0;
     }
-    const max = Math.max(1, ...Object.values(counts));
-    return { counts, max };
+    return {
+      counts,
+      max: Math.max(1, ...Object.values(counts))
+    };
   });
 }
-
 function renderChapterListFilter(entityKey, chapterName) {
-  const chapter = APP_DATA.chapters.find(c => c.name === chapterName);
-  const list = document.getElementById('name-list');
+  const chapter = APP_DATA.chapters.find((c) => c.name === chapterName);
+  const list = document.getElementById("name-list");
   if (!chapter || !list) return;
   const filtered = getItemsForChapter(entityKey, chapter);
   list.innerHTML = `<div class="chapter-filter-banner"><strong>Лекция:</strong> ${escapeHtml(chapter.name)} <span class="chapter-filter-count">(${filtered.length})</span></div>`;
   appendItemsWithLetters(list, filtered, entityKey);
 }
-
 function renderChapterHistogramRows(host, entityKey, focusedItem = null) {
   const stats = getChapterHistogramStats(entityKey, focusedItem);
   const counts = stats.counts;
   const max = stats.max;
-  host.textContent = '';
+  host.textContent = "";
   for (const ch of APP_DATA.chapters) {
     const c = counts[ch.name] || 0;
     const pct = c / max * 100;
-    const row = document.createElement('div');
-    row.className = 'bar-row';
-
-    const label = document.createElement('div');
-    label.className = 'bar-label';
-    label.appendChild(document.createTextNode(String(ch.name || '')));
-    label.appendChild(document.createElement('br'));
-    const small = document.createElement('small');
+    const row = document.createElement("div");
+    row.className = "bar-row";
+    const label = document.createElement("div");
+    label.className = "bar-label";
+    label.appendChild(document.createTextNode(String(ch.name || "")));
+    label.appendChild(document.createElement("br"));
+    const small = document.createElement("small");
     small.textContent = `стр. ${ch.start}–${ch.end}`;
     label.appendChild(small);
-
-    const bg = document.createElement('div');
-    bg.className = 'bar-bg';
-    const fill = document.createElement('div');
-    fill.className = 'bar-fill';
-    fill.dataset.chapter = String(ch.name || '');
+    const bg = document.createElement("div");
+    bg.className = "bar-bg";
+    const fill = document.createElement("div");
+    fill.className = "bar-fill";
+    fill.dataset.chapter = String(ch.name || "");
     fill.dataset.barWidthPct = String(pct);
     bg.appendChild(fill);
-
-    const count = document.createElement('div');
-    count.className = 'bar-count';
+    const count = document.createElement("div");
+    count.className = "bar-count";
     count.textContent = String(c);
-
     row.appendChild(label);
     row.appendChild(bg);
     row.appendChild(count);
@@ -6333,173 +5904,155 @@ function renderChapterHistogramRows(host, entityKey, focusedItem = null) {
   }
   applyDataDrivenStyles(host);
 }
-
 function renderHistogramInRight() {
   const right = getRightContentHost();
   if (!right) return;
   const focusedItem = getFocusedHistogramItem(currentEntity);
   const introText = buildHistogramIntroText(currentEntity, focusedItem);
-  const introHtml = introText ? `<p class="chart-intro">${escapeHtml(introText)}</p>` : '';
-  const html = `<div class="chart">
-    ${introHtml}
+  right.innerHTML = `<div class="chart">
+    ${introText ? `<p class="chart-intro">${escapeHtml(introText)}</p>` : ""}
     <div id="right-histogram"></div>
   </div>`;
-  right.innerHTML = html;
-  const root = document.getElementById('right-histogram');
+  const root = document.getElementById("right-histogram");
   if (!root) return;
   renderChapterHistogramRows(root, currentEntity, focusedItem);
-  right.querySelectorAll('.bar-fill').forEach(bar => {
+  right.querySelectorAll(".bar-fill").forEach((bar) => {
     bar.onclick = () => renderChapterListFilter(currentEntity, bar.dataset.chapter);
   });
 }
-
 function findItemByHeadAndType(head, type) {
   const targetType = type || currentEntity;
   return getIndexedItem(targetType, head);
 }
-
 function countItemContexts(item) {
   if (Array.isArray(item && item.contexts)) return item.contexts.filter(Boolean).length;
-  const contexts = item && item.contexts && typeof item.contexts === 'object' ? item.contexts : {};
+  const contexts = item && item.contexts && typeof item.contexts === "object" ? item.contexts : {};
   let total = 0;
-  for (const snippets of Object.values(contexts)) {
-    if (Array.isArray(snippets)) total += snippets.filter(Boolean).length;
-  }
+  for (const snippets of Object.values(contexts)) if (Array.isArray(snippets)) total += snippets.filter(Boolean).length;
   return total;
 }
-
 function getReverseEdgesIndex() {
   if (reverseEdgesCache) return reverseEdgesCache;
   const index = {};
   const edges = Array.isArray(APP_DATA && APP_DATA.edges) ? APP_DATA.edges : [];
   for (const edge of edges) {
-    const source = String(edge && edge.source ? edge.source : '').trim();
-    const target = String(edge && edge.target ? edge.target : '').trim();
+    const source = String(edge && edge.source ? edge.source : "").trim();
+    const target = String(edge && edge.target ? edge.target : "").trim();
     if (!source || !target || source === target) continue;
     const weightRaw = Number(edge && edge.weight);
     const weight = Number.isFinite(weightRaw) ? weightRaw : 0;
     if (!index[target]) index[target] = [];
-    index[target].push({ head: source, weight });
+    index[target].push({
+      head: source,
+      weight
+    });
   }
   reverseEdgesCache = index;
   return reverseEdgesCache;
 }
-
 function collectNameRelationLinks(head) {
-  const baseHead = String(head || '').trim();
+  const baseHead = String(head || "").trim();
   if (!baseHead) return [];
-  const relationMap = new Map();
+  const relationMap = /* @__PURE__ */ new Map();
   const edges = Array.isArray(APP_DATA && APP_DATA.edges) ? APP_DATA.edges : [];
   for (const edge of edges) {
-    const source = String(edge && edge.source ? edge.source : '').trim();
-    const target = String(edge && edge.target ? edge.target : '').trim();
+    const source = String(edge && edge.source ? edge.source : "").trim();
+    const target = String(edge && edge.target ? edge.target : "").trim();
     if (!source || !target || source !== baseHead || source === target) continue;
     const weightRaw = Number(edge && edge.weight);
     const weight = Number.isFinite(weightRaw) ? weightRaw : 0;
     const prev = relationMap.get(target);
-    if (!prev || weight > prev.weight) relationMap.set(target, { head: target, weight });
+    if (!prev || weight > prev.weight) relationMap.set(target, {
+      head: target,
+      weight
+    });
   }
   const reverse = getReverseEdgesIndex();
   const reverseEntries = Array.isArray(reverse[baseHead]) ? reverse[baseHead] : [];
   for (const edge of reverseEntries) {
-    const otherHead = String(edge && edge.head ? edge.head : '').trim();
+    const otherHead = String(edge && edge.head ? edge.head : "").trim();
     if (!otherHead || otherHead === baseHead) continue;
     const weightRaw = Number(edge && edge.weight);
     const weight = Number.isFinite(weightRaw) ? weightRaw : 0;
     const prev = relationMap.get(otherHead);
-    if (!prev || weight > prev.weight) relationMap.set(otherHead, { head: otherHead, weight });
+    if (!prev || weight > prev.weight) relationMap.set(otherHead, {
+      head: otherHead,
+      weight
+    });
   }
-  return Array.from(relationMap.values())
-    .sort((a, b) => (b.weight - a.weight) || compareHeadsRu(a.head, b.head));
+  return Array.from(relationMap.values()).sort((a, b) => b.weight - a.weight || compareHeadsRu(a.head, b.head));
 }
-
 function renderCardInRight() {
   const right = getRightContentHost();
   if (!right) return;
   const it = findItemByHeadAndType(selectedItem, selectedItemType);
   if (!it) {
-    right.innerHTML = '<div class="card"><div class="card-missing-message">Элемент не найден</div></div>';
+    right.innerHTML = "<div class=\"card\"><div class=\"card-missing-message\">Элемент не найден</div></div>";
     return;
   }
-
-  const photo = it.img ? `<img class="card-photo" src="${escapeHtml(safeImageUrl(it.img))}" alt="">` : '';
-  const wikiLink = it.wiki ? `<a class="wiki-link" href="${escapeHtml(safeUrl(it.wiki))}" target="_blank" rel="noopener noreferrer">Статья в Википедии →</a>` : '';
+  const photo = it.img ? `<img class="card-photo" src="${escapeHtml(safeImageUrl(it.img))}" alt="">` : "";
+  const wikiLink = it.wiki ? `<a class="wiki-link" href="${escapeHtml(safeUrl(it.wiki))}" target="_blank" rel="noopener noreferrer">Статья в Википедии →</a>` : "";
   const eType = it._entityType || currentEntity;
-  const editorial = (it.editorial_flags && typeof it.editorial_flags === 'object') ? it.editorial_flags : {};
-  let category = '';
-  if (eType === 'names') category = LABELS[it.subcategory] || 'Имя';
-  else if (eType === 'toponyms') {
-    category = 'Топоним';
-    if (it.epoch_class && it.epoch_class !== 'unknown') {
-      category += ' · ' + EPOCH_LABELS[it.epoch_class];
-    }
-  }
-  else if (eType === 'ethnonyms') category = 'Этноним';
-  else if (eType === 'languages') {
-    category = 'Язык';
-    if (it.family) category += ' · ' + it.family + (it.group && it.group !== it.family ? ' / ' + it.group : '');
-  }
-  else if (eType === 'lexicon') category = 'Лексема';
-  else if (eType === 'lexicon_tech') category = 'Реконструированная или иноязычная форма';
-  else if (eType === 'lexicon_reverse') category = 'Лексема (обратный алфавит)';
-  else if (eType === 'subject') category = it.needs_review ? 'Понятие / термин (требует сверки — артефакт парсинга двухколоночной верстки)' : 'Понятие / термин';
-  if (it.head && it.head.startsWith('?')) category = 'Кандидат — требует проверки редактором' + (it.note ? ' · ' + it.note : '');
-
-  if (eType === 'subject' && editorial.suspect) category = 'Понятие / термин (требует сверки редактором)';
-  if (editorial.suspect && it.head && it.head.startsWith('?')) {
-    category = 'Кандидат — требует проверки редактором' + ((editorial.note || it.note) ? ' · ' + (editorial.note || it.note) : '');
-  }
+  const editorial = it.editorial_flags && typeof it.editorial_flags === "object" ? it.editorial_flags : {};
+  let category = "";
+  if (eType === "names") category = LABELS[it.subcategory] || "Имя";
+  else if (eType === "toponyms") {
+    category = "Топоним";
+    if (it.epoch_class && it.epoch_class !== "unknown") category += " · " + EPOCH_LABELS[it.epoch_class];
+  } else if (eType === "ethnonyms") category = "Этноним";
+  else if (eType === "languages") {
+    category = "Язык";
+    if (it.family) category += " · " + it.family + (it.group && it.group !== it.family ? " / " + it.group : "");
+  } else if (eType === "lexicon") category = "Лексема";
+  else if (eType === "lexicon_tech") category = "Реконструированная или иноязычная форма";
+  else if (eType === "lexicon_reverse") category = "Лексема (обратный алфавит)";
+  else if (eType === "subject") category = it.needs_review ? "Понятие / термин (требует сверки — артефакт парсинга двухколоночной верстки)" : "Понятие / термин";
+  if (it.head && it.head.startsWith("?")) category = "Кандидат — требует проверки редактором" + (it.note ? " · " + it.note : "");
+  if (eType === "subject" && editorial.suspect) category = "Понятие / термин (требует сверки редактором)";
+  if (editorial.suspect && it.head && it.head.startsWith("?")) category = "Кандидат — требует проверки редактором" + (editorial.note || it.note ? " · " + (editorial.note || it.note) : "");
   const hasMapCoords = Number.isFinite(Number(it.lat)) && Number.isFinite(Number(it.lon));
-  const canOpenMapForCard = ['toponyms', 'ethnonyms', 'languages'].includes(eType) && hasMapCoords;
-  const useTwoColumnCardLayout = eType === 'toponyms';
-  const itemBookId = String(it.book_id || it.bookId || getActiveBook().book_id || '');
-  const itemBookLabel = getBookLabelForSearch(itemBookId);
+  const canOpenMapForCard = [
+    "toponyms",
+    "ethnonyms",
+    "languages"
+  ].includes(eType) && hasMapCoords;
+  const useTwoColumnCardLayout = eType === "toponyms";
+  const itemBookLabel = getBookLabelForSearch(String(it.book_id || it.bookId || getActiveBook().book_id || ""));
   const allPages = sortUniquePages(it.page_list || []);
-  let pagesText = it.pages || it.head_pages || '';
+  let pagesText = it.pages || it.head_pages || "";
   const itemSources = Array.isArray(it.sources) ? it.sources.slice(0, 5) : [];
-  if (!itemSources.length && itemBookLabel) {
-    itemSources.push({
-      label: itemBookLabel,
-      page: allPages.length ? allPages.join(', ') : pagesText,
-      quote: getFirstContextQuote(it),
-    });
-  }
+  if (!itemSources.length && itemBookLabel) itemSources.push({
+    label: itemBookLabel,
+    page: allPages.length ? allPages.join(", ") : pagesText,
+    quote: getFirstContextQuote(it)
+  });
   it._cardSources = itemSources;
-  const renderSourcesInHeader = eType === 'names' && itemSources.length > 0;
-  const sourceConfirmedInline = editorial.source_confirmed
-    ? '<span class="card-status-inline">source confirmed</span>'
-    : '';
-  const cardBookChipHtml = itemBookLabel
-    ? `<span class="card-book-chip">${escapeHtml(itemBookLabel)}</span>`
-    : '';
-  const metaChipsHtml = (cardBookChipHtml || sourceConfirmedInline)
-    ? `<div class="card-meta-chips">${cardBookChipHtml}${sourceConfirmedInline}</div>`
-    : '';
-  let headerSourcesHtml = '';
+  const renderSourcesInHeader = eType === "names" && itemSources.length > 0;
+  const sourceConfirmedInline = editorial.source_confirmed ? "<span class=\"card-status-inline\">source confirmed</span>" : "";
+  const cardBookChipHtml = itemBookLabel ? `<span class="card-book-chip">${escapeHtml(itemBookLabel)}</span>` : "";
+  const metaChipsHtml = cardBookChipHtml || sourceConfirmedInline ? `<div class="card-meta-chips">${cardBookChipHtml}${sourceConfirmedInline}</div>` : "";
+  let headerSourcesHtml = "";
   if (renderSourcesInHeader) {
     const sourcePills = itemSources.slice(0, 3).map((src, sourceIdx) => {
-      const label = escapeHtml(src.label || 'Source');
-      const link = src.url
-        ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
-        : `<span>${label}</span>`;
-      return `<span class="card-source-pill">${link}<button type="button" class="related-link related-link-btn source-export-bib card-source-bib" data-source-idx="${sourceIdx}">BibTeX</button></span>`;
-    }).join('');
-    if (sourcePills) {
-      headerSourcesHtml = `<div class="card-sources-inline"><span class="card-sources-label">Sources</span>${sourcePills}</div>`;
-    }
+      const label = escapeHtml(src.label || "Source");
+      return `<span class="card-source-pill">${src.url ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>` : `<span>${label}</span>`}<button type="button" class="related-link related-link-btn source-export-bib card-source-bib" data-source-idx="${sourceIdx}">BibTeX</button></span>`;
+    }).join("");
+    if (sourcePills) headerSourcesHtml = `<div class="card-sources-inline"><span class="card-sources-label">Sources</span>${sourcePills}</div>`;
   }
   const pageLinksHtml = buildCardPageLinksHtml(allPages);
   const contextCount = countItemContexts(it);
   const sourceCount = itemSources.length;
   const occurrenceStripHtml = `<div class="card-occurrence-strip">
-    <span><strong>${escapeHtml(itemBookLabel || '\u0422\u0435\u043a\u0443\u0449\u0430\u044f \u043a\u043d\u0438\u0433\u0430')}</strong><em>source</em></span>
+    <span><strong>${escapeHtml(itemBookLabel || "Текущая книга")}</strong><em>source</em></span>
     <span><strong>${allPages.length}</strong><em>pages</em></span>
     <span><strong>${contextCount}</strong><em>contexts</em></span>
     <span><strong>${sourceCount}</strong><em>refs</em></span>
   </div>`;
-  const showLectureBreakdown = ['lexicon', 'lexicon_tech', 'lexicon_reverse'].includes(eType);
-  const lectureBreakdownHtml = showLectureBreakdown ? buildLecturePageBreakdownHtml(allPages) : '';
-
+  const lectureBreakdownHtml = [
+    "lexicon",
+    "lexicon_tech",
+    "lexicon_reverse"
+  ].includes(eType) ? buildLecturePageBreakdownHtml(allPages) : "";
   let html = `
     <div class="card">
       <div class="card-header">
@@ -6518,398 +6071,441 @@ function renderCardInRight() {
             <button type="button" class="related-link related-link-btn card-action-link" id="card-prev" aria-label="Предыдущая карточка">◀</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="card-next" aria-label="Следующая карточка">▶</button>
             <button type="button" class="related-link related-link-btn card-action-link" id="back-to-histo">← вернуться к гистограмме</button>
-            ${canOpenMapForCard ? '<button type="button" class="related-link related-link-btn card-action-link" id="open-on-map">📍 показать на карте</button>' : ''}
-            <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
-            <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
+            <details class="card-actions-more">
+              <summary class="related-link related-link-btn card-action-link card-actions-more-summary">⋯ ещё</summary>
+              <div class="card-actions-more-menu">
+                ${canOpenMapForCard ? "<button type=\"button\" class=\"related-link related-link-btn card-action-link\" id=\"open-on-map\">📍 показать на карте</button>" : ""}
+                <button type="button" class="related-link related-link-btn card-action-link" id="copy-card-link">скопировать ссылку</button>
+                <button type="button" class="related-link related-link-btn card-action-link" id="export-card-md">экспорт карточки .md</button>
+                <a class="related-link related-link-btn card-action-link" id="report-card-issue" href="${escapeHtml(buildEntityIssueUrl(eType, it.head))}" target="_blank" rel="noopener noreferrer">🐞 сообщить об ошибке</a>
+              </div>
+            </details>
           </div>
         </div>
       </div>
       <div class="pages-info">
         <strong>Упоминается на ${allPages.length} ${pluralPages(allPages.length)}:</strong>
         <span class="pages-links">${pageLinksHtml || escapeHtml(pagesText)}</span>
-        ${it.discussed ? ' · <em>обсуждается</em>' : ' · однократное упоминание'}
+        ${it.discussed ? " · <em>обсуждается</em>" : " · однократное упоминание"}
       </div>
       ${occurrenceStripHtml}
       ${lectureBreakdownHtml}
   `;
-  if (eType === 'lexicon' || eType === 'lexicon_tech') {
-    html += `<div class="card-kwic-action">
+  if (eType === "lexicon" || eType === "lexicon_tech") html += `<div class="card-kwic-action">
       <button type="button" class="related-link related-link-btn kwic-jump-btn" data-term="${escapeHtml(it.head)}">\u041d\u0430\u0439\u0442\u0438 \u0432 KWIC</button>
     </div>`;
-  }
   const flagBadges = [];
-  if (editorial.verified) flagBadges.push('<span class="card-editorial-flag verified">verified</span>');
-  if (editorial.suspect) flagBadges.push('<span class="card-editorial-flag suspect">suspect</span>');
-  if (flagBadges.length) {
-    html += `<div class="card-editorial-flags">${flagBadges.join('')}</div>`;
-  }
-  if (editorial.note) {
-    html += `<div class="card-editorial-note">
+  if (editorial.verified) flagBadges.push("<span class=\"card-editorial-flag verified\">verified</span>");
+  if (editorial.suspect) flagBadges.push("<span class=\"card-editorial-flag suspect\">suspect</span>");
+  if (flagBadges.length) html += `<div class="card-editorial-flags">${flagBadges.join("")}</div>`;
+  if (editorial.note) html += `<div class="card-editorial-note">
       <strong>Editor note:</strong> ${escapeHtml(editorial.note)}
     </div>`;
-  }
-  if (it.is_moderator && it.moderator_note) {
-    html += `<div class="card-moderator-note">
+  if (it.is_moderator && it.moderator_note) html += `<div class="card-moderator-note">
       <strong>Примечание о подсчёте:</strong> ${escapeHtml(it.moderator_note)}
     </div>`;
-  }
-
-  // Контексты
-  if (useTwoColumnCardLayout) html += '<div class="card-two-col-layout">';
-
+  if (useTwoColumnCardLayout) html += "<div class=\"card-two-col-layout\">";
   if (itemSources.length > 0 && !renderSourcesInHeader) {
-    html += useTwoColumnCardLayout ? '<section class="card-col-block"><h3>Sources</h3><div class="related">' : '<h3>Sources</h3><div class="related">';
+    html += useTwoColumnCardLayout ? "<section class=\"card-col-block\"><h3>Sources</h3><div class=\"related\">" : "<h3>Sources</h3><div class=\"related\">";
     for (let sourceIdx = 0; sourceIdx < itemSources.length; sourceIdx++) {
       const src = itemSources[sourceIdx];
-      const label = escapeHtml(src.label || 'Source');
-      const isWikiSource = /wikipedia/i.test(String(src.label || '')) || /wikipedia\.org/i.test(String(src.url || ''));
-      const pageHint = src.page ? ` · p. ${escapeHtml(src.page)}` : '';
-      const link = src.url
-        ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`
-        : `<span>${label}</span>`;
-      const quote = (!isWikiSource && src.quote) ? `<div class="card-source-quote">“${escapeHtml(src.quote)}”</div>` : '';
+      const label = escapeHtml(src.label || "Source");
+      const isWikiSource = /wikipedia/i.test(String(src.label || "")) || /wikipedia\.org/i.test(String(src.url || ""));
+      const pageHint = src.page ? ` · p. ${escapeHtml(src.page)}` : "";
+      const link = src.url ? `<a href="${escapeHtml(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer">${label} ↗</a>` : `<span>${label}</span>`;
+      const quoteHost = !isWikiSource && src.quote ? `<div class="card-source-quote" data-source-quote-idx="${sourceIdx}"></div>` : "";
       html += `<div class="card-source-row">
         ${link}
         <span class="card-source-page">${pageHint}</span>
         <button type="button" class="related-link related-link-btn source-export-bib card-source-row-bib" data-source-idx="${sourceIdx}">BibTeX</button>
-        ${quote}
+        ${quoteHost}
       </div>`;
     }
-    html += useTwoColumnCardLayout ? '</div></section>' : '</div>';
+    html += useTwoColumnCardLayout ? "</div></section>" : "</div>";
   }
-  if (Array.isArray(it.contexts) && it.contexts.length > 0) {
-    html += '<h3>Контексты упоминаний (KWIC)</h3>';
-    for (const ctx of it.contexts.slice(0, 10)) {
-      const ctxHtml = renderContextTextWithLinks(ctx);
-      html += `
-        <div class="context-item">
-          <div class="context-text">${ctxHtml}</div>
-        </div>`;
+  const hasArrayContexts = Array.isArray(it.contexts) && it.contexts.length > 0;
+  const hasMapContexts = !hasArrayContexts && it.contexts && typeof it.contexts === "object" && !Array.isArray(it.contexts) && Object.keys(it.contexts).length > 0;
+  if (hasArrayContexts || hasMapContexts) html += "<div class=\"card-contexts-mount\" data-card-contexts-mount></div>";
+  // B5: reverse video links sit right after contexts, above the cross-link cluster.
+  const videoBacklinks = getVideoBacklinkIndex().get(videoBacklinkKey(eType, it.head)) || [];
+  if (videoBacklinks.length) {
+    const VIDEO_CARD_LIMIT = 8;
+    const shown = videoBacklinks.slice(0, VIDEO_CARD_LIMIT);
+    const rest = videoBacklinks.length - shown.length;
+    html += `<h3>Видео <span class="card-video-count">${videoBacklinks.length}</span></h3><div class="card-video-links">`;
+    for (const entry of shown) {
+      const v = entry.v;
+      const hasT = Number.isFinite(entry.t) && entry.t > 0;
+      const url = hasT ? v.url + (v.url.includes("?") ? "&" : "?") + "t=" + entry.t + "s" : v.url;
+      const meta = hasT
+        ? `<span class="card-video-dur card-video-at" title="упоминание на ${escapeHtml(formatVideoDuration(entry.t))}">▸ ${escapeHtml(formatVideoDuration(entry.t))}</span>`
+        : (formatVideoDuration(v.duration) ? `<span class="card-video-dur">${escapeHtml(formatVideoDuration(v.duration))}</span>` : "");
+      html += `<a class="card-video-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title)}">
+        <span class="card-video-title">${escapeHtml(v.title)}</span>
+        ${meta}
+      </a>`;
     }
-  } else if (it.contexts && typeof it.contexts === 'object' && !Array.isArray(it.contexts)) {
-    const ctxKeys = Object.keys(it.contexts).sort((a, b) => parseInt(a) - parseInt(b));
-    if (ctxKeys.length > 0) {
-      html += '<h3>Контексты упоминаний (KWIC)</h3>';
-      for (const pg of ctxKeys.slice(0, 10)) {
-        const ctxs = it.contexts[pg];
-        for (const ctx of ctxs.slice(0, 1)) {
-          const ctxHtml = renderContextTextWithLinks(ctx);
-          html += `
-            <div class="context-item">
-              <div class="context-page">стр. ${pg}</div>
-              <div class="context-text">${ctxHtml}</div>
-            </div>`;
-        }
-      }
-    }
+    if (rest > 0) html += `<span class="card-video-more">и ещё ${rest}</span>`;
+    html += "</div>";
   }
-
-  // Главы
   if (it.chapters && it.chapters.length > 0) {
-    html += '<h3>Лекции</h3><ul class="card-lecture-list">';
+    html += "<h3>Лекции</h3><ul class=\"card-lecture-list\">";
     for (const ch of it.chapters) {
       const lectureIdx = findLectureIndexByName(ch);
-      if (lectureIdx >= 0) {
-        html += `<li><a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}">${escapeHtml(ch)}</a></li>`;
-      } else {
-        html += `<li>${escapeHtml(ch)}</li>`;
-      }
+      if (lectureIdx >= 0) html += `<li><a class="related-link lecture-open-link" data-lecture-idx="${lectureIdx}" href="${escapeHtml(buildLecturePageHash(lectureIdx))}">${escapeHtml(ch)}</a></li>`;
+      else html += `<li>${escapeHtml(ch)}</li>`;
     }
-    html += '</ul>';
+    html += "</ul>";
   }
-
-  // Связи (только для имён)
-  if (['lexicon', 'lexicon_reverse', 'lexicon_tech'].includes(eType)) {
+  if ([
+    "lexicon",
+    "lexicon_reverse",
+    "lexicon_tech"
+  ].includes(eType)) {
     const relatedGlossary = findRelatedGlossaryTerms(it.head, 6);
     if (relatedGlossary.length > 0) {
-      html += '<h3>Связанные термины глоссария</h3><div class="related">';
+      html += "<h3>Связанные термины глоссария</h3><div class=\"related\">";
       for (const g of relatedGlossary) {
-        const shortDef = g.definition.length > 92 ? (g.definition.slice(0, 89) + '…') : g.definition;
+        const shortDef = g.definition.length > 92 ? g.definition.slice(0, 89) + "…" : g.definition;
         html += `<a class="glossary-backlink card-inline-row-link" data-term="${escapeHtml(g.term)}" href="${escapeHtml(buildGlossaryTermHash(g.term))}">
           <span>${escapeHtml(g.term)}</span>
           <span class="card-inline-row-meta">${escapeHtml(shortDef)}</span>
         </a>`;
       }
-      html += '</div>';
+      html += "</div>";
     }
   }
-  if (eType === 'lexicon') {
+  if (eType === "lexicon") {
     const subjectIdx = getSubjectByLexiconIndex();
-    let subjLinks = (subjectIdx && subjectIdx.exact && subjectIdx.exact[normalizeHeadForMatch(it.head)]) || [];
+    let subjLinks = subjectIdx && subjectIdx.exact && subjectIdx.exact[normalizeHeadForMatch(it.head)] || [];
     if (!subjLinks.length) {
       const fallbackHead = pickBestCrosslinkByPageOverlap(sortUniquePages(it.page_list || []), subjectIdx && subjectIdx.byPage);
       if (fallbackHead) subjLinks = [fallbackHead];
     }
     if (subjLinks.length) {
-      const linksHtml = subjLinks.map((h) => `<a href="${escapeHtml(buildItemHash('subject', h))}"
+      const linksHtml = subjLinks.map((h) => `<a href="${escapeHtml(buildItemHash("subject", h))}"
         class="crosslink-badge"
         data-type="subject"
-        data-head="${escapeHtml(h)}">${escapeHtml(h)}</a>`).join('');
+        data-head="${escapeHtml(h)}">${escapeHtml(h)}</a>`).join("");
       html += `<div class="subject-crosslinks">
         <span class="crosslinks-label">В предметном указателе:</span>
         ${linksHtml}
       </div>`;
     }
   }
-
-  if (eType === 'names') {
+  if (eType === "names") {
     const relationLinks = collectNameRelationLinks(it.head);
     if (relationLinks.length > 0) {
-      html += '<h3>\u0421\u0432\u044f\u0437\u0430\u043d\u043d\u044b\u0435 \u0443\u0447\u0451\u043d\u044b\u0435</h3><div class="related">';
+      html += "<h3>Связанные учёные</h3><div class=\"related\">";
       for (const rel of relationLinks.slice(0, 12)) {
-        const weightLabel = Number.isFinite(rel.weight) ? rel.weight.toFixed(1).replace(/\.0$/, '') : '0';
-        html += `<a class="relation-chip" data-type="names" data-head="${escapeHtml(rel.head)}" href="${escapeHtml(buildItemHash('names', rel.head))}">
+        const weightLabel = Number.isFinite(rel.weight) ? rel.weight.toFixed(1).replace(/\.0$/, "") : "0";
+        html += `<a class="relation-chip" data-type="names" data-head="${escapeHtml(rel.head)}" href="${escapeHtml(buildItemHash("names", rel.head))}">
           <span>${escapeHtml(rel.head)}</span>
           <span class="chip-weight">${escapeHtml(weightLabel)}</span>
         </a>`;
       }
-      html += '</div>';
+      html += "</div>";
     }
   }
-  const crossLabels = {names: 'Связанные имена', toponyms: 'Связанные топонимы',
-                       ethnonyms: 'Связанные этнонимы', languages: 'Связанные языки'};
+  const crossLabels = {
+    names: "Связанные имена",
+    toponyms: "Связанные топонимы",
+    ethnonyms: "Связанные этнонимы",
+    languages: "Связанные языки"
+  };
   const cross = (APP_DATA.cross_links || {})[eType] || {};
   for (const [tgtType, tgtMap] of Object.entries(cross)) {
     const links = tgtMap[it.head];
     if (!links || links.length === 0) continue;
     html += `<h3>${crossLabels[tgtType] || tgtType}</h3><div class="related">`;
-    for (const lnk of links.slice(0, 8)) {
-    html += `<a class="xlink card-inline-row-link" data-type="${escapeHtml(tgtType)}" data-head="${escapeHtml(lnk.head)}" href="${escapeHtml(buildItemHash(tgtType, lnk.head))}">
+    for (const lnk of links.slice(0, 8)) html += `<a class="xlink card-inline-row-link" data-type="${escapeHtml(tgtType)}" data-head="${escapeHtml(lnk.head)}" href="${escapeHtml(buildItemHash(tgtType, lnk.head))}">
         <span>${escapeHtml(lnk.head)}</span>
-        ${lnk.weight > 1 ? `<span class="card-inline-row-meta">· ${escapeHtml(lnk.weight)}</span>` : '<span></span>'}
+        ${lnk.weight > 1 ? `<span class="card-inline-row-meta">· ${escapeHtml(lnk.weight)}</span>` : "<span></span>"}
       </a>`;
-    }
-    html += '</div>';
+    html += "</div>";
   }
-
-  if (useTwoColumnCardLayout) html += '</div>';
-  html += buildCitationWidgetHtml('card');
-  html += '</div>';
+  // Authority records (A3) — grouped right after cross-links per B5.
+  const auth = it && it.authority;
+  if (auth && auth.wikidata) {
+    const authLinks = [];
+    authLinks.push(`<a class="lod-link wikidata" href="https://www.wikidata.org/wiki/${escapeHtml(auth.wikidata)}" target="_blank" rel="noopener noreferrer">Wikidata (${escapeHtml(auth.wikidata)}) ↗</a>`);
+    if (auth.viaf) authLinks.push(`<a class="lod-link viaf" href="https://viaf.org/viaf/${escapeHtml(auth.viaf)}" target="_blank" rel="noopener noreferrer">VIAF ↗</a>`);
+    if (auth.gnd) authLinks.push(`<a class="lod-link gnd" href="https://d-nb.info/gnd/${escapeHtml(auth.gnd)}" target="_blank" rel="noopener noreferrer">GND ↗</a>`);
+    if (auth.geonames) authLinks.push(`<a class="lod-link geonames" href="https://www.geonames.org/${escapeHtml(auth.geonames)}" target="_blank" rel="noopener noreferrer">GeoNames ↗</a>`);
+    html += `<div class="card-lod-section">
+						<h3>Авторитетные записи</h3>
+						<div class="card-lod-grid">${authLinks.join("")}</div>
+					</div>`;
+  }
+  // Linguistic Database Interoperability (Linked Open Data)
+  let lodHtml = "";
+  if (eType === "languages") {
+    const langKey = String(it.head || "").toLowerCase().trim();
+    const info = LANGUAGE_LOD_MAP[langKey];
+    if (info) {
+      const walsUrl = info.customWals || `https://wals.info/languoid/lect/wals_code_${info.wals}`;
+      const glottologUrl = `https://glottolog.org/resource/languoid/id/${info.glottolog}`;
+      lodHtml = `
+					<div class="card-lod-section">
+						<h3>Связанные базы данных (LOD)</h3>
+						<div class="card-lod-grid">
+							<a class="lod-link wals" href="${escapeHtml(walsUrl)}" target="_blank" rel="noopener noreferrer">WALS (${escapeHtml(info.wals)}) ↗</a>
+							<a class="lod-link glottolog" href="${escapeHtml(glottologUrl)}" target="_blank" rel="noopener noreferrer">Glottolog (${escapeHtml(info.glottolog)}) ↗</a>
+						</div>
+					</div>
+				`;
+    }
+  } else if (["lexicon", "lexicon_tech", "lexicon_reverse"].includes(eType)) {
+    const cleanTerm = String(it.head || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f*?]/g, "")
+      .trim();
+    if (cleanTerm) {
+      const starlingUrl = `https://starlingdb.org/cgi-bin/response.cgi?root=config&morpho=0&basename=\\data\\ie\\vasmer&first=1&off=&text_word=${encodeURIComponent(cleanTerm)}&method_word=substring`;
+      const rncUrl = `https://ruscorpora.ru/results?q=${encodeURIComponent(cleanTerm)}`;
+      lodHtml = `
+					<div class="card-lod-section">
+						<h3>Связанные базы данных (LOD)</h3>
+						<div class="card-lod-grid">
+							<a class="lod-link vasmer" href="${escapeHtml(starlingUrl)}" target="_blank" rel="noopener noreferrer">Vasmer (Starling) ↗</a>
+							<a class="lod-link rnc" href="${escapeHtml(rncUrl)}" target="_blank" rel="noopener noreferrer">НКРЯ ↗</a>
+						</div>
+					</div>
+				`;
+    }
+  }
+  if (lodHtml) {
+    html += lodHtml;
+  }
+  if (useTwoColumnCardLayout) html += "</div>";
+  html += buildCitationWidgetHtml("card");
+  html += "</div>";
   right.innerHTML = html;
+  right.querySelectorAll("[data-source-quote-idx]").forEach((el) => {
+    const idx = parseInt(el.dataset && el.dataset.sourceQuoteIdx || "-1", 10);
+    if (!Number.isInteger(idx) || idx < 0) return;
+    const src = itemSources[idx];
+    if (!src || !src.quote) return;
+    el.textContent = `\u201c${String(src.quote)}\u201d`;
+  });
+  const contextsMount = right.querySelector("[data-card-contexts-mount]");
+  if (contextsMount) fillCardContextsMount(contextsMount, it);
   wireSafeImageFallback(right);
-  wireCitationWidget(right, 'card');
-
+  wireCitationWidget(right, "card");
   const navState = getCardNavigationState();
-  const prevBtn = document.getElementById('card-prev');
+  const prevBtn = document.getElementById("card-prev");
   if (prevBtn) {
-    prevBtn.style.opacity = navState.canPrev ? '1' : '0.35';
-    prevBtn.style.pointerEvents = navState.canPrev ? 'auto' : 'none';
+    prevBtn.style.opacity = navState.canPrev ? "1" : "0.35";
+    prevBtn.style.pointerEvents = navState.canPrev ? "auto" : "none";
     prevBtn.onclick = () => navigateCardByDelta(-1);
   }
-  const nextBtn = document.getElementById('card-next');
+  const nextBtn = document.getElementById("card-next");
   if (nextBtn) {
-    nextBtn.style.opacity = navState.canNext ? '1' : '0.35';
-    nextBtn.style.pointerEvents = navState.canNext ? 'auto' : 'none';
+    nextBtn.style.opacity = navState.canNext ? "1" : "0.35";
+    nextBtn.style.pointerEvents = navState.canNext ? "auto" : "none";
     nextBtn.onclick = () => navigateCardByDelta(1);
   }
-  document.getElementById('back-to-histo').onclick = () => {
-    rightPaneMode = 'histogram';
+  document.getElementById("back-to-histo").onclick = () => {
+    rightPaneMode = "histogram";
     selectedItem = null;
     selectedItemType = null;
     renderList();
     renderRightContent();
     syncNavigationState();
   };
-  const openOnMapBtn = document.getElementById('open-on-map');
-  if (openOnMapBtn) {
-    openOnMapBtn.onclick = () => {
-      selectedItem = it.head;
-      selectedItemType = eType;
-      rightPaneMode = 'card';
-      switchTab('map');
-    };
-  }
-  const exportCardBtn = document.getElementById('export-card-md');
+  const openOnMapBtn = document.getElementById("open-on-map");
+  if (openOnMapBtn) openOnMapBtn.onclick = () => {
+    selectedItem = it.head;
+    selectedItemType = eType;
+    rightPaneMode = "card";
+    switchTab("map");
+  };
+  const exportCardBtn = document.getElementById("export-card-md");
   if (exportCardBtn) exportCardBtn.onclick = () => exportCurrentCardMarkdown();
-  const copyLinkBtn = document.getElementById('copy-card-link');
-  if (copyLinkBtn) {
-    copyLinkBtn.onclick = async () => {
-      const ok = await copyCurrentUrl();
-      const prev = copyLinkBtn.textContent;
-      copyLinkBtn.textContent = ok ? 'ссылка скопирована' : 'не удалось скопировать';
-      announceUiMessage(ok ? 'Link copied' : 'Failed to copy link');
-      setTimeout(() => { copyLinkBtn.textContent = prev; }, 1200);
-    };
-  }
-  // Универсальная привязка для всех кросс-ссылок (xlink) с указанием типа
-  right.querySelectorAll('.card-page-link[data-page]').forEach((el) => {
+  const copyLinkBtn = document.getElementById("copy-card-link");
+  if (copyLinkBtn) copyLinkBtn.onclick = async () => {
+    // B2/A2: copy the stable clean canonical URL of this entity, not the hash route.
+    // A2.4: scope to the entity's own book when the corpus spans more than one.
+    const scopeBookId = String(it.book_id || it.bookId || getActiveBook().book_id || "");
+    const canonicalUrl = buildCanonicalEntityUrl(eType, it.head, scopeBookId);
+    const ok = canonicalUrl ? await copyTextToClipboard(canonicalUrl) : await copyCurrentUrl();
+    const prev = copyLinkBtn.textContent;
+    copyLinkBtn.textContent = ok ? "ссылка скопирована" : "не удалось скопировать";
+    announceUiMessage(ok ? "Link copied" : "Failed to copy link");
+    setTimeout(() => {
+      copyLinkBtn.textContent = prev;
+    }, 1200);
+  };
+  right.querySelectorAll(".card-page-link[data-page]").forEach((el) => {
     bindActionWithKeyboard(el, () => {
-      const page = parseInt((el.dataset && el.dataset.page) || '0', 10);
+      const page = parseInt(el.dataset && el.dataset.page || "0", 10);
       openReadingNowPage(Number.isFinite(page) ? page : 1);
     });
   });
-  right.querySelectorAll('.kwic-jump-btn[data-term]').forEach((btn) => {
+  right.querySelectorAll(".kwic-jump-btn[data-term]").forEach((btn) => {
     bindActionWithKeyboard(btn, () => {
-      const term = clampUiInput((btn.dataset && btn.dataset.term) || '', MAX_LIST_QUERY_LENGTH);
+      const term = clampUiInput(btn.dataset && btn.dataset.term || "", MAX_LIST_QUERY_LENGTH);
       if (!term) return;
       openKwicTerm(term);
     });
   });
-  right.querySelectorAll('.source-export-bib[data-source-idx]').forEach((btn) => {
+  right.querySelectorAll(".source-export-bib[data-source-idx]").forEach((btn) => {
     bindActionWithKeyboard(btn, () => {
-      const idx = parseInt(btn.dataset.sourceIdx || '-1', 10);
+      const idx = parseInt(btn.dataset.sourceIdx || "-1", 10);
       if (!Number.isInteger(idx) || idx < 0) return;
-      const sources = Array.isArray(it._cardSources) ? it._cardSources : (Array.isArray(it.sources) ? it.sources : []);
-      const src = sources[idx];
+      const src = (Array.isArray(it._cardSources) ? it._cardSources : Array.isArray(it.sources) ? it.sources : [])[idx];
       if (!src) return;
       const entry = buildCardSourceBibEntry(it, eType, src, idx);
       if (!entry) return;
       downloadBibtexFile(`${slugify(it.head)}-source-${idx + 1}.bib`, [entry]);
-      announceUiMessage('BibTeX exported');
+      announceUiMessage("BibTeX exported");
     });
   });
-  bindNavigateLinks(right, '.xlink[data-head]', 'names');
-  bindNavigateLinks(right, '.relation-chip[data-head]', 'names');
-  right.querySelectorAll('.ctx-link[data-type="glossary"][data-head]').forEach((el) => {
+  bindNavigateLinks(right, ".xlink[data-head]", "names");
+  bindNavigateLinks(right, ".relation-chip[data-head]", "names");
+  right.querySelectorAll(".ctx-link[data-type=\"glossary\"][data-head]").forEach((el) => {
     bindActionWithKeyboard(el, () => {
-      const term = clampUiInput((el.dataset && el.dataset.head) || '', MAX_LIST_QUERY_LENGTH);
+      const term = clampUiInput(el.dataset && el.dataset.head || "", MAX_LIST_QUERY_LENGTH);
       if (!term) return;
-      if (typeof window !== 'undefined') window._pendingGlossaryTerm = term.toLowerCase();
+      if (typeof window !== "undefined") window._pendingGlossaryTerm = term.toLowerCase();
       openGlossaryTerm(term);
     });
   });
-  right.querySelectorAll('.glossary-backlink[data-term]').forEach(el => {
+  right.querySelectorAll(".glossary-backlink[data-term]").forEach((el) => {
     el.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      openGlossaryTerm(el.dataset.term || '');
+      if (e && typeof e.preventDefault === "function") e.preventDefault();
+      openGlossaryTerm(el.dataset.term || "");
     };
   });
-  right.querySelectorAll('.lecture-open-link[data-lecture-idx]').forEach(el => {
+  right.querySelectorAll(".lecture-open-link[data-lecture-idx]").forEach((el) => {
     bindActionWithKeyboard(el, () => {
-      const idx = parseInt((el.dataset && el.dataset.lectureIdx) || '0', 10);
+      const idx = parseInt(el.dataset && el.dataset.lectureIdx || "0", 10);
       openLecturePage(Number.isFinite(idx) ? idx : 0);
     });
   });
-  right.querySelectorAll('.related-link[data-name]').forEach(el => {
+  right.querySelectorAll(".related-link[data-name]").forEach((el) => {
     el.onclick = () => {
       selectedItem = el.dataset.name;
-      selectedItemType = 'names';
-      rightPaneMode = 'card';
+      selectedItemType = "names";
+      rightPaneMode = "card";
       renderList();
       renderRightContent();
       syncNavigationState();
     };
   });
 }
-
-// =========================================================
-// КАРТОЧКИ СЕТКОЙ
-// =========================================================
 function renderCardsPanel(container) {
-  container.innerHTML = '<div class="panel active"><div class="cards-grid-container"><div class="cards-grid" id="cards-grid"></div></div></div>';
-  const grid = document.getElementById('cards-grid');
-  const items = ENTITY_TYPES[currentEntity].items;
-  const sorted = [...items].sort(compareItemsByHead);
+  container.innerHTML = "<div class=\"panel active\"><div class=\"cards-grid-container\"><div class=\"cards-grid\" id=\"cards-grid\"></div></div></div>";
+  const grid = document.getElementById("cards-grid");
+  const sorted = [...ENTITY_TYPES[currentEntity].items].sort(compareItemsByHead);
   for (const it of sorted) {
-    const card = document.createElement('div');
-    card.className = 'mini-card';
-    if (currentEntity === 'names') card.style.borderTopColor = safeColor(COLORS[it.subcategory], '#8a7050');
-    let cat = '';
-    if (currentEntity === 'names') cat = LABELS[it.subcategory] || '';
-    else if (currentEntity === 'toponyms') cat = 'Топоним';
-    else if (currentEntity === 'ethnonyms') cat = 'Этноним';
-    else if (currentEntity === 'languages') cat = it.family || 'Язык';
-    const pages = it.pages || it.head_pages || '';
-    const head = document.createElement('div');
-    head.className = 'mc-head';
-    head.textContent = String(it.head || '');
+    const card = document.createElement("div");
+    card.className = "mini-card";
+    if (currentEntity === "names") card.style.borderTopColor = safeColor(COLORS[it.subcategory], "#8a7050");
+    let cat = "";
+    if (currentEntity === "names") cat = LABELS[it.subcategory] || "";
+    else if (currentEntity === "toponyms") cat = "Топоним";
+    else if (currentEntity === "ethnonyms") cat = "Этноним";
+    else if (currentEntity === "languages") cat = it.family || "Язык";
+    const pages = it.pages || it.head_pages || "";
+    const head = document.createElement("div");
+    head.className = "mc-head";
+    head.textContent = String(it.head || "");
     if (it.discussed) {
-      const discussed = document.createElement('span');
-      discussed.className = 'mc-discussed';
-      discussed.textContent = 'обсуждается';
+      const discussed = document.createElement("span");
+      discussed.className = "mc-discussed";
+      discussed.textContent = "обсуждается";
       head.appendChild(discussed);
     }
-    const catEl = document.createElement('div');
-    catEl.className = 'mc-cat';
-    catEl.textContent = String(cat || '');
-    const pagesEl = document.createElement('div');
-    pagesEl.className = 'mc-pages';
-    pagesEl.textContent = `стр. ${String(pages || '')}`;
+    const catEl = document.createElement("div");
+    catEl.className = "mc-cat";
+    catEl.textContent = String(cat || "");
+    const pagesEl = document.createElement("div");
+    pagesEl.className = "mc-pages";
+    pagesEl.textContent = `стр. ${String(pages || "")}`;
     card.appendChild(head);
     card.appendChild(catEl);
     card.appendChild(pagesEl);
     card.onclick = () => {
       selectedItem = it.head;
       selectedItemType = currentEntity;
-      rightPaneMode = 'card';
-      switchTab('list');
+      rightPaneMode = "card";
+      switchTab("list");
     };
     grid.appendChild(card);
   }
 }
-
-// =========================================================
-// ГИСТОГРАММА (отдельная вкладка)
-// =========================================================
 function renderHistogramPanel(container) {
   const t0 = nowMs();
   const focusedItem = getFocusedHistogramItem(currentEntity);
   const introText = buildHistogramIntroText(currentEntity, focusedItem);
-  const introHtml = introText ? `<p class="chart-intro">${escapeHtml(introText)}</p>` : '';
   container.innerHTML = `<div class="panel active"><div class="chart">
-    ${introHtml}
+    ${introText ? `<p class="chart-intro">${escapeHtml(introText)}</p>` : ""}
     <div id="histogram"></div></div></div>`;
-  const chart = document.getElementById('histogram');
+  const chart = document.getElementById("histogram");
   if (!chart) return;
   renderChapterHistogramRows(chart, currentEntity, focusedItem);
-  chart.querySelectorAll('.bar-fill').forEach(bar => {
+  chart.querySelectorAll(".bar-fill").forEach((bar) => {
     bar.onclick = () => {
-      switchTab('list');
+      switchTab("list");
       setTimeout(() => renderChapterListFilter(currentEntity, bar.dataset.chapter), 50);
     };
   });
-  perfDebug('render-histogram', nowMs() - t0, currentEntity);
+  perfDebug("render-histogram", nowMs() - t0, currentEntity);
 }
-
-// =========================================================
-// ШКАЛА
-// =========================================================
 function renderTimelinePanel(container) {
   container.innerHTML = `<div class="panel active"><div class="timeline-container">
     <p class="chart-intro">Имена на оси времени по векам. Каждая точка — одно имя; цвет показывает категорию. Кликните, чтобы открыть карточку.</p>
     <div id="timeline"></div>
     <div class="legend" id="timeline-legend"></div></div></div>`;
-  const tl = document.getElementById('timeline');
-  const items = ENTITY_TYPES[currentEntity].items;
-  const withEpoch = items.filter(n => n.epoch !== null && n.epoch !== undefined);
-  if (withEpoch.length === 0) { tl.innerHTML = '<p class="panel-muted-message">Нет данных.</p>'; return; }
+  const tl = document.getElementById("timeline");
+  const withEpoch = ENTITY_TYPES[currentEntity].items.filter((n) => n.epoch !== null && n.epoch !== void 0);
+  if (withEpoch.length === 0) {
+    tl.innerHTML = "<p class=\"panel-muted-message\">Нет данных.</p>";
+    return;
+  }
   withEpoch.sort((a, b) => a.epoch - b.epoch);
-
-  const isNarrow = window.innerWidth < 1000;
-  const ticks = [-1500, -500, 0, 500, 1000, 1500, 1700, 1850, 1900, 1950, 2000, 2025];
-
+  const isNarrow = window.innerWidth < 1e3;
+  const ticks = [
+    -1500,
+    -500,
+    0,
+    500,
+    1e3,
+    1500,
+    1700,
+    1850,
+    1900,
+    1950,
+    2e3,
+    2025
+  ];
   if (isNarrow) {
-    // Вертикальная шкала для узких экранов
-    const W = Math.max(480, window.innerWidth - 80);
-    const padL = 100, padR = 20, padT = 20;
+    const W = Math.max(480, window.innerWidth - 80), padL = 100, padT = 20;
     const rowH = 28;
     const H = padT + withEpoch.length * rowH + 20;
     let svg = `<svg class="timeline-svg" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">`;
     svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${H - 20}" stroke="#8a7050" stroke-width="2"/>`;
-    // Метки времени — слева от оси, в виде текста рядом с точками соответствующих десятилетий
     for (let i = 0; i < withEpoch.length; i++) {
       const n = withEpoch[i];
       const y = padT + 10 + i * rowH;
-      const color = safeColor(COLORS[n.subcategory], '#888');
-      const epochLabel = n.epoch < 0 ? (-n.epoch) + ' до н.э.' : String(n.epoch);
+      const color = safeColor(COLORS[n.subcategory], "#888");
+      const epochLabel = n.epoch < 0 ? -n.epoch + " до н.э." : String(n.epoch);
       svg += `<text x="${padL - 8}" y="${y + 4}" fill="#888" font-size="10" text-anchor="end">${epochLabel}</text>`;
       svg += `<g class="timeline-point" data-name="${escapeHtml(n.head)}">
         <circle cx="${padL}" cy="${y}" r="5" fill="${color}" stroke="white" stroke-width="1.5"></circle>
         <text x="${padL + 10}" y="${y + 4}" fill="#1a1a1a" font-size="12">${escapeHtml(n.head)}</text>
       </g>`;
     }
-    svg += '</svg>';
+    svg += "</svg>";
     tl.innerHTML = svg;
   } else {
-    // Горизонтальная шкала для широких экранов
     const W = Math.max(1200, window.innerWidth - 100);
     const padL = 80, padR = 60, padT = 40, rowH = 22;
     function epochToX(e) {
-      for (let i = 0; i < ticks.length - 1; i++) {
-        if (e >= ticks[i] && e <= ticks[i+1]) {
-          const t = (e - ticks[i]) / (ticks[i+1] - ticks[i]);
-          return padL + (i + t) / (ticks.length - 1) * (W - padL - padR);
-        }
+      for (let i = 0; i < ticks.length - 1; i++) if (e >= ticks[i] && e <= ticks[i + 1]) {
+        const t = (e - ticks[i]) / (ticks[i + 1] - ticks[i]);
+        return padL + (i + t) / (ticks.length - 1) * (W - padL - padR);
       }
       if (e < ticks[0]) return padL;
       return W - padR;
@@ -6919,11 +6515,15 @@ function renderTimelinePanel(container) {
       const x = epochToX(n.epoch);
       const labelW = n.head.length * 6 + 16;
       let level = 0;
-      while (placed.some(p => p.level === level && !(p.x + p.labelW < x - 4 || x + labelW < p.x - 4))) level++;
-      placed.push({ name: n, x, level, labelW });
+      while (placed.some((p) => p.level === level && !(p.x + p.labelW < x - 4 || x + labelW < p.x - 4))) level++;
+      placed.push({
+        name: n,
+        x,
+        level,
+        labelW
+      });
     }
-    const maxLevel = Math.max(...placed.map(p => p.level));
-    const H = padT + (maxLevel + 1) * rowH + 30;
+    const H = padT + (Math.max(...placed.map((p) => p.level)) + 1) * rowH + 30;
     let svg = `<svg class="timeline-svg" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">`;
     const axisY = padT;
     svg += `<line x1="${padL}" y1="${axisY}" x2="${W - padR}" y2="${axisY}" stroke="#8a7050" stroke-width="2"/>`;
@@ -6933,75 +6533,86 @@ function renderTimelinePanel(container) {
       svg += `<line x1="${x}" y1="${axisY - 6}" x2="${x}" y2="${axisY + 6}" stroke="#8a7050" stroke-width="2"/>`;
       svg += `<line x1="${x}" y1="${axisY + 6}" x2="${x}" y2="${H - 5}" stroke="#f0e8d8" stroke-width="1" stroke-dasharray="2 3"/>`;
       let label;
-      if (t < 0) label = (-t) + ' до н.э.';
-      else if (t === 0) label = '0';
+      if (t < 0) label = -t + " до н.э.";
+      else if (t === 0) label = "0";
       else label = String(t);
       svg += `<text x="${x}" y="${axisY - 12}" fill="#5a3818" font-size="11" text-anchor="middle">${label}</text>`;
     }
     for (const p of placed) {
       const cy = axisY + 18 + p.level * rowH;
-      const color = safeColor(COLORS[p.name.subcategory], '#888');
+      const color = safeColor(COLORS[p.name.subcategory], "#888");
       svg += `<line x1="${p.x}" y1="${axisY}" x2="${p.x}" y2="${cy - 5}" stroke="#d4c8b0" stroke-width="1"/>`;
       svg += `<g class="timeline-point" data-name="${escapeHtml(p.name.head)}">
         <circle cx="${p.x}" cy="${cy}" r="5" fill="${color}" stroke="white" stroke-width="1.5"></circle>
         <text x="${p.x + 7}" y="${cy + 4}" fill="#1a1a1a" font-size="11">${escapeHtml(p.name.head)}</text>
       </g>`;
     }
-    svg += '</svg>';
+    svg += "</svg>";
     tl.innerHTML = svg;
   }
-  tl.querySelectorAll('g[data-name]').forEach(g => {
+  tl.querySelectorAll("g[data-name]").forEach((g) => {
     g.onclick = () => {
       selectedItem = g.dataset.name;
       selectedItemType = currentEntity;
-      rightPaneMode = 'card';
-      switchTab('list');
+      rightPaneMode = "card";
+      switchTab("list");
     };
   });
-
-  const lg = document.getElementById('timeline-legend');
-  const subsPresent = new Set(withEpoch.map(n => n.subcategory));
-  const order = ['linguist','literator','historical','participant','edition_staff'];
-  for (const sub of order) {
+  const lg = document.getElementById("timeline-legend");
+  const subsPresent = new Set(withEpoch.map((n) => n.subcategory));
+  for (const sub of [
+    "linguist",
+    "literator",
+    "historical",
+    "participant",
+    "edition_staff"
+  ]) {
     if (!subsPresent.has(sub)) continue;
-    const div = document.createElement('div');
-    div.className = 'legend-item';
-    const dot = document.createElement('span');
+    const div = document.createElement("div");
+    div.className = "legend-item";
+    const dot = document.createElement("span");
     dot.className = `legend-dot ${getCategoryColorClass(sub)}`;
     div.appendChild(dot);
     div.appendChild(document.createTextNode(LABELS[sub] || sub));
     lg.appendChild(div);
   }
 }
-
-// =========================================================
-// ЭПОХИ ТОПОНИМОВ
-// =========================================================
 function renderEpochsPanel(container) {
   container.innerHTML = `<div class="panel active"><div class="timeline-container">
     <p class="chart-intro">Топонимы, разнесенные по историческим эпохам. В каждой колонке — те места, чья историческая роль приходится на этот период (древность, средневековье, новое время, новейшее).</p>
     <div id="epochs-grid"></div></div></div>`;
-  const grid = document.getElementById('epochs-grid');
+  const grid = document.getElementById("epochs-grid");
   const epochs = [
-    {key: 'ancient', label: 'Античность', sub: 'до 500 г.'},
-    {key: 'medieval', label: 'Средневековье', sub: '500–1500'},
-    {key: 'modern', label: 'Новое время', sub: '1500–1900'},
-    {key: 'contemporary', label: 'Новейшее', sub: '1900+'},
+    {
+      key: "ancient",
+      label: "Античность",
+      sub: "до 500 г."
+    },
+    {
+      key: "medieval",
+      label: "Средневековье",
+      sub: "500–1500"
+    },
+    {
+      key: "modern",
+      label: "Новое время",
+      sub: "1500–1900"
+    },
+    {
+      key: "contemporary",
+      label: "Новейшее",
+      sub: "1900+"
+    }
   ];
   const items = APP_DATA.toponyms;
   const grouped = {};
   for (const ep of epochs) grouped[ep.key] = [];
-  for (const t of items) {
-    if (t.epoch_class && grouped[t.epoch_class]) grouped[t.epoch_class].push(t);
-  }
-  for (const ep of epochs) {
-    grouped[ep.key].sort(compareItemsByHead);
-  }
-
-  let html = '<div class="epochs-grid">';
+  for (const t of items) if (t.epoch_class && grouped[t.epoch_class]) grouped[t.epoch_class].push(t);
+  for (const ep of epochs) grouped[ep.key].sort(compareItemsByHead);
+  let html = "<div class=\"epochs-grid\">";
   for (const ep of epochs) {
     const list = grouped[ep.key];
-    const epochColor = safeColor(EPOCH_COLORS[ep.key], '#8a7050');
+    const epochColor = safeColor(EPOCH_COLORS[ep.key], "#8a7050");
     html += `<div class="epoch-card">
       <div class="epoch-card-head" data-epoch-color="${escapeHtml(epochColor)}">
         <div class="epoch-card-title">${ep.label}</div>
@@ -7009,159 +6620,151 @@ function renderEpochsPanel(container) {
       </div>
       <div class="epoch-link-list">`;
     for (const t of list) {
-      const discussedClass = t.discussed ? ' discussed' : '';
-      html += `<a class="related-link epoch-link${discussedClass}" data-head="${escapeHtml(t.head)}" href="${escapeHtml(buildItemHash('toponyms', t.head))}">${escapeHtml(t.head)}</a>`;
+      const discussedClass = t.discussed ? " discussed" : "";
+      html += `<a class="related-link epoch-link${discussedClass}" data-head="${escapeHtml(t.head)}" href="${escapeHtml(buildItemHash("toponyms", t.head))}">${escapeHtml(t.head)}</a>`;
     }
-    html += '</div></div>';
+    html += "</div></div>";
   }
-  html += '</div>';
+  html += "</div>";
   grid.innerHTML = html;
   applyDataDrivenStyles(grid);
-  bindNavigateLinks(grid, '.related-link[data-head]', 'toponyms');
+  bindNavigateLinks(grid, ".related-link[data-head]", "toponyms");
 }
-
-// =========================================================
-// ТЕПЛОВАЯ КАРТА
-// =========================================================
 function getHeatmapTopItems(entityKey, limit = 50) {
   const key = `${entityKey}:${limit}:${getDataSignature()}`;
-  return getCachedAggregate('heatmap', key, () => {
-    const src = (ENTITY_TYPES[entityKey] && Array.isArray(ENTITY_TYPES[entityKey].items)) ? ENTITY_TYPES[entityKey].items : [];
-    const items = src.filter(it => it.discussed);
+  return getCachedAggregate("heatmap", key, () => {
+    const items = (ENTITY_TYPES[entityKey] && Array.isArray(ENTITY_TYPES[entityKey].items) ? ENTITY_TYPES[entityKey].items : []).filter((it) => it.discussed);
     items.sort((a, b) => (b.page_list || []).length - (a.page_list || []).length);
     return items.slice(0, limit);
   });
 }
-
 function renderHeatmapPanel(container) {
   const t0 = nowMs();
   container.innerHTML = `<div class="panel active"><div class="heatmap-container">
     <p class="chart-intro">Сетка «элемент × страница книги» (только обсуждаемые, топ-50). Цветные ячейки — упоминания.</p>
     <div id="heatmap"></div></div></div>`;
-  const hm = document.getElementById('heatmap');
+  const hm = document.getElementById("heatmap");
   const top = getHeatmapTopItems(currentEntity, 50);
-
   const TOTAL_PAGES = getTotalBookPages();
   const cellW = 2.2, cellH = 14, labelW = 220;
   const W = labelW + TOTAL_PAGES * cellW + 30;
   const H = top.length * cellH + 40;
-
   let svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">`;
   for (const ch of APP_DATA.chapters) {
     const x1 = labelW + (ch.start - 1) * cellW;
     const x2 = labelW + ch.end * cellW;
-    svg += `<rect x="${x1}" y="0" width="${x2-x1}" height="${H - 20}" fill="#fbf6e8" />`;
+    svg += `<rect x="${x1}" y="0" width="${x2 - x1}" height="${H - 20}" fill="#fbf6e8" />`;
     svg += `<line x1="${x2}" y1="0" x2="${x2}" y2="${H - 20}" stroke="#e8dfc5" stroke-width="1"/>`;
   }
   let chIdx = 0;
   for (const ch of APP_DATA.chapters) {
-    const xMid = labelW + ((ch.start + ch.end) / 2) * cellW;
-    const shortName = ch.name.length > 18 ? ch.name.slice(0, 16) + '…' : ch.name;
-    const yLabel = (chIdx % 2 === 0) ? H - 12 : H - 2;
+    const xMid = labelW + (ch.start + ch.end) / 2 * cellW;
+    const shortName = ch.name.length > 18 ? ch.name.slice(0, 16) + "…" : ch.name;
+    const yLabel = chIdx % 2 === 0 ? H - 12 : H - 2;
     svg += `<text x="${xMid}" y="${yLabel}" fill="#888" font-size="9" text-anchor="middle">${escapeHtml(shortName)}</text>`;
     chIdx++;
   }
   for (let i = 0; i < top.length; i++) {
     const it = top[i];
     const y = i * cellH + 8;
-    const label = it.head.length > 30 ? it.head.slice(0, 28) + '…' : it.head;
+    const label = it.head.length > 30 ? it.head.slice(0, 28) + "…" : it.head;
     svg += `<text x="${labelW - 6}" y="${y + 4}" fill="#1a1a1a" font-size="10" text-anchor="end">${escapeHtml(label)}</text>`;
-    const color = currentEntity === 'names' ? safeColor(COLORS[it.subcategory], '#888') : '#5a3818';
-    for (const p of (it.page_list || [])) {
+    const color = currentEntity === "names" ? safeColor(COLORS[it.subcategory], "#888") : "#5a3818";
+    for (const p of it.page_list || []) {
       const x = labelW + (p - 1) * cellW;
       svg += `<rect x="${x}" y="${y - 4}" width="${Math.max(2.5, cellW)}" height="${cellH - 4}" fill="${color}" opacity="0.85"><title>${escapeHtml(it.head)} · стр. ${p}</title></rect>`;
     }
   }
-  svg += '</svg>';
+  svg += "</svg>";
   hm.innerHTML = svg;
-  perfDebug('render-heatmap', nowMs() - t0, currentEntity);
+  perfDebug("render-heatmap", nowMs() - t0, currentEntity);
 }
-
-// =========================================================
-// ГРАФ ИМЁН
-// =========================================================
 function getNameGraphLayoutSync(minEdgeWeight, W, H) {
   const minWeight = Number.isFinite(minEdgeWeight) ? Math.max(0, minEdgeWeight) : 0;
   const key = `${minWeight.toFixed(2)}:${W}x${H}:${getDataSignature()}`;
-  return getCachedAggregate('graph-names', key, () => {
+  return getCachedAggregate("graph-names", key, () => {
     const items = APP_DATA.names || [];
-    const srcEdges = APP_DATA.edges || [];
-    const edges = srcEdges.filter(e => (Number(e.weight) || 0) >= minWeight);
-    const connectedNames = new Set();
+    const edges = (APP_DATA.edges || []).filter((e) => (Number(e.weight) || 0) >= minWeight);
+    const connectedNames = /* @__PURE__ */ new Set();
     for (const e of edges) {
       connectedNames.add(e.source);
       connectedNames.add(e.target);
     }
-    const nodes = items.filter(n => connectedNames.has(n.head)).map(n => ({
+    const nodes = items.filter((n) => connectedNames.has(n.head)).map((n) => ({
       name: n.head,
       subcat: n.subcategory,
       weight: (n.page_list || []).length,
-      x: W / 2 + (deterministicUnitFromString(n.head + ':x', 11) - 0.5) * W * 0.8,
-      y: H / 2 + (deterministicUnitFromString(n.head + ':y', 23) - 0.5) * H * 0.8,
+      x: W / 2 + (deterministicUnitFromString(n.head + ":x", 11) - .5) * W * .8,
+      y: H / 2 + (deterministicUnitFromString(n.head + ":y", 23) - .5) * H * .8,
       vx: 0,
-      vy: 0,
+      vy: 0
     }));
     const idx = {};
-    nodes.forEach((n, i) => { idx[n.name] = i; });
-    const validEdges = edges.filter(e => idx[e.source] !== undefined && idx[e.target] !== undefined);
-
+    nodes.forEach((n, i) => {
+      idx[n.name] = i;
+    });
+    const validEdges = edges.filter((e) => idx[e.source] !== void 0 && idx[e.target] !== void 0);
     function step() {
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j];
-          const dx = b.x - a.x, dy = b.y - a.y;
-          const d2 = dx * dx + dy * dy + 0.01;
-          const d = Math.sqrt(d2);
-          const force = 1000 / d2;
-          a.vx -= (dx / d) * force; a.vy -= (dy / d) * force;
-          b.vx += (dx / d) * force; b.vy += (dy / d) * force;
-        }
+      for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const d2 = dx * dx + dy * dy + .01;
+        const d = Math.sqrt(d2);
+        const force = 1e3 / d2;
+        a.vx -= dx / d * force;
+        a.vy -= dy / d * force;
+        b.vx += dx / d * force;
+        b.vy += dy / d * force;
       }
       for (const e of validEdges) {
         const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
         const dx = b.x - a.x, dy = b.y - a.y;
-        const d = Math.sqrt(dx * dx + dy * dy) + 0.01;
-        const force = (d - 90) * 0.01 * Math.sqrt(e.weight);
-        a.vx += (dx / d) * force; a.vy += (dy / d) * force;
-        b.vx -= (dx / d) * force; b.vy -= (dy / d) * force;
+        const d = Math.sqrt(dx * dx + dy * dy) + .01;
+        const force = (d - 90) * .01 * Math.sqrt(e.weight);
+        a.vx += dx / d * force;
+        a.vy += dy / d * force;
+        b.vx -= dx / d * force;
+        b.vy -= dy / d * force;
       }
       for (const n of nodes) {
-        n.vx += (W / 2 - n.x) * 0.001; n.vy += (H / 2 - n.y) * 0.001;
-        n.vx *= 0.85; n.vy *= 0.85;
-        n.x += n.vx; n.y += n.vy;
+        n.vx += (W / 2 - n.x) * .001;
+        n.vy += (H / 2 - n.y) * .001;
+        n.vx *= .85;
+        n.vy *= .85;
+        n.x += n.vx;
+        n.y += n.vy;
         n.x = Math.max(40, Math.min(W - 40, n.x));
         n.y = Math.max(40, Math.min(H - 40, n.y));
       }
     }
     for (let i = 0; i < 300; i++) step();
-    return { nodes, idx, validEdges };
+    return {
+      nodes,
+      idx,
+      validEdges
+    };
   });
 }
-
 function getNameGraphLayout(minEdgeWeight, W, H) {
   return getNameGraphLayoutSync(minEdgeWeight, W, H);
 }
-
 function supportsNameGraphWorker() {
-  return (
-    typeof Worker !== 'undefined' &&
-    typeof Blob !== 'undefined' &&
-    typeof URL !== 'undefined' &&
-    typeof URL.createObjectURL === 'function'
-  );
+  return typeof Worker !== "undefined" && typeof Blob !== "undefined" && typeof URL !== "undefined" && typeof URL.createObjectURL === "function";
 }
-
 function disposeNameGraphWorker() {
   if (nameGraphWorker) {
-    try { nameGraphWorker.terminate(); } catch (e) {}
+    try {
+      nameGraphWorker.terminate();
+    } catch (e) {}
     nameGraphWorker = null;
   }
   if (nameGraphWorkerBlobUrl) {
-    try { URL.revokeObjectURL(nameGraphWorkerBlobUrl); } catch (e) {}
+    try {
+      URL.revokeObjectURL(nameGraphWorkerBlobUrl);
+    } catch (e) {}
     nameGraphWorkerBlobUrl = null;
   }
 }
-
 function getNameGraphWorkerScript() {
   return [
     "function seed(text, salt) {",
@@ -7248,15 +6851,14 @@ function getNameGraphWorkerScript() {
     "  } catch (error) {",
     "    self.postMessage({ requestId: requestId, ok: false, error: String((error && error.message) ? error.message : error) });",
     "  }",
-    "};",
-  ].join('\n');
+    "};"
+  ].join("\n");
 }
-
 function getNameGraphWorker() {
   if (!supportsNameGraphWorker()) return null;
   if (nameGraphWorker) return nameGraphWorker;
   try {
-    const blob = new Blob([getNameGraphWorkerScript()], { type: 'text/javascript' });
+    const blob = new Blob([getNameGraphWorkerScript()], { type: "text/javascript" });
     nameGraphWorkerBlobUrl = URL.createObjectURL(blob);
     nameGraphWorker = new Worker(nameGraphWorkerBlobUrl);
     return nameGraphWorker;
@@ -7265,74 +6867,69 @@ function getNameGraphWorker() {
     return null;
   }
 }
-
 function requestNameGraphLayoutFromWorker(minEdgeWeight, W, H) {
   const worker = getNameGraphWorker();
   if (!worker) return null;
   const minWeight = Number.isFinite(minEdgeWeight) ? Math.max(0, minEdgeWeight) : 0;
   const requestId = ++nameGraphWorkerRequestId;
-  const names = (APP_DATA.names || []).map(n => ({
+  const names = (APP_DATA.names || []).map((n) => ({
     head: n.head,
     subcat: n.subcategory,
-    weight: (n.page_list || []).length,
+    weight: (n.page_list || []).length
   }));
-  const edges = (APP_DATA.edges || []).map(e => ({
+  const edges = (APP_DATA.edges || []).map((e) => ({
     source: e.source,
     target: e.target,
-    weight: Number(e.weight) || 0,
+    weight: Number(e.weight) || 0
   }));
   return new Promise((resolve, reject) => {
     const onMessage = (event) => {
       const data = event.data || {};
       if (data.requestId !== requestId) return;
-      worker.removeEventListener('message', onMessage);
-      worker.removeEventListener('error', onError);
+      worker.removeEventListener("message", onMessage);
+      worker.removeEventListener("error", onError);
       if (data.ok && data.layout) resolve(data.layout);
-      else reject(new Error(data.error || 'name graph worker failed'));
+      else reject(new Error(data.error || "name graph worker failed"));
     };
     const onError = (event) => {
-      worker.removeEventListener('message', onMessage);
-      worker.removeEventListener('error', onError);
-      const msg = event && event.message ? event.message : 'name graph worker error';
+      worker.removeEventListener("message", onMessage);
+      worker.removeEventListener("error", onError);
+      const msg = event && event.message ? event.message : "name graph worker error";
       reject(new Error(msg));
     };
-    worker.addEventListener('message', onMessage);
-    worker.addEventListener('error', onError);
-    worker.postMessage({ requestId, minWeight, W, H, names, edges });
+    worker.addEventListener("message", onMessage);
+    worker.addEventListener("error", onError);
+    worker.postMessage({
+      requestId,
+      minWeight,
+      W,
+      H,
+      names,
+      edges
+    });
   });
 }
-
 function getNameGraphLayoutAsync(minEdgeWeight, W, H) {
   const minWeight = Number.isFinite(minEdgeWeight) ? Math.max(0, minEdgeWeight) : 0;
-  const key = `${minWeight.toFixed(2)}:${W}x${H}:${getDataSignature()}`;
-  const cacheKey = `graph-names::${key}`;
+  const cacheKey = `graph-names::${`${minWeight.toFixed(2)}:${W}x${H}:${getDataSignature()}`}`;
   if (aggregateCache.has(cacheKey)) {
-    perfDebug('graph-names-worker cache', 0, 'hit');
+    perfDebug("graph-names-worker cache", 0, "hit");
     return Promise.resolve(aggregateCache.get(cacheKey));
   }
-  if (nameGraphLayoutPromiseCache.has(cacheKey)) {
-    return nameGraphLayoutPromiseCache.get(cacheKey);
-  }
+  if (nameGraphLayoutPromiseCache.has(cacheKey)) return nameGraphLayoutPromiseCache.get(cacheKey);
   const t0 = nowMs();
   let job = null;
-  if (supportsNameGraphWorker()) {
-    job = requestNameGraphLayoutFromWorker(minWeight, W, H);
-  }
-  if (!job) {
-    job = Promise.resolve(getNameGraphLayoutSync(minWeight, W, H));
-  } else {
-    job = job.catch((error) => {
-      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
-        console.warn('[graph-worker] fallback to sync layout:', error && error.message ? error.message : error);
-      }
-      disposeNameGraphWorker();
-      return getNameGraphLayoutSync(minWeight, W, H);
-    });
-  }
+  if (supportsNameGraphWorker()) job = requestNameGraphLayoutFromWorker(minWeight, W, H);
+  if (!job) job = Promise.resolve(getNameGraphLayoutSync(minWeight, W, H));
+  else job = job.catch((error) => {
+    if (typeof console !== "undefined" && typeof console.warn === "function") console.warn("[graph-worker] fallback to sync layout:", error && error.message ? error.message : error);
+    disposeNameGraphWorker();
+    return getNameGraphLayoutSync(minWeight, W, H);
+  });
   const promise = job.then((layout) => {
     rememberBoundedCacheValue(aggregateCache, cacheKey, layout, AGGREGATE_CACHE_MAX);
     nameGraphLayoutPromiseCache.delete(cacheKey);
-    perfDebug('graph-names-worker', nowMs() - t0, 'miss');
+    perfDebug("graph-names-worker", nowMs() - t0, "miss");
     return layout;
   }).catch((error) => {
     nameGraphLayoutPromiseCache.delete(cacheKey);
@@ -7341,18 +6938,16 @@ function getNameGraphLayoutAsync(minEdgeWeight, W, H) {
   nameGraphLayoutPromiseCache.set(cacheKey, promise);
   return promise;
 }
-
 function renderGraphPanel(container) {
   const t0 = nowMs();
-  const edgesRaw = APP_DATA.edges || [];
-  const maxEdgeWeight = edgesRaw.reduce((mx, e) => Math.max(mx, Number(e.weight) || 0), 0);
+  const maxEdgeWeight = (APP_DATA.edges || []).reduce((mx, e) => Math.max(mx, Number(e.weight) || 0), 0);
   const sliderMax = Math.max(2, Math.ceil(maxEdgeWeight * 10) / 10);
   if (!Number.isFinite(nameGraphMinEdgeWeight) || nameGraphMinEdgeWeight < 0) nameGraphMinEdgeWeight = 0;
   nameGraphMinEdgeWeight = Math.min(nameGraphMinEdgeWeight, sliderMax);
   const minWeightLabel = (Math.round(nameGraphMinEdgeWeight * 10) / 10).toFixed(1);
-
   container.innerHTML = `<div class="panel active"><div class="graph-container">
-    <p class="chart-intro">Person-to-person co-mention graph. Nodes are people and weighted links reflect how close their mentions are in the text.</p>
+    <p class="chart-intro">Граф со-упоминаний лиц: узлы — люди, вес связи отражает близость их упоминаний в тексте.</p>
+    <p class="chart-provenance">Связи вычислены автоматически по со-встречаемости — поисковый сигнал, не нормативное утверждение. Метод и провенанс: <a href="https://github.com/gasyoun/BookIndex/blob/main/docs/METHODS_RU.md" target="_blank" rel="noopener noreferrer">METHODS_RU.md</a>.</p>
     <div class="graph-toolbar">
       <label class="graph-range">min edge weight
         <input id="graph-min-weight" type="range" min="0" max="${sliderMax.toFixed(1)}" step="0.1" value="${minWeightLabel}">
@@ -7365,18 +6960,16 @@ function renderGraphPanel(container) {
     <div id="graph-legend" class="graph-legend"></div>
     <div id="graph-tooltip" class="graph-tooltip" hidden></div>
   </div></div>`;
-
-  const slider = document.getElementById('graph-min-weight');
-  const sliderValue = document.getElementById('graph-min-weight-value');
-  const summary = document.getElementById('graph-summary');
-  const status = document.getElementById('graph-status');
-  const stage = document.getElementById('graph-stage');
-  const legend = document.getElementById('graph-legend');
-  const tooltip = document.getElementById('graph-tooltip');
+  const slider = document.getElementById("graph-min-weight");
+  const sliderValue = document.getElementById("graph-min-weight-value");
+  const summary = document.getElementById("graph-summary");
+  const status = document.getElementById("graph-status");
+  const stage = document.getElementById("graph-stage");
+  const legend = document.getElementById("graph-legend");
+  const tooltip = document.getElementById("graph-tooltip");
   const W = 1200;
   const H = 620;
   const renderToken = ++nameGraphRenderToken;
-
   const setWeightValue = () => {
     const raw = Number(slider && slider.value);
     const next = Number.isFinite(raw) ? Math.max(0, Math.min(sliderMax, raw)) : 0;
@@ -7384,29 +6977,23 @@ function renderGraphPanel(container) {
     if (slider) slider.value = next.toFixed(1);
     if (sliderValue) sliderValue.textContent = next.toFixed(1);
   };
-
-  if (slider) {
-    slider.oninput = () => {
-      setWeightValue();
-      renderGraphPanel(container);
-    };
-  }
+  if (slider) slider.oninput = () => {
+    setWeightValue();
+    renderGraphPanel(container);
+  };
   setWeightValue();
-
-  if (!stage || typeof d3 === 'undefined' || !d3 || typeof d3.select !== 'function') {
+  if (!stage || typeof d3 === "undefined" || !d3 || typeof d3.select !== "function") {
     if (status) {
       status.hidden = false;
-      status.textContent = 'D3.js is unavailable, graph view is disabled.';
+      status.textContent = "D3.js is unavailable, graph view is disabled.";
     }
     return;
   }
-
   function hideTooltip() {
     if (!tooltip) return;
     tooltip.hidden = true;
-    tooltip.textContent = '';
+    tooltip.textContent = "";
   }
-
   function showTooltip(event, item) {
     if (!tooltip || !stage || !item) return;
     const rect = stage.getBoundingClientRect();
@@ -7415,241 +7002,160 @@ function renderGraphPanel(container) {
     tooltip.hidden = false;
     tooltip.style.left = `${Math.max(0, px)}px`;
     tooltip.style.top = `${Math.max(0, py)}px`;
-    tooltip.textContent = '';
-    const title = document.createElement('strong');
-    title.textContent = String(item.name || '');
+    tooltip.textContent = "";
+    const title = document.createElement("strong");
+    title.textContent = String(item.name || "");
     tooltip.appendChild(title);
-    tooltip.appendChild(document.createTextNode(`${item.subcat || 'uncategorized'} - mentions: ${Number(item.weight || 0)}`));
+    tooltip.appendChild(document.createTextNode(`${item.subcat || "uncategorized"} - mentions: ${Number(item.weight || 0)}`));
   }
-
   function renderLegend(rows) {
     if (!legend) return;
-    legend.textContent = '';
+    legend.textContent = "";
     for (const row of rows) {
-      const item = document.createElement('span');
-      item.className = 'graph-legend-item';
-      const swatch = document.createElement('span');
+      const item = document.createElement("span");
+      item.className = "graph-legend-item";
+      const swatch = document.createElement("span");
       swatch.className = `graph-legend-swatch ${getCategoryColorClass(row.label)}`;
       item.appendChild(swatch);
       item.appendChild(document.createTextNode(`${row.label} (${row.count})`));
       legend.appendChild(item);
     }
   }
-
-  getNameGraphLayoutAsync(nameGraphMinEdgeWeight, W, H)
-    .then((layout) => {
-      if (renderToken !== nameGraphRenderToken) return;
-      const nodes = Array.isArray(layout.nodes) ? layout.nodes.map((n) => ({ ...n })) : [];
-      const idx = layout.idx || {};
-      const validEdges = Array.isArray(layout.validEdges) ? layout.validEdges : [];
-      const links = validEdges
-        .map((e) => ({
-          source: nodes[idx[e.source]],
-          target: nodes[idx[e.target]],
-          weight: Number(e.weight) || 0,
-        }))
-        .filter((e) => e.source && e.target);
-      if (summary) {
-        summary.textContent = `nodes: ${nodes.length} - edges: ${links.length}`;
-      }
-      if (status) {
-        status.hidden = true;
-        status.textContent = '';
-      }
-      if (!nodes.length || !links.length) {
-        if (status) {
-          status.hidden = false;
-          status.textContent = 'No edges for the selected threshold.';
-        }
-        stage.innerHTML = '';
-        renderLegend([]);
-        hideTooltip();
-        return;
-      }
-
-      const legendMap = new Map();
-      for (const n of nodes) {
-        const label = n.subcat || 'uncategorized';
-        const prev = legendMap.get(label) || 0;
-        legendMap.set(label, prev + 1);
-      }
-      const legendRows = [...legendMap.entries()]
-        .sort((a, b) => b[1] - a[1] || compareHeadsRu(a[0], b[0]))
-        .map(([label, count]) => ({ label, count }));
-      renderLegend(legendRows);
-
-      const svg = d3.select(stage)
-        .html('')
-        .append('svg')
-        .attr('viewBox', `0 0 ${W} ${H}`)
-        .attr('role', 'img')
-        .attr('aria-label', 'Граф связей имен');
-      const root = svg.append('g').attr('class', 'graph-root');
-      const linkLayer = root.append('g').attr('class', 'graph-links');
-      const nodeLayer = root.append('g').attr('class', 'graph-nodes');
-      const labelLayer = root.append('g').attr('class', 'graph-labels');
-
-      const linkSel = linkLayer
-        .selectAll('line')
-        .data(links)
-        .join('line')
-        .attr('stroke', '#8a7050')
-        .attr('stroke-opacity', (d) => Math.min(0.75, 0.18 + Math.sqrt(d.weight) * 0.12))
-        .attr('stroke-width', (d) => Math.max(0.6, Math.sqrt(d.weight) * 1.25));
-
-      const nodeSel = nodeLayer
-        .selectAll('circle')
-        .data(nodes)
-        .join('circle')
-        .attr('class', 'name-graph-node')
-        .attr('r', (d) => 4 + Math.sqrt(d.weight) * 1.45)
-        .attr('fill', (d) => safeColor(COLORS[d.subcat], '#666'))
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 1.2)
-        .style('cursor', 'pointer');
-
-      const labelSel = labelLayer
-        .selectAll('text')
-        .data(nodes.filter((n) => (4 + Math.sqrt(n.weight) * 1.45) >= 6))
-        .join('text')
-        .text((d) => d.name)
-        .attr('font-size', 11)
-        .attr('fill', '#1a1a1a')
-        .attr('paint-order', 'stroke')
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 2)
-        .attr('stroke-opacity', 0.85)
-        .attr('font-family', 'Georgia, serif');
-
-      const simulation = d3.forceSimulation(nodes)
-        .force('link', d3.forceLink(links)
-          .distance((d) => Math.max(42, 150 - Math.sqrt(d.weight) * 18))
-          .strength((d) => Math.min(0.75, 0.12 + Math.sqrt(d.weight) * 0.09)))
-        .force('charge', d3.forceManyBody().strength(-95))
-        .force('center', d3.forceCenter(W / 2, H / 2))
-        .force('collide', d3.forceCollide().radius((d) => 7 + Math.sqrt(d.weight) * 1.7))
-        .alpha(0.65)
-        .alphaDecay(0.055);
-
-      const drag = d3.drag()
-        .on('start', (event, d) => {
-          if (!event.active) simulation.alphaTarget(0.2).restart();
-          d.fx = d.x;
-          d.fy = d.y;
-        })
-        .on('drag', (event, d) => {
-          d.fx = event.x;
-          d.fy = event.y;
-        })
-        .on('end', (event, d) => {
-          if (!event.active) simulation.alphaTarget(0);
-          d.fx = null;
-          d.fy = null;
-        });
-
-      nodeSel.call(drag);
-      nodeSel.on('mousemove', (event, d) => showTooltip(event, d));
-      nodeSel.on('mouseleave', hideTooltip);
-      nodeSel.on('click', (event, d) => {
-        event.stopPropagation();
-        hideTooltip();
-        simulation.stop();
-        selectedItem = d.name;
-        selectedItemType = 'names';
-        rightPaneMode = 'card';
-        switchTab('list');
-      });
-
-      const zoom = d3.zoom()
-        .scaleExtent([0.45, 3.4])
-        .on('zoom', (event) => {
-          root.attr('transform', event.transform);
-        });
-      svg.call(zoom);
-      svg.on('dblclick.zoom', null);
-      svg.on('dblclick', () => {
-        svg.transition().duration(180).call(zoom.transform, d3.zoomIdentity);
-      });
-      svg.on('mouseleave', hideTooltip);
-
-      simulation.on('tick', () => {
-        if (renderToken !== nameGraphRenderToken) {
-          simulation.stop();
-          return;
-        }
-        linkSel
-          .attr('x1', (d) => d.source.x)
-          .attr('y1', (d) => d.source.y)
-          .attr('x2', (d) => d.target.x)
-          .attr('y2', (d) => d.target.y);
-        nodeSel
-          .attr('cx', (d) => d.x)
-          .attr('cy', (d) => d.y);
-        labelSel
-          .attr('x', (d) => d.x + 6 + Math.sqrt(d.weight))
-          .attr('y', (d) => d.y + 4);
-      });
-
-      perfDebug('render-graph-names', nowMs() - t0, `min=${nameGraphMinEdgeWeight.toFixed(1)}`);
-    })
-    .catch((error) => {
-      if (renderToken !== nameGraphRenderToken) return;
+  getNameGraphLayoutAsync(nameGraphMinEdgeWeight, W, H).then((layout) => {
+    if (renderToken !== nameGraphRenderToken) return;
+    const nodes = Array.isArray(layout.nodes) ? layout.nodes.map((n) => ({ ...n })) : [];
+    const idx = layout.idx || {};
+    const links = (Array.isArray(layout.validEdges) ? layout.validEdges : []).map((e) => ({
+      source: nodes[idx[e.source]],
+      target: nodes[idx[e.target]],
+      weight: Number(e.weight) || 0
+    })).filter((e) => e.source && e.target);
+    if (summary) summary.textContent = `nodes: ${nodes.length} - edges: ${links.length}`;
+    if (status) {
+      status.hidden = true;
+      status.textContent = "";
+    }
+    if (!nodes.length || !links.length) {
       if (status) {
         status.hidden = false;
-        status.textContent = 'Failed to build graph.';
+        status.textContent = "No edges for the selected threshold.";
       }
-      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
-        console.warn('[graph-names] render failed:', error && error.message ? error.message : error);
-      }
+      stage.innerHTML = "";
+      renderLegend([]);
+      hideTooltip();
+      return;
+    }
+    const legendMap = /* @__PURE__ */ new Map();
+    for (const n of nodes) {
+      const label = n.subcat || "uncategorized";
+      const prev = legendMap.get(label) || 0;
+      legendMap.set(label, prev + 1);
+    }
+    renderLegend([...legendMap.entries()].sort((a, b) => b[1] - a[1] || compareHeadsRu(a[0], b[0])).map(([label, count]) => ({
+      label,
+      count
+    })));
+    const svg = d3.select(stage).html("").append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img").attr("aria-label", "Граф связей имен");
+    const root = svg.append("g").attr("class", "graph-root");
+    const linkLayer = root.append("g").attr("class", "graph-links");
+    const nodeLayer = root.append("g").attr("class", "graph-nodes");
+    const labelLayer = root.append("g").attr("class", "graph-labels");
+    const linkSel = linkLayer.selectAll("line").data(links).join("line").attr("stroke", "#8a7050").attr("stroke-opacity", (d) => Math.min(.75, .18 + Math.sqrt(d.weight) * .12)).attr("stroke-width", (d) => Math.max(.6, Math.sqrt(d.weight) * 1.25));
+    const nodeSel = nodeLayer.selectAll("circle").data(nodes).join("circle").attr("class", "name-graph-node").attr("r", (d) => 4 + Math.sqrt(d.weight) * 1.45).attr("fill", (d) => safeColor(COLORS[d.subcat], "#666")).attr("stroke", "#fff").attr("stroke-width", 1.2).style("cursor", "pointer");
+    const labelSel = labelLayer.selectAll("text").data(nodes.filter((n) => 4 + Math.sqrt(n.weight) * 1.45 >= 6)).join("text").text((d) => d.name).attr("font-size", 11).attr("fill", "#1a1a1a").attr("paint-order", "stroke").attr("stroke", "#fff").attr("stroke-width", 2).attr("stroke-opacity", .85).attr("font-family", "Georgia, serif");
+    const simulation = d3.forceSimulation(nodes).force("link", d3.forceLink(links).distance((d) => Math.max(42, 150 - Math.sqrt(d.weight) * 18)).strength((d) => Math.min(.75, .12 + Math.sqrt(d.weight) * .09))).force("charge", d3.forceManyBody().strength(-95)).force("center", d3.forceCenter(W / 2, H / 2)).force("collide", d3.forceCollide().radius((d) => 7 + Math.sqrt(d.weight) * 1.7)).alpha(.65).alphaDecay(.055);
+    const drag = d3.drag().on("start", (event, d) => {
+      if (!event.active) simulation.alphaTarget(.2).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }).on("drag", (event, d) => {
+      d.fx = event.x;
+      d.fy = event.y;
+    }).on("end", (event, d) => {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
     });
+    nodeSel.call(drag);
+    nodeSel.on("mousemove", (event, d) => showTooltip(event, d));
+    nodeSel.on("mouseleave", hideTooltip);
+    nodeSel.on("click", (event, d) => {
+      event.stopPropagation();
+      hideTooltip();
+      simulation.stop();
+      selectedItem = d.name;
+      selectedItemType = "names";
+      rightPaneMode = "card";
+      switchTab("list");
+    });
+    const zoom = d3.zoom().scaleExtent([.45, 3.4]).on("zoom", (event) => {
+      root.attr("transform", event.transform);
+    });
+    svg.call(zoom);
+    svg.on("dblclick.zoom", null);
+    svg.on("dblclick", () => {
+      svg.transition().duration(180).call(zoom.transform, d3.zoomIdentity);
+    });
+    svg.on("mouseleave", hideTooltip);
+    simulation.on("tick", () => {
+      if (renderToken !== nameGraphRenderToken) {
+        simulation.stop();
+        return;
+      }
+      linkSel.attr("x1", (d) => d.source.x).attr("y1", (d) => d.source.y).attr("x2", (d) => d.target.x).attr("y2", (d) => d.target.y);
+      nodeSel.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+      labelSel.attr("x", (d) => d.x + 6 + Math.sqrt(d.weight)).attr("y", (d) => d.y + 4);
+    });
+    perfDebug("render-graph-names", nowMs() - t0, `min=${nameGraphMinEdgeWeight.toFixed(1)}`);
+  }).catch((error) => {
+    if (renderToken !== nameGraphRenderToken) return;
+    if (status) {
+      status.hidden = false;
+      status.textContent = "Failed to build graph.";
+    }
+    if (typeof console !== "undefined" && typeof console.warn === "function") console.warn("[graph-names] render failed:", error && error.message ? error.message : error);
+  });
 }
-
-// =========================================================
-// LANGUAGE FAMILIES GRAPH
-// =========================================================
 function getFamiliesGraphLayoutSync(strongOnly, W, H) {
   const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
-  return getCachedAggregate('graph-families', key, () => {
+  return getCachedAggregate("graph-families", key, () => {
     const items = APP_DATA.languages || [];
     const rawEdges = APP_DATA.language_edges || [];
-    const edges = strongOnly
-      ? rawEdges.filter(e => e.weight >= 50)
-      : rawEdges.filter(e => e.weight >= 10);
-    const connectedSet = new Set();
+    const edges = strongOnly ? rawEdges.filter((e) => e.weight >= 50) : rawEdges.filter((e) => e.weight >= 10);
+    const connectedSet = /* @__PURE__ */ new Set();
     for (const e of edges) {
       connectedSet.add(e.source);
       connectedSet.add(e.target);
     }
-    const connectedItems = items.filter(l => connectedSet.has(l.head));
+    const connectedItems = items.filter((l) => connectedSet.has(l.head));
     const byFamily = {};
     for (const l of connectedItems) {
-      const f = l.family || 'Не классифицировано';
+      const f = l.family || "Не классифицировано";
       if (!byFamily[f]) byFamily[f] = [];
       byFamily[f].push(l);
     }
     const families = Object.keys(byFamily).sort((a, b) => byFamily[b].length - byFamily[a].length);
     const familyCounts = {};
     for (const fam of families) familyCounts[fam] = byFamily[fam].length;
-
     const nodes = [];
     const idx = {};
     const cx = W / 2, cy = H / 2;
     const familyAngles = {};
     for (let fi = 0; fi < families.length; fi++) {
-      const angle = (fi / Math.max(1, families.length)) * Math.PI * 2;
+      const angle = fi / Math.max(1, families.length) * Math.PI * 2;
       familyAngles[families[fi]] = angle;
     }
     for (let fi = 0; fi < families.length; fi++) {
       const fam = families[fi];
       const langs = byFamily[fam];
       const baseAngle = familyAngles[fam];
-      const baseR = fam === 'Индоевропейская' ? 0 : 200;
+      const baseR = fam === "Индоевропейская" ? 0 : 200;
       const fcx = cx + Math.cos(baseAngle) * baseR;
       const fcy = cy + Math.sin(baseAngle) * baseR;
       for (let li = 0; li < langs.length; li++) {
         const l = langs[li];
-        const a = (li / Math.max(1, langs.length)) * Math.PI * 2;
-        const r = fam === 'Индоевропейская' ? 230 : 50;
+        const a = li / Math.max(1, langs.length) * Math.PI * 2;
+        const r = fam === "Индоевропейская" ? 230 : 50;
         nodes.push({
           name: l.head,
           family: fam,
@@ -7658,65 +7164,71 @@ function getFamiliesGraphLayoutSync(strongOnly, W, H) {
           x: fcx + Math.cos(a) * r,
           y: fcy + Math.sin(a) * r,
           vx: 0,
-          vy: 0,
+          vy: 0
         });
         idx[l.head] = nodes.length - 1;
       }
     }
-    const validEdges = edges.filter(e => idx[e.source] !== undefined && idx[e.target] !== undefined);
+    const validEdges = edges.filter((e) => idx[e.source] !== void 0 && idx[e.target] !== void 0);
     function step() {
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j];
-          const dx = b.x - a.x, dy = b.y - a.y;
-          const d2 = dx * dx + dy * dy + 0.01;
-          const d = Math.sqrt(d2);
-          if (d > 250) continue;
-          const force = 800 / d2;
-          a.vx -= (dx / d) * force; a.vy -= (dy / d) * force;
-          b.vx += (dx / d) * force; b.vy += (dy / d) * force;
-        }
+      for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const d2 = dx * dx + dy * dy + .01;
+        const d = Math.sqrt(d2);
+        if (d > 250) continue;
+        const force = 800 / d2;
+        a.vx -= dx / d * force;
+        a.vy -= dy / d * force;
+        b.vx += dx / d * force;
+        b.vy += dy / d * force;
       }
       for (const e of validEdges) {
         const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
         const dx = b.x - a.x, dy = b.y - a.y;
-        const d = Math.sqrt(dx * dx + dy * dy) + 0.01;
-        const force = (d - 60) * 0.02;
-        a.vx += (dx / d) * force; a.vy += (dy / d) * force;
-        b.vx -= (dx / d) * force; b.vy -= (dy / d) * force;
+        const d = Math.sqrt(dx * dx + dy * dy) + .01;
+        const force = (d - 60) * .02;
+        a.vx += dx / d * force;
+        a.vy += dy / d * force;
+        b.vx -= dx / d * force;
+        b.vy -= dy / d * force;
       }
       for (const n of nodes) {
-        n.vx *= 0.8; n.vy *= 0.8;
-        n.x += n.vx; n.y += n.vy;
+        n.vx *= .8;
+        n.vy *= .8;
+        n.x += n.vx;
+        n.y += n.vy;
         n.x = Math.max(60, Math.min(W - 60, n.x));
         n.y = Math.max(60, Math.min(H - 60, n.y));
       }
     }
     for (let i = 0; i < 200; i++) step();
-    return { nodes, idx, validEdges, families, familyCounts };
+    return {
+      nodes,
+      idx,
+      validEdges,
+      families,
+      familyCounts
+    };
   });
 }
-
 function supportsFamiliesGraphWorker() {
-  return (
-    typeof Worker !== 'undefined' &&
-    typeof Blob !== 'undefined' &&
-    typeof URL !== 'undefined' &&
-    typeof URL.createObjectURL === 'function'
-  );
+  return typeof Worker !== "undefined" && typeof Blob !== "undefined" && typeof URL !== "undefined" && typeof URL.createObjectURL === "function";
 }
-
 function disposeFamiliesGraphWorker() {
   if (familiesGraphWorker) {
-    try { familiesGraphWorker.terminate(); } catch (e) {}
+    try {
+      familiesGraphWorker.terminate();
+    } catch (e) {}
     familiesGraphWorker = null;
   }
   if (familiesGraphWorkerBlobUrl) {
-    try { URL.revokeObjectURL(familiesGraphWorkerBlobUrl); } catch (e) {}
+    try {
+      URL.revokeObjectURL(familiesGraphWorkerBlobUrl);
+    } catch (e) {}
     familiesGraphWorkerBlobUrl = null;
   }
 }
-
 function getFamiliesGraphWorkerScript() {
   return [
     "self.onmessage = function(event) {",
@@ -7807,15 +7319,14 @@ function getFamiliesGraphWorkerScript() {
     "  } catch (error) {",
     "    self.postMessage({ requestId: requestId, ok: false, error: String((error && error.message) ? error.message : error) });",
     "  }",
-    "};",
-  ].join('\n');
+    "};"
+  ].join("\n");
 }
-
 function getFamiliesGraphWorker() {
   if (!supportsFamiliesGraphWorker()) return null;
   if (familiesGraphWorker) return familiesGraphWorker;
   try {
-    const blob = new Blob([getFamiliesGraphWorkerScript()], { type: 'text/javascript' });
+    const blob = new Blob([getFamiliesGraphWorkerScript()], { type: "text/javascript" });
     familiesGraphWorkerBlobUrl = URL.createObjectURL(blob);
     familiesGraphWorker = new Worker(familiesGraphWorkerBlobUrl);
     return familiesGraphWorker;
@@ -7824,73 +7335,68 @@ function getFamiliesGraphWorker() {
     return null;
   }
 }
-
 function requestFamiliesGraphLayoutFromWorker(strongOnly, W, H) {
   const worker = getFamiliesGraphWorker();
   if (!worker) return null;
   const requestId = ++familiesGraphWorkerRequestId;
-  const languages = (APP_DATA.languages || []).map(l => ({
+  const languages = (APP_DATA.languages || []).map((l) => ({
     head: l.head,
-    family: l.family || 'Не классифицировано',
-    group: l.group || '',
-    weight: (l.page_list || []).length,
+    family: l.family || "Не классифицировано",
+    group: l.group || "",
+    weight: (l.page_list || []).length
   }));
-  const edges = (APP_DATA.language_edges || []).map(e => ({
+  const edges = (APP_DATA.language_edges || []).map((e) => ({
     source: e.source,
     target: e.target,
-    weight: Number(e.weight) || 0,
+    weight: Number(e.weight) || 0
   }));
   return new Promise((resolve, reject) => {
     const onMessage = (event) => {
       const data = event.data || {};
       if (data.requestId !== requestId) return;
-      worker.removeEventListener('message', onMessage);
-      worker.removeEventListener('error', onError);
+      worker.removeEventListener("message", onMessage);
+      worker.removeEventListener("error", onError);
       if (data.ok && data.layout) resolve(data.layout);
-      else reject(new Error(data.error || 'families graph worker failed'));
+      else reject(new Error(data.error || "families graph worker failed"));
     };
     const onError = (event) => {
-      worker.removeEventListener('message', onMessage);
-      worker.removeEventListener('error', onError);
-      const msg = event && event.message ? event.message : 'families graph worker error';
+      worker.removeEventListener("message", onMessage);
+      worker.removeEventListener("error", onError);
+      const msg = event && event.message ? event.message : "families graph worker error";
       reject(new Error(msg));
     };
-    worker.addEventListener('message', onMessage);
-    worker.addEventListener('error', onError);
-    worker.postMessage({ requestId, strongOnly, W, H, languages, edges });
+    worker.addEventListener("message", onMessage);
+    worker.addEventListener("error", onError);
+    worker.postMessage({
+      requestId,
+      strongOnly,
+      W,
+      H,
+      languages,
+      edges
+    });
   });
 }
-
 function getFamiliesGraphLayoutAsync(strongOnly, W, H) {
-  const key = `${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`;
-  const cacheKey = `graph-families::${key}`;
+  const cacheKey = `graph-families::${`${strongOnly ? 1 : 0}:${W}x${H}:${getDataSignature()}`}`;
   if (aggregateCache.has(cacheKey)) {
-    perfDebug('graph-families-worker cache', 0, 'hit');
+    perfDebug("graph-families-worker cache", 0, "hit");
     return Promise.resolve(aggregateCache.get(cacheKey));
   }
-  if (familiesGraphLayoutPromiseCache.has(cacheKey)) {
-    return familiesGraphLayoutPromiseCache.get(cacheKey);
-  }
+  if (familiesGraphLayoutPromiseCache.has(cacheKey)) return familiesGraphLayoutPromiseCache.get(cacheKey);
   const t0 = nowMs();
   let job = null;
-  if (supportsFamiliesGraphWorker()) {
-    job = requestFamiliesGraphLayoutFromWorker(strongOnly, W, H);
-  }
-  if (!job) {
-    job = Promise.resolve(getFamiliesGraphLayoutSync(strongOnly, W, H));
-  } else {
-    job = job.catch((error) => {
-      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
-        console.warn('[families-worker] fallback to sync layout:', error && error.message ? error.message : error);
-      }
-      disposeFamiliesGraphWorker();
-      return getFamiliesGraphLayoutSync(strongOnly, W, H);
-    });
-  }
+  if (supportsFamiliesGraphWorker()) job = requestFamiliesGraphLayoutFromWorker(strongOnly, W, H);
+  if (!job) job = Promise.resolve(getFamiliesGraphLayoutSync(strongOnly, W, H));
+  else job = job.catch((error) => {
+    if (typeof console !== "undefined" && typeof console.warn === "function") console.warn("[families-worker] fallback to sync layout:", error && error.message ? error.message : error);
+    disposeFamiliesGraphWorker();
+    return getFamiliesGraphLayoutSync(strongOnly, W, H);
+  });
   const promise = job.then((layout) => {
     rememberBoundedCacheValue(aggregateCache, cacheKey, layout, AGGREGATE_CACHE_MAX);
     familiesGraphLayoutPromiseCache.delete(cacheKey);
-    perfDebug('graph-families-worker', nowMs() - t0, 'miss');
+    perfDebug("graph-families-worker", nowMs() - t0, "miss");
     return layout;
   }).catch((error) => {
     familiesGraphLayoutPromiseCache.delete(cacheKey);
@@ -7899,40 +7405,36 @@ function getFamiliesGraphLayoutAsync(strongOnly, W, H) {
   familiesGraphLayoutPromiseCache.set(cacheKey, promise);
   return promise;
 }
-
 function wireGraphWorkersLifecycle() {
   if (workersLifecycleWired) return;
   workersLifecycleWired = true;
-  if (typeof window === 'undefined' || typeof window.addEventListener !== 'function') return;
+  if (typeof window === "undefined" || typeof window.addEventListener !== "function") return;
   const disposeAll = () => {
     disposeNameGraphWorker();
     disposeFamiliesGraphWorker();
   };
-  window.addEventListener('pagehide', disposeAll, { passive: true });
-  window.addEventListener('beforeunload', disposeAll);
+  window.addEventListener("pagehide", disposeAll, { passive: true });
+  window.addEventListener("beforeunload", disposeAll);
 }
-
 function renderFamiliesPanel(container) {
   const t0 = nowMs();
   container.innerHTML = `<div class="panel active"><div class="graph-container">
     <p class="chart-intro">Граф языков: соединены языки, упоминаемые в книге близко друг к другу в тексте. Алгоритм позиционного взвешивания учитывает место упоминания на странице, а не только её номер — разрыв страницы между близкими упоминаниями не наказывается. Цвет узла — языковая семья. По умолчанию показаны только сильные связи (вес ≥ 10).</p>
-    <div class="graph-filter-row"><button class="filter-chip ${graphStrongOnly ? 'active' : ''}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
+    <p class="chart-provenance">Связи вычислены автоматически по со-встречаемости — поисковый сигнал, не нормативное утверждение. Метод и провенанс: <a href="https://github.com/gasyoun/BookIndex/blob/main/docs/METHODS_RU.md" target="_blank" rel="noopener noreferrer">METHODS_RU.md</a>.</p>
+    <div class="graph-filter-row"><button class="filter-chip ${graphStrongOnly ? "active" : ""}" id="lang-strong-btn">только сильные связи (вес ≥ 50)</button></div>
     <div id="families-status" class="graph-status">Рассчитываю расположение узлов…</div>
     <canvas id="graph-canvas" width="1300" height="650"></canvas>
     <div class="legend" id="families-legend"></div></div></div>`;
-
-  document.getElementById('lang-strong-btn').onclick = (e) => {
+  document.getElementById("lang-strong-btn").onclick = (e) => {
     graphStrongOnly = !graphStrongOnly;
-    e.target.classList.toggle('active', graphStrongOnly);
+    e.target.classList.toggle("active", graphStrongOnly);
     renderFamiliesPanel(container);
   };
-
-  const canvas = document.getElementById('graph-canvas');
-  const ctx = canvas.getContext('2d');
+  const canvas = document.getElementById("graph-canvas");
+  const ctx = canvas.getContext("2d");
   const W = canvas.width, H = canvas.height;
-  const status = document.getElementById('families-status');
+  const status = document.getElementById("families-status");
   const renderToken = ++familiesGraphRenderToken;
-
   function mountLayout(layout) {
     if (renderToken !== familiesGraphRenderToken) return;
     const nodes = Array.isArray(layout.nodes) ? layout.nodes : [];
@@ -7940,12 +7442,7 @@ function renderFamiliesPanel(container) {
     const validEdges = Array.isArray(layout.validEdges) ? layout.validEdges : [];
     const families = Array.isArray(layout.families) ? layout.families : [];
     const familyCounts = layout.familyCounts || {};
-    const canTransform = (
-      typeof ctx.save === 'function' &&
-      typeof ctx.restore === 'function' &&
-      typeof ctx.translate === 'function' &&
-      typeof ctx.scale === 'function'
-    );
+    const canTransform = typeof ctx.save === "function" && typeof ctx.restore === "function" && typeof ctx.translate === "function" && typeof ctx.scale === "function";
     let viewScale = 1;
     let viewOffsetX = 0;
     let viewOffsetY = 0;
@@ -7954,39 +7451,33 @@ function renderFamiliesPanel(container) {
     let dragMoved = false;
     let dragLastX = 0;
     let dragLastY = 0;
-
     if (status) {
-      status.textContent = '';
+      status.textContent = "";
       status.hidden = true;
     }
-
     function eventToCanvasPoint(e) {
       const rect = canvas.getBoundingClientRect();
       const sx = canvas.width / rect.width;
       const sy = canvas.height / rect.height;
       return {
         x: (e.clientX - rect.left) * sx,
-        y: (e.clientY - rect.top) * sy,
+        y: (e.clientY - rect.top) * sy
       };
     }
-
     function screenToWorld(pt) {
       return {
         x: (pt.x - viewOffsetX) / viewScale,
-        y: (pt.y - viewOffsetY) / viewScale,
+        y: (pt.y - viewOffsetY) / viewScale
       };
     }
-
     function pickNode(screenPt) {
       const worldPt = screenToWorld(screenPt);
       for (const n of nodes) {
-        const r = 4 + Math.sqrt(n.weight) * 1.2;
-        const hitR = (r + 5) / Math.max(0.25, viewScale);
+        const hitR = (4 + Math.sqrt(n.weight) * 1.2 + 5) / Math.max(.25, viewScale);
         if ((worldPt.x - n.x) ** 2 + (worldPt.y - n.y) ** 2 < hitR ** 2) return n;
       }
       return null;
     }
-
     function draw(hover) {
       ctx.clearRect(0, 0, W, H);
       if (canTransform) {
@@ -7997,28 +7488,35 @@ function renderFamiliesPanel(container) {
       for (const e of validEdges) {
         const a = nodes[idx[e.source]], b = nodes[idx[e.target]];
         if (!a || !b) continue;
-        const ax = canTransform ? a.x : (a.x * viewScale + viewOffsetX);
-        const ay = canTransform ? a.y : (a.y * viewScale + viewOffsetY);
-        const bx = canTransform ? b.x : (b.x * viewScale + viewOffsetX);
-        const by = canTransform ? b.y : (b.y * viewScale + viewOffsetY);
+        const ax = canTransform ? a.x : a.x * viewScale + viewOffsetX;
+        const ay = canTransform ? a.y : a.y * viewScale + viewOffsetY;
+        const bx = canTransform ? b.x : b.x * viewScale + viewOffsetX;
+        const by = canTransform ? b.y : b.y * viewScale + viewOffsetY;
         const fam = a.family;
-        const color = safeColor(FAMILY_COLORS[fam], '#888');
-        ctx.strokeStyle = color + '40';
+        ctx.strokeStyle = safeColor(FAMILY_COLORS[fam], "#888") + "40";
         ctx.lineWidth = canTransform ? 1 : viewScale;
-        ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(bx, by);
+        ctx.stroke();
       }
       for (const n of nodes) {
         const rBase = 4 + Math.sqrt(n.weight) * 1.2;
-        const nx = canTransform ? n.x : (n.x * viewScale + viewOffsetX);
-        const ny = canTransform ? n.y : (n.y * viewScale + viewOffsetY);
+        const nx = canTransform ? n.x : n.x * viewScale + viewOffsetX;
+        const ny = canTransform ? n.y : n.y * viewScale + viewOffsetY;
         const r = canTransform ? rBase : rBase * viewScale;
-        const color = safeColor(FAMILY_COLORS[n.family], '#888');
-        ctx.fillStyle = color;
-        ctx.beginPath(); ctx.arc(nx, ny, r, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.fillStyle = safeColor(FAMILY_COLORS[n.family], "#888");
+        ctx.beginPath();
+        ctx.arc(nx, ny, r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
         if (r > 5) {
-          ctx.fillStyle = '#1a1a1a'; ctx.font = '10px Georgia';
-          ctx.textAlign = 'left'; ctx.fillText(n.name, nx + r + 3, ny + 4);
+          ctx.fillStyle = "#1a1a1a";
+          ctx.font = "10px Georgia";
+          ctx.textAlign = "left";
+          ctx.fillText(n.name, nx + r + 3, ny + 4);
         }
       }
       if (canTransform) ctx.restore();
@@ -8026,42 +7524,41 @@ function renderFamiliesPanel(container) {
         const r = (4 + Math.sqrt(hover.weight) * 1.2) * viewScale;
         const hx = hover.x * viewScale + viewOffsetX;
         const hy = hover.y * viewScale + viewOffsetY;
-        ctx.font = 'bold 12px Georgia';
-        const text = hover.name + ' (' + hover.family + ')';
+        ctx.font = "bold 12px Georgia";
+        const text = hover.name + " (" + hover.family + ")";
         const tw = ctx.measureText(text).width;
-        ctx.fillStyle = 'rgba(255,248,232,0.95)';
+        ctx.fillStyle = "rgba(255,248,232,0.95)";
         ctx.fillRect(hx + r + 2, hy - 16, tw + 8, 22);
-        ctx.strokeStyle = '#8a7050';
+        ctx.strokeStyle = "#8a7050";
         ctx.strokeRect(hx + r + 2, hy - 16, tw + 8, 22);
-        ctx.fillStyle = '#5a3818';
+        ctx.fillStyle = "#5a3818";
         ctx.fillText(text, hx + r + 6, hy);
       }
     }
-
     draw();
-    canvas.style.cursor = 'grab';
+    canvas.style.cursor = "grab";
     canvas.onwheel = (e) => {
-      if (typeof e.preventDefault === 'function') e.preventDefault();
+      if (typeof e.preventDefault === "function") e.preventDefault();
       const point = eventToCanvasPoint(e);
       const before = screenToWorld(point);
-      const zoomFactor = e.deltaY < 0 ? 1.12 : (1 / 1.12);
-      const nextScale = Math.max(0.45, Math.min(3.2, viewScale * zoomFactor));
-      if (Math.abs(nextScale - viewScale) < 0.0001) return;
+      const zoomFactor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+      const nextScale = Math.max(.45, Math.min(3.2, viewScale * zoomFactor));
+      if (Math.abs(nextScale - viewScale) < 1e-4) return;
       viewScale = nextScale;
       viewOffsetX = point.x - before.x * viewScale;
       viewOffsetY = point.y - before.y * viewScale;
       hoverNode = pickNode(point);
       draw(hoverNode);
-      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+      canvas.style.cursor = hoverNode ? "pointer" : "grab";
     };
     canvas.onmousedown = (e) => {
-      if (e && e.button !== undefined && e.button !== 0) return;
+      if (e && e.button !== void 0 && e.button !== 0) return;
       const point = eventToCanvasPoint(e);
       dragActive = true;
       dragMoved = false;
       dragLastX = point.x;
       dragLastY = point.y;
-      canvas.style.cursor = 'grabbing';
+      canvas.style.cursor = "grabbing";
     };
     canvas.onmousemove = (e) => {
       const point = eventToCanvasPoint(e);
@@ -8070,185 +7567,201 @@ function renderFamiliesPanel(container) {
         const dy = point.y - dragLastY;
         dragLastX = point.x;
         dragLastY = point.y;
-        if (Math.abs(dx) + Math.abs(dy) > 0.4) dragMoved = true;
+        if (Math.abs(dx) + Math.abs(dy) > .4) dragMoved = true;
         viewOffsetX += dx;
         viewOffsetY += dy;
         draw(hoverNode);
-        canvas.style.cursor = 'grabbing';
+        canvas.style.cursor = "grabbing";
         return;
       }
       hoverNode = pickNode(point);
       draw(hoverNode);
-      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+      canvas.style.cursor = hoverNode ? "pointer" : "grab";
     };
     canvas.onmouseup = () => {
       if (!dragActive) return;
       dragActive = false;
-      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+      canvas.style.cursor = hoverNode ? "pointer" : "grab";
     };
     canvas.onmouseleave = () => {
       dragActive = false;
-      canvas.style.cursor = 'grab';
+      canvas.style.cursor = "grab";
     };
     canvas.ondblclick = () => {
       viewScale = 1;
       viewOffsetX = 0;
       viewOffsetY = 0;
       draw(hoverNode);
-      canvas.style.cursor = hoverNode ? 'pointer' : 'grab';
+      canvas.style.cursor = hoverNode ? "pointer" : "grab";
     };
     canvas.onclick = (e) => {
       if (dragMoved) {
         dragMoved = false;
         return;
       }
-      const point = eventToCanvasPoint(e);
-      const picked = pickNode(point);
+      const picked = pickNode(eventToCanvasPoint(e));
       if (!picked) return;
       selectedItem = picked.name;
-      selectedItemType = 'languages';
-      rightPaneMode = 'card';
-      switchTab('list');
+      selectedItemType = "languages";
+      rightPaneMode = "card";
+      switchTab("list");
     };
-
-    const lg = document.getElementById('families-legend');
+    const lg = document.getElementById("families-legend");
     if (lg) {
-      lg.innerHTML = '';
+      lg.innerHTML = "";
       for (const fam of families) {
-        const div = document.createElement('div');
-        div.className = 'legend-item';
-        div.innerHTML = `<span class="legend-dot" data-family-color="${escapeHtml(safeColor(FAMILY_COLORS[fam], '#888'))}"></span>${escapeHtml(fam)} (${familyCounts[fam] || 0})`;
+        const div = document.createElement("div");
+        div.className = "legend-item";
+        div.innerHTML = `<span class="legend-dot" data-family-color="${escapeHtml(safeColor(FAMILY_COLORS[fam], "#888"))}"></span>${escapeHtml(fam)} (${familyCounts[fam] || 0})`;
         lg.appendChild(div);
       }
       applyDataDrivenStyles(lg);
     }
-    perfDebug('render-graph-families', nowMs() - t0, graphStrongOnly ? 'strong' : 'all');
+    perfDebug("render-graph-families", nowMs() - t0, graphStrongOnly ? "strong" : "all");
   }
-
-  getFamiliesGraphLayoutAsync(graphStrongOnly, W, H)
-    .then((layout) => mountLayout(layout))
-    .catch((error) => {
-      if (renderToken !== familiesGraphRenderToken) return;
-      if (status) {
-        status.hidden = false;
-        status.textContent = 'Не удалось рассчитать граф.';
-      }
-      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
-        console.warn('[graph-families] render failed:', error && error.message ? error.message : error);
-      }
-    });
+  getFamiliesGraphLayoutAsync(graphStrongOnly, W, H).then((layout) => mountLayout(layout)).catch((error) => {
+    if (renderToken !== familiesGraphRenderToken) return;
+    if (status) {
+      status.hidden = false;
+      status.textContent = "Не удалось рассчитать граф.";
+    }
+    if (typeof console !== "undefined" && typeof console.warn === "function") console.warn("[graph-families] render failed:", error && error.message ? error.message : error);
+  });
 }
-
 function getSavedReadingPage() {
-  if (typeof localStorage === 'undefined') return null;
+  if (typeof localStorage === "undefined") return null;
   try {
-    const raw = parseInt(localStorage.getItem(READING_PAGE_STORAGE_KEY) || '', 10);
+    const raw = parseInt(localStorage.getItem(READING_PAGE_STORAGE_KEY) || "", 10);
     return Number.isFinite(raw) ? raw : null;
   } catch (e) {
     return null;
   }
 }
-
 function saveReadingPage(page) {
-  if (typeof localStorage === 'undefined') return;
-  try { localStorage.setItem(READING_PAGE_STORAGE_KEY, String(page)); } catch (e) {}
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.setItem(READING_PAGE_STORAGE_KEY, String(page));
+  } catch (e) {}
 }
-
 function collectReadingNow(page, limitPerType = 8) {
   const sources = [
-    { type: 'names', label: 'Имена', items: APP_DATA.names || [] },
-    { type: 'languages', label: 'Языки', items: APP_DATA.languages || [] },
-    { type: 'toponyms', label: 'Топонимы', items: APP_DATA.toponyms || [] },
-    { type: 'ethnonyms', label: 'Этнонимы', items: APP_DATA.ethnonyms || [] },
-    { type: 'subject', label: 'Понятия', items: APP_DATA.subject_index || [] },
-    { type: 'lexicon', label: 'Лексика', items: APP_DATA.lexicon || [] },
+    {
+      type: "names",
+      label: "Имена",
+      items: APP_DATA.names || []
+    },
+    {
+      type: "languages",
+      label: "Языки",
+      items: APP_DATA.languages || []
+    },
+    {
+      type: "toponyms",
+      label: "Топонимы",
+      items: APP_DATA.toponyms || []
+    },
+    {
+      type: "ethnonyms",
+      label: "Этнонимы",
+      items: APP_DATA.ethnonyms || []
+    },
+    {
+      type: "subject",
+      label: "Понятия",
+      items: APP_DATA.subject_index || []
+    },
+    {
+      type: "lexicon",
+      label: "Лексика",
+      items: APP_DATA.lexicon || []
+    }
   ];
   const groups = [];
   for (const src of sources) {
     const hits = [];
-    for (const it of src.items) {
-      const pages = it.page_list || [];
-      if (pages.includes(page)) hits.push(it);
-    }
+    for (const it of src.items) if ((it.page_list || []).includes(page)) hits.push(it);
     if (!hits.length) continue;
     hits.sort((a, b) => {
       if (!!b.discussed !== !!a.discussed) return (b.discussed ? 1 : 0) - (a.discussed ? 1 : 0);
-  return (b.page_list || []).length - (a.page_list || []).length || compareHeadsRu(a.head, b.head);
+      return (b.page_list || []).length - (a.page_list || []).length || compareHeadsRu(a.head, b.head);
     });
-    groups.push({ type: src.type, label: src.label, items: hits.slice(0, limitPerType), total: hits.length });
+    groups.push({
+      type: src.type,
+      label: src.label,
+      items: hits.slice(0, limitPerType),
+      total: hits.length
+    });
   }
   return groups;
 }
-
 function loadRecentItems() {
-  if (typeof localStorage === 'undefined') return [];
+  if (typeof localStorage === "undefined") return [];
   try {
     const raw = localStorage.getItem(RECENT_ITEMS_STORAGE_KEY);
     const arr = raw ? JSON.parse(raw) : [];
     if (!Array.isArray(arr)) return [];
-    return arr.filter(x => x && typeof x.type === 'string' && typeof x.head === 'string').slice(0, 20);
+    return arr.filter((x) => x && typeof x.type === "string" && typeof x.head === "string").slice(0, 20);
   } catch (e) {
     return [];
   }
 }
-
 function saveRecentItems(items) {
-  if (typeof localStorage === 'undefined') return;
-  try { localStorage.setItem(RECENT_ITEMS_STORAGE_KEY, JSON.stringify(items.slice(0, 20))); } catch (e) {}
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.setItem(RECENT_ITEMS_STORAGE_KEY, JSON.stringify(items.slice(0, 20)));
+  } catch (e) {}
 }
-
 function rememberRecentItem(type, head) {
   if (!type || !head) return;
   const items = loadRecentItems();
   const normalizedHead = String(head);
-  const filtered = items.filter(x => !(x.type === type && x.head === normalizedHead));
-  filtered.unshift({ type, head: normalizedHead, ts: Date.now() });
+  const filtered = items.filter((x) => !(x.type === type && x.head === normalizedHead));
+  filtered.unshift({
+    type,
+    head: normalizedHead,
+    ts: Date.now()
+  });
   saveRecentItems(filtered);
 }
-
 function buildHomeHowToGuideHtml() {
-  const demoHref = 'https://gasyoun.github.io/BookIndex/aaz-index.html#v4/home/home';
-  const namesListHash = buildCanonicalHash(['names', 'list']);
-  const toponymsListHash = buildCanonicalHash(['toponyms', 'list']);
-  const ethnonymsListHash = buildCanonicalHash(['ethnonyms', 'list']);
-  const languagesListHash = buildCanonicalHash(['languages', 'list']);
-  const lexiconListHash = buildCanonicalHash(['lexicon', 'list']);
-  const lexiconReverseHash = buildCanonicalHash(['lexicon_reverse', 'list']);
-  const reconstructionsHash = buildCanonicalHash(['lexicon_tech', 'list']);
-  const subjectListHash = buildCanonicalHash(['subject', 'list']);
-  const kwicHash = buildCanonicalHash(['materials', 'kwic']);
-  const toponymsMapHash = buildCanonicalHash(['toponyms', 'map']);
-  const ethnonymsMapHash = buildCanonicalHash(['ethnonyms', 'map']);
-  const languagesMapHash = buildCanonicalHash(['languages', 'map']);
-  const materialsPhoneticHash = buildCanonicalHash(['materials', 'phonetic_laws']);
-  const udarenieAllHash = buildListSearchHash('all', 'ударение');
-  const udarenieSubjectHash = buildListSearchHash('subject', 'ударение');
-  const akanyeSubjectHash = buildListSearchHash('subject', 'аканье');
-  const articleSubjectHash = buildListSearchHash('subject', 'артикль');
-  const birchSubjectHash = buildListSearchHash('subject', 'берестяные грамоты');
-  const avanesovHash = buildListSearchHash('names', 'Аванесов Р. И.');
-  const avvakumHash = buildListSearchHash('names', 'Аввакум');
-  const avanesovItemHash = buildItemHash('names', 'Аванесов Р. И.');
-  const angliaHash = buildListSearchHash('toponyms', 'Англия');
-  const angliaItemHash = buildItemHash('toponyms', 'Англия');
-  const rossiyaHash = buildListSearchHash('toponyms', 'Россия');
-  const austraHash = buildListSearchHash('languages', 'австралийские');
-  const austraItemHash = buildItemHash('languages', 'австралийские');
-  const sanskritHash = buildListSearchHash('all', 'санскрит');
-  const globalBerestaHash = buildListSearchHash('all', 'берестяные грамоты');
-  const globalAvanesovHash = buildListSearchHash('all', 'Аванесов Р. И.');
-  const globalAngliaHash = buildListSearchHash('all', 'Англия');
-  const globalLekciiHash = buildListSearchHash('all', 'лекция');
+  const demoHref = "https://gasyoun.github.io/BookIndex/aaz-index.html#v4/home/home";
+  const namesListHash = buildCanonicalHash(["names", "list"]);
+  const toponymsListHash = buildCanonicalHash(["toponyms", "list"]);
+  const ethnonymsListHash = buildCanonicalHash(["ethnonyms", "list"]);
+  const languagesListHash = buildCanonicalHash(["languages", "list"]);
+  const lexiconListHash = buildCanonicalHash(["lexicon", "list"]);
+  const lexiconReverseHash = buildCanonicalHash(["lexicon_reverse", "list"]);
+  const reconstructionsHash = buildCanonicalHash(["lexicon_tech", "list"]);
+  const subjectListHash = buildCanonicalHash(["subject", "list"]);
+  const kwicHash = buildCanonicalHash(["materials", "kwic"]);
+  const toponymsMapHash = buildCanonicalHash(["toponyms", "map"]);
+  const ethnonymsMapHash = buildCanonicalHash(["ethnonyms", "map"]);
+  const languagesMapHash = buildCanonicalHash(["languages", "map"]);
+  const materialsPhoneticHash = buildCanonicalHash(["materials", "phonetic_laws"]);
+  const udarenieAllHash = buildListSearchHash("all", "ударение");
+  const udarenieSubjectHash = buildListSearchHash("subject", "ударение");
+  const akanyeSubjectHash = buildListSearchHash("subject", "аканье");
+  const articleSubjectHash = buildListSearchHash("subject", "артикль");
+  const birchSubjectHash = buildListSearchHash("subject", "берестяные грамоты");
+  buildListSearchHash("names", "Аванесов Р. И.");
+  const avvakumHash = buildListSearchHash("names", "Аввакум");
+  const avanesovItemHash = buildItemHash("names", "Аванесов Р. И.");
+  const angliaHash = buildListSearchHash("toponyms", "Англия");
+  const angliaItemHash = buildItemHash("toponyms", "Англия");
+  const rossiyaHash = buildListSearchHash("toponyms", "Россия");
+  const austraHash = buildListSearchHash("languages", "австралийские");
+  const austraItemHash = buildItemHash("languages", "австралийские");
+  const sanskritHash = buildListSearchHash("all", "санскрит");
+  const globalBerestaHash = buildListSearchHash("all", "берестяные грамоты");
+  const globalAvanesovHash = buildListSearchHash("all", "Аванесов Р. И.");
+  const globalAngliaHash = buildListSearchHash("all", "Англия");
+  const globalLekciiHash = buildListSearchHash("all", "лекция");
   const corpusBooks = getCorpusBooks();
   const videoCatalog = getPlannedVideoCatalogSource();
   const corpusBookCount = corpusBooks.length || 1;
-  const videoCount = videoCatalog && Number.isFinite(Number(videoCatalog.planned_count))
-    ? Number(videoCatalog.planned_count)
-    : 0;
-  const bookWord = corpusBookCount === 1 ? 'книгу' : (corpusBookCount >= 2 && corpusBookCount <= 4 ? 'книги' : 'книг');
-  const corpusSummary = videoCount
-    ? `Сейчас корпусная модель держит ${corpusBookCount} ${bookWord} и подготовлена к видеокаталогу: ${videoCount} записей с тайм-кодами и стенограммами.`
-    : `Сейчас корпусная модель держит ${corpusBookCount} ${bookWord}.`;
+  const videoCount = videoCatalog && Number.isFinite(Number(videoCatalog.planned_count)) ? Number(videoCatalog.planned_count) : 0;
+  const bookWord = corpusBookCount === 1 ? "книгу" : corpusBookCount >= 2 && corpusBookCount <= 4 ? "книги" : "книг";
+  const corpusSummary = videoCount ? `Сейчас корпусная модель держит ${corpusBookCount} ${bookWord} и подготовлена к видеокаталогу: ${videoCount} записей с тайм-кодами и стенограммами.` : `Сейчас корпусная модель держит ${corpusBookCount} ${bookWord}.`;
   return `<details id="home-howto-details" class="home-howto" open>
     <summary class="home-howto-summary">Как пользоваться «Зализнякиадой»</summary>
     <div class="home-howto-grid">
@@ -8333,93 +7846,85 @@ function buildHomeHowToGuideHtml() {
     </div>
   </details>`;
 }
-
 function buildHomeDeclarativeViewModel() {
   const stats = APP_DATA.book_stats || {};
   const routes = Array.isArray(APP_DATA.routes) ? APP_DATA.routes : [];
-  const featured = APP_DATA.featured_quote || { text: '', page: '', lecture: '' };
+  const featured = APP_DATA.featured_quote || {
+    text: "",
+    page: "",
+    lecture: ""
+  };
   const recentRaw = loadRecentItems().slice(0, 10);
-  const vw = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 0;
-  const vh = (typeof window !== 'undefined' && typeof window.innerHeight === 'number') ? window.innerHeight : 0;
+  const vw = typeof window !== "undefined" && typeof window.innerWidth === "number" ? window.innerWidth : 0;
+  const vh = typeof window !== "undefined" && typeof window.innerHeight === "number" ? window.innerHeight : 0;
   const isDesktop = vw >= 980;
   const compactHome = isDesktop && vh > 0 && vh <= 840;
-
-  const homeInnerPadding = compactHome ? '10px 14px' : '14px 20px';
-  const factPairClass = compactHome ? 'home-fact-pair home-fact-pair-compact' : 'home-fact-pair';
-  const quoteClass = compactHome ? 'home-featured-quote home-featured-quote-compact' : 'home-featured-quote home-featured-quote-full';
-  const quoteTextClass = compactHome ? 'home-featured-quote-clamp' : '';
-  const routeGridClass = (compactHome || isDesktop) ? 'home-routes-grid home-routes-grid-compact' : 'home-routes-grid';
-
-  const topFamilyName = Array.isArray(stats.top_family) ? String(stats.top_family[0] || '') : '';
+  const homeInnerPadding = compactHome ? "10px 14px" : "14px 20px";
+  const factPairClass = compactHome ? "home-fact-pair home-fact-pair-compact" : "home-fact-pair";
+  const quoteClass = compactHome ? "home-featured-quote home-featured-quote-compact" : "home-featured-quote home-featured-quote-full";
+  const quoteTextClass = compactHome ? "home-featured-quote-clamp" : "";
+  const routeGridClass = compactHome || isDesktop ? "home-routes-grid home-routes-grid-compact" : "home-routes-grid";
+  const topFamilyName = Array.isArray(stats.top_family) ? String(stats.top_family[0] || "") : "";
   const topFamilyCount = Array.isArray(stats.top_family) ? Number(stats.top_family[1] || 0) : 0;
   const earliestEpochRaw = Number(stats?.earliest_person?.epoch);
   const earliestEpoch = Number.isFinite(earliestEpochRaw) ? earliestEpochRaw : 0;
   const earliestEpochLabel = earliestEpoch < 0 ? `${Math.abs(earliestEpoch)} до н. э.` : `${earliestEpoch} г.`;
-
   const statsCards = [
-    { key: 'pages', num: String(stats.total_pages || getTotalBookPages()), label: 'страницы' },
     {
-      key: 'lectures',
-      num: stats.has_preface ? '10 + 1' : String(stats.lectures || 10),
-      label: stats.has_preface ? 'лекций + предисловие' : 'лекций',
+      key: "pages",
+      num: String(stats.total_pages || getTotalBookPages()),
+      label: "страницы"
     },
-    { key: 'names', num: String(stats.names || 0), label: 'имён' },
-    { key: 'languages', num: String(stats.languages || 0), label: 'языков' },
-    { key: 'toponyms', num: String(stats.toponyms || 0), label: 'топонимов' },
-    { key: 'ethnonyms', num: String(stats.ethnonyms || 0), label: 'этнонимов' },
     {
-      key: 'lexicon',
-      num: Number(stats.lexicon || 0).toLocaleString('ru'),
-      label: 'лексем',
+      key: "lectures",
+      num: stats.has_preface ? "10 + 1" : String(stats.lectures || 10),
+      label: stats.has_preface ? "лекций + предисловие" : "лекций"
     },
-    { key: 'subject', num: String(stats.subject_index || 0), label: 'понятий' },
+    {
+      key: "names",
+      num: String(stats.names || 0),
+      label: "имён"
+    },
+    {
+      key: "languages",
+      num: String(stats.languages || 0),
+      label: "языков"
+    },
+    {
+      key: "toponyms",
+      num: String(stats.toponyms || 0),
+      label: "топонимов"
+    },
+    {
+      key: "ethnonyms",
+      num: String(stats.ethnonyms || 0),
+      label: "этнонимов"
+    },
+    {
+      key: "lexicon",
+      num: Number(stats.lexicon || 0).toLocaleString("ru"),
+      label: "лексем"
+    },
+    {
+      key: "subject",
+      num: String(stats.subject_index || 0),
+      label: "понятий"
+    }
   ];
-
   const facts = [
-    `Самая длинная лекция — «${String(stats?.longest_lecture?.name || '')}» (${String(stats?.longest_lecture?.pages || 0)} страниц)`,
-    `Самый часто упоминаемый язык — ${String(stats?.top_lang?.head || '')} (${String(stats?.top_lang?.count || 0)} упоминаний)`,
-    `Самое часто упоминаемое место — ${String(stats?.top_topo?.head || '')} (${String(stats?.top_topo?.count || 0)} упоминаний)`,
-    `Самый часто упоминаемый человек — ${String(stats?.top_name?.head || '')} (${String(stats?.top_name?.count || 0)} упоминаний)`,
-    `Самое часто обсуждаемое слово — «${String(stats?.top_lex?.head || '')}» (${String(stats?.top_lex?.count || 0)} упоминаний)`,
-    `Самый ранний из упомянутых — ${String(stats?.earliest_person?.head || '')} (${earliestEpochLabel})`,
-    `Самая представленная семья — ${topFamilyName} (${topFamilyCount} языков)`,
+    `Самая длинная лекция — «${String(stats?.longest_lecture?.name || "")}» (${String(stats?.longest_lecture?.pages || 0)} страниц)`,
+    `Самый часто упоминаемый язык — ${String(stats?.top_lang?.head || "")} (${String(stats?.top_lang?.count || 0)} упоминаний)`,
+    `Самое часто упоминаемое место — ${String(stats?.top_topo?.head || "")} (${String(stats?.top_topo?.count || 0)} упоминаний)`,
+    `Самый часто упоминаемый человек — ${String(stats?.top_name?.head || "")} (${String(stats?.top_name?.count || 0)} упоминаний)`,
+    `Самое часто обсуждаемое слово — «${String(stats?.top_lex?.head || "")}» (${String(stats?.top_lex?.count || 0)} упоминаний)`,
+    `Самый ранний из упомянутых — ${String(stats?.earliest_person?.head || "")} (${earliestEpochLabel})`,
+    `Самая представленная семья — ${topFamilyName} (${topFamilyCount} языков)`
   ];
-
   const normalizeRouteIcon = (value) => {
-    const raw = String(value == null ? '' : value).trim();
-    if (!raw) return '•';
-    return raw.replace(/[<>]/g, '').slice(0, 8) || '•';
+    const raw = String(value == null ? "" : value).trim();
+    if (!raw) return "•";
+    return raw.replace(/[<>]/g, "").slice(0, 8) || "•";
   };
-
-  const routeCards = routes.map((r, idx) => ({
-    id: String(r?.id || `route-${idx}`),
-    title: String(r?.title || ''),
-    desc: String(r?.desc || ''),
-    icon: normalizeRouteIcon(r?.icon),
-    pages: String(r?.pages || ''),
-    entities: Array.isArray(r?.entities)
-      ? r.entities
-        .map((e, eIdx) => ({
-          key: `${idx}-${eIdx}-${String(e?.type || '')}-${String(e?.head || '')}`,
-          type: String(e?.type || ''),
-          head: String(e?.head || ''),
-        }))
-        .filter((e) => e.type && e.head)
-      : [],
-  }));
-
-  const recentItems = recentRaw
-    .map((r, idx) => {
-      const conf = ENTITY_TYPES[r.type];
-      return {
-        key: `${idx}-${String(r.type || '')}-${String(r.head || '')}`,
-        type: String(r.type || ''),
-        head: String(r.head || ''),
-        label: conf ? conf.title : String(r.type || ''),
-      };
-    })
-    .filter((r) => r.type && r.head);
-
   return {
     compactHome,
     routeGridClass,
@@ -8429,21 +7934,39 @@ function buildHomeDeclarativeViewModel() {
     quoteTextClass,
     statsCards,
     facts,
-    routes: routeCards,
-    recentItems,
-    featuredText: String(featured.text || ''),
-    featuredPage: String(featured.page || ''),
-    featuredLecture: String(featured.lecture || ''),
+    routes: routes.map((r, idx) => ({
+      id: String(r?.id || `route-${idx}`),
+      title: String(r?.title || ""),
+      desc: String(r?.desc || ""),
+      icon: normalizeRouteIcon(r?.icon),
+      pages: String(r?.pages || ""),
+      entities: Array.isArray(r?.entities) ? r.entities.map((e, eIdx) => ({
+        key: `${idx}-${eIdx}-${String(e?.type || "")}-${String(e?.head || "")}`,
+        type: String(e?.type || ""),
+        head: String(e?.head || "")
+      })).filter((e) => e.type && e.head) : []
+    })),
+    recentItems: recentRaw.map((r, idx) => {
+      const conf = ENTITY_TYPES[r.type];
+      return {
+        key: `${idx}-${String(r.type || "")}-${String(r.head || "")}`,
+        type: String(r.type || ""),
+        head: String(r.head || ""),
+        label: conf ? conf.title : String(r.type || "")
+      };
+    }).filter((r) => r.type && r.head),
+    featuredText: String(featured.text || ""),
+    featuredPage: String(featured.page || ""),
+    featuredLecture: String(featured.lecture || ""),
     guideHtml: buildHomeHowToGuideHtml(),
-    longestLectureName: String(stats?.longest_lecture?.name || ''),
-    topLangHead: String(stats?.top_lang?.head || ''),
-    topTopoHead: String(stats?.top_topo?.head || ''),
-    topNameHead: String(stats?.top_name?.head || ''),
-    topLexHead: String(stats?.top_lex?.head || ''),
-    earliestNameHead: String(stats?.earliest_person?.head || ''),
+    longestLectureName: String(stats?.longest_lecture?.name || ""),
+    topLangHead: String(stats?.top_lang?.head || ""),
+    topTopoHead: String(stats?.top_topo?.head || ""),
+    topNameHead: String(stats?.top_name?.head || ""),
+    topLexHead: String(stats?.top_lex?.head || ""),
+    earliestNameHead: String(stats?.earliest_person?.head || "")
   };
 }
-
 function createHomeDeclarativeState(viewModel) {
   const vm = viewModel || buildHomeDeclarativeViewModel();
   return {
@@ -8459,31 +7982,31 @@ function createHomeDeclarativeState(viewModel) {
         return;
       }
       if (idx === 1) {
-        navigateToItem('languages', vm.topLangHead);
+        navigateToItem("languages", vm.topLangHead);
         return;
       }
       if (idx === 2) {
-        navigateToItem('toponyms', vm.topTopoHead);
+        navigateToItem("toponyms", vm.topTopoHead);
         return;
       }
       if (idx === 3) {
-        navigateToItem('names', vm.topNameHead);
+        navigateToItem("names", vm.topNameHead);
         return;
       }
       if (idx === 4) {
-        navigateToItem('lexicon', vm.topLexHead);
+        navigateToItem("lexicon", vm.topLexHead);
         return;
       }
       if (idx === 5) {
-        navigateToItem('names', vm.earliestNameHead);
+        navigateToItem("names", vm.earliestNameHead);
         return;
       }
       if (idx === 6) {
-        currentEntity = 'languages';
-        currentTab = 'families';
+        currentEntity = "languages";
+        currentTab = "families";
         selectedItem = null;
         selectedItemType = null;
-        rightPaneMode = 'histogram';
+        rightPaneMode = "histogram";
         renderEntitySwitcher();
         renderTabs();
         renderContent();
@@ -8497,23 +8020,18 @@ function createHomeDeclarativeState(viewModel) {
     openRecent(type, head) {
       if (!type || !head) return;
       navigateToItem(type, head);
-    },
+    }
   };
 }
-
 function renderHomePanelDeclarative(container) {
-  const alpine = (typeof window !== 'undefined' && window.Alpine) ? window.Alpine : null;
-  if (!alpine || typeof alpine.initTree !== 'function') {
+  const alpine = typeof window !== "undefined" && window.Alpine ? window.Alpine : null;
+  if (!alpine || typeof alpine.initTree !== "function") {
     renderHomePanel(container);
     return;
   }
-
   const viewModel = buildHomeDeclarativeViewModel();
   const state = createHomeDeclarativeState(viewModel);
-  if (typeof globalThis !== 'undefined') {
-    globalThis[HOME_DECL_FACTORY_KEY] = () => state;
-  }
-
+  if (typeof globalThis !== "undefined") globalThis[HOME_DECL_FACTORY_KEY] = () => state;
   container.innerHTML = `<div class="panel active home-panel home-panel-declarative">
     <div id="home-declarative-root" class="home-declarative-root" x-data="${HOME_DECL_FACTORY_KEY}()" data-home-decl-padding="${escapeHtml(viewModel.homeInnerPadding)}">
       <div class="home-stats-hero">
@@ -8591,57 +8109,181 @@ function renderHomePanelDeclarative(container) {
       <div x-html="guideHtml"></div>
     </div>
   </div>`;
-
   applyDataDrivenStyles(container);
   alpine.initTree(container);
 }
-
+function buildHomeIndexTaskEntries() {
+  const section = getNavSectionById("indexes");
+  const items = section && Array.isArray(section.items) ? section.items : [];
+  return items.filter((item) => item && item.entity && ENTITY_TYPES[item.entity]).map((item) => {
+    const conf = ENTITY_TYPES[item.entity];
+    const count = Array.isArray(conf && conf.items) ? conf.items.length : 0;
+    return {
+      entity: item.entity,
+      label: String(item.label || item.entity),
+      count
+    };
+  });
+}
+function wireHomeTasks(container, totalPages) {
+  if (!container || typeof container.querySelector !== "function") return;
+  const maxPage = Math.max(1, Number(totalPages) || getTotalBookPages());
+  const pageForm = container.querySelector("#home-task-page");
+  if (pageForm) pageForm.onsubmit = (e) => {
+    e.preventDefault();
+    const raw = parseInt((container.querySelector("#home-task-page-input") || {}).value, 10);
+    if (Number.isFinite(raw)) applyHash(buildReadingNowHash(Math.max(1, Math.min(maxPage, raw))));
+  };
+  const termForm = container.querySelector("#home-task-term");
+  if (termForm) termForm.onsubmit = (e) => {
+    e.preventDefault();
+    const q = clampUiInput((container.querySelector("#home-task-term-input") || {}).value || "", MAX_LIST_QUERY_LENGTH).trim();
+    if (q) applyHash(buildListSearchHash("all", q));
+  };
+  const indexForm = container.querySelector("#home-task-index");
+  if (indexForm) indexForm.onsubmit = (e) => {
+    e.preventDefault();
+    const sel = container.querySelector("#home-task-index-select");
+    const entity = String(sel && sel.value || "").trim();
+    if (entity && ENTITY_TYPES[entity]) applyHash(buildListSearchHash(entity, ""));
+  };
+  const videoForm = container.querySelector("#home-task-video");
+  const videoInput = container.querySelector("#home-task-video-input");
+  const videoResults = container.querySelector("#home-task-video-results");
+  const runVideoSearch = () => {
+    if (!videoResults) return;
+    const q = clampUiInput((videoInput || {}).value || "", MAX_LIST_QUERY_LENGTH).trim().toLowerCase();
+    if (q.length < 2) {
+      videoResults.textContent = "";
+      return;
+    }
+    const cat = getDedupedVideoCatalog();
+    const matches = cat.filter((v) => String(v && v.title || "").toLowerCase().includes(q));
+    matches.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    const shown = matches.slice(0, 8);
+    videoResults.textContent = "";
+    if (!shown.length) {
+      const empty = document.createElement("div");
+      empty.className = "home-task-empty";
+      empty.textContent = `Ничего не найдено среди ${cat.length} видео.`;
+      videoResults.appendChild(empty);
+      return;
+    }
+    for (const v of shown) {
+      const a = document.createElement("a");
+      a.className = "home-task-video-row";
+      const vidId = sanitizeVideoId(v.id) || String(v.id || "");
+      a.href = buildVideoDetailHash(vidId);
+      a.dataset.videoId = vidId;
+      const title = document.createElement("span");
+      title.className = "home-task-video-title";
+      title.textContent = String(v.title || "");
+      a.appendChild(title);
+      const dur = formatVideoDuration(v.duration);
+      if (dur) {
+        const d = document.createElement("span");
+        d.className = "home-task-video-dur";
+        d.textContent = dur;
+        a.appendChild(d);
+      }
+      videoResults.appendChild(a);
+    }
+    videoResults.querySelectorAll(".home-task-video-row").forEach((row) => {
+      bindActionWithKeyboard(row, () => openVideoDetail(row.dataset.videoId || ""));
+    });
+    if (matches.length > shown.length) {
+      const more = document.createElement("div");
+      more.className = "home-task-empty";
+      more.textContent = `и ещё ${matches.length - shown.length}`;
+      videoResults.appendChild(more);
+    }
+  };
+  if (videoForm) videoForm.onsubmit = (e) => { e.preventDefault(); runVideoSearch(); };
+  if (videoInput) videoInput.oninput = runVideoSearch;
+}
 function renderHomePanel(container) {
   const stats = APP_DATA.book_stats;
   const routes = APP_DATA.routes || [];
-  const featured = APP_DATA.featured_quote || { text: '', page: '', lecture: '' };
+  const featured = APP_DATA.featured_quote || {
+    text: "",
+    page: "",
+    lecture: ""
+  };
   const totalPages = getTotalBookPages();
-  const vw = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 0;
-  const vh = (typeof window !== 'undefined' && typeof window.innerHeight === 'number') ? window.innerHeight : 0;
+  const vw = typeof window !== "undefined" && typeof window.innerWidth === "number" ? window.innerWidth : 0;
+  const vh = typeof window !== "undefined" && typeof window.innerHeight === "number" ? window.innerHeight : 0;
   const isDesktop = vw >= 980;
   const compactHome = isDesktop && vh > 0 && vh <= 840;
-  const homeInnerPadding = compactHome ? '10px 14px' : '14px 20px';
-  const factPairClass = compactHome ? 'home-fact-pair home-fact-pair-compact' : 'home-fact-pair';
-  const quoteClass = compactHome ? 'home-featured-quote home-featured-quote-compact' : 'home-featured-quote home-featured-quote-full';
-  const quoteTextClass = compactHome ? 'home-featured-quote-clamp' : '';
-  const routeGridClass = (compactHome || isDesktop) ? 'home-routes-grid home-routes-grid-compact' : 'home-routes-grid';
-
+  const homeInnerPadding = compactHome ? "10px 14px" : "14px 20px";
+  const factPairClass = compactHome ? "home-fact-pair home-fact-pair-compact" : "home-fact-pair";
+  const quoteClass = compactHome ? "home-featured-quote home-featured-quote-compact" : "home-featured-quote home-featured-quote-full";
+  const quoteTextClass = compactHome ? "home-featured-quote-clamp" : "";
+  const routeGridClass = compactHome || isDesktop ? "home-routes-grid home-routes-grid-compact" : "home-routes-grid";
+  const indexEntries = buildHomeIndexTaskEntries();
+  const indexOptionsHtml = indexEntries.map((entry) => `<option value="${escapeHtml(entry.entity)}">${escapeHtml(entry.label)}${entry.count ? ` (${entry.count})` : ""}</option>`).join("");
   let html = `<div class="panel active home-panel"><div class="home-panel-inner" data-home-inner-padding="${escapeHtml(homeInnerPadding)}">`;
-
-  // === БЛОК 1: КНИГА В ЦИФРАХ ===
-  html += `<div class="home-stats-hero">
+  html += `<div class="home-tasks">
+    <div class="home-tasks-title">С чего начать?</div>
+    <div id="home-tasks-grid" class="home-tasks-grid">
+      <form class="home-task" id="home-task-page">
+        <div class="home-task-head"><span class="home-task-icon">📖</span><label class="home-task-label" for="home-task-page-input">Я читаю страницу книги</label></div>
+        <div class="home-task-row">
+          <input id="home-task-page-input" class="home-task-input" type="number" min="1" max="${escapeHtml(totalPages)}" step="1" placeholder="№ страницы" inputmode="numeric">
+          <button class="home-task-btn" type="submit">Открыть</button>
+        </div>
+        <div class="home-task-hint">Кто и что упоминается на этой странице.</div>
+      </form>
+      <form class="home-task" id="home-task-video">
+        <div class="home-task-head"><span class="home-task-icon">▶</span><label class="home-task-label" for="home-task-video-input">Я смотрю видео</label></div>
+        <div class="home-task-row">
+          <input id="home-task-video-input" class="home-task-input" type="search" placeholder="название лекции" autocomplete="off">
+          <button class="home-task-btn" type="submit">Найти</button>
+        </div>
+        <div id="home-task-video-results" class="home-task-results"></div>
+      </form>
+      <form class="home-task" id="home-task-term">
+        <div class="home-task-head"><span class="home-task-icon">🔎</span><label class="home-task-label" for="home-task-term-input">Найти слово, имя, термин</label></div>
+        <div class="home-task-row">
+          <input id="home-task-term-input" class="home-task-input" type="search" placeholder="например: ударение" autocomplete="off">
+          <button class="home-task-btn" type="submit">Искать</button>
+        </div>
+        <div class="home-task-hint">Поиск по всему указателю.</div>
+      </form>
+      <form class="home-task" id="home-task-index">
+        <div class="home-task-head"><span class="home-task-icon">📇</span><label class="home-task-label" for="home-task-index-select">Смотрю указатель целиком</label></div>
+        <div class="home-task-row">
+          <select id="home-task-index-select" class="home-task-input home-task-select">${indexOptionsHtml}</select>
+          <button class="home-task-btn" type="submit">Открыть</button>
+        </div>
+        <div class="home-task-hint">Полный список с фильтрами и сортировкой.</div>
+      </form>
+    </div>
+  </div>`;
+  // U1 (H2127): the «Книга в цифрах» showcase is BUILT here but APPENDED after the
+  // task-shaped surfaces (routes, recents), so the home fold stays task-first.
+  let showcase = `<div class="home-stats-hero">
     <div class="home-stats-head">
       <h2 class="home-stats-title">Книга в цифрах</h2>
       <button id="export-site-md" class="home-export-btn">Экспорт всего BookIndex в Markdown</button>
     </div>
     <div class="home-stats-subtitle">Что внутри ${escapeHtml(totalPages)} страниц лекций А. А. Зализняка</div>
     <div id="home-stats-grid" class="home-stats-grid">`;
-
   const cells = [
-    [String(totalPages), 'страницы'],
-    [stats.has_preface ? '10 + 1' : String(stats.lectures || 10), stats.has_preface ? 'лекций + предисловие' : 'лекций'],
-    [stats.names, 'имён'],
-    [stats.languages, 'языков'],
-    [stats.toponyms, 'топонимов'],
-    [stats.ethnonyms, 'этнонимов'],
-    [stats.lexicon.toLocaleString('ru'), 'лексем'],
-    [stats.subject_index, 'понятий'],
+    [String(totalPages), "страницы"],
+    [stats.has_preface ? "10 + 1" : String(stats.lectures || 10), stats.has_preface ? "лекций + предисловие" : "лекций"],
+    [stats.names, "имён"],
+    [stats.languages, "языков"],
+    [stats.toponyms, "топонимов"],
+    [stats.ethnonyms, "этнонимов"],
+    [stats.lexicon.toLocaleString("ru"), "лексем"],
+    [stats.subject_index, "понятий"]
   ];
-  for (const [num, label] of cells) {
-    html += `<div class="home-stat-cell">
+  for (const [num, label] of cells) showcase += `<div class="home-stat-cell">
       <div class="home-stat-num">${num}</div>
       <div class="home-stat-label">${label}</div>
     </div>`;
-  }
-  html += '</div>';
-
-  // Изюминки
-  html += `<div class="home-facts" data-home-facts-space="${compactHome ? 10 : 14}" data-home-facts-line-height="${compactHome ? 1.55 : 1.7}">
+  showcase += "</div>";
+  showcase += `<div class="home-facts" data-home-facts-space="${compactHome ? 10 : 14}" data-home-facts-line-height="${compactHome ? 1.55 : 1.7}">
     <div id="home-fact-pair" class="${factPairClass}">
       <div>
         <div class="home-fact-row">📖 Самая длинная лекция — <strong>«${escapeHtml(stats.longest_lecture.name)}»</strong> (${stats.longest_lecture.pages} страниц)</div>
@@ -8649,28 +8291,25 @@ function renderHomePanel(container) {
         <div class="home-fact-row">🌍 Самое часто упоминаемое место — <strong>${escapeHtml(stats.top_topo.head)}</strong> (${stats.top_topo.count} упоминаний)</div>
         <div class="home-fact-row">👤 Самый часто упоминаемый человек — <strong>${escapeHtml(stats.top_name.head)}</strong> (${stats.top_name.count} упоминаний)</div>
         <div class="home-fact-row">📜 Самое часто обсуждаемое слово — <strong>«${escapeHtml(stats.top_lex.head)}»</strong> (${stats.top_lex.count} упоминаний)</div>
-        <div class="home-fact-row">⏳ Самый ранний из упомянутых — <strong>${escapeHtml(stats.earliest_person.head)}</strong> (${Math.abs(stats.earliest_person.epoch)} ${stats.earliest_person.epoch < 0 ? 'до н.&nbsp;э.' : 'г.'})</div>
+        <div class="home-fact-row">⏳ Самый ранний из упомянутых — <strong>${escapeHtml(stats.earliest_person.head)}</strong> (${Math.abs(stats.earliest_person.epoch)} ${stats.earliest_person.epoch < 0 ? "до н.&nbsp;э." : "г."})</div>
         <div class="home-fact-row">🌐 Самая представленная семья — <strong>${escapeHtml(stats.top_family[0])}</strong> (${stats.top_family[1]} языков)</div>
       </div>
       <div id="home-featured-quote" class="${quoteClass}" data-home-featured-padding="${compactHome ? 8 : 10}">
         <div id="home-featured-quote-text" class="${quoteTextClass}">«${escapeHtml(featured.text)}»</div>
-        <div class="home-featured-meta">— ${renderTextWithPageLinks(`стр. ${featured.page}`, { className: 'material-page-link card-page-link related-link home-featured-page-link', rangeTarget: 'trends' })}, лекция «${escapeHtml(featured.lecture)}»</div>
+        <div class="home-featured-meta">— ${renderTextWithPageLinks(`стр. ${featured.page}`, {
+			className: "material-page-link card-page-link related-link home-featured-page-link",
+			rangeTarget: "trends"
+		})}, лекция «${escapeHtml(featured.lecture)}»</div>
         <div class="home-featured-hint">Выберите свой путь по книге — если не знаете, с чего начать, выберите тему, которая вас интересует.</div>
       </div>
     </div>
   </div></div>`;
-
   const recentItems = loadRecentItems().slice(0, 10);
-
-  // === БЛОК 2: МАРШРУТЫ ===
-  if (compactHome) {
-    html += `<details id="home-routes-details" class="home-routes-details">
+  if (compactHome) html += `<details id="home-routes-details" class="home-routes-details">
       <summary class="home-routes-summary">Выберите свой путь по книге (${routes.length})</summary>
       <div class="${routeGridClass}">`;
-  } else {
-    html += `<h2 class="home-routes-title">Выберите свой путь по книге</h2>
+  else html += `<h2 class="home-routes-title">Выберите свой путь по книге</h2>
       <div class="${routeGridClass}">`;
-  }
   for (const r of routes) {
     html += `<div class="home-route-card">
       <div class="home-route-head">
@@ -8682,34 +8321,31 @@ function renderHomePanel(container) {
       </div>
       <div class="home-route-desc">${escapeHtml(r.desc)}</div>
       <div class="home-route-links">`;
-    for (const e of r.entities) {
-      html += `<a class="route-link home-route-link" data-type="${escapeHtml(e.type)}" data-head="${escapeHtml(e.head)}" href="${escapeHtml(buildItemHash(e.type, e.head))}">${escapeHtml(e.head)}</a>`;
-    }
-    html += '</div></div>';
+    for (const e of r.entities) html += `<a class="route-link home-route-link" data-type="${escapeHtml(e.type)}" data-head="${escapeHtml(e.head)}" href="${escapeHtml(buildItemHash(e.type, e.head))}">${escapeHtml(e.head)}</a>`;
+    html += "</div></div>";
   }
-  html += '</div>';
-  if (compactHome) html += '</details>';
+  html += "</div>";
+  if (compactHome) html += "</details>";
   html += `<div class="home-recent-card">
     <div class="home-recent-title">Недавно открывали</div>
-    <div id="home-recent-items" class="home-recent-items">${recentItems.length ? '' : '<span class="home-recent-empty">Пока пусто — откройте любую карточку.</span>'}</div>
+    <div id="home-recent-items" class="home-recent-items">${recentItems.length ? "" : "<span class=\"home-recent-empty\">Пока пусто — откройте любую карточку.</span>"}</div>
   </div>`;
+  html += showcase;
   html += buildHomeHowToGuideHtml();
-
-  html += '</div></div>';
-
+  html += "</div></div>";
   container.innerHTML = html;
   applyDataDrivenStyles(container);
-  const homeFactPair = document.getElementById('home-fact-pair');
+  wireHomeTasks(container, totalPages);
+  const homeFactPair = document.getElementById("home-fact-pair");
   if (homeFactPair) {
-    const pairChildren = homeFactPair.children || [];
-    const factCol = pairChildren[0] || null;
+    const factCol = (homeFactPair.children || [])[0] || null;
     const factRows = factCol && factCol.children ? Array.from(factCol.children) : [];
     const openTopFamily = () => {
-      currentEntity = 'languages';
-      currentTab = 'families';
+      currentEntity = "languages";
+      currentTab = "families";
       selectedItem = null;
       selectedItemType = null;
-      rightPaneMode = 'histogram';
+      rightPaneMode = "histogram";
       renderEntitySwitcher();
       renderTabs();
       renderContent();
@@ -8720,141 +8356,187 @@ function renderHomePanel(container) {
         const idx = findLectureIndexByName(stats?.longest_lecture?.name);
         openLecturePage(idx >= 0 ? idx : 1);
       },
-      () => navigateToItem('languages', stats?.top_lang?.head || ''),
-      () => navigateToItem('toponyms', stats?.top_topo?.head || ''),
-      () => navigateToItem('names', stats?.top_name?.head || ''),
-      () => navigateToItem('lexicon', stats?.top_lex?.head || ''),
-      () => navigateToItem('names', stats?.earliest_person?.head || ''),
-      () => openTopFamily(),
+      () => navigateToItem("languages", stats?.top_lang?.head || ""),
+      () => navigateToItem("toponyms", stats?.top_topo?.head || ""),
+      () => navigateToItem("names", stats?.top_name?.head || ""),
+      () => navigateToItem("lexicon", stats?.top_lex?.head || ""),
+      () => navigateToItem("names", stats?.earliest_person?.head || ""),
+      () => openTopFamily()
     ];
     for (let i = 0; i < factRows.length && i < factActions.length; i++) {
       const row = factRows[i];
       bindActionWithKeyboard(row, factActions[i]);
     }
   }
-
-  const recentBox = document.getElementById('home-recent-items');
+  const recentBox = document.getElementById("home-recent-items");
   if (recentBox && recentItems.length) {
-    let recentHtml = '';
+    let recentHtml = "";
     for (const r of recentItems) {
       const conf = ENTITY_TYPES[r.type];
       const label = conf ? conf.title : r.type;
       recentHtml += `<a class="home-recent-link" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}">${escapeHtml(r.head)} <span class="home-recent-label">· ${escapeHtml(label)}</span></a>`;
     }
     recentBox.innerHTML = recentHtml;
-    bindNavigateLinks(recentBox, '.home-recent-link', 'all');
+    bindNavigateLinks(recentBox, ".home-recent-link", "all");
   }
-
-  // Маршрутные ссылки
-  bindNavigateLinks(container, '.route-link', 'all');
-  const exportSiteBtn = document.getElementById('export-site-md');
+  bindNavigateLinks(container, ".route-link", "all");
+  const exportSiteBtn = document.getElementById("export-site-md");
   if (exportSiteBtn) exportSiteBtn.onclick = () => exportWholeSiteMarkdown();
 }
-
 function openReadingPageTrends(page) {
   const maxPage = getTotalBookPages();
-  const p = Math.max(1, Math.min(maxPage, Number.isFinite(page) ? page : parseInt(String(page || ''), 10) || 1));
-  currentEntity = 'scholar';
-  currentTab = 'page_trends';
+  const p = Math.max(1, Math.min(maxPage, Number.isFinite(page) ? page : parseInt(String(page || ""), 10) || 1));
+  currentEntity = "scholar";
+  currentTab = "page_trends";
   trendsRangeStart = p;
   trendsRangeEnd = p;
   selectedItem = null;
   selectedItemType = null;
-  rightPaneMode = 'histogram';
+  rightPaneMode = "histogram";
   renderEntitySwitcher();
   renderTabs();
   renderContent();
   syncNavigationState();
 }
-
 function buildReadingNowHash(page) {
-  const p = clampPageInBook(Number.isFinite(page) ? page : parseInt(String(page || ''), 10));
-  return buildCanonicalHash(['materials', 'lectures', 'reading', String(p)]);
+  const p = clampPageInBook(Number.isFinite(page) ? page : parseInt(String(page || ""), 10));
+  return buildCanonicalHash([
+    "materials",
+    "lectures",
+    "reading",
+    String(p)
+  ]);
 }
-
 function openReadingNowPage(page) {
-  const p = clampPageInBook(Number.isFinite(page) ? page : parseInt(String(page || ''), 10));
-  saveReadingPage(p);
-  currentEntity = 'materials';
-  currentTab = 'lectures';
+  saveReadingPage(clampPageInBook(Number.isFinite(page) ? page : parseInt(String(page || ""), 10)));
+  currentEntity = "materials";
+  currentTab = "lectures";
   selectedItem = null;
   selectedItemType = null;
-  rightPaneMode = 'histogram';
+  rightPaneMode = "histogram";
   renderEntitySwitcher();
   renderTabs();
   renderContent();
   syncNavigationState();
 }
-
+var CHAPTER_DENSITY_CACHE = null;
+function getChapterDensities() {
+  if (CHAPTER_DENSITY_CACHE) return CHAPTER_DENSITY_CACHE;
+  const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+  const types = ["names", "toponyms", "ethnonyms", "languages", "lexicon", "subject_index"];
+  const perPage = /* @__PURE__ */ new Map();
+  for (const t of types) for (const it of (APP_DATA[t] || [])) {
+    for (const p of (it.page_list || [])) {
+      const page = parseInt(p, 10);
+      if (Number.isFinite(page)) perPage.set(page, (perPage.get(page) || 0) + 1);
+    }
+  }
+  const rows = chapters.map((ch) => {
+    let total = 0;
+    const start = parseInt(ch.start, 10) || 1;
+    const end = parseInt(ch.end, 10) || start;
+    for (let p = start; p <= end; p++) total += perPage.get(p) || 0;
+    const span = Math.max(1, end - start + 1);
+    return { name: ch.name || "", start, end, span, total, perPage: total / span };
+  });
+  const maxPerPage = rows.reduce((m, r) => Math.max(m, r.perPage), 0) || 1;
+  for (const r of rows) r.intensity = r.perPage / maxPerPage;
+  CHAPTER_DENSITY_CACHE = rows;
+  return rows;
+}
 function wireReadingNowWidget(root, totalPages = DEFAULT_TOTAL_PAGES) {
-  if (!root || typeof root.querySelector !== 'function') return;
-  const readingInput = root.querySelector('#reading-page-input');
-  const readingGo = root.querySelector('#reading-page-go');
-  const readingPrev = root.querySelector('#reading-page-prev');
-  const readingNext = root.querySelector('#reading-page-next');
-  const readingTrends = root.querySelector('#reading-page-trends');
-  const readingResults = root.querySelector('#reading-now-results');
+  if (!root || typeof root.querySelector !== "function") return;
+  const readingInput = root.querySelector("#reading-page-input");
+  const readingGo = root.querySelector("#reading-page-go");
+  const readingPrev = root.querySelector("#reading-page-prev");
+  const readingNext = root.querySelector("#reading-page-next");
+  const readingTrends = root.querySelector("#reading-page-trends");
+  const readingResults = root.querySelector("#reading-now-results");
   if (!readingInput || !readingGo || !readingResults) return;
   const maxPage = Math.max(1, Number(totalPages) || DEFAULT_TOTAL_PAGES);
   const clampReadingPage = (page) => {
-    const raw = Number.isFinite(page) ? page : parseInt(String(page || ''), 10);
+    const raw = Number.isFinite(page) ? page : parseInt(String(page || ""), 10);
     if (!Number.isFinite(raw)) return 1;
     return Math.max(1, Math.min(maxPage, raw));
   };
-  const getInputPage = () => clampReadingPage(parseInt(readingInput.value || '', 10));
+  const getInputPage = () => clampReadingPage(parseInt(readingInput.value || "", 10));
   const updateReadingPagerControls = (page) => {
     if (readingPrev) {
       const disabled = page <= 1;
       readingPrev.disabled = disabled;
-      readingPrev.style.opacity = disabled ? '0.45' : '1';
-      readingPrev.style.cursor = disabled ? 'default' : 'pointer';
+      readingPrev.style.opacity = disabled ? "0.45" : "1";
+      readingPrev.style.cursor = disabled ? "default" : "pointer";
     }
     if (readingNext) {
       const disabled = page >= maxPage;
       readingNext.disabled = disabled;
-      readingNext.style.opacity = disabled ? '0.45' : '1';
-      readingNext.style.cursor = disabled ? 'default' : 'pointer';
+      readingNext.style.opacity = disabled ? "0.45" : "1";
+      readingNext.style.cursor = disabled ? "default" : "pointer";
     }
   };
+  const ribbonEl = root.querySelector("#reading-chapter-ribbon");
+  const densities = getChapterDensities();
+  const buildRibbon = () => {
+    if (!ribbonEl || !densities.length) return;
+    ribbonEl.textContent = "";
+    densities.forEach((d, i) => {
+      const seg = document.createElement("button");
+      seg.type = "button";
+      seg.className = "reading-chapter-seg";
+      seg.dataset.idx = String(i);
+      seg.style.flexGrow = String(d.span);
+      seg.style.setProperty("--seg-intensity", d.intensity.toFixed(3));
+      safeSetAttr(seg, "title", `${d.name} · стр. ${d.start}–${d.end} · ${d.total} упоминаний`);
+      safeSetAttr(seg, "aria-label", `${d.name}, страницы ${d.start}–${d.end}`);
+      const fill = document.createElement("span");
+      fill.className = "reading-chapter-fill";
+      seg.appendChild(fill);
+      seg.onclick = () => renderReadingNow(d.start);
+      ribbonEl.appendChild(seg);
+    });
+  };
+  const highlightRibbon = (idx) => {
+    if (!ribbonEl) return;
+    ribbonEl.querySelectorAll(".reading-chapter-seg").forEach((el) => {
+      el.classList.toggle("active", Number(el.dataset.idx) === idx);
+    });
+  };
+  buildRibbon();
   const renderReadingNow = (page) => {
     const currentPage = clampReadingPage(page);
     saveReadingPage(currentPage);
     updateReadingPagerControls(currentPage);
     readingInput.value = String(currentPage);
     const chapters = APP_DATA.chapters || [];
-    const chapterIdx = chapters.findIndex(ch => currentPage >= ch.start && currentPage <= ch.end);
+    const chapterIdx = chapters.findIndex((ch) => currentPage >= ch.start && currentPage <= ch.end);
+    highlightRibbon(chapterIdx);
     const chapter = chapterIdx >= 0 ? chapters[chapterIdx] : null;
     const groups = collectReadingNow(currentPage, 7);
-    let htmlOut = `<div class="reading-now-page-title"><strong>Страница ${currentPage}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ''}</div>`;
+    let htmlOut = `<div class="reading-now-page-title"><strong>Страница ${currentPage}</strong>${chapter ? ` · ${escapeHtml(chapter.name)}` : ""}</div>`;
     htmlOut += `<div class="reading-now-action-row">`;
     htmlOut += `<button class="reading-now-open-trends reading-now-pill-btn" data-page="${currentPage}">Динамика этой страницы</button>`;
-    if (chapter) {
-      htmlOut += `<button class="reading-now-open-lecture reading-now-pill-btn" data-idx="${chapterIdx}">Открыть лекцию</button>`;
-    }
+    if (chapter) htmlOut += `<button class="reading-now-open-lecture reading-now-pill-btn" data-idx="${chapterIdx}">Открыть лекцию</button>`;
     htmlOut += `</div>`;
     if (!groups.length) {
-      htmlOut += '<div class="reading-now-empty">На этой странице в базе не найдено размеченных сущностей.</div>';
+      htmlOut += "<div class=\"reading-now-empty\">На этой странице в базе не найдено размеченных сущностей.</div>";
       readingResults.innerHTML = htmlOut;
     } else {
       for (const g of groups) {
         htmlOut += `<div class="reading-now-group"><strong>${escapeHtml(g.label)}:</strong> `;
-        for (const it of g.items) {
-          htmlOut += `<a class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(g.type, it.head))}">${escapeHtml(it.head)}</a>`;
-        }
+        for (const it of g.items) htmlOut += `<a class="reading-now-link" data-type="${escapeHtml(g.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(g.type, it.head))}">${escapeHtml(it.head)}</a>`;
         if (g.total > g.items.length) htmlOut += `<span class="reading-now-more">и ещё ${g.total - g.items.length}</span>`;
         htmlOut += `</div>`;
       }
       readingResults.innerHTML = htmlOut;
     }
-    bindNavigateLinks(readingResults, '.reading-now-link', 'all');
-    readingResults.querySelectorAll('.reading-now-open-trends').forEach(btn => {
-      btn.onclick = () => openReadingPageTrends(parseInt(btn.dataset.page || '', 10));
+    bindNavigateLinks(readingResults, ".reading-now-link", "all");
+    readingResults.querySelectorAll(".reading-now-open-trends").forEach((btn) => {
+      btn.onclick = () => openReadingPageTrends(parseInt(btn.dataset.page || "", 10));
     });
-    readingResults.querySelectorAll('.reading-now-open-lecture').forEach(btn => {
-      btn.onclick = () => openLecturePage(parseInt(btn.dataset.idx || '0', 10) || 0);
+    readingResults.querySelectorAll(".reading-now-open-lecture").forEach((btn) => {
+      btn.onclick = () => openLecturePage(parseInt(btn.dataset.idx || "0", 10) || 0);
     });
   };
-
   const savedPage = getSavedReadingPage();
   const defaultPage = Number.isFinite(savedPage) ? clampReadingPage(savedPage) : 1;
   readingInput.value = String(defaultPage);
@@ -8864,13 +8546,12 @@ function wireReadingNowWidget(root, totalPages = DEFAULT_TOTAL_PAGES) {
   if (readingNext) readingNext.onclick = () => renderReadingNow(getInputPage() + 1);
   if (readingTrends) readingTrends.onclick = () => openReadingPageTrends(getInputPage());
   readingInput.onkeydown = (e) => {
-    if (e.key === 'Enter') {
-      renderReadingNow(getInputPage());
-    } else if (e.key === 'ArrowLeft') {
-      if (typeof e.preventDefault === 'function') e.preventDefault();
+    if (e.key === "Enter") renderReadingNow(getInputPage());
+    else if (e.key === "ArrowLeft") {
+      if (typeof e.preventDefault === "function") e.preventDefault();
       renderReadingNow(getInputPage() - 1);
-    } else if (e.key === 'ArrowRight') {
-      if (typeof e.preventDefault === 'function') e.preventDefault();
+    } else if (e.key === "ArrowRight") {
+      if (typeof e.preventDefault === "function") e.preventDefault();
       renderReadingNow(getInputPage() + 1);
     }
   };
@@ -8879,16 +8560,13 @@ function wireReadingNowWidget(root, totalPages = DEFAULT_TOTAL_PAGES) {
     updateReadingPagerControls(getInputPage());
   };
 }
-
 function buildTopQuestion(items, entityType, question, hintPrefix, limitOptions = 4, skipModerator = false) {
-  const list = (Array.isArray(items) ? items : [])
-    .filter(it => it && it.head)
-    .filter(it => !skipModerator || !it.is_moderator)
-    .map(it => ({ head: it.head, count: (it.page_list || []).length }))
-    .filter(it => it.count > 0)
-    .sort((a, b) => b.count - a.count || compareHeadsRu(a.head, b.head));
+  const list = (Array.isArray(items) ? items : []).filter((it) => it && it.head).filter((it) => !skipModerator || !it.is_moderator).map((it) => ({
+    head: it.head,
+    count: (it.page_list || []).length
+  })).filter((it) => it.count > 0).sort((a, b) => b.count - a.count || compareHeadsRu(a.head, b.head));
   if (list.length < 2) return null;
-  const options = list.slice(0, Math.max(2, limitOptions)).map(it => it.head);
+  const options = list.slice(0, Math.max(2, limitOptions)).map((it) => it.head);
   const top = list[0];
   return {
     id: `dyn_${entityType}_top`,
@@ -8896,123 +8574,99 @@ function buildTopQuestion(items, entityType, question, hintPrefix, limitOptions 
     options,
     correct: 0,
     hint: `${hintPrefix}: ${top.head} (${top.count}).`,
-    entity: { type: entityType, head: top.head },
+    entity: {
+      type: entityType,
+      head: top.head
+    }
   };
 }
-
 function buildLectureLengthQuestion() {
-  const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
-  const lectureRows = chapters
-    .map((ch, idx) => {
-      const span = Math.max(1, (Number(ch.end) || 0) - (Number(ch.start) || 0) + 1);
-      return { idx, name: ch.name || '', span };
-    })
-    .filter(ch => ch.idx > 0);
+  const lectureRows = (Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : []).map((ch, idx) => {
+    const span = Math.max(1, (Number(ch.end) || 0) - (Number(ch.start) || 0) + 1);
+    return {
+      idx,
+      name: ch.name || "",
+      span
+    };
+  }).filter((ch) => ch.idx > 0);
   if (lectureRows.length < 2) return null;
   lectureRows.sort((a, b) => b.span - a.span || compareHeadsRu(a.name, b.name));
-  const options = lectureRows.slice(0, 4).map(ch => ch.name);
+  const options = lectureRows.slice(0, 4).map((ch) => ch.name);
   const top = lectureRows[0];
   return {
-    id: 'dyn_lecture_length',
-    question: 'Какая лекция в книге самая длинная?',
+    id: "dyn_lecture_length",
+    question: "Какая лекция в книге самая длинная?",
     options,
     correct: 0,
     hint: `Самая длинная лекция — ${top.name} (${top.span} стр.).`,
-    entity: { type: 'lecture', index: top.idx },
+    entity: {
+      type: "lecture",
+      index: top.idx
+    }
   };
 }
-
 function buildDynamicTasks() {
   const out = [];
-  const topNameTask = buildTopQuestion(
-    APP_DATA.names || [],
-    'names',
-    'Кто чаще всего упоминается в книге среди персональных имён?',
-    'Чаще всего упоминается',
-    4,
-    true
-  );
+  const topNameTask = buildTopQuestion(APP_DATA.names || [], "names", "Кто чаще всего упоминается в книге среди персональных имён?", "Чаще всего упоминается", 4, true);
   if (topNameTask) out.push(topNameTask);
-
-  const topLangTask = buildTopQuestion(
-    APP_DATA.languages || [],
-    'languages',
-    'Какой язык упоминается чаще всего?',
-    'Чаще всего упоминается',
-    4,
-    false
-  );
+  const topLangTask = buildTopQuestion(APP_DATA.languages || [], "languages", "Какой язык упоминается чаще всего?", "Чаще всего упоминается", 4, false);
   if (topLangTask) out.push(topLangTask);
-
-  const topTopoTask = buildTopQuestion(
-    APP_DATA.toponyms || [],
-    'toponyms',
-    'Какой топоним встречается чаще всего?',
-    'Чаще всего встречается',
-    4,
-    false
-  );
+  const topTopoTask = buildTopQuestion(APP_DATA.toponyms || [], "toponyms", "Какой топоним встречается чаще всего?", "Чаще всего встречается", 4, false);
   if (topTopoTask) out.push(topTopoTask);
-
   const lectureLenTask = buildLectureLengthQuestion();
   if (lectureLenTask) out.push(lectureLenTask);
   return out;
 }
-
 function renderTasksPanel(container, options = {}) {
   const collapseHistory = !!(options && options.collapseHistory);
   const baseTasks = Array.isArray(APP_DATA.tasks) ? APP_DATA.tasks : [];
   const dynamicTasks = buildDynamicTasks();
-  const tasks = [...baseTasks, ...dynamicTasks];
-  const tasksPrepared = tasks.map((task, idx) => ({
+  const tasksPrepared = [...baseTasks, ...dynamicTasks].map((task, idx) => ({
     ...task,
     _taskIndex: idx,
-    _storageId: getTaskStorageId(task, idx),
+    _storageId: getTaskStorageId(task, idx)
   }));
   const tasksShuffled = shuffleArray(tasksPrepared);
-  let html = '<div class="panel active tasks-panel"><div class="tasks-panel-inner">';
-  html += '<h2 class="tasks-title">\u041f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0441\u0435\u0431\u044f</h2>';
-  html += '<div class="tasks-toolbar">';
+  let html = "<div class=\"panel active tasks-panel\"><div class=\"tasks-panel-inner\">";
+  html += "<h2 class=\"tasks-title\">Проверьте себя</h2>";
+  html += "<div class=\"tasks-toolbar\">";
   html += `<div class="tasks-toolbar-note">${baseTasks.length} \u0431\u0430\u0437\u043e\u0432\u044b\u0445 + ${dynamicTasks.length} \u0434\u0438\u043d\u0430\u043c\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0432\u043e\u043f\u0440\u043e\u0441\u043e\u0432. \u041a\u043b\u0438\u043a\u043d\u0438\u0442\u0435 \u043d\u0430 \u043e\u0442\u0432\u0435\u0442, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0440\u0438\u0442\u044c.</div>`;
-  html += '<div class="tasks-toolbar-actions">';
-  html += '<button id="tasks-reset-progress" class="tasks-toolbar-btn danger">\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0443</button>';
-  html += '<button id="tasks-regen" class="tasks-toolbar-btn">\u041d\u043e\u0432\u0430\u044f \u043f\u043e\u0434\u0431\u043e\u0440\u043a\u0430</button>';
-  html += '</div>';
-  html += '</div>';
-  html += '<div id="tasks-summary" class="tasks-summary-grid"></div>';
-  html += `<details id="tasks-history-box" class="tasks-history-box"${collapseHistory ? '' : ' open'}>`;
-  html += '<summary id="tasks-history-summary" class="tasks-history-summary">\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u043e\u0442\u0432\u0435\u0442\u043e\u0432</summary>';
-  html += '<div class="tasks-history-body">';
-  html += '<div id="tasks-history-list" class="tasks-history-list"></div>';
-  html += '</div></details>';
-  html += '<div id="tasks-container"></div></div></div>';
+  html += "<div class=\"tasks-toolbar-actions\">";
+  html += "<button id=\"tasks-reset-progress\" class=\"tasks-toolbar-btn danger\">Сбросить статистику</button>";
+  html += "<button id=\"tasks-regen\" class=\"tasks-toolbar-btn\">Новая подборка</button>";
+  html += "</div>";
+  html += "</div>";
+  html += "<div id=\"tasks-summary\" class=\"tasks-summary-grid\"></div>";
+  html += `<details id="tasks-history-box" class="tasks-history-box"${collapseHistory ? "" : " open"}>`;
+  html += "<summary id=\"tasks-history-summary\" class=\"tasks-history-summary\">История ответов</summary>";
+  html += "<div class=\"tasks-history-body\">";
+  html += "<div id=\"tasks-history-list\" class=\"tasks-history-list\"></div>";
+  html += "</div></details>";
+  html += "<div id=\"tasks-container\"></div></div></div>";
   container.innerHTML = html;
-
-  const tc = document.getElementById('tasks-container');
-  const summaryEl = document.getElementById('tasks-summary');
-  const historyListEl = document.getElementById('tasks-history-list');
-  const currentTaskIds = new Set(tasksShuffled.map(t => String(t._storageId || '').trim()).filter(Boolean));
-
+  const tc = document.getElementById("tasks-container");
+  const summaryEl = document.getElementById("tasks-summary");
+  const historyListEl = document.getElementById("tasks-history-list");
+  const currentTaskIds = new Set(tasksShuffled.map((t) => String(t._storageId || "").trim()).filter(Boolean));
   const formatHistoryDate = (ts) => {
     const d = new Date(ts);
-    if (!Number.isFinite(d.getTime())) return '\u2014';
+    if (!Number.isFinite(d.getTime())) return "—";
     try {
-      return d.toLocaleString('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
+      return d.toLocaleString("ru-RU", {
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
       });
     } catch (e) {
       return d.toISOString();
     }
   };
-
   const renderProgressPanels = (progressData = getStoredTasksProgress()) => {
     const progress = normalizeTasksProgress(progressData);
     const totalAnswered = progress.totalAnswered;
     const totalCorrect = progress.totalCorrect;
-    const totalAccuracy = totalAnswered ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+    const totalAccuracy = totalAnswered ? Math.round(totalCorrect / totalAnswered * 100) : 0;
     let packAnswered = 0;
     let packCorrect = 0;
     for (const taskId of currentTaskIds) {
@@ -9021,10 +8675,8 @@ function renderTasksPanel(container, options = {}) {
       packAnswered += Number(row.answered || 0);
       packCorrect += Number(row.correct || 0);
     }
-    const packAccuracy = packAnswered ? Math.round((packCorrect / packAnswered) * 100) : 0;
-
-    if (summaryEl) {
-      summaryEl.innerHTML = `
+    const packAccuracy = packAnswered ? Math.round(packCorrect / packAnswered * 100) : 0;
+    if (summaryEl) summaryEl.innerHTML = `
         <div class="tasks-summary-card">
           <strong>\u0412\u0441\u0435 \u043f\u043e\u043f\u044b\u0442\u043a\u0438</strong><br>
           \u041e\u0442\u0432\u0435\u0442\u043e\u0432: <strong>${totalAnswered}</strong> \u00b7
@@ -9038,45 +8690,39 @@ function renderTasksPanel(container, options = {}) {
           \u0442\u043e\u0447\u043d\u043e\u0441\u0442\u044c: <strong>${packAccuracy}%</strong>
         </div>
       `;
-    }
-
     if (historyListEl) {
       const rows = progress.history.slice(0, 12);
-      if (!rows.length) {
-        historyListEl.innerHTML = '<div class="task-history-empty">\u041f\u043e\u043a\u0430 \u043d\u0435\u0442 \u043e\u0442\u0432\u0435\u0442\u043e\u0432. \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0430\u0440\u0438\u0430\u043d\u0442 \u0432 \u043b\u044e\u0431\u043e\u043c \u0432\u043e\u043f\u0440\u043e\u0441\u0435, \u0447\u0442\u043e\u0431\u044b \u043d\u0430\u0447\u0430\u0442\u044c \u0438\u0441\u0442\u043e\u0440\u0438\u044e.</div>';
-      } else {
-        historyListEl.textContent = '';
+      if (!rows.length) historyListEl.innerHTML = "<div class=\"task-history-empty\">Пока нет ответов. Выберите вариант в любом вопросе, чтобы начать историю.</div>";
+      else {
+        historyListEl.textContent = "";
         for (const row of rows) {
-          const item = document.createElement('div');
-          item.className = `task-history-row ${row.isCorrect ? 'correct' : 'incorrect'}`;
-          const head = document.createElement('div');
-          head.className = 'task-history-row-head';
-          const status = document.createElement('strong');
-          status.className = 'task-history-status';
-          status.textContent = row.isCorrect ? '\u0412\u0435\u0440\u043d\u043e' : '\u041e\u0448\u0438\u0431\u043a\u0430';
-          const date = document.createElement('span');
-          date.className = 'task-history-date';
+          const item = document.createElement("div");
+          item.className = `task-history-row ${row.isCorrect ? "correct" : "incorrect"}`;
+          const head = document.createElement("div");
+          head.className = "task-history-row-head";
+          const status = document.createElement("strong");
+          status.className = "task-history-status";
+          status.textContent = row.isCorrect ? "Верно" : "Ошибка";
+          const date = document.createElement("span");
+          date.className = "task-history-date";
           date.textContent = formatHistoryDate(row.at);
           head.appendChild(status);
           head.appendChild(date);
-
-          const question = document.createElement('div');
-          question.className = 'task-history-question';
-          question.textContent = String(row.question || '');
-
-          const answer = document.createElement('div');
-          answer.className = 'task-history-answer';
-          answer.appendChild(document.createTextNode('\u0412\u0430\u0448 \u043e\u0442\u0432\u0435\u0442: '));
-          const selected = document.createElement('strong');
-          selected.textContent = String(row.selected || '\u2014');
+          const question = document.createElement("div");
+          question.className = "task-history-question";
+          question.textContent = String(row.question || "");
+          const answer = document.createElement("div");
+          answer.className = "task-history-answer";
+          answer.appendChild(document.createTextNode("Ваш ответ: "));
+          const selected = document.createElement("strong");
+          selected.textContent = String(row.selected || "—");
           answer.appendChild(selected);
           if (row.correctAnswer) {
-            answer.appendChild(document.createTextNode(' \u00b7 \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e: '));
-            const correct = document.createElement('strong');
+            answer.appendChild(document.createTextNode(" · правильно: "));
+            const correct = document.createElement("strong");
             correct.textContent = String(row.correctAnswer);
             answer.appendChild(correct);
           }
-
           item.appendChild(head);
           item.appendChild(question);
           item.appendChild(answer);
@@ -9085,99 +8731,248 @@ function renderTasksPanel(container, options = {}) {
       }
     }
   };
-
   for (let ti = 0; ti < tasksShuffled.length; ti++) {
     const t = tasksShuffled[ti];
-    const taskDiv = document.createElement('div');
-    taskDiv.className = 'task-card';
-    const question = document.createElement('div');
-    question.className = 'task-card-question';
-    question.textContent = `\u0412\u043e\u043f\u0440\u043e\u0441 ${ti + 1}. ${String(t.question || '')}`;
-    const optsDiv = document.createElement('div');
-    optsDiv.className = 'task-options';
+    const taskDiv = document.createElement("div");
+    taskDiv.className = "task-card";
+    const question = document.createElement("div");
+    question.className = "task-card-question";
+    question.textContent = `\u0412\u043e\u043f\u0440\u043e\u0441 ${ti + 1}. ${String(t.question || "")}`;
+    const optsDiv = document.createElement("div");
+    optsDiv.className = "task-options";
     optsDiv.id = `task-tab-${t._storageId}-opts`;
-    const resDiv = document.createElement('div');
-    resDiv.className = 'task-result';
+    const resDiv = document.createElement("div");
+    resDiv.className = "task-result";
     resDiv.id = `task-tab-${t._storageId}-res`;
     taskDiv.appendChild(question);
     taskDiv.appendChild(optsDiv);
     taskDiv.appendChild(resDiv);
     tc.appendChild(taskDiv);
-    const optionsShuffled = shuffleArray((t.options || []).map((text, idx) => ({ text, idx })));
+    const optionsShuffled = shuffleArray((t.options || []).map((text, idx) => ({
+      text,
+      idx
+    })));
     for (let oi = 0; oi < optionsShuffled.length; oi++) {
       const opt = optionsShuffled[oi];
-      const btn = document.createElement('button');
-      btn.className = 'task-option-btn';
+      const btn = document.createElement("button");
+      btn.className = "task-option-btn";
       btn.dataset.sourceIndex = String(opt.idx);
-      btn.textContent = String.fromCharCode(65 + oi) + '. ' + opt.text;
+      btn.textContent = String.fromCharCode(65 + oi) + ". " + opt.text;
       btn.onclick = () => {
-        if (optsDiv.dataset.locked === '1') return;
-        optsDiv.dataset.locked = '1';
+        if (optsDiv.dataset.locked === "1") return;
+        optsDiv.dataset.locked = "1";
         const isCorrect = opt.idx === t.correct;
-        optsDiv.querySelectorAll('button').forEach(b => { b.disabled = true; b.classList.add('locked'); });
-        if (isCorrect) {
-          btn.classList.add('correct');
-        } else {
-          btn.classList.add('incorrect');
+        optsDiv.querySelectorAll("button").forEach((b) => {
+          b.disabled = true;
+          b.classList.add("locked");
+        });
+        if (isCorrect) btn.classList.add("correct");
+        else {
+          btn.classList.add("incorrect");
           const correctBtn = optsDiv.querySelector(`button[data-source-index="${String(t.correct)}"]`);
-          if (correctBtn) {
-            correctBtn.classList.add('correct');
-          }
+          if (correctBtn) correctBtn.classList.add("correct");
         }
         const res = document.getElementById(`task-tab-${t._storageId}-res`);
-        res.classList.add('visible', isCorrect ? 'correct' : 'incorrect');
-        const linkHref = t.entity
-          ? ((t.entity.type || '') === 'lecture'
-            ? buildLecturePageHash(t.entity.index)
-            : buildItemHash(t.entity.type || 'all', t.entity.head || ''))
-          : '';
-        const linkBtn = t.entity
-          ? ` <a class="task-card-link" data-type="${escapeHtml(t.entity.type || '')}" data-head="${escapeHtml(t.entity.head || '')}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : '')}" href="${escapeHtml(linkHref)}">\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0443 \u2192</a>`
-          : '';
-        res.innerHTML = (isCorrect ? '<strong>\u0412\u0435\u0440\u043d\u043e!</strong> ' : '<strong>\u041d\u0435 \u0443\u0433\u0430\u0434\u0430\u043b\u0438.</strong> ')
-          + renderTextWithPageLinks(t.hint, {
-            className: 'task-page-link card-page-link related-link',
-            rangeTarget: 'trends',
-          })
-          + linkBtn;
-        res.querySelectorAll('.task-card-link').forEach(el => {
+        res.classList.add("visible", isCorrect ? "correct" : "incorrect");
+        const linkHref = t.entity ? (t.entity.type || "") === "lecture" ? buildLecturePageHash(t.entity.index) : buildItemHash(t.entity.type || "all", t.entity.head || "") : "";
+        const linkBtn = t.entity ? ` <a class="task-card-link" data-type="${escapeHtml(t.entity.type || "")}" data-head="${escapeHtml(t.entity.head || "")}" data-lecture-idx="${escapeHtml(t.entity.index != null ? String(t.entity.index) : "")}" href="${escapeHtml(linkHref)}">\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0443 \u2192</a>` : "";
+        res.innerHTML = (isCorrect ? "<strong>Верно!</strong> " : "<strong>Не угадали.</strong> ") + renderTextWithPageLinks(t.hint, {
+          className: "task-page-link card-page-link related-link",
+          rangeTarget: "trends"
+        }) + linkBtn;
+        res.querySelectorAll(".task-card-link").forEach((el) => {
           el.onclick = (e) => {
-            if (e && typeof e.preventDefault === 'function') e.preventDefault();
-            if ((el.dataset.type || '') === 'lecture') {
-              openLecturePage(parseInt(el.dataset.lectureIdx || '0', 10) || 0);
+            if (e && typeof e.preventDefault === "function") e.preventDefault();
+            if ((el.dataset.type || "") === "lecture") {
+              openLecturePage(parseInt(el.dataset.lectureIdx || "0", 10) || 0);
               return;
             }
             navigateToItem(el.dataset.type, el.dataset.head);
           };
         });
-        const progress = recordTaskAnswer(t, opt.text, isCorrect);
-        renderProgressPanels(progress);
+        renderProgressPanels(recordTaskAnswer(t, opt.text, isCorrect));
         persistViewState();
       };
       optsDiv.appendChild(btn);
     }
   }
-
   renderProgressPanels();
-  const regenBtn = document.getElementById('tasks-regen');
+  const regenBtn = document.getElementById("tasks-regen");
   if (regenBtn) regenBtn.onclick = () => renderTasksPanel(container, { collapseHistory: true });
-  const resetProgressBtn = document.getElementById('tasks-reset-progress');
-  if (resetProgressBtn) {
-    resetProgressBtn.onclick = () => {
-      clearStoredTasksProgress();
-      renderProgressPanels();
-      announceUiMessage('\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0438 \u0438\u0441\u0442\u043e\u0440\u0438\u044f \u0441\u0431\u0440\u043e\u0448\u0435\u043d\u044b');
-    };
+  const resetProgressBtn = document.getElementById("tasks-reset-progress");
+  if (resetProgressBtn) resetProgressBtn.onclick = () => {
+    clearStoredTasksProgress();
+    renderProgressPanels();
+    announceUiMessage("Статистика и история сброшены");
+  };
+}
+function formatVideoDate(s) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || ""));
+  return m ? `${m[3]}.${m[2]}.${m[1]}` : String(s || "");
+}
+var VG_THUMBS_STORAGE_KEY = "bookindex.vg.thumbs";
+function getVgThumbsPref() {
+  if (typeof localStorage === "undefined") return false;
+  try {
+    return localStorage.getItem(VG_THUMBS_STORAGE_KEY) === "1";
+  } catch (e) {
+    return false;
   }
 }
-
+function setVgThumbsPref(on) {
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.setItem(VG_THUMBS_STORAGE_KEY, on ? "1" : "0");
+  } catch (e) {}
+}
+function renderVideoGalleryPanel(container) {
+  const detailId = getCurrentVideoId();
+  if (detailId) {
+    renderVideoDetailPanel(container, detailId);
+    return;
+  }
+  const chapters = Array.isArray(APP_DATA.chapters) ? APP_DATA.chapters : [];
+  const catalog = getDedupedVideoCatalog();
+  container.innerHTML = `<div class="panel active video-gallery"><div class="video-gallery-inner">
+    <h2 class="video-gallery-title">Видеогалерея</h2>
+    <div class="video-gallery-intro">${catalog.length} публичных лекций и выступлений А. А. Зализняка. Ссылка ведёт на YouTube; дата известна не для всех записей, таймкоды на карточках пока не добавлены.</div>
+    <div class="video-gallery-controls">
+      <input id="vg-search" class="vg-input vg-search" type="search" placeholder="поиск по названию или упомянутой сущности" aria-label="Поиск по названию или упомянутой сущности" autocomplete="off">
+      <select id="vg-chapter" class="vg-input" aria-label="Глава книги"><option value="-1">все главы книги</option>${chapters.map((c, i) => `<option value="${i}">${escapeHtml(c.name)}</option>`).join("")}</select>
+      <select id="vg-sort" class="vg-input" aria-label="Сортировка">
+        <option value="title">по названию</option>
+        <option value="date-desc">сначала новые</option>
+        <option value="date-asc">сначала старые</option>
+        <option value="dur-desc">сначала длинные</option>
+        <option value="dur-asc">сначала короткие</option>
+      </select>
+      <label class="vg-thumbs-toggle" for="vg-thumbs-toggle"><input type="checkbox" id="vg-thumbs-toggle" class="vg-thumbs-input"> Превью</label>
+    </div>
+    <div id="vg-meta" class="video-gallery-meta" role="status" aria-live="polite"></div>
+    <div id="vg-list" class="video-gallery-list vg-list-dense"></div>
+  </div></div>`;
+  const searchEl = container.querySelector("#vg-search");
+  const chapterEl = container.querySelector("#vg-chapter");
+  const sortEl = container.querySelector("#vg-sort");
+  const metaEl = container.querySelector("#vg-meta");
+  const listEl = container.querySelector("#vg-list");
+  const thumbsEl = container.querySelector("#vg-thumbs-toggle");
+  thumbsEl.checked = getVgThumbsPref();
+  const render = () => {
+    const q = clampUiInput(searchEl.value || "", MAX_LIST_QUERY_LENGTH).trim().toLowerCase();
+    const chapterIdx = parseInt(chapterEl.value, 10);
+    const sort = sortEl.value;
+    let vids = catalog.slice();
+    if (Number.isFinite(chapterIdx) && chapterIdx >= 0) {
+      const ids = new Set(getChapterRelatedVideos(chapterIdx, 9999).map((e) => e.v.id));
+      vids = vids.filter((v) => ids.has(v.id));
+    }
+    if (q) vids = vids.filter((v) => String(v.title || "").toLowerCase().includes(q)
+      || (v.related_entities || []).some((r) => String(r && r.head || "").toLowerCase().includes(q)));
+    vids.sort((a, b) => {
+      if (sort === "dur-desc") return (Number(b.duration) || 0) - (Number(a.duration) || 0);
+      if (sort === "dur-asc") return (Number(a.duration) || 0) - (Number(b.duration) || 0);
+      if (sort === "date-asc") return String(a.date || "").localeCompare(String(b.date || ""));
+      if (sort === "date-desc") return String(b.date || "").localeCompare(String(a.date || ""));
+      return String(a.title || "").localeCompare(String(b.title || ""), "ru");
+    });
+    metaEl.textContent = `Показано ${vids.length} из ${catalog.length} видео.`;
+    listEl.className = `video-gallery-list ${thumbsEl.checked ? "vg-list-thumbs" : "vg-list-dense"}`;
+    listEl.textContent = "";
+    if (!vids.length) {
+      const empty = document.createElement("div");
+      empty.className = "vg-empty";
+      empty.textContent = "Ничего не найдено по заданным фильтрам.";
+      const reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "vg-empty-reset";
+      reset.textContent = "Сбросить фильтры";
+      reset.onclick = () => {
+        searchEl.value = "";
+        chapterEl.value = "-1";
+        sortEl.value = "title";
+        render();
+        searchEl.focus();
+      };
+      empty.appendChild(document.createElement("br"));
+      empty.appendChild(reset);
+      listEl.appendChild(empty);
+    }
+    for (const v of vids) {
+      const card = document.createElement("div");
+      card.className = "vg-card";
+      const vidId = sanitizeVideoId(v.id) || String(v.id || "");
+      if (thumbsEl.checked && vidId) {
+        const thumb = document.createElement("img");
+        thumb.className = "vg-card-thumb";
+        thumb.loading = "lazy";
+        thumb.alt = "";
+        thumb.src = `https://img.youtube.com/vi/${vidId}/mqdefault.jpg`;
+        card.appendChild(thumb);
+      }
+      const link = document.createElement("a");
+      link.className = "vg-card-title";
+      link.href = buildVideoDetailHash(vidId);
+      link.dataset.videoId = vidId;
+      link.textContent = String(v.title || "");
+      card.appendChild(link);
+      const meta = document.createElement("div");
+      meta.className = "vg-card-meta";
+      const dur = formatVideoDuration(v.duration);
+      const dateLabel = formatVideoDate(v.date) || "дата неизвестна";
+      meta.textContent = [dateLabel, dur ? `⏱ ${dur}` : ""].filter(Boolean).join(" · ");
+      card.appendChild(meta);
+      if (v.url) {
+        const yt = document.createElement("a");
+        yt.className = "vg-card-yt";
+        yt.href = String(v.url || "");
+        yt.target = "_blank";
+        yt.rel = "noopener noreferrer";
+        yt.textContent = "YouTube";
+        card.appendChild(yt);
+      }
+      const rels = (v.related_entities || []).slice(0, 6);
+      if (rels.length) {
+        const chips = document.createElement("div");
+        chips.className = "vg-card-chips";
+        for (const r of rels) {
+          if (!r || !r.head) continue;
+          const t = r.type === "subject_index" ? "subject" : r.type;
+          const chip = document.createElement("a");
+          chip.className = "vg-chip";
+          chip.dataset.type = String(t || "");
+          chip.dataset.head = String(r.head || "");
+          chip.href = buildItemHash(t || "all", r.head);
+          chip.textContent = r.head;
+          chips.appendChild(chip);
+        }
+        card.appendChild(chips);
+      }
+      listEl.appendChild(card);
+    }
+    listEl.querySelectorAll(".vg-card-title").forEach((link) => {
+      bindActionWithKeyboard(link, () => openVideoDetail(link.dataset.videoId || ""));
+    });
+    listEl.querySelectorAll(".vg-chip").forEach((chip) => {
+      bindActionWithKeyboard(chip, () => navigateToItem(chip.dataset.type || "all", chip.dataset.head || ""));
+    });
+  };
+  searchEl.oninput = render;
+  chapterEl.onchange = render;
+  sortEl.onchange = render;
+  thumbsEl.onchange = () => {
+    setVgThumbsPref(thumbsEl.checked);
+    render();
+  };
+  render();
+}
 function renderLecturesPanel(container) {
   const lectures = APP_DATA.lectures || [];
   const stats = APP_DATA.book_stats || {};
   const maxPage = Number(stats.total_pages) || getTotalBookPages();
-  let html = '<div class="panel active lectures-panel"><div class="lectures-inner">';
-  html += '<h2 class="lectures-title">Все лекции книги — за пять минут</h2>';
-  html += '<div class="lectures-intro">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>';
+  let html = "<div class=\"panel active lectures-panel\"><div class=\"lectures-inner\">";
+  html += "<h2 class=\"lectures-title\">Все лекции книги — за пять минут</h2>";
+  html += "<div class=\"lectures-intro\">Краткие резюме: 10 лекций + предисловие. Нажмите карточку, чтобы открыть отдельную мини-страницу.</div>";
   html += `<div class="reading-now-box">
     <div class="reading-now-title">Режим «Читаю сейчас»</div>
     <div class="reading-now-desc">Введите номер страницы, и мы покажем, кто и что на ней упоминается.</div>
@@ -9188,14 +8983,14 @@ function renderLecturesPanel(container) {
       <button id="reading-page-go" class="reading-now-btn">Показать</button>
       <button id="reading-page-trends" class="reading-now-btn">Динамика страницы</button>
     </div>
+    <div id="reading-chapter-ribbon" class="reading-chapter-ribbon" role="navigation" aria-label="Главы книги — плотность упоминаний"></div>
     <div id="reading-now-results" class="reading-now-results"></div>
   </div>`;
-  html += '<div id="lectures-grid" class="lectures-grid">';
+  html += "<div id=\"lectures-grid\" class=\"lectures-grid\">";
   for (let i = 0; i < lectures.length; i++) {
     const l = lectures[i];
-    const title = i === 0 ? 'Предисловие' : `Лекция ${i}`;
-    const cardClass = i === 0 ? 'lecture-card preface' : 'lecture-card';
-    html += `<div class="${cardClass}" data-idx="${i}">
+    const title = i === 0 ? "Предисловие" : `Лекция ${i}`;
+    html += `<div class="${i === 0 ? "lecture-card preface" : "lecture-card"}" data-idx="${i}">
       <div class="lecture-card-meta">${title} · стр. ${escapeHtml(l.pages)}</div>
       <div class="lecture-card-title">${escapeHtml(l.name)}</div>
       <div class="lecture-card-idea">${escapeHtml(l.main_idea)}</div>
@@ -9210,70 +9005,80 @@ function renderLecturesPanel(container) {
       <div class="lecture-card-why">${escapeHtml(l.why_read)}</div>
     </div>`;
   }
-  html += '</div></div></div>';
+  html += "</div></div></div>";
   container.innerHTML = html;
   wireReadingNowWidget(container, maxPage);
-  container.querySelectorAll('.lecture-card').forEach(card => {
+  container.querySelectorAll(".lecture-card").forEach((card) => {
     card.onclick = () => {
-      openLecturePage(parseInt(card.dataset.idx || '0', 10) || 0);
+      openLecturePage(parseInt(card.dataset.idx || "0", 10) || 0);
     };
   });
-  container.querySelectorAll('.lecture-term-chip').forEach(chip => {
+  container.querySelectorAll(".lecture-term-chip").forEach((chip) => {
     chip.onclick = (e) => {
       if (e) {
         e.stopPropagation();
-        if (typeof e.preventDefault === 'function') e.preventDefault();
+        if (typeof e.preventDefault === "function") e.preventDefault();
       }
-      openLectureTerm(chip.dataset.term || chip.textContent || '');
+      openLectureTerm(chip.dataset.term || chip.textContent || "");
     };
   });
-  wireCitationWidget(container, 'lecture', currentLecture);
+  wireCitationWidget(container, "lecture", currentLecture);
 }
-
 function renderLectureComparePanel(container) {
   const chapters = APP_DATA.chapters || [];
   if (chapters.length < 2) {
-    container.innerHTML = '<div class="panel active"><div class="panel-empty-state">Недостаточно лекций для сравнения.</div></div>';
+    container.innerHTML = "<div class=\"panel active\"><div class=\"panel-empty-state\">Недостаточно лекций для сравнения.</div></div>";
     return;
   }
-
   const clampIdx = (idx) => Math.max(0, Math.min(chapters.length - 1, Number.isInteger(idx) ? idx : 0));
   lectureCompareA = clampIdx(lectureCompareA);
   lectureCompareB = clampIdx(lectureCompareB);
   if (lectureCompareA === lectureCompareB) lectureCompareB = (lectureCompareA + 1) % chapters.length;
-
   const chapterA = chapters[lectureCompareA];
   const chapterB = chapters[lectureCompareB];
   const types = [
-    { key: 'names', label: 'Имена' },
-    { key: 'toponyms', label: 'Топонимы' },
-    { key: 'ethnonyms', label: 'Этнонимы' },
-    { key: 'languages', label: 'Языки' },
-    { key: 'lexicon', label: 'Лексика' },
-    { key: 'subject', label: 'Предметный' },
-  ];
-
-  const headsFor = (type, chapter) => {
-    const set = new Set();
-    for (const it of getItemsForChapter(type, chapter)) {
-      if (it && it.head) set.add(it.head);
+    {
+      key: "names",
+      label: "Имена"
+    },
+    {
+      key: "toponyms",
+      label: "Топонимы"
+    },
+    {
+      key: "ethnonyms",
+      label: "Этнонимы"
+    },
+    {
+      key: "languages",
+      label: "Языки"
+    },
+    {
+      key: "lexicon",
+      label: "Лексика"
+    },
+    {
+      key: "subject",
+      label: "Предметный"
     }
+  ];
+  const headsFor = (type, chapter) => {
+    const set = /* @__PURE__ */ new Set();
+    for (const it of getItemsForChapter(type, chapter)) if (it && it.head) set.add(it.head);
     return set;
   };
   const asSorted = (arr) => arr.sort(compareHeadsRu);
   const renderHeadLinks = (type, heads, max = 10) => {
-    if (!heads.length) return '<span class="lecture-compare-empty">—</span>';
-    let out = '';
-    for (const head of heads.slice(0, max)) {
-      out += `<a class="lecture-compare-link" data-type="${escapeHtml(type)}" data-head="${escapeHtml(head)}" href="${escapeHtml(buildItemHash(type, head))}">${escapeHtml(head)}</a>`;
-    }
+    if (!heads.length) return "<span class=\"lecture-compare-empty\">—</span>";
+    let out = "";
+    for (const head of heads.slice(0, max)) out += `<a class="lecture-compare-link" data-type="${escapeHtml(type)}" data-head="${escapeHtml(head)}" href="${escapeHtml(buildItemHash(type, head))}">${escapeHtml(head)}</a>`;
     if (heads.length > max) out += `<span class="lecture-compare-more">+${heads.length - max}</span>`;
     return out;
   };
-  const chapterLabel = (idx, ch) => (idx === 0 ? 'Предисловие' : `Лекция ${idx}`) + ` · ${ch.name}`;
-  const chapterSetCache = new Map();
+  const chapterLabel = (idx, ch) => (idx === 0 ? "Предисловие" : `Лекция ${idx}`) + ` · ${ch.name}`;
+  const chapterSetCache = /* @__PURE__ */ new Map();
   const getChapterHeadsCached = (type, chapter) => {
-    const key = `${type}|${chapter.start}|${chapter.end}|${chapter.name || ''}`;
+    const key = `${type}|${chapter.start}|${chapter.end}|${chapter.name || ""}`;
     const cached = chapterSetCache.get(key);
     if (cached) return cached;
     const set = headsFor(type, chapter);
@@ -9282,93 +9087,84 @@ function renderLectureComparePanel(container) {
   };
   const buildRecommendedLecturePairs = (limit = 8) => {
     const rows = [];
-    for (let a = 0; a < chapters.length; a++) {
-      for (let b = a + 1; b < chapters.length; b++) {
-        const chA = chapters[a];
-        const chB = chapters[b];
-        let sharedTotal = 0;
-        let uniqueTotal = 0;
-        let sizeA = 0;
-        let sizeB = 0;
-        const sharedByType = [];
-        for (const t of types) {
-          const setA = getChapterHeadsCached(t.key, chA);
-          const setB = getChapterHeadsCached(t.key, chB);
-          let shared = 0;
-          for (const head of setA) if (setB.has(head)) shared += 1;
-          const onlyA = Math.max(0, setA.size - shared);
-          const onlyB = Math.max(0, setB.size - shared);
-          sharedTotal += shared;
-          uniqueTotal += onlyA + onlyB;
-          sizeA += setA.size;
-          sizeB += setB.size;
-          sharedByType.push({ label: t.label, shared });
-        }
-        if (sharedTotal < 2) continue;
-        const balance = 1 - (Math.abs(sizeA - sizeB) / Math.max(1, sizeA + sizeB));
-        const score = sharedTotal * 2 + Math.min(60, uniqueTotal) * 0.08 + balance;
-        const topSignals = sharedByType
-          .filter(x => x.shared > 0)
-          .sort((x, y) => y.shared - x.shared)
-          .slice(0, 2)
-          .map(x => `${x.label}: ${x.shared}`)
-          .join(' · ');
-        rows.push({
-          a,
-          b,
-          score,
-          sharedTotal,
-          reason: topSignals || 'общие сущности',
+    for (let a = 0; a < chapters.length; a++) for (let b = a + 1; b < chapters.length; b++) {
+      const chA = chapters[a];
+      const chB = chapters[b];
+      let sharedTotal = 0;
+      let uniqueTotal = 0;
+      let sizeA = 0;
+      let sizeB = 0;
+      const sharedByType = [];
+      for (const t of types) {
+        const setA = getChapterHeadsCached(t.key, chA);
+        const setB = getChapterHeadsCached(t.key, chB);
+        let shared = 0;
+        for (const head of setA) if (setB.has(head)) shared += 1;
+        const onlyA = Math.max(0, setA.size - shared);
+        const onlyB = Math.max(0, setB.size - shared);
+        sharedTotal += shared;
+        uniqueTotal += onlyA + onlyB;
+        sizeA += setA.size;
+        sizeB += setB.size;
+        sharedByType.push({
+          label: t.label,
+          shared
         });
       }
+      if (sharedTotal < 2) continue;
+      const balance = 1 - Math.abs(sizeA - sizeB) / Math.max(1, sizeA + sizeB);
+      const score = sharedTotal * 2 + Math.min(60, uniqueTotal) * .08 + balance;
+      const topSignals = sharedByType.filter((x) => x.shared > 0).sort((x, y) => y.shared - x.shared).slice(0, 2).map((x) => `${x.label}: ${x.shared}`).join(" · ");
+      rows.push({
+        a,
+        b,
+        score,
+        sharedTotal,
+        reason: topSignals || "общие сущности"
+      });
     }
     rows.sort((x, y) => y.score - x.score || y.sharedTotal - x.sharedTotal || x.a - y.a || x.b - y.b);
     return rows.slice(0, limit);
   };
   const recommendedPairs = buildRecommendedLecturePairs(10);
-
-  let html = '<div class="panel active lecture-compare-panel"><div class="lecture-compare-inner">';
-  html += '<h2 class="lecture-compare-title">Сравнение двух лекций</h2>';
-  html += '<div class="lecture-compare-intro">Показываем пересечения и уникальные сущности по типам. Нажмите на элемент, чтобы открыть карточку.</div>';
+  let html = "<div class=\"panel active lecture-compare-panel\"><div class=\"lecture-compare-inner\">";
+  html += "<h2 class=\"lecture-compare-title\">Сравнение двух лекций</h2>";
+  html += "<div class=\"lecture-compare-intro\">Показываем пересечения и уникальные сущности по типам. Нажмите на элемент, чтобы открыть карточку.</div>";
   html += `<div class="lecture-compare-controls">
     <label class="lecture-compare-field">
       <div class="lecture-compare-label">Лекция A</div>
       <select id="lecture-compare-a" class="lecture-compare-select">
-        ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareA ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
+        ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareA ? "selected" : ""}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join("")}
       </select>
     </label>
     <label class="lecture-compare-field">
       <div class="lecture-compare-label">Лекция B</div>
       <select id="lecture-compare-b" class="lecture-compare-select">
-        ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareB ? 'selected' : ''}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join('')}
+        ${chapters.map((ch, idx) => `<option value="${idx}" ${idx === lectureCompareB ? "selected" : ""}>${escapeHtml(chapterLabel(idx, ch))} (стр. ${ch.start}-${ch.end})</option>`).join("")}
       </select>
     </label>
   </div>`;
   if (recommendedPairs.length) {
-    html += '<div class="lecture-compare-suggestions">';
-    html += '<div class="lecture-compare-suggestions-title">Осмысленные пары для сравнения</div>';
-    html += '<div class="lecture-compare-pair-list">';
+    html += "<div class=\"lecture-compare-suggestions\">";
+    html += "<div class=\"lecture-compare-suggestions-title\">Осмысленные пары для сравнения</div>";
+    html += "<div class=\"lecture-compare-pair-list\">";
     for (const rec of recommendedPairs) {
-      const selected =
-        (rec.a === lectureCompareA && rec.b === lectureCompareB) ||
-        (rec.a === lectureCompareB && rec.b === lectureCompareA);
-      html += `<button type="button" class="lecture-compare-pair ${selected ? 'active' : ''}" data-a="${rec.a}" data-b="${rec.b}">
+      const selected = rec.a === lectureCompareA && rec.b === lectureCompareB || rec.a === lectureCompareB && rec.b === lectureCompareA;
+      html += `<button type="button" class="lecture-compare-pair ${selected ? "active" : ""}" data-a="${rec.a}" data-b="${rec.b}">
         ${escapeHtml(chapterLabel(rec.a, chapters[rec.a]))} ↔ ${escapeHtml(chapterLabel(rec.b, chapters[rec.b]))}
         <span>(${escapeHtml(rec.reason)})</span>
       </button>`;
     }
-    html += '</div></div>';
+    html += "</div></div>";
   }
-
   html += `<div class="lecture-compare-current"><strong>A:</strong> ${escapeHtml(chapterA.name)} <span>(стр. ${chapterA.start}-${chapterA.end})</span><br><strong>B:</strong> ${escapeHtml(chapterB.name)} <span>(стр. ${chapterB.start}-${chapterB.end})</span></div>`;
-  html += '<div class="lecture-compare-grid">';
-
+  html += "<div class=\"lecture-compare-grid\">";
   for (const t of types) {
     const setA = headsFor(t.key, chapterA);
     const setB = headsFor(t.key, chapterB);
-    const inter = asSorted([...setA].filter(h => setB.has(h)));
-    const onlyA = asSorted([...setA].filter(h => !setB.has(h)));
-    const onlyB = asSorted([...setB].filter(h => !setA.has(h)));
+    const inter = asSorted([...setA].filter((h) => setB.has(h)));
+    const onlyA = asSorted([...setA].filter((h) => !setB.has(h)));
+    const onlyB = asSorted([...setB].filter((h) => !setA.has(h)));
     html += `<div class="lecture-compare-card">
       <div class="lecture-compare-card-title">${t.label}</div>
       <div class="lecture-compare-card-meta">Общие: <strong>${inter.length}</strong> · Только A: <strong>${onlyA.length}</strong> · Только B: <strong>${onlyB.length}</strong></div>
@@ -9380,71 +9176,80 @@ function renderLectureComparePanel(container) {
       <div>${renderHeadLinks(t.key, onlyB, 8)}</div>
     </div>`;
   }
-
-  html += '</div></div></div>';
+  html += "</div></div></div>";
   container.innerHTML = html;
-
-  const selA = document.getElementById('lecture-compare-a');
-  const selB = document.getElementById('lecture-compare-b');
-  if (selA) {
-    selA.onchange = () => {
-      lectureCompareA = clampIdx(parseInt(selA.value, 10));
-      if (lectureCompareA === lectureCompareB) lectureCompareB = (lectureCompareA + 1) % chapters.length;
-      renderLectureComparePanel(container);
-      persistViewState();
-    };
-  }
-  if (selB) {
-    selB.onchange = () => {
-      lectureCompareB = clampIdx(parseInt(selB.value, 10));
-      if (lectureCompareA === lectureCompareB) lectureCompareA = (lectureCompareB + 1) % chapters.length;
-      renderLectureComparePanel(container);
-      persistViewState();
-    };
-  }
-  container.querySelectorAll('.lecture-compare-pair[data-a][data-b]').forEach(btn => {
+  const selA = document.getElementById("lecture-compare-a");
+  const selB = document.getElementById("lecture-compare-b");
+  if (selA) selA.onchange = () => {
+    lectureCompareA = clampIdx(parseInt(selA.value, 10));
+    if (lectureCompareA === lectureCompareB) lectureCompareB = (lectureCompareA + 1) % chapters.length;
+    renderLectureComparePanel(container);
+    persistViewState();
+  };
+  if (selB) selB.onchange = () => {
+    lectureCompareB = clampIdx(parseInt(selB.value, 10));
+    if (lectureCompareA === lectureCompareB) lectureCompareA = (lectureCompareB + 1) % chapters.length;
+    renderLectureComparePanel(container);
+    persistViewState();
+  };
+  container.querySelectorAll(".lecture-compare-pair[data-a][data-b]").forEach((btn) => {
     btn.onclick = () => {
-      lectureCompareA = clampIdx(parseInt(btn.dataset.a || '0', 10));
-      lectureCompareB = clampIdx(parseInt(btn.dataset.b || '1', 10));
+      lectureCompareA = clampIdx(parseInt(btn.dataset.a || "0", 10));
+      lectureCompareB = clampIdx(parseInt(btn.dataset.b || "1", 10));
       if (lectureCompareA === lectureCompareB) lectureCompareB = (lectureCompareA + 1) % chapters.length;
       renderLectureComparePanel(container);
       persistViewState();
     };
   });
-  bindNavigateLinks(container, '.lecture-compare-link[data-head]', 'all');
+  bindNavigateLinks(container, ".lecture-compare-link[data-head]", "all");
 }
-
 function renderLecturePagePanel(container) {
   const lectures = APP_DATA.lectures || [];
   if (!lectures.length) {
-    container.innerHTML = '<div class="panel active"><div class="panel-empty-state">Нет данных о лекциях.</div></div>';
+    container.innerHTML = "<div class=\"panel active\"><div class=\"panel-empty-state\">Нет данных о лекциях.</div></div>";
     return;
   }
   if (currentLecture < 0) currentLecture = 0;
   if (currentLecture >= lectures.length) currentLecture = lectures.length - 1;
   const l = lectures[currentLecture];
-  const title = currentLecture === 0 ? 'Предисловие' : `Лекция ${currentLecture}`;
-
-  let html = '<div class="panel active lecture-page"><div class="lecture-page-inner">';
+  const title = currentLecture === 0 ? "Предисловие" : `Лекция ${currentLecture}`;
+  let html = "<div class=\"panel active lecture-page\"><div class=\"lecture-page-inner\">";
   html += `<div class="lecture-page-nav">
     <button id="lecture-prev" class="lecture-page-nav-btn">← Предыдущая</button>
     <button id="lecture-all" class="lecture-page-nav-btn">Ко всем лекциям</button>
     <button id="lecture-next" class="lecture-page-nav-btn">Следующая →</button>
   </div>`;
   html += `<div class="lecture-page-card">
-    <div class="lecture-page-meta">${title} · стр. ${escapeHtml(l.pages || '')}</div>
-    <h2 class="lecture-page-title">${escapeHtml(l.name || '')}</h2>
-    <div class="lecture-page-idea">${escapeHtml(l.main_idea || '')}</div>
+    <div class="lecture-page-meta">${title} · стр. ${escapeHtml(l.pages || "")}</div>
+    <h2 class="lecture-page-title">${escapeHtml(l.name || "")}</h2>
+    <div class="lecture-page-idea">${escapeHtml(l.main_idea || "")}</div>
     <h3 class="lecture-page-section">Ключевые факты</h3>
     <ul class="lecture-page-facts">`;
-  for (const fact of (l.key_facts || [])) html += `<li>${escapeHtml(fact)}</li>`;
+  for (const fact of l.key_facts || []) html += `<li>${escapeHtml(fact)}</li>`;
   html += `</ul>
     <h3 class="lecture-page-section">Термины</h3>
     <div class="lecture-page-terms">`;
-  for (const t of (l.terms || [])) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}">${escapeHtml(t)}</a>`;
+  for (const t of l.terms || []) html += `<a class="lecture-term-chip" data-term="${escapeHtml(t.toLowerCase())}" href="${escapeHtml(buildLectureTermHash(t))}">${escapeHtml(t)}</a>`;
   html += `</div>
-    <div class="lecture-page-why">${escapeHtml(l.why_read || '')}</div>
-    ${buildCitationWidgetHtml('lecture', currentLecture)}
+    <div class="lecture-page-why">${escapeHtml(l.why_read || "")}</div>`;
+  const chapterVideos = getChapterRelatedVideos(currentLecture, 6);
+  if (chapterVideos.length) {
+    html += `<h3 class="lecture-page-section">Видео по теме главы <span class="lecture-page-video-count">${chapterVideos.length}</span></h3>
+    <div class="lecture-page-video-note">Похожие публичные лекции А. А. Зализняка на YouTube — по тем же темам, что и эта глава (не записи самой лекции из книги).</div>
+    <div class="lecture-page-videos">`;
+    for (const entry of chapterVideos) {
+      const v = entry.v;
+      const dur = formatVideoDuration(v.duration);
+      const durHtml = dur ? `<span class="lecture-page-video-dur">${escapeHtml(dur)}</span>` : "";
+      html += `<a class="lecture-page-video" href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(v.title || "")}">
+        <span class="lecture-page-video-title">${escapeHtml(v.title || "")}</span>
+        ${durHtml}
+      </a>`;
+    }
+    html += `</div>`;
+  }
+  html += `
+    ${buildCitationWidgetHtml("lecture", currentLecture)}
   </div>`;
   if (currentLecture === 0 && Array.isArray(APP_DATA.further_reading) && APP_DATA.further_reading.length) {
     html += `<div class="lecture-page-further">
@@ -9454,174 +9259,187 @@ function renderLecturePagePanel(container) {
       </div>`;
     for (const sec of APP_DATA.further_reading) {
       html += `<div class="lecture-page-further-section">
-        <div class="lecture-page-further-topic">${escapeHtml(sec.topic || '')}</div>`;
-      for (const b of (sec.books || [])) {
-        html += `<div class="lecture-page-further-book">• <strong>${escapeHtml(b.title || '')}</strong>: ${escapeHtml(b.why || '')}</div>`;
-      }
-      html += '</div>';
+        <div class="lecture-page-further-topic">${escapeHtml(sec.topic || "")}</div>`;
+      for (const b of sec.books || []) html += `<div class="lecture-page-further-book">• <strong>${escapeHtml(b.title || "")}</strong>: ${escapeHtml(b.why || "")}</div>`;
+      html += "</div>";
     }
     html += `</div>`;
   }
   html += `</div></div></div>`;
   container.innerHTML = html;
-
-  const prev = document.getElementById('lecture-prev');
-  const next = document.getElementById('lecture-next');
-  const all = document.getElementById('lecture-all');
+  const prev = document.getElementById("lecture-prev");
+  const next = document.getElementById("lecture-next");
+  const all = document.getElementById("lecture-all");
   prev.disabled = currentLecture <= 0;
   next.disabled = currentLecture >= lectures.length - 1;
-  prev.style.opacity = prev.disabled ? '0.5' : '1';
-  next.style.opacity = next.disabled ? '0.5' : '1';
+  prev.style.opacity = prev.disabled ? "0.5" : "1";
+  next.style.opacity = next.disabled ? "0.5" : "1";
   prev.onclick = () => {
-    if (currentLecture > 0) {
-      openLecturePage(currentLecture - 1);
-    }
+    if (currentLecture > 0) openLecturePage(currentLecture - 1);
   };
   next.onclick = () => {
-    if (currentLecture < lectures.length - 1) {
-      openLecturePage(currentLecture + 1);
-    }
+    if (currentLecture < lectures.length - 1) openLecturePage(currentLecture + 1);
   };
-  all.onclick = () => switchTab('lectures');
-  const openFurther = document.getElementById('go-further-reading');
-  if (openFurther) openFurther.onclick = () => switchTab('further_reading');
-  container.querySelectorAll('.lecture-term-chip').forEach(chip => {
+  all.onclick = () => switchTab("lectures");
+  const openFurther = document.getElementById("go-further-reading");
+  if (openFurther) openFurther.onclick = () => switchTab("further_reading");
+  container.querySelectorAll(".lecture-term-chip").forEach((chip) => {
     chip.onclick = (e) => {
       if (e) {
         e.stopPropagation();
-        if (typeof e.preventDefault === 'function') e.preventDefault();
+        if (typeof e.preventDefault === "function") e.preventDefault();
       }
-      openLectureTerm(chip.dataset.term || chip.textContent || '');
+      openLectureTerm(chip.dataset.term || chip.textContent || "");
     };
   });
 }
-
 function renderFurtherReadingPanel(container) {
   const sections = APP_DATA.further_reading || [];
-  let html = '<div class="panel active further-reading-panel"><div class="further-reading-inner">';
-  html += '<div class="further-reading-head">';
-  html += '<h2 class="further-reading-title">Что почитать ещё</h2>';
-  html += '<button id="export-further-bib" class="further-reading-export-btn">Экспорт BibTeX (.bib)</button>';
-  html += '</div>';
-  html += '<div class="further-reading-intro">Небольшой школьный навигатор по научно-популярным и базовым лингвистическим книгам.</div>';
-  html += '<div class="further-reading-grid">';
+  let html = "<div class=\"panel active further-reading-panel\"><div class=\"further-reading-inner\">";
+  html += "<div class=\"further-reading-head\">";
+  html += "<h2 class=\"further-reading-title\">Что почитать ещё</h2>";
+  html += "<button id=\"export-further-bib\" class=\"further-reading-export-btn\">Экспорт BibTeX (.bib)</button>";
+  html += "</div>";
+  html += "<div class=\"further-reading-intro\">Небольшой школьный навигатор по научно-популярным и базовым лингвистическим книгам.</div>";
+  html += "<div class=\"further-reading-grid\">";
   for (const sec of sections) {
     html += `<div class="further-reading-card">
-      <div class="further-reading-topic">${escapeHtml(sec.topic || '')}</div>`;
-    for (const b of (sec.books || [])) {
-      html += `<div class="further-reading-book">
-        <div class="further-reading-book-title">${escapeHtml(b.title || '')}</div>
-        <div class="further-reading-book-why">${escapeHtml(b.why || '')}</div>
+      <div class="further-reading-topic">${escapeHtml(sec.topic || "")}</div>`;
+    for (const b of sec.books || []) html += `<div class="further-reading-book">
+        <div class="further-reading-book-title">${escapeHtml(b.title || "")}</div>
+        <div class="further-reading-book-why">${escapeHtml(b.why || "")}</div>
       </div>`;
-    }
-    html += '</div>';
+    html += "</div>";
   }
-  html += '</div></div></div>';
+  html += "</div></div></div>";
   container.innerHTML = html;
-  const exportFurtherBibBtn = container.querySelector('#export-further-bib');
-  if (exportFurtherBibBtn) {
-    exportFurtherBibBtn.onclick = () => {
-      const entries = collectFurtherReadingBibEntries();
-      if (!entries.length) return;
-      downloadBibtexFile('further-reading.bib', entries);
-      announceUiMessage('BibTeX exported');
-    };
-  }
+  const exportFurtherBibBtn = container.querySelector("#export-further-bib");
+  if (exportFurtherBibBtn) exportFurtherBibBtn.onclick = () => {
+    const entries = collectFurtherReadingBibEntries();
+    if (!entries.length) return;
+    downloadBibtexFile("further-reading.bib", entries);
+    announceUiMessage("BibTeX exported");
+  };
 }
-
-const GLOSSARY_TOKEN_STOPWORDS = new Set([
-  'это', 'этот', 'эта', 'эти', 'такой', 'также', 'который', 'которые', 'когда',
-  'где', 'что', 'как', 'для', 'или', 'при', 'под', 'над', 'без', 'между',
-  'среди', 'так', 'ещё', 'уже', 'его', 'её', 'их', 'они', 'она', 'оно',
-  'из', 'по', 'на', 'в', 'к', 'о', 'об', 'от', 'до',
+var GLOSSARY_TOKEN_STOPWORDS = new Set([
+  "это",
+  "этот",
+  "эта",
+  "эти",
+  "такой",
+  "также",
+  "который",
+  "которые",
+  "когда",
+  "где",
+  "что",
+  "как",
+  "для",
+  "или",
+  "при",
+  "под",
+  "над",
+  "без",
+  "между",
+  "среди",
+  "так",
+  "ещё",
+  "уже",
+  "его",
+  "её",
+  "их",
+  "они",
+  "она",
+  "оно",
+  "из",
+  "по",
+  "на",
+  "в",
+  "к",
+  "о",
+  "об",
+  "от",
+  "до"
 ]);
-
 function tokenizeNormalizedForGlossary(value, minLen = 3) {
   const norm = normalizeHeadForMatch(value);
   if (!norm) return [];
   const out = [];
   for (const token of norm.split(/\s+/)) {
-    const t = String(token || '').trim();
+    const t = String(token || "").trim();
     if (!t || t.length < minLen) continue;
     if (GLOSSARY_TOKEN_STOPWORDS.has(t)) continue;
     out.push(t);
   }
   return out;
 }
-
-function findRelatedLexiconItems(term, definition = '', limit = 4) {
+function findRelatedLexiconItems(term, definition = "", limit = 4) {
   const needle = normalizeHeadForMatch(term);
   if (!needle) return [];
   const termTokens = tokenizeNormalizedForGlossary(term, 3);
   const defTokens = new Set(tokenizeNormalizedForGlossary(definition, 4));
   const rows = [];
   const sources = [
-    { type: 'lexicon', items: APP_DATA.lexicon || [], typePriority: 0 },
-    { type: 'lexicon_reverse', items: APP_DATA.lexicon_reverse || [], typePriority: 1 },
-    { type: 'lexicon_tech', items: APP_DATA.lexicon_tech || [], typePriority: 2 },
-  ];
-  const kindPriority = { exact: 0, prefix: 1, term_token: 2, definition_token: 3 };
-
-  for (const src of sources) {
-    for (const it of src.items) {
-      const head = String(it.head || '').trim();
-      const headNorm = normalizeHeadForMatch(head);
-      if (!headNorm) continue;
-      const headTokens = tokenizeNormalizedForGlossary(head, 3);
-
-      let score = 99;
-      let matchKind = '';
-      let signal = '';
-      const assign = (nextScore, kind, nextSignal) => {
-        if (nextScore < score) {
-          score = nextScore;
-          matchKind = kind;
-          signal = nextSignal || '';
-        }
-      };
-
-      if (headNorm === needle) {
-        assign(0, 'exact', head);
-      } else if (headNorm.startsWith(needle) || needle.startsWith(headNorm)) {
-        assign(1, 'prefix', head);
-      } else {
-        const tokenHit = termTokens.find(t => headNorm.includes(t));
-        if (tokenHit) assign(2, 'term_token', tokenHit);
-        const defHit = headTokens.find(t => defTokens.has(t));
-        if (defHit) assign(3, 'definition_token', defHit);
-      }
-
-      if (score < 99) {
-        rows.push({
-          type: src.type,
-          typePriority: src.typePriority,
-          head,
-          headNorm,
-          score,
-          matchKind,
-          signal,
-          weight: (it.page_list || []).length,
-          hint: (
-            matchKind === 'exact' ? 'точное совпадение' :
-            matchKind === 'prefix' ? 'совпадение по началу термина' :
-            matchKind === 'term_token' ? `совпадение по токену: ${signal}` :
-            `совпадение по определению: ${signal}`
-          ),
-        });
-      }
+    {
+      type: "lexicon",
+      items: APP_DATA.lexicon || [],
+      typePriority: 0
+    },
+    {
+      type: "lexicon_reverse",
+      items: APP_DATA.lexicon_reverse || [],
+      typePriority: 1
+    },
+    {
+      type: "lexicon_tech",
+      items: APP_DATA.lexicon_tech || [],
+      typePriority: 2
     }
+  ];
+  const kindPriority = {
+    exact: 0,
+    prefix: 1,
+    term_token: 2,
+    definition_token: 3
+  };
+  for (const src of sources) for (const it of src.items) {
+    const head = String(it.head || "").trim();
+    const headNorm = normalizeHeadForMatch(head);
+    if (!headNorm) continue;
+    const headTokens = tokenizeNormalizedForGlossary(head, 3);
+    let score = 99;
+    let matchKind = "";
+    let signal = "";
+    const assign = (nextScore, kind, nextSignal) => {
+      if (nextScore < score) {
+        score = nextScore;
+        matchKind = kind;
+        signal = nextSignal || "";
+      }
+    };
+    if (headNorm === needle) assign(0, "exact", head);
+    else if (headNorm.startsWith(needle) || needle.startsWith(headNorm)) assign(1, "prefix", head);
+    else {
+      const tokenHit = termTokens.find((t) => headNorm.includes(t));
+      if (tokenHit) assign(2, "term_token", tokenHit);
+      const defHit = headTokens.find((t) => defTokens.has(t));
+      if (defHit) assign(3, "definition_token", defHit);
+    }
+    if (score < 99) rows.push({
+      type: src.type,
+      typePriority: src.typePriority,
+      head,
+      headNorm,
+      score,
+      matchKind,
+      signal,
+      weight: (it.page_list || []).length,
+      hint: matchKind === "exact" ? "точное совпадение" : matchKind === "prefix" ? "совпадение по началу термина" : matchKind === "term_token" ? `совпадение по токену: ${signal}` : `совпадение по определению: ${signal}`
+    });
   }
-
-  rows.sort((a, b) =>
-    (a.score - b.score) ||
-    ((kindPriority[a.matchKind] || 9) - (kindPriority[b.matchKind] || 9)) ||
-    (b.weight - a.weight) ||
-    (a.typePriority - b.typePriority) ||
-    compareHeadsRu(a.head, b.head)
-  );
-
+  rows.sort((a, b) => a.score - b.score || (kindPriority[a.matchKind] || 9) - (kindPriority[b.matchKind] || 9) || b.weight - a.weight || a.typePriority - b.typePriority || compareHeadsRu(a.head, b.head));
   const unique = [];
-  const seen = new Set();
+  const seen = /* @__PURE__ */ new Set();
   for (const r of rows) {
     const key = r.headNorm;
     if (!key || seen.has(key)) continue;
@@ -9631,33 +9449,31 @@ function findRelatedLexiconItems(term, definition = '', limit = 4) {
   }
   return unique;
 }
-
-// =========================================================
-// ГЛОССАРИЙ
-// =========================================================
 function findRelatedGlossaryTerms(head, limit = 5) {
   const needle = normalizeHeadForMatch(head);
   if (!needle) return [];
   const glossary = Array.isArray(APP_DATA?.glossary) ? APP_DATA.glossary : [];
-  const needleTokens = needle.split(/\s+/).filter(t => t.length >= 3);
+  const needleTokens = needle.split(/\s+/).filter((t) => t.length >= 3);
   const rows = [];
-
   for (const g of glossary) {
-    const term = String(g.term || '').trim();
+    const term = String(g.term || "").trim();
     if (!term) continue;
     const termNorm = normalizeHeadForMatch(term);
-    const defNorm = normalizeHeadForMatch(g.definition || '');
+    const defNorm = normalizeHeadForMatch(g.definition || "");
     let score = 99;
     if (termNorm === needle) score = 0;
     else if (termNorm && (termNorm.startsWith(needle) || needle.startsWith(termNorm))) score = 1;
-    else if (needleTokens.some(t => termNorm.includes(t))) score = 2;
-    else if (needleTokens.some(t => defNorm.includes(t)) || (defNorm && defNorm.includes(needle))) score = 3;
-    if (score < 99) rows.push({ term, definition: String(g.definition || ''), score });
+    else if (needleTokens.some((t) => termNorm.includes(t))) score = 2;
+    else if (needleTokens.some((t) => defNorm.includes(t)) || defNorm && defNorm.includes(needle)) score = 3;
+    if (score < 99) rows.push({
+      term,
+      definition: String(g.definition || ""),
+      score
+    });
   }
-
-  rows.sort((a, b) => (a.score - b.score) || compareHeadsRu(a.term, b.term));
+  rows.sort((a, b) => a.score - b.score || compareHeadsRu(a.term, b.term));
   const out = [];
-  const seen = new Set();
+  const seen = /* @__PURE__ */ new Set();
   for (const row of rows) {
     const key = normalizeHeadForMatch(row.term);
     if (!key || seen.has(key)) continue;
@@ -9667,46 +9483,46 @@ function findRelatedGlossaryTerms(head, limit = 5) {
   }
   return out;
 }
-
 function findSnippetMatch(snippet, query) {
-  const text = String(snippet || '');
-  const q = String(query || '').trim();
+  const text = String(snippet || "");
+  const q = String(query || "").trim();
   if (!text || !q) return null;
-  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   try {
-    const re = new RegExp(escaped, 'i');
-    const m = re.exec(text);
-    if (m && Number.isInteger(m.index)) {
-      return { index: m.index, len: String(m[0] || '').length || q.length };
-    }
+    const m = new RegExp(escaped, "i").exec(text);
+    if (m && Number.isInteger(m.index)) return {
+      index: m.index,
+      len: String(m[0] || "").length || q.length
+    };
   } catch (e) {}
-  const textFold = text.toLowerCase().replace(/ё/g, 'е');
-  const qFold = q.toLowerCase().replace(/ё/g, 'е');
+  const textFold = text.toLowerCase().replace(/ё/g, "е");
+  const qFold = q.toLowerCase().replace(/ё/g, "е");
   const idx = textFold.indexOf(qFold);
-  if (idx >= 0) return { index: idx, len: qFold.length };
+  if (idx >= 0) return {
+    index: idx,
+    len: qFold.length
+  };
   return null;
 }
-
 function buildKwicContextRow(opts) {
-  const page = parseInt(String(opts.page || ''), 10);
+  const page = parseInt(String(opts.page || ""), 10);
   if (!Number.isFinite(page) || page < 1) return null;
-  const snippet = String(opts.snippet || '').replace(/\s+/g, ' ').trim();
+  const snippet = String(opts.snippet || "").replace(/\s+/g, " ").trim();
   if (!snippet) return null;
-  let hit = findSnippetMatch(snippet, opts.query || '');
+  let hit = findSnippetMatch(snippet, opts.query || "");
   if (!hit) {
-    const hints = Array.isArray(opts.matchHints)
-      ? opts.matchHints
-      : [opts.matchHint];
+    const hints = Array.isArray(opts.matchHints) ? opts.matchHints : [opts.matchHint];
     for (const hint of hints) {
-      hit = findSnippetMatch(snippet, hint || '');
+      hit = findSnippetMatch(snippet, hint || "");
       if (hit) break;
     }
   }
   if (!hit && opts.allowLeadingFallback) {
     const m = /[A-Za-zА-Яа-яЁё0-9-]{2,}/.exec(snippet);
-    if (m && Number.isInteger(m.index)) {
-      hit = { index: m.index, len: String(m[0] || '').length || 2 };
-    }
+    if (m && Number.isInteger(m.index)) hit = {
+      index: m.index,
+      len: String(m[0] || "").length || 2
+    };
   }
   if (!hit) return null;
   const idx = Math.max(0, hit.index);
@@ -9717,46 +9533,46 @@ function buildKwicContextRow(opts) {
   const keyText = snippet.slice(idx, idx + len);
   const rightText = snippet.slice(idx + len, rightEnd);
   return {
-    source: String(opts.source || 'lexicon'),
-    bookId: String(opts.bookId || getActiveBook().book_id || ''),
-    term: String(opts.term || ''),
-    itemType: String(opts.itemType || 'lexicon'),
-    itemHead: String(opts.itemHead || ''),
+    source: String(opts.source || "lexicon"),
+    bookId: String(opts.bookId || getActiveBook().book_id || ""),
+    term: String(opts.term || ""),
+    itemType: String(opts.itemType || "lexicon"),
+    itemHead: String(opts.itemHead || ""),
     page,
-    leftPrefix: leftStart > 0 ? '…' : '',
+    leftPrefix: leftStart > 0 ? "…" : "",
     leftText,
     keyText,
     rightText,
-    rightSuffix: rightEnd < snippet.length ? '…' : '',
+    rightSuffix: rightEnd < snippet.length ? "…" : "",
     sortLeft: normalizeHeadForMatch(leftText.slice(-40)),
-    sortRight: normalizeHeadForMatch(rightText.slice(0, 40)),
+    sortRight: normalizeHeadForMatch(rightText.slice(0, 40))
   };
 }
-
 function iterateKwicContextEntries(contexts, pageStart, pageEnd) {
   return getContextEntries(contexts, pageStart, pageEnd);
 }
-
 function collectLexiconContextBundles(pageStart, pageEnd) {
   const out = [];
   const items = Array.isArray(APP_DATA?.lexicon) ? APP_DATA.lexicon : [];
   for (const it of items) {
-    const itemHead = String(it?.head || '').trim();
+    const itemHead = String(it?.head || "").trim();
     if (!itemHead) continue;
     const entries = iterateKwicContextEntries(it, pageStart, pageEnd);
     if (!entries.length) continue;
-    out.push({ itemHead, entries });
+    out.push({
+      itemHead,
+      entries
+    });
   }
   return out;
 }
-
 function collectMatchingGlossaryTerms(qNorm) {
   const out = [];
-  const seen = new Set();
+  const seen = /* @__PURE__ */ new Set();
   const glossary = Array.isArray(APP_DATA?.glossary) ? APP_DATA.glossary : [];
   for (const g of glossary) {
-    const term = String(g?.term || '').trim();
-    const definition = String(g?.definition || '').trim();
+    const term = String(g?.term || "").trim();
+    const definition = String(g?.definition || "").trim();
     const termNorm = normalizeHeadForMatch(term);
     const defNorm = normalizeHeadForMatch(definition);
     if (!termNorm) continue;
@@ -9767,7 +9583,6 @@ function collectMatchingGlossaryTerms(qNorm) {
   }
   return out;
 }
-
 function collectLexiconKwicRows(query, pageStart, pageEnd) {
   const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH);
   const qNorm = normalizeHeadForMatch(q);
@@ -9775,93 +9590,137 @@ function collectLexiconKwicRows(query, pageStart, pageEnd) {
   const rows = [];
   rows._truncated = false;
   const bundles = collectLexiconContextBundles(pageStart, pageEnd);
-  for (const bundle of bundles) {
-    for (const entry of bundle.entries) {
-      const page = entry.page;
-      const snippets = entry.snippets;
-      for (const raw of snippets) {
-        const snippetNorm = normalizeHeadForMatch(raw);
-        if (!snippetNorm.includes(qNorm)) continue;
-        const row = buildKwicContextRow({
-          source: 'lexicon',
-          term: bundle.itemHead,
-          itemType: 'lexicon',
-          itemHead: bundle.itemHead,
-          page,
-          snippet: raw,
-          query: q,
-        });
-        if (row) rows.push(row);
-        if (rows.length >= KWIC_MAX_ROWS) {
-          rows._truncated = true;
-          return rows;
-        }
+  for (const bundle of bundles) for (const entry of bundle.entries) {
+    const page = entry.page;
+    const snippets = entry.snippets;
+    for (const raw of snippets) {
+      if (!normalizeHeadForMatch(raw).includes(qNorm)) continue;
+      const row = buildKwicContextRow({
+        source: "lexicon",
+        term: bundle.itemHead,
+        itemType: "lexicon",
+        itemHead: bundle.itemHead,
+        page,
+        snippet: raw,
+        query: q
+      });
+      if (row) rows.push(row);
+      if (rows.length >= KWIC_MAX_ROWS) {
+        rows._truncated = true;
+        return rows;
       }
     }
   }
   return rows;
 }
-
 function collectGlossaryKwicRows(query, pageStart, pageEnd) {
   const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH);
   const qNorm = normalizeHeadForMatch(q);
   if (qNorm.length < 2) return [];
   const rows = [];
   rows._truncated = false;
-  const seen = new Set();
+  const seen = /* @__PURE__ */ new Set();
   const matchedTerms = collectMatchingGlossaryTerms(qNorm);
   const bundles = collectLexiconContextBundles(pageStart, pageEnd);
-  for (const term of matchedTerms) {
-    for (const bundle of bundles) {
-      for (const entry of bundle.entries) {
-        const page = entry.page;
-        const snippets = entry.snippets;
-        for (const raw of snippets) {
-          const row = buildKwicContextRow({
-            source: 'glossary',
-            term,
-            itemType: 'lexicon',
-            itemHead: bundle.itemHead,
-            page,
-            snippet: raw,
-            query: q,
-            matchHints: [term],
-          });
-          if (!row) continue;
-          const key = `${row.term}|${row.itemType}|${row.itemHead}|${row.page}|${row.leftText}|${row.keyText}|${row.rightText}`;
-          if (seen.has(key)) continue;
-          seen.add(key);
-          rows.push(row);
-          if (rows.length >= KWIC_MAX_ROWS) {
-            rows._truncated = true;
-            return rows;
-          }
-        }
+  for (const term of matchedTerms) for (const bundle of bundles) for (const entry of bundle.entries) {
+    const page = entry.page;
+    const snippets = entry.snippets;
+    for (const raw of snippets) {
+      const row = buildKwicContextRow({
+        source: "glossary",
+        term,
+        itemType: "lexicon",
+        itemHead: bundle.itemHead,
+        page,
+        snippet: raw,
+        query: q,
+        matchHints: [term]
+      });
+      if (!row) continue;
+      const key = `${row.term}|${row.itemType}|${row.itemHead}|${row.page}|${row.leftText}|${row.keyText}|${row.rightText}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      rows.push(row);
+      if (rows.length >= KWIC_MAX_ROWS) {
+        rows._truncated = true;
+        return rows;
       }
     }
   }
   return rows;
 }
-
+function loadLecturesKwic() {
+  if (LECTURES_KWIC_CACHE) return Promise.resolve(LECTURES_KWIC_CACHE);
+  if (lecturesKwicLoadPromise) return lecturesKwicLoadPromise;
+  const base = typeof document !== "undefined" && document.baseURI ? document.baseURI : (typeof location !== "undefined" ? location.href : "");
+  const url = new URL("./data/lectures_kwic.json", base).href;
+  lecturesKwicLoadPromise = fetch(url, { cache: "default" })
+    .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+    .then((d) => { LECTURES_KWIC_CACHE = d && Array.isArray(d.segments) ? d : { videos: [], segments: [] }; return LECTURES_KWIC_CACHE; })
+    .catch((e) => { lecturesKwicLoadPromise = null; throw e; });
+  return lecturesKwicLoadPromise;
+}
+function collectLecturesKwicRows(query) {
+  const rows = [];
+  rows._truncated = false;
+  const cache = LECTURES_KWIC_CACHE;
+  if (!cache) return rows;
+  const q = clampUiInput(query, MAX_LIST_QUERY_LENGTH).trim();
+  if (normalizeHeadForMatch(q).length < 2) return rows;
+  const ql = q.toLowerCase();
+  // accent-tolerant: allow an optional combining mark after each query char
+  // so "победа" also matches the stressed transcript form "побе́да".
+  const pat = new RegExp(ql.split("").map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[\\u0300-\\u036f]?").join(""), "g");
+  const W = 64;
+  for (const seg of cache.segments) {
+    const vi = seg[0];
+    const t = typeof seg[1] === "number" ? seg[1] : null;
+    const text = String(seg[2] || "");
+    const lower = text.toLowerCase();
+    pat.lastIndex = 0;
+    let m = pat.exec(lower);
+    while (m !== null) {
+      const idx = m.index;
+      const matchLen = m[0].length || 1;
+      const leftStart = Math.max(0, idx - W);
+      const rightEnd = Math.min(text.length, idx + matchLen + W);
+      const v = cache.videos[vi] || {};
+      rows.push({
+        source: "lectures",
+        term: q,
+        itemType: "",
+        itemHead: v.title || "",
+        page: t == null ? 0 : t,
+        leftPrefix: leftStart > 0 ? "…" : "",
+        leftText: text.slice(leftStart, idx),
+        keyText: text.slice(idx, idx + matchLen),
+        rightText: text.slice(idx + matchLen, rightEnd),
+        rightSuffix: rightEnd < text.length ? "…" : "",
+        sortLeft: normalizeHeadForMatch(text.slice(Math.max(0, idx - 40), idx)),
+        sortRight: normalizeHeadForMatch(text.slice(idx + matchLen, idx + matchLen + 40)),
+        videoId: v.id || v.url || "",
+        videoUrl: v.url || "",
+        videoTitle: v.title || "",
+        t
+      });
+      if (rows.length >= KWIC_MAX_ROWS) {
+        rows._truncated = true;
+        return rows;
+      }
+      if (pat.lastIndex === idx) pat.lastIndex++; // guard against zero-width
+      m = pat.exec(lower);
+    }
+  }
+  return rows;
+}
 function sortKwicRows(rows, mode) {
   const sortMode = normalizeKwicSort(mode);
   rows.sort((a, b) => {
-    if (sortMode === 'page') {
-      return (a.page - b.page) || compareHeadsRu(a.itemHead, b.itemHead);
-    }
-    if (sortMode === 'right') {
-      return compareHeadsRu(a.sortRight, b.sortRight) ||
-        compareHeadsRu(a.sortLeft, b.sortLeft) ||
-        (a.page - b.page) ||
-        compareHeadsRu(a.itemHead, b.itemHead);
-    }
-    return compareHeadsRu(a.sortLeft, b.sortLeft) ||
-      compareHeadsRu(a.sortRight, b.sortRight) ||
-      (a.page - b.page) ||
-      compareHeadsRu(a.itemHead, b.itemHead);
+    if (sortMode === "page") return a.page - b.page || compareHeadsRu(a.itemHead, b.itemHead);
+    if (sortMode === "right") return compareHeadsRu(a.sortRight, b.sortRight) || compareHeadsRu(a.sortLeft, b.sortLeft) || a.page - b.page || compareHeadsRu(a.itemHead, b.itemHead);
+    return compareHeadsRu(a.sortLeft, b.sortLeft) || compareHeadsRu(a.sortRight, b.sortRight) || a.page - b.page || compareHeadsRu(a.itemHead, b.itemHead);
   });
 }
-
 function renderKwicPanel(container) {
   const totalPages = getTotalBookPages();
   currentKwicSource = normalizeKwicSource(currentKwicSource);
@@ -9871,18 +9730,17 @@ function renderKwicPanel(container) {
   currentKwicPageStart = panelRange.start;
   currentKwicPageEnd = panelRange.end;
   const queuedKwicTerm = (() => {
-    const localPending = clampUiInput(pendingKwicTerm || '', MAX_LIST_QUERY_LENGTH);
+    const localPending = clampUiInput(pendingKwicTerm || "", MAX_LIST_QUERY_LENGTH);
     if (localPending) return localPending;
-    if (typeof window === 'undefined') return '';
-    return clampUiInput(window._pendingKwicTerm || '', MAX_LIST_QUERY_LENGTH);
+    if (typeof window === "undefined") return "";
+    return clampUiInput(window._pendingKwicTerm || "", MAX_LIST_QUERY_LENGTH);
   })();
   if (queuedKwicTerm) {
-    currentKwicSource = 'lexicon';
+    currentKwicSource = "lexicon";
     currentKwicQuery = queuedKwicTerm;
-    pendingKwicTerm = '';
-    if (typeof window !== 'undefined') window._pendingKwicTerm = '';
+    pendingKwicTerm = "";
+    if (typeof window !== "undefined") window._pendingKwicTerm = "";
   }
-
   container.innerHTML = `<div class="panel active kwic-panel">
     <div class="kwic-inner">
       <h2 class="kwic-title">KWIC-конкорданс</h2>
@@ -9897,16 +9755,17 @@ function renderKwicPanel(container) {
         <label class="kwic-field">
           Источник
           <select id="kwic-source" class="kwic-input">
-            <option value="lexicon"${currentKwicSource === 'lexicon' ? ' selected' : ''}>Лексика (статьи)</option>
-            <option value="glossary"${currentKwicSource === 'glossary' ? ' selected' : ''}>Глоссарий (термины)</option>
+            <option value="lexicon"${currentKwicSource === "lexicon" ? " selected" : ""}>Лексика (статьи)</option>
+            <option value="glossary"${currentKwicSource === "glossary" ? " selected" : ""}>Глоссарий (термины)</option>
+            <option value="lectures"${currentKwicSource === "lectures" ? " selected" : ""}>Лекции (видео)</option>
           </select>
         </label>
         <label class="kwic-field">
           Сортировка
           <select id="kwic-sort" class="kwic-input">
-            <option value="left"${currentKwicSort === 'left' ? ' selected' : ''}>по левому контексту</option>
-            <option value="right"${currentKwicSort === 'right' ? ' selected' : ''}>по правому контексту</option>
-            <option value="page"${currentKwicSort === 'page' ? ' selected' : ''}>по странице</option>
+            <option value="left"${currentKwicSort === "left" ? " selected" : ""}>по левому контексту</option>
+            <option value="right"${currentKwicSort === "right" ? " selected" : ""}>по правому контексту</option>
+            <option value="page"${currentKwicSort === "page" ? " selected" : ""}>по странице</option>
           </select>
         </label>
         <label class="kwic-field">
@@ -9924,27 +9783,28 @@ function renderKwicPanel(container) {
       <div id="kwic-results" class="kwic-results"></div>
     </div>
   </div>`;
-
-  const queryInput = container.querySelector('#kwic-query');
-  const sourceInput = container.querySelector('#kwic-source');
-  const sortInput = container.querySelector('#kwic-sort');
-  const startInput = container.querySelector('#kwic-page-start');
-  const endInput = container.querySelector('#kwic-page-end');
-  const runBtn = container.querySelector('#kwic-run');
-  const sourceHintEl = container.querySelector('#kwic-source-hint');
-  const metaEl = container.querySelector('#kwic-meta');
-  const resultsEl = container.querySelector('#kwic-results');
+  const queryInput = container.querySelector("#kwic-query");
+  const sourceInput = container.querySelector("#kwic-source");
+  const sortInput = container.querySelector("#kwic-sort");
+  const startInput = container.querySelector("#kwic-page-start");
+  const endInput = container.querySelector("#kwic-page-end");
+  const runBtn = container.querySelector("#kwic-run");
+  const sourceHintEl = container.querySelector("#kwic-source-hint");
+  const metaEl = container.querySelector("#kwic-meta");
+  const resultsEl = container.querySelector("#kwic-results");
   let renderTimer = null;
-
   const renderSourceHint = () => {
     if (!sourceHintEl) return;
-    if (currentKwicSource === 'glossary') {
-      sourceHintEl.innerHTML = '<strong>Глоссарий:</strong> учебные определения терминов (например, энклитика, аблаут).';
+    if (currentKwicSource === "glossary") {
+      sourceHintEl.innerHTML = "<strong>Глоссарий:</strong> учебные определения терминов (например, энклитика, аблаут).";
       return;
     }
-    sourceHintEl.innerHTML = '<strong>Лексика:</strong> словарные карточки слов/форм и их контексты в книге.';
+    if (currentKwicSource === "lectures") {
+      sourceHintEl.innerHTML = "<strong>Лекции:</strong> расшифровки 27 видеолекций (≈240 тыс. слов); ссылка ведёт на минуту в видео. Диапазон страниц не применяется.";
+      return;
+    }
+    sourceHintEl.innerHTML = "<strong>Лексика:</strong> словарные карточки слов/форм и их контексты в книге.";
   };
-
   const renderRows = () => {
     currentKwicSource = normalizeKwicSource(sourceInput.value);
     renderSourceHint();
@@ -9956,114 +9816,141 @@ function renderKwicPanel(container) {
     currentKwicPageEnd = formRange.end;
     startInput.value = String(currentKwicPageStart);
     endInput.value = String(currentKwicPageEnd);
-
-    const qNorm = normalizeHeadForMatch(currentKwicQuery);
-    if (qNorm.length < 2) {
-      metaEl.textContent = 'Введите минимум 2 символа для KWIC-поиска.';
-      resultsEl.innerHTML = '<div class="kwic-empty">Например: «энклитика», «санскрит», «закон».</div>';
+    if (normalizeHeadForMatch(currentKwicQuery).length < 2) {
+      metaEl.textContent = "Введите минимум 2 символа для KWIC-поиска.";
+      setStaticEmptyMessage(resultsEl, "kwic-empty", "Например: «энклитика», «санскрит», «закон».");
       persistViewState();
       return;
     }
-
-    const rows = currentKwicSource === 'glossary'
-      ? collectGlossaryKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd)
-      : collectLexiconKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd);
+    const sourceLabel = currentKwicSource === "glossary" ? "глоссарий" : currentKwicSource === "lectures" ? "лекции" : "лексика";
+    if (currentKwicSource === "lectures" && !LECTURES_KWIC_CACHE) {
+      metaEl.textContent = "Загрузка корпуса лекций…";
+      setStaticEmptyMessage(resultsEl, "kwic-empty", "Один раз загружается ~3 МБ расшифровок.");
+      loadLecturesKwic().then(() => renderRows()).catch(() => {
+        metaEl.textContent = "Не удалось загрузить корпус лекций.";
+        setStaticEmptyMessage(resultsEl, "kwic-empty", "Проверьте соединение и повторите.");
+      });
+      return;
+    }
+    const rows = currentKwicSource === "glossary" ? collectGlossaryKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd) : currentKwicSource === "lectures" ? collectLecturesKwicRows(currentKwicQuery) : collectLexiconKwicRows(currentKwicQuery, currentKwicPageStart, currentKwicPageEnd);
     sortKwicRows(rows, currentKwicSort);
     const kwicTruncated = rows && rows._truncated === true;
-
     if (!rows.length) {
-      metaEl.textContent = `Совпадений не найдено: ${currentKwicSource === 'glossary' ? 'глоссарий' : 'лексика'}, стр. ${currentKwicPageStart}-${currentKwicPageEnd}.`;
-      resultsEl.innerHTML = '<div class="kwic-empty">Попробуйте расширить диапазон страниц или изменить запрос.</div>';
+      metaEl.textContent = `Совпадений не найдено: ${sourceLabel}${currentKwicSource === "lectures" ? "" : `, стр. ${currentKwicPageStart}-${currentKwicPageEnd}`}.`;
+      setStaticEmptyMessage(resultsEl, "kwic-empty", currentKwicSource === "lectures" ? "Попробуйте другой запрос (например: «ударение», «грамота», «санскрит»)." : "Попробуйте расширить диапазон страниц или изменить запрос.");
       persistViewState();
       return;
     }
-
-    const terms = new Set(rows.map(r => r.term));
-    const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : '';
-    metaEl.textContent = `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${currentKwicSource === 'glossary' ? 'глоссарий' : 'лексика'}.${truncText}`;
-    resultsEl.textContent = '';
+    const terms = new Set(rows.map((r) => r.term));
+    const truncText = kwicTruncated ? ` Показаны первые ${KWIC_MAX_ROWS}.` : "";
+    const lecturesCount = currentKwicSource === "lectures" ? new Set(rows.map((r) => r.videoId)).size : 0;
+    metaEl.textContent = currentKwicSource === "lectures"
+      ? `Найдено ${rows.length} контекстов в ${lecturesCount} лекциях, источник: лекции.${truncText}`
+      : `Найдено ${rows.length} контекстов (${terms.size} терминов), источник: ${sourceLabel}.${truncText}`;
+    resultsEl.textContent = "";
     for (const r of rows) {
-      const row = document.createElement('div');
-      row.className = 'kwic-row';
-      const head = document.createElement('div');
-      head.className = 'kwic-row-head';
-
-      const cardBtn = document.createElement('button');
-      cardBtn.type = 'button';
-      cardBtn.className = 'kwic-open-card kwic-pill';
-      cardBtn.dataset.type = String(r.itemType || '');
-      cardBtn.dataset.head = String(r.itemHead || '');
-      cardBtn.textContent = String(r.itemHead || '');
+      const row = document.createElement("div");
+      row.className = "kwic-row";
+      const head = document.createElement("div");
+      head.className = "kwic-row-head";
+      if (r.source === "lectures") {
+        const hasT = Number.isFinite(r.t) && r.t > 0;
+        const vlink = document.createElement("a");
+        vlink.className = "kwic-video-link kwic-pill";
+        vlink.target = "_blank";
+        vlink.rel = "noopener noreferrer";
+        vlink.href = hasT ? r.videoUrl + (r.videoUrl.includes("?") ? "&" : "?") + "t=" + r.t + "s" : r.videoUrl;
+        vlink.textContent = hasT ? `▸ ${formatVideoDuration(r.t)}` : "▸ видео";
+        head.appendChild(vlink);
+        const titleChip = document.createElement("span");
+        titleChip.className = "kwic-source-chip";
+        titleChip.textContent = r.videoTitle || "";
+        titleChip.title = r.videoTitle || "";
+        head.appendChild(titleChip);
+        const context = document.createElement("div");
+        context.className = "kwic-context";
+        const left = document.createElement("span");
+        left.className = "kwic-muted";
+        left.textContent = String(r.leftPrefix || "") + String(r.leftText || "");
+        const mark = document.createElement("mark");
+        mark.textContent = String(r.keyText || "");
+        const right = document.createElement("span");
+        right.textContent = String(r.rightText || "") + String(r.rightSuffix || "");
+        context.appendChild(left);
+        context.appendChild(mark);
+        context.appendChild(right);
+        row.appendChild(head);
+        row.appendChild(context);
+        resultsEl.appendChild(row);
+        continue;
+      }
+      const cardBtn = document.createElement("button");
+      cardBtn.type = "button";
+      cardBtn.className = "kwic-open-card kwic-pill";
+      cardBtn.dataset.type = String(r.itemType || "");
+      cardBtn.dataset.head = String(r.itemHead || "");
+      cardBtn.textContent = String(r.itemHead || "");
       head.appendChild(cardBtn);
-
-      if (r.source === 'glossary') {
-        const glossaryBtn = document.createElement('button');
-        glossaryBtn.type = 'button';
-        glossaryBtn.className = 'kwic-open-glossary kwic-pill';
-        glossaryBtn.dataset.term = String(r.term || '');
-        glossaryBtn.textContent = `термин: ${String(r.term || '')}`;
+      if (r.source === "glossary") {
+        const glossaryBtn = document.createElement("button");
+        glossaryBtn.type = "button";
+        glossaryBtn.className = "kwic-open-glossary kwic-pill";
+        glossaryBtn.dataset.term = String(r.term || "");
+        glossaryBtn.textContent = `термин: ${String(r.term || "")}`;
         head.appendChild(glossaryBtn);
       }
-
-      const pageLink = document.createElement('a');
-      pageLink.className = 'kwic-page-link card-page-link related-link';
+      const pageLink = document.createElement("a");
+      pageLink.className = "kwic-page-link card-page-link related-link";
       pageLink.dataset.page = String(r.page);
       pageLink.href = buildReadingNowHash(r.page);
       pageLink.textContent = `стр. ${r.page}`;
       head.appendChild(pageLink);
-
-      const sourceChip = document.createElement('span');
-      sourceChip.className = 'kwic-source-chip';
+      const sourceChip = document.createElement("span");
+      sourceChip.className = "kwic-source-chip";
       sourceChip.textContent = getBookLabelForSearch(r.bookId);
       head.appendChild(sourceChip);
-
-      const context = document.createElement('div');
-      context.className = 'kwic-context';
-      const left = document.createElement('span');
-      left.className = 'kwic-muted';
-      left.textContent = String(r.leftPrefix || '') + String(r.leftText || '');
-      const mark = document.createElement('mark');
-      mark.textContent = String(r.keyText || '');
-      const right = document.createElement('span');
-      right.textContent = String(r.rightText || '') + String(r.rightSuffix || '');
+      const context = document.createElement("div");
+      context.className = "kwic-context";
+      const left = document.createElement("span");
+      left.className = "kwic-muted";
+      left.textContent = String(r.leftPrefix || "") + String(r.leftText || "");
+      const mark = document.createElement("mark");
+      mark.textContent = String(r.keyText || "");
+      const right = document.createElement("span");
+      right.textContent = String(r.rightText || "") + String(r.rightSuffix || "");
       context.appendChild(left);
       context.appendChild(mark);
       context.appendChild(right);
-
       row.appendChild(head);
       row.appendChild(context);
       resultsEl.appendChild(row);
     }
-
-    resultsEl.querySelectorAll('.kwic-open-card').forEach(btn => {
+    resultsEl.querySelectorAll(".kwic-open-card").forEach((btn) => {
       bindActionWithKeyboard(btn, () => {
-        navigateToItem(btn.dataset.type || 'lexicon', btn.dataset.head || '');
+        navigateToItem(btn.dataset.type || "lexicon", btn.dataset.head || "");
       });
     });
-    resultsEl.querySelectorAll('.kwic-open-glossary').forEach(btn => {
+    resultsEl.querySelectorAll(".kwic-open-glossary").forEach((btn) => {
       bindActionWithKeyboard(btn, () => {
-        openGlossaryTerm(btn.dataset.term || '');
+        openGlossaryTerm(btn.dataset.term || "");
       });
     });
-    resultsEl.querySelectorAll('.kwic-page-link[data-page]').forEach((el) => {
+    resultsEl.querySelectorAll(".kwic-page-link[data-page]").forEach((el) => {
       bindActionWithKeyboard(el, () => {
-        const page = parseInt((el.dataset && el.dataset.page) || '0', 10);
+        const page = parseInt(el.dataset && el.dataset.page || "0", 10);
         openReadingNowPage(Number.isFinite(page) ? page : 1);
       });
     });
-
     persistViewState();
   };
-
   const scheduleRender = () => {
     if (renderTimer) clearTimeout(renderTimer);
     renderTimer = setTimeout(renderRows, 120);
   };
-
   queryInput.oninput = scheduleRender;
   queryInput.onkeydown = (e) => {
-    if (e.key === 'Enter') {
-      if (typeof e.preventDefault === 'function') e.preventDefault();
+    if (e.key === "Enter") {
+      if (typeof e.preventDefault === "function") e.preventDefault();
       renderRows();
     }
   };
@@ -10074,26 +9961,22 @@ function renderKwicPanel(container) {
   runBtn.onclick = renderRows;
   renderRows();
 }
-
 function renderGlossaryPanel(container) {
   const glossary = APP_DATA.glossary || [];
-  let html = '<div class="panel active glossary-panel"><div class="glossary-inner">';
-  html += '<h2 class="glossary-title">Глоссарий простыми словами</h2>';
-  html += '<div class="glossary-intro">Лингвистические термины из книги, объяснённые так, чтобы понял школьник. У каждого термина — отдельная внешняя ссылка.</div>';
-  // Простое поле поиска
-  html += '<input type="text" id="glossary-search" class="glossary-search" placeholder="Поиск термина…" />';
-  html += '<div id="glossary-list" class="glossary-list">';
+  let html = "<div class=\"panel active glossary-panel\"><div class=\"glossary-inner\">";
+  html += "<h2 class=\"glossary-title\">Глоссарий простыми словами</h2>";
+  html += "<div class=\"glossary-intro\">Лингвистические термины из книги, объяснённые так, чтобы понял школьник. У каждого термина — отдельная внешняя ссылка.</div>";
+  html += "<input type=\"text\" id=\"glossary-search\" class=\"glossary-search\" placeholder=\"Поиск термина…\" />";
+  html += "<div id=\"glossary-list\" class=\"glossary-list\">";
   for (const g of glossary) {
-    const termUrl = g.url || ('https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=' + encodeURIComponent(String(g.term || '')));
-    const related = findRelatedLexiconItems(g.term, g.definition || '', 4);
-    let relatedHtml = '';
+    const termUrl = g.url || "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=" + encodeURIComponent(String(g.term || ""));
+    const related = findRelatedLexiconItems(g.term, g.definition || "", 4);
+    let relatedHtml = "";
     if (related.length) {
-      relatedHtml += '<div class="glossary-related-links">';
-      relatedHtml += '<span class="glossary-related-label">Связанные лексемы:</span>';
-      for (const r of related) {
-        relatedHtml += `<a class="glossary-xlink" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" title="${escapeHtml(r.hint || '')}">${escapeHtml(r.head)}</a>`;
-      }
-      relatedHtml += '</div>';
+      relatedHtml += "<div class=\"glossary-related-links\">";
+      relatedHtml += "<span class=\"glossary-related-label\">Связанные лексемы:</span>";
+      for (const r of related) relatedHtml += `<a class="glossary-xlink" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}" title="${escapeHtml(r.hint || "")}">${escapeHtml(r.head)}</a>`;
+      relatedHtml += "</div>";
     }
     html += `<div class="glossary-entry" data-term="${escapeHtml(g.term.toLowerCase())}">
       <div class="glossary-entry-head">
@@ -10104,36 +9987,33 @@ function renderGlossaryPanel(container) {
       ${relatedHtml}
     </div>`;
   }
-  html += '</div></div></div>';
+  html += "</div></div></div>";
   container.innerHTML = html;
-  const glist = document.getElementById('glossary-list');
-  if (glist && typeof window !== 'undefined' && typeof window.innerWidth === 'number' && window.innerWidth < 900) {
-    glist.style.gridTemplateColumns = '1fr';
-  }
-
+  const glist = document.getElementById("glossary-list");
+  if (glist && typeof window !== "undefined" && typeof window.innerWidth === "number" && window.innerWidth < 900) glist.style.gridTemplateColumns = "1fr";
   const applyGlossaryFilter = (value) => {
-    const q = (value || '').trim().toLowerCase();
-    container.querySelectorAll('.glossary-entry').forEach(el => {
+    const q = (value || "").trim().toLowerCase();
+    container.querySelectorAll(".glossary-entry").forEach((el) => {
       const t = el.dataset.term;
       el.hidden = !!(q && !t.includes(q));
     });
   };
   const focusGlossaryEntry = (term) => {
-    const q = String(term || '').trim().toLowerCase();
+    const q = String(term || "").trim().toLowerCase();
     if (!q) return;
-    const entries = Array.from(container.querySelectorAll('.glossary-entry'));
+    const entries = Array.from(container.querySelectorAll(".glossary-entry"));
     if (!entries.length) return;
-    let target = entries.find((el) => String((el.dataset && el.dataset.term) || '') === q);
-    if (!target) target = entries.find((el) => String((el.dataset && el.dataset.term) || '').includes(q));
+    let target = entries.find((el) => String(el.dataset && el.dataset.term || "") === q);
+    if (!target) target = entries.find((el) => String(el.dataset && el.dataset.term || "").includes(q));
     if (!target) return;
-    entries.forEach((el) => el.classList.remove('glossary-pending-highlight'));
-    target.classList.add('glossary-pending-highlight');
-    if (typeof target.scrollIntoView === 'function') target.scrollIntoView({ block: 'center' });
+    entries.forEach((el) => el.classList.remove("glossary-pending-highlight"));
+    target.classList.add("glossary-pending-highlight");
+    if (typeof target.scrollIntoView === "function") target.scrollIntoView({ block: "center" });
     setTimeout(() => {
-      target.classList.remove('glossary-pending-highlight');
+      target.classList.remove("glossary-pending-highlight");
     }, 1800);
   };
-  const input = document.getElementById('glossary-search');
+  const input = document.getElementById("glossary-search");
   input.oninput = (e) => {
     const q = e.target.value.trim().toLowerCase();
     currentGlossaryTerm = q;
@@ -10143,85 +10023,78 @@ function renderGlossaryPanel(container) {
     syncNavigationState();
   };
   input.onkeydown = (e) => {
-    if (e.key === 'Enter') {
-      if (typeof e.preventDefault === 'function') e.preventDefault();
+    if (e.key === "Enter") {
+      if (typeof e.preventDefault === "function") e.preventDefault();
       syncNavigationState();
     }
   };
   const queuedGlossaryTerm = (() => {
-    const localPending = clampUiInput(pendingGlossaryQuery || '', MAX_LIST_QUERY_LENGTH).toLowerCase();
+    const localPending = clampUiInput(pendingGlossaryQuery || "", MAX_LIST_QUERY_LENGTH).toLowerCase();
     if (localPending) return localPending;
-    if (typeof window === 'undefined') return '';
-    return clampUiInput(window._pendingGlossaryTerm || '', MAX_LIST_QUERY_LENGTH).toLowerCase();
+    if (typeof window === "undefined") return "";
+    return clampUiInput(window._pendingGlossaryTerm || "", MAX_LIST_QUERY_LENGTH).toLowerCase();
   })();
   if (queuedGlossaryTerm) {
     input.value = queuedGlossaryTerm;
     currentGlossaryTerm = queuedGlossaryTerm;
     applyGlossaryFilter(queuedGlossaryTerm);
-    pendingGlossaryQuery = '';
-    if (typeof window !== 'undefined') window._pendingGlossaryTerm = '';
+    pendingGlossaryQuery = "";
+    if (typeof window !== "undefined") window._pendingGlossaryTerm = "";
     focusGlossaryEntry(queuedGlossaryTerm);
-  } else {
-    currentGlossaryTerm = String(input.value || '').trim().toLowerCase();
-  }
-  bindNavigateLinks(container, '.glossary-xlink', 'lexicon');
+  } else currentGlossaryTerm = String(input.value || "").trim().toLowerCase();
+  bindNavigateLinks(container, ".glossary-xlink", "lexicon");
 }
-
-// =========================================================
-// ГАЛЕРЕЯ ЛИНГВИСТОВ
-// =========================================================
 function renderGalleryPanel(container) {
-  const names = APP_DATA.names.filter(n => n.img);
-  // Сортировка: сначала по эпохе (если есть), потом по фамилии
+  const names = APP_DATA.names.filter((n) => n.img);
   names.sort((a, b) => {
     if (a.epoch && b.epoch) return a.epoch - b.epoch;
     if (a.epoch) return -1;
     if (b.epoch) return 1;
     return compareHeadsRu(a.head, b.head);
   });
-  let html = '<div class="panel active gallery-panel"><div class="gallery-inner">';
-  html += '<h2 class="gallery-title">Галерея лингвистов</h2>';
+  let html = "<div class=\"panel active gallery-panel\"><div class=\"gallery-inner\">";
+  html += "<h2 class=\"gallery-title\">Галерея лингвистов</h2>";
   html += `<div class="gallery-intro">${names.length} лингвистов и литераторов, упомянутых в книге, с фотографиями. Расположены примерно в хронологическом порядке. Кликните по портрету, чтобы открыть карточку.</div>`;
-  html += '<div class="gallery-grid">';
+  html += "<div class=\"gallery-grid\">";
   for (const n of names) {
-    const epochLabel = n.epoch ? (n.epoch < 0 ? Math.abs(n.epoch) + ' до н.э.' : n.epoch + ' г.') : '';
-    html += `<a class="gallery-card" data-head="${escapeHtml(n.head)}" href="${escapeHtml(buildItemHash('names', n.head))}">
+    const epochLabel = n.epoch ? n.epoch < 0 ? Math.abs(n.epoch) + " до н.э." : n.epoch + " г." : "";
+    html += `<a class="gallery-card" data-head="${escapeHtml(n.head)}" href="${escapeHtml(buildItemHash("names", n.head))}">
       <img class="gallery-card-img" src="${escapeHtml(safeImageUrl(n.img))}" alt="">
       <div class="gallery-card-title">${escapeHtml(n.head)}</div>
       <div class="gallery-card-meta">${epochLabel}</div>
     </a>`;
   }
-  html += '</div></div></div>';
+  html += "</div></div></div>";
   container.innerHTML = html;
   wireSafeImageFallback(container);
-  container.querySelectorAll('.gallery-card').forEach(card => {
-    card.onmouseover = () => { card.style.borderColor = '#8a7050'; card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)'; };
-    card.onmouseout = () => { card.style.borderColor = '#d4c8b0'; card.style.boxShadow = 'none'; };
+  container.querySelectorAll(".gallery-card").forEach((card) => {
+    card.onmouseover = () => {
+      card.style.borderColor = "#8a7050";
+      card.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
+    };
+    card.onmouseout = () => {
+      card.style.borderColor = "#d4c8b0";
+      card.style.boxShadow = "none";
+    };
     card.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      navigateToItem('names', card.dataset.head);
+      if (e && typeof e.preventDefault === "function") e.preventDefault();
+      navigateToItem("names", card.dataset.head);
     };
   });
 }
-
-// =========================================================
-// РУССКИЙ ЯЗЫК ВО ВРЕМЕНИ
-// =========================================================
 function renderRussianEvolutionPanel(container) {
   const samples = APP_DATA.russian_evolution || [];
-  let html = '<div class="panel active russian-evolution-panel"><div class="russian-evolution-inner">';
-  html += '<h2 class="russian-evolution-title">Русский язык во времени</h2>';
-  html += '<div class="russian-evolution-intro">Семь срезов истории русского языка, от XI до XXI века. Видно, как менялся алфавит, лексика и грамматика.</div>';
+  let html = "<div class=\"panel active russian-evolution-panel\"><div class=\"russian-evolution-inner\">";
+  html += "<h2 class=\"russian-evolution-title\">Русский язык во времени</h2>";
+  html += "<div class=\"russian-evolution-intro\">Семь срезов истории русского языка, от XI до XXI века. Видно, как менялся алфавит, лексика и грамматика.</div>";
   for (let i = 0; i < samples.length; i++) {
     const s = samples[i];
     const isLast = i === samples.length - 1;
-    const pageRaw = parseInt(String(s.page || ''), 10);
+    const pageRaw = parseInt(String(s.page || ""), 10);
     const pageNum = clampPageInBook(Number.isFinite(pageRaw) ? pageRaw : 1);
     const pageLabel = escapeHtml(String(s.page || pageNum));
-    const pageMetaHtml = s.page
-      ? `<a class="russian-evolution-page-link card-page-link related-link" data-page="${pageNum}" href="${escapeHtml(buildReadingNowHash(pageNum))}">стр. ${pageLabel}</a>`
-      : '';
-    html += `<div class="russian-evolution-row${isLast ? ' russian-evolution-row-last' : ''}">
+    const pageMetaHtml = s.page ? `<a class="russian-evolution-page-link card-page-link related-link" data-page="${pageNum}" href="${escapeHtml(buildReadingNowHash(pageNum))}">стр. ${pageLabel}</a>` : "";
+    html += `<div class="russian-evolution-row${isLast ? " russian-evolution-row-last" : ""}">
       <div class="russian-evolution-time">
         <div class="russian-evolution-epoch">${escapeHtml(s.epoch)}</div>
         <div class="russian-evolution-year">≈ ${s.year} г.</div>
@@ -10229,61 +10102,176 @@ function renderRussianEvolutionPanel(container) {
       <div class="russian-evolution-card">
         <div class="russian-evolution-sample">«${escapeHtml(s.sample)}»</div>
         <div class="russian-evolution-translation">${escapeHtml(s.translation)}</div>
-        <div class="russian-evolution-note">${escapeHtml(s.note)}${pageMetaHtml ? ` · ${pageMetaHtml}` : ''}</div>
+        <div class="russian-evolution-note">${escapeHtml(s.note)}${pageMetaHtml ? ` · ${pageMetaHtml}` : ""}</div>
       </div>
     </div>`;
   }
-  html += '</div></div>';
+  html += "</div></div>";
   container.innerHTML = html;
-  container.querySelectorAll('.russian-evolution-page-link[data-page]').forEach((el) => {
+  container.querySelectorAll(".russian-evolution-page-link[data-page]").forEach((el) => {
     bindActionWithKeyboard(el, () => {
-      const page = parseInt((el.dataset && el.dataset.page) || '0', 10);
+      const page = parseInt(el.dataset && el.dataset.page || "0", 10);
       openReadingNowPage(Number.isFinite(page) ? page : 1);
     });
   });
 }
-
-// =========================================================
-// ФОНЕТИЧЕСКИЕ ЗАКОНЫ
-// =========================================================
 function formatPhoneticTransitionText(text) {
-  const raw = String(text || '').replace(/\s+/g, ' ').trim();
-  if (!raw) return '';
-  const parts = raw.split('\u2192');
+  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  if (!raw) return "";
+  const parts = raw.split("→");
   if (parts.length !== 2) return escapeHtml(raw);
-  const left = escapeHtml(parts[0].trim()).replace(/\s+/g, '&nbsp;');
-  const right = escapeHtml(parts[1].trim()).replace(/\s+/g, '&nbsp;');
-  return `${left} <span class="phonetic-arrow">\u2192</span> ${right}`;
+  return `${escapeHtml(parts[0].trim()).replace(/\s+/g, "&nbsp;")} <span class="phonetic-arrow">\u2192</span> ${escapeHtml(parts[1].trim()).replace(/\s+/g, "&nbsp;")}`;
 }
-
 function formatPhoneticCommentText(text) {
-  const raw = String(text || '').replace(/\s+/g, ' ').trim();
-  if (!raw) return '';
-  if (!raw.includes('\u2192')) return escapeHtml(raw);
-  const colon = raw.indexOf(':');
+  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  if (!raw) return "";
+  if (!raw.includes("→")) return escapeHtml(raw);
+  const colon = raw.indexOf(":");
   if (colon > -1 && colon < raw.length - 1) {
     const prefix = raw.slice(0, colon + 1).trim();
     const tail = raw.slice(colon + 1).trim();
-    if (tail.includes('\u2192')) {
-      return `${escapeHtml(prefix)} ${formatPhoneticTransitionText(tail)}`;
-    }
+    if (tail.includes("→")) return `${escapeHtml(prefix)} ${formatPhoneticTransitionText(tail)}`;
   }
   return formatPhoneticTransitionText(raw);
 }
-
 function renderPhoneticLawsPanel(container) {
   const laws = APP_DATA.phonetic_laws || [];
-  let html = '<div class="panel active phonetic-panel"><div class="phonetic-inner">';
-  html += '<h2 class="phonetic-title">Фонетические законы из лекций Зализняка</h2>';
-  html += '<div class="phonetic-intro">Восемь ключевых фонетических законов, обсуждаемых в книге, с примерами из текста. Для каждого закона показан переход «было → стало» и пояснение.</div>';
+  const simData = [
+    {
+      root: "*gordъ",
+      meaning: "ограда, поселение (town / fence)",
+      branches: {
+        russian: [
+          { state: "*gordъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова до разделения." },
+          { state: "*gorodъ", law: "Восточнославянское полногласие", desc: "Группа -or- переходит в полногласное сочетание -оро-." },
+          { state: "город", law: "Падение слабых редуцированных", desc: "Конечный слабый гласный -ъ полностью отпадает." }
+        ],
+        polish: [
+          { state: "*gordъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова до разделения." },
+          { state: "*grodъ", law: "Лехитское неполногласие", desc: "Группа -or- переходит в неполногласное сочетание -ro-." },
+          { state: "gród", law: "Падение редуцированных и сужение гласного", desc: "Утрата конечного -ъ и сужение гласного о -> ó перед звонким согласным." }
+        ],
+        czech: [
+          { state: "*gordъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова до разделения." },
+          { state: "*gradъ", law: "Чешско-словацкое неполногласие", desc: "Группа -or- переходит в неполногласное сочетание -ra-." },
+          { state: "*hradъ", law: "Спирантизация согласного g -> h", desc: "Древний взрывной согласный g переходит в придыхательный h." },
+          { state: "hrad", law: "Падение редуцированных", desc: "Конечный редуцированный гласный -ъ отпадает." }
+        ]
+      }
+    },
+    {
+      root: "*melko",
+      meaning: "молоко (milk)",
+      branches: {
+        russian: [
+          { state: "*melko", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
+          { state: "*moloko", law: "Восточнославянское полногласие", desc: "Группа -el- переходит в полногласное сочетание -оло-." },
+          { state: "молоко", law: "Закрепление современной формы", desc: "Формирование современного русского литературного произношения." }
+        ],
+        polish: [
+          { state: "*melko", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
+          { state: "*mleko", law: "Лехитское неполногласие", desc: "Группа -el- переходит в неполногласное сочетание -le-." },
+          { state: "mleko", law: "Закрепление современной формы", desc: "Формирование современного польского литературного слова." }
+        ],
+        czech: [
+          { state: "*melko", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
+          { state: "*mleko", law: "Чешское неполногласие", desc: "Группа -el- переходит в неполногласное сочетание -le-." },
+          { state: "mléko", law: "Долгота гласного", desc: "Вокализация с удлинением гласного звука: e -> é." }
+        ]
+      }
+    },
+    {
+      root: "*dorgъ",
+      meaning: "дорогой (dear / expensive)",
+      branches: {
+        russian: [
+          { state: "*dorgъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
+          { state: "*dorogъ", law: "Восточнославянское полногласие", desc: "Группа -or- переходит в полногласное сочетание -оро-." },
+          { state: "дорогой", law: "Добавление флексии прилагательного", desc: "Падение конечного -ъ и оформление флексии мужского рода -ой." }
+        ],
+        polish: [
+          { state: "*dorgъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
+          { state: "*drogъ", law: "Лехитское неполногласие", desc: "Группа -or- переходит в неполногласное сочетание -ro-." },
+          { state: "drogi", law: "Утрата редуцированного и флексия прилагательного", desc: "Конечный -ъ отпадает, добавляется окончание именительного падежа -i." }
+        ],
+        czech: [
+          { state: "*dorgъ", law: "Исходная праславянская форма", desc: "Праславянское начальное состояние слова." },
+          { state: "*drahъ", law: "Чешское неполногласие и спирантизация", desc: "Группа -or- переходит в -ra-, согласный g переходит в h." },
+          { state: "drahý", law: "Падение редуцированного и флексия прилагательного", desc: "Утрата конечного -ъ и присоединение окончательной флексии -ý." }
+        ]
+      }
+    }
+  ];
+
+  const currentRoot = simData[currentSimRootIndex];
+  const maxSteps = Math.max(
+    currentRoot.branches.russian.length,
+    currentRoot.branches.polish.length,
+    currentRoot.branches.czech.length
+  );
+
+  let html = "<div class=\"panel active phonetic-panel\"><div class=\"phonetic-inner\">";
+  html += "<h2 class=\"phonetic-title\">Фонетические законы из лекций Зализняка</h2>";
+  html += "<div class=\"phonetic-intro\">Восемь ключевых фонетических законов, обсуждаемых в книге, с примерами из текста. Для каждого закона показан переход «было → стало» и пояснение.</div>";
+
+  // Inject Interactive Simulator
+  let simHtml = `
+		<div class="sim-container">
+			<h3 class="sim-title">
+				<span>\uD83C\uDF93 Интерактивный симулятор звуковых законов</span>
+				<span class="sim-word-meaning">${escapeHtml(currentRoot.meaning)}</span>
+			</h3>
+			<div class="sim-intro">
+				Посмотрите в хронологическом разрезе, как праславянские реконструированные корни эволюционировали в современные славянские языки под воздействием фонетических законов, описанных Зализняком. Учебно-иллюстративный инструмент: звуковые переходы (полногласие/неполногласие, спирантизация g → h, падение редуцированных) — стандартная сравнительная славистика; шаги с флексией показаны упрощённо. Разбор: <a class="sim-source-link" href="https://github.com/gasyoun/BookIndex/blob/main/docs/SIMULATOR_AUDIT_RU.md" target="_blank" rel="noopener noreferrer">SIMULATOR_AUDIT_RU.md</a>.
+			</div>
+			<div class="sim-controls">
+				<label for="sim-root-select" class="sim-label">Выберите праславянский корень:</label>
+				<select id="sim-root-select" class="sim-select">`;
+  for (let i = 0; i < simData.length; i++) {
+    simHtml += `<option value="${i}"${i === currentSimRootIndex ? ' selected' : ''}>${escapeHtml(simData[i].root)}</option>`;
+  }
+  simHtml += `
+				</select>
+				<button id="sim-btn-prev" class="sim-btn" ${currentSimStep <= 0 ? 'disabled' : ''}>\u2190 Назад</button>
+				<button id="sim-btn-next" class="sim-btn" ${currentSimStep >= maxSteps - 1 ? 'disabled' : ''}>Вперед \u2192</button>
+				<span class="sim-step-indicator">Шаг: ${currentSimStep + 1} из ${maxSteps}</span>
+			</div>
+			<div class="sim-grid">`;
+
+  const renderBranch = (title, stepsList) => {
+    const activeIndex = Math.min(currentSimStep, stepsList.length - 1);
+    const stepData = stepsList[activeIndex];
+    const isNewlyHighlighted = currentSimStep === activeIndex;
+    return `
+				<div class="sim-branch-col ${isNewlyHighlighted ? 'highlighted' : ''}">
+					<div class="sim-branch-title">${escapeHtml(title)}</div>
+					<div class="sim-word-state">${escapeHtml(stepData.state)}</div>
+					<div class="sim-law-name">${escapeHtml(stepData.law)}</div>
+					<div class="sim-law-desc">${escapeHtml(stepData.desc)}</div>
+				</div>
+			`;
+  };
+
+  simHtml += renderBranch("Восточнославянская ветвь (Русский)", currentRoot.branches.russian);
+  simHtml += renderBranch("Лехитская подгруппа (Польский)", currentRoot.branches.polish);
+  simHtml += renderBranch("Чешско-словацкая подгруппа (Чешский)", currentRoot.branches.czech);
+
+  simHtml += `
+			</div>
+		</div>
+		`;
+
+  html += simHtml;
+
   for (const law of laws) {
-    const lawMetaText = law.page
-      ? `${law.discoverer} · ${law.year} · стр. ${law.page}`
-      : `${law.discoverer} · ${law.year}`;
+    const lawMetaText = law.page ? `${law.discoverer} · ${law.year} · стр. ${law.page}` : `${law.discoverer} · ${law.year}`;
     html += `<div class="phonetic-card">
       <div class="phonetic-card-head">
         <div class="phonetic-card-title">${escapeHtml(law.name)}</div>
-        <div class="phonetic-card-meta">${renderTextWithPageLinks(lawMetaText, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })}</div>
+        <div class="phonetic-card-meta">${renderTextWithPageLinks(lawMetaText, {
+				className: "material-page-link card-page-link related-link",
+				rangeTarget: "trends"
+			})}</div>
       </div>
       <div class="phonetic-desc">${escapeHtml(law.description)}</div>
       <div class="phonetic-examples">
@@ -10296,172 +10284,289 @@ function renderPhoneticLawsPanel(container) {
           </tr></thead>
           <tbody>`;
     for (const ex of law.examples) {
-      const fromHtml = escapeHtml(String(ex.from || '')).replace(/\s+/g, '&nbsp;');
-      const toHtml = escapeHtml(String(ex.to || '')).replace(/\s+/g, '&nbsp;');
-      const commentHtml = formatPhoneticCommentText(ex.comment || '');
+      const fromHtml = escapeHtml(String(ex.from || "")).replace(/\s+/g, "&nbsp;");
+      const toHtml = escapeHtml(String(ex.to || "")).replace(/\s+/g, "&nbsp;");
+      const commentHtml = formatPhoneticCommentText(ex.comment || "");
       html += `<tr>
         <td class="phonetic-before">${fromHtml}</td>
         <td class="phonetic-after"><strong class="phonetic-arrow">\u2192</strong> <span class="phonetic-transition">${toHtml}</span></td>
         <td class="phonetic-comment">${commentHtml}</td>
       </tr>`;
     }
-    html += '</tbody></table></div></div>';
+    html += "</tbody></table></div></div>";
   }
-  html += '</div></div>';
+  html += "</div></div>";
   container.innerHTML = html;
-}
 
-// =========================================================
-// ПРОФЕССИОНАЛЬНЫЙ АППАРАТ — для взрослого читателя и лингвиста
-// =========================================================
+  // Bind events
+  const select = container.querySelector("#sim-root-select");
+  if (select) {
+    select.onchange = (e) => {
+      currentSimRootIndex = parseInt(e.target.value, 10) || 0;
+      currentSimStep = 0;
+      renderPhoneticLawsPanel(container);
+    };
+  }
+  const btnPrev = container.querySelector("#sim-btn-prev");
+  if (btnPrev) {
+    btnPrev.onclick = () => {
+      if (currentSimStep > 0) {
+        currentSimStep--;
+        renderPhoneticLawsPanel(container);
+      }
+    };
+  }
+  const btnNext = container.querySelector("#sim-btn-next");
+  if (btnNext) {
+    btnNext.onclick = () => {
+      if (currentSimStep < maxSteps - 1) {
+        currentSimStep++;
+        renderPhoneticLawsPanel(container);
+      }
+    };
+  }
+}
 function countMentionsInRange(pageList, start, end) {
   if (!Array.isArray(pageList) || start > end) return 0;
   let count = 0;
-  for (const p of pageList) {
-    if (typeof p === 'number' && p >= start && p <= end) count++;
-  }
+  for (const p of pageList) if (typeof p === "number" && p >= start && p <= end) count++;
   return count;
 }
-
 function getVizModuleCatalog() {
   const registry = getVizRegistry();
   return [
-    { id: 'viz08', title: 'VIZ-08 · Исследовательская карта', renderKey: 'renderResearchMap', render: registry.renderResearchMap },
-    { id: 'viz03', title: 'VIZ-03 · Лента открытий', renderKey: 'renderDiscoveryTimeline', render: registry.renderDiscoveryTimeline },
-    { id: 'viz04', title: 'VIZ-04 · Тепловая матрица', renderKey: 'renderHeatmapMatrix', render: registry.renderHeatmapMatrix },
-    { id: 'viz02', title: 'VIZ-02 · Граф сосуществования', renderKey: 'renderCooccurrenceGraph', render: registry.renderCooccurrenceGraph },
-    { id: 'viz07', title: 'VIZ-07 · Bump-chart рангов', renderKey: 'renderTermBumpChart', render: registry.renderTermBumpChart },
-    { id: 'viz06', title: 'VIZ-06 · Хорда языков', renderKey: 'renderLangChord', render: registry.renderLangChord },
-    { id: 'viz01', title: 'VIZ-01 · Карта по векам', renderKey: 'renderMapTimeline', render: registry.renderMapTimeline },
-    { id: 'viz05', title: 'VIZ-05 · Sankey «Слово»', renderKey: 'renderNarrativeSankey', render: registry.renderNarrativeSankey },
+    {
+      id: "viz08",
+      title: "VIZ-08 · Исследовательская карта",
+      renderKey: "renderResearchMap",
+      render: registry.renderResearchMap
+    },
+    {
+      id: "viz03",
+      title: "VIZ-03 · Лента открытий",
+      renderKey: "renderDiscoveryTimeline",
+      render: registry.renderDiscoveryTimeline
+    },
+    {
+      id: "viz04",
+      title: "VIZ-04 · Тепловая матрица",
+      renderKey: "renderHeatmapMatrix",
+      render: registry.renderHeatmapMatrix
+    },
+    {
+      id: "viz02",
+      title: "VIZ-02 · Граф сосуществования",
+      renderKey: "renderCooccurrenceGraph",
+      render: registry.renderCooccurrenceGraph
+    },
+    {
+      id: "viz07",
+      title: "VIZ-07 · Bump-chart рангов",
+      renderKey: "renderTermBumpChart",
+      render: registry.renderTermBumpChart
+    },
+    {
+      id: "viz06",
+      title: "VIZ-06 · Хорда языков",
+      renderKey: "renderLangChord",
+      render: registry.renderLangChord
+    },
+    {
+      id: "viz01",
+      title: "VIZ-01 · Карта по векам",
+      renderKey: "renderMapTimeline",
+      render: registry.renderMapTimeline
+    },
+    {
+      id: "viz05",
+      title: "VIZ-05 · Sankey «Слово»",
+      renderKey: "renderNarrativeSankey",
+      render: registry.renderNarrativeSankey
+    }
   ];
 }
-
-function setVizHostStatus(host, message, className = 'viz-loading') {
+function setVizHostStatus(host, message, kind = "loading") {
   if (!host) return;
-  host.textContent = '';
-  const status = document.createElement('div');
-  status.className = String(className || 'viz-loading');
-  status.textContent = String(message || '');
+  const statusKind = [
+    "loading",
+    "empty",
+    "error"
+  ].includes(String(kind)) ? String(kind) : "loading";
+  const titleByKind = {
+    loading: "Загрузка",
+    empty: "Нет данных",
+    error: "Ошибка"
+  };
+  if (typeof window !== "undefined" && window.VizShell && typeof window.VizShell.showStatus === "function") {
+    window.VizShell.showStatus(host, statusKind, titleByKind[statusKind] || "Статус", message);
+    return;
+  }
+  host.textContent = "";
+  const status = document.createElement("div");
+  status.className = `viz-status viz-status-${statusKind}`;
+  status.setAttribute("role", statusKind === "error" ? "alert" : "status");
+  status.textContent = String(message || "");
   host.appendChild(status);
 }
-
 function mountVizModule(host, moduleDef) {
   if (!host || !moduleDef) return;
-  setVizHostStatus(host, 'Загрузка модуля…');
-  ensureVizStateLoaded()
-    .then(() => ensureVizModuleLoaded(moduleDef.id))
-    .catch(() => null)
-    .then(() => warmupVizCacheInWorker().catch(() => null))
-    .then(() => {
-      const registry = getVizRegistry();
-      const renderFn = registry[moduleDef.renderKey] || moduleDef.render;
-      if (typeof renderFn !== 'function') {
-        setVizHostStatus(host, 'Модуль не подключён. Проверьте scripts/viz/*.js.', 'viz-card');
-        return;
-      }
-      try {
-        renderFn(host);
-        currentVizCleanup = typeof host.__vizCleanup === 'function' ? host.__vizCleanup : null;
-      } catch (e) {
-        const msg = String(e && e.message ? e.message : e);
-        setVizHostStatus(host, `Ошибка рендера: ${msg}`, 'viz-card');
-      }
-    })
-    .catch((e) => {
-      const msg = String(e && e.message ? e.message : e);
-      setVizHostStatus(host, `Ошибка загрузки модуля: ${msg}`, 'viz-card');
-    });
+  setVizHostStatus(host, "Загрузка модуля…", "loading");
+  ensureVizStateLoaded().then(() => ensureVizModuleLoaded(moduleDef.id)).catch(() => null).then(() => warmupVizCacheInWorker().catch(() => null)).then(() => {
+    const renderFn = getVizRegistry()[moduleDef.renderKey] || moduleDef.render;
+    if (typeof renderFn !== "function") {
+      setVizHostStatus(host, "Модуль не подключён. Проверьте scripts/viz/*.js.", "error");
+      return;
+    }
+    try {
+      renderFn(host);
+      currentVizCleanup = typeof host.__vizCleanup === "function" ? host.__vizCleanup : null;
+    } catch (e) {
+      setVizHostStatus(host, `Ошибка рендера: ${String(e && e.message ? e.message : e)}`, "error");
+    }
+  }).catch((e) => {
+    setVizHostStatus(host, `Ошибка загрузки модуля: ${String(e && e.message ? e.message : e)}`, "error");
+  });
 }
-
 function renderVizPanel(container) {
   cleanupActiveVizModule();
   const catalog = getVizModuleCatalog();
-  const validModuleIds = new Set(catalog.map((m) => m.id));
-  if (!validModuleIds.has(currentVizModule)) currentVizModule = 'viz03';
+  if (!new Set(catalog.map((m) => m.id)).has(currentVizModule)) currentVizModule = "viz03";
   const activeBook = getActiveBook();
-  const activeBookLabel = activeBook.short_title || activeBook.title || activeBook.book_id || '\u0442\u0435\u043a\u0443\u0449\u0430\u044f \u043a\u043d\u0438\u0433\u0430';
-
+  const activeBookLabel = activeBook.short_title || activeBook.title || activeBook.book_id || "текущая книга";
   container.innerHTML = `<div class="panel active viz-shell">
     <div class="viz-header-row">
       <h2 class="viz-title">Визуализации</h2>
       <div class="viz-header-actions">
-        <span class="viz-source-chip">${escapeHtml(activeBookLabel)}</span>
+        <span class="viz-source-chip" title="Активная книга">${escapeHtml(activeBookLabel)}</span>
         <a class="related-link viz-canonical-link" href="${escapeHtml(buildVizHash(currentVizModule))}">канонический маршрут</a>
         <a class="related-link viz-corpus-link" href="${escapeHtml(buildCorpusVizHash(currentVizModule))}">маршрут корпуса</a>
       </div>
     </div>
-    <div class="viz-module-tabs" id="viz-module-tabs"></div>
-    <div id="viz-module-host" class="viz-module-host"><div class="viz-loading">Подготовка кэша…</div></div>
+    <div class="viz-module-tabs" id="viz-module-tabs" role="tablist" aria-label="Модули визуализации"></div>
+    <div id="viz-module-host" class="viz-module-host"><div class="viz-status viz-status-loading" role="status">Подготовка кэша…</div></div>
   </div>`;
-
-  const tabs = container.querySelector('#viz-module-tabs');
-  const host = container.querySelector('#viz-module-host');
+  const tabs = container.querySelector("#viz-module-tabs");
+  const host = container.querySelector("#viz-module-host");
   if (!tabs || !host) return;
-
   for (const item of catalog) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'viz-module-btn' + (item.id === currentVizModule ? ' active' : '');
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "viz-module-btn" + (item.id === currentVizModule ? " active" : "");
     btn.dataset.module = item.id;
+    btn.setAttribute("role", "tab");
+    btn.setAttribute("aria-selected", item.id === currentVizModule ? "true" : "false");
     btn.textContent = item.title;
     bindActionWithKeyboard(btn, () => {
       currentVizModule = item.id;
-      currentVizQueryString = '';
+      currentVizQueryString = "";
       renderVizPanel(container);
       syncNavigationHashOnly();
     });
     tabs.appendChild(btn);
   }
-
   mountVizModule(host, catalog.find((m) => m.id === currentVizModule) || catalog[0]);
 }
-
 function renderScholarChronologyPanel(container) {
   const scholar = APP_DATA.scholar || {};
   const rawEvents = Array.isArray(scholar.chronology) ? scholar.chronology : [];
   const typeLabels = {
-    all: 'Все типы',
-    discovery: 'Открытия и находки',
-    publication: 'Публикации',
-    decipherment: 'Расшифровки',
-    law: 'Законы и теории',
-    milestone: 'Ключевые вехи',
+    all: "Все типы",
+    discovery: "Открытия и находки",
+    publication: "Публикации",
+    decipherment: "Расшифровки",
+    law: "Законы и теории",
+    milestone: "Ключевые вехи"
   };
   const chronologyMap = [
-    { needle: 'бопп', type: 'names', heads: ['Бопп Фр.'] },
-    { needle: 'раск', type: 'names', heads: ['Раск Р. К.'] },
-    { needle: 'гримм', type: 'names', heads: ['Гримм Я.'] },
-    { needle: 'вернер', type: 'names', heads: ['Вернер К.'] },
-    { needle: 'вакернагель', type: 'names', heads: ['Вакернагель Я.'] },
-    { needle: 'шампольон', type: 'names', heads: ['Шампольон Ф.'] },
-    { needle: 'вентрис', type: 'names', heads: ['Вентрис М.'] },
-    { needle: 'зализняк', type: 'names', heads: ['Зализняк А. А.'] },
-    { needle: 'берестян', type: 'toponyms', heads: ['Новгород'] },
-    { needle: 'санскрит', type: 'languages', heads: ['санскрит'] },
-    { needle: 'древнеперсид', type: 'languages', heads: ['древнеперсидский'] },
-    { needle: 'линейное письмо', type: 'languages', heads: ['древнегреческий'] },
+    {
+      needle: "бопп",
+      type: "names",
+      heads: ["Бопп Фр."]
+    },
+    {
+      needle: "раск",
+      type: "names",
+      heads: ["Раск Р. К."]
+    },
+    {
+      needle: "гримм",
+      type: "names",
+      heads: ["Гримм Я."]
+    },
+    {
+      needle: "вернер",
+      type: "names",
+      heads: ["Вернер К."]
+    },
+    {
+      needle: "вакернагель",
+      type: "names",
+      heads: ["Вакернагель Я."]
+    },
+    {
+      needle: "шампольон",
+      type: "names",
+      heads: ["Шампольон Ф."]
+    },
+    {
+      needle: "вентрис",
+      type: "names",
+      heads: ["Вентрис М."]
+    },
+    {
+      needle: "зализняк",
+      type: "names",
+      heads: ["Зализняк А. А."]
+    },
+    {
+      needle: "берестян",
+      type: "toponyms",
+      heads: ["Новгород"]
+    },
+    {
+      needle: "санскрит",
+      type: "languages",
+      heads: ["санскрит"]
+    },
+    {
+      needle: "древнеперсид",
+      type: "languages",
+      heads: ["древнеперсидский"]
+    },
+    {
+      needle: "линейное письмо",
+      type: "languages",
+      heads: ["древнегреческий"]
+    }
   ];
   const pickExistingHead = (type, heads) => {
-    for (const h of (heads || [])) {
+    for (const h of heads || []) {
       const resolved = resolveExistingHead(type, h);
       if (getIndexedItem(type, resolved)) return resolved;
     }
-    return '';
+    return "";
   };
   const classifyEvent = (ev) => {
-    const text = String(ev && ev.event ? ev.event : '').toLowerCase();
-    if (text.includes('расшифров')) return 'decipherment';
-    if (text.includes('закон') || text.includes('теор')) return 'law';
-    if (text.includes('публику') || text.includes('изда')) return 'publication';
-    if (text.includes('найден') || text.includes('обнаруж')) return 'discovery';
-    return 'milestone';
+    const text = String(ev && ev.event ? ev.event : "").toLowerCase();
+    if (text.includes("расшифров")) return "decipherment";
+    if (text.includes("закон") || text.includes("теор")) return "law";
+    if (text.includes("публику") || text.includes("изда")) return "publication";
+    if (text.includes("найден") || text.includes("обнаруж")) return "discovery";
+    return "milestone";
   };
   const romanToInt = (roman) => {
-    const map = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+    const map = {
+      I: 1,
+      V: 5,
+      X: 10,
+      L: 50,
+      C: 100,
+      D: 500,
+      M: 1e3
+    };
     let prev = 0;
     let sum = 0;
-    const raw = String(roman || '').toUpperCase();
+    const raw = String(roman || "").toUpperCase();
     for (let i = raw.length - 1; i >= 0; i--) {
       const cur = map[raw[i]] || 0;
       if (cur < prev) sum -= cur;
@@ -10471,57 +10576,95 @@ function renderScholarChronologyPanel(container) {
     return sum;
   };
   const parseYearSpan = (value) => {
-    if (Number.isFinite(value)) return { from: value, to: value, label: String(value) };
-    const raw = String(value || '').trim();
-    if (!raw) return { from: 0, to: 0, label: '—' };
+    if (Number.isFinite(value)) return {
+      from: value,
+      to: value,
+      label: String(value)
+    };
+    const raw = String(value || "").trim();
+    if (!raw) return {
+      from: 0,
+      to: 0,
+      label: "—"
+    };
     if (/^\d{3,4}$/.test(raw)) {
       const y = parseInt(raw, 10);
-      return { from: y, to: y, label: raw };
+      return {
+        from: y,
+        to: y,
+        label: raw
+      };
     }
     const range = raw.match(/(\d{3,4})\s*[–-]\s*(\d{2,4})/);
     if (range) {
       const left = parseInt(range[1], 10);
       let right = parseInt(range[2], 10);
-      if (range[2].length === 2) {
-        const prefix = Math.floor(left / 100) * 100;
-        right = prefix + right;
-      }
-      return { from: Math.min(left, right), to: Math.max(left, right), label: raw };
+      if (range[2].length === 2) right = Math.floor(left / 100) * 100 + right;
+      return {
+        from: Math.min(left, right),
+        to: Math.max(left, right),
+        label: raw
+      };
     }
     const decade = raw.match(/(\d{3,4})\s*-\s*е/);
     if (decade) {
       const left = parseInt(decade[1], 10);
-      return { from: left, to: left + 9, label: raw };
+      return {
+        from: left,
+        to: left + 9,
+        label: raw
+      };
     }
     const century = raw.match(/([IVXLCDM]+)\s*в/i);
     if (century) {
       const cent = romanToInt(century[1]);
       const bce = /до\s*н\.?\s*э\.?/i.test(raw);
       if (cent > 0) {
-        if (bce) return { from: -cent * 100 + 1, to: -(cent - 1) * 100, label: raw };
-        return { from: (cent - 1) * 100 + 1, to: cent * 100, label: raw };
+        if (bce) return {
+          from: -cent * 100 + 1,
+          to: -(cent - 1) * 100,
+          label: raw
+        };
+        return {
+          from: (cent - 1) * 100 + 1,
+          to: cent * 100,
+          label: raw
+        };
       }
     }
     const firstInt = raw.match(/-?\d{3,4}/);
     if (firstInt) {
       const y = parseInt(firstInt[0], 10);
-      return { from: y, to: y, label: raw };
+      return {
+        from: y,
+        to: y,
+        label: raw
+      };
     }
-    return { from: 0, to: 0, label: raw };
+    return {
+      from: 0,
+      to: 0,
+      label: raw
+    };
   };
   const resolveTarget = (ev) => {
-    const text = String(ev && ev.event ? ev.event : '');
+    const text = String(ev && ev.event ? ev.event : "");
     const lower = text.toLowerCase();
     for (const row of chronologyMap) {
       if (!lower.includes(row.needle)) continue;
       const head = pickExistingHead(row.type, row.heads);
-      if (head) return { mode: 'item', type: row.type, head };
+      if (head) return {
+        mode: "item",
+        type: row.type,
+        head
+      };
     }
-    const firstToken = text.split(/[,\s]+/).filter(Boolean)[0] || '';
-    const query = firstToken.length >= 3 ? firstToken : text.slice(0, 40);
-    return { mode: 'search', query };
+    const firstToken = text.split(/[,\s]+/).filter(Boolean)[0] || "";
+    return {
+      mode: "search",
+      query: firstToken.length >= 3 ? firstToken : text.slice(0, 40)
+    };
   };
-
   const events = rawEvents.map((ev, idx) => {
     const span = parseYearSpan(ev.year);
     const target = resolveTarget(ev);
@@ -10533,14 +10676,16 @@ function renderScholarChronologyPanel(container) {
       _to: span.to,
       _yearLabel: span.label,
       _type: type,
-      _target: target,
+      _target: target
     };
   }).sort((a, b) => a._from - b._from || a._to - b._to || a._idx - b._idx);
-
-  const minYear = events.length ? Math.min(...events.map(e => e._from)) : 0;
-  const maxYear = events.length ? Math.max(...events.map(e => e._to)) : 0;
-  const state = { type: 'all', start: minYear, end: maxYear };
-
+  const minYear = events.length ? Math.min(...events.map((e) => e._from)) : 0;
+  const maxYear = events.length ? Math.max(...events.map((e) => e._to)) : 0;
+  const state = {
+    type: "all",
+    start: minYear,
+    end: maxYear
+  };
   container.innerHTML = `<div class="panel active chronology-panel">
     <div class="chronology-inner">
       <h2 class="chronology-title">Хронология лингвистических открытий</h2>
@@ -10548,7 +10693,7 @@ function renderScholarChronologyPanel(container) {
       <div class="chronology-controls">
         <label class="chronology-label">Тип события
           <select id="chronology-type" class="chronology-select">
-            ${Object.keys(typeLabels).map(k => `<option value="${escapeHtml(k)}">${escapeHtml(typeLabels[k])}</option>`).join('')}
+            ${Object.keys(typeLabels).map((k) => `<option value="${escapeHtml(k)}">${escapeHtml(typeLabels[k])}</option>`).join("")}
           </select>
         </label>
         <label class="chronology-label">Zoom
@@ -10572,21 +10717,35 @@ function renderScholarChronologyPanel(container) {
       <div id="chronology-list" class="chronology-list"></div>
     </div>
   </div>`;
-
-  const typeSelect = container.querySelector('#chronology-type');
-  const zoomSelect = container.querySelector('#chronology-zoom');
-  const startInput = container.querySelector('#chronology-start');
-  const endInput = container.querySelector('#chronology-end');
-  const exportBtn = container.querySelector('#chronology-export-md');
-  const statsEl = container.querySelector('#chronology-stats');
-  const listEl = container.querySelector('#chronology-list');
+  const typeSelect = container.querySelector("#chronology-type");
+  const zoomSelect = container.querySelector("#chronology-zoom");
+  const startInput = container.querySelector("#chronology-start");
+  const endInput = container.querySelector("#chronology-end");
+  const exportBtn = container.querySelector("#chronology-export-md");
+  const statsEl = container.querySelector("#chronology-stats");
+  const listEl = container.querySelector("#chronology-list");
   let lastFiltered = events.slice();
-
   const applyZoomPreset = (zoom) => {
-    if (zoom === 'xix') { state.start = 1800; state.end = 1899; return; }
-    if (zoom === 'xx') { state.start = 1900; state.end = 1999; return; }
-    if (zoom === 'xxi') { state.start = 2000; state.end = Math.max(2000, maxYear); return; }
-    if (zoom === 'all') { state.start = minYear; state.end = maxYear; return; }
+    if (zoom === "xix") {
+      state.start = 1800;
+      state.end = 1899;
+      return;
+    }
+    if (zoom === "xx") {
+      state.start = 1900;
+      state.end = 1999;
+      return;
+    }
+    if (zoom === "xxi") {
+      state.start = 2e3;
+      state.end = Math.max(2e3, maxYear);
+      return;
+    }
+    if (zoom === "all") {
+      state.start = minYear;
+      state.end = maxYear;
+      return;
+    }
   };
   const syncRangeInputs = () => {
     if (startInput) startInput.value = String(state.start);
@@ -10596,7 +10755,7 @@ function renderScholarChronologyPanel(container) {
     const start = Math.min(state.start, state.end);
     const end = Math.max(state.start, state.end);
     return events.filter((ev) => {
-      const byType = state.type === 'all' || ev._type === state.type;
+      const byType = state.type === "all" || ev._type === state.type;
       const byRange = ev._to >= start && ev._from <= end;
       return byType && byRange;
     });
@@ -10604,24 +10763,21 @@ function renderScholarChronologyPanel(container) {
   const buildMarkdown = (rows) => {
     const start = Math.min(state.start, state.end);
     const end = Math.max(state.start, state.end);
-    const activeBook = getActiveBook();
-    const activeBookId = activeBook.book_id || '';
+    const activeBookId = getActiveBook().book_id || "";
     const activeBookLabel = getBookLabelForSearch(activeBookId);
     const lines = [
-      '# Хронология лингвистических открытий',
-      '',
+      "# Хронология лингвистических открытий",
+      "",
       `Диапазон: ${start}—${end}`,
       `Фильтр по типу: ${typeLabels[state.type] || typeLabels.all}`,
-      '',
+      ""
     ];
-    if (activeBookLabel) {
-      lines.splice(4, 0, `Источник: **${activeBookLabel}**`, `book_id: ${activeBookId}`);
-    }
+    if (activeBookLabel) lines.splice(4, 0, `Источник: **${activeBookLabel}**`, `book_id: ${activeBookId}`);
     for (const ev of rows) {
-      const page = ev.page ? ` (стр. ${ev.page})` : '';
+      const page = ev.page ? ` (стр. ${ev.page})` : "";
       lines.push(`- [${ev._yearLabel}] ${ev.event}${page}`);
     }
-    return lines.join('\n');
+    return lines.join("\n");
   };
   const renderRows = () => {
     const rows = filterEvents();
@@ -10631,46 +10787,40 @@ function renderScholarChronologyPanel(container) {
     if (statsEl) statsEl.textContent = `Показано: ${rows.length} из ${events.length} · диапазон ${start}—${end} · тип: ${typeLabels[state.type] || typeLabels.all}`;
     if (!listEl) return;
     if (!rows.length) {
-      listEl.textContent = '';
-      const empty = document.createElement('div');
-      empty.className = 'chronology-empty';
-      empty.textContent = 'Нет событий в текущем фильтре.';
+      listEl.textContent = "";
+      const empty = document.createElement("div");
+      empty.className = "chronology-empty";
+      empty.textContent = "Нет событий в текущем фильтре.";
       listEl.appendChild(empty);
       return;
     }
-    listEl.textContent = '';
+    listEl.textContent = "";
     for (const ev of rows) {
       const target = ev._target || {};
-      const link = document.createElement('a');
-      const targetMode = String(target.mode || '');
-      const href = targetMode === 'item'
-        ? buildItemHash(target.type, target.head)
-        : (targetMode === 'search'
-          ? buildListSearchHash('all', target.query)
-          : buildCanonicalHash(['scholar', 'chronology']));
-      link.className = 'chronology-event-link';
+      const link = document.createElement("a");
+      const targetMode = String(target.mode || "");
+      const href = targetMode === "item" ? buildItemHash(target.type, target.head) : targetMode === "search" ? buildListSearchHash("all", target.query) : buildCanonicalHash(["scholar", "chronology"]);
+      link.className = "chronology-event-link";
       link.href = href;
-      link.dataset.mode = String(target.mode || '');
-      link.dataset.type = String(target.type || '');
-      link.dataset.head = String(target.head || '');
-      link.dataset.query = String(target.query || '');
-
-      const year = document.createElement('div');
-      year.className = 'chronology-event-year';
-      year.textContent = String(ev._yearLabel || '—');
-
-      const body = document.createElement('div');
-      const text = document.createElement('div');
-      text.className = 'chronology-event-text';
-      text.textContent = String(ev.event || '');
-      const meta = document.createElement('div');
-      meta.className = 'chronology-event-meta';
-      const type = document.createElement('span');
-      type.textContent = String(typeLabels[ev._type] || ev._type || '');
+      link.dataset.mode = String(target.mode || "");
+      link.dataset.type = String(target.type || "");
+      link.dataset.head = String(target.head || "");
+      link.dataset.query = String(target.query || "");
+      const year = document.createElement("div");
+      year.className = "chronology-event-year";
+      year.textContent = String(ev._yearLabel || "—");
+      const body = document.createElement("div");
+      const text = document.createElement("div");
+      text.className = "chronology-event-text";
+      text.textContent = String(ev.event || "");
+      const meta = document.createElement("div");
+      meta.className = "chronology-event-meta";
+      const type = document.createElement("span");
+      type.textContent = String(typeLabels[ev._type] || ev._type || "");
       meta.appendChild(type);
       if (ev.page) {
-        const page = document.createElement('span');
-        page.className = 'chronology-event-page';
+        const page = document.createElement("span");
+        page.className = "chronology-event-page";
         page.textContent = `стр. ${String(ev.page)}`;
         meta.appendChild(page);
       }
@@ -10683,24 +10833,23 @@ function renderScholarChronologyPanel(container) {
     bindActionWithKeyboardList(listEl);
   };
   const bindActionWithKeyboardList = (root) => {
-    if (!root || typeof root.querySelectorAll !== 'function') return;
-    root.querySelectorAll('.chronology-event-link').forEach((el) => {
+    if (!root || typeof root.querySelectorAll !== "function") return;
+    root.querySelectorAll(".chronology-event-link").forEach((el) => {
       bindActionWithKeyboard(el, () => {
-        const mode = String(el.dataset.mode || '');
-        if (mode === 'item') {
-          const type = String(el.dataset.type || '');
-          const head = String(el.dataset.head || '');
+        if (String(el.dataset.mode || "") === "item") {
+          const type = String(el.dataset.type || "");
+          const head = String(el.dataset.head || "");
           if (type && head) navigateToItem(type, head);
           return;
         }
-        const query = String(el.dataset.query || '');
+        const query = String(el.dataset.query || "");
         if (!query) return;
-        currentEntity = 'all';
-        currentTab = 'list';
+        currentEntity = "all";
+        currentTab = "list";
         searchQuery = query;
         selectedItem = null;
         selectedItemType = null;
-        rightPaneMode = 'histogram';
+        rightPaneMode = "histogram";
         renderEntitySwitcher();
         renderTabs();
         renderContent();
@@ -10708,115 +10857,133 @@ function renderScholarChronologyPanel(container) {
       });
     });
   };
-
   if (typeSelect) {
     typeSelect.value = state.type;
     typeSelect.onchange = (e) => {
-      const next = e && e.target && typeof e.target.value === 'string' ? e.target.value : 'all';
-      state.type = typeLabels[next] ? next : 'all';
+      const next = e && e.target && typeof e.target.value === "string" ? e.target.value : "all";
+      state.type = typeLabels[next] ? next : "all";
       renderRows();
     };
   }
   if (zoomSelect) {
-    zoomSelect.value = 'all';
+    zoomSelect.value = "all";
     zoomSelect.onchange = (e) => {
-      const next = e && e.target && typeof e.target.value === 'string' ? e.target.value : 'all';
-      if (next !== 'custom') {
+      const next = e && e.target && typeof e.target.value === "string" ? e.target.value : "all";
+      if (next !== "custom") {
         applyZoomPreset(next);
         syncRangeInputs();
       }
       renderRows();
     };
   }
-  if (startInput) {
-    startInput.onchange = () => {
-      const raw = parseInt(startInput.value || '', 10);
-      if (Number.isFinite(raw)) state.start = raw;
-      if (zoomSelect) zoomSelect.value = 'custom';
-      renderRows();
-    };
-  }
-  if (endInput) {
-    endInput.onchange = () => {
-      const raw = parseInt(endInput.value || '', 10);
-      if (Number.isFinite(raw)) state.end = raw;
-      if (zoomSelect) zoomSelect.value = 'custom';
-      renderRows();
-    };
-  }
-  if (exportBtn) {
-    exportBtn.onclick = () => {
-      const start = Math.min(state.start, state.end);
-      const end = Math.max(state.start, state.end);
-      const md = buildMarkdown(lastFiltered);
-      downloadTextFile(`chronology-${start}-${end}.md`, md, 'text/markdown;charset=utf-8');
-    };
-  }
+  if (startInput) startInput.onchange = () => {
+    const raw = parseInt(startInput.value || "", 10);
+    if (Number.isFinite(raw)) state.start = raw;
+    if (zoomSelect) zoomSelect.value = "custom";
+    renderRows();
+  };
+  if (endInput) endInput.onchange = () => {
+    const raw = parseInt(endInput.value || "", 10);
+    if (Number.isFinite(raw)) state.end = raw;
+    if (zoomSelect) zoomSelect.value = "custom";
+    renderRows();
+  };
+  if (exportBtn) exportBtn.onclick = () => {
+    const start = Math.min(state.start, state.end);
+    const end = Math.max(state.start, state.end);
+    const md = buildMarkdown(lastFiltered);
+    downloadTextFile(`chronology-${start}-${end}.md`, md, "text/markdown;charset=utf-8");
+  };
   renderRows();
 }
-
 function renderPageTrendsPanel(container) {
   const totalPages = getTotalBookPages();
-  const clamp = (v) => Math.max(1, Math.min(totalPages, Number.isInteger(v) ? v : parseInt(v || '1', 10) || 1));
+  const clamp = (v) => Math.max(1, Math.min(totalPages, Number.isInteger(v) ? v : parseInt(v || "1", 10) || 1));
   trendsRangeStart = clamp(trendsRangeStart);
   trendsRangeEnd = clamp(trendsRangeEnd);
   if (trendsRangeStart > trendsRangeEnd) [trendsRangeStart, trendsRangeEnd] = [trendsRangeEnd, trendsRangeStart];
   const start = trendsRangeStart;
   const end = trendsRangeEnd;
   const mid = Math.floor((start + end) / 2);
-
   const chapters = APP_DATA.chapters || [];
   const types = [
-    { key: 'names', label: 'Имена' },
-    { key: 'toponyms', label: 'Топонимы' },
-    { key: 'ethnonyms', label: 'Этнонимы' },
-    { key: 'languages', label: 'Языки' },
-    { key: 'lexicon', label: 'Лексика' },
-    { key: 'subject', label: 'Предметный' },
+    {
+      key: "names",
+      label: "Имена"
+    },
+    {
+      key: "toponyms",
+      label: "Топонимы"
+    },
+    {
+      key: "ethnonyms",
+      label: "Этнонимы"
+    },
+    {
+      key: "languages",
+      label: "Языки"
+    },
+    {
+      key: "lexicon",
+      label: "Лексика"
+    },
+    {
+      key: "subject",
+      label: "Предметный"
+    }
   ];
-
   const stats = [];
   const globalTrend = [];
   for (const t of types) {
-    const items = (ENTITY_TYPES[t.key] && ENTITY_TYPES[t.key].items) || [];
+    const items = ENTITY_TYPES[t.key] && ENTITY_TYPES[t.key].items || [];
     let mentionTotal = 0;
     const activeItems = [];
     for (const it of items) {
       const totalCount = countMentionsInRange(it.page_list || [], start, end);
       if (totalCount > 0) {
-        activeItems.push({ head: it.head, count: totalCount, type: t.key });
+        activeItems.push({
+          head: it.head,
+          count: totalCount,
+          type: t.key
+        });
         mentionTotal += totalCount;
       }
       if (end > start) {
         const leftCount = countMentionsInRange(it.page_list || [], start, mid);
         const rightCount = countMentionsInRange(it.page_list || [], mid + 1, end);
         const delta = rightCount - leftCount;
-        if (delta !== 0 && leftCount + rightCount >= 2) {
-          globalTrend.push({ head: it.head, type: t.key, delta, leftCount, rightCount });
-        }
+        if (delta !== 0 && leftCount + rightCount >= 2) globalTrend.push({
+          head: it.head,
+          type: t.key,
+          delta,
+          leftCount,
+          rightCount
+        });
       }
     }
-    activeItems.sort((a, b) => (b.count - a.count) || compareHeadsRu(a.head, b.head));
-    stats.push({ ...t, mentionTotal, activeCount: activeItems.length, top: activeItems.slice(0, 8) });
+    activeItems.sort((a, b) => b.count - a.count || compareHeadsRu(a.head, b.head));
+    stats.push({
+      ...t,
+      mentionTotal,
+      activeCount: activeItems.length,
+      top: activeItems.slice(0, 8)
+    });
   }
-
-  const trendUp = globalTrend.filter(x => x.delta > 0).sort((a, b) => (b.delta - a.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
-  const trendDown = globalTrend.filter(x => x.delta < 0).sort((a, b) => (a.delta - b.delta) || compareHeadsRu(a.head, b.head)).slice(0, 14);
+  const trendUp = globalTrend.filter((x) => x.delta > 0).sort((a, b) => b.delta - a.delta || compareHeadsRu(a.head, b.head)).slice(0, 14);
+  const trendDown = globalTrend.filter((x) => x.delta < 0).sort((a, b) => a.delta - b.delta || compareHeadsRu(a.head, b.head)).slice(0, 14);
   const activeBookId = getActiveBook().book_id;
   const activeBookLabel = getBookLabelForSearch(activeBookId);
-
-  let html = '<div class="panel active page-trends-panel"><div class="page-trends-shell">';
-  html += '<div class="page-trends-head">';
-  html += '<div><h2 class="page-trends-title">Динамика по страницам</h2>';
-  html += '<div class="page-trends-intro">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div></div>';
+  let html = "<div class=\"panel active page-trends-panel\"><div class=\"page-trends-shell\">";
+  html += "<div class=\"page-trends-head\">";
+  html += "<div><h2 class=\"page-trends-title\">Динамика по страницам</h2>";
+  html += "<div class=\"page-trends-intro\">Выберите окно страниц и смотрите, как меняется плотность упоминаний и какие сущности усиливаются/ослабевают во второй половине диапазона.</div></div>";
   html += `<div class="page-trends-source-chip">${escapeHtml(activeBookLabel)}</div>`;
-  html += '<div class="page-trends-actions">';
-  html += '<button id="trend-export-csv" class="page-trends-btn">Экспорт CSV</button>';
-  html += '<button id="trend-export-md" class="page-trends-btn">Экспорт Markdown</button>';
-  html += '<button id="trend-copy-link" class="page-trends-btn">Скопировать ссылку</button>';
-  html += '</div></div>';
-
-  const chapterOptions = chapters.map((ch, idx) => `<option value="${idx}">${escapeHtml(ch.name)} (${ch.start}-${ch.end})</option>`).join('');
+  html += "<div class=\"page-trends-actions\">";
+  html += "<button id=\"trend-export-csv\" class=\"page-trends-btn\">Экспорт CSV</button>";
+  html += "<button id=\"trend-export-md\" class=\"page-trends-btn\">Экспорт Markdown</button>";
+  html += "<button id=\"trend-copy-link\" class=\"page-trends-btn\">Скопировать ссылку</button>";
+  html += "</div></div>";
+  const chapterOptions = chapters.map((ch, idx) => `<option value="${idx}">${escapeHtml(ch.name)} (${ch.start}-${ch.end})</option>`).join("");
   html += `<div class="page-trends-controls">
     <div class="page-trends-range-grid">
       <label class="page-trends-label">
@@ -10839,300 +11006,603 @@ function renderPageTrendsPanel(container) {
       <span class="page-trends-range-note">Диапазон: ${start}-${end} · ширина ${end - start + 1} стр.</span>
     </div>
   </div>`;
-
-  html += '<div class="page-trends-summary-grid">';
-  for (const s of stats) {
-    html += `<div class="page-trends-summary-card">
+  html += "<div class=\"page-trends-summary-grid\">";
+  for (const s of stats) html += `<div class="page-trends-summary-card">
       <div class="page-trends-summary-title">${s.label}</div>
       <div class="page-trends-summary-meta">Сущностей: <strong>${s.activeCount}</strong> · упоминаний: <strong>${s.mentionTotal}</strong></div>
       <div class="page-trends-summary-subtitle">Топ в выбранном окне</div>
-      <div>${s.top.length ? s.top.map(it => `<a class="trend-link page-trend-chip" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(it.type, it.head))}">${escapeHtml(it.head)} · ${it.count}</a>`).join('') : '<span class="page-trends-empty-mark">—</span>'}</div>
+      <div>${s.top.length ? s.top.map((it) => `<a class="trend-link page-trend-chip" data-type="${escapeHtml(it.type)}" data-head="${escapeHtml(it.head)}" href="${escapeHtml(buildItemHash(it.type, it.head))}">${escapeHtml(it.head)} · ${it.count}</a>`).join("") : "<span class=\"page-trends-empty-mark\">—</span>"}</div>
     </div>`;
-  }
-  html += '</div>';
-
-  const trendLinks = (rows, tone) => rows.length
-    ? rows.map(r => `<a class="trend-link page-trend-row" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}">
+  html += "</div>";
+  const trendLinks = (rows, tone) => rows.length ? rows.map((r) => `<a class="trend-link page-trend-row" data-type="${escapeHtml(r.type)}" data-head="${escapeHtml(r.head)}" href="${escapeHtml(buildItemHash(r.type, r.head))}">
         <span class="page-trend-head">${escapeHtml(r.head)}</span>
-        <span class="page-trend-metrics ${tone === 'up' ? 'trend-up' : 'trend-down'}">${r.delta > 0 ? '+' : ''}${r.delta} (${r.leftCount}→${r.rightCount})</span>
-      </a>`).join('')
-    : '<div class="page-trends-empty-mark">—</div>';
-
+        <span class="page-trend-metrics ${tone === "up" ? "trend-up" : "trend-down"}">${r.delta > 0 ? "+" : ""}${r.delta} (${r.leftCount}→${r.rightCount})</span>
+      </a>`).join("") : "<div class=\"page-trends-empty-mark\">—</div>";
   html += `<div class="page-trends-delta-grid">
     <div class="page-trends-delta-card">
       <div class="page-trends-delta-title">Растут во второй половине диапазона</div>
-      ${trendLinks(trendUp, 'up')}
+      ${trendLinks(trendUp, "up")}
     </div>
     <div class="page-trends-delta-card">
       <div class="page-trends-delta-title">Слабеют во второй половине диапазона</div>
-      ${trendLinks(trendDown, 'down')}
+      ${trendLinks(trendDown, "down")}
     </div>
   </div>`;
-
-  html += '</div></div>';
+  html += "</div></div>";
   container.innerHTML = html;
-
   const rerender = () => {
     renderPageTrendsPanel(container);
     syncNavigationHashOnly();
   };
-  const startRange = document.getElementById('trend-start-range');
-  const endRange = document.getElementById('trend-end-range');
-  const startInput = document.getElementById('trend-start-input');
-  const endInput = document.getElementById('trend-end-input');
-  const chapterSelect = document.getElementById('trend-chapter-select');
-  const exportCsvBtn = document.getElementById('trend-export-csv');
-  const exportMdBtn = document.getElementById('trend-export-md');
-  const copyLinkBtn = document.getElementById('trend-copy-link');
-
+  const startRange = document.getElementById("trend-start-range");
+  const endRange = document.getElementById("trend-end-range");
+  const startInput = document.getElementById("trend-start-input");
+  const endInput = document.getElementById("trend-end-input");
+  const chapterSelect = document.getElementById("trend-chapter-select");
+  const exportCsvBtn = document.getElementById("trend-export-csv");
+  const exportMdBtn = document.getElementById("trend-export-md");
+  const copyLinkBtn = document.getElementById("trend-copy-link");
   const csvEscape = (v) => {
-    const s = String(v == null ? '' : v);
-    return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    const s = String(v == null ? "" : v);
+    return /[",\n;]/.test(s) ? `"${s.replace(/"/g, "\"\"")}"` : s;
   };
-  const csvRows = [['source', 'book_id', 'range_start', 'range_end', 'section', 'type', 'head', 'value', 'delta', 'left_half', 'right_half']];
+  const csvRows = [[
+    "source",
+    "book_id",
+    "range_start",
+    "range_end",
+    "section",
+    "type",
+    "head",
+    "value",
+    "delta",
+    "left_half",
+    "right_half"
+  ]];
   for (const s of stats) {
-    csvRows.push([activeBookLabel, activeBookId, start, end, 'summary', s.key, '', s.mentionTotal, '', '', '']);
-    for (const top of s.top) csvRows.push([activeBookLabel, activeBookId, start, end, 'top', s.key, top.head, top.count, '', '', '']);
+    csvRows.push([
+      activeBookLabel,
+      activeBookId,
+      start,
+      end,
+      "summary",
+      s.key,
+      "",
+      s.mentionTotal,
+      "",
+      "",
+      ""
+    ]);
+    for (const top of s.top) csvRows.push([
+      activeBookLabel,
+      activeBookId,
+      start,
+      end,
+      "top",
+      s.key,
+      top.head,
+      top.count,
+      "",
+      "",
+      ""
+    ]);
   }
-  for (const row of trendUp) csvRows.push([activeBookLabel, activeBookId, start, end, 'trend_up', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
-  for (const row of trendDown) csvRows.push([activeBookLabel, activeBookId, start, end, 'trend_down', row.type, row.head, '', row.delta, row.leftCount, row.rightCount]);
-  const csvText = csvRows.map(r => r.map(csvEscape).join(',')).join('\n');
-
+  for (const row of trendUp) csvRows.push([
+    activeBookLabel,
+    activeBookId,
+    start,
+    end,
+    "trend_up",
+    row.type,
+    row.head,
+    "",
+    row.delta,
+    row.leftCount,
+    row.rightCount
+  ]);
+  for (const row of trendDown) csvRows.push([
+    activeBookLabel,
+    activeBookId,
+    start,
+    end,
+    "trend_down",
+    row.type,
+    row.head,
+    "",
+    row.delta,
+    row.leftCount,
+    row.rightCount
+  ]);
+  const csvText = csvRows.map((r) => r.map(csvEscape).join(",")).join("\n");
   const mdLines = [];
   mdLines.push(`# Динамика по страницам: ${start}-${end}`);
-  mdLines.push('');
+  mdLines.push("");
   mdLines.push(`Источник: **${activeBookLabel}**`);
   mdLines.push(`book_id: ${activeBookId}`);
-  mdLines.push('');
+  mdLines.push("");
   mdLines.push(`Окно: **${start}-${end}** (ширина ${end - start + 1} стр.)`);
-  mdLines.push('');
-  mdLines.push('## Сводка по типам');
+  mdLines.push("");
+  mdLines.push("## Сводка по типам");
   for (const s of stats) mdLines.push(`- ${s.label}: сущностей ${s.activeCount}, упоминаний ${s.mentionTotal}`);
-  mdLines.push('');
-  mdLines.push('## Рост во второй половине');
-  if (trendUp.length) for (const r of trendUp) mdLines.push(`- ${r.head} [${r.type}] ${r.leftCount}→${r.rightCount} (Δ ${r.delta > 0 ? '+' : ''}${r.delta})`);
-  else mdLines.push('- —');
-  mdLines.push('');
-  mdLines.push('## Снижение во второй половине');
+  mdLines.push("");
+  mdLines.push("## Рост во второй половине");
+  if (trendUp.length) for (const r of trendUp) mdLines.push(`- ${r.head} [${r.type}] ${r.leftCount}→${r.rightCount} (Δ ${r.delta > 0 ? "+" : ""}${r.delta})`);
+  else mdLines.push("- —");
+  mdLines.push("");
+  mdLines.push("## Снижение во второй половине");
   if (trendDown.length) for (const r of trendDown) mdLines.push(`- ${r.head} [${r.type}] ${r.leftCount}→${r.rightCount} (Δ ${r.delta})`);
-  else mdLines.push('- —');
-  const mdText = mdLines.join('\n');
-
-  if (startRange) startRange.oninput = () => { trendsRangeStart = clamp(parseInt(startRange.value, 10)); rerender(); };
-  if (endRange) endRange.oninput = () => { trendsRangeEnd = clamp(parseInt(endRange.value, 10)); rerender(); };
-  if (startInput) startInput.onchange = () => { trendsRangeStart = clamp(parseInt(startInput.value, 10)); rerender(); };
-  if (endInput) endInput.onchange = () => { trendsRangeEnd = clamp(parseInt(endInput.value, 10)); rerender(); };
-  if (chapterSelect) {
-    chapterSelect.onchange = () => {
-      const idx = parseInt(chapterSelect.value, 10);
-      if (!Number.isInteger(idx) || idx < 0 || idx >= chapters.length) return;
-      trendsRangeStart = chapters[idx].start;
-      trendsRangeEnd = chapters[idx].end;
-      rerender();
-    };
-  }
-  if (exportCsvBtn) exportCsvBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.csv`, csvText, 'text/csv;charset=utf-8');
-  if (exportMdBtn) exportMdBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.md`, mdText, 'text/markdown;charset=utf-8');
-  if (copyLinkBtn) {
-    copyLinkBtn.onclick = async () => {
-      const ok = await copyCurrentUrl();
-      const prev = copyLinkBtn.textContent;
-      copyLinkBtn.textContent = ok ? 'Ссылка скопирована' : 'Не удалось скопировать';
-      announceUiMessage(ok ? 'Link copied' : 'Failed to copy link');
-      setTimeout(() => { copyLinkBtn.textContent = prev; }, 1200);
-    };
-  }
-  bindNavigateLinks(container, '.trend-link[data-head]', 'all');
+  else mdLines.push("- —");
+  const mdText = mdLines.join("\n");
+  if (startRange) startRange.oninput = () => {
+    trendsRangeStart = clamp(parseInt(startRange.value, 10));
+    rerender();
+  };
+  if (endRange) endRange.oninput = () => {
+    trendsRangeEnd = clamp(parseInt(endRange.value, 10));
+    rerender();
+  };
+  if (startInput) startInput.onchange = () => {
+    trendsRangeStart = clamp(parseInt(startInput.value, 10));
+    rerender();
+  };
+  if (endInput) endInput.onchange = () => {
+    trendsRangeEnd = clamp(parseInt(endInput.value, 10));
+    rerender();
+  };
+  if (chapterSelect) chapterSelect.onchange = () => {
+    const idx = parseInt(chapterSelect.value, 10);
+    if (!Number.isInteger(idx) || idx < 0 || idx >= chapters.length) return;
+    trendsRangeStart = chapters[idx].start;
+    trendsRangeEnd = chapters[idx].end;
+    rerender();
+  };
+  if (exportCsvBtn) exportCsvBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.csv`, csvText, "text/csv;charset=utf-8");
+  if (exportMdBtn) exportMdBtn.onclick = () => downloadTextFile(`page-trends-${start}-${end}.md`, mdText, "text/markdown;charset=utf-8");
+  if (copyLinkBtn) copyLinkBtn.onclick = async () => {
+    const ok = await copyCurrentUrl();
+    const prev = copyLinkBtn.textContent;
+    copyLinkBtn.textContent = ok ? "Ссылка скопирована" : "Не удалось скопировать";
+    announceUiMessage(ok ? "Link copied" : "Failed to copy link");
+    setTimeout(() => {
+      copyLinkBtn.textContent = prev;
+    }, 1200);
+  };
+  bindNavigateLinks(container, ".trend-link[data-head]", "all");
 }
-
 function renderScholarPanel(container) {
   const s = APP_DATA.scholar || {};
-  const scholarViewportWidth = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 1280;
-  const reconstructionColumns = scholarViewportWidth >= 1280 ? 4 : (scholarViewportWidth >= 980 ? 3 : (scholarViewportWidth >= 680 ? 2 : 1));
-  let html = '<div class="panel active scholar-panel"><div class="scholar-inner">';
-  html += '<h2 class="scholar-title">Профессиональный аппарат</h2>';
-  html += '<div class="scholar-intro">Дополнительные материалы для взрослого читателя, студента-лингвиста, преподавателя и специалиста-русиста.</div>';
 
-  // Якорное оглавление
-  const sections = [
-    ['biblio', '1. Библиография работ Зализняка'],
-    ['extended_cards', '2. Расширенные сведения о ключевых лингвистах'],
-    ['controversies', '3. Спорные вопросы и дискуссионные места'],
-    ['original', '4. Оригинальные формы по языкам'],
-    ['birch', '5. Конкорданс берестяных грамот'],
-    ['chronology', '6. Хронология лингвистических открытий'],
-    ['isoglosses', '7. Изоглоссы русских диалектов'],
-    ['slovo', '8. Аргументация о подлинности «Слова о полку Игореве»'],
-    ['accents', '9. Акцентологические парадигмы Зализняка'],
-    ['correspondences', '10. Сравнительная таблица фонетических соответствий'],
-    ['reconstructions', '11. Реконструкции'],
-  ];
-  html += '<div class="scholar-toc">';
-  for (const [id, title] of sections) {
-    html += `<a class="scholar-toc-link" href="#sch-${id}">${escapeHtml(title)}</a>`;
+  function hydrateToOldRussian(word) {
+    let clean = String(word || "").trim().toLowerCase();
+    if (!clean) return { result: "—", rules: [] };
+
+    const rules = [];
+    let current = clean;
+
+    const yatRoots = [
+      { regex: /хлеб/g, replace: "хлѣб", name: "Корень *хлѣб-", desc: "Общеславянский ять в корне слова." },
+      { regex: /вер/g, replace: "вѣр", name: "Корень *вѣр-", desc: "Общеславянский ять (вера, верный)." },
+      { regex: /мест/g, replace: "мѣст", name: "Корень *мѣст-", desc: "Общеславянский ять (место, местный)." },
+      { regex: /снег/g, replace: "снѣг", name: "Корень *снѣг-", desc: "Общеславянский ять (снег, снеговой)." },
+      { regex: /бел/g, replace: "бѣл", name: "Корень *бѣл-", desc: "Общеславянский ять (белый, белок)." },
+      { regex: /веч/g, replace: "вѣч", name: "Корень *вѣч-", desc: "Общеславянский ять (вече, вечный)." },
+      { regex: /дед/g, replace: "дѣд", name: "Корень *дѣд-", desc: "Общеславянский ять (дед, дедушка)." },
+      { regex: /грех/g, replace: "грѣх", name: "Корень *грѣх-", desc: "Общеславянский ять (грех, грешный)." },
+      { regex: /звер/g, replace: "звѣр", name: "Корень *звѣр-", desc: "Общеславянский ять (зверь, звериный)." },
+      { regex: /лес/g, replace: "лѣс", name: "Корень *лѣс-", desc: "Общеславянский ять (лес, лесной)." },
+      { regex: /сен/g, replace: "сѣн", name: "Корень *сѣн-", desc: "Общеславянский ять (сено, сенокос)." },
+      { regex: /цвет/g, replace: "цвѣт", name: "Корень *цвѣт-", desc: "Общеславянский ять (цвет, цветок)." },
+      { regex: /тел/g, replace: "тѣл", name: "Корень *тѣл-", desc: "Общеславянский ять (тело, телесный)." },
+      { regex: /дел/g, replace: "дѣл", name: "Корень *дѣл-", desc: "Общеславянский ять (дело, делать)." },
+      { regex: /вед/g, replace: "вѣд", name: "Корень *вѣд-", desc: "Общеславянский ять (ведать, известный)." }
+    ];
+
+    let triggeredYat = false;
+    for (const r of yatRoots) {
+      if (r.regex.test(current)) {
+        current = current.replace(r.regex, r.replace);
+        if (!triggeredYat) {
+          rules.push({
+            title: "Буква Ять (ѣ)",
+            desc: `Замена 'е' на 'ѣ' в корне слов: древний долгий гласный переднего ряда передан исторической графемой ѣ (ять). ${r.desc}`
+          });
+          triggeredYat = true;
+        }
+      }
+    }
+
+    const bigYusRoots = [
+      { regex: /рук/g, replace: "рѫк", desc: "рука" },
+      { regex: /суд/g, replace: "сѫд", desc: "суд" },
+      { regex: /мук/g, replace: "мѫк", desc: "мука" },
+      { regex: /голуб/g, replace: "голѫб", desc: "голубь" }
+    ];
+    let triggeredBigYus = false;
+    for (const r of bigYusRoots) {
+      if (r.regex.test(current)) {
+        current = current.replace(r.regex, r.replace);
+        if (!triggeredBigYus) {
+          rules.push({
+            title: "Большой юс (ѫ)",
+            desc: "Замена 'у' на 'ѫ' (юс большой): перекодирование праславянского носового гласного *ǫ."
+          });
+          triggeredBigYus = true;
+        }
+      }
+    }
+
+    const smallYusRoots = [
+      { regex: /мяс/g, replace: "мѧс", desc: "мясо" },
+      { regex: /пят/g, replace: "пѧт", desc: "пять" },
+      { regex: /память/g, replace: "памѧть", desc: "память" },
+      { regex: /зят/g, replace: "зѧт", desc: "зять" },
+      { regex: /имя/g, replace: "имѧ", desc: "имя" }
+    ];
+    let triggeredSmallYus = false;
+    for (const r of smallYusRoots) {
+      if (r.regex.test(current)) {
+        current = current.replace(r.regex, r.replace);
+        if (!triggeredSmallYus) {
+          rules.push({
+            title: "Малый юс (ѧ)",
+            desc: "Замена 'я' на 'ѧ' (юс малый): перекодирование праславянского носового гласного *ę."
+          });
+          triggeredSmallYus = true;
+        }
+      }
+    }
+
+    if (current === "сон") {
+      current = "сън";
+      rules.push({
+        title: "Внутренний редуцированный Ер (ъ)",
+        desc: "Сверхкраткий гласный заднего ряда (ер) в слове 'сънъ' (совр. 'сон')."
+      });
+    } else if (current === "день") {
+      current = "дьн";
+      rules.push({
+        title: "Внутренний редуцированный Ерь (ь)",
+        desc: "Сверхкраткий гласный переднего ряда (ерь) в слове 'дьнь' (совр. 'день')."
+      });
+    }
+
+    const hardConsonants = /[бвгджзклмнпрстфхцчшщ]$/i;
+    if (hardConsonants.test(current)) {
+      current += "ъ";
+      rules.push({
+        title: "Конечный Ер (ъ)",
+        desc: "Слова, оканчивающиеся на твердый согласный, по закону открытого слога закрываются сверхкратким гласным 'ъ' (ер)."
+      });
+    } else if (current.endsWith("ь")) {
+      rules.push({
+        title: "Конечный Ерь (ь)",
+        desc: "Завершение на мягкий согласный передается с помощью сверхкратного гласного 'ь' (ерь)."
+      });
+    } else if (current.endsWith("я") && !triggeredSmallYus) {
+      current = current.slice(0, -1) + "ѧ";
+      rules.push({
+        title: "Малый юс (ѧ) в исходе",
+        desc: "Конечное 'я' передано как юс малый (ѧ)."
+      });
+    }
+
+    return {
+      result: current,
+      rules: rules
+    };
   }
-  html += '</div>';
 
-  // 1. Библиография
-  html += '<h3 id="sch-biblio" class="scholar-section-title">1. Библиография работ Зализняка по темам лекций</h3>';
-  html += '<div class="scholar-section-intro">Каждая лекция в книге — выжимка из академических работ Зализняка. Здесь — ключевые публикации, где темы изложены подробнее. PDF-подборка: <a class="related-link" href="https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017" target="_blank" rel="noopener noreferrer">страница ИСл РАН ↗</a>.</div>';
-  html += '<div class="scholar-action-row"><button id="export-scholar-biblio-bib" class="scholar-action-button">Экспорт BibTeX (.bib)</button></div>';
-  for (const lec of (s.bibliography || [])) {
+  function highlightStressedVowel(word) {
+    if (!word || word === "—") return "—";
+    const vowelsRegex = /([аеиоуыэюяё][\u0301]?|[âêîôûàèìòùỳ])/gi;
+    return String(word).replace(vowelsRegex, (match) => {
+      if (match.includes("\u0301") || match.toLowerCase() === "ё" || /[âêîôûàèìòùỳ]/i.test(match)) {
+        return `<span class="accent-syllable-stressed">${match}</span>`;
+      }
+      return match;
+    });
+  }
+
+  const ACCENT_RECON_DATA = [
+    {
+      stem: "*gord-",
+      meaning: "город, ограда",
+      paradigm: "C",
+      badge: "C (подвижная)",
+      comment: "Подвижная парадигма C восходит к праславянскому циркумфлексному типу. При падении редуцированных ударение оттягивалось на предшествующий слог или клитику (закон Васильева-Долобко). Обратите внимание на сохранение двойственного числа в берестяных грамотах с особым типом ударения.",
+      stages: [
+        {
+          name: "Праславянский",
+          desc: "Реконструированная система с праславянским тоническим и количественным ударением. Краткий циркумфлекс.",
+          forms: {
+            sg: { nom: "gôrdъ", gen: "gordà", dat: "gordû", acc: "gôrdъ", ins: "gordomь", loc: "gordê" },
+            pl: { nom: "gordỳ", gen: "gordôvъ", dat: "gordomъ", acc: "gordŷ", ins: "gordỳ", loc: "gordêxъ" },
+            du: { nom: "gordà", gen: "gordôu", dat: "gordomà", acc: "gordà", ins: "gordomà", loc: "gordôu" }
+          }
+        },
+        {
+          name: "Берестяные грамоты",
+          desc: "Новгородская система XII–XIV вв. на основе берестяных грамот и исследований Зализняка. Ударение переносится на предлоги и клитики.",
+          forms: {
+            sg: { nom: "го́родъ", gen: "города́", gen_preposition: "о́коло города", dat: "го́роду", acc: "го́родъ", acc_preposition: "на́ городъ", ins: "го́родомь", loc: "го́роде" },
+            pl: { nom: "города́", gen: "городо́въ", dat: "города́мъ", acc: "городы́", ins: "городы́", loc: "городо́хъ" },
+            du: { nom: "города́", gen: "городо́вю", dat: "города́ма", acc: "города́", ins: "города́ма", loc: "городо́хъ" }
+          }
+        },
+        {
+          name: "Современный русский",
+          desc: "Современная нормативная система русского языка. Включает подвижность ударения (го́род — города́). Двойственное число утрачено.",
+          forms: {
+            sg: { nom: "го́род", gen: "го́рода", dat: "го́роду", acc: "го́род", ins: "го́родом", loc: "го́роде" },
+            pl: { nom: "города́", gen: "городо́в", dat: "города́м", acc: "города́", ins: "города́ми", loc: "города́х" },
+            du: { nom: "—", gen: "—", dat: "—", acc: "—", ins: "—", loc: "—" }
+          }
+        }
+      ]
+    },
+    {
+      stem: "*žen-",
+      meaning: "жена, женщина",
+      paradigm: "B",
+      badge: "B (наконечная)",
+      comment: "Парадигма B характеризуется постоянным ударением на окончании (окситонеза). В истории русского языка ударение в этой парадигме оставалось на флексии, за исключением сдвигов во множественном числе.",
+      stages: [
+        {
+          name: "Праславянский",
+          desc: "Праславянское конечное ударение. Слог с постоянным кратким или восходящим ударением.",
+          forms: {
+            sg: { nom: "ženà", gen: "ženỳ", dat: "ženè", acc: "ženù", ins: "ženòjǫ", loc: "ženè" },
+            pl: { nom: "ženỳ", gen: "ženâ", dat: "ženamà", acc: "ženŷ", ins: "ženamà", loc: "ženâxъ" },
+            du: { nom: "ženè", gen: "ženû", dat: "ženamà", acc: "ženè", ins: "ženamà", loc: "ženû" }
+          }
+        },
+        {
+          name: "Берестяные грамоты",
+          desc: "Древнерусская система XII–XIV вв. Постоянное ударение на гласную флексию, отражённое в берестяных грамотах.",
+          forms: {
+            sg: { nom: "жена́", gen: "жены́", dat: "жене́", acc: "жену́", ins: "жено́ю", loc: "жене́" },
+            pl: { nom: "же́ны", gen: "же́нъ", dat: "же́намъ", acc: "же́ны", ins: "же́нами", loc: "же́нахъ" },
+            du: { nom: "жене́", gen: "жену́", dat: "жена́ма", acc: "жене́", ins: "жена́ма", loc: "жену́" }
+          }
+        },
+        {
+          name: "Современный русский",
+          desc: "Современный русский литературный язык. В Paradigm B во множественном числе произошло смещение ударения на основу (жёны).",
+          forms: {
+            sg: { nom: "жена́", gen: "жены́", dat: "жене́", acc: "жену́", ins: "жено́й", loc: "жене́" },
+            pl: { nom: "жёны", gen: "жёны", dat: "жёнам", acc: "жёны", ins: "жёнами", loc: "жёнах" },
+            du: { nom: "—", gen: "—", dat: "—", acc: "—", ins: "—", loc: "—" }
+          }
+        }
+      ]
+    },
+    {
+      stem: "*vòln-",
+      meaning: "волна",
+      paradigm: "A",
+      badge: "A (накоренная)",
+      comment: "Парадигма A представляет собой классическую баритонезу: постоянное ударение на корневом слоге во всех формах ед. и мн. числа.",
+      stages: [
+        {
+          name: "Праславянский",
+          desc: "Праславянская баритонеза с восходящим акутовым ударением на корневом гласном.",
+          forms: {
+            sg: { nom: "vòlna", gen: "vòlny", dat: "vòlne", acc: "vòlnǫ", ins: "vòlnojǫ", loc: "vòlne" },
+            pl: { nom: "vòlny", gen: "vòlnъ", dat: "vòlnamъ", acc: "vòlny", ins: "vòlnami", loc: "vòlnaxъ" },
+            du: { nom: "vòlne", gen: "vòlnoju", dat: "vòlnama", acc: "vòlne", ins: "vòlnama", loc: "vòlnoju" }
+          }
+        },
+        {
+          name: "Берестяные грамоты",
+          desc: "Древнерусская система. Полногласная основа 'волона' сохраняет ударение на первом слоге корня.",
+          forms: {
+            sg: { nom: "во́лона", gen: "во́лоны", dat: "во́лоне", acc: "во́лону", ins: "во́лоною", loc: "во́лоне" },
+            pl: { nom: "во́лоны", gen: "во́лонъ", dat: "во́лонамъ", acc: "во́лоны", ins: "во́лонами", loc: "во́лонахъ" },
+            du: { nom: "во́лоне", gen: "во́лону", dat: "во́лонама", acc: "во́лоне", ins: "во́лонама", loc: "во́лону" }
+          }
+        },
+        {
+          name: "Современный русский",
+          desc: "Современный русский язык. Произошло стяжение полногласия, но ударение в Paradigm A по-прежнему стабильно стоит на корне.",
+          forms: {
+            sg: { nom: "во́лна", gen: "во́льны", dat: "во́лне", acc: "во́лну", ins: "во́лной", loc: "во́лне" },
+            pl: { nom: "во́лны", gen: "во́лн", dat: "во́лнам", acc: "во́лны", ins: "во́лнами", loc: "во́лнах" },
+            du: { nom: "—", gen: "—", dat: "—", acc: "—", ins: "—", loc: "—" }
+          }
+        }
+      ]
+    }
+  ];
+
+  const scholarViewportWidth = typeof window !== "undefined" && typeof window.innerWidth === "number" ? window.innerWidth : 1280;
+  const reconstructionColumns = scholarViewportWidth >= 1280 ? 4 : scholarViewportWidth >= 980 ? 3 : scholarViewportWidth >= 680 ? 2 : 1;
+  let html = "<div class=\"panel active scholar-panel\"><div class=\"scholar-inner\">";
+  html += "<h2 class=\"scholar-title\">Профессиональный аппарат</h2>";
+  html += "<div class=\"scholar-intro\">Дополнительные материалы для взрослого читателя, студента-лингвиста, преподавателя и специалиста-русиста.</div>";
+  const sections = [
+    ["biblio", "1. Библиография работ Зализняка"],
+    ["extended_cards", "2. Расширенные сведения о ключевых лингвистах"],
+    ["controversies", "3. Спорные вопросы и дискуссионные места"],
+    ["original", "4. Оригинальные формы по языкам"],
+    ["birch", "5. Конкорданс берестяных грамот"],
+    ["chronology", "6. Хронология лингвистических открытий"],
+    ["isoglosses", "7. Изоглоссы русских диалектов"],
+    ["slovo", "8. Аргументация о подлинности «Слова о полку Игореве»"],
+    ["accents", "9. Акцентологические парадигмы Зализняка"],
+    ["correspondences", "10. Сравнительная таблица фонетических соответствий"],
+    ["reconstructions", "11. Реконструкции"]
+  ];
+  html += "<div class=\"scholar-toc\">";
+  for (const [id, title] of sections) html += `<a class="scholar-toc-link" href="#sch-${id}">${escapeHtml(title)}</a>`;
+  html += "</div>";
+  html += "<h3 id=\"sch-biblio\" class=\"scholar-section-title\">1. Библиография работ Зализняка по темам лекций</h3>";
+  html += "<div class=\"scholar-section-intro\">Каждая лекция в книге — выжимка из академических работ Зализняка. Здесь — ключевые публикации, где темы изложены подробнее. PDF-подборка: <a class=\"related-link\" href=\"https://inslav.ru/people/zaliznyak-andrey-anatolevich-1935-2017\" target=\"_blank\" rel=\"noopener noreferrer\">страница ИСл РАН ↗</a>.</div>";
+  html += "<div class=\"scholar-action-row\"><button id=\"export-scholar-biblio-bib\" class=\"scholar-action-button\">Экспорт BibTeX (.bib)</button></div>";
+  for (const lec of s.bibliography || []) {
     html += `<div class="scholar-card">
       <div class="scholar-card-title">Лекция «${escapeHtml(lec.lecture)}»</div>`;
-    for (const w of lec.works) {
-      html += `<div class="scholar-work">
-        <strong>${escapeHtml(w.title)}</strong> (${escapeHtml(String(w.year))})${w.url ? ` <a class="related-link" href="${escapeHtml(safeUrl(w.url))}" target="_blank" rel="noopener noreferrer">PDF/страница ↗</a>` : ''}<br>
+    for (const w of lec.works) html += `<div class="scholar-work">
+        <strong>${escapeHtml(w.title)}</strong> (${escapeHtml(String(w.year))})${w.url ? ` <a class="related-link" href="${escapeHtml(safeUrl(w.url))}" target="_blank" rel="noopener noreferrer">PDF/страница ↗</a>` : ""}<br>
         <span class="scholar-note">${escapeHtml(w.note)}</span>
       </div>`;
-    }
-    html += '</div>';
+    html += "</div>";
   }
-
-  // 2. Расширенные сведения — отсылка к карточкам имён
-  html += '<h3 id="sch-extended_cards" class="scholar-section-title scholar-section-title-spaced">2. Расширенные сведения о ключевых лингвистах</h3>';
-  html += '<div class="scholar-section-intro">Подробные карточки лингвистов с биографией, библиографией и научно-исторической информацией доступны в разделе «Имена». Кликните по любому имени, чтобы открыть карточку.</div>';
-  html += '<div>';
-  const keyLinguists = ['Вакернагель Я.','Гримм Я.','Вернер К.','Раск Р. К.','Бопп Фр.','Мейе А.','Шампольон Ф.','Вентрис М.','Янин В. Л.','Гиппиус А. А.','Аванесов Р. И.','Дыбо В. А.','Иллич-Свитыч В. М.','Падучева Е. В.'];
-  for (const name of keyLinguists) {
-    html += `<a class="scholar-link scholar-chip-link" data-type="names" data-head="${escapeHtml(name)}" href="${escapeHtml(buildItemHash('names', name))}">${escapeHtml(name)}</a>`;
-  }
-  html += '</div>';
-
-  // 3. Спорные вопросы
-  html += '<h3 id="sch-controversies" class="scholar-section-title scholar-section-title-spaced">3. Спорные вопросы и дискуссионные места</h3>';
-  for (const c of (s.controversies || [])) {
-    const controversyPageMeta = c.page
-      ? renderTextWithPageLinks(`стр. ${c.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })
-      : '';
+  html += "<h3 id=\"sch-extended_cards\" class=\"scholar-section-title scholar-section-title-spaced\">2. Расширенные сведения о ключевых лингвистах</h3>";
+  html += "<div class=\"scholar-section-intro\">Подробные карточки лингвистов с биографией, библиографией и научно-исторической информацией доступны в разделе «Имена». Кликните по любому имени, чтобы открыть карточку.</div>";
+  html += "<div>";
+  for (const name of [
+    "Вакернагель Я.",
+    "Гримм Я.",
+    "Вернер К.",
+    "Раск Р. К.",
+    "Бопп Фр.",
+    "Мейе А.",
+    "Шампольон Ф.",
+    "Вентрис М.",
+    "Янин В. Л.",
+    "Гиппиус А. А.",
+    "Аванесов Р. И.",
+    "Дыбо В. А.",
+    "Иллич-Свитыч В. М.",
+    "Падучева Е. В."
+  ]) html += `<a class="scholar-link scholar-chip-link" data-type="names" data-head="${escapeHtml(name)}" href="${escapeHtml(buildItemHash("names", name))}">${escapeHtml(name)}</a>`;
+  html += "</div>";
+  html += "<h3 id=\"sch-controversies\" class=\"scholar-section-title scholar-section-title-spaced\">3. Спорные вопросы и дискуссионные места</h3>";
+  for (const c of s.controversies || []) {
+    const controversyPageMeta = c.page ? renderTextWithPageLinks(`стр. ${c.page}`, {
+      className: "material-page-link card-page-link related-link",
+      rangeTarget: "trends"
+    }) : "";
     html += `<div class="scholar-card scholar-controversy-card">
-      <div class="scholar-controversy-title">${escapeHtml(c.topic)}${controversyPageMeta ? ` <span class="scholar-muted-meta">· ${controversyPageMeta}</span>` : ''}</div>
+      <div class="scholar-controversy-title">${escapeHtml(c.topic)}${controversyPageMeta ? ` <span class="scholar-muted-meta">· ${controversyPageMeta}</span>` : ""}</div>
       <div class="scholar-controversy-desc">${escapeHtml(c.description)}</div>
       <div class="scholar-controversy-sides"><strong>Стороны:</strong> ${escapeHtml(c.sides)}</div>
     </div>`;
   }
-
-  // 4. Оригинальные формы по языкам
-  html += '<h3 id="sch-original" class="scholar-section-title scholar-section-title-spaced">4. Оригинальные формы по языкам</h3>';
-  html += '<div class="scholar-section-intro">Слова из лекций в авторских системах транслитерации и оригинальном письме.</div>';
-  const langLabels = {sanskrit:'Санскрит',greek:'Древнегреческий',latin:'Латинский',arabic:'Арабский',old_russian:'Древнерусский'};
-  html += '<div class="scholar-grid">';
+  html += "<h3 id=\"sch-original\" class=\"scholar-section-title scholar-section-title-spaced\">4. Оригинальные формы по языкам</h3>";
+  html += "<div class=\"scholar-section-intro\">Слова из лекций в авторских системах транслитерации и оригинальном письме.</div>";
+  const langLabels = {
+    sanskrit: "Санскрит",
+    greek: "Древнегреческий",
+    latin: "Латинский",
+    arabic: "Арабский",
+    old_russian: "Древнерусский"
+  };
+  html += "<div class=\"scholar-grid\">";
   for (const [key, label] of Object.entries(langLabels)) {
     const forms = (s.original_forms || {})[key] || [];
     html += `<div class="scholar-card">
       <div class="scholar-card-title">${label}</div>`;
     for (const f of forms) {
-      const formPageMeta = f.page
-        ? renderTextWithPageLinks(`стр. ${f.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })
-        : '';
-      html += `<div class="scholar-original-form"><span class="scholar-original-word">${renderAccentSafe(f.form)}</span> — ${escapeHtml(f.translation)}${formPageMeta ? ` <span class="scholar-muted-meta">(${formPageMeta})</span>` : ''}</div>`;
+      const formPageMeta = f.page ? renderTextWithPageLinks(`стр. ${f.page}`, {
+        className: "material-page-link card-page-link related-link",
+        rangeTarget: "trends"
+      }) : "";
+      html += `<div class="scholar-original-form"><span class="scholar-original-word">${renderAccentSafe(f.form)}</span> — ${escapeHtml(f.translation)}${formPageMeta ? ` <span class="scholar-muted-meta">(${formPageMeta})</span>` : ""}</div>`;
     }
-    html += '</div>';
+    html += "</div>";
   }
-  html += '</div>';
-
-  // 5. Конкорданс берестяных грамот
+  html += "</div>";
   const birchRows = (s.birch_grammar || []).map((g) => {
-    const rawUrl = String(g.url || '');
-    const cityMatch = rawUrl.match(/show\/([^/]+)\//i);
-    const city = cityMatch ? cityMatch[1].toLowerCase() : 'unknown';
-    const yearText = String(g.year || '');
-    const centuryMatch = yearText.toUpperCase().match(/X{1,3}(?:I{0,3}|V?I{0,3})/);
-    const century = centuryMatch ? `${centuryMatch[0]} в.` : 'не указано';
-    return { ...g, city, century };
+    const cityMatch = String(g.url || "").match(/show\/([^/]+)\//i);
+    const city = cityMatch ? cityMatch[1].toLowerCase() : "unknown";
+    const centuryMatch = String(g.year || "").toUpperCase().match(/X{1,3}(?:I{0,3}|V?I{0,3})/);
+    const century = centuryMatch ? `${centuryMatch[0]} в.` : "не указано";
+    return {
+      ...g,
+      city,
+      century
+    };
   });
-  const birchCities = Array.from(new Set(birchRows.map(r => r.city))).sort(compareHeadsRu);
-  const birchCenturies = Array.from(new Set(birchRows.map(r => r.century))).sort(compareHeadsRu);
-  html += '<h3 id="sch-birch" class="scholar-section-title scholar-section-title-spaced">5. Конкорданс берестяных грамот</h3>';
-  html += '<div class="scholar-section-intro">Берестяные грамоты, упоминаемые в лекции, по номерам. Полная база: <a class="related-link" href="https://gramoty.ru/birchbark" target="_blank" rel="noopener noreferrer">gramoty.ru/birchbark ↗</a>.</div>';
+  const birchCities = Array.from(new Set(birchRows.map((r) => r.city))).sort(compareHeadsRu);
+  const birchCenturies = Array.from(new Set(birchRows.map((r) => r.century))).sort(compareHeadsRu);
+  html += "<h3 id=\"sch-birch\" class=\"scholar-section-title scholar-section-title-spaced\">5. Конкорданс берестяных грамот</h3>";
+  html += "<div class=\"scholar-section-intro\">Берестяные грамоты, упоминаемые в лекции, по номерам. Полная база: <a class=\"related-link\" href=\"https://gramoty.ru/birchbark\" target=\"_blank\" rel=\"noopener noreferrer\">gramoty.ru/birchbark ↗</a>.</div>";
   html += `<div class="scholar-filter-bar">
     <label class="scholar-filter-label">Город
       <select id="birch-city-filter" class="scholar-filter-control">
         <option value="">Все</option>
-        ${birchCities.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
+        ${birchCities.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("")}
       </select>
     </label>
     <label class="scholar-filter-label">Век
       <select id="birch-century-filter" class="scholar-filter-control">
         <option value="">Все</option>
-        ${birchCenturies.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
+        ${birchCenturies.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("")}
       </select>
     </label>
     <label class="scholar-filter-label">Номер грамоты
       <input id="birch-number-filter" class="scholar-filter-control scholar-filter-input" type="text" inputmode="numeric" placeholder="например, 776">
     </label>
   </div>`;
-  html += '<table class="scholar-table">';
-  html += '<thead><tr class="scholar-table-head-row"><th>№</th><th>Город</th><th>Дата</th><th>Содержание</th><th>Стр.</th></tr></thead><tbody id="birch-concordance-body">';
+  html += "<table class=\"scholar-table\">";
+  html += "<thead><tr class=\"scholar-table-head-row\"><th>№</th><th>Город</th><th>Дата</th><th>Содержание</th><th>Стр.</th></tr></thead><tbody id=\"birch-concordance-body\">";
   for (const g of birchRows) {
     const birchLink = g.url ? `<a class="related-link" href="${escapeHtml(safeUrl(g.url))}" target="_blank" rel="noopener noreferrer">№${escapeHtml(g.num)} ↗</a>` : `№${escapeHtml(g.num)}`;
-    html += `<tr class="birch-row scholar-table-row" data-city="${escapeHtml(g.city)}" data-century="${escapeHtml(g.century)}" data-num="${escapeHtml(String(g.num || ''))}">
+    html += `<tr class="birch-row scholar-table-row" data-city="${escapeHtml(g.city)}" data-century="${escapeHtml(g.century)}" data-num="${escapeHtml(String(g.num || ""))}">
       <td class="scholar-table-key">${birchLink}</td>
       <td class="scholar-table-muted">${escapeHtml(g.city)}</td>
       <td class="scholar-table-muted">${escapeHtml(g.year)}</td>
       <td>${escapeHtml(g.content)}</td>
-      <td class="scholar-table-page">${g.page ? renderTextWithPageLinks(`стр. ${g.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' }) : ''}</td>
+      <td class="scholar-table-page">${g.page ? renderTextWithPageLinks(`стр. ${g.page}`, {
+				className: "material-page-link card-page-link related-link",
+				rangeTarget: "trends"
+			}) : ""}</td>
     </tr>`;
   }
-  html += '</tbody></table>';
-
-  // 6. Хронология
-  html += '<h3 id="sch-chronology" class="scholar-section-title scholar-section-title-spaced">6. Хронология лингвистических открытий</h3>';
-  html += '<div class="scholar-section-intro">События истории лингвистики, связанные с темами книги.</div>';
-  for (const ev of (s.chronology || [])) {
-    const chronologyPageMeta = ev.page
-      ? renderTextWithPageLinks(`стр. ${ev.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })
-      : '';
+  html += "</tbody></table>";
+  html += "<h3 id=\"sch-chronology\" class=\"scholar-section-title scholar-section-title-spaced\">6. Хронология лингвистических открытий</h3>";
+  html += "<div class=\"scholar-section-intro\">События истории лингвистики, связанные с темами книги.</div>";
+  for (const ev of s.chronology || []) {
+    const chronologyPageMeta = ev.page ? renderTextWithPageLinks(`стр. ${ev.page}`, {
+      className: "material-page-link card-page-link related-link",
+      rangeTarget: "trends"
+    }) : "";
     html += `<div class="scholar-chronology-row">
       <div class="scholar-chronology-year">${escapeHtml(ev.year)}</div>
-      <div class="scholar-chronology-event">${escapeHtml(ev.event)}${chronologyPageMeta ? `<span class="scholar-muted-meta"> · ${chronologyPageMeta}</span>` : ''}</div>
+      <div class="scholar-chronology-event">${escapeHtml(ev.event)}${chronologyPageMeta ? `<span class="scholar-muted-meta"> · ${chronologyPageMeta}</span>` : ""}</div>
     </div>`;
   }
-  // 7. Изоглоссы
-  html += '<h3 id="sch-isoglosses" class="scholar-section-title scholar-section-title-spaced">7. Изоглоссы русских диалектов</h3>';
-  html += '<div class="scholar-section-intro">Линии, разделяющие диалекты по конкретным фонетическим, морфологическим и лексическим признакам, обсуждаемым в книге.</div>';
-  for (const i of (s.isoglosses || [])) {
-    const isoglossPageMeta = i.page
-      ? renderTextWithPageLinks(`стр. ${i.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })
-      : '';
+  html += "<h3 id=\"sch-isoglosses\" class=\"scholar-section-title scholar-section-title-spaced\">7. Изоглоссы русских диалектов</h3>";
+  html += "<div class=\"scholar-section-intro\">Линии, разделяющие диалекты по конкретным фонетическим, морфологическим и лексическим признакам, обсуждаемым в книге.</div>";
+  for (const i of s.isoglosses || []) {
+    const isoglossPageMeta = i.page ? renderTextWithPageLinks(`стр. ${i.page}`, {
+      className: "material-page-link card-page-link related-link",
+      rangeTarget: "trends"
+    }) : "";
     html += `<div class="scholar-card scholar-isogloss-card">
-      <div class="scholar-card-title">${escapeHtml(i.name)}${isoglossPageMeta ? ` <span class="scholar-muted-meta">· ${isoglossPageMeta}</span>` : ''}</div>
+      <div class="scholar-card-title">${escapeHtml(i.name)}${isoglossPageMeta ? ` <span class="scholar-muted-meta">· ${isoglossPageMeta}</span>` : ""}</div>
       <div class="scholar-body-text">${escapeHtml(i.description)}</div>
     </div>`;
   }
-
-  // 8. Слово о полку Игореве
-  html += '<h3 id="sch-slovo" class="scholar-section-title scholar-section-title-spaced">8. Аргументация Зализняка о подлинности «Слова о полку Игореве»</h3>';
+  html += "<h3 id=\"sch-slovo\" class=\"scholar-section-title scholar-section-title-spaced\">8. Аргументация Зализняка о подлинности «Слова о полку Игореве»</h3>";
   if (s.slovo) {
     html += `<div class="scholar-slovo-card">
       <div class="scholar-slovo-thesis">${escapeHtml(s.slovo.thesis)}</div>
-      ${s.slovo.context ? `<div class="scholar-slovo-context">${escapeHtml(s.slovo.context)}</div>` : ''}`;
+      ${s.slovo.context ? `<div class="scholar-slovo-context">${escapeHtml(s.slovo.context)}</div>` : ""}`;
     html += `<div class="scholar-slovo-opponents"><strong>Оппоненты:</strong> ${escapeHtml(s.slovo.opponents)}</div>
       <div class="scholar-slovo-verdict">${escapeHtml(s.slovo.verdict)}</div>
     </div>`;
   }
   if (Array.isArray(s.slovo_links) && s.slovo_links.length) {
-    html += '<div class="scholar-inline-links">';
-    for (const link of s.slovo_links) {
-      html += `<a class="related-link scholar-inline-source-link" href="${escapeHtml(safeUrl(link.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.title)} ↗</a>`;
-    }
-    html += '</div>';
+    html += "<div class=\"scholar-inline-links\">";
+    for (const link of s.slovo_links) html += `<a class="related-link scholar-inline-source-link" href="${escapeHtml(safeUrl(link.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.title)} ↗</a>`;
+    html += "</div>";
   }
   if (s.slovo) {
     const slovoArgs = Array.isArray(s.slovo.arguments) ? s.slovo.arguments : [];
     const slovoCounters = Array.isArray(s.slovo.counterarguments) ? s.slovo.counterarguments : [];
-    html += '<div class="scholar-soft-panel">';
-    html += '<div class="scholar-soft-title">Тезисы / контраргументы / контекст</div>';
-    if (s.slovo.context) {
-      html += `<div class="scholar-body-text scholar-body-text-spaced">${escapeHtml(s.slovo.context)}</div>`;
-    }
+    html += "<div class=\"scholar-soft-panel\">";
+    html += "<div class=\"scholar-soft-title\">Тезисы / контраргументы / контекст</div>";
+    if (s.slovo.context) html += `<div class="scholar-body-text scholar-body-text-spaced">${escapeHtml(s.slovo.context)}</div>`;
     for (let i = 0; i < slovoArgs.length; i++) {
       const a = slovoArgs[i];
       const anchorId = `sch-slovo-arg-${i + 1}`;
-      const pageMeta = a.page
-        ? `<span class="scholar-muted-meta">${renderTextWithPageLinks(`стр. ${a.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })}</span>`
-        : '';
-      const sourceMeta = a.url ? `<a class="related-link scholar-meta-link" href="${escapeHtml(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer">источник ↗</a>` : '';
+      const pageMeta = a.page ? `<span class="scholar-muted-meta">${renderTextWithPageLinks(`стр. ${a.page}`, {
+					className: "material-page-link card-page-link related-link",
+					rangeTarget: "trends"
+				})}</span>` : "";
+      const sourceMeta = a.url ? `<a class="related-link scholar-meta-link" href="${escapeHtml(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer">источник ↗</a>` : "";
       html += `<div id="${anchorId}" class="scholar-slovo-item">
         <div class="scholar-slovo-item-head">
           <div class="scholar-slovo-item-title">${escapeHtml(a.name)}</div>
@@ -11143,12 +11613,13 @@ function renderScholarPanel(container) {
       </div>`;
     }
     if (slovoCounters.length) {
-      html += '<div class="scholar-subsection-label">Контраргументы:</div>';
+      html += "<div class=\"scholar-subsection-label\">Контраргументы:</div>";
       for (const c of slovoCounters) {
-        const pageMeta = c.page
-          ? `<span class="scholar-muted-meta">${renderTextWithPageLinks(`стр. ${c.page}`, { className: 'material-page-link card-page-link related-link', rangeTarget: 'trends' })}</span>`
-          : '';
-        const sourceMeta = c.url ? `<a class="related-link scholar-meta-link" href="${escapeHtml(safeUrl(c.url))}" target="_blank" rel="noopener noreferrer">источник ↗</a>` : '';
+        const pageMeta = c.page ? `<span class="scholar-muted-meta">${renderTextWithPageLinks(`стр. ${c.page}`, {
+						className: "material-page-link card-page-link related-link",
+						rangeTarget: "trends"
+					})}</span>` : "";
+        const sourceMeta = c.url ? `<a class="related-link scholar-meta-link" href="${escapeHtml(safeUrl(c.url))}" target="_blank" rel="noopener noreferrer">источник ↗</a>` : "";
         html += `<div class="scholar-slovo-item scholar-slovo-counter">
           <div class="scholar-slovo-item-title">${escapeHtml(c.name)}</div>
           <div class="scholar-body-text">${escapeHtml(c.detail)}</div>
@@ -11156,33 +11627,27 @@ function renderScholarPanel(container) {
         </div>`;
       }
     }
-    html += '</div>';
+    html += "</div>";
   }
   if (Array.isArray(s.slovo_reading) && s.slovo_reading.length) {
-    html += '<div class="scholar-soft-panel">';
-    html += '<div class="scholar-soft-title">Что читать дальше</div>';
-    for (const item of s.slovo_reading) {
-      html += `<div class="scholar-reading-item">
+    html += "<div class=\"scholar-soft-panel\">";
+    html += "<div class=\"scholar-soft-title\">Что читать дальше</div>";
+    for (const item of s.slovo_reading) html += `<div class="scholar-reading-item">
         <a class="related-link" href="${escapeHtml(safeUrl(item.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title)} ↗</a>
-        ${item.note ? `<div class="scholar-reading-note">${escapeHtml(item.note)}</div>` : ''}
+        ${item.note ? `<div class="scholar-reading-note">${escapeHtml(item.note)}</div>` : ""}
       </div>`;
-    }
-    html += '</div>';
+    html += "</div>";
   }
-
-  // 9. Акцентологические парадигмы
-  html += '<h3 id="sch-accents" class="scholar-section-title scholar-section-title-spaced">9. Акцентологические парадигмы Зализняка</h3>';
-  html += '<div class="scholar-section-intro">Базовые и расширенные типы русского ударения по классификации Зализняка («Грамматический словарь русского языка», 1977) с историко-диалектными комментариями.</div>';
-  for (const ap of (s.accent_paradigms || [])) {
+  html += "<h3 id=\"sch-accents\" class=\"scholar-section-title scholar-section-title-spaced\">9. Акцентологические парадигмы Зализняка</h3>";
+  html += "<div class=\"scholar-section-intro\">Базовые и расширенные типы русского ударения по классификации Зализняка («Грамматический словарь русского языка», 1977) с историко-диалектными комментариями.</div>";
+  for (const ap of s.accent_paradigms || []) {
     html += `<div class="scholar-card scholar-accent-card">
       <div class="scholar-accent-card-title">Тип ${escapeHtml(ap.type)}</div>
       <div class="scholar-body-text scholar-body-text-spaced">${escapeHtml(ap.description)}</div>`;
-    for (const ex of ap.examples) {
-      html += `<div class="scholar-accent-example"><strong>${renderAccentSafe(ex.word)}</strong> — <span class="scholar-note">${renderAccentSafe(ex.forms)}</span></div>`;
-    }
-    html += '</div>';
+    for (const ex of ap.examples) html += `<div class="scholar-accent-example"><strong>${renderAccentSafe(ex.word)}</strong> — <span class="scholar-note">${renderAccentSafe(ex.forms)}</span></div>`;
+    html += "</div>";
   }
-  const accentOptions = (s.accent_paradigms || []).map((ap, idx) => `<option value="${idx}">${escapeHtml(ap.type)}</option>`).join('');
+  const accentOptions = (s.accent_paradigms || []).map((ap, idx) => `<option value="${idx}">${escapeHtml(ap.type)}</option>`).join("");
   html += `<div class="scholar-soft-panel scholar-compare-panel">
     <div class="scholar-soft-title">Сравнение 2–3 парадигм</div>
     <div class="scholar-compare-controls">
@@ -11203,23 +11668,176 @@ function renderScholarPanel(container) {
     <div id="accent-compare-box"></div>
   </div>`;
 
-  // 10. Сравнительная таблица
-  html += '<h3 id="sch-correspondences" class="scholar-section-title scholar-section-title-spaced">10. Сравнительная таблица фонетических соответствий</h3>';
-  html += '<div class="scholar-section-intro">Расширенный набор соответствий (ПИЕ → славянские, греческие, индоиранские и западноевропейские формы), который можно дальше наращивать на материале работ Зализняка.</div>';
+  // Dynamic Accent Paradigm Reconstructor Widget
+  const currentReconRoot = ACCENT_RECON_DATA[currentAccentReconRootIndex];
+  const currentReconStage = currentReconRoot.stages[currentAccentReconStageIndex];
+
+  let reconHtml = `
+		<div class="accent-recon-container">
+			<h3 class="accent-recon-title">
+				<span>📖 Симулятор древнерусской акцентологии</span>
+				<span class="sim-word-meaning">${escapeHtml(currentReconRoot.stem)} (${escapeHtml(currentReconRoot.meaning)})</span>
+			</h3>
+			<div class="accent-recon-intro">
+				Интерактивный реконструктор древнерусских и праславянских именных акцентных парадигм. Выберите реконструированный праславянский корень и стадию эволюции, чтобы наглядно увидеть, как ударение перемещалось по падежным формам.
+				</div>
+				<p class="sim-source">Учебно-иллюстративный инструмент. Парадигмы A/B/C — по акцентологии А. А. Зализняка («От праславянской акцентуации к русской», 1985; «Древнерусские энклитики», 2008). Источники и оговорки: <a href="https://github.com/gasyoun/BookIndex/blob/main/docs/SIMULATOR_AUDIT_RU.md" target="_blank" rel="noopener noreferrer">SIMULATOR_AUDIT_RU.md</a>.</p>
+
+			<div class="accent-recon-grid">
+				<div class="accent-recon-controls">
+					<label for="accent-recon-root-select" class="sim-label">Выберите корень:</label>
+					<select id="accent-recon-root-select" class="sim-select">`;
+  for (let i = 0; i < ACCENT_RECON_DATA.length; i++) {
+    reconHtml += `<option value="${i}"${i === currentAccentReconRootIndex ? ' selected' : ''}>${escapeHtml(ACCENT_RECON_DATA[i].stem)} (${escapeHtml(ACCENT_RECON_DATA[i].meaning)})</option>`;
+  }
+  reconHtml += `
+					</select>
+
+					<label class="sim-label">Историческая стадия:</label>
+					<div class="accent-recon-stages">`;
+  for (let i = 0; i < currentReconRoot.stages.length; i++) {
+    reconHtml += `<button type="button" class="accent-recon-stage-btn${i === currentAccentReconStageIndex ? ' active' : ''}" data-stage-idx="${i}">${escapeHtml(currentReconRoot.stages[i].name)}</button>`;
+  }
+  reconHtml += `
+					</div>
+				</div>
+
+				<div class="accent-recon-display">
+					<div class="accent-recon-badge-row">
+						<span class="accent-paradigm-badge ${currentReconRoot.paradigm}">Парадигма ${escapeHtml(currentReconRoot.badge)}</span>
+					</div>
+					<div class="scholar-body-text scholar-body-text-spaced">${escapeHtml(currentReconStage.desc)}</div>
+
+					<div class="accent-recon-table-scroll">
+						<table class="accent-recon-table">
+							<thead>
+								<tr>
+									<th>Падеж</th>
+									<th>Единственное число</th>
+									<th>Множественное число</th>
+									<th>Двойственное число (дв. ч.)</th>
+								</tr>
+							</thead>
+							<tbody>`;
+
+  const cases = [
+    ["nom", "Именительный (Nom)"],
+    ["gen", "Родительный (Gen)"],
+    ["dat", "Дательного (Dat)"],
+    ["acc", "Винительный (Acc)"],
+    ["ins", "Творительный (Ins)"],
+    ["loc", "Местный (Loc)"]
+  ];
+
+  for (const [cKey, cName] of cases) {
+    const sgForm = highlightStressedVowel(currentReconStage.forms.sg[cKey]);
+    const plForm = highlightStressedVowel(currentReconStage.forms.pl[cKey]);
+    const duForm = highlightStressedVowel(currentReconStage.forms.du[cKey]);
+
+    let extraSg = "";
+    if (currentReconStage.forms.sg[cKey + "_preposition"]) {
+      extraSg = `<br><span class="scholar-note">с предлогом: ${highlightStressedVowel(currentReconStage.forms.sg[cKey + "_preposition"])}</span>`;
+    }
+
+    reconHtml += `
+								<tr>
+									<th>${escapeHtml(cName)}</th>
+									<td>${sgForm}${extraSg}</td>
+									<td>${plForm}</td>
+									<td>${duForm}</td>
+								</tr>`;
+  }
+
+  reconHtml += `
+							</tbody>
+						</table>
+					</div>
+
+					<div class="accent-recon-note">
+						<strong>Комментарий Зализняка:</strong> ${escapeHtml(currentReconRoot.comment)}
+					</div>
+				</div>
+			</div>
+		</div>
+		`;
+  html += reconHtml;
+
+  // Old East Slavic Orthography Hydrator Widget
+  const hydrated = hydrateToOldRussian(currentOrthoHydratorInput);
+
+  let orthoHtml = `
+		<div class="ortho-hydrator-container" id="sch-orthography-hydrator">
+			<h3 class="accent-recon-title">
+				<span>✍️ Гидратор древнерусской орфографии</span>
+			</h3>
+			<div class="accent-recon-intro">
+				Интерактивный инструмент для автоматической реконструкции древнерусского написания (гидратации) на основе современных слов. Позволяет увидеть, как современные лексемы выглядели бы в новгородских берестяных грамотах и летописях XI-XIV веков. Учебно-иллюстративный инструмент: корни ять/юс этимологически стандартны, но сопоставление по подстроке приблизительно и может ошибаться (не нормативный транскриптор). Разбор и источники: <a class="sim-source-link" href="https://github.com/gasyoun/BookIndex/blob/main/docs/SIMULATOR_AUDIT_RU.md" target="_blank" rel="noopener noreferrer">SIMULATOR_AUDIT_RU.md</a>.
+			</div>
+
+			<div class="ortho-hydrator-grid">
+				<div class="ortho-input-area">
+					<label for="ortho-input" class="sim-label">Введите слово на современном русском:</label>
+					<input type="text" id="ortho-input" class="ortho-input-control" value="${escapeHtml(currentOrthoHydratorInput)}" placeholder="Например: хлеб, рука, мясо, день...">
+
+					<div class="ortho-presets-label">Популярные примеры (кликните для теста):</div>
+					<div class="ortho-presets-grid">
+						<button type="button" class="ortho-preset-btn" data-preset="хлеб">хлеб</button>
+						<button type="button" class="ortho-preset-btn" data-preset="рука">рука</button>
+						<button type="button" class="ortho-preset-btn" data-preset="мясо">мясо</button>
+						<button type="button" class="ortho-preset-btn" data-preset="город">город</button>
+						<button type="button" class="ortho-preset-btn" data-preset="день">день</button>
+						<button type="button" class="ortho-preset-btn" data-preset="суд">суд</button>
+						<button type="button" class="ortho-preset-btn" data-preset="вера">вера</button>
+					</div>
+				</div>
+
+				<div class="ortho-result-area">
+					<div class="ortho-result-label">Древнерусское написание (XI–XIV вв.):</div>
+					<div class="ortho-result-card">${escapeHtml(hydrated.result)}</div>
+
+					<div class="ortho-presets-label">Выявленные орфографические соответствия:</div>
+					<div class="ortho-rules-list">`;
+  if (hydrated.rules.length === 0) {
+    orthoHtml += `<div class="scholar-table-empty">Слово сохранено в исходной графике (за исключением общих правил). Попробуйте ввести примеры из списка слева.</div>`;
+  } else {
+    for (const rule of hydrated.rules) {
+      orthoHtml += `
+						<div class="ortho-rule-alert">
+							<div class="ortho-rule-title">${escapeHtml(rule.title)}</div>
+							<div>${escapeHtml(rule.desc)}</div>
+						</div>`;
+    }
+  }
+  orthoHtml += `
+					</div>
+				</div>
+			</div>
+		</div>
+		`;
+  html += orthoHtml;
+  html += "<h3 id=\"sch-correspondences\" class=\"scholar-section-title scholar-section-title-spaced\">10. Сравнительная таблица фонетических соответствий</h3>";
+  html += "<div class=\"scholar-section-intro\">Расширенный набор соответствий (ПИЕ → славянские, греческие, индоиранские и западноевропейские формы), который можно дальше наращивать на материале работ Зализняка.</div>";
   const corrRows = (s.sound_correspondences || []).map((r) => {
-    const focusLangRaw = String(r.focus_language || 'санскрит');
-    const focusLang = resolveExistingHead('languages', focusLangRaw);
-    const langs = ['rus', 'lat', 'gre', 'san', 'eng', 'ger'].filter((key) => {
-      const v = String(r[key] == null ? '' : r[key]).trim();
-      return !!v && v !== '—';
+    const focusLangRaw = String(r.focus_language || "санскрит");
+    const focusLang = resolveExistingHead("languages", focusLangRaw);
+    const langs = [
+      "rus",
+      "lat",
+      "gre",
+      "san",
+      "eng",
+      "ger"
+    ].filter((key) => {
+      const v = String(r[key] == null ? "" : r[key]).trim();
+      return !!v && v !== "—";
     });
     return {
       ...r,
-      _family: String(r.family || 'индоевропейская'),
-      _law: String(r.law || 'базовое соответствие'),
-      _source: String(r.source || 'Источник не указан'),
+      _family: String(r.family || "индоевропейская"),
+      _law: String(r.law || "базовое соответствие"),
+      _source: String(r.source || "Источник не указан"),
       _focusLang: focusLang,
-      _langs: langs.join(','),
+      _langs: langs.join(",")
     };
   });
   const corrFamilies = Array.from(new Set(corrRows.map((r) => r._family))).sort(compareHeadsRu);
@@ -11228,7 +11846,7 @@ function renderScholarPanel(container) {
     <label class="scholar-filter-label">Семья
       <select id="corr-family-filter" class="scholar-filter-control">
         <option value="">Все</option>
-        ${corrFamilies.map((f) => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('')}
+        ${corrFamilies.map((f) => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join("")}
       </select>
     </label>
     <label class="scholar-filter-label">Язык в строке
@@ -11245,14 +11863,14 @@ function renderScholarPanel(container) {
     <label class="scholar-filter-label">Фонетический закон
       <select id="corr-law-filter" class="scholar-filter-control scholar-filter-wide">
         <option value="">Все</option>
-        ${corrLaws.map((l) => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join('')}
+        ${corrLaws.map((l) => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join("")}
       </select>
     </label>
   </div>`;
-  html += '<div class="scholar-table-scroll"><table class="scholar-compact-table">';
-  html += '<thead><tr class="scholar-table-head-row"><th>ПИЕ</th><th>Русск.</th><th>Лат.</th><th>Греч.</th><th>Санскр.</th><th>Англ.</th><th>Нем.</th><th>Значение</th><th>Закон/семья</th><th>Источник</th><th>Связи</th></tr></thead><tbody id="corr-table-body">';
+  html += "<div class=\"scholar-table-scroll\"><table class=\"scholar-compact-table\">";
+  html += "<thead><tr class=\"scholar-table-head-row\"><th>ПИЕ</th><th>Русск.</th><th>Лат.</th><th>Греч.</th><th>Санскр.</th><th>Англ.</th><th>Нем.</th><th>Значение</th><th>Закон/семья</th><th>Источник</th><th>Связи</th></tr></thead><tbody id=\"corr-table-body\">";
   for (const r of corrRows) {
-    const langHash = buildItemHash('languages', r._focusLang || 'санскрит');
+    const langHash = buildItemHash("languages", r._focusLang || "санскрит");
     html += `<tr class="corr-row" role="button" tabindex="0" data-family="${escapeHtml(r._family)}" data-law="${escapeHtml(r._law)}" data-langs="${escapeHtml(r._langs)}" data-focus-lang="${escapeHtml(r._focusLang)}">
       <td class="corr-pie-cell">${renderAccentSafe(r.pie)}</td>
       <td class="corr-rus-cell">${renderAccentSafe(r.rus)}</td>
@@ -11269,181 +11887,232 @@ function renderScholarPanel(container) {
       <td class="corr-source-cell">${escapeHtml(r._source)}</td>
       <td class="corr-links-cell">
         <a class="corr-lang-link" data-type="languages" data-head="${escapeHtml(r._focusLang)}" href="${escapeHtml(langHash)}">язык ↗</a><br>
-        <a class="corr-law-link" href="${escapeHtml(buildCanonicalHash(['materials', 'phonetic_laws']))}">закон ↗</a>
+        <a class="corr-law-link" href="${escapeHtml(buildCanonicalHash(["materials", "phonetic_laws"]))}">закон ↗</a>
       </td>
     </tr>`;
   }
-  html += '</tbody></table></div>';
-
-  // 11. Реконструкции
+  html += "</tbody></table></div>";
   const recon = APP_DATA.lexicon_tech || [];
-  html += '<h3 id="sch-reconstructions" class="scholar-section-title scholar-section-title-spaced">11. Реконструкции</h3>';
+  html += "<h3 id=\"sch-reconstructions\" class=\"scholar-section-title scholar-section-title-spaced\">11. Реконструкции</h3>";
   html += `<div class="scholar-section-intro">${recon.length} реконструированных и иноязычных форм, вынесенных в подраздел профессионального аппарата.</div>`;
   html += `<div class="scholar-recon-grid" data-scholar-recon-columns="${reconstructionColumns}">`;
-  for (const item of recon) {
-    html += `<a class="scholar-link scholar-recon-link" data-type="lexicon_tech" data-head="${escapeHtml(item.head)}" href="${escapeHtml(buildItemHash('lexicon_tech', item.head))}">
+  for (const item of recon) html += `<a class="scholar-link scholar-recon-link" data-type="lexicon_tech" data-head="${escapeHtml(item.head)}" href="${escapeHtml(buildItemHash("lexicon_tech", item.head))}">
       <span class="scholar-recon-head">${escapeHtml(item.head)}</span>
       <span class="scholar-muted-meta">${escapeHtml((item.page_list || []).length)} стр.</span>
     </a>`;
-  }
-  html += '</div>';
-
-  html += '</div></div>';
+  html += "</div>";
+  html += "</div></div>";
   container.innerHTML = html;
   applyDataDrivenStyles(container);
-
-  // Привязки кликов на имена
-  const exportScholarBiblioBibBtn = container.querySelector('#export-scholar-biblio-bib');
-  if (exportScholarBiblioBibBtn) {
-    exportScholarBiblioBibBtn.onclick = () => {
-      const entries = collectScholarBibliographyBibEntries();
-      if (!entries.length) return;
-      downloadBibtexFile('scholar-bibliography.bib', entries);
-      announceUiMessage('BibTeX exported');
-    };
-  }
-  bindNavigateLinks(container, '.scholar-link', 'all');
-  container.querySelectorAll('.scholar-slovo-anchor[data-anchor]').forEach((link) => {
+  const exportScholarBiblioBibBtn = container.querySelector("#export-scholar-biblio-bib");
+  if (exportScholarBiblioBibBtn) exportScholarBiblioBibBtn.onclick = () => {
+    const entries = collectScholarBibliographyBibEntries();
+    if (!entries.length) return;
+    downloadBibtexFile("scholar-bibliography.bib", entries);
+    announceUiMessage("BibTeX exported");
+  };
+  bindNavigateLinks(container, ".scholar-link", "all");
+  container.querySelectorAll(".scholar-slovo-anchor[data-anchor]").forEach((link) => {
     link.onclick = (e) => {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      const anchorId = String(link.dataset.anchor || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
+      if (e && typeof e.preventDefault === "function") e.preventDefault();
+      const anchorId = String(link.dataset.anchor || "").replace(/[^a-z0-9_-]/gi, "").slice(0, 64);
       if (!anchorId) return;
       currentScholarAnchor = anchorId;
       pendingScholarAnchor = anchorId;
       syncNavigationState();
       const target = container.querySelector(`#${anchorId}`);
-      if (target && typeof target.scrollIntoView === 'function') {
-        const opts = prefersReducedMotion()
-          ? { block: 'start' }
-          : { block: 'start', behavior: 'smooth' };
+      if (target && typeof target.scrollIntoView === "function") {
+        const opts = prefersReducedMotion() ? { block: "start" } : {
+          block: "start",
+          behavior: "smooth"
+        };
         target.scrollIntoView(opts);
       }
     };
   });
   if (pendingScholarAnchor) {
     const target = container.querySelector(`#${pendingScholarAnchor}`);
-    if (target && typeof target.scrollIntoView === 'function') {
-      target.scrollIntoView({ block: 'start' });
-    }
+    if (target && typeof target.scrollIntoView === "function") target.scrollIntoView({ block: "start" });
     currentScholarAnchor = pendingScholarAnchor;
-    pendingScholarAnchor = '';
+    pendingScholarAnchor = "";
   }
-  const accentCompareA = container.querySelector('#accent-compare-a');
-  const accentCompareB = container.querySelector('#accent-compare-b');
-  const accentCompareC = container.querySelector('#accent-compare-c');
-  const accentCompareBox = container.querySelector('#accent-compare-box');
-  const accentCompareExport = container.querySelector('#accent-compare-export-md');
+  const accentCompareA = container.querySelector("#accent-compare-a");
+  const accentCompareB = container.querySelector("#accent-compare-b");
+  const accentCompareC = container.querySelector("#accent-compare-c");
+  const accentCompareBox = container.querySelector("#accent-compare-box");
+  const accentCompareExport = container.querySelector("#accent-compare-export-md");
   if (accentCompareA && accentCompareB && accentCompareC && accentCompareBox) {
     const paradigms = Array.isArray(s.accent_paradigms) ? s.accent_paradigms : [];
-    const splitForms = (text) => String(text || '')
-      .split(/[;,]/)
-      .map((x) => x.trim())
-      .filter(Boolean)
-      .slice(0, 12);
-    const stripAccents = (text) => String(text || '')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .trim()
-      .toLowerCase();
+    const splitForms = (text) => String(text || "").split(/[;,]/).map((x) => x.trim()).filter(Boolean).slice(0, 12);
+    const stripAccents = (text) => String(text || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
     const mdEscapeCell = escapeMarkdownTableCell;
     const parseIdx = (el, fallback) => {
-      if (!el || typeof el.value !== 'string') return fallback;
+      if (!el || typeof el.value !== "string") return fallback;
       const n = parseInt(el.value, 10);
       if (!Number.isInteger(n)) return fallback;
       return Math.max(-1, Math.min(n, paradigms.length - 1));
     };
-    let lastMd = '';
+    let lastMd = "";
     const renderAccentCompare = () => {
       const idxA = parseIdx(accentCompareA, 0);
       let idxB = parseIdx(accentCompareB, paradigms.length > 1 ? 1 : 0);
       const idxC = parseIdx(accentCompareC, -1);
-      if (idxB === idxA) idxB = paradigms.length > 1 ? ((idxA + 1) % paradigms.length) : idxA;
-      const selected = [idxA, idxB, idxC].filter((idx, pos, arr) => idx >= 0 && arr.indexOf(idx) === pos);
+      if (idxB === idxA) idxB = paradigms.length > 1 ? (idxA + 1) % paradigms.length : idxA;
+      const selected = [
+        idxA,
+        idxB,
+        idxC
+      ].filter((idx, pos, arr) => idx >= 0 && arr.indexOf(idx) === pos);
       if (selected.length < 2) {
-        accentCompareBox.innerHTML = '<div class="scholar-compare-empty">Выберите минимум две разные парадигмы.</div>';
-        lastMd = '';
+        accentCompareBox.innerHTML = "<div class=\"scholar-compare-empty\">Выберите минимум две разные парадигмы.</div>";
+        lastMd = "";
         return;
       }
       const selectedParadigms = selected.map((idx) => paradigms[idx]).filter(Boolean);
-      const labels = selectedParadigms.map((p) => String(p.type || 'тип'));
+      const labels = selectedParadigms.map((p) => String(p.type || "тип"));
       const rows = [];
       let maxRows = 0;
       for (const p of selectedParadigms) {
         const ex = Array.isArray(p.examples) ? p.examples : [];
-        const first = ex.length ? ex[0] : { word: '', forms: '' };
-        const forms = splitForms(first.forms || first.word || '');
+        const first = ex.length ? ex[0] : {
+          word: "",
+          forms: ""
+        };
+        const forms = splitForms(first.forms || first.word || "");
         rows.push(forms);
         if (forms.length > maxRows) maxRows = forms.length;
       }
       const htmlRows = [];
       const mdRows = [];
       for (let i = 0; i < maxRows; i++) {
-        const cells = rows.map((r) => String(r[i] || ''));
+        const cells = rows.map((r) => String(r[i] || ""));
         const norms = cells.map(stripAccents).filter(Boolean);
         const same = norms.length > 1 && norms.every((n) => n === norms[0]);
         const cellHtml = cells.map((cell) => {
-          const compareClass = !same && cell ? ' scholar-compare-cell-mismatch' : '';
-          return `<td class="scholar-compare-cell${compareClass}">${cell ? renderAccentSafe(cell) : '<span class="scholar-compare-missing">—</span>'}</td>`;
-        }).join('');
+          return `<td class="scholar-compare-cell${!same && cell ? " scholar-compare-cell-mismatch" : ""}">${cell ? renderAccentSafe(cell) : "<span class=\"scholar-compare-missing\">—</span>"}</td>`;
+        }).join("");
         htmlRows.push(`<tr><td class="scholar-compare-row-index">${i + 1}</td>${cellHtml}</tr>`);
-        mdRows.push(`| ${i + 1} | ${cells.map(mdEscapeCell).join(' | ')} |`);
+        mdRows.push(`| ${i + 1} | ${cells.map(mdEscapeCell).join(" | ")} |`);
       }
       accentCompareBox.innerHTML = `<div class="scholar-table-scroll"><table class="scholar-compact-table">
-        <thead><tr class="scholar-table-head-row"><th>№</th>${labels.map((l) => `<th>${escapeHtml(l)}</th>`).join('')}</tr></thead>
-        <tbody>${htmlRows.join('')}</tbody>
+        <thead><tr class="scholar-table-head-row"><th>№</th>${labels.map((l) => `<th>${escapeHtml(l)}</th>`).join("")}</tr></thead>
+        <tbody>${htmlRows.join("")}</tbody>
       </table></div>`;
-      const mdHeader = `| № | ${labels.join(' | ')} |`;
-      const mdSep = `| ${['---', ...labels.map(() => '---')].join(' | ')} |`;
-      const activeBook = getActiveBook();
-      const activeBookId = activeBook.book_id || '';
+      const mdHeader = `| № | ${labels.join(" | ")} |`;
+      const mdSep = `| ${["---", ...labels.map(() => "---")].join(" | ")} |`;
+      const activeBookId = getActiveBook().book_id || "";
       const activeBookLabel = getBookLabelForSearch(activeBookId);
-      const sourceLines = activeBookLabel ? [`Источник: **${activeBookLabel}**`, `book_id: ${activeBookId}`, ''] : [];
-      lastMd = ['# Сравнение акцентологических парадигм', '', ...sourceLines, mdHeader, mdSep, ...mdRows, ''].join('\n');
+      lastMd = [
+        "# Сравнение акцентологических парадигм",
+        "",
+        ...activeBookLabel ? [
+          `Источник: **${activeBookLabel}**`,
+          `book_id: ${activeBookId}`,
+          ""
+        ] : [],
+        mdHeader,
+        mdSep,
+        ...mdRows,
+        ""
+      ].join("\n");
     };
     if (paradigms.length > 1) {
-      accentCompareA.value = '0';
-      accentCompareB.value = '1';
+      accentCompareA.value = "0";
+      accentCompareB.value = "1";
     }
-    accentCompareC.value = '-1';
+    accentCompareC.value = "-1";
     accentCompareA.onchange = renderAccentCompare;
     accentCompareB.onchange = renderAccentCompare;
     accentCompareC.onchange = renderAccentCompare;
-    if (accentCompareExport) {
-      accentCompareExport.onclick = () => {
-        if (!lastMd) return;
-        downloadTextFile('accent-paradigms-compare.md', lastMd, 'text/markdown;charset=utf-8');
-      };
-    }
+    if (accentCompareExport) accentCompareExport.onclick = () => {
+      if (!lastMd) return;
+      downloadTextFile("accent-paradigms-compare.md", lastMd, "text/markdown;charset=utf-8");
+    };
     renderAccentCompare();
   }
-  bindNavigateLinks(container, '.corr-lang-link', 'languages');
-  container.querySelectorAll('.corr-law-link').forEach((link) => {
+
+  // Bind events for Accent Reconstructor
+  const reconSelect = container.querySelector("#accent-recon-root-select");
+  if (reconSelect) {
+    reconSelect.onchange = (e) => {
+      currentAccentReconRootIndex = parseInt(e.target.value, 10) || 0;
+      if (currentAccentReconStageIndex >= ACCENT_RECON_DATA[currentAccentReconRootIndex].stages.length) {
+        currentAccentReconStageIndex = 0;
+      }
+      renderScholarPanel(container);
+    };
+  }
+  container.querySelectorAll(".accent-recon-stage-btn[data-stage-idx]").forEach((btn) => {
+    btn.onclick = () => {
+      currentAccentReconStageIndex = parseInt(btn.dataset.stageIdx, 10) || 0;
+      renderScholarPanel(container);
+    };
+  });
+
+  // Bind events for Orthography Hydrator
+  const orthoInput = container.querySelector("#ortho-input");
+  if (orthoInput) {
+    orthoInput.oninput = (e) => {
+      currentOrthoHydratorInput = e.target.value;
+      const hyd = hydrateToOldRussian(currentOrthoHydratorInput);
+      const card = container.querySelector(".ortho-result-card");
+      if (card) card.textContent = hyd.result;
+      const list = container.querySelector(".ortho-rules-list");
+      if (list) {
+        if (hyd.rules.length === 0) {
+          list.innerHTML = `<div class="scholar-table-empty">Слово сохранено в исходной графике (за исключением общих правил). Попробуйте ввести примеры из списка слева.</div>`;
+        } else {
+          list.innerHTML = hyd.rules.map((rule) => `
+							<div class="ortho-rule-alert">
+								<div class="ortho-rule-title">${escapeHtml(rule.title)}</div>
+								<div>${escapeHtml(rule.desc)}</div>
+							</div>
+						`).join("");
+        }
+      }
+    };
+    orthoInput.onfocus = () => {
+      const val = orthoInput.value;
+      orthoInput.value = "";
+      orthoInput.value = val;
+    };
+  }
+  container.querySelectorAll(".ortho-preset-btn[data-preset]").forEach((btn) => {
+    btn.onclick = () => {
+      currentOrthoHydratorInput = btn.dataset.preset;
+      renderScholarPanel(container);
+      const input = container.querySelector("#ortho-input");
+      if (input) input.focus();
+    };
+  });
+  bindNavigateLinks(container, ".corr-lang-link", "languages");
+  container.querySelectorAll(".corr-law-link").forEach((link) => {
     bindActionWithKeyboard(link, () => {
-      currentEntity = 'materials';
-      currentTab = 'phonetic_laws';
+      currentEntity = "materials";
+      currentTab = "phonetic_laws";
       selectedItem = null;
       selectedItemType = null;
-      rightPaneMode = 'histogram';
+      rightPaneMode = "histogram";
       renderEntitySwitcher();
       renderTabs();
       renderContent();
       syncNavigationState();
     });
   });
-  const corrFamilyFilter = container.querySelector('#corr-family-filter');
-  const corrLangFilter = container.querySelector('#corr-lang-filter');
-  const corrLawFilter = container.querySelector('#corr-law-filter');
-  const corrBody = container.querySelector('#corr-table-body');
-  const corrRowsEls = Array.from(container.querySelectorAll('.corr-row'));
+  const corrFamilyFilter = container.querySelector("#corr-family-filter");
+  const corrLangFilter = container.querySelector("#corr-lang-filter");
+  const corrLawFilter = container.querySelector("#corr-law-filter");
+  const corrBody = container.querySelector("#corr-table-body");
+  const corrRowsEls = Array.from(container.querySelectorAll(".corr-row"));
   const applyCorrespondenceFilters = () => {
-    const family = corrFamilyFilter && corrFamilyFilter.value ? String(corrFamilyFilter.value) : '';
-    const lang = corrLangFilter && corrLangFilter.value ? String(corrLangFilter.value) : '';
-    const law = corrLawFilter && corrLawFilter.value ? String(corrLawFilter.value) : '';
+    const family = corrFamilyFilter && corrFamilyFilter.value ? String(corrFamilyFilter.value) : "";
+    const lang = corrLangFilter && corrLangFilter.value ? String(corrLangFilter.value) : "";
+    const law = corrLawFilter && corrLawFilter.value ? String(corrLawFilter.value) : "";
     let shown = 0;
     for (const row of corrRowsEls) {
-      const rowFamily = String(row.dataset.family || '');
-      const rowLaw = String(row.dataset.law || '');
-      const langs = String(row.dataset.langs || '').split(',').filter(Boolean);
+      const rowFamily = String(row.dataset.family || "");
+      const rowLaw = String(row.dataset.law || "");
+      const langs = String(row.dataset.langs || "").split(",").filter(Boolean);
       const byFamily = !family || rowFamily === family;
       const byLaw = !law || rowLaw === law;
       const byLang = !lang || langs.includes(lang);
@@ -11452,12 +12121,12 @@ function renderScholarPanel(container) {
       if (visible) shown += 1;
     }
     if (!corrBody) return;
-    const oldEmpty = corrBody.querySelector('.corr-empty-row');
+    const oldEmpty = corrBody.querySelector(".corr-empty-row");
     if (oldEmpty) oldEmpty.remove();
     if (!shown) {
-      const tr = document.createElement('tr');
-      tr.className = 'corr-empty-row';
-      tr.innerHTML = '<td class="scholar-table-empty" colspan="11">Нет строк под текущие фильтры.</td>';
+      const tr = document.createElement("tr");
+      tr.className = "corr-empty-row";
+      tr.innerHTML = "<td class=\"scholar-table-empty\" colspan=\"11\">Нет строк под текущие фильтры.</td>";
       corrBody.appendChild(tr);
     }
   };
@@ -11468,43 +12137,41 @@ function renderScholarPanel(container) {
     corrBody.onclick = (e) => {
       const target = e && e.target;
       if (!(target instanceof HTMLElement)) return;
-      if (target.closest('a')) return;
-      const row = target.closest('.corr-row');
+      if (target.closest("a")) return;
+      const row = target.closest(".corr-row");
       if (!row || !corrBody.contains(row)) return;
-      const focusLang = String(row.dataset.focusLang || '');
+      const focusLang = String(row.dataset.focusLang || "");
       if (!focusLang) return;
-      navigateToItem('languages', focusLang);
+      navigateToItem("languages", focusLang);
     };
     corrBody.onkeydown = (e) => {
-      const key = e && e.key ? String(e.key) : '';
-      if (key !== 'Enter' && key !== ' ') return;
+      const key = e && e.key ? String(e.key) : "";
+      if (key !== "Enter" && key !== " ") return;
       const target = e && e.target;
       if (!(target instanceof HTMLElement)) return;
-      const row = target.closest('.corr-row');
+      const row = target.closest(".corr-row");
       if (!row || !corrBody.contains(row)) return;
       e.preventDefault();
-      const focusLang = String(row.dataset.focusLang || '');
+      const focusLang = String(row.dataset.focusLang || "");
       if (!focusLang) return;
-      navigateToItem('languages', focusLang);
+      navigateToItem("languages", focusLang);
     };
   }
   applyCorrespondenceFilters();
-
-  // Локальные фильтры конкорданса берестяных грамот
-  const birchCityFilter = container.querySelector('#birch-city-filter');
-  const birchCenturyFilter = container.querySelector('#birch-century-filter');
-  const birchNumberFilter = container.querySelector('#birch-number-filter');
-  const birchRowsEls = Array.from(container.querySelectorAll('.birch-row'));
-  const birchBody = container.querySelector('#birch-concordance-body');
+  const birchCityFilter = container.querySelector("#birch-city-filter");
+  const birchCenturyFilter = container.querySelector("#birch-century-filter");
+  const birchNumberFilter = container.querySelector("#birch-number-filter");
+  const birchRowsEls = Array.from(container.querySelectorAll(".birch-row"));
+  const birchBody = container.querySelector("#birch-concordance-body");
   const applyBirchFilters = () => {
-    const city = (birchCityFilter && birchCityFilter.value ? String(birchCityFilter.value) : '').toLowerCase();
-    const century = birchCenturyFilter && birchCenturyFilter.value ? String(birchCenturyFilter.value) : '';
-    const numNeedle = normalizeHeadForMatch(birchNumberFilter && birchNumberFilter.value ? String(birchNumberFilter.value) : '');
+    const city = (birchCityFilter && birchCityFilter.value ? String(birchCityFilter.value) : "").toLowerCase();
+    const century = birchCenturyFilter && birchCenturyFilter.value ? String(birchCenturyFilter.value) : "";
+    const numNeedle = normalizeHeadForMatch(birchNumberFilter && birchNumberFilter.value ? String(birchNumberFilter.value) : "");
     let shown = 0;
     for (const row of birchRowsEls) {
-      const rowCity = String(row.dataset.city || '').toLowerCase();
-      const rowCentury = String(row.dataset.century || '');
-      const rowNum = normalizeHeadForMatch(String(row.dataset.num || ''));
+      const rowCity = String(row.dataset.city || "").toLowerCase();
+      const rowCentury = String(row.dataset.century || "");
+      const rowNum = normalizeHeadForMatch(String(row.dataset.num || ""));
       const byCity = !city || rowCity === city;
       const byCentury = !century || rowCentury === century;
       const byNum = !numNeedle || rowNum.includes(numNeedle);
@@ -11513,43 +12180,39 @@ function renderScholarPanel(container) {
       if (visible) shown += 1;
     }
     if (!birchBody) return;
-    const oldEmpty = birchBody.querySelector('.birch-empty-row');
+    const oldEmpty = birchBody.querySelector(".birch-empty-row");
     if (oldEmpty) oldEmpty.remove();
     if (!shown) {
-      const tr = document.createElement('tr');
-      tr.className = 'birch-empty-row';
-      tr.innerHTML = '<td class="scholar-table-empty" colspan="5">Ничего не найдено: попробуйте ослабить фильтры.</td>';
+      const tr = document.createElement("tr");
+      tr.className = "birch-empty-row";
+      tr.innerHTML = "<td class=\"scholar-table-empty\" colspan=\"5\">Ничего не найдено: попробуйте ослабить фильтры.</td>";
       birchBody.appendChild(tr);
     }
   };
   if (birchCityFilter) birchCityFilter.onchange = applyBirchFilters;
   if (birchCenturyFilter) birchCenturyFilter.onchange = applyBirchFilters;
-  if (birchNumberFilter) {
-    birchNumberFilter.oninput = (e) => {
-      const t = e && e.target;
-      if (!t || typeof t.value !== 'string') return;
-      const next = t.value.replace(/[^\d]/g, '').slice(0, 6);
-      if (t.value !== next) t.value = next;
-      applyBirchFilters();
-    };
-  }
+  if (birchNumberFilter) birchNumberFilter.oninput = (e) => {
+    const t = e && e.target;
+    if (!t || typeof t.value !== "string") return;
+    const next = t.value.replace(/[^\d]/g, "").slice(0, 6);
+    if (t.value !== next) t.value = next;
+    applyBirchFilters();
+  };
   applyBirchFilters();
 }
-
-// =========================================================
-// ДРЕВО ЯЗЫКОВ
-// =========================================================
 function renderTreePanel(container) {
   container.innerHTML = `<div class="panel active"><div class="timeline-container">
     <p class="chart-intro">Генеалогическое древо языков книги: языковая семья → подгруппа → язык. Полужирным выделены языки, обсуждаемые содержательно. Кликните по языку, чтобы открыть карточку.</p>
     <div id="lang-tree"></div></div></div>`;
-  const container_tree = document.getElementById('lang-tree');
+  const container_tree = document.getElementById("lang-tree");
   const tree = APP_DATA.language_tree;
-  if (!tree) { container_tree.innerHTML = '<p>Нет данных</p>'; return; }
-
+  if (!tree) {
+    container_tree.innerHTML = "<p>Нет данных</p>";
+    return;
+  }
   const rowH = 20;
   const col1 = 20, col2 = 220, col3 = 480;
-  const W = 1000;
+  const W = 1e3;
   let y = 40;
   const positioned = [];
   for (const fam of tree) {
@@ -11558,8 +12221,11 @@ function renderTreePanel(container) {
       const grpStartY = y;
       for (const lang of grp.children) {
         positioned.push({
-          famName: fam.name, grpName: grp.name, langName: lang.name,
-          discussed: lang.discussed, y: y,
+          famName: fam.name,
+          grpName: grp.name,
+          langName: lang.name,
+          discussed: lang.discussed,
+          y
         });
         y += rowH;
       }
@@ -11571,159 +12237,169 @@ function renderTreePanel(container) {
     y += 10;
   }
   const H = y + 30;
-
-  const svgNs = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(svgNs, 'svg');
-  svg.classList.add('language-tree-svg');
-  svg.setAttribute('width', String(W));
-  svg.setAttribute('height', String(H));
-  svg.setAttribute('xmlns', svgNs);
+  const svgNs = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(svgNs, "svg");
+  svg.classList.add("language-tree-svg");
+  svg.setAttribute("width", String(W));
+  svg.setAttribute("height", String(H));
+  svg.setAttribute("xmlns", svgNs);
   const addPath = (d, attrs = {}) => {
-    const path = document.createElementNS(svgNs, 'path');
-    path.setAttribute('d', d);
+    const path = document.createElementNS(svgNs, "path");
+    path.setAttribute("d", d);
     Object.entries(attrs).forEach(([key, value]) => path.setAttribute(key, String(value)));
     svg.appendChild(path);
   };
   const addText = (x, y, textValue, attrs = {}) => {
-    const text = document.createElementNS(svgNs, 'text');
-    text.setAttribute('x', String(x));
-    text.setAttribute('y', String(y));
+    const text = document.createElementNS(svgNs, "text");
+    text.setAttribute("x", String(x));
+    text.setAttribute("y", String(y));
     Object.entries(attrs).forEach(([key, value]) => text.setAttribute(key, String(value)));
-    text.textContent = String(textValue || '');
+    text.textContent = String(textValue || "");
     svg.appendChild(text);
     return text;
   };
   for (const fam of tree) {
-    const famColor = safeColor(FAMILY_COLORS[fam.name], '#888');
-    addText(col1, fam.midY + 4, fam.name, { fill: famColor, 'font-size': 13, 'font-weight': 'bold' });
+    const famColor = safeColor(FAMILY_COLORS[fam.name], "#888");
+    addText(col1, fam.midY + 4, fam.name, {
+      fill: famColor,
+      "font-size": 13,
+      "font-weight": "bold"
+    });
     for (const grp of fam.children) {
       addPath(`M ${col1 + 180} ${fam.midY} C ${col2 - 20} ${fam.midY}, ${col2 - 20} ${grp.midY}, ${col2} ${grp.midY}`, {
-        fill: 'none',
+        fill: "none",
         stroke: famColor,
-        'stroke-width': 1.5,
-        opacity: 0.6,
+        "stroke-width": 1.5,
+        opacity: .6
       });
-      addText(col2, grp.midY + 4, grp.name, { fill: '#5a3818', 'font-size': 11, 'font-style': 'italic' });
+      addText(col2, grp.midY + 4, grp.name, {
+        fill: "#5a3818",
+        "font-size": 11,
+        "font-style": "italic"
+      });
       for (const lang of grp.children) {
-        const p = positioned.find(p => p.famName===fam.name && p.grpName===grp.name && p.langName===lang.name);
+        const p = positioned.find((p) => p.famName === fam.name && p.grpName === grp.name && p.langName === lang.name);
         if (!p) continue;
         addPath(`M ${col2 + 240} ${grp.midY} C ${col3 - 20} ${grp.midY}, ${col3 - 20} ${p.y}, ${col3} ${p.y}`, {
-          fill: 'none',
+          fill: "none",
           stroke: famColor,
-          'stroke-width': 1,
-          opacity: 0.4,
+          "stroke-width": 1,
+          opacity: .4
         });
-        const group = document.createElementNS(svgNs, 'g');
-        group.classList.add('language-tree-node');
-        group.dataset.lang = String(lang.name || '');
-        const circle = document.createElementNS(svgNs, 'circle');
-        circle.setAttribute('cx', String(col3 - 6));
-        circle.setAttribute('cy', String(p.y));
-        circle.setAttribute('r', '3');
-        circle.setAttribute('fill', famColor);
-        const text = document.createElementNS(svgNs, 'text');
-        text.setAttribute('x', String(col3));
-        text.setAttribute('y', String(p.y + 4));
-        text.setAttribute('fill', '#1a1a1a');
-        text.setAttribute('font-size', '12');
-        if (lang.discussed) text.setAttribute('font-weight', 'bold');
-        text.textContent = String(lang.name || '');
+        const group = document.createElementNS(svgNs, "g");
+        group.classList.add("language-tree-node");
+        group.dataset.lang = String(lang.name || "");
+        const circle = document.createElementNS(svgNs, "circle");
+        circle.setAttribute("cx", String(col3 - 6));
+        circle.setAttribute("cy", String(p.y));
+        circle.setAttribute("r", "3");
+        circle.setAttribute("fill", famColor);
+        const text = document.createElementNS(svgNs, "text");
+        text.setAttribute("x", String(col3));
+        text.setAttribute("y", String(p.y + 4));
+        text.setAttribute("fill", "#1a1a1a");
+        text.setAttribute("font-size", "12");
+        if (lang.discussed) text.setAttribute("font-weight", "bold");
+        text.textContent = String(lang.name || "");
         group.appendChild(circle);
         group.appendChild(text);
         svg.appendChild(group);
       }
     }
   }
-  container_tree.textContent = '';
+  container_tree.textContent = "";
   container_tree.appendChild(svg);
-  container_tree.querySelectorAll('g[data-lang]').forEach(g => {
+  container_tree.querySelectorAll("g[data-lang]").forEach((g) => {
     g.onclick = () => {
       selectedItem = g.dataset.lang;
-      selectedItemType = 'languages';
-      rightPaneMode = 'card';
-      switchTab('list');
+      selectedItemType = "languages";
+      rightPaneMode = "card";
+      switchTab("list");
     };
   });
 }
-
-// =========================================================
-// КАРТА: Google My Maps embed
-// =========================================================
 function renderMapPanel(container) {
   const type = currentEntity;
-  const selectedHeadForMap = selectedItemType === type ? String(selectedItem || '').trim() : '';
+  const selectedHeadForMap = selectedItemType === type ? String(selectedItem || "").trim() : "";
   let note, items, colorFn, radiusFn;
-  if (type === 'toponyms') {
-    note = 'Топонимы лекций на карте мира. Размер точки — число упоминаний; цвет — историческая эпоха. Кликните по маркеру, чтобы открыть карточку.';
-    items = APP_DATA.toponyms.filter(t => t.lat !== undefined);
-    colorFn = t => safeColor(EPOCH_COLORS[t.epoch_class], '#888');
-    radiusFn = t => 4 + Math.sqrt((t.page_list||[]).length) * 1.5;
-  } else if (type === 'ethnonyms') {
-    note = 'Народы, упоминаемые в лекциях, в местах их исторического расселения. Размер — число упоминаний. Кликните, чтобы открыть карточку.';
-    items = APP_DATA.ethnonyms.filter(t => t.lat !== undefined);
-    colorFn = t => t.discussed ? '#c0392b' : '#3a6ea5';
-    radiusFn = t => 4 + Math.sqrt((t.page_list||[]).length) * 1.5;
-  } else if (type === 'languages') {
-    note = 'Языки на карте мира, размещённые по центрам своих исторических ареалов. Цвет — языковая семья. Размер — число упоминаний в книге.';
-    items = APP_DATA.languages.filter(t => t.lat !== undefined);
-    colorFn = l => safeColor(FAMILY_COLORS[l.family], '#888');
-    radiusFn = l => 4 + Math.sqrt((l.page_list||[]).length) * 1.3;
+  if (type === "toponyms") {
+    note = "Топонимы лекций на карте мира. Размер точки — число упоминаний; цвет — историческая эпоха. Кликните по маркеру, чтобы открыть карточку.";
+    items = APP_DATA.toponyms.filter((t) => t.lat !== void 0);
+    colorFn = (t) => safeColor(EPOCH_COLORS[t.epoch_class], "#888");
+    radiusFn = (t) => 4 + Math.sqrt((t.page_list || []).length) * 1.5;
+  } else if (type === "ethnonyms") {
+    note = "Народы, упоминаемые в лекциях, в местах их исторического расселения. Размер — число упоминаний. Кликните, чтобы открыть карточку.";
+    items = APP_DATA.ethnonyms.filter((t) => t.lat !== void 0);
+    colorFn = (t) => t.discussed ? "#c0392b" : "#3a6ea5";
+    radiusFn = (t) => 4 + Math.sqrt((t.page_list || []).length) * 1.5;
+  } else if (type === "languages") {
+    note = "Языки на карте мира, размещённые по центрам своих исторических ареалов. Цвет — языковая семья. Размер — число упоминаний в книге.";
+    items = APP_DATA.languages.filter((t) => t.lat !== void 0);
+    colorFn = (l) => safeColor(FAMILY_COLORS[l.family], "#888");
+    radiusFn = (l) => 4 + Math.sqrt((l.page_list || []).length) * 1.3;
   } else {
-    note = 'Карта'; items = []; colorFn = () => '#888'; radiusFn = () => 6;
+    note = "Карта";
+    items = [];
+    colorFn = () => "#888";
+    radiusFn = () => 6;
   }
-
   container.innerHTML = `<div class="panel active"><div class="map-container">
     <p class="chart-intro">${note}</p>
       <div id="leaflet-map" class="leaflet-map-host"></div></div></div>`;
-
-  // Fallback при отсутствии Leaflet / интернета
-  if (typeof L === 'undefined') {
+  if (typeof L === "undefined") {
     renderOfflineMap(type, items, colorFn, radiusFn);
     return;
   }
-
   setTimeout(() => {
     let map;
     try {
-      map = L.map('leaflet-map', { preferCanvas: true }).setView([40, 30], 3);
+      map = L.map("leaflet-map", { preferCanvas: true }).setView([40, 30], 3);
       const providers = [
         {
-          name: 'CARTO',
-          url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-          options: { subdomains: 'abcd', maxZoom: 20, attribution: '© OpenStreetMap contributors © CARTO' },
+          name: "CARTO",
+          url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+          options: {
+            subdomains: "abcd",
+            maxZoom: 20,
+            attribution: "© OpenStreetMap contributors © CARTO"
+          }
         },
         {
-          name: 'Esri WorldStreetMap',
-          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+          name: "Esri WorldStreetMap",
+          url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
           options: {
             maxZoom: 19,
-            attribution: 'Tiles © Esri',
-          },
+            attribution: "Tiles © Esri"
+          }
         },
         {
-          name: 'OpenTopoMap',
-          url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-          options: { subdomains: 'abc', maxZoom: 17, attribution: '© OpenStreetMap contributors, SRTM | © OpenTopoMap' },
-        },
+          name: "OpenTopoMap",
+          url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+          options: {
+            subdomains: "abc",
+            maxZoom: 17,
+            attribution: "© OpenStreetMap contributors, SRTM | © OpenTopoMap"
+          }
+        }
       ];
-
-      const status = document.createElement('div');
-      status.style.cssText = 'position:absolute;right:8px;top:8px;z-index:450;background:rgba(255,255,255,.9);border:1px solid #cbb79a;border-radius:3px;padding:2px 6px;font-size:11px;color:#6a5040;';
-      status.textContent = 'Карта: загрузка…';
-      const mapEl = document.getElementById('leaflet-map');
+      const status = document.createElement("div");
+      status.style.cssText = "position:absolute;right:8px;top:8px;z-index:450;background:rgba(255,255,255,.9);border:1px solid #cbb79a;border-radius:3px;padding:2px 6px;font-size:11px;color:#6a5040;";
+      status.textContent = "Карта: загрузка…";
+      const mapEl = document.getElementById("leaflet-map");
       if (mapEl) mapEl.appendChild(status);
-
       let loaded = false;
       let providerIndex = -1;
       let layer = null;
       let loadWatch = null;
-
       const failToOffline = () => {
-        try { if (loadWatch) clearTimeout(loadWatch); } catch (e) {}
-        try { map.remove(); } catch (e) {}
+        try {
+          if (loadWatch) clearTimeout(loadWatch);
+        } catch (e) {}
+        try {
+          map.remove();
+        } catch (e) {}
         renderOfflineMap(type, items, colorFn, radiusFn);
       };
-
       const switchProvider = () => {
         providerIndex += 1;
         if (providerIndex >= providers.length) {
@@ -11737,15 +12413,13 @@ function renderMapPanel(container) {
         } catch (e) {}
         layer = L.tileLayer(p.url, p.options || {});
         let tileErrors = 0;
-        layer.on('load', () => {
+        layer.on("load", () => {
           loaded = true;
           status.textContent = `Карта: ${p.name}`;
         });
-        layer.on('tileerror', () => {
+        layer.on("tileerror", () => {
           tileErrors += 1;
-          if (tileErrors >= 6 && !loaded) {
-            switchProvider();
-          }
+          if (tileErrors >= 6 && !loaded) switchProvider();
         });
         layer.addTo(map);
         if (loadWatch) clearTimeout(loadWatch);
@@ -11753,7 +12427,6 @@ function renderMapPanel(container) {
           if (!loaded) switchProvider();
         }, 4500);
       };
-
       switchProvider();
     } catch (e) {
       renderOfflineMap(type, items, colorFn, radiusFn);
@@ -11762,59 +12435,50 @@ function renderMapPanel(container) {
     let focusedMarker = null;
     let focusedLatLng = null;
     for (const it of items) {
-      const isFocused = selectedHeadForMap && String(it.head || '') === selectedHeadForMap;
+      const isFocused = selectedHeadForMap && String(it.head || "") === selectedHeadForMap;
       const marker = L.circleMarker([it.lat, it.lon], {
         radius: radiusFn(it),
-        color: isFocused ? '#1f2933' : 'white',
+        color: isFocused ? "#1f2933" : "white",
         weight: isFocused ? 2.5 : 1.5,
         fillColor: colorFn(it),
-        fillOpacity: 0.8,
+        fillOpacity: .8
       }).addTo(map);
-      const pagesInfo = (it.page_list || []).length + ' стр.';
-      let extra = '';
-      if (type === 'toponyms' && it.epoch_class && it.epoch_class !== 'unknown') {
-        extra = '<br><small>' + escapeHtml(EPOCH_LABELS[it.epoch_class] || '') + '</small>';
-      } else if (type === 'languages' && it.family) {
-        extra = '<br><small>' + escapeHtml(it.family) + '</small>';
-      }
-      marker.bindTooltip(`<strong>${escapeHtml(it.head)}</strong><br>${pagesInfo}${extra}`, {sticky: true});
-      marker.on('click', () => {
+      const pagesInfo = (it.page_list || []).length + " стр.";
+      let extra = "";
+      if (type === "toponyms" && it.epoch_class && it.epoch_class !== "unknown") extra = "<br><small>" + escapeHtml(EPOCH_LABELS[it.epoch_class] || "") + "</small>";
+      else if (type === "languages" && it.family) extra = "<br><small>" + escapeHtml(it.family) + "</small>";
+      marker.bindTooltip(`<strong>${escapeHtml(it.head)}</strong><br>${pagesInfo}${extra}`, { sticky: true });
+      marker.on("click", () => {
         selectedItem = it.head;
         selectedItemType = type;
-        rightPaneMode = 'card';
-        switchTab('list');
+        rightPaneMode = "card";
+        switchTab("list");
       });
       if (isFocused) {
         focusedMarker = marker;
         focusedLatLng = [it.lat, it.lon];
       }
     }
-    if (focusedMarker && focusedLatLng) {
-      try {
-        map.setView(focusedLatLng, Math.max(map.getZoom(), 5), { animate: false });
-        setTimeout(() => {
-          try { focusedMarker.openTooltip(); } catch (e) {}
-        }, 80);
-      } catch (e) {}
-    }
+    if (focusedMarker && focusedLatLng) try {
+      map.setView(focusedLatLng, Math.max(map.getZoom(), 5), { animate: false });
+      setTimeout(() => {
+        try {
+          focusedMarker.openTooltip();
+        } catch (e) {}
+      }, 80);
+    } catch (e) {}
   }, 50);
 }
-
-// Офлайн-заглушка карты: SVG с координатной сеткой и маркерами
 function renderOfflineMap(type, items, colorFn, radiusFn) {
-  const div = document.getElementById('leaflet-map');
+  const div = document.getElementById("leaflet-map");
   if (!div) return;
-  const selectedHeadForMap = selectedItemType === type ? String(selectedItem || '').trim() : '';
+  const selectedHeadForMap = selectedItemType === type ? String(selectedItem || "").trim() : "";
   const W = 1100, H = 600;
-  // Простая равноугольная проекция (Plate Carrée)
   function project(lat, lon) {
-    const x = ((lon + 180) / 360) * W;
-    const y = ((85 - lat) / 145) * H;
-    return [x, y];
+    return [(lon + 180) / 360 * W, (85 - lat) / 145 * H];
   }
   let svg = `<svg class="offline-map-svg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
   svg += `<rect x="0" y="0" width="${W}" height="${H}" fill="#e8edf3"/>`;
-  // Координатная сетка
   for (let lon = -180; lon <= 180; lon += 30) {
     const [x] = project(0, lon);
     svg += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#c8d2dc" stroke-width="0.5"/>`;
@@ -11824,159 +12488,117 @@ function renderOfflineMap(type, items, colorFn, radiusFn) {
     svg += `<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#c8d2dc" stroke-width="0.5"/>`;
     svg += `<text x="4" y="${y - 2}" fill="#88a" font-size="9">${lat}°</text>`;
   }
-  // Маркеры
   let hasFocusedMarker = false;
   for (const it of items) {
     const [x, y] = project(it.lat, it.lon);
-    const isFocused = selectedHeadForMap && String(it.head || '') === selectedHeadForMap;
+    const isFocused = selectedHeadForMap && String(it.head || "") === selectedHeadForMap;
     if (isFocused) hasFocusedMarker = true;
     const r = radiusFn(it) + (isFocused ? 1 : 0);
     const color = colorFn(it);
-    const strokeColor = isFocused ? '#1f2933' : 'white';
-    const strokeWidth = isFocused ? 2 : 1;
-    svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" fill-opacity="0.75" stroke="${strokeColor}" stroke-width="${strokeWidth}" data-head="${escapeHtml(it.head)}" data-type="${escapeHtml(type)}" class="offline-map-point"><title>${escapeHtml(it.head)} · стр. ${escapeHtml(it.pages || it.head_pages || '')}</title></circle>`;
+    svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" fill-opacity="0.75" stroke="${isFocused ? "#1f2933" : "white"}" stroke-width="${isFocused ? 2 : 1}" data-head="${escapeHtml(it.head)}" data-type="${escapeHtml(type)}" class="offline-map-point"><title>${escapeHtml(it.head)} · стр. ${escapeHtml(it.pages || it.head_pages || "")}</title></circle>`;
   }
-  // Заглушка-текст
-  svg += `<text x="${W/2}" y="24" fill="#6a5040" font-size="13" text-anchor="middle" font-style="italic">Офлайн-режим: тайлы карты недоступны, показаны только точки</text>`;
-  if (hasFocusedMarker) {
-    svg += `<text x="${W/2}" y="42" fill="#1f2933" font-size="12" text-anchor="middle" font-style="italic">Выбранный объект выделен тёмным контуром</text>`;
-  }
-  svg += '</svg>';
+  svg += `<text x="${W / 2}" y="24" fill="#6a5040" font-size="13" text-anchor="middle" font-style="italic">Офлайн-режим: тайлы карты недоступны, показаны только точки</text>`;
+  if (hasFocusedMarker) svg += `<text x="${W / 2}" y="42" fill="#1f2933" font-size="12" text-anchor="middle" font-style="italic">Выбранный объект выделен тёмным контуром</text>`;
+  svg += "</svg>";
   div.innerHTML = svg;
-  div.style.background = '#e8edf3';
-  div.querySelectorAll('circle[data-head]').forEach(c => {
+  div.style.background = "#e8edf3";
+  div.querySelectorAll("circle[data-head]").forEach((c) => {
     c.onclick = () => {
       selectedItem = c.dataset.head;
       selectedItemType = c.dataset.type;
-      rightPaneMode = 'card';
-      switchTab('list');
+      rightPaneMode = "card";
+      switchTab("list");
     };
   });
 }
-
-// =========================================================
-// ЗАПУСК (асинхронный: сначала отрисовать каркас, потом парсить данные)
-// =========================================================
-/* [modularized] Boot sequence:
-document.getElementById('content').innerHTML = '<div class="panel-empty-state">Загрузка указателей…</div>';
-
-registerAppServiceWorker();
-
-setTimeout(() => {
-  (async () => {
-    await loadAppData();
-    normalizeAppData();
-    initEntityTypes();
-    wireGlobalUI();
-    initTheme();
-    initDensityMode();
-    const initialHash = (typeof window !== 'undefined' && window.location && typeof window.location.hash === 'string')
-      ? window.location.hash
-      : '';
-    const restored = applyHash(initialHash);
-    if (!restored) {
-      const saved = restoreViewState();
-      if (saved) {
-        applyViewState(saved);
-        syncNavigationState();
-      } else {
-        renderEntitySwitcher();
-        renderTabs();
-        renderContent();
-        syncNavigationState();
-      }
-    }
-  })().catch((error) => {
-    const message = error && error.message ? error.message : String(error || 'Unknown data loading error');
-    const content = document.getElementById('content');
-    if (content) {
-      content.innerHTML = `<div class="panel-empty-state">Не удалось загрузить данные справочника.<br><small>${escapeHtml(message)}</small></div>`;
-    }
-    if (typeof console !== 'undefined' && typeof console.error === 'function') {
-      console.error('[app-data]', error);
-    }
-  });
-}, 10);
-
-*/
-
 function generateCitation(style, type, id) {
-  const d = new Date();
-  const monthsRu = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-  const monthsEn = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
-  
+  const d = /* @__PURE__ */ new Date();
+  const monthsRu = [
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря"
+  ];
+  const monthsEn = [
+    "Jan.",
+    "Feb.",
+    "Mar.",
+    "Apr.",
+    "May",
+    "June",
+    "July",
+    "Aug.",
+    "Sept.",
+    "Oct.",
+    "Nov.",
+    "Dec."
+  ];
   const day = d.getDate();
   const monthRu = monthsRu[d.getMonth()];
   const monthEn = monthsEn[d.getMonth()];
   const year = d.getFullYear();
-  const dateFormatted = `${String(day).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${year}`;
-
-  let citationTitle = '';
-  let citationBook = '';
-  let url = '';
-  
-  if (type === 'lecture') {
+  const dateFormatted = `${String(day).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${year}`;
+  let citationTitle = "";
+  let citationBook = "";
+  let url = "";
+  if (type === "lecture") {
     const lectureId = parseInt(id, 10);
-    const l = (window.APP_DATA && window.APP_DATA.lectures) ? window.APP_DATA.lectures[lectureId] : null;
-    const lName = l ? (l.name || '') : '';
-    const lTitle = lectureId === 0 ? 'Предисловие' : `Лекция ${lectureId}`;
-    citationTitle = lectureId === 0 ? `Предисловие: ${lName}` : `${lTitle}. ${lName}`;
-    citationBook = 'Из жизни слов и языков';
+    const l = window.APP_DATA && window.APP_DATA.lectures ? window.APP_DATA.lectures[lectureId] : null;
+    const lName = l ? l.name || "" : "";
+    const lTitle = lectureId === 0 ? "Предисловие" : `Лекция ${lectureId}`;
+    citationTitle = lectureId === 0 ? `Предисловие: ${escapeHtml(lName)}` : `${lTitle}. ${escapeHtml(lName)}`;
+    citationBook = "Из жизни слов и языков";
     url = `https://gasyoun.github.io/BookIndex/aaz-index.html#v4/materials/lecture_pages/${lectureId}`;
   } else {
-    // Card
-    const itemHead = window.selectedItem || '';
-    const itemType = window.selectedItemType || window.currentEntity || '';
-    citationTitle = `Справочная статья «${itemHead}»`;
-    citationBook = 'Из жизни слов и языков: интерактивный академический справочник и корпус';
-    
-    let encodedSlug = '';
-    if (typeof window.encodeItemHeadForHash === 'function') {
-      encodedSlug = window.encodeItemHeadForHash(itemType, itemHead);
-    } else {
-      encodedSlug = encodeURIComponent(itemHead);
+    const itemHead = window.selectedItem || "";
+    const itemType = window.selectedItemType || window.currentEntity || "";
+    // B2: page reference + correct book/edition + clean canonical URL (A2).
+    const dataKey = itemType === "subject" ? "subject_index" : itemType;
+    const list = (window.APP_DATA && window.APP_DATA[dataKey]) || [];
+    const rec = Array.isArray(list) ? list.find((x) => x && x.head === itemHead) : null;
+    let pages = rec ? sortUniquePages(rec.page_list || []) : [];
+    // fall back to per-book occurrence pages when page_list is empty
+    if (rec && !pages.length && rec.occurrences && typeof rec.occurrences === "object") {
+      const agg = [];
+      for (const occ of Object.values(rec.occurrences)) if (occ && Array.isArray(occ.pages)) agg.push(...occ.pages);
+      pages = sortUniquePages(agg);
     }
-    url = `https://gasyoun.github.io/BookIndex/aaz-index.html#v4/${itemType}/list/item/${itemType}/${encodedSlug}`;
+    const books = (window.APP_DATA && window.APP_DATA.corpus && window.APP_DATA.corpus.books) || [];
+    const bookId = rec && rec.book_id ? rec.book_id : (getActiveBook().book_id || "");
+    const book = books.find((b) => b && b.book_id === bookId) || {};
+    citationTitle = `Справочная статья «${escapeHtml(itemHead)}»` + (pages.length ? `. С. ${pages.join(", ")}` : "");
+    citationBook = escapeHtml(book.title || "Из жизни слов и языков: интерактивный академический справочник и корпус");
+    let encodedSlug = "";
+    if (typeof window.encodeItemHeadForHash === "function") encodedSlug = window.encodeItemHeadForHash(itemType, itemHead);
+    else encodedSlug = encodeURIComponent(itemHead);
+    url = `https://gasyoun.github.io/BookIndex/${itemType}/list/item/${itemType}/${encodedSlug}/`;
   }
-
+  url = escapeHtml(url);
   style = style.toLowerCase();
-  if (style === 'apa') {
-    if (type === 'lecture') {
-      return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. BookIndex Digital Humanities Project. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank">${url}</a>`;
-    } else {
-      return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank">${url}</a>`;
-    }
-  } else if (style === 'mla') {
-    if (type === 'lecture') {
-      return `Зализняк, А. А. "${citationTitle}." <em>${citationBook}</em>, BookIndex Digital Humanities Project, 2026, <a href="${url}" target="_blank">${url}</a>. Доступ ${day} ${monthEn} ${year}.`;
-    } else {
-      return `Зализняк, А. А. "${citationTitle}." <em>${citationBook}</em>, 2026, <a href="${url}" target="_blank">${url}</a>. Доступ ${day} ${monthEn} ${year}.`;
-    }
-  } else if (style === 'chicago') {
-    if (type === 'lecture') {
-      return `Зализняк, А. А. 2026. "${citationTitle}." <em>${citationBook}</em>. BookIndex Digital Humanities Project. <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
-    } else {
-      return `Зализняк, А. А. 2026. "${citationTitle}." <em>${citationBook}</em>. <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
-    }
-  } else {
-    // GOST
-    if (type === 'lecture') {
-      return `Зализняк А. А. ${citationTitle} // ${citationBook}. — BookIndex Digital Humanities Project, 2026. — URL: <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
-    } else {
-      return `Зализняк А. А. ${citationTitle} // ${citationBook}, 2026. — URL: <a href="${url}" target="_blank">${url}</a> (дата обращения: ${dateFormatted}).`;
-    }
-  }
+  if (style === "apa") if (type === "lecture") return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. BookIndex Digital Humanities Project. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  else return `Зализняк, А. А. (2026). <em>${citationTitle}</em>. ${citationBook}. Получено ${day} ${monthRu} ${year} г. из <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  else if (style === "mla") if (type === "lecture") return `Зализняк, А. А. "${citationTitle}." <em>${citationBook}</em>, BookIndex Digital Humanities Project, 2026, <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>. Доступ ${day} ${monthEn} ${year}.`;
+  else return `Зализняк, А. А. "${citationTitle}." <em>${citationBook}</em>, 2026, <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>. Доступ ${day} ${monthEn} ${year}.`;
+  else if (style === "chicago") if (type === "lecture") return `Зализняк, А. А. 2026. "${citationTitle}." <em>${citationBook}</em>. BookIndex Digital Humanities Project. <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a> (дата обращения: ${dateFormatted}).`;
+  else return `Зализняк, А. А. 2026. "${citationTitle}." <em>${citationBook}</em>. <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a> (дата обращения: ${dateFormatted}).`;
+  else if (type === "lecture") return `Зализняк А. А. ${citationTitle} // ${citationBook}. — BookIndex Digital Humanities Project, 2026. — URL: <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a> (дата обращения: ${dateFormatted}).`;
+  else return `Зализняк А. А. ${citationTitle} // ${citationBook}, 2026. — URL: <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a> (дата обращения: ${dateFormatted}).`;
 }
-
 function stripHtml(html) {
-  const tmp = document.createElement('DIV');
+  const tmp = document.createElement("DIV");
   tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || '';
+  return tmp.textContent || tmp.innerText || "";
 }
-
 export function buildCitationWidgetHtml(type, id) {
-  const containerId = `citation-widget-${type}-${id || 'card'}`;
-  
+  const containerId = `citation-widget-${type}-${id || "card"}`;
   return `
     <div class="citation-widget" id="${containerId}">
       <div class="citation-widget-title">Цитировать / Cite</div>
@@ -11993,64 +12615,51 @@ export function buildCitationWidgetHtml(type, id) {
     </div>
   `;
 }
-
 export function wireCitationWidget(container, type, id) {
-  const containerId = `citation-widget-${type}-${id || 'card'}`;
+  const containerId = `citation-widget-${type}-${id || "card"}`;
   const widgetEl = container.querySelector(`#${containerId}`);
   if (!widgetEl) return;
-
-  const tabs = widgetEl.querySelectorAll('.citation-tab-btn');
+  const tabs = widgetEl.querySelectorAll(".citation-tab-btn");
   const box = widgetEl.querySelector(`#${containerId}-box`);
   const copyBtn = widgetEl.querySelector(`#${containerId}-copy-btn`);
-
-  let currentStyle = 'gost';
-
+  let currentStyle = "gost";
   const updateDisplay = () => {
-    const htmlText = generateCitation(currentStyle, type, id);
-    box.innerHTML = htmlText;
+    box.innerHTML = generateCitation(currentStyle, type, id);
   };
-
-  tabs.forEach(tab => {
+  tabs.forEach((tab) => {
     tab.onclick = () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
+      tabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
       currentStyle = tab.dataset.style;
       updateDisplay();
     };
   });
-
   copyBtn.onclick = async () => {
     const plainText = stripHtml(box.innerHTML);
     try {
       await navigator.clipboard.writeText(plainText);
       const originalText = copyBtn.textContent;
-      copyBtn.textContent = 'Скопировано!';
-      copyBtn.style.background = 'var(--primary)';
-      copyBtn.style.color = 'var(--surface)';
+      copyBtn.textContent = "Скопировано!";
+      copyBtn.style.background = "var(--primary)";
+      copyBtn.style.color = "var(--surface)";
       setTimeout(() => {
         copyBtn.textContent = originalText;
-        copyBtn.style.background = '';
-        copyBtn.style.color = '';
+        copyBtn.style.background = "";
+        copyBtn.style.color = "";
       }, 1500);
-      if (typeof window.announceUiMessage === 'function') {
-        window.announceUiMessage('Citation copied to clipboard');
-      }
+      if (typeof window.announceUiMessage === "function") window.announceUiMessage("Citation copied to clipboard");
     } catch (err) {
-      copyBtn.textContent = 'Ошибка';
+      copyBtn.textContent = "Ошибка";
       setTimeout(() => {
-        copyBtn.textContent = 'Копировать';
+        copyBtn.textContent = "Копировать";
       }, 1500);
     }
   };
-
-  // Initial load
   updateDisplay();
 }
-
-export function initLegacy() { console.log("Legacy UI loaded."); }
-
-// Proactively expose all legacy functions globally for backward compatibility
-if (typeof window !== 'undefined') {
+export function initLegacy() {
+}
+if (typeof window !== "undefined") {
   window.activateNavTarget = activateNavTarget;
   window.appendGlobalSearchResult = appendGlobalSearchResult;
   window.appendGlobalSearchScopeControl = appendGlobalSearchScopeControl;
@@ -12061,14 +12670,12 @@ if (typeof window !== 'undefined') {
   window.appendScholarMarkdown = appendScholarMarkdown;
   window.applyDataDrivenStyles = applyDataDrivenStyles;
   window.applyDensityMode = applyDensityMode;
-  window.applyViewState = applyViewState;
   window.autoLinkEntities = autoLinkEntities;
   window.autoLinkEntitiesPlain = autoLinkEntitiesPlain;
   window.bindActionWithKeyboard = bindActionWithKeyboard;
   window.bindNavigateLinks = bindNavigateLinks;
   window.buildBibtexEntry = buildBibtexEntry;
   window.buildBibtexKey = buildBibtexKey;
-  window.buildCanonicalHash = buildCanonicalHash;
   window.buildCardPageLinksHtml = buildCardPageLinksHtml;
   window.buildCardSourceBibEntry = buildCardSourceBibEntry;
   window.buildContextLinkMatchTerms = buildContextLinkMatchTerms;
@@ -12099,7 +12706,6 @@ if (typeof window !== 'undefined') {
   window.buildTopQuestion = buildTopQuestion;
   window.buildVisibleItemsCacheKey = buildVisibleItemsCacheKey;
   window.buildVizHash = buildVizHash;
-  window.captureViewState = captureViewState;
   window.clampQualityPercent = clampQualityPercent;
   window.cleanupActiveVizModule = cleanupActiveVizModule;
   window.clearGlobalSearchCaches = clearGlobalSearchCaches;
@@ -12133,7 +12739,6 @@ if (typeof window !== 'undefined') {
   window.disposeNameGraphWorker = disposeNameGraphWorker;
   window.downloadBibtexFile = downloadBibtexFile;
   window.downloadTextFile = downloadTextFile;
-  window.encodeHashPart = encodeHashPart;
   window.enrichGlobalSearchRecord = enrichGlobalSearchRecord;
   window.ensureGlobalSearchFuse = ensureGlobalSearchFuse;
   window.ensureVizCoreLoaded = ensureVizCoreLoaded;
@@ -12222,6 +12827,10 @@ if (typeof window !== 'undefined') {
   window.hashString32 = hashString32;
   window.highlightInContext = highlightInContext;
   window.highlightSearchMatch = highlightSearchMatch;
+  window.appendHighlightedSearchText = appendHighlightedSearchText;
+  window.appendAccentSafeText = appendAccentSafeText;
+  window.appendContextTextWithLinks = appendContextTextWithLinks;
+  window.fillCardContextsMount = fillCardContextsMount;
   window.inflateOccurrences = inflateOccurrences;
   window.initDensityMode = initDensityMode;
   window.initTheme = initTheme;
@@ -12248,16 +12857,35 @@ if (typeof window !== 'undefined') {
   window.normalizeSubjectCrosslinkHead = normalizeSubjectCrosslinkHead;
   window.normalizeTasksProgress = normalizeTasksProgress;
   window.onGlobalKeydown = onGlobalKeydown;
+  window.buildCommandPaletteCommands = buildCommandPaletteCommands;
+  window.getCommandPaletteCommands = getCommandPaletteCommands;
+  window.getCommandPaletteEntries = getCommandPaletteEntries;
+  window.getCommandPaletteRecentEntries = getCommandPaletteRecentEntries;
+  window.scoreCommandPaletteCandidate = scoreCommandPaletteCandidate;
+  window.isCommandPaletteHotkey = isCommandPaletteHotkey;
+  window.isCommandPaletteOpen = isCommandPaletteOpen;
+  window.openCommandPalette = openCommandPalette;
+  window.closeCommandPalette = closeCommandPalette;
+  window.toggleCommandPalette = toggleCommandPalette;
+  window.runCommandPaletteEntry = runCommandPaletteEntry;
+  window.renderCommandPaletteResults = renderCommandPaletteResults;
+  window.setCommandPaletteActiveItem = setCommandPaletteActiveItem;
   window.openGlobalSearchMatch = openGlobalSearchMatch;
   window.openGlossaryTerm = openGlossaryTerm;
   window.openKwicTerm = openKwicTerm;
   window.openLecturePage = openLecturePage;
+  window.openVideoDetail = openVideoDetail;
+  window.openVideoGallery = openVideoGallery;
+  window.buildVideoDetailHash = buildVideoDetailHash;
+  window.isVideoModalOpen = isVideoModalOpen;
+  window.openVideoModal = openVideoModal;
+  window.closeVideoModal = closeVideoModal;
+  window.wireVideoModal = wireVideoModal;
+  window.findVideoById = findVideoById;
   window.openLectureTerm = openLectureTerm;
   window.openMaterialsLectures = openMaterialsLectures;
   window.openReadingNowPage = openReadingNowPage;
   window.openReadingPageTrends = openReadingPageTrends;
-  window.parseHashRoute = parseHashRoute;
-  window.parsePositiveRouteNumber = parsePositiveRouteNumber;
   window.persistTasksProgress = persistTasksProgress;
   window.persistViewState = persistViewState;
   window.pickBestCrosslinkByPageOverlap = pickBestCrosslinkByPageOverlap;
@@ -12266,7 +12894,6 @@ if (typeof window !== 'undefined') {
   window.preserveCorpusQualityEvidence = preserveCorpusQualityEvidence;
   window.recordTaskAnswer = recordTaskAnswer;
   window.registerAppServiceWorker = registerAppServiceWorker;
-  window.rememberBoundedCacheValue = rememberBoundedCacheValue;
   window.rememberRecentItem = rememberRecentItem;
   window.renderAccentSafe = renderAccentSafe;
   window.renderAccentSafeInHtmlTextNodes = renderAccentSafeInHtmlTextNodes;
@@ -12324,14 +12951,11 @@ if (typeof window !== 'undefined') {
   window.resetGlobalSearchFuseState = resetGlobalSearchFuseState;
   window.restoreViewState = restoreViewState;
   window.routeToMarkdown = routeToMarkdown;
-  window.routeValueAfter = routeValueAfter;
-  window.routeVizAlias = routeVizAlias;
   window.rowIndexForOffset = rowIndexForOffset;
   window.safeColor = safeColor;
   window.safeIcon = safeIcon;
   window.safeImageUrl = safeImageUrl;
   window.safeUrl = safeUrl;
-  window.sameViewState = sameViewState;
   window.saveReadingPage = saveReadingPage;
   window.saveRecentItems = saveRecentItems;
   window.scrollSelectedItemIntoView = scrollSelectedItemIntoView;
@@ -12359,3 +12983,30 @@ if (typeof window !== 'undefined') {
   window.wireSafeImageFallback = wireSafeImageFallback;
   window.wrapAccentSafeInEscapedText = wrapAccentSafeInEscapedText;
 }
+
+// Restored from v3_app.js by H3874 — hand-added declarations that were typed into a
+// core region of the artifact but are read only from here, so this is where the
+// bundler can still see a link to them.
+var currentSimRootIndex = 0;
+var currentSimStep = 0;
+var currentAccentReconRootIndex = 0;
+var currentAccentReconStageIndex = 0;
+var currentOrthoHydratorInput = "хлеб";
+var LANGUAGE_LOD_MAP = {
+  "русский": { iso: "rus", wals: "rus", glottolog: "russ1263" },
+  "санскрит": { iso: "san", wals: "skt", glottolog: "sans1269" },
+  "латынь": { iso: "lat", wals: "lat", glottolog: "lati1261" },
+  "латинский": { iso: "lat", wals: "lat", glottolog: "lati1261" },
+  "древнегреческий": { iso: "grc", wals: "grk", glottolog: "anci1242" },
+  "греческий": { iso: "ell", wals: "mgo", glottolog: "mode1248" },
+  "праславянский": { iso: "sla", wals: "psl", glottolog: "prot1234", customWals: "https://wals.info/languoid/lect/wals_code_psl" },
+  "старославянский": { iso: "chu", wals: "ocs", glottolog: "oldc1244" },
+  "древнерусский": { iso: "orv", wals: "orv", glottolog: "olde1240" },
+  "литовский": { iso: "lit", wals: "lit", glottolog: "lith1251" },
+  "готский": { iso: "got", wals: "got", glottolog: "goth1244" },
+  "английский": { iso: "eng", wals: "eng", glottolog: "engl1287" },
+  "немецкий": { iso: "deu", wals: "ger", glottolog: "stan1295" },
+  "французский": { iso: "fra", wals: "fre", glottolog: "stan1290" }
+};
+var LECTURES_KWIC_CACHE = null;
+var lecturesKwicLoadPromise = null;

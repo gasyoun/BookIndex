@@ -178,7 +178,9 @@ export function getTotalBookPages() {
 }
 
 export function normalizeKwicSource(source) {
-  return source === 'glossary' ? 'glossary' : 'lexicon';
+  if (source === "glossary") return "glossary";
+  if (source === "lectures") return "lectures";
+  return "lexicon";
 }
 
 export function normalizeKwicSort(mode) {

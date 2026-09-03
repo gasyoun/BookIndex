@@ -61,6 +61,13 @@ jobs:
       - name: JS syntax checks
         run: npm run check:js
 
+      # Fails if rebuilding the runtime from src/runtime/ would drop a declaration the
+      # committed v3_app.js publishes (FINDINGS.md §3 / H3874). Without this, a source tree
+      # that has drifted out of the artifact reads as green and the size budget scores the
+      # lost features as a win.
+      - name: Runtime source parity
+        run: npm run check:parity:runtime
+
       - name: UI inline style guard
         run: npm run check:ui
 
