@@ -110,6 +110,15 @@ const sections = [
       { label: "B4 — легенда (83 записи)", svg: readFile("toponyms-map-b4-legend.svg"), pageW: 145 },
     ],
   },
+  {
+    num: 10,
+    title: "B5 — zoom in (верх Африки), все точки — номерные чипы, лупа киевского треугольника",
+    note: "v4.17.21 · <a href='toponyms-map-b5.html'>toponyms-map-b5.html</a>",
+    files: [
+      { label: "B5 — карта", svg: readFile("toponyms-map-b5-map.svg"), pageW: 145 },
+      { label: "B5 — легенда (83 записи)", svg: readFile("toponyms-map-b5-legend.svg"), pageW: 145 },
+    ],
+  },
 ];
 
 const body = sections

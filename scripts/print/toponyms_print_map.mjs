@@ -137,12 +137,27 @@ const B4_INSET_CHIP_FONT = 6.8;
 const B4_INSET_CAPTION = "Русь · крупный план";
 const B4_STAMP = "вариант B4 · v4.17.19 · 04-09-2026";
 
+// sheet B5 (MG 04-09-2026 rev 7): ZOOM IN - the main map crops everything
+// south of lat 26 (only the very top of Africa stays: Morocco, Egypt); main
+// scale grows so every number reads on the map itself. ALL groups are
+// numbered chips now (filled = discussed, outline = mentioned; naked dots
+// abolished). The 5 southern groups sit in an edge row at the frame bottom
+// with arrows toward their true directions. A Kiev-triangle loupe (~14x) sits
+// in the empty NE corner. Versioned URL: writes b5-* files, older URLs stay
+// frozen. Stamp removed before print.
+const B5_FIT_LAT_MIN = 26;
+const B5_LOUPE_BOX = { x0: 98, y0: 20, x1: 137, y1: 49 };
+const B5_LOUPE_GEO = { lat0: 49.8, lat1: 51.8, lon0: 29, lon1: 33.5 };
+const B5_LOUPE_PAD = 0.06;
+const B5_LOUPE_CAPTION = "Киев и окрестности · лупа";
+const B5_STAMP = "вариант B5 · v4.17.21 · 04-09-2026";
+
 function markerRadU(g) {
   return g.discussed ? 2.8 : 7;
 }
 
-function relaxAll(groups, box) {
-  const pts = groups.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, r: markerRadU(g), stay: false }));
+function relaxAll(groups, box, radiusOverride) {
+  const pts = groups.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, r: radiusOverride || markerRadU(g), stay: false }));
   const x0 = box.x0 + 6;
   const x1 = box.x1 - 6;
   const y0 = box.y0 + 6;
@@ -441,6 +456,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
       (cfg.inset
         ? `<clipPath id="inset-clip-${cfg.key}"><rect x="${f(cfg.inset.box.x0 * U)}" y="${f(cfg.inset.box.y0 * U)}" width="${f((cfg.inset.box.x1 - cfg.inset.box.x0) * U)}" height="${f((cfg.inset.box.y1 - cfg.inset.box.y0) * U)}"/></clipPath>`
         : "") +
+      (cfg.loupeGeo
+        ? `<clipPath id="loupe-clip-${cfg.key}"><rect x="${f(cfg.loupeBox.x0 * U)}" y="${f(cfg.loupeBox.y0 * U)}" width="${f((cfg.loupeBox.x1 - cfg.loupeBox.x0) * U)}" height="${f((cfg.loupeBox.y1 - cfg.loupeBox.y0) * U)}"/></clipPath>`
+        : "") +
       `<pattern id="hatch-${cfg.key}" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="5" stroke="#6a655c" stroke-width="0.7"/></pattern></defs>`
   );
 
@@ -449,9 +467,13 @@ function renderSheet(cfg, world, landObj, groups, total) {
       ? g.lat >= cfg.insetGeo.lat0 && g.lat <= cfg.insetGeo.lat1 && g.lon >= cfg.insetGeo.lon0 && g.lon <= cfg.insetGeo.lon1
       : g.lineClass === "west";
   const inMain = groups.filter((g) => (cfg.inset ? !inInset(g) : true));
+  // B5: groups south of the cropped frame - drawn in an edge row, not fitted
+  const southern = cfg.fitLatMin ? groups.filter((g) => g.lat < cfg.fitLatMin) : [];
+  const southernSet = new Set(southern);
+  const inCrop = groups.filter((g) => !southernSet.has(g));
   // the frame is always fitted to ALL points so every sheet shares the same geography;
   // on inset sheets the west points simply do not render on the main map
-  const { projection, geopath, box } = buildProjection(cfg.mapBox, groups.map((g) => [g.lon, g.lat]), PAD_FRACTION);
+  const { projection, geopath, box } = buildProjection(cfg.mapBox, (cfg.fitLatMin ? inCrop : groups).map((g) => [g.lon, g.lat]), PAD_FRACTION);
   for (const g of groups) {
     [g.px, g.py] = projection([g.lon, g.lat]);
     g.anchorPx = !cfg.ignoreAnchors && g.anchor ? projection([g.anchor.lon, g.anchor.lat]) : null;
@@ -481,11 +503,29 @@ function renderSheet(cfg, world, landObj, groups, total) {
     stats.areals_drawn += 1;
   }
 
-  relaxAll(inMain, box);
+  relaxAll(inMain, box, cfg.numberAll ? 7 : undefined);
 
   const placed = [];
   const labels = [];
   const leaders = [];
+
+  // B5: groups south of the cropped frame sit in an edge row at the frame
+  // bottom, arrows pointing toward their true (off-frame) directions
+  if (cfg.fitLatMin && southern.length) {
+    const yEdge = box.y1 - 14;
+    let lastX = -1e9;
+    const sorted = southern.slice().sort((a, b) => a.lon - b.lon);
+    for (const g of sorted) {
+      const [ex] = projection([g.lon, g.lat]);
+      const x = Math.max(ex, lastX + 14);
+      lastX = x;
+      const dash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
+      const fill = g.discussed ? "#111111" : "#ffffff";
+      const tf = g.discussed ? "#ffffff" : "#111111";
+      s.push(`<line x1="${f(x)}" y1="${f(yEdge + 7)}" x2="${f(x)}" y2="${f(box.y1 - 2)}" stroke="#55524c" stroke-width="0.4"${dash}/>`);
+      s.push(`<circle cx="${f(x)}" cy="${f(yEdge)}" r="7" fill="${fill}" stroke="#111111" stroke-width="0.6"${dash}/><text x="${f(x)}" y="${f(yEdge + 2.5)}" text-anchor="middle" font-size="7.2" fill="${tf}">${g.number}</text>`);
+    }
+  }
 
   // displaced chips keep a thin link to the true spot
   for (const g of inMain) {
@@ -499,7 +539,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   // B3: chips and dots are obstacles - name labels may never cover numbers
   if (cfg.chipObstacles) {
     for (const g of inMain) {
-      const pad = g.discussed ? 4 : 11;
+      const pad = cfg.numberAll ? 11 : g.discussed ? 4 : 11;
       placed.push({ x0: g.px2 - pad, x1: g.px2 + pad, y0: g.py2 - pad, y1: g.py2 + pad });
     }
   }
@@ -510,7 +550,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
       const a = inMain[i];
       const b = inMain[j];
       const d = Math.hypot(a.px2 - b.px2, a.py2 - b.py2);
-      if (d < markerRadU(a) + markerRadU(b) - 1) {
+      const rrA = cfg.numberAll ? 7 : markerRadU(a);
+      const rrB = cfg.numberAll ? 7 : markerRadU(b);
+      if (d < rrA + rrB - 1) {
         chipClosePairs += 1;
         stats.chip_close_pair = `${a.primary.head} (${a.px.toFixed(0)},${a.py.toFixed(0)}) <-> ${b.primary.head} (${b.px.toFixed(0)},${b.py.toFixed(0)}) d=${d.toFixed(1)}`;
       }
@@ -662,7 +704,19 @@ function renderSheet(cfg, world, landObj, groups, total) {
   // markers + chips on the main map
   for (const g of inMain) {
     if (coveredSet.has(g)) continue;
-    if (g.discussed) {
+    if (cfg.numberAll) {
+      // B5: every group is a numbered chip - filled = discussed, outline =
+      // mentioned; naked dots abolished
+      if (g.conditional) {
+        s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="10.5" fill="none" stroke="#111111" stroke-width="0.55" stroke-dasharray="2.2 1.8"/>`);
+      }
+      const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
+      const chipFill = g.discussed ? "#111111" : "#ffffff";
+      const chipTextFill = g.discussed ? "#ffffff" : "#111111";
+      s.push(
+        `<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="7" fill="${chipFill}" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.px2)}" y="${f(g.py2 + 2.5)}" text-anchor="middle" font-size="7.2" fill="${chipTextFill}">${g.number}</text>`
+      );
+    } else if (g.discussed) {
       if (g.lineClass === "west") {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="2.8" fill="#ffffff" stroke="#111111" stroke-width="1.1"/>`);
       } else {
@@ -788,6 +842,57 @@ function renderSheet(cfg, world, landObj, groups, total) {
 
   if (insetCtx && cfg.insetGeo) drawInset();
 
+  // B5: Kiev-triangle loupe in the empty NE corner - chips + names at ~14x
+  if (cfg.loupeGeo && cfg.numberAll) {
+    const lm = groups.filter(
+      (g) => g.lat >= cfg.loupeGeo.lat0 && g.lat <= cfg.loupeGeo.lat1 && g.lon >= cfg.loupeGeo.lon0 && g.lon <= cfg.loupeGeo.lon1
+    );
+    const lp = buildProjection(cfg.loupeBox, lm.map((g) => [g.lon, g.lat]), B5_LOUPE_PAD);
+    s.push(`<rect x="${f(cfg.loupeBox.x0 * U)}" y="${f(cfg.loupeBox.y0 * U)}" width="${f((cfg.loupeBox.x1 - cfg.loupeBox.x0) * U)}" height="${f((cfg.loupeBox.y1 - cfg.loupeBox.y0) * U)}" fill="#ffffff"/>`);
+    s.push(`<g clip-path="url(#loupe-clip-${cfg.key})">`);
+    s.push(`<path d="${lp.geopath(landObj)}" fill="#e9e5dc" stroke="#4a4640" stroke-width="0.9" stroke-linejoin="round" fill-rule="evenodd"/>`);
+    s.push(`<path d="${lp.geopath(graticule)}" fill="none" stroke="#cdc8be" stroke-width="0.45"/>`);
+    const lPlaced = [];
+    for (const g of lm) {
+      const [cx, cy] = lp.projection([g.lon, g.lat]);
+      const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
+      const chipFill = g.discussed ? "#111111" : "#ffffff";
+      const chipTextFill = g.discussed ? "#ffffff" : "#111111";
+      s.push(
+        `<circle cx="${f(cx)}" cy="${f(cy)}" r="7" fill="${chipFill}" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(cx)}" y="${f(cy + 2.5)}" text-anchor="middle" font-size="7.2" fill="${chipTextFill}">${g.number}</text>`
+      );
+      lPlaced.push({ x0: cx - 8, x1: cx + 8, y0: cy - 8, y1: cy + 8 });
+    }
+    for (const g of lm) {
+      if (!g.discussed) continue;
+      const lines = wrapText(g.mapName, 20, 2);
+      const pos = placeLabel(g, ...lp.projection([g.lon, g.lat]), lines, lPlaced, lp.box, 8.5, lp.box);
+      s.push(textBlockSvg({ g, ...(pos || { x: lp.box.x1 - 4, y: lp.box.y0 + 12, anchor: "end" }), lines, lineH: 8.5 * 1.22 }, 8.5));
+    }
+    s.push(`</g>`);
+    s.push(
+      `<rect x="${f(cfg.loupeBox.x0 * U)}" y="${f(cfg.loupeBox.y0 * U)}" width="${f((cfg.loupeBox.x1 - cfg.loupeBox.x0) * U)}" height="${f((cfg.loupeBox.y1 - cfg.loupeBox.y0) * U)}" fill="none" stroke="#111111" stroke-width="1.2"/>` +
+        `<text x="${f((cfg.loupeBox.x0 + cfg.loupeBox.x1) / 2 * U)}" y="${f(cfg.loupeBox.y1 * U - 6)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b">${esc(B5_LOUPE_CAPTION)}</text>`
+    );
+    // thin reference line: loupe corner -> the triangle on the main map
+    const [tx, ty] = projection([30.8, 50.8]);
+    s.push(`<line x1="${f(cfg.loupeBox.x0 * U)}" y1="${f(cfg.loupeBox.y1 * U - 2)}" x2="${f(tx)}" y2="${f(ty)}" stroke="#55524c" stroke-width="0.4" stroke-dasharray="3 2"/>`);
+    if (cfg.loupeRefRect) {
+      const cs = [
+        projection([cfg.loupeGeo.lon0, cfg.loupeGeo.lat0]),
+        projection([cfg.loupeGeo.lon1, cfg.loupeGeo.lat0]),
+        projection([cfg.loupeGeo.lon1, cfg.loupeGeo.lat1]),
+        projection([cfg.loupeGeo.lon0, cfg.loupeGeo.lat1]),
+      ];
+      const xs = cs.map((c) => c[0]);
+      const ys = cs.map((c) => c[1]);
+      s.push(
+        `<rect x="${f(Math.min(...xs))}" y="${f(Math.min(...ys))}" width="${f(Math.max(...xs) - Math.min(...xs))}" height="${f(Math.max(...ys) - Math.min(...ys))}" fill="none" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>` +
+          `<text x="${f(Math.min(...xs) + 6)}" y="${f(Math.min(...ys) - 4)}" font-size="7.5" fill="#33302b" stroke="#ffffff" stroke-width="1.4" paint-order="stroke" stroke-linejoin="round">см. лупу</text>`
+      );
+    }
+  }
+
   // B4: covered chips/labels relocate below the inset edge, stub leaders
   // point up toward the covered true spots
   if (covered.length) {
@@ -824,7 +929,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       const bx1 = bx0 + widest;
       const by1 = by0 + l.lines.length * l.lineH;
       for (const g of inMain) {
-        if (g.discussed || coveredSet.has(g)) continue;
+        if ((g.discussed && !cfg.numberAll) || coveredSet.has(g) || g === l.g) continue;
         const dx = Math.max(bx0 - g.px2, g.px2 - bx1, 0);
         const dy = Math.max(by0 - g.py2, g.py2 - by1, 0);
         if (Math.hypot(dx, dy) < 11) viol += 1;
@@ -1527,6 +1632,47 @@ function render() {
       scaleBar: false,
       svgFile: "toponyms-map-b4-legend.svg",
     },
+    {
+      key: "B5map",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: B2_MAP_BOX,
+      fit: "all",
+      inset: null,
+      legend: null,
+      nameOnlyLabels: true,
+      ignoreAnchors: true,
+      labelRingDeltas: B2_LABEL_RINGS,
+      noWholeFrameFallback: true,
+      squeezeRings: [64, 72, 80, 88, 100, 112],
+      squeezePad: 2.5,
+      thirdPassPad: 1,
+      chipObstacles: true,
+      numberAll: true,
+      fitLatMin: B5_FIT_LAT_MIN,
+      loupeBox: B5_LOUPE_BOX,
+      loupeGeo: B5_LOUPE_GEO,
+      loupeRefRect: true,
+      title: true,
+      subtitleOverride: `«Из жизни слов и языков» · ${total} названий мест: обсуждаемые подписаны названием, страницы — в легенде на соседней странице, у остальных номер`,
+      stamp: B5_STAMP,
+      scaleBar: true,
+      svgFile: "toponyms-map-b5-map.svg",
+    },
+    {
+      key: "B5legend",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: { x0: 0, y0: 0, x1: PAGE_W_MM, y1: PAGE_H_MM },
+      fit: "all",
+      inset: null,
+      legend: "page-compact",
+      noMap: true,
+      title: false,
+      stamp: B5_STAMP,
+      scaleBar: false,
+      svgFile: "toponyms-map-b5-legend.svg",
+    },
   ];
 
   // sheet D numbering: every group gets a legend number (alphabetical, 1..N)
@@ -1538,7 +1684,8 @@ function render() {
   const rendered = [];
   for (const cfg of sheets) {
     const sheetRenderer = cfg.renderer === "d2" ? renderSheetD : renderSheet;
-    const { svg, stats } = sheetRenderer(cfg, world, land, cfg.key.startsWith("D") ? dGroups : groups, total);
+    const groupsForSheet = cfg.numberAll || cfg.key.startsWith("D") ? dGroups : groups;
+    const { svg, stats } = sheetRenderer(cfg, world, land, groupsForSheet, total);
     fs.writeFileSync(path.join(OUT_DIR, cfg.svgFile), svg, "utf-8");
     rendered.push({ cfg, svg, stats });
     console.log(cfg.key, JSON.stringify(stats));
@@ -1638,6 +1785,22 @@ function render() {
     ),
     "utf-8"
   );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b5-print.html"),
+    pageHtml("Карта топонимов книги — вариант B5: zoom in + лупа киевского треугольника", PAGE_W_MM, PAGE_H_MM, [rendered[12].svg, rendered[13].svg]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b5.html"),
+    reviewHtml(
+      "Карта топонимов — вариант B5: zoom in, все точки — номерные чипы, лупа киевского треугольника",
+      [
+        { title: `B5 — страница (карта): zoom in (верх Африки), все точки — номерные чипы, лупа киевского треугольника · ${B5_STAMP}`, pageW: PAGE_W_MM, svg: rendered[12].svg },
+        { title: `B5 — соседняя страница: легенда, все 83 записи по номерам · ${B5_STAMP}`, pageW: PAGE_W_MM, svg: rendered[13].svg },
+      ]
+    ),
+    "utf-8"
+  );
 
   const A = byKey.A;
   const report = {
@@ -1697,7 +1860,16 @@ function render() {
     byKey.B4map.labels_last_resort > 6 ||
     byKey.B4legend.legend_rows_drawn !== groups.length ||
     byKey.B4legend.legend_overflow > 0 ||
-    !byKey.B4legend.legend_parity_ok;
+    !byKey.B4legend.legend_parity_ok ||
+    byKey.B5map.chip_close_pairs > 0 ||
+    byKey.B5map.labels_without_slot > 0 ||
+    byKey.B5map.escapes > 0 ||
+    byKey.B5map.label_chip_violations > 0 ||
+    byKey.B5map.max_leader_mm > 33 ||
+    byKey.B5map.labels_last_resort > 20 ||
+    byKey.B5legend.legend_rows_drawn !== groups.length ||
+    byKey.B5legend.legend_overflow > 0 ||
+    !byKey.B5legend.legend_parity_ok;
   if (hardFail) {
     console.error("FAIL: see report fields above");
     process.exit(1);
