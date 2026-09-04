@@ -303,6 +303,13 @@ const B10_LABEL_BIAS = new Map(B8_LABEL_BIAS);
 B10_LABEL_BIAS.set("Швеция", [81, -73]);
 B10_LABEL_BIAS.set("Цейлон · Шри-Ланка", [6, 24]);
 B10_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
+// H4109: B9 does not carry B10's scaleRankedNames/tightUpwardBoxes, so its
+// obstacle field differs - offsets are re-derived per-label with
+// H4051_DEBUG=1, NOT copied blindly from B10 (MG scope ruling).
+const B9_LABEL_BIAS = new Map(B8_LABEL_BIAS);
+B9_LABEL_BIAS.set("Швеция", [81, -95]);
+B9_LABEL_BIAS.set("Цейлон · Шри-Ланка", [6, 24]);
+B9_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
 // MG rev 12 point 1: the filled (discussed) marker reads fine in dark gray -
 // softer than the near-black #111111, on B10 only
 const B10_FILLED_U = "#444444";
@@ -623,7 +630,7 @@ function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU,
     const ly = ly2 + lineH * 0.34;
     const by0 = ly - lineH * 0.8;
     const by1 = by0 + blockH;
-    if (process.env.H4051_DEBUG && (g.primary.head.includes("Архангельская") || g.primary.head === "Швеция" || g.primary.head === "Германия+ГДР")) {
+    if (process.env.H4051_DEBUG && (g.primary.head.includes("Архангельская") || g.primary.head === "Швеция" || g.primary.head === "Германия+ГДР" || g.mapName === "Цейлон · Шри-Ланка")) {
       console.error(`FIELD ${g.primary.head}: target (${(bx0 / 4).toFixed(1)}-${(bx1 / 4).toFixed(1)}, ${(by0 / 4).toFixed(1)}-${(by1 / 4).toFixed(1)})mm; placed boxes:`);
       for (const b of placed) console.error(`  (${(b.x0 / 4).toFixed(1)},${(b.y0 / 4).toFixed(1)})-(${(b.x1 / 4).toFixed(1)},${(b.y1 / 4).toFixed(1)})`);
     }
@@ -2531,8 +2538,10 @@ function render() {
       pairMerge: true,
       pairMergeList: B8_PAIR_MERGE,
       labelStacks: B8_LABEL_STACKS,
-      labelBias: B8_LABEL_BIAS,
+      labelBias: B9_LABEL_BIAS,
       labelAir: true,
+      // MG rev 12 point 1 ported to B9 (live accepted variant, not just B10)
+      softFill: true,
       // B9 leader policy (MG tiers): no leader within 10 mm of the dot;
       // the second tier (10-25 mm) is tied
       leaderDistThresholdU: 40,
