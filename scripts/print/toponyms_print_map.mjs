@@ -15,6 +15,7 @@
 // Offline, deterministic, no npm deps (d3 + topojson-client are vendored UMD bundles).
 
 import { createRequire } from "node:module";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,6 +28,9 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
 const OUT_DIR = path.join(ROOT, "print");
 
 const U = 4;
+// H4051: sha256(first 16) of the ru-collated group order (see loadGroups).
+// Pinned on Node v24.15.0 / full ICU, 04-09-2026, 83 groups.
+const RU_COLLATION_SHA = "42b3a8abe09d1ac8";
 const SPREAD_W_MM = 290;
 const SPREAD_H_MM = 215;
 const PAGE_W_MM = 145;
@@ -90,8 +94,7 @@ const B2_INSET_BOX = { x0: 73, y0: 128, x1: 137, y1: 196 };
 const B2_STAMP = "вариант B2 · v4.17.10 · 03-09-2026";
 const B2_LABEL_RINGS = [0, 8, 16, 24, 32, 40, 48];
 
-const PAD_FRACTION = 0.09;
-const LABEL_FONT_U = 11.2;
+const PAD_FRACTION = 0.09;const LABEL_FONT_U = 11.2;
 const INSET_LABEL_FONT_U = 8.5;
 const LEGEND_FONT_U = 9.9;
 const LEGEND_ROW_H = 11.6;
@@ -227,7 +230,13 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
-// display = historical FIRST, modern tail (MG rev 10 ruling)
+// display = OLDEST ATTESTED FORM first (MG ruling 04-09-2026, restated at
+// H4051 audit). The rev-10 comment called this "historical first, modern
+// tail", which reads as a contradiction of the stacks below - Варанаси and
+// Шри-Ланка look "modern" but are the older names: Бенарес is the colonial
+// derivative of Vārāṇasī, Цейлон the Portuguese-Dutch form beside the
+// Rāmāyaṇa-era Laṅkā. Under "oldest first" the shipped stacks and pairs are
+// all correct; it is the rule statement that was wrong.
 const B8_PAIR_MERGE = [
   ["Литовское княжество Великое", "Литва"],
   ["Британия", "Англия"],
@@ -238,6 +247,17 @@ const B8_LABEL_STACKS = new Map([
   ["Бенарес · Варанаси", ["Варанаси", "Бенарес"]],
   ["арабские страны", ["арабские", "страны"]],
   ["Центральная Африка", ["Центральная", "Африка"]],
+]);
+// H4051: the LEGEND joins a group's names alphabetically, so it prints
+// «Бенарес · Варанаси» while the map stack above prints «Варанаси / Бенарес» -
+// map and legend disagree on name order for the same row. This map is the
+// oldest-first ruling in legend form; sheets opt in with cfg.displayOrder so
+// the eleven frozen legends stay byte-identical. `display_order_conflicts` in
+// the report counts the rows still disagreeing, so the defect is a tracked
+// number rather than prose.
+const NAME_ORDER_OLDEST_FIRST = new Map([
+  ["Бенарес · Варанаси", "Варанаси · Бенарес"],
+  ["Цейлон · Шри-Ланка", "Шри-Ланка · Цейлон"],
 ]);
 // exact label offsets from the TRUE dot in units (tried first) - the spots
 // MG named in rev 10 points 1, 4, 7, 8
@@ -255,7 +275,7 @@ function markerRadU(g) {
 }
 
 function relaxAll(groups, box, radiusOverride, capU, gapU) {
-  const pts = groups.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, r: radiusOverride || markerRadU(g), stay: false }));
+  const pts = groups.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, r: radiusOverride || markerRadU(g) }));
   const x0 = box.x0 + 6;
   const x1 = box.x1 - 6;
   const y0 = box.y0 + 6;
@@ -284,22 +304,11 @@ function relaxAll(groups, box, radiusOverride, capU, gapU) {
       }
     }
     for (const p of pts) {
-      if (p.stay) {
-        p.x = p.ox;
-        p.y = p.oy;
-        continue;
-      }
       p.x = Math.min(Math.max(p.x, x0), x1);
       p.y = Math.min(Math.max(p.y, y0), y1);
     }
   }
   for (const p of pts) {
-    if (p.stay) {
-      p.g.px2 = p.ox;
-      p.g.py2 = p.oy;
-      p.g.displaced = false;
-      continue;
-    }
     let dx = p.x - p.ox;
     let dy = p.y - p.oy;
     const d = Math.hypot(dx, dy);
@@ -386,6 +395,25 @@ function loadGroups() {
     });
   }
   groups.sort((a, b) => a.primary.head.localeCompare(b.primary.head, "ru"));
+  // H4051 collation pin. Group order decides the 1..83 numbering, and the
+  // numbering decides every byte of every sheet - so `localeCompare(…, "ru")`
+  // silently owns the "frozen sheets are byte-identical" invariant. It is
+  // ICU-version dependent: a Node built against a different ICU (or the other
+  // box) renumbers the whole book without a word of warning. Fail loudly
+  // instead. If this trips, the ICU changed - do NOT bump the hash without
+  // re-checking every frozen sheet.
+  const collationHash = crypto
+    .createHash("sha256")
+    .update(groups.map((g) => g.primary.head).join("|"), "utf8")
+    .digest("hex")
+    .slice(0, 16);
+  if (collationHash !== RU_COLLATION_SHA) {
+    throw new Error(
+      `FAIL: ru collation drift - group order hash ${collationHash} != pinned ${RU_COLLATION_SHA}. ` +
+        `Node ${process.version} sorts data/modules/11-toponyms.json differently, so the 1..83 numbering ` +
+        `and every frozen sheet would change. Investigate ICU before touching the pin (H4051).`
+    );
+  }
   let num = 0;
   for (const g of groups) if (!g.discussed) g.number = ++num;
   return { groups, total: items.length };
@@ -493,11 +521,15 @@ function placeLabel(g, px, py, lines, placed, box, fontU, clipBox, ringDeltas, p
         }
       }
       if (clash) continue;
-      if (g.primary.head === "Литва") console.error("LITVA placed anchor", anchor, "d", d, "r", r, "at", lx2, ly2, "from", px, py);
       placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
       const dist = Math.hypot(lx2 - px, ly2 - py);
       const leader = dist > startR + 6 ? { x: px, y: py, tx: lx2, ty: ly2 } : null;
-      return { x: lx2, y: ly, anchor, lines, lineH, leader };
+      // H4051: hand back the EXACT ink rect the collision test used. The
+      // escapes / label_chip_violations gates used to re-derive it with a
+      // one-line formula that is wrong for upward multi-line placements (the
+      // two-line stacks B8 introduced) - they measured a box the placer never
+      // reserved. Measuring the placer's own rect is the whole point.
+      return { x: lx2, y: ly, anchor, lines, lineH, leader, dist, rect: { x0: bx0, x1: bx1, y0: by0, y1: by1 } };
     }
   }
   return null;
@@ -556,7 +588,7 @@ function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU,
     }
     if (clash) continue;
     placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
-    return { x: lx2, y: ly, anchor: "middle", lines, lineH, leader: null, dist: Math.hypot(bdx, bdy) };
+    return { x: lx2, y: ly, anchor: "middle", lines, lineH, leader: null, dist: Math.hypot(bdx, bdy), rect: { x0: bx0, x1: bx1, y0: by0, y1: by1 } };
   }
   for (let r = startR; r <= maxDistU; r += B7_TRUE_RING_STEP) {
     for (const [dx, dy, anchor] of dirs) {
@@ -599,7 +631,7 @@ function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU,
       }
       if (clash) continue;
       placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
-      return { x: lx2, y: ly, anchor, lines, lineH, leader: null, dist: r };
+      return { x: lx2, y: ly, anchor, lines, lineH, leader: null, dist: r, rect: { x0: bx0, x1: bx1, y0: by0, y1: by1 } };
     }
   }
   return null;
@@ -613,9 +645,9 @@ function textBlockSvg(l, fontU) {
   );
 }
 
-function legendRowSvg(x, y, fontU, maxChars, g, maxLines = 2, pitchU = LEGEND_ROW_H, lineDy = 11) {
+function legendRowSvg(x, y, fontU, maxChars, g, maxLines = 2, pitchU = LEGEND_ROW_H, lineDy = 11, displayName = null) {
   const expect = g.pages ? `стр. ${g.pages}` : "—";
-  const rowText = `${g.number}. ${g.display} — ${expect}`;
+  const rowText = `${g.number}. ${displayName || g.display} — ${expect}`;
   const lines = wrapText(rowText, maxChars, maxLines);
   const rowH = pitchU + (lines.length - 1) * lineDy;
   const svg =
@@ -623,6 +655,45 @@ function legendRowSvg(x, y, fontU, maxChars, g, maxLines = 2, pitchU = LEGEND_RO
     lines.map((line, li) => `<tspan x="${f(x)}" dy="${li === 0 ? 0 : lineDy}">${lineHtml(line)}</tspan>`).join("") +
     `</text>`;
   return { svg, rowH, parity: !g.pages || expect === `стр. ${g.pages}` };
+}
+
+// ---------------------------------------------------------------------------
+// H4051 measurement helpers (MG rev 11 audit): the gates up to B8 measured the
+// placer's own bookkeeping - "did my collision loop report a collision?" - and
+// four variants in a row shipped all-green and were rejected. These compute
+// what MG actually judges: how many lines the sheet draws, how far a name sits
+// from its dot, how many names are silently not drawn, how much chip ink is
+// covered. Accounting only - no glyph moves, no byte change to any sheet.
+// ---------------------------------------------------------------------------
+
+// The ink rect for labels pushed outside the placers (fallback / last-resort /
+// no-slot paths). Mirrors the placers' dy === 0 branch, which is the geometry
+// those pushes use, so the number is exact rather than approximated.
+function labelRectFallback(x, y, anchor, lines, lineH, fontU) {
+  const widest = Math.max(...lines.map((line) => textW(line, fontU)));
+  const x0 = anchor === "end" ? x - widest : anchor === "middle" ? x - widest / 2 : x;
+  const y0 = y - lineH * 0.8;
+  return { x0, x1: x0 + widest, y0, y1: y0 + lines.length * lineH };
+}
+
+const rectGap = (r, px, py) => Math.hypot(Math.max(r.x0 - px, px - r.x1, 0), Math.max(r.y0 - py, py - r.y1, 0));
+
+function percentile(sorted, q) {
+  if (!sorted.length) return 0;
+  const i = Math.min(sorted.length - 1, Math.max(0, Math.ceil(q * sorted.length) - 1));
+  return sorted[i];
+}
+
+// fraction of the smaller chip's area hidden under the other chip - the honest
+// form of "no full number-on-number cover"
+function circleOverlapFraction(d, r1, r2) {
+  if (d >= r1 + r2) return 0;
+  const rMin = Math.min(r1, r2);
+  if (d <= Math.abs(r1 - r2)) return 1;
+  const a1 = r1 * r1 * Math.acos((d * d + r1 * r1 - r2 * r2) / (2 * d * r1));
+  const a2 = r2 * r2 * Math.acos((d * d + r2 * r2 - r1 * r1) / (2 * d * r2));
+  const a3 = 0.5 * Math.sqrt(Math.max(0, (-d + r1 + r2) * (d + r1 - r2) * (d - r1 + r2) * (d + r1 + r2)));
+  return (a1 + a2 - a3) / (Math.PI * rMin * rMin);
 }
 
 // ---------------------------------------------------------------------------
@@ -648,6 +719,30 @@ function renderSheet(cfg, world, landObj, groups, total) {
     legend_parity_ok: true,
     cis_anchored_ok: 0,
     areals_drawn: 0,
+    // H4051 MG-facing metrics
+    links_drawn: 0,
+    links_by_kind: {},
+    max_link_mm: 0,
+    names_requested: 0,
+    names_drawn: 0,
+    names_not_drawn: 0,
+    names_at_true_place: 0,
+    label_offset_p50_mm: 0,
+    label_offset_p90_mm: 0,
+    label_offset_max_mm: 0,
+    chip_ink_overlap_max: 0,
+    chip_ink_overlap_pairs: 0,
+  };
+
+  // every drawn leader / stub / connector is counted here. Accounting is
+  // centralised even though emission stays inline per site: the seven sites
+  // differ in stroke width and dash, and rewriting them through one emitter
+  // would drift the bytes of eleven frozen sheets. `links_drawn` is the stat
+  // MG's «уменьшение количества выносных линий» is judged on.
+  const countLink = (kind, x1, y1, x2, y2) => {
+    stats.links_drawn += 1;
+    stats.links_by_kind[kind] = (stats.links_by_kind[kind] || 0) + 1;
+    stats.max_link_mm = Math.max(stats.max_link_mm, Math.hypot(x2 - x1, y2 - y1) / U);
   };
 
   const pageWU = cfg.pageW * U;
@@ -739,6 +834,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       const fill = g.discussed ? "#111111" : "#ffffff";
       const tf = g.discussed ? "#ffffff" : "#111111";
       s.push(`<line x1="${f(x)}" y1="${f(yEdge + 7)}" x2="${f(x)}" y2="${f(box.y1 - 2)}" stroke="#55524c" stroke-width="0.4"${dash}/>`);
+      countLink("southern_edge", x, yEdge + 7, x, box.y1 - 2);
       s.push(`<circle cx="${f(x)}" cy="${f(yEdge)}" r="7" fill="${fill}" stroke="#111111" stroke-width="0.6"${dash}/><text x="${f(x)}" y="${f(yEdge + 2.5)}" text-anchor="middle" font-size="7.2" fill="${tf}">${g.number}</text>`);
     }
   }
@@ -749,6 +845,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       const dash = LINE_DASH[g.lineClass];
       s.push(`<line x1="${f(g.px)}" y1="${f(g.py)}" x2="${f(g.px2)}" y2="${f(g.py2)}" stroke="#55524c" stroke-width="0.4"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`);
       s.push(`<circle cx="${f(g.px)}" cy="${f(g.py)}" r="1.7" fill="none" stroke="#111111" stroke-width="0.5"/>`);
+      countLink("chip_displacement", g.px, g.py, g.px2, g.py2);
     }
   }
 
@@ -774,6 +871,17 @@ function renderSheet(cfg, world, landObj, groups, total) {
       if (d < rrA + rrB - 1) {
         chipClosePairs += 1;
         stats.chip_close_pair = `${a.primary.head} (${a.px.toFixed(0)},${a.py.toFixed(0)}) <-> ${b.primary.head} (${b.px.toFixed(0)},${b.py.toFixed(0)}) d=${d.toFixed(1)}`;
+      }
+      // H4051: «no full number-on-number cover» as a measured quantity. The
+      // shipped chip_close_pairs rule is a yes/no at d < r1+r2-1; this says
+      // HOW MUCH ink is hidden, which is what decides whether a digit reads.
+      const frac = circleOverlapFraction(d, rrA, rrB);
+      if (frac > 0) {
+        stats.chip_ink_overlap_pairs += 1;
+        if (frac > stats.chip_ink_overlap_max) {
+          stats.chip_ink_overlap_max = Number(frac.toFixed(4));
+          stats.chip_ink_overlap_worst = `${a.primary.head} <-> ${b.primary.head} d=${d.toFixed(2)}u frac=${frac.toFixed(3)}`;
+        }
       }
     }
   }
@@ -948,7 +1056,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
         // B2 last resort: rings up to +55U failed - place the label right at
         // the (relax-adjusted) dot, overlaps permitted and reported
         stats.labels_last_resort += 1;
-        labels.push({ g, x: origin.x, y: origin.y + LABEL_FONT_U * 0.34, anchor: "middle", lines, lineH: LABEL_FONT_U * 1.22 });
+        labels.push({ g, x: origin.x, y: origin.y + LABEL_FONT_U * 0.34, anchor: "middle", lines, lineH: LABEL_FONT_U * 1.22, rect: labelRectFallback(origin.x, origin.y + LABEL_FONT_U * 0.34, "middle", lines, LABEL_FONT_U * 1.22, LABEL_FONT_U) });
         pushLeader(g, origin.x, origin.y - 2);
         }
       } else {
@@ -974,14 +1082,14 @@ function renderSheet(cfg, world, landObj, groups, total) {
       }
       if (best) {
         placed.push({ x0: best.x0, x1: best.x1, y0: best.y0, y1: best.y1 });
-        labels.push({ g, x: best.x0, y: best.y0 + LABEL_FONT_U * 0.85, anchor: "start", lines, lineH: LABEL_FONT_U * 1.22 });
+        labels.push({ g, x: best.x0, y: best.y0 + LABEL_FONT_U * 0.85, anchor: "start", lines, lineH: LABEL_FONT_U * 1.22, rect: { x0: best.x0, x1: best.x1, y0: best.y0, y1: best.y1 } });
         pushLeader(g, best.x0 - 2, best.y0 + LABEL_FONT_U * 0.4);
         stats.labels_in_fallback_slots += 1;
       } else {
         stats.labels_without_slot += 1;
         const lx = Math.min(Math.max(origin.x + 12, box.x0 + 60), box.x1 - 60);
         const ly = Math.min(Math.max(origin.y - 12, box.y0 + 16), box.y1 - 8);
-        labels.push({ g, x: lx, y: ly, anchor: "middle", lines, lineH: LABEL_FONT_U * 1.22 });
+        labels.push({ g, x: lx, y: ly, anchor: "middle", lines, lineH: LABEL_FONT_U * 1.22, rect: labelRectFallback(lx, ly, "middle", lines, LABEL_FONT_U * 1.22, LABEL_FONT_U) });
         pushLeader(g, lx, ly - 4);
       }
       }
@@ -997,6 +1105,21 @@ function renderSheet(cfg, world, landObj, groups, total) {
       else if (squeezed) stats.labels_squeezed += 1;
       else if (cfg.truePlace && pos && pos.dist > B7_LABEL_CAP_U) stats.labels_squeezed += 1;
     }
+  }
+
+  // H4051: how far the names actually landed from their dots, and how many
+  // were never drawn. MG rev 11: «алгоритм ... уносит их далеко от точек
+  // привязки» - until now nothing measured that, so eleven revisions argued
+  // about it in prose.
+  {
+    const offsets = labels.map((l) => (l.rect ? rectGap(l.rect, l.g.px, l.g.py) / U : 0)).sort((a, b) => a - b);
+    stats.names_requested = mainLabeled.filter((e) => !coveredSet.has(e.g)).length;
+    stats.names_drawn = labels.length;
+    stats.names_not_drawn = Math.max(0, stats.names_requested - stats.names_drawn);
+    stats.names_at_true_place = labels.filter((l) => l.dist == null || l.dist <= B7_LABEL_CAP_U).length;
+    stats.label_offset_p50_mm = Number(percentile(offsets, 0.5).toFixed(2));
+    stats.label_offset_p90_mm = Number(percentile(offsets, 0.9).toFixed(2));
+    stats.label_offset_max_mm = Number((offsets.length ? offsets[offsets.length - 1] : 0).toFixed(2));
   }
 
   // markers + chips on the main map
@@ -1035,6 +1158,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   }
   for (const l of leaders) {
     s.push(`<line x1="${f(l.x1)}" y1="${f(l.y1)}" x2="${f(l.x2)}" y2="${f(l.y2)}" stroke="#55524c" stroke-width="0.4"${l.dash ? ` stroke-dasharray="${l.dash}"` : ""}/>`);
+    countLink("label_leader", l.x1, l.y1, l.x2, l.y2);
   }
   for (const l of labels) {
     s.push(textBlockSvg(l, LABEL_FONT_U));
@@ -1077,6 +1201,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
         if (!c.displaced) continue;
         s.push(`<line x1="${f(g.ipx)}" y1="${f(g.ipy)}" x2="${f(c.px2)}" y2="${f(c.py2)}" stroke="#55524c" stroke-width="0.4"/>`);
         s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="1.7" fill="none" stroke="#111111" stroke-width="0.5"/>`);
+        countLink("inset_stub", g.ipx, g.ipy, c.px2, c.py2);
       }
     }
     for (const g of west) {
@@ -1192,6 +1317,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const sx = (cfg.inset.box.x0 + 12) * U;
     const sy = cfg.inset.box.y0 * U;
     s.push(`<line x1="${f(sx)}" y1="${f(sy)}" x2="${f(srcX)}" y2="${f(srcY)}" stroke="#55524c" stroke-width="0.45" stroke-dasharray="4 3"/>`);
+    countLink("inset_ref_line", sx, sy, srcX, srcY);
   }
 
   if (insetCtx && cfg.insetGeo) drawInset();
@@ -1231,6 +1357,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     // thin reference line: loupe corner -> the triangle on the main map
     const [tx, ty] = projection([30.8, 50.8]);
     s.push(`<line x1="${f(cfg.loupeBox.x0 * U)}" y1="${f(cfg.loupeBox.y1 * U - 2)}" x2="${f(tx)}" y2="${f(ty)}" stroke="#55524c" stroke-width="0.4" stroke-dasharray="3 2"/>`);
+    countLink("loupe_ref_line", cfg.loupeBox.x0 * U, cfg.loupeBox.y1 * U - 2, tx, ty);
     if (cfg.loupeRefRect) {
       const cs = [
         projection([cfg.loupeGeo.lon0, cfg.loupeGeo.lat0]),
@@ -1256,6 +1383,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       const y = byEdge + 10 + i * 16;
       const dash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
       s.push(`<line x1="${f(g.px2)}" y1="${f(byEdge + 2)}" x2="${f(g.px2)}" y2="${f(y - (g.discussed ? 4 : 9))}" stroke="#55524c" stroke-width="0.4"${dash}/>`);
+      countLink("covered_relocate_stub", g.px2, byEdge + 2, g.px2, y - (g.discussed ? 4 : 9));
       if (g.discussed) {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(y)}" r="2.8" fill="#111111" stroke="#ffffff" stroke-width="0.7"/>`);
         // B6 coveredLabelFlip: near the right frame edge the name flips to the
@@ -1271,27 +1399,23 @@ function renderSheet(cfg, world, landObj, groups, total) {
   }
 
   // escapes: every label rect must sit inside its frame
+  // H4051: measured on the rect the PLACER reserved (l.rect), not on a
+  // re-derived one. The old formula assumed the dy === 0 geometry for every
+  // label, so an upward two-line stack was checked against a box shifted a
+  // whole line down - it could not see a real escape and could invent one.
   for (const l of labels) {
-    const widest = Math.max(...l.lines.map((line) => textW(line, LABEL_FONT_U)));
-    const bx0 = l.anchor === "end" ? l.x - widest : l.anchor === "middle" ? l.x - widest / 2 : l.x;
-    const by0 = l.y - l.lineH * 0.8;
-    if (bx0 < box.x0 || bx0 + widest > box.x1 || by0 < box.y0 || by0 + l.lines.length * l.lineH > box.y1) stats.escapes += 1;
+    const r = l.rect || labelRectFallback(l.x, l.y, l.anchor, l.lines, l.lineH, LABEL_FONT_U);
+    if (r.x0 < box.x0 || r.x1 > box.x1 || r.y0 < box.y0 || r.y1 > box.y1) stats.escapes += 1;
   }
 
   // B3 gate: every legend number keeps >= 1.5 mm of clear space from name labels
   if (cfg.chipObstacles) {
     let viol = 0;
     for (const l of labels) {
-      const widest = Math.max(...l.lines.map((line) => textW(line, LABEL_FONT_U)));
-      const bx0 = l.anchor === "end" ? l.x - widest : l.anchor === "middle" ? l.x - widest / 2 : l.x;
-      const by0 = l.y - l.lineH * 0.8;
-      const bx1 = bx0 + widest;
-      const by1 = by0 + l.lines.length * l.lineH;
+      const r = l.rect || labelRectFallback(l.x, l.y, l.anchor, l.lines, l.lineH, LABEL_FONT_U);
       for (const g of onMap) {
         if ((g.discussed && !cfg.numberAll) || coveredSet.has(g) || g === l.g) continue;
-        const dx = Math.max(bx0 - g.px2, g.px2 - bx1, 0);
-        const dy = Math.max(by0 - g.py2, g.py2 - by1, 0);
-        if (Math.hypot(dx, dy) < 11) viol += 1;
+        if (rectGap(r, g.px2, g.py2) < 11) viol += 1;
       }
     }
     stats.label_chip_violations = viol;
@@ -1334,6 +1458,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
 
   // legend
   const numbered = groups.filter((g) => !g.discussed);
+  // H4051: legend rows follow the oldest-first ruling on sheets that opt in;
+  // frozen legends keep their alphabetical join, so their bytes do not move.
+  const legendName = (g) => (cfg.displayOrder ? NAME_ORDER_OLDEST_FIRST.get(g.display) || g.display : g.display);
   if (cfg.legend === "spread") {
     // MG visa fix: the whole numbered legend lives in ONE full-height side
     // column (was: 3 short strip columns + a 7-row side column), and the map
@@ -1348,7 +1475,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     let cursor = SIDE_ROWS_Y * U;
     const cursorY1 = SIDE_ROWS_Y1 * U;
     for (const g of numbered) {
-      const row = legendRowSvg(SIDE_X0 * U, cursor, SIDE_FONT_U, maxChars, g);
+      const row = legendRowSvg(SIDE_X0 * U, cursor, SIDE_FONT_U, maxChars, g, 2, LEGEND_ROW_H, 11, legendName(g));
       if (!row.parity) stats.legend_parity_ok = false;
       if (cursor + row.rowH > cursorY1) {
         stats.legend_overflow += 1;
@@ -1379,7 +1506,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const maxChars = Math.floor((colW - 12) / (PLEG_FONT_U * CHAR_W));
     const wrapped = numbered.map((g) => {
       const expect = g.pages ? `стр. ${g.pages}` : "—";
-      const lines = wrapText(`${g.number}. ${g.display} — ${expect}`, maxChars, 3);
+      const lines = wrapText(`${g.number}. ${legendName(g)} — ${expect}`, maxChars, 3);
       return { g, lines, parity: !g.pages || expect === `стр. ${g.pages}` };
     });
     const totalLines = wrapped.reduce((acc, w) => acc + w.lines.length, 0);
@@ -1442,7 +1569,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
         : g.number
           ? `${g.number}. `
           : "● ";
-      const lines = wrapText(`${prefix}${g.display} — ${expect}`, maxChars, 3);
+      const lines = wrapText(`${prefix}${legendName(g)} — ${expect}`, maxChars, 3);
       return { g, lines, parity: !g.pages || expect === `стр. ${g.pages}` };
     });
     const totalLines = wrapped.reduce((acc, w) => acc + w.lines.length, 0);
@@ -1532,7 +1659,7 @@ function chipSvgD(x, y, g, r, font) {
 }
 
 function relaxD(members, box, r) {
-  const pts = members.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, stay: false }));
+  const pts = members.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py }));
   const x0 = box.x0 + 6;
   const x1 = box.x1 - 6;
   const y0 = box.y0 + 6;
@@ -1592,6 +1719,16 @@ function renderSheetD(cfg, world, landObj, groups, total) {
     legend_parity_ok: true,
     cis_anchored_ok: 0,
     areals_drawn: 0,
+    links_drawn: 0,
+    links_by_kind: {},
+    max_link_mm: 0,
+    chip_ink_overlap_max: 0,
+    chip_ink_overlap_pairs: 0,
+  };
+  const countLink = (kind, x1, y1, x2, y2) => {
+    stats.links_drawn += 1;
+    stats.links_by_kind[kind] = (stats.links_by_kind[kind] || 0) + 1;
+    stats.max_link_mm = Math.max(stats.max_link_mm, Math.hypot(x2 - x1, y2 - y1) / U);
   };
   const pageWU = cfg.pageW * U;
   const pageHU = cfg.pageH * U;
@@ -1637,6 +1774,7 @@ function renderSheetD(cfg, world, landObj, groups, total) {
         const dash = LINE_DASH[g.lineClass];
         s.push(`<line x1="${f(g.px)}" y1="${f(g.py)}" x2="${f(g.px2)}" y2="${f(g.py2)}" stroke="#55524c" stroke-width="0.4"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`);
         s.push(`<circle cx="${f(g.px)}" cy="${f(g.py)}" r="1.7" fill="none" stroke="#111111" stroke-width="0.5"/>`);
+        countLink("chip_displacement", g.px, g.py, g.px2, g.py2);
       }
     }
     let closePairs = 0;
@@ -1648,6 +1786,14 @@ function renderSheetD(cfg, world, landObj, groups, total) {
         if (d < opts.chipR * 2 - 1) {
           closePairs += 1;
           stats.chip_close_pair = `${a.primary.head} <-> ${b.primary.head} d=${d.toFixed(1)}`;
+        }
+        const frac = circleOverlapFraction(d, opts.chipR, opts.chipR);
+        if (frac > 0) {
+          stats.chip_ink_overlap_pairs += 1;
+          if (frac > stats.chip_ink_overlap_max) {
+            stats.chip_ink_overlap_max = Number(frac.toFixed(4));
+            stats.chip_ink_overlap_worst = `${a.primary.head} <-> ${b.primary.head} d=${d.toFixed(2)}u frac=${frac.toFixed(3)}`;
+          }
         }
       }
     }
@@ -1707,6 +1853,7 @@ function renderSheetD(cfg, world, landObj, groups, total) {
     s.push(`<g clip-path="url(#map-clip-${cfg.key}-d)">`);
     s.push(`<line x1="${f(cx)}" y1="${f(cy + r)}" x2="${f(tx)}" y2="${f(ty)}" stroke="#55524c" stroke-width="0.6" stroke-dasharray="3 2"/>`);
     s.push(`</g>`);
+    countLink("offframe_pointer", cx, cy + r, tx, ty);
     const exitT = (box.y1 - (cy + r)) / (ty - (cy + r));
     const exX = cx + (tx - cx) * exitT;
     s.push(`<path d="M ${f(exX - 3)} ${f(box.y1 - 5)} L ${f(exX + 3)} ${f(box.y1 - 5)} L ${f(exX)} ${f(box.y1 - 0.5)} Z" fill="#33302b"/>`);
@@ -1749,7 +1896,17 @@ function renderSheetD(cfg, world, landObj, groups, total) {
 
 // ---------------------------------------------------------------------------
 
-function pageHtml(title, pageW, pageH, svgs) {
+// H4051 weight fix (MG ruling 04-09-2026): the wrapper pages REFERENCE their
+// sheets instead of inlining them. 99.1% of a map SVG is the Natural Earth
+// land path (5,517,849 of 5,568,705 chars on b8), and every variant used to
+// store that path four times - the .svg, *-print.html, *.html and again inside
+// toponyms-map-versions.html, which had grown to a 63.8 MB tracked blob
+// (GitHub warns above 50 MB, refuses above 100 MB) on an 835.7 MB Pages site
+// against a 1 GB limit. <img> keeps the vector on print (Chrome rasterises
+// nothing) and keeps every URL and every .svg byte unchanged. Cost: the HTML
+// is no longer a detached single file - it needs its sibling .svg. MG reviews
+// via gasyoun.github.io URLs, so that costs nothing here.
+function pageHtml(title, pageW, pageH, svgFiles) {
   return `<!doctype html>
 <html lang="ru">
 <head>
@@ -1758,14 +1915,14 @@ function pageHtml(title, pageW, pageH, svgs) {
 <style>
   @page { size: ${pageW}mm ${pageH}mm; margin: 0; }
   html, body { margin: 0; padding: 0; background: #888; }
-  svg { display: block; width: ${pageW}mm; height: ${pageH}mm; background: #fff; }
+  img { display: block; width: ${pageW}mm; height: ${pageH}mm; background: #fff; }
   .sheet { page-break-after: always; }
   .sheet:last-child { page-break-after: auto; }
   @media print { html, body { background: #fff; } }
 </style>
 </head>
 <body>
-${svgs.map((svg) => `<div class="sheet">${svg}</div>`).join("\n")}
+${svgFiles.map((file) => `<div class="sheet"><img src="${esc(file)}" alt=""></div>`).join("\n")}
 </body>
 </html>
 `;
@@ -1783,13 +1940,13 @@ function reviewHtml(title, sheets) {
   .wrap { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.5); margin-bottom: 8px; }
   .w-spread { width: 1100px; }
   .w-page { width: 550px; }
-  svg { display: block; width: 100%; height: auto; }
+  img { display: block; width: 100%; height: auto; }
 </style>
 </head>
 <body>
 ${sheets
   .map(
-    (sh) => `<h2>${esc(sh.title)}</h2><div class="wrap ${sh.pageW > 200 ? "w-spread" : "w-page"}">${sh.svg}</div>`
+    (sh) => `<h2>${esc(sh.title)}</h2><div class="wrap ${sh.pageW > 200 ? "w-spread" : "w-page"}"><img src="${esc(sh.file)}" alt="" loading="lazy"></div>`
   )
   .join("\n")}
 </body>
@@ -2217,26 +2374,38 @@ function render() {
     const sheetRenderer = cfg.renderer === "d2" ? renderSheetD : renderSheet;
     const groupsForSheet = cfg.numberAll || cfg.numberingAll || cfg.key.startsWith("D") ? dGroups : groups;
     const { svg, stats } = sheetRenderer(cfg, world, land, groupsForSheet, total);
+    // H4051: `f()` turns a NaN coordinate into the literal string "NaN" and
+    // the SVG still parses, so a broken placement path used to ship silently
+    // (the B8 near-miss MG flagged). Refuse to write such a sheet at all.
+    const bad = svg.match(/(?:NaN|Infinity)/);
+    if (bad) {
+      const at = svg.indexOf(bad[0]);
+      throw new Error(`FAIL ${cfg.key}: non-finite coordinate in output near «${svg.slice(Math.max(0, at - 90), at + 30)}»`);
+    }
     fs.writeFileSync(path.join(OUT_DIR, cfg.svgFile), svg, "utf-8");
     rendered.push({ cfg, svg, stats });
     console.log(cfg.key, JSON.stringify(stats));
   }
 
   const byKey = Object.fromEntries(rendered.map((r) => [r.cfg.key, r.stats]));
+  // H4051: the wrapper writers used to address sheets by their position in
+  // `rendered`, so appending a variant meant hand-counting indices - the
+  // rev 11 spec mis-numbered them before a line of code was written. Keyed.
+  const sheetFile = Object.fromEntries(rendered.map((r) => [r.cfg.key, r.cfg.svgFile]));
 
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-print.html"),
-    pageHtml("Карта топонимов книги — печатный макет (H3996)", SPREAD_W_MM, SPREAD_H_MM, [rendered[0].svg]),
+    pageHtml("Карта топонимов книги — печатный макет (H3996)", SPREAD_W_MM, SPREAD_H_MM, [sheetFile.A]),
     "utf-8"
   );
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-b-print.html"),
-    pageHtml("Карта топонимов книги — страница + легенда (H3996)", PAGE_W_MM, PAGE_H_MM, [rendered[1].svg, rendered[2].svg]),
+    pageHtml("Карта топонимов книги — страница + легенда (H3996)", PAGE_W_MM, PAGE_H_MM, [sheetFile.Bmap, sheetFile.Blegend]),
     "utf-8"
   );
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-c-print.html"),
-    pageHtml("Карта топонимов книги — разворот с врезкой (H3996)", SPREAD_W_MM, SPREAD_H_MM, [rendered[3].svg]),
+    pageHtml("Карта топонимов книги — разворот с врезкой (H3996)", SPREAD_W_MM, SPREAD_H_MM, [sheetFile.C]),
     "utf-8"
   );
   fs.writeFileSync(
@@ -2244,17 +2413,17 @@ function render() {
     reviewHtml(
       "Карта топонимов книги — все листы (H3996)",
       [
-        { title: "A — разворот: карта + легенда (4-й столбец в полный рост)", pageW: SPREAD_W_MM, svg: rendered[0].svg },
-        { title: "B — страница (карта) + соседняя страница (легенда)", pageW: PAGE_W_MM, svg: rendered[1].svg },
-        { title: "B — легенда, правая страница", pageW: PAGE_W_MM, svg: rendered[2].svg },
-        { title: "C — разворот с врезкой Западной Европы", pageW: SPREAD_W_MM, svg: rendered[3].svg },
+        { title: "A — разворот: карта + легенда (4-й столбец в полный рост)", pageW: SPREAD_W_MM, file: sheetFile.A },
+        { title: "B — страница (карта) + соседняя страница (легенда)", pageW: PAGE_W_MM, file: sheetFile.Bmap },
+        { title: "B — легенда, правая страница", pageW: PAGE_W_MM, file: sheetFile.Blegend },
+        { title: "C — разворот с врезкой Западной Европы", pageW: SPREAD_W_MM, file: sheetFile.C },
       ]
     ),
     "utf-8"
   );
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-d3-print.html"),
-    pageHtml("Карта топонимов книги — вариант D3: крупный план + обзор", PAGE_W_MM, PAGE_H_MM, [rendered[4].svg, rendered[5].svg]),
+    pageHtml("Карта топонимов книги — вариант D3: крупный план + обзор", PAGE_W_MM, PAGE_H_MM, [sheetFile.Dmap, sheetFile.Dlegend]),
     "utf-8"
   );
   fs.writeFileSync(
@@ -2262,15 +2431,15 @@ function render() {
     reviewHtml(
       "Карта топонимов — вариант D3: крупный план «Русь, Европа и Северная Африка» + обзор",
       [
-        { title: `D3 — страница (карта): крупный план «Русь, Европа и Северная Африка» + обзорный локатор, все группы номерные · ${D_STAMP}`, pageW: PAGE_W_MM, svg: rendered[4].svg },
-        { title: `D3 — соседняя страница: легенда, все группы по номерам (плотная вёрстка) · ${D_STAMP}`, pageW: PAGE_W_MM, svg: rendered[5].svg },
+        { title: `D3 — страница (карта): крупный план «Русь, Европа и Северная Африка» + обзорный локатор, все группы номерные · ${D_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.Dmap },
+        { title: `D3 — соседняя страница: легенда, все группы по номерам (плотная вёрстка) · ${D_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.Dlegend },
       ]
     ),
     "utf-8"
   );
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-b2-print.html"),
-    pageHtml("Карта топонимов книги — вариант B2: подписи на местах + плотная легенда", PAGE_W_MM, PAGE_H_MM, [rendered[6].svg, rendered[7].svg]),
+    pageHtml("Карта топонимов книги — вариант B2: подписи на местах + плотная легенда", PAGE_W_MM, PAGE_H_MM, [sheetFile.B2map, sheetFile.B2legend]),
     "utf-8"
   );
   fs.writeFileSync(
@@ -2278,15 +2447,15 @@ function render() {
     reviewHtml(
       "Карта топонимов — вариант B2: названия на своих местах, страницы в легенде",
       [
-        { title: `B2 — страница (карта): названия у истинных точек (сдвиг ≤ 10 мм), врезка Западной Европы · ${B2_STAMP}`, pageW: PAGE_W_MM, svg: rendered[6].svg },
-        { title: `B2 — соседняя страница: легенда, все 83 записи (● — обсуждается, номера — чипы) · ${B2_STAMP}`, pageW: PAGE_W_MM, svg: rendered[7].svg },
+        { title: `B2 — страница (карта): названия у истинных точек (сдвиг ≤ 10 мм), врезка Западной Европы · ${B2_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B2map },
+        { title: `B2 — соседняя страница: легенда, все 83 записи (● — обсуждается, номера — чипы) · ${B2_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B2legend },
       ]
     ),
     "utf-8"
   );
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-b3-print.html"),
-    pageHtml("Карта топонимов книги — вариант B3: подписи на местах, ядро «Русь» во врезке", PAGE_W_MM, PAGE_H_MM, [rendered[8].svg, rendered[9].svg]),
+    pageHtml("Карта топонимов книги — вариант B3: подписи на местах, ядро «Русь» во врезке", PAGE_W_MM, PAGE_H_MM, [sheetFile.B3map, sheetFile.B3legend]),
     "utf-8"
   );
   fs.writeFileSync(
@@ -2294,15 +2463,15 @@ function render() {
     reviewHtml(
       "Карта топонимов — вариант B3: все цифры читаются, ядро «Русь» во врезке",
       [
-        { title: `B3 — страница (карта): ядро «Русь» вынесено во врезку (≈24 группы, крупно), подписи у точек, цифры не пересекаются · ${B3_STAMP}`, pageW: PAGE_W_MM, svg: rendered[8].svg },
-        { title: `B3 — соседняя страница: легенда, все 83 записи (● — обсуждается, номера — чипы) · ${B3_STAMP}`, pageW: PAGE_W_MM, svg: rendered[9].svg },
+        { title: `B3 — страница (карта): ядро «Русь» вынесено во врезку (≈24 группы, крупно), подписи у точек, цифры не пересекаются · ${B3_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B3map },
+        { title: `B3 — соседняя страница: легенда, все 83 записи (● — обсуждается, номера — чипы) · ${B3_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B3legend },
       ]
     ),
     "utf-8"
   );
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-b4-print.html"),
-    pageHtml("Карта топонимов книги — вариант B4: лупа «Русь» над Индийским океаном", PAGE_W_MM, PAGE_H_MM, [rendered[10].svg, rendered[11].svg]),
+    pageHtml("Карта топонимов книги — вариант B4: лупа «Русь» над Индийским океаном", PAGE_W_MM, PAGE_H_MM, [sheetFile.B4map, sheetFile.B4legend]),
     "utf-8"
   );
   fs.writeFileSync(
@@ -2310,15 +2479,15 @@ function render() {
     reviewHtml(
       "Карта топонимов — вариант B4: карта в полный рост, лупа «Русь» над Индийским океаном",
       [
-        { title: `B4 — страница (карта): полная карта + лупа «Русь» над Индийским океаном, цифры без наложений · ${B4_STAMP}`, pageW: PAGE_W_MM, svg: rendered[10].svg },
-        { title: `B4 — соседняя страница: легенда, все 83 записи (● — обсуждается, номера — чипы) · ${B4_STAMP}`, pageW: PAGE_W_MM, svg: rendered[11].svg },
+        { title: `B4 — страница (карта): полная карта + лупа «Русь» над Индийским океаном, цифры без наложений · ${B4_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B4map },
+        { title: `B4 — соседняя страница: легенда, все 83 записи (● — обсуждается, номера — чипы) · ${B4_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B4legend },
       ]
     ),
     "utf-8"
   );
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-b5-print.html"),
-    pageHtml("Карта топонимов книги — вариант B5: zoom in + лупа киевского треугольника", PAGE_W_MM, PAGE_H_MM, [rendered[12].svg, rendered[13].svg]),
+    pageHtml("Карта топонимов книги — вариант B5: zoom in + лупа киевского треугольника", PAGE_W_MM, PAGE_H_MM, [sheetFile.B5map, sheetFile.B5legend]),
     "utf-8"
   );
   fs.writeFileSync(
@@ -2326,8 +2495,8 @@ function render() {
     reviewHtml(
       "Карта топонимов — вариант B5: zoom in, все точки — номерные чипы, лупа киевского треугольника",
       [
-        { title: `B5 — страница (карта): zoom in (верх Африки), все точки — номерные чипы, лупа киевского треугольника · ${B5_STAMP}`, pageW: PAGE_W_MM, svg: rendered[12].svg },
-        { title: `B5 — соседняя страница: легенда, все 83 записи по номерам · ${B5_STAMP}`, pageW: PAGE_W_MM, svg: rendered[13].svg },
+        { title: `B5 — страница (карта): zoom in (верх Африки), все точки — номерные чипы, лупа киевского треугольника · ${B5_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B5map },
+        { title: `B5 — соседняя страница: легенда, все 83 записи по номерам · ${B5_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B5legend },
       ]
     ),
     "utf-8"
@@ -2335,7 +2504,7 @@ function render() {
 
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-b6-print.html"),
-    pageHtml("Карта топонимов книги — вариант B6: zoom, врезка-ядро «Киев → Новгород», подписи только в чистых слотах", PAGE_W_MM, PAGE_H_MM, [rendered[14].svg, rendered[15].svg]),
+    pageHtml("Карта топонимов книги — вариант B6: zoom, врезка-ядро «Киев → Новгород», подписи только в чистых слотах", PAGE_W_MM, PAGE_H_MM, [sheetFile.B6map, sheetFile.B6legend]),
     "utf-8"
   );
   fs.writeFileSync(
@@ -2343,8 +2512,8 @@ function render() {
     reviewHtml(
       "Карта топонимов — вариант B6: zoom, врезка-ядро «Русь», ни одной наложенной подписи",
       [
-        { title: `B6 — страница (карта): zoom (верх Африки), все точки — номерные чипы, врезка «Русь · Киев → Новгород» с именами, подписи только в чистых слотах · ${B6_STAMP}`, pageW: PAGE_W_MM, svg: rendered[14].svg },
-        { title: `B6 — соседняя страница: легенда, все 83 записи по номерам · ${B6_STAMP}`, pageW: PAGE_W_MM, svg: rendered[15].svg },
+        { title: `B6 — страница (карта): zoom (верх Африки), все точки — номерные чипы, врезка «Русь · Киев → Новгород» с именами, подписи только в чистых слотах · ${B6_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B6map },
+        { title: `B6 — соседняя страница: легенда, все 83 записи по номерам · ${B6_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B6legend },
       ]
     ),
     "utf-8"
@@ -2352,7 +2521,7 @@ function render() {
 
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-b7-print.html"),
-    pageHtml("Карта топонимов книги — вариант B7: полная карта, истинные подписи, врезка-ядро в ЮВ углу", PAGE_W_MM, PAGE_H_MM, [rendered[16].svg, rendered[17].svg]),
+    pageHtml("Карта топонимов книги — вариант B7: полная карта, истинные подписи, врезка-ядро в ЮВ углу", PAGE_W_MM, PAGE_H_MM, [sheetFile.B7map, sheetFile.B7legend]),
     "utf-8"
   );
   fs.writeFileSync(
@@ -2360,8 +2529,8 @@ function render() {
     reviewHtml(
       "Карта топонимов — вариант B7: полный мир, атласная точность, единая нумерация 1–83",
       [
-        { title: `B7 — страница (карта): полный мир без выносов, подписи у истинных мест (≤ 10 мм), врезка «Русь · Киев → Новгород» в ЮВ углу с рамочным заголовком, штриховая рамка-источник + линия · ${B7_STAMP}`, pageW: PAGE_W_MM, svg: rendered[16].svg },
-        { title: `B7 — соседняя страница: легенда, единый ряд 1–83 («номер строки = номер на карте») · ${B7_STAMP}`, pageW: PAGE_W_MM, svg: rendered[17].svg },
+        { title: `B7 — страница (карта): полный мир без выносов, подписи у истинных мест (≤ 10 мм), врезка «Русь · Киев → Новгород» в ЮВ углу с рамочным заголовком, штриховая рамка-источник + линия · ${B7_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B7map },
+        { title: `B7 — соседняя страница: легенда, единый ряд 1–83 («номер строки = номер на карте») · ${B7_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B7legend },
       ]
     ),
     "utf-8"
@@ -2369,7 +2538,7 @@ function render() {
 
   fs.writeFileSync(
     path.join(OUT_DIR, "toponyms-map-b8-print.html"),
-    pageHtml("Карта топонимов книги — вариант B8: воздух, исторические имена первыми, двухстрочные подписи", PAGE_W_MM, PAGE_H_MM, [rendered[18].svg, rendered[19].svg]),
+    pageHtml("Карта топонимов книги — вариант B8: воздух, исторические имена первыми, двухстрочные подписи", PAGE_W_MM, PAGE_H_MM, [sheetFile.B8map, sheetFile.B8legend]),
     "utf-8"
   );
   fs.writeFileSync(
@@ -2377,8 +2546,8 @@ function render() {
     reviewHtml(
       "Карта топонимов — вариант B8: воздух вокруг подписей, историческое имя первым, пары вместе",
       [
-        { title: `B8 — страница (карта): воздух (pad 3.2 / чипы 10 / gap 5.5), стеки «Шри-Ланка→Цейлон», «Варанаси→Бенарес», пары «Британия · Англия», «Германия · ГДР», биасы направления · ${B8_STAMP}`, pageW: PAGE_W_MM, svg: rendered[18].svg },
-        { title: `B8 — соседняя страница: легенда, единый ряд 1–83 · ${B8_STAMP}`, pageW: PAGE_W_MM, svg: rendered[19].svg },
+        { title: `B8 — страница (карта): воздух (pad 3.2 / чипы 10 / gap 5.5), стеки «Шри-Ланка→Цейлон», «Варанаси→Бенарес», пары «Британия · Англия», «Германия · ГДР», биасы направления · ${B8_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B8map },
+        { title: `B8 — соседняя страница: легенда, единый ряд 1–83 · ${B8_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B8legend },
       ]
     ),
     "utf-8"
@@ -2388,6 +2557,13 @@ function render() {
   const report = {
     total_toponyms: total,
     coordinate_groups: groups.length,
+    // H4051: rows whose legend order still disagrees with the oldest-first
+    // map stacks (they self-heal on any sheet that opts into cfg.displayOrder;
+    // frozen legends keep alphabetical order by design).
+    display_order_conflicts: groups.filter((g) => NAME_ORDER_OLDEST_FIRST.has(g.display)).length,
+    display_order_conflict_rows: groups
+      .filter((g) => NAME_ORDER_OLDEST_FIRST.has(g.display))
+      .map((g) => `${g.display} → ${NAME_ORDER_OLDEST_FIRST.get(g.display)}`),
     labeled_groups: groups.filter((g) => g.discussed).length,
     numbered_groups: numbered.length,
     west_groups: groups.filter((g) => g.lineClass === "west").length,
@@ -2405,6 +2581,27 @@ function render() {
     areals_drawn_total: rendered.reduce((acc, r) => acc + r.stats.areals_drawn, 0),
     scale_bar_km: 1000,
     page_mm: [SPREAD_W_MM, SPREAD_H_MM],
+    // H4051 MG-facing summary: one row per sheet on the criteria MG judges,
+    // so «свободнее, без выносных линий» is a number and not an argument.
+    mg_metrics: Object.fromEntries(
+      rendered.map((r) => [
+        r.cfg.key,
+        {
+          links_drawn: r.stats.links_drawn,
+          links_by_kind: r.stats.links_by_kind,
+          max_link_mm: Number((r.stats.max_link_mm || 0).toFixed(2)),
+          names_requested: r.stats.names_requested,
+          names_drawn: r.stats.names_drawn,
+          names_not_drawn: r.stats.names_not_drawn,
+          names_at_true_place: r.stats.names_at_true_place,
+          label_offset_p50_mm: r.stats.label_offset_p50_mm,
+          label_offset_p90_mm: r.stats.label_offset_p90_mm,
+          label_offset_max_mm: r.stats.label_offset_max_mm,
+          chip_ink_overlap_pairs: r.stats.chip_ink_overlap_pairs,
+          chip_ink_overlap_max: r.stats.chip_ink_overlap_max,
+        },
+      ])
+    ),
     sheets: byKey,
   };
   fs.writeFileSync(path.join(OUT_DIR, "toponyms-map-report.json"), JSON.stringify(report, null, 2) + "\n", "utf-8");

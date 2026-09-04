@@ -111,6 +111,15 @@ jobs:
       - name: Ensure committed aaz-index.html is in sync
         run: git diff --exit-code -- aaz-index.html
 
+      # H4051: the print pipeline had no CI at all - eleven revisions of MG
+      # feedback landed in print/ with "frozen sheets are byte-identical"
+      # enforced by a human reading `git status`. Same regenerate-and-diff
+      # pattern the five gates above use. The generator's own hardFail gate
+      # (overlaps / escapes / legend parity / non-finite coordinates) runs
+      # inside it, so this asserts both determinism and the gates.
+      - name: Ensure committed toponym print sheets are in sync
+        run: npm run print:toponyms:check
+
       - name: Vite build smoke
         run: |
           npm run build:vite
