@@ -227,6 +227,14 @@ const B7_PAIR_MERGE = [
 const B8_INSET_BOX = { x0: 54, y0: 148, x1: 106, y1: 202 };
 const B8_INSET_PAD = 0.14;
 const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
+// sheet B9 (MG 04-09-2026, «строим B9 по новой метрике»): the lines-free pass
+// measured, not guessed. Chips may TOUCH (relax gap 0) instead of B8's 4.6 mm
+// air - probe: median drift 3.7u vs 10.8u, only 3 chips drift past the 16u
+// stub threshold (B8: 58 stubs). Leaders follow MG's tier rule: none within
+// 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
+// HATCHED square with an arrow from the inset frame; the framed caption bar
+// is reserved before chip fitting. Legend opts into oldest-first name order.
+const B9_STAMP = "вариант B9 · v4.17.26 · 04-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -274,7 +282,7 @@ function markerRadU(g) {
   return g.discussed ? 2.8 : 7;
 }
 
-function relaxAll(groups, box, radiusOverride, capU, gapU) {
+function relaxAll(groups, box, radiusOverride, capU, gapU, displacedMinU) {
   const pts = groups.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, r: radiusOverride || markerRadU(g) }));
   const x0 = box.x0 + 6;
   const x1 = box.x1 - 6;
@@ -288,7 +296,9 @@ function relaxAll(groups, box, radiusOverride, capU, gapU) {
         let dx = b.x - a.x;
         let dy = b.y - a.y;
         let d = Math.hypot(dx, dy);
-        const minD = a.r + b.r + (gapU || RELAX_GAP);
+        // ?? not ||: B9 passes gapU = 0 (chips may touch) and must not fall
+        // back to the default gap
+        const minD = a.r + b.r + (gapU ?? RELAX_GAP);
         if (d === 0) {
           dx = 0.5;
           dy = 0.5;
@@ -319,7 +329,10 @@ function relaxAll(groups, box, radiusOverride, capU, gapU) {
     }
     p.g.px2 = p.ox + dx;
     p.g.py2 = p.oy + dy;
-    p.g.displaced = Math.hypot(p.g.px2 - p.ox, p.g.py2 - p.oy) > 5;
+    // B9: the displaced threshold is configurable - a chip nudged 1-4 mm
+    // toward its neighbours does NOT draw a stub (MG rev 11: the lines are the
+    // complaint); only real drift does. Default 5u keeps every frozen sheet.
+    p.g.displaced = Math.hypot(p.g.px2 - p.ox, p.g.py2 - p.oy) > (displacedMinU ?? 5);
   }
 }
 
@@ -807,7 +820,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     stats.areals_drawn += 1;
   }
 
-  relaxAll(onMap, box, cfg.numberAll ? 7 : undefined, cfg.displaceCap, cfg.relaxGap);
+  relaxAll(onMap, box, cfg.numberAll ? 7 : undefined, cfg.displaceCap, cfg.relaxGap, cfg.displacedMinU);
 
   const placed = [];
   const labels = [];
@@ -897,11 +910,17 @@ function renderSheet(cfg, world, landObj, groups, total) {
       x1: cfg.inset.box.x1 * U,
       y1: cfg.inset.box.y1 * U,
     };
-    const inset = buildProjection(cfg.inset.box, west.map((g) => [g.lon, g.lat]), cfg.insetPad || 0.12);
+    // B9 (MG rev 11): the framed title bar is RESERVED BEFORE fitting - the
+    // projection (hence chips, stubs and labels) lives below the bar, so the
+    // top row never touches or clips under the frame caption.
+    const insetBarU = cfg.insetReserveBar ? 30 : 0;
+    const insetFitBoxMm = insetBarU ? { ...cfg.inset.box, y0: cfg.inset.box.y0 + insetBarU / U } : cfg.inset.box;
+    const insetFitBoxU = insetBarU ? { x0: ib.x0, y0: ib.y0 + insetBarU, x1: ib.x1, y1: ib.y1 } : ib;
+    const inset = buildProjection(insetFitBoxMm, west.map((g) => [g.lon, g.lat]), cfg.insetPad || 0.12);
     for (const g of west) {
       [g.ipx, g.ipy] = inset.projection([g.lon, g.lat]);
     }
-    insetCtx = { west, inset, ib };
+    insetCtx = { west, inset, ib, fitBox: insetFitBoxU };
     placed.push({ x0: ib.x0 - 3, x1: ib.x1 + 3, y0: ib.y0 - 3, y1: ib.y1 + 3 });
   }
 
@@ -1098,7 +1117,10 @@ function renderSheet(cfg, world, landObj, groups, total) {
       // leader meets the label's NEAR edge; for name-only labels the anchor
       // point is that edge, don't run the line under the text to its far side
       const lx = cfg.nameOnlyLabels ? pos.x : pos.anchor === "end" ? pos.x - textW(lines[0], LABEL_FONT_U) : pos.anchor === "middle" ? pos.x - textW(lines[0], LABEL_FONT_U) / 2 : pos.x;
-      if (squeezed || squeezed3 || g.anchorPx || Math.hypot(lx - g.px2, pos.y - g.py2) > 24 || g.displaced) {
+      // B9 (MG rev 11 tiers): a label within 10 mm of its dot needs NO leader;
+      // only the second tier (10-25 mm) is tied. Default 24u keeps frozen sheets.
+      const leaderDist = cfg.leaderDistThresholdU ?? 24;
+      if (squeezed || squeezed3 || g.anchorPx || Math.hypot(lx - g.px2, pos.y - g.py2) > leaderDist || g.displaced) {
         pushLeader(g, lx, pos.y - 2);
       }
       if (squeezed3 || (squeezed && !cfg.cleanSlotsOnly)) stats.labels_last_resort += 1;
@@ -1168,7 +1190,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   // the map frame, so it must be drawn OUTSIDE the map clip group
   const drawInset = () => {
     if (!insetCtx) return;
-    const { west, inset, ib } = insetCtx;
+    const { west, inset, ib, fitBox } = insetCtx;
     s.push(`<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(ib.y1 - ib.y0)}" fill="#ffffff"/>`);
     s.push(`<g clip-path="url(#inset-clip-${cfg.key})">`);
     s.push(`<path d="${inset.geopath(landObj)}" fill="#e9e5dc" stroke="#4a4640" stroke-width="0.9" stroke-linejoin="round" fill-rule="evenodd"/>`);
@@ -1190,7 +1212,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     let iPos = null;
     if (cfg.insetRelax) {
       const clones = west.map((g) => ({ ...g, px: g.ipx, py: g.ipy }));
-      relaxD(clones, ib, insetChipR);
+      relaxD(clones, fitBox, insetChipR, cfg.insetRelaxGap);
       iPos = new Map(west.map((g, i) => [g, clones[i]]));
     }
     const icx = (g) => (iPos ? iPos.get(g).px2 : g.ipx);
@@ -1243,7 +1265,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       .sort((a, b) => b.width - a.width);
     for (const { g } of iLabeled) {
       const lines = wrapText(g.mapName, 20, 2);
-      const pos = placeLabel(g, icx(g), icy(g), lines, iPlaced, ib, INSET_LABEL_FONT_U, ib);
+      const pos = placeLabel(g, icx(g), icy(g), lines, iPlaced, fitBox, INSET_LABEL_FONT_U, fitBox);
       if (pos) {
         s.push(textBlockSvg({ g, ...pos }, INSET_LABEL_FONT_U));
       } else {
@@ -1318,6 +1340,47 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const sy = cfg.inset.box.y0 * U;
     s.push(`<line x1="${f(sx)}" y1="${f(sy)}" x2="${f(srcX)}" y2="${f(srcY)}" stroke="#55524c" stroke-width="0.45" stroke-dasharray="4 3"/>`);
     countLink("inset_ref_line", sx, sy, srcX, srcY);
+  }
+
+  // B9 (MG 04-09-2026): the inset source is a HATCHED square on the map with
+  // an ARROW from the inset frame - «чтобы понять какое именно место на карте
+  // она увеличивает». The hatch fill is the same pattern as areals, but the
+  // dashed frame + arrow make it a pointer, not a language zone.
+  if (cfg.insetSourceArrow && cfg.insetGeo && insetCtx) {
+    const cs = [
+      projection([cfg.insetGeo.lon0, cfg.insetGeo.lat0]),
+      projection([cfg.insetGeo.lon1, cfg.insetGeo.lat0]),
+      projection([cfg.insetGeo.lon1, cfg.insetGeo.lat1]),
+      projection([cfg.insetGeo.lon0, cfg.insetGeo.lat1]),
+    ];
+    const rx0 = Math.min(...cs.map((c) => c[0]));
+    const rx1 = Math.max(...cs.map((c) => c[0]));
+    const ry0 = Math.min(...cs.map((c) => c[1]));
+    const ry1 = Math.max(...cs.map((c) => c[1]));
+    s.push(
+      `<rect x="${f(rx0)}" y="${f(ry0)}" width="${f(rx1 - rx0)}" height="${f(ry1 - ry0)}" fill="url(#hatch-${cfg.key})" fill-opacity="0.35" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>` +
+        `<text x="${f(rx1 + 4)}" y="${f(ry0 + 10)}" font-size="7.5" fill="#33302b" stroke="#ffffff" stroke-width="1.4" paint-order="stroke" stroke-linejoin="round">см. врезку</text>`
+    );
+    // arrow: inset frame's top-left corner region -> centre of the source
+    // square, arrowhead at the square
+    const sx = (cfg.inset.box.x0 + 12) * U;
+    const sy = cfg.inset.box.y0 * U;
+    const cx = (rx0 + rx1) / 2;
+    const cy = (ry0 + ry1) / 2;
+    const len = Math.hypot(cx - sx, cy - sy) || 1;
+    const head = 9;
+    // stop the shaft short of the head so the tip lands on the centre
+    const bx = cx - ((cx - sx) / len) * head;
+    const by = cy - ((cy - sy) / len) * head;
+    s.push(`<line x1="${f(sx)}" y1="${f(sy)}" x2="${f(bx)}" y2="${f(by)}" stroke="#33302b" stroke-width="0.9"/>`);
+    const ux = (cx - sx) / len;
+    const uy = (cy - sy) / len;
+    const px = -uy;
+    const py = ux;
+    s.push(
+      `<path d="M ${f(cx)} ${f(cy)} L ${f(bx + px * head * 0.42)} ${f(by + py * head * 0.42)} L ${f(bx - px * head * 0.42)} ${f(by - py * head * 0.42)} Z" fill="#33302b"/>`
+    );
+    countLink("inset_ref_line", sx, sy, cx, cy);
   }
 
   if (insetCtx && cfg.insetGeo) drawInset();
@@ -1658,7 +1721,7 @@ function chipSvgD(x, y, g, r, font) {
   );
 }
 
-function relaxD(members, box, r) {
+function relaxD(members, box, r, gapU) {
   const pts = members.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py }));
   const x0 = box.x0 + 6;
   const x1 = box.x1 - 6;
@@ -1672,7 +1735,9 @@ function relaxD(members, box, r) {
         let dx = b.x - a.x;
         let dy = b.y - a.y;
         let d = Math.hypot(dx, dy);
-        const minD = r * 2 + RELAX_GAP;
+        // gapU ?? default: B9 passes 0 - inset chips may touch, same policy as
+    // the main map (fewer stubs, no ink overlap)
+    const minD = r * 2 + (gapU ?? RELAX_GAP);
         if (d === 0) {
           dx = 0.5;
           dy = 0.5;
@@ -2361,6 +2426,84 @@ function render() {
       scaleBar: false,
       svgFile: "toponyms-map-b8-legend.svg",
     },
+    {
+      key: "B9map",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: B2_MAP_BOX,
+      fit: "all",
+      inset: { box: B8_INSET_BOX },
+      insetGeo: B7_INSET_GEO,
+      insetPad: B8_INSET_PAD,
+      insetChipR: 6.5,
+      insetChipFont: 6.8,
+      insetCaption: B7_INSET_CAPTION,
+      insetCaptionFramed: true,
+      // MG rev 11: the framed bar is RESERVED before chip fitting - the top
+      // row of chips never touches or clips under the caption
+      insetReserveBar: true,
+      insetLabelsSoft: true,
+      insetMirror: true,
+      insetChipDiscussed: true,
+      insetRelax: true,
+      // inset chips may touch too - the reserved-bar fit box is tighter, and
+      // the stub gate (<= 8) needs the drift low
+      insetRelaxGap: 0,
+      coverRelocate: true,
+      // MG 04-09-2026: the magnified place is a HATCHED square on the map
+      // with an arrow from the inset frame (replaces refRect+refLine)
+      insetSourceArrow: true,
+      legend: null,
+      nameOnlyLabels: true,
+      ignoreAnchors: true,
+      chipObstacles: true,
+      numberAll: true,
+      numberingAll: true,
+      truePlace: true,
+      truePlaceSecondTier: true,
+      cleanSlotsOnly: true,
+      noWholeFrameFallback: true,
+      nameMentioned: true,
+      pairMerge: true,
+      pairMergeList: B8_PAIR_MERGE,
+      labelStacks: B8_LABEL_STACKS,
+      labelBias: B8_LABEL_BIAS,
+      labelAir: true,
+      // B9 leader policy (MG tiers): no leader within 10 mm of the dot;
+      // the second tier (10-25 mm) is tied
+      leaderDistThresholdU: 40,
+      // B9 chip policy (probe-measured 04-09-2026): chips may TOUCH (gap 0 =
+      // exact contact, no ink overlap) which halves the drift vs B8's gap 5.5
+      // (median 3.7u vs 10.8u); a stub is drawn only for real drift > 16u
+      // (4 mm) - probe says 3 chips qualify (B8 drew 58)
+      relaxGap: 0,
+      displaceCap: 32,
+      displacedMinU: 16,
+      title: true,
+      subtitleOverride: `«Из жизни слов и языков» · ${total} названий мест: все точки на истинных местах, у каждой номер; ядро «Русь» крупно во врезке`,
+      stamp: B9_STAMP,
+      scaleBar: true,
+      svgFile: "toponyms-map-b9-map.svg",
+    },
+    {
+      key: "B9legend",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: { x0: 0, y0: 0, x1: PAGE_W_MM, y1: PAGE_H_MM },
+      fit: "all",
+      inset: null,
+      legend: "page-compact",
+      legendNumberAll: true,
+      numberingAll: true,
+      // oldest-attested-first legend order (MG 04-09-2026) - new sheet, so it
+      // opts in; frozen legends keep their bytes
+      displayOrder: true,
+      noMap: true,
+      title: false,
+      stamp: B9_STAMP,
+      scaleBar: false,
+      svgFile: "toponyms-map-b9-legend.svg",
+    },
   ];
 
   // sheet D numbering: every group gets a legend number (alphabetical, 1..N)
@@ -2553,6 +2696,23 @@ function render() {
     "utf-8"
   );
 
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b9-print.html"),
+    pageHtml("Карта топонимов книги — вариант B9: без выносных линий, штрихованный квадрат-источник врезки", PAGE_W_MM, PAGE_H_MM, [sheetFile.B9map, sheetFile.B9legend]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b9.html"),
+    reviewHtml(
+      "Карта топонимов — вариант B9: касание чипов вместо разлёва, штрих-квадрат со стрелкой на врезку",
+      [
+        { title: `B9 — страница (карта): чипы касаются, но не наезжают (gap 0), штрих только при дрейфе > 4 мм, подпись ≤ 10 мм от точки без лидера, врезка с запасом под рамочный заголовок, источник врезки — штрихованный квадрат со стрелкой · ${B9_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B9map },
+        { title: `B9 — соседняя страница: легенда, единый ряд 1–83, порядок имён «древнейшая форма первой» · ${B9_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B9legend },
+      ]
+    ),
+    "utf-8"
+  );
+
   const A = byKey.A;
   const report = {
     total_toponyms: total,
@@ -2613,7 +2773,14 @@ function render() {
     A.legend_rows_drawn !== numbered.length ||
     rendered[2].stats.legend_rows_drawn !== numbered.length ||
     !report.legend_parity_ok ||
-    report.chip_close_pairs > 0 ||
+    // H4051 B9: touching chips are ALLOWED on sheets that opt in
+    // (chipClosePairsGate; MG B9a: «касание допустимо»), everyone else keeps
+    // the strict 0. `report.chip_close_pairs` stays the cross-sheet max,
+    // informational only.
+    rendered.some((r) => r.stats.chip_close_pairs > (r.cfg.chipClosePairsGate ?? 0)) ||
+    // H4051 B9: "no full number-on-number cover" as a measured gate - up to
+    // 5% of the smaller chip's ink may be covered (touch), never more
+    rendered.some((r) => (r.stats.chip_ink_overlap_max ?? 0) > (r.cfg.chipInkOverlapGate ?? 0.05)) ||
     report.cis_anchored_ok !== report.cis_anchored ||
     report.areals_drawn_total < 3 ||
     rendered.some((r) => r.stats.escapes > 0) ||
@@ -2684,7 +2851,26 @@ function render() {
     byKey.B8map.labels_deferred > 55 ||
     byKey.B8legend.legend_rows_drawn !== groups.length ||
     byKey.B8legend.legend_overflow > 0 ||
-    !byKey.B8legend.legend_parity_ok;
+    !byKey.B8legend.legend_parity_ok ||
+    // H4051 B9 gates (MG rev 11a, ruled 04-09-2026): the lines MG complained
+    // about are the chip displacement stubs - <= 8 of those on the main map;
+    // label leaders follow the tier rule (none within 10 mm) and are reported
+    // in mg_metrics rather than gated; inset stubs stay <= 8; the offset
+    // percentile must beat B8's 23.75; no more names silently dropped than B8.
+    byKey.B9map.links_by_kind.chip_displacement > 8 ||
+    byKey.B9map.links_by_kind.inset_stub > 8 ||
+    byKey.B9map.label_offset_p90_mm > 25 ||
+    byKey.B9map.names_not_drawn > 25 ||
+    byKey.B9map.names_at_true_place < 13 ||
+    byKey.B9map.labels_without_slot > 0 ||
+    byKey.B9map.escapes > 0 ||
+    byKey.B9map.label_chip_violations > 0 ||
+    byKey.B9map.labels_last_resort > 0 ||
+    byKey.B9map.covered_relocated > 0 ||
+    byKey.B9map.max_leader_mm > 31 ||
+    byKey.B9legend.legend_rows_drawn !== groups.length ||
+    byKey.B9legend.legend_overflow > 0 ||
+    !byKey.B9legend.legend_parity_ok;
   if (hardFail) {
     console.error("FAIL: see report fields above");
     process.exit(1);

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 860" font-family="Georgia, 'Times New Roman', serif">
+<rect width="580" height="860" fill="#ffffff"/>
+<defs><clipPath id="map-clip-B9legend"><rect x="0.00" y="0.00" width="580.00" height="860.00"/></clipPath><pattern id="hatch-B9legend" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="5" stroke="#6a655c" stroke-width="0.7"/></pattern></defs>
+<rect x="24.00" y="24.00" width="532.00" height="812.00" fill="none" stroke="#111111" stroke-width="1.6"/><rect x="29.00" y="29.00" width="522.00" height="802.00" fill="none" stroke="#111111" stroke-width="0.45"/>
+<text x="32" y="80.00" font-size="13.5" font-weight="bold" fill="#111111">Легенда: топонимы по номерам</text><text x="548" y="104.00" text-anchor="end" font-size="8.2" fill="#33302b">залитый номер — обсуждается в книге · контурный — упоминается</text>
+<text x="548" y="80.00" text-anchor="end" font-size="7.2" fill="#55524c">вариант B9 · v4.17.26 · 04-09-2026</text>
+<text x="32.00" y="128.00" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">1. Англия — <tspan font-style="italic">стр.</tspan> 82</tspan></text>
+<text x="32.00" y="140.39" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">2. Апеннинский полуостров — <tspan font-style="italic">стр.</tspan> 192</tspan></text>
+<text x="32.00" y="152.78" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">3. ● арабские страны — <tspan font-style="italic">стр.</tspan> 192, 210-211,</tspan><tspan x="32.00" dy="11.13">222-223</tspan></text>
+<text x="32.00" y="176.31" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">4. Архангельская область — <tspan font-style="italic">стр.</tspan> 199</tspan></text>
+<text x="32.00" y="188.70" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">5. ● Африка — <tspan font-style="italic">стр.</tspan> 210</tspan></text>
+<text x="32.00" y="201.09" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">6. Бавария — <tspan font-style="italic">стр.</tspan> 60</tspan></text>
+<text x="32.00" y="213.49" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">7. Балканы — <tspan font-style="italic">стр.</tspan> 184</tspan></text>
+<text x="32.00" y="225.88" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">8. Балтийское море — <tspan font-style="italic">стр.</tspan> 61</tspan></text>
+<text x="32.00" y="238.27" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">9. ● Белоруссия — <tspan font-style="italic">стр.</tspan> 57, 196, 200-201, 204,</tspan><tspan x="32.00" dy="11.13">206</tspan></text>
+<text x="32.00" y="261.79" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">10. Бремен — <tspan font-style="italic">стр.</tspan> 61</tspan></text>
+<text x="32.00" y="274.19" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">11. Британия — <tspan font-style="italic">стр.</tspan> 82</tspan></text>
+<text x="32.00" y="286.58" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">12. Британские острова — <tspan font-style="italic">стр.</tspan> 60</tspan></text>
+<text x="32.00" y="298.97" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">13. Варанаси · Бенарес — <tspan font-style="italic">стр.</tspan> 124</tspan></text>
+<text x="32.00" y="311.36" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">14. ● Великороссия — <tspan font-style="italic">стр.</tspan> 199-200</tspan></text>
+<text x="32.00" y="323.75" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">15. ● Венгрия — <tspan font-style="italic">стр.</tspan> 27, 135</tspan></text>
+<text x="32.00" y="336.15" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">16. Венеция — <tspan font-style="italic">стр.</tspan> 181</tspan></text>
+<text x="32.00" y="348.54" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">17. Византия — <tspan font-style="italic">стр.</tspan> 391</tspan></text>
+<text x="32.00" y="360.93" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">18. Владимир — <tspan font-style="italic">стр.</tspan> 200</tspan></text>
+<text x="32.00" y="373.32" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">19. Галич — <tspan font-style="italic">стр.</tspan> 27</tspan></text>
+<text x="32.00" y="385.72" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">20. ● Галлия — <tspan font-style="italic">стр.</tspan> 56, 126</tspan></text>
+<text x="32.00" y="398.11" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">21. Гастингс — <tspan font-style="italic">стр.</tspan> 82</tspan></text>
+<text x="32.00" y="410.50" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">22. ГДР — <tspan font-style="italic">стр.</tspan> 61</tspan></text>
+<text x="32.00" y="422.89" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">23. ● Германия — <tspan font-style="italic">стр.</tspan> 12, 56, 59-60</tspan></text>
+<text x="32.00" y="435.28" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">24. Голландия — <tspan font-style="italic">стр.</tspan> 190</tspan></text>
+<text x="32.00" y="447.68" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">25. ● Греция · Грецколань — <tspan font-style="italic">стр.</tspan> 77, 120</tspan></text>
+<text x="32.00" y="460.07" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">26. ● Европа — <tspan font-style="italic">стр.</tspan> 58, 81, 84, 135-136, 139,</tspan><tspan x="32.00" dy="11.13">142, 147, 152, 180, 211</tspan></text>
+<text x="32.00" y="483.59" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">27. ● Египет — <tspan font-style="italic">стр.</tspan> 81, 86, 192, 222-223</tspan></text>
+<text x="32.00" y="495.98" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">28. западный мир — <tspan font-style="italic">стр.</tspan> 189</tspan></text>
+<text x="32.00" y="508.38" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">29. ● Бхарат · Индия — <tspan font-style="italic">стр.</tspan> 6, 112, 133-136,</tspan><tspan x="32.00" dy="11.13">138-142, 144, 146, 152-153, 155-156, 158, 160,</tspan><tspan x="32.00" dy="11.13">162, 167, 172-174, 180, 192, 203</tspan></text>
+<text x="32.00" y="543.03" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">30. ● Индостан — <tspan font-style="italic">стр.</tspan> 133, 152</tspan></text>
+<text x="32.00" y="555.43" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">31. Ирак — <tspan font-style="italic">стр.</tspan> 192</tspan></text>
+<text x="32.00" y="567.82" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">32. ● Иран — <tspan font-style="italic">стр.</tspan> 135, 139</tspan></text>
+<text x="32.00" y="580.21" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">33. ● Исландия — <tspan font-style="italic">стр.</tspan> 65, 182</tspan></text>
+<text x="32.00" y="592.60" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">34. Испания — <tspan font-style="italic">стр.</tspan> 184</tspan></text>
+<text x="32.00" y="604.99" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">35. ● Италия — <tspan font-style="italic">стр.</tspan> 181, 184, 192, 300</tspan></text>
+<text x="32.00" y="617.39" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">36. ● Кавказ — <tspan font-style="italic">стр.</tspan> 135</tspan></text>
+<text x="32.00" y="629.78" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">37. ● Киев · киевская земля · Киевская область</tspan><tspan x="32.00" dy="11.13">— <tspan font-style="italic">стр.</tspan> 57, 179, 199-200</tspan></text>
+<text x="32.00" y="653.30" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">38. киевско-черниговская зона — <tspan font-style="italic">стр.</tspan> 202</tspan></text>
+<text x="32.00" y="665.69" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">39. Вятская губерния · Кировская область —</tspan><tspan x="32.00" dy="11.13"><tspan font-style="italic">стр.</tspan> 199</tspan></text>
+<text x="32.00" y="689.22" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">40. Китай — <tspan font-style="italic">стр.</tspan> 142</tspan></text>
+<text x="32.00" y="701.61" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">41. Кольский полуостров — <tspan font-style="italic">стр.</tspan> 199</tspan></text>
+<text x="32.00" y="714.00" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">42. Кордова — —</tspan></text>
+<text x="32.00" y="726.40" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">43. ● Крит · критские города — <tspan font-style="italic">стр.</tspan> 121-122</tspan></text>
+<text x="32.00" y="738.79" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">44. Крым — <tspan font-style="italic">стр.</tspan> 184</tspan></text>
+<text x="290.00" y="128.00" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">45. ● Литва — <tspan font-style="italic">стр.</tspan> 200</tspan></text>
+<text x="290.00" y="140.39" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">46. ● Литовское княжество Великое — <tspan font-style="italic">стр.</tspan> 200,</tspan><tspan x="290.00" dy="11.13">206</tspan></text>
+<text x="290.00" y="163.92" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">47. ● Малая Азия — <tspan font-style="italic">стр.</tspan> 122</tspan></text>
+<text x="290.00" y="176.31" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">48. ● Марокко — <tspan font-style="italic">стр.</tspan> 132, 192</tspan></text>
+<text x="290.00" y="188.70" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">49. ● Новгород — <tspan font-style="italic">стр.</tspan> 28, 57, 96, 179, 196,</tspan><tspan x="290.00" dy="11.13">198-199, 208-209, 236, 279, 294, 301, 306,</tspan><tspan x="290.00" dy="11.13">312, 314, 316, 319</tspan></text>
+<text x="290.00" y="223.36" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">50. Падуя — <tspan font-style="italic">стр.</tspan> 247</tspan></text>
+<text x="290.00" y="235.75" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">51. Пакистан — <tspan font-style="italic">стр.</tspan> 141</tspan></text>
+<text x="290.00" y="248.14" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">52. ● Палестина — <tspan font-style="italic">стр.</tspan> 121</tspan></text>
+<text x="290.00" y="260.53" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">53. Пелопоннес — <tspan font-style="italic">стр.</tspan> 122</tspan></text>
+<text x="290.00" y="272.93" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">54. Переяславль · Переяславская область ·</tspan><tspan x="290.00" dy="11.13">Южный Переславль — <tspan font-style="italic">стр.</tspan> 57, 179</tspan></text>
+<text x="290.00" y="296.45" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">55. Пилос — <tspan font-style="italic">стр.</tspan> 122</tspan></text>
+<text x="290.00" y="308.84" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">56. ● Пруссия — <tspan font-style="italic">стр.</tspan> 56-57</tspan></text>
+<text x="290.00" y="321.23" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">57. ● Псков · псковская зона — <tspan font-style="italic">стр.</tspan> 198,</tspan><tspan x="290.00" dy="11.13">208-209</tspan></text>
+<text x="290.00" y="344.76" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">58. ● Рим · Римская империя · Римский мир —</tspan><tspan x="290.00" dy="11.13"><tspan font-style="italic">стр.</tspan> 60, 115, 134, 248, 272</tspan></text>
+<text x="290.00" y="368.28" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">59. ● Российская Федерация · Россия — <tspan font-style="italic">стр.</tspan> 57,</tspan><tspan x="290.00" dy="11.13">80, 135, 201, 246, 328</tspan></text>
+<text x="290.00" y="391.81" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">60. ● Ростов — <tspan font-style="italic">стр.</tspan> 152, 199-200, 392</tspan></text>
+<text x="290.00" y="404.20" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">61. Ростово-Суздальская земля — <tspan font-style="italic">стр.</tspan> 201</tspan></text>
+<text x="290.00" y="416.59" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">62. Ростовско-суздальско-рязанская языковая</tspan><tspan x="290.00" dy="11.13">зона — <tspan font-style="italic">стр.</tspan> 202</tspan></text>
+<text x="290.00" y="440.12" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">63. Русколань — —</tspan></text>
+<text x="290.00" y="452.51" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">64. ● Русь [древняя] — <tspan font-style="italic">стр.</tspan> 8, 57, 96, 178,</tspan><tspan x="290.00" dy="11.13">196-197, 199, 279</tspan></text>
+<text x="290.00" y="476.03" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">65. север [Руси] — <tspan font-style="italic">стр.</tspan> 200</tspan></text>
+<text x="290.00" y="488.42" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">66. Северный Урал — <tspan font-style="italic">стр.</tspan> 200</tspan></text>
+<text x="290.00" y="500.82" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">67. ● северо-запад [Руси] — <tspan font-style="italic">стр.</tspan> 199-200,</tspan><tspan x="290.00" dy="11.13">202-203</tspan></text>
+<text x="290.00" y="524.34" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">68. Синдху — <tspan font-style="italic">стр.</tspan> 141</tspan></text>
+<text x="290.00" y="536.73" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">69. Средняя Азия — <tspan font-style="italic">стр.</tspan> 186</tspan></text>
+<text x="290.00" y="549.13" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">70. ● Суздаль — <tspan font-style="italic">стр.</tspan> 199-200, 313</tspan></text>
+<text x="290.00" y="561.52" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">71. ● Украина — <tspan font-style="italic">стр.</tspan> 57, 179, 184, 196,</tspan><tspan x="290.00" dy="11.13">200-201, 203, 206</tspan></text>
+<text x="290.00" y="585.04" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">72. Фессалоники (Салоники) — —</tspan></text>
+<text x="290.00" y="597.43" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">73. Фест — <tspan font-style="italic">стр.</tspan> 122</tspan></text>
+<text x="290.00" y="609.83" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">74. ● Финляндия — <tspan font-style="italic">стр.</tspan> 135</tspan></text>
+<text x="290.00" y="622.22" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">75. Флоренция — <tspan font-style="italic">стр.</tspan> 192</tspan></text>
+<text x="290.00" y="634.61" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">76. Франкфурт — <tspan font-style="italic">стр.</tspan> 56</tspan></text>
+<text x="290.00" y="647.00" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">77. ● Франция — <tspan font-style="italic">стр.</tspan> 56-57, 68, 115, 184</tspan></text>
+<text x="290.00" y="659.39" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">78. Центральная Африка — <tspan font-style="italic">стр.</tspan> 89</tspan></text>
+<text x="290.00" y="671.79" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">79. русские края · Центральная часть [Руси] —</tspan><tspan x="290.00" dy="11.13"><tspan font-style="italic">стр.</tspan> 186, 199</tspan></text>
+<text x="290.00" y="695.31" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">80. ● Чернигов — <tspan font-style="italic">стр.</tspan> 57, 179</tspan></text>
+<text x="290.00" y="707.70" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">81. ● Швеция — <tspan font-style="italic">стр.</tspan> 58, 248, 269</tspan></text>
+<text x="290.00" y="720.10" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">82. Шлиссельбург — <tspan font-style="italic">стр.</tspan> 269</tspan></text>
+<text x="290.00" y="732.49" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">83. Шри-Ланка · Цейлон — <tspan font-style="italic">стр.</tspan> 173-174</tspan></text>
+<text x="32" y="780.00" font-size="7.6" fill="#33302b">Залитый маркер — обсуждается в книге, контурный — упоминается; штриховой контур — Русь, Византия, Восток · номер строки = номер на карте</text><text x="32" y="789.00" font-size="7.6" fill="#33302b">Штриховой ареал — языковая зона · пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц</text><text x="32" y="798.00" font-size="7.4" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция</text>
+</svg>

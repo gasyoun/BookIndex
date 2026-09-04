@@ -158,6 +158,15 @@ const sections = [
       { label: "B8 — легенда (83 записи, единый ряд с картой)", file: have("toponyms-map-b8-legend.svg"), pageW: 145 },
     ],
   },
+  {
+    num: 14,
+    title: "B9 — без разлёва: чипы касаются, но не наезжают; штрих только при дрейфе > 4 мм; подпись ≤ 10 мм от точки без лидера; источник врезки — штрихованный квадрат со стрелкой; рамочный заголовок врезки с запасом",
+    note: "v4.17.26 · <a href='toponyms-map-b9.html'>toponyms-map-b9.html</a>",
+    files: [
+      { label: "B9 — карта", file: have("toponyms-map-b9-map.svg"), pageW: 145 },
+      { label: "B9 — легенда (83 записи, «древнейшая форма первой»)", file: have("toponyms-map-b9-legend.svg"), pageW: 145 },
+    ],
+  },
 ];
 
 // H4051: MG's own criteria per variant, read straight out of the generator
@@ -171,7 +180,7 @@ try {
 }
 const METRIC_SHEET = {
   1: "A", 2: "Bmap", 3: "C", 5: "Dmap", 6: "Dmap",
-  7: "B2map", 8: "B3map", 9: "B4map", 10: "B5map", 11: "B6map", 12: "B7map", 13: "B8map",
+  7: "B2map", 8: "B3map", 9: "B4map", 10: "B5map", 11: "B6map", 12: "B7map", 13: "B8map", 14: "B9map",
 };
 const metricRow = (num) => {
   const m = mg[METRIC_SHEET[num]];
