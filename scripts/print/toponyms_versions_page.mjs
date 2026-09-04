@@ -119,6 +119,15 @@ const sections = [
       { label: "B5 — легенда (83 записи)", svg: readFile("toponyms-map-b5-legend.svg"), pageW: 145 },
     ],
   },
+  {
+    num: 11,
+    title: "B6 — zoom + врезка-ядро «Русь · Киев → Новгород» с именами; ни одной наложенной подписи (последний ресорт отменён)",
+    note: "v4.17.22 · <a href='toponyms-map-b6.html'>toponyms-map-b6.html</a>",
+    files: [
+      { label: "B6 — карта", svg: readFile("toponyms-map-b6-map.svg"), pageW: 145 },
+      { label: "B6 — легенда (83 записи)", svg: readFile("toponyms-map-b6-legend.svg"), pageW: 145 },
+    ],
+  },
 ];
 
 const body = sections

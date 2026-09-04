@@ -152,6 +152,24 @@ const B5_LOUPE_PAD = 0.06;
 const B5_LOUPE_CAPTION = "Киев и окрестности · лупа";
 const B5_STAMP = "вариант B5 · v4.17.21 · 04-09-2026";
 
+// sheet B6 (MG 04-09-2026 rev 8): the 3-element Kiev-triangle loupe DIES; the
+// inset instead magnifies the REAL dense core - «Русь · Киев → Новгород»
+// (lat 50-60.5, lon 27-41, ~10 discussed groups), over the empty NE corner.
+// Core groups stay on the main map as numbered chips (mirror) and gain
+// readable NAMES inside the inset. Every other discussed name renders ONLY in
+// a clean slot - last-resort placement is abolished for this sheet (B5's 19
+// forced overlaps were the defect MG flagged), groups without a clean slot
+// stay numbered chips (the legend decodes them). Southern groups render ONLY
+// in the edge row (no more leaked in-frame names + double chips). All new
+// behavior is flag-gated (insetMirror / insetChipDiscussed / cleanSlotsOnly /
+// southernEdgeOnly) so the frozen b5-* outputs stay byte-identical.
+// Versioned URL: writes b6-* files, older URLs stay frozen.
+const B6_CORE_GEO = { lat0: 50, lat1: 60.5, lon0: 27, lon1: 41 };
+const B6_CORE_BOX = { x0: 82, y0: 20, x1: 137, y1: 66 };
+const B6_CORE_PAD = 0.06;
+const B6_CORE_CAPTION = "Русь · Киев → Новгород";
+const B6_STAMP = "вариант B6 · v4.17.22 · 04-09-2026";
+
 function markerRadU(g) {
   return g.discussed ? 2.8 : 7;
 }
@@ -434,6 +452,8 @@ function renderSheet(cfg, world, landObj, groups, total) {
     labels_without_slot: 0,
     labels_in_fallback_slots: 0,
     labels_last_resort: 0,
+    labels_deferred: 0,
+    labels_squeezed: 0,
     max_leader_mm: 0,
     label_chip_violations: 0,
     escapes: 0,
@@ -466,11 +486,16 @@ function renderSheet(cfg, world, landObj, groups, total) {
     cfg.insetGeo
       ? g.lat >= cfg.insetGeo.lat0 && g.lat <= cfg.insetGeo.lat1 && g.lon >= cfg.insetGeo.lon0 && g.lon <= cfg.insetGeo.lon1
       : g.lineClass === "west";
-  const inMain = groups.filter((g) => (cfg.inset ? !inInset(g) : true));
+  // B6 insetMirror: core groups stay on the main map (numbered chips) while
+  // also living in the inset with names - a magnifier, not an extraction
+  const inMain = groups.filter((g) => (cfg.inset && !cfg.insetMirror ? !inInset(g) : true));
   // B5: groups south of the cropped frame - drawn in an edge row, not fitted
   const southern = cfg.fitLatMin ? groups.filter((g) => g.lat < cfg.fitLatMin) : [];
   const southernSet = new Set(southern);
   const inCrop = groups.filter((g) => !southernSet.has(g));
+  // B6 southernEdgeOnly: the edge row is the ONLY rendering for southern
+  // groups (B5 leaked their names + chips into the frame at clamped spots)
+  const onMap = cfg.southernEdgeOnly && cfg.fitLatMin ? inCrop : inMain;
   // the frame is always fitted to ALL points so every sheet shares the same geography;
   // on inset sheets the west points simply do not render on the main map
   const { projection, geopath, box } = buildProjection(cfg.mapBox, (cfg.fitLatMin ? inCrop : groups).map((g) => [g.lon, g.lat]), PAD_FRACTION);
@@ -494,7 +519,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   s.push(`<path d="${geopath(graticule)}" fill="none" stroke="#cdc8be" stroke-width="0.45"/>`);
 
   // OLA-style areals: dashed outline + light hatching, under everything else
-  for (const g of inMain) {
+  for (const g of onMap) {
     if (!g.areal) continue;
     const pts = g.areal.map(([lon, lat]) => projection([lon, lat]));
     if (pts.some((p) => !p || Number.isNaN(p[0]))) continue;
@@ -503,7 +528,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     stats.areals_drawn += 1;
   }
 
-  relaxAll(inMain, box, cfg.numberAll ? 7 : undefined);
+  relaxAll(onMap, box, cfg.numberAll ? 7 : undefined);
 
   const placed = [];
   const labels = [];
@@ -515,9 +540,16 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const yEdge = box.y1 - 14;
     let lastX = -1e9;
     const sorted = southern.slice().sort((a, b) => a.lon - b.lon);
+    // B6 southernEdgeOnly: even west->east spacing - raw projected x bunches
+    // the low-lat chips against the right frame edge (chip 13 was half-clipped)
+    const sMin = 240;
+    const sMax = box.x1 - 14;
+    const sStep = sorted.length > 1 ? (sMax - sMin) / (sorted.length - 1) : 0;
+    let sIdx = 0;
     for (const g of sorted) {
       const [ex] = projection([g.lon, g.lat]);
-      const x = Math.max(ex, lastX + 14);
+      const x = cfg.southernEdgeOnly ? sMin + sIdx * sStep : Math.max(ex, lastX + 14);
+      sIdx += 1;
       lastX = x;
       const dash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
       const fill = g.discussed ? "#111111" : "#ffffff";
@@ -528,7 +560,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   }
 
   // displaced chips keep a thin link to the true spot
-  for (const g of inMain) {
+  for (const g of onMap) {
     if (g.displaced) {
       const dash = LINE_DASH[g.lineClass];
       s.push(`<line x1="${f(g.px)}" y1="${f(g.py)}" x2="${f(g.px2)}" y2="${f(g.py2)}" stroke="#55524c" stroke-width="0.4"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`);
@@ -538,17 +570,17 @@ function renderSheet(cfg, world, landObj, groups, total) {
 
   // B3: chips and dots are obstacles - name labels may never cover numbers
   if (cfg.chipObstacles) {
-    for (const g of inMain) {
+    for (const g of onMap) {
       const pad = cfg.numberAll ? 11 : g.discussed ? 4 : 11;
       placed.push({ x0: g.px2 - pad, x1: g.px2 + pad, y0: g.py2 - pad, y1: g.py2 + pad });
     }
   }
 
   let chipClosePairs = 0;
-  for (let i = 0; i < inMain.length; i++) {
-    for (let j = i + 1; j < inMain.length; j++) {
-      const a = inMain[i];
-      const b = inMain[j];
+  for (let i = 0; i < onMap.length; i++) {
+    for (let j = i + 1; j < onMap.length; j++) {
+      const a = onMap[i];
+      const b = onMap[j];
       const d = Math.hypot(a.px2 - b.px2, a.py2 - b.py2);
       const rrA = cfg.numberAll ? 7 : markerRadU(a);
       const rrB = cfg.numberAll ? 7 : markerRadU(b);
@@ -579,8 +611,11 @@ function renderSheet(cfg, world, landObj, groups, total) {
   }
 
   // discussed labels on the main map (east classes; west live in the inset on sheet C)
-  const mainLabeled = inMain
+  // B6 insetMirror: the core's names live in the inset only - on the main map
+  // the core stays chips-only (MG rev 8 ruling)
+  const mainLabeled = onMap
     .filter((x) => x.discussed)
+    .filter((x) => !(cfg.insetMirror && cfg.insetGeo && inInset(x)))
     .map((g) => ({
       g,
       width: Math.max(
@@ -621,7 +656,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   const coveredSet = new Set();
   if (cfg.coverRelocate && insetCtx) {
     const bx = cfg.inset.box;
-    for (const g of inMain) {
+    for (const g of onMap) {
       if (g.px2 >= bx.x0 * U && g.px2 <= bx.x1 * U && g.py2 >= bx.y0 * U && g.py2 <= bx.y1 * U) {
         covered.push(g);
         coveredSet.add(g);
@@ -650,11 +685,17 @@ function renderSheet(cfg, world, landObj, groups, total) {
     }
     if (!pos) {
       if (cfg.noWholeFrameFallback) {
+        if (cfg.cleanSlotsOnly) {
+          // B6: forced overlaps abolished - the number chip stays and the
+          // legend page decodes it; the name is simply not drawn here
+          stats.labels_deferred += 1;
+        } else {
         // B2 last resort: rings up to +55U failed - place the label right at
         // the (relax-adjusted) dot, overlaps permitted and reported
         stats.labels_last_resort += 1;
         labels.push({ g, x: origin.x, y: origin.y + LABEL_FONT_U * 0.34, anchor: "middle", lines, lineH: LABEL_FONT_U * 1.22 });
         pushLeader(g, origin.x, origin.y - 2);
+        }
       } else {
       const widest = Math.max(...lines.map((l) => textW(l, LABEL_FONT_U)));
       const blockH = lines.length * LABEL_FONT_U * 1.22;
@@ -697,12 +738,13 @@ function renderSheet(cfg, world, landObj, groups, total) {
       if (squeezed || squeezed3 || g.anchorPx || Math.hypot(lx - g.px2, pos.y - g.py2) > 24 || g.displaced) {
         pushLeader(g, lx, pos.y - 2);
       }
-      if (squeezed || squeezed3) stats.labels_last_resort += 1;
+      if (squeezed3 || (squeezed && !cfg.cleanSlotsOnly)) stats.labels_last_resort += 1;
+      else if (squeezed) stats.labels_squeezed += 1;
     }
   }
 
   // markers + chips on the main map
-  for (const g of inMain) {
+  for (const g of onMap) {
     if (coveredSet.has(g)) continue;
     if (cfg.numberAll) {
       // B5: every group is a numbered chip - filled = discussed, outline =
@@ -777,6 +819,15 @@ function renderSheet(cfg, world, landObj, groups, total) {
         }
         iPlaced.push({ x0: g.ipx - insetChipPad, x1: g.ipx + insetChipPad, y0: g.ipy - insetChipPad, y1: g.ipy + insetChipPad });
       } else {
+        if (cfg.insetChipDiscussed) {
+          // B6: every point is a numbered chip, even inside the inset - the
+          // name label goes next to it (fill marks «обсуждается» as on the map)
+          const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
+          s.push(
+            `<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="${f(insetChipR)}" fill="#111111" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.ipx)}" y="${f(g.ipy + insetChipFont * 0.35)}" text-anchor="middle" font-size="${insetChipFont}" fill="#ffffff">${g.number}</text>`
+          );
+          iPlaced.push({ x0: g.ipx - insetChipPad, x1: g.ipx + insetChipPad, y0: g.ipy - insetChipPad, y1: g.ipy + insetChipPad });
+        } else {
         const g2 = { ...g, px2: g.ipx, py2: g.ipy, anchor: null };
         if (g2.lineClass === "west") {
           s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="2.8" fill="#ffffff" stroke="#111111" stroke-width="1.1"/>`);
@@ -784,6 +835,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
           s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="2.8" fill="#111111" stroke="#ffffff" stroke-width="0.7"/>`);
         }
         iPlaced.push({ x0: g.ipx - 4, x1: g.ipx + 4, y0: g.ipy - 4, y1: g.ipy + 4 });
+        }
       }
     }
     const iLabeled = west
@@ -812,7 +864,15 @@ function renderSheet(cfg, world, landObj, groups, total) {
     s.push(`</g>`);
     s.push(
       `<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(ib.y1 - ib.y0)}" fill="none" stroke="#111111" stroke-width="1.2"/>` +
-        `<text x="${f((ib.x0 + ib.x1) / 2)}" y="${f(ib.y1 - 6)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b">${esc(cfg.insetCaption || WEST_CAPTION)}</text>`
+        (() => {
+          // B6 insetCaptionBelow: the core fills the box to its south edge -
+          // an inside-bottom caption ran over chips 37/38; it moves below the
+          // box with a white halo (safe: the band under the NE inset is empty)
+          if (!cfg.insetCaptionBelow) {
+            return `<text x="${f((ib.x0 + ib.x1) / 2)}" y="${f(ib.y1 - 6)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b">${esc(cfg.insetCaption || WEST_CAPTION)}</text>`;
+          }
+          return `<text x="${f((ib.x0 + ib.x1) / 2)}" y="${f(ib.y1 + 44)}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#33302b" stroke="#ffffff" stroke-width="1.6" paint-order="stroke" stroke-linejoin="round">${esc(cfg.insetCaption || WEST_CAPTION)}</text>`;
+        })()
     );
   };
 
@@ -904,7 +964,12 @@ function renderSheet(cfg, world, landObj, groups, total) {
       s.push(`<line x1="${f(g.px2)}" y1="${f(byEdge + 2)}" x2="${f(g.px2)}" y2="${f(y - (g.discussed ? 4 : 9))}" stroke="#55524c" stroke-width="0.4"${dash}/>`);
       if (g.discussed) {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(y)}" r="2.8" fill="#111111" stroke="#ffffff" stroke-width="0.7"/>`);
-        s.push(textBlockSvg({ g, x: g.px2 + 10, y: y + 4, anchor: "start", lines: wrapText(g.mapName, 26, 2), lineH: LABEL_FONT_U * 1.22 }, LABEL_FONT_U));
+        // B6 coveredLabelFlip: near the right frame edge the name flips to the
+        // left of the dot (frozen b4 keeps its exact v4.17.19 output)
+        const covLines = wrapText(g.mapName, 26, 2);
+        const covW = Math.max(...covLines.map((l) => textW(l, LABEL_FONT_U)));
+        const covRight = cfg.coveredLabelFlip && g.px2 + 10 + covW > box.x1 - 6;
+        s.push(textBlockSvg({ g, x: covRight ? g.px2 - 10 : g.px2 + 10, y: y + 4, anchor: covRight ? "end" : "start", lines: covLines, lineH: LABEL_FONT_U * 1.22 }, LABEL_FONT_U));
       } else {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(y)}" r="7" fill="#ffffff" stroke="#111111" stroke-width="0.6"${dash}/><text x="${f(g.px2)}" y="${f(y + 2.5)}" text-anchor="middle" font-size="7.2" fill="#111111">${g.number}</text>`);
       }
@@ -928,7 +993,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       const by0 = l.y - l.lineH * 0.8;
       const bx1 = bx0 + widest;
       const by1 = by0 + l.lines.length * l.lineH;
-      for (const g of inMain) {
+      for (const g of onMap) {
         if ((g.discussed && !cfg.numberAll) || coveredSet.has(g) || g === l.g) continue;
         const dx = Math.max(bx0 - g.px2, g.px2 - bx1, 0);
         const dy = Math.max(by0 - g.py2, g.py2 - by1, 0);
@@ -1673,6 +1738,56 @@ function render() {
       scaleBar: false,
       svgFile: "toponyms-map-b5-legend.svg",
     },
+    {
+      key: "B6map",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: B2_MAP_BOX,
+      fit: "all",
+      inset: { box: B6_CORE_BOX },
+      insetGeo: B6_CORE_GEO,
+      insetPad: B6_CORE_PAD,
+      insetChipR: 7,
+      insetChipFont: 7.2,
+      insetCaption: B6_CORE_CAPTION,
+      insetCaptionBelow: true,
+      coveredLabelFlip: true,
+      insetLabelsSoft: true,
+      insetMirror: true,
+      insetChipDiscussed: true,
+      coverRelocate: true,
+      legend: null,
+      nameOnlyLabels: true,
+      ignoreAnchors: true,
+      labelRingDeltas: B2_LABEL_RINGS,
+      noWholeFrameFallback: true,
+      squeezeRings: [64, 72, 80, 88, 100, 112],
+      squeezePad: 1,
+      chipObstacles: true,
+      numberAll: true,
+      cleanSlotsOnly: true,
+      southernEdgeOnly: true,
+      fitLatMin: B5_FIT_LAT_MIN,
+      title: true,
+      subtitleOverride: `«Из жизни слов и языков» · ${total} названий мест: обсуждаемые подписаны названием, страницы — в легенде на соседней странице, у остальных номер`,
+      stamp: B6_STAMP,
+      scaleBar: true,
+      svgFile: "toponyms-map-b6-map.svg",
+    },
+    {
+      key: "B6legend",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: { x0: 0, y0: 0, x1: PAGE_W_MM, y1: PAGE_H_MM },
+      fit: "all",
+      inset: null,
+      legend: "page-compact",
+      noMap: true,
+      title: false,
+      stamp: B6_STAMP,
+      scaleBar: false,
+      svgFile: "toponyms-map-b6-legend.svg",
+    },
   ];
 
   // sheet D numbering: every group gets a legend number (alphabetical, 1..N)
@@ -1802,6 +1917,23 @@ function render() {
     "utf-8"
   );
 
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b6-print.html"),
+    pageHtml("Карта топонимов книги — вариант B6: zoom, врезка-ядро «Киев → Новгород», подписи только в чистых слотах", PAGE_W_MM, PAGE_H_MM, [rendered[14].svg, rendered[15].svg]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b6.html"),
+    reviewHtml(
+      "Карта топонимов — вариант B6: zoom, врезка-ядро «Русь», ни одной наложенной подписи",
+      [
+        { title: `B6 — страница (карта): zoom (верх Африки), все точки — номерные чипы, врезка «Русь · Киев → Новгород» с именами, подписи только в чистых слотах · ${B6_STAMP}`, pageW: PAGE_W_MM, svg: rendered[14].svg },
+        { title: `B6 — соседняя страница: легенда, все 83 записи по номерам · ${B6_STAMP}`, pageW: PAGE_W_MM, svg: rendered[15].svg },
+      ]
+    ),
+    "utf-8"
+  );
+
   const A = byKey.A;
   const report = {
     total_toponyms: total,
@@ -1864,12 +1996,26 @@ function render() {
     byKey.B5map.chip_close_pairs > 0 ||
     byKey.B5map.labels_without_slot > 0 ||
     byKey.B5map.escapes > 0 ||
-    byKey.B5map.label_chip_violations > 0 ||
+    // B5 shipped (v4.17.21) with the known defect MG flagged in rev 8: 19
+    // forced last-resort labels, 32 label-chip violations. The b5-* outputs
+    // are frozen, so these two are REGRESSION detectors at the shipped
+    // baseline; the strict == 0 gates live on B6 (cleanSlotsOnly).
+    byKey.B5map.label_chip_violations > 32 ||
     byKey.B5map.max_leader_mm > 33 ||
-    byKey.B5map.labels_last_resort > 20 ||
+    byKey.B5map.labels_last_resort > 19 ||
     byKey.B5legend.legend_rows_drawn !== groups.length ||
     byKey.B5legend.legend_overflow > 0 ||
-    !byKey.B5legend.legend_parity_ok;
+    !byKey.B5legend.legend_parity_ok ||
+    byKey.B6map.chip_close_pairs > 0 ||
+    byKey.B6map.labels_without_slot > 0 ||
+    byKey.B6map.escapes > 0 ||
+    byKey.B6map.label_chip_violations > 0 ||
+    byKey.B6map.labels_last_resort > 0 ||
+    byKey.B6map.labels_deferred > 3 ||
+    byKey.B6map.max_leader_mm > 33 ||
+    byKey.B6legend.legend_rows_drawn !== groups.length ||
+    byKey.B6legend.legend_overflow > 0 ||
+    !byKey.B6legend.legend_parity_ok;
   if (hardFail) {
     console.error("FAIL: see report fields above");
     process.exit(1);
