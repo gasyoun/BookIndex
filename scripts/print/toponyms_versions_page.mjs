@@ -137,6 +137,15 @@ const sections = [
       { label: "B7 — легенда (83 записи, единый ряд с картой)", svg: readFile("toponyms-map-b7-legend.svg"), pageW: 145 },
     ],
   },
+  {
+    num: 13,
+    title: "B8 — воздух вокруг подписей, историческое имя первым, двухстрочные подписи, пары «Британия · Англия» и «Германия · ГДР» вместе, врезка шире и выше",
+    note: "v4.17.24 · <a href='toponyms-map-b8.html'>toponyms-map-b8.html</a>",
+    files: [
+      { label: "B8 — карта", svg: readFile("toponyms-map-b8-map.svg"), pageW: 145 },
+      { label: "B8 — легенда (83 записи, единый ряд с картой)", svg: readFile("toponyms-map-b8-legend.svg"), pageW: 145 },
+    ],
+  },
 ];
 
 const body = sections

@@ -206,11 +206,55 @@ const B7_PAIR_MERGE = [
   ["Литва", "Литовское княжество Великое"],
 ];
 
+// sheet B8 (MG 04-09-2026 rev 10): AIR + reading-order pass on B7 (11 points).
+// All flag-gated, frozen b7-* byte-identical:
+//   - air: label-label pad 2.5 -> 3.2, chip-obstacle pad 9 -> 10, chip relax
+//     gap 4.5 -> 5.5, inset pad 6% -> 14% and the inset box grows wider and
+//     higher - «воздуха везде надо больше, особенно там, где это дёшево»;
+//   - historical name FIRST, modern in the tail (points 2, 5, 6): merged pair
+//     reads «Литовское княжество Великое · Литва», stacks render «Шри-Ланка»
+//     over «Цейлон» and «Варанаси» over «Бенарес»;
+//   - explicit two-line stacks (points 5, 6, 8, 9): арабские/страны,
+//     Центральная/Африка stay on their land instead of spilling into the sea;
+//   - per-name direction biases tried first (points 1, 4, 7, 8):
+//     Архангельская область -> right of Кольский, РФ · Россия -> lower and
+//     further right, Украина -> NE (above Кавказ), арабские страны -> west;
+//   - pairs kept together (points 3, 10): «Британия · Англия»,
+//     «Германия · ГДР» join the merge list, historical name first.
+const B8_INSET_BOX = { x0: 54, y0: 148, x1: 106, y1: 202 };
+const B8_INSET_PAD = 0.14;
+const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
+const B8_LABEL_PAD_U = 3.2;
+const B8_CHIP_OBSTACLE_PAD_U = 10;
+const B8_RELAX_GAP_U = 5.5;
+// display = historical FIRST, modern tail (MG rev 10 ruling)
+const B8_PAIR_MERGE = [
+  ["Литовское княжество Великое", "Литва"],
+  ["Британия", "Англия"],
+  ["Германия", "ГДР"],
+];
+const B8_LABEL_STACKS = new Map([
+  ["Цейлон · Шри-Ланка", ["Шри-Ланка", "Цейлон"]],
+  ["Бенарес · Варанаси", ["Варанаси", "Бенарес"]],
+  ["арабские страны", ["арабские", "страны"]],
+  ["Центральная Африка", ["Центральная", "Африка"]],
+]);
+// exact label offsets from the TRUE dot in units (tried first) - the spots
+// MG named in rev 10 points 1, 4, 7, 8
+const B8_LABEL_BIAS = new Map([
+  ["Архангельская область", [144, 12]],
+  ["Российская Федерация · Россия", [48, 32]],
+  // Украина: the «именно над Кавказом» spot sits behind a wall of chips -
+  // shortest honest leader is ~32+ mm (a вынос MG rejects), so the label
+  // keeps its nearest clean slot; flagged in the rev 10 report
+  ["арабские страны", [-24, 0]],
+]);
+
 function markerRadU(g) {
   return g.discussed ? 2.8 : 7;
 }
 
-function relaxAll(groups, box, radiusOverride, capU) {
+function relaxAll(groups, box, radiusOverride, capU, gapU) {
   const pts = groups.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, r: radiusOverride || markerRadU(g), stay: false }));
   const x0 = box.x0 + 6;
   const x1 = box.x1 - 6;
@@ -224,7 +268,7 @@ function relaxAll(groups, box, radiusOverride, capU) {
         let dx = b.x - a.x;
         let dy = b.y - a.y;
         let d = Math.hypot(dx, dy);
-        const minD = a.r + b.r + RELAX_GAP;
+        const minD = a.r + b.r + (gapU || RELAX_GAP);
         if (d === 0) {
           dx = 0.5;
           dy = 0.5;
@@ -462,7 +506,7 @@ function placeLabel(g, px, py, lines, placed, box, fontU, clipBox, ringDeltas, p
 // B7 truePlace: fine 1 mm rings around the TRUE anchor, all 16 directions,
 // first clash-free slot wins (ascending radius = nearest wins); hard cap - a
 // label that does not fit within maxDistU of its dot is not drawn at all.
-function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU, padU) {
+function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU, padU, biasDir) {
   const widest = Math.max(...lines.map((l) => textW(l, fontU)));
   const lineH = fontU * 1.22;
   const blockH = lines.length * lineH;
@@ -485,8 +529,35 @@ function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU,
     [0.45, 1, "middle"],
     [-0.45, 1, "middle"],
   ];
+  // B8 LABEL_BIAS: the requested spots are tried BEFORE the ring walk (see
+  // biasList below) - the ring walk itself always uses the standard dirs
   const cb = clipBox || box;
   const P = padU ?? 2.5;
+  // B8 LABEL_BIAS as an exact offset (units from the true dot) - the one
+  // spot MG asked for is tried before the ring walk; a LIST of offsets is
+  // walked in order (Ukraine's north-east steppe candidates)
+  const biasList = Array.isArray(biasDir && biasDir[0]) ? biasDir : biasDir ? [biasDir] : [];
+  for (const [bdx, bdy] of biasList) {
+    if (!Number.isFinite(bdx) || !Number.isFinite(bdy)) continue;
+    const lx2 = px + bdx;
+    const ly2 = py + bdy;
+    const bx0 = lx2 - widest / 2;
+    const bx1 = lx2 + widest / 2;
+    const ly = ly2 + lineH * 0.34;
+    const by0 = ly - lineH * 0.8;
+    const by1 = by0 + blockH;
+    if (bx0 < cb.x0 + 2 || bx1 > cb.x1 - 2 || by0 < cb.y0 + 2 || by1 > cb.y1 - 2) continue;
+    let clash = false;
+    for (const b of placed) {
+      if (bx0 - P < b.x1 && bx1 + P > b.x0 && by0 - P < b.y1 && by1 + P > b.y0) {
+        clash = true;
+        break;
+      }
+    }
+    if (clash) continue;
+    placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
+    return { x: lx2, y: ly, anchor: "middle", lines, lineH, leader: null, dist: Math.hypot(bdx, bdy) };
+  }
   for (let r = startR; r <= maxDistU; r += B7_TRUE_RING_STEP) {
     for (const [dx, dy, anchor] of dirs) {
       const len = Math.hypot(dx, dy) || 1;
@@ -641,7 +712,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     stats.areals_drawn += 1;
   }
 
-  relaxAll(onMap, box, cfg.numberAll ? 7 : undefined, cfg.displaceCap);
+  relaxAll(onMap, box, cfg.numberAll ? 7 : undefined, cfg.displaceCap, cfg.relaxGap);
 
   const placed = [];
   const labels = [];
@@ -686,7 +757,8 @@ function renderSheet(cfg, world, landObj, groups, total) {
     for (const g of onMap) {
       // B7 truePlace: chip obstacle pad tightens to r + 0.5 mm (white halo
       // keeps both readable) - frees slots in the dense Baltic fringe
-      const pad = cfg.truePlace ? 9 : cfg.numberAll ? 11 : g.discussed ? 4 : 11;
+      // B8: back out to r + 1 mm - «воздуха надо больше»
+      const pad = cfg.labelAir ? 10 : cfg.truePlace ? 9 : cfg.numberAll ? 11 : g.discussed ? 4 : 11;
       placed.push({ x0: g.px2 - pad, x1: g.px2 + pad, y0: g.py2 - pad, y1: g.py2 + pad });
     }
   }
@@ -749,8 +821,10 @@ function renderSheet(cfg, world, landObj, groups, total) {
 
   // B7 pairMerge: near-twin groups share ONE label anchored between their
   // true dots (render-level pairing, data untouched)
+  // B8: pair list from cfg (historical name FIRST, modern in the tail) and
+  // extended to Британия·Англия / Германия·ГДР (MG rev 10 points 3, 10)
   if (cfg.pairMerge) {
-    for (const [ha, hb] of B7_PAIR_MERGE) {
+    for (const [ha, hb] of cfg.pairMergeList || B7_PAIR_MERGE) {
       const ia = mainLabeled.findIndex((e) => e.g.primary.head === ha);
       const ib = mainLabeled.findIndex((e) => e.g.primary.head === hb);
       if (ia < 0 || ib < 0) continue;
@@ -775,7 +849,13 @@ function renderSheet(cfg, world, landObj, groups, total) {
 
   const buildLines = (g) => {
     // B2: name-only labels - pages live in the legend, not on the map
-    if (cfg.nameOnlyLabels) return wrapText(g.mapName, 26, 2);
+    if (cfg.nameOnlyLabels) {
+      // B8 LABEL_STACKS: explicit line order/stacking (historical first,
+      // two-line country pairs) - beats arbitrary word wrap
+      const stack = cfg.labelStacks && cfg.labelStacks.get(g.mapName);
+      if (stack) return [...stack];
+      return wrapText(g.mapName, 26, 2);
+    }
     const lines = wrapText(g.mapName, 26, 2);
     if (g.pages) {
       lines.push(...wrapText(g.pages, 34, 3).map((l, i) => (i === 0 ? `стр. ${l}` : l)));
@@ -835,8 +915,13 @@ function renderSheet(cfg, world, landObj, groups, total) {
           // two-tier budget: 10 mm tight rings for everyone; a clean second
           // tier out to 25 mm (empty sea/steppe slots - Пруссия under Sweden,
           // Украина in the N-Black-Sea steppe, Литва+ВКЛ in the Baltic,
-          // Балканы over Greece) with an explicit leader line (B2's budget)
-          cfg.truePlaceSecondTier ? 100 : g.discussed ? 100 : B7_LABEL_CAP_U
+          // Балканы over Greece) with an explicit leader line (B2's budget);
+          // merged pair labels get 40 mm - «держать рядом» is one label for
+          // two dots, the leader ties them (B8 points 3, 10)
+          g.primary.head.includes("+") ? 160 : cfg.truePlaceSecondTier ? 100 : g.discussed ? 100 : B7_LABEL_CAP_U,
+          cfg.labelAir ? B8_LABEL_PAD_U : undefined,
+          // B8 LABEL_BIAS: requested direction tried first at every radius
+          cfg.labelBias ? cfg.labelBias.get(g.mapName) : null
         )
       : placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, cfg.labelRingDeltas);
     let squeezed = false;
@@ -2059,6 +2144,66 @@ function render() {
       scaleBar: false,
       svgFile: "toponyms-map-b7-legend.svg",
     },
+    {
+      key: "B8map",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: B2_MAP_BOX,
+      fit: "all",
+      inset: { box: B8_INSET_BOX },
+      insetGeo: B7_INSET_GEO,
+      insetPad: B8_INSET_PAD,
+      insetChipR: 6.5,
+      insetChipFont: 6.8,
+      insetCaption: B7_INSET_CAPTION,
+      insetCaptionFramed: true,
+      insetLabelsSoft: true,
+      insetMirror: true,
+      insetChipDiscussed: true,
+      insetRelax: true,
+      coverRelocate: true,
+      refRect: true,
+      refLine: true,
+      legend: null,
+      nameOnlyLabels: true,
+      ignoreAnchors: true,
+      chipObstacles: true,
+      numberAll: true,
+      numberingAll: true,
+      truePlace: true,
+      truePlaceSecondTier: true,
+      cleanSlotsOnly: true,
+      noWholeFrameFallback: true,
+      nameMentioned: true,
+      pairMerge: true,
+      pairMergeList: B8_PAIR_MERGE,
+      labelStacks: B8_LABEL_STACKS,
+      labelBias: B8_LABEL_BIAS,
+      labelAir: true,
+      displaceCap: 32,
+      relaxGap: B8_RELAX_GAP_U,
+      title: true,
+      subtitleOverride: `«Из жизни слов и языков» · ${total} названий мест: все точки на истинных местах, у каждой номер; ядро «Русь» крупно во врезке`,
+      stamp: B8_STAMP,
+      scaleBar: true,
+      svgFile: "toponyms-map-b8-map.svg",
+    },
+    {
+      key: "B8legend",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: { x0: 0, y0: 0, x1: PAGE_W_MM, y1: PAGE_H_MM },
+      fit: "all",
+      inset: null,
+      legend: "page-compact",
+      legendNumberAll: true,
+      numberingAll: true,
+      noMap: true,
+      title: false,
+      stamp: B8_STAMP,
+      scaleBar: false,
+      svgFile: "toponyms-map-b8-legend.svg",
+    },
   ];
 
   // sheet D numbering: every group gets a legend number (alphabetical, 1..N)
@@ -2222,6 +2367,23 @@ function render() {
     "utf-8"
   );
 
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b8-print.html"),
+    pageHtml("Карта топонимов книги — вариант B8: воздух, исторические имена первыми, двухстрочные подписи", PAGE_W_MM, PAGE_H_MM, [rendered[18].svg, rendered[19].svg]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b8.html"),
+    reviewHtml(
+      "Карта топонимов — вариант B8: воздух вокруг подписей, историческое имя первым, пары вместе",
+      [
+        { title: `B8 — страница (карта): воздух (pad 3.2 / чипы 10 / gap 5.5), стеки «Шри-Ланка→Цейлон», «Варанаси→Бенарес», пары «Британия · Англия», «Германия · ГДР», биасы направления · ${B8_STAMP}`, pageW: PAGE_W_MM, svg: rendered[18].svg },
+        { title: `B8 — соседняя страница: легенда, единый ряд 1–83 · ${B8_STAMP}`, pageW: PAGE_W_MM, svg: rendered[19].svg },
+      ]
+    ),
+    "utf-8"
+  );
+
   const A = byKey.A;
   const report = {
     total_toponyms: total,
@@ -2314,7 +2476,18 @@ function render() {
     byKey.B7map.labels_deferred > 50 ||
     byKey.B7legend.legend_rows_drawn !== groups.length ||
     byKey.B7legend.legend_overflow > 0 ||
-    !byKey.B7legend.legend_parity_ok;
+    !byKey.B7legend.legend_parity_ok ||
+    byKey.B8map.chip_close_pairs > 0 ||
+    byKey.B8map.labels_without_slot > 0 ||
+    byKey.B8map.escapes > 0 ||
+    byKey.B8map.label_chip_violations > 0 ||
+    byKey.B8map.labels_last_resort > 0 ||
+    byKey.B8map.covered_relocated > 0 ||
+    byKey.B8map.max_leader_mm > 31 ||
+    byKey.B8map.labels_deferred > 55 ||
+    byKey.B8legend.legend_rows_drawn !== groups.length ||
+    byKey.B8legend.legend_overflow > 0 ||
+    !byKey.B8legend.legend_parity_ok;
   if (hardFail) {
     console.error("FAIL: see report fields above");
     process.exit(1);
