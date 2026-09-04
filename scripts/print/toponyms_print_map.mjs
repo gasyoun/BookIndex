@@ -170,11 +170,47 @@ const B6_CORE_PAD = 0.06;
 const B6_CORE_CAPTION = "Русь · Киев → Новгород";
 const B6_STAMP = "вариант B6 · v4.17.22 · 04-09-2026";
 
+// sheet B7 (MG 04-09-2026 rev 9): ATLAS-ACCURACY pass on the FULL WORLD (the
+// B5/B6 crop is dead - Africa and India render properly, no edge row, no
+// callout stubs). Principles MG asked to adopt from lingtypology (HSE): one
+// point = one object, the label lives AT the feature, print-grade static
+// render. Mechanics (all flag-gated, frozen sheets byte-identical):
+//   - truePlace: name labels are sampled on a fine 1 mm ring around the TRUE
+//     dot (not the relaxed one) with a HARD 10 mm cap - a label either sits in
+//     the dot's neighborhood or not at all (the numbered chip + unified legend
+//     carry it). This is why Украина/Пруссия/Марокко/Пелопоннес/Балканы/etc.
+//     now sit at home "at no cost".
+//   - nameMentioned: mentioned groups get names too where a clean slot exists
+//     (Китай, Индия, Цейлон... - free-space regions).
+//   - pairMerge: Литва (55.17,23.88) + Великое княжество Литовское (55,25) are
+//     1 deg apart - ONE combined label anchored between the two true dots
+//     (render-level pairing, data untouched).
+//   - displaceCap 8 mm: chips stay close to their true spots (was 22 mm).
+//   - unified numbering: map AND legend use the same 1..83 row (legendNumberAll),
+//     discussed rows keep the ● marker - «13» на карте = «13» в легенде.
+//   - inset in the SE corner (over the empty Indian Ocean, MG choice) with
+//     insetRelax: chips spread with leader stubs (no more 82-over-67), the
+//     caption lives in a FRAMED title bar on the inset frame
+//     (insetCaptionFramed), and refRect + refLine show WHERE the zoom comes
+//     from (dashed box around lat 50-60.5 / lon 27-41 + a connecting line).
+// Fallback documented (MG): moving the inset to the legend page was rejected -
+// the legend is already dense and its fonts would shrink.
+const B7_INSET_GEO = { lat0: 50, lat1: 60.5, lon0: 27, lon1: 41 };
+const B7_INSET_BOX = { x0: 58, y0: 152, x1: 104, y1: 200 };
+const B7_INSET_PAD = 0.06;
+const B7_INSET_CAPTION = "Русь · Киев → Новгород";
+const B7_STAMP = "вариант B7 · v4.17.23 · 04-09-2026";
+const B7_LABEL_CAP_U = 40; // 10 mm hard neighborhood for name labels
+const B7_TRUE_RING_STEP = 4; // 1 mm sampling step
+const B7_PAIR_MERGE = [
+  ["Литва", "Литовское княжество Великое"],
+];
+
 function markerRadU(g) {
   return g.discussed ? 2.8 : 7;
 }
 
-function relaxAll(groups, box, radiusOverride) {
+function relaxAll(groups, box, radiusOverride, capU) {
   const pts = groups.map((g) => ({ g, x: g.px, y: g.py, ox: g.px, oy: g.py, r: radiusOverride || markerRadU(g), stay: false }));
   const x0 = box.x0 + 6;
   const x1 = box.x1 - 6;
@@ -223,9 +259,10 @@ function relaxAll(groups, box, radiusOverride) {
     let dx = p.x - p.ox;
     let dy = p.y - p.oy;
     const d = Math.hypot(dx, dy);
-    if (d > DISPLACE_CAP) {
-      dx *= DISPLACE_CAP / d;
-      dy *= DISPLACE_CAP / d;
+    const cap = capU || DISPLACE_CAP;
+    if (d > cap) {
+      dx *= cap / d;
+      dy *= cap / d;
     }
     p.g.px2 = p.ox + dx;
     p.g.py2 = p.oy + dy;
@@ -422,6 +459,81 @@ function placeLabel(g, px, py, lines, placed, box, fontU, clipBox, ringDeltas, p
   return null;
 }
 
+// B7 truePlace: fine 1 mm rings around the TRUE anchor, all 16 directions,
+// first clash-free slot wins (ascending radius = nearest wins); hard cap - a
+// label that does not fit within maxDistU of its dot is not drawn at all.
+function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU, padU) {
+  const widest = Math.max(...lines.map((l) => textW(l, fontU)));
+  const lineH = fontU * 1.22;
+  const blockH = lines.length * lineH;
+  const startR = markerRadU(g) + 4;
+  const dirs = [
+    [1, 0, "start"],
+    [-1, 0, "end"],
+    [0, -1, "middle"],
+    [0, 1, "middle"],
+    [1, -1, "start"],
+    [-1, -1, "end"],
+    [1, 1, "start"],
+    [-1, 1, "end"],
+    [1, -0.45, "start"],
+    [-1, -0.45, "end"],
+    [1, 0.45, "start"],
+    [-1, 0.45, "end"],
+    [0.45, -1, "middle"],
+    [-0.45, -1, "middle"],
+    [0.45, 1, "middle"],
+    [-0.45, 1, "middle"],
+  ];
+  const cb = clipBox || box;
+  const P = padU ?? 2.5;
+  for (let r = startR; r <= maxDistU; r += B7_TRUE_RING_STEP) {
+    for (const [dx, dy, anchor] of dirs) {
+      const len = Math.hypot(dx, dy) || 1;
+      const ux = dx / len;
+      const uy = dy / len;
+      const lx2 = ux !== 0 ? px + ux * r : px;
+      const ly2 = uy !== 0 ? py + uy * r : py;
+      let bx0, bx1, by0, by1, ly;
+      if (anchor === "start") {
+        bx0 = lx2;
+        bx1 = lx2 + widest;
+      } else if (anchor === "end") {
+        bx0 = lx2 - widest;
+        bx1 = lx2;
+      } else {
+        bx0 = lx2 - widest / 2;
+        bx1 = lx2 + widest / 2;
+      }
+      if (dy < 0) {
+        ly = ly2 - blockH * 0.1;
+        by0 = ly - blockH + lineH * 0.25;
+        by1 = ly + lineH * 0.25;
+      } else if (dy > 0) {
+        ly = ly2 + lineH * 0.8;
+        by0 = ly - lineH * 0.8;
+        by1 = by0 + blockH;
+      } else {
+        ly = ly2 + lineH * 0.34;
+        by0 = ly - lineH * 0.8;
+        by1 = by0 + blockH;
+      }
+      if (bx0 < cb.x0 + 2 || bx1 > cb.x1 - 2 || by0 < cb.y0 + 2 || by1 > cb.y1 - 2) continue;
+      let clash = false;
+      for (const b of placed) {
+        if (bx0 - P < b.x1 && bx1 + P > b.x0 && by0 - P < b.y1 && by1 + P > b.y0) {
+          clash = true;
+          break;
+        }
+      }
+      if (clash) continue;
+      placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
+      return { x: lx2, y: ly, anchor, lines, lineH, leader: null, dist: r };
+    }
+  }
+  return null;
+}
+
 function textBlockSvg(l, fontU) {
   return (
     `<text x="${f(l.x)}" y="${f(l.y)}" text-anchor="${l.anchor}" font-size="${fontU}" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round">` +
@@ -454,6 +566,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     labels_last_resort: 0,
     labels_deferred: 0,
     labels_squeezed: 0,
+    covered_relocated: 0,
     max_leader_mm: 0,
     label_chip_violations: 0,
     escapes: 0,
@@ -528,7 +641,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     stats.areals_drawn += 1;
   }
 
-  relaxAll(onMap, box, cfg.numberAll ? 7 : undefined);
+  relaxAll(onMap, box, cfg.numberAll ? 7 : undefined, cfg.displaceCap);
 
   const placed = [];
   const labels = [];
@@ -571,7 +684,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
   // B3: chips and dots are obstacles - name labels may never cover numbers
   if (cfg.chipObstacles) {
     for (const g of onMap) {
-      const pad = cfg.numberAll ? 11 : g.discussed ? 4 : 11;
+      // B7 truePlace: chip obstacle pad tightens to r + 0.5 mm (white halo
+      // keeps both readable) - frees slots in the dense Baltic fringe
+      const pad = cfg.truePlace ? 9 : cfg.numberAll ? 11 : g.discussed ? 4 : 11;
       placed.push({ x0: g.px2 - pad, x1: g.px2 + pad, y0: g.py2 - pad, y1: g.py2 + pad });
     }
   }
@@ -613,8 +728,10 @@ function renderSheet(cfg, world, landObj, groups, total) {
   // discussed labels on the main map (east classes; west live in the inset on sheet C)
   // B6 insetMirror: the core's names live in the inset only - on the main map
   // the core stays chips-only (MG rev 8 ruling)
+  // B7 nameMentioned: mentioned groups get true-place names too where a clean
+  // slot exists (free-space regions - Китай, Индия, Цейлон...)
   const mainLabeled = onMap
-    .filter((x) => x.discussed)
+    .filter((x) => x.discussed || cfg.nameMentioned)
     .filter((x) => !(cfg.insetMirror && cfg.insetGeo && inInset(x)))
     .map((g) => ({
       g,
@@ -623,7 +740,38 @@ function renderSheet(cfg, world, landObj, groups, total) {
         ...wrapText(g.pages || "", 32, 2).map((l) => textW(l, LABEL_FONT_U))
       ),
     }))
-    .sort((a, b) => b.width - a.width || a.g.primary.head.localeCompare(b.g.primary.head, "ru"));
+    .sort((a, b) => {
+      // B7 truePlace: discussed labels compete first - mentioned names defer
+      // to chips before a discussed name loses its true-place slot
+      const dd = cfg.truePlace ? (b.g.discussed ? 1 : 0) - (a.g.discussed ? 1 : 0) : 0;
+      return dd || b.width - a.width || a.g.primary.head.localeCompare(b.g.primary.head, "ru");
+    });
+
+  // B7 pairMerge: near-twin groups share ONE label anchored between their
+  // true dots (render-level pairing, data untouched)
+  if (cfg.pairMerge) {
+    for (const [ha, hb] of B7_PAIR_MERGE) {
+      const ia = mainLabeled.findIndex((e) => e.g.primary.head === ha);
+      const ib = mainLabeled.findIndex((e) => e.g.primary.head === hb);
+      if (ia < 0 || ib < 0) continue;
+      const ea = mainLabeled[ia];
+      const eb = mainLabeled[ib];
+      const mid = { x: (ea.g.px + eb.g.px) / 2, y: (ea.g.py + eb.g.py) / 2 };
+      const mg = {
+        ...ea.g,
+        primary: { head: `${ha}+${hb}` },
+        mapName: `${ha} · ${hb}`,
+        px: mid.x,
+        py: mid.y,
+        px2: mid.x,
+        py2: mid.y,
+        displaced: false,
+        anchorPx: null,
+      };
+      mainLabeled.splice(Math.max(ia, ib), 1);
+      mainLabeled.splice(Math.min(ia, ib), 1, { g: mg, width: ea.width + eb.width });
+    }
+  }
 
   const buildLines = (g) => {
     // B2: name-only labels - pages live in the legend, not on the map
@@ -663,21 +811,43 @@ function renderSheet(cfg, world, landObj, groups, total) {
       }
     }
   }
+  stats.covered_relocated = covered.length;
 
   for (const { g } of mainLabeled) {
     if (coveredSet.has(g)) continue;
     const lines = buildLines(g);
-    const origin = !cfg.ignoreAnchors && g.anchorPx ? { x: g.anchorPx[0], y: g.anchorPx[1] } : { x: g.px2, y: g.py2 };
-    let pos = placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, cfg.labelRingDeltas);
+    // B7 truePlace: the label hunts around the TRUE dot, not the relaxed one
+    const origin = cfg.truePlace
+      ? { x: g.px, y: g.py }
+      : !cfg.ignoreAnchors && g.anchorPx
+        ? { x: g.anchorPx[0], y: g.anchorPx[1] }
+        : { x: g.px2, y: g.py2 };
+    let pos = cfg.truePlace
+      ? placeLabelTrue(
+          g,
+          origin.x,
+          origin.y,
+          lines,
+          placed,
+          box,
+          LABEL_FONT_U,
+          null,
+          // two-tier budget: 10 mm tight rings for everyone; a clean second
+          // tier out to 25 mm (empty sea/steppe slots - Пруссия under Sweden,
+          // Украина in the N-Black-Sea steppe, Литва+ВКЛ in the Baltic,
+          // Балканы over Greece) with an explicit leader line (B2's budget)
+          cfg.truePlaceSecondTier ? 100 : g.discussed ? 100 : B7_LABEL_CAP_U
+        )
+      : placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, cfg.labelRingDeltas);
     let squeezed = false;
-    if (!pos && cfg.noWholeFrameFallback) {
+    if (!pos && cfg.noWholeFrameFallback && !cfg.truePlace) {
       // second pass: wider radius - overlaps stay forbidden (frozen B2 keeps
       // its exact v4.17.10 squeeze semantics via cfg)
       pos = placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, cfg.squeezeRings, cfg.squeezePad);
       squeezed = pos != null;
     }
     let squeezed3 = false;
-    if (!pos && cfg.thirdPassPad) {
+    if (!pos && cfg.thirdPassPad && !cfg.truePlace) {
       // third pass: same rings, minimal padding - labels may sit 1 mm from
       // chips/neighbors (white halo keeps both readable)
       pos = placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, [64, 72, 80, 88, 100, 112], cfg.thirdPassPad);
@@ -740,6 +910,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       }
       if (squeezed3 || (squeezed && !cfg.cleanSlotsOnly)) stats.labels_last_resort += 1;
       else if (squeezed) stats.labels_squeezed += 1;
+      else if (cfg.truePlace && pos && pos.dist > B7_LABEL_CAP_U) stats.labels_squeezed += 1;
     }
   }
 
@@ -805,28 +976,46 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const insetChipR = cfg.insetChipR || 7;
     const insetChipFont = cfg.insetChipFont || 7.2;
     const insetChipPad = insetChipR + 1;
+    // B7 insetRelax: chips spread inside the inset with leader stubs to their
+    // true spots (fixes chip-over-chip merges like 82 over 67 / blind 79-70)
+    let iPos = null;
+    if (cfg.insetRelax) {
+      const clones = west.map((g) => ({ ...g, px: g.ipx, py: g.ipy }));
+      relaxD(clones, ib, insetChipR);
+      iPos = new Map(west.map((g, i) => [g, clones[i]]));
+    }
+    const icx = (g) => (iPos ? iPos.get(g).px2 : g.ipx);
+    const icy = (g) => (iPos ? iPos.get(g).py2 : g.ipy);
+    if (iPos) {
+      for (const g of west) {
+        const c = iPos.get(g);
+        if (!c.displaced) continue;
+        s.push(`<line x1="${f(g.ipx)}" y1="${f(g.ipy)}" x2="${f(c.px2)}" y2="${f(c.py2)}" stroke="#55524c" stroke-width="0.4"/>`);
+        s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="1.7" fill="none" stroke="#111111" stroke-width="0.5"/>`);
+      }
+    }
     for (const g of west) {
       if (!g.discussed) {
         const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
         if (!cfg.insetChipR) {
           s.push(
-            `<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="7" fill="#ffffff" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.ipx)}" y="${f(g.ipy + 2.5)}" text-anchor="middle" font-size="7.2" fill="#111111">${g.number}</text>`
+            `<circle cx="${f(icx(g))}" cy="${f(icy(g))}" r="7" fill="#ffffff" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(icx(g))}" y="${f(icy(g) + 2.5)}" text-anchor="middle" font-size="7.2" fill="#111111">${g.number}</text>`
           );
         } else {
           s.push(
-            `<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="${f(insetChipR)}" fill="#ffffff" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.ipx)}" y="${f(g.ipy + insetChipFont * 0.35)}" text-anchor="middle" font-size="${insetChipFont}" fill="#111111">${g.number}</text>`
+            `<circle cx="${f(icx(g))}" cy="${f(icy(g))}" r="${f(insetChipR)}" fill="#ffffff" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(icx(g))}" y="${f(icy(g) + insetChipFont * 0.35)}" text-anchor="middle" font-size="${insetChipFont}" fill="#111111">${g.number}</text>`
           );
         }
-        iPlaced.push({ x0: g.ipx - insetChipPad, x1: g.ipx + insetChipPad, y0: g.ipy - insetChipPad, y1: g.ipy + insetChipPad });
+        iPlaced.push({ x0: icx(g) - insetChipPad, x1: icx(g) + insetChipPad, y0: icy(g) - insetChipPad, y1: icy(g) + insetChipPad });
       } else {
         if (cfg.insetChipDiscussed) {
           // B6: every point is a numbered chip, even inside the inset - the
           // name label goes next to it (fill marks «обсуждается» as on the map)
           const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
           s.push(
-            `<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="${f(insetChipR)}" fill="#111111" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.ipx)}" y="${f(g.ipy + insetChipFont * 0.35)}" text-anchor="middle" font-size="${insetChipFont}" fill="#ffffff">${g.number}</text>`
+            `<circle cx="${f(icx(g))}" cy="${f(icy(g))}" r="${f(insetChipR)}" fill="#111111" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(icx(g))}" y="${f(icy(g) + insetChipFont * 0.35)}" text-anchor="middle" font-size="${insetChipFont}" fill="#ffffff">${g.number}</text>`
           );
-          iPlaced.push({ x0: g.ipx - insetChipPad, x1: g.ipx + insetChipPad, y0: g.ipy - insetChipPad, y1: g.ipy + insetChipPad });
+          iPlaced.push({ x0: icx(g) - insetChipPad, x1: icx(g) + insetChipPad, y0: icy(g) - insetChipPad, y1: icy(g) + insetChipPad });
         } else {
         const g2 = { ...g, px2: g.ipx, py2: g.ipy, anchor: null };
         if (g2.lineClass === "west") {
@@ -844,17 +1033,17 @@ function renderSheet(cfg, world, landObj, groups, total) {
       .sort((a, b) => b.width - a.width);
     for (const { g } of iLabeled) {
       const lines = wrapText(g.mapName, 20, 2);
-      const pos = placeLabel(g, g.ipx, g.ipy, lines, iPlaced, ib, INSET_LABEL_FONT_U, ib);
+      const pos = placeLabel(g, icx(g), icy(g), lines, iPlaced, ib, INSET_LABEL_FONT_U, ib);
       if (pos) {
         s.push(textBlockSvg({ g, ...pos }, INSET_LABEL_FONT_U));
       } else {
         if (!cfg.insetLabelsSoft) stats.labels_without_slot += 1;
         // fallback: right-aligned into the inset's top-right corner - always
-        // inside the box, stacked if several fail
+        // inside the box, stacked if several fail (below the framed title bar)
         if (!drawInset._fb) drawInset._fb = 0;
         s.push(
           textBlockSvg(
-            { g, x: ib.x1 - 4, y: ib.y0 + 12 + drawInset._fb * 10, anchor: "end", lines, lineH: INSET_LABEL_FONT_U * 1.22 },
+            { g, x: ib.x1 - 4, y: ib.y0 + (cfg.insetCaptionFramed ? 46 : 12) + drawInset._fb * 10, anchor: "end", lines, lineH: INSET_LABEL_FONT_U * 1.22 },
             INSET_LABEL_FONT_U
           )
         );
@@ -865,6 +1054,12 @@ function renderSheet(cfg, world, landObj, groups, total) {
     s.push(
       `<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(ib.y1 - ib.y0)}" fill="none" stroke="#111111" stroke-width="1.2"/>` +
         (() => {
+          // B7 insetCaptionFramed: the caption is a framed title bar ON the
+          // inset frame - «в рамочку и ближе» (MG rev 9), never floating
+          if (cfg.insetCaptionFramed) {
+            const barH = 30;
+            return `<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(barH)}" fill="#ffffff" stroke="#111111" stroke-width="0.7"/><text x="${f((ib.x0 + ib.x1) / 2)}" y="${f(ib.y0 + 20)}" text-anchor="middle" font-size="10" font-weight="bold" fill="#33302b">${esc(cfg.insetCaption || WEST_CAPTION)}</text>`;
+          }
           // B6 insetCaptionBelow: the core fills the box to its south edge -
           // an inside-bottom caption ran over chips 37/38; it moves below the
           // box with a white halo (safe: the band under the NE inset is empty)
@@ -898,6 +1093,20 @@ function renderSheet(cfg, world, landObj, groups, total) {
       `<rect x="${f(rx0)}" y="${f(ry0)}" width="${f(rx1 - rx0)}" height="${f(ry1 - ry0)}" fill="none" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>` +
         `<text x="${f(rx0 + 8)}" y="${f(ry0 + 16)}" font-size="7.5" fill="#33302b" stroke="#ffffff" stroke-width="1.4" paint-order="stroke" stroke-linejoin="round">см. врезку</text>`
     );
+  }
+
+  // B7 refLine: a thin dashed connector from the inset frame to its dashed
+  // source box - the reader sees exactly WHAT is magnified and WHERE it sits
+  if (cfg.refLine && cfg.insetGeo && insetCtx && cfg.refRect) {
+    const cs = [
+      projection([cfg.insetGeo.lon1, cfg.insetGeo.lat0]),
+      projection([cfg.insetGeo.lon1, cfg.insetGeo.lat1]),
+    ];
+    const srcX = Math.max(...cs.map((c) => c[0]));
+    const srcY = Math.max(...cs.map((c) => c[1]));
+    const sx = (cfg.inset.box.x0 + 12) * U;
+    const sy = cfg.inset.box.y0 * U;
+    s.push(`<line x1="${f(sx)}" y1="${f(sy)}" x2="${f(srcX)}" y2="${f(srcY)}" stroke="#55524c" stroke-width="0.45" stroke-dasharray="4 3"/>`);
   }
 
   if (insetCtx && cfg.insetGeo) drawInset();
@@ -1141,7 +1350,13 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const maxChars = Math.floor((colW - 10) / (DLEG_FONT_U * CHAR_W));
     const wrapped = groups.map((g) => {
       const expect = g.pages ? `стр. ${g.pages}` : "—";
-      const prefix = g.number ? `${g.number}. ` : "● ";
+      // B7 legendNumberAll: ONE numbering across map and legend - every row
+      // carries its map number, discussed rows keep the ● marker
+      const prefix = cfg.legendNumberAll
+        ? `${g.number}. ${g.discussed ? "● " : ""}`
+        : g.number
+          ? `${g.number}. `
+          : "● ";
       const lines = wrapText(`${prefix}${g.display} — ${expect}`, maxChars, 3);
       return { g, lines, parity: !g.pages || expect === `стр. ${g.pages}` };
     });
@@ -1183,8 +1398,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
     }
     stats.legend_capacity = DLEG_COLS * Math.floor(rowsAreaU / pitch);
     const keyY = (DLEG_Y1 + 5) * U;
+    const numNote = cfg.legendNumberAll ? " · номер строки = номер на карте" : "";
     s.push(
-      `<text x="${DLEG_X0 * U}" y="${f(keyY)}" font-size="7.6" fill="#33302b">Залитый маркер — обсуждается в книге, контурный — упоминается; штриховой контур — Русь, Византия, Восток</text>` +
+      `<text x="${DLEG_X0 * U}" y="${f(keyY)}" font-size="7.6" fill="#33302b">Залитый маркер — обсуждается в книге, контурный — упоминается; штриховой контур — Русь, Византия, Восток${numNote}</text>` +
         `<text x="${DLEG_X0 * U}" y="${f(keyY + 9)}" font-size="7.6" fill="#33302b">Штриховой ареал — языковая зона · пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц</text>` +
         `<text x="${DLEG_X0 * U}" y="${f(keyY + 18)}" font-size="7.4" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция${cfg.legendTail || ""}</text>`
     );
@@ -1788,6 +2004,61 @@ function render() {
       scaleBar: false,
       svgFile: "toponyms-map-b6-legend.svg",
     },
+    {
+      key: "B7map",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: B2_MAP_BOX,
+      fit: "all",
+      inset: { box: B7_INSET_BOX },
+      insetGeo: B7_INSET_GEO,
+      insetPad: B7_INSET_PAD,
+      insetChipR: 6.5,
+      insetChipFont: 6.8,
+      insetCaption: B7_INSET_CAPTION,
+      insetCaptionFramed: true,
+      insetLabelsSoft: true,
+      insetMirror: true,
+      insetChipDiscussed: true,
+      insetRelax: true,
+      coverRelocate: true,
+      refRect: true,
+      refLine: true,
+      legend: null,
+      nameOnlyLabels: true,
+      ignoreAnchors: true,
+      chipObstacles: true,
+      numberAll: true,
+      numberingAll: true,
+      truePlace: true,
+      truePlaceSecondTier: true,
+      cleanSlotsOnly: true,
+      noWholeFrameFallback: true,
+      nameMentioned: true,
+      pairMerge: true,
+      displaceCap: 32,
+      title: true,
+      subtitleOverride: `«Из жизни слов и языков» · ${total} названий мест: все точки на истинных местах, у каждой номер; ядро «Русь» крупно во врезке`,
+      stamp: B7_STAMP,
+      scaleBar: true,
+      svgFile: "toponyms-map-b7-map.svg",
+    },
+    {
+      key: "B7legend",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: { x0: 0, y0: 0, x1: PAGE_W_MM, y1: PAGE_H_MM },
+      fit: "all",
+      inset: null,
+      legend: "page-compact",
+      legendNumberAll: true,
+      numberingAll: true,
+      noMap: true,
+      title: false,
+      stamp: B7_STAMP,
+      scaleBar: false,
+      svgFile: "toponyms-map-b7-legend.svg",
+    },
   ];
 
   // sheet D numbering: every group gets a legend number (alphabetical, 1..N)
@@ -1799,7 +2070,7 @@ function render() {
   const rendered = [];
   for (const cfg of sheets) {
     const sheetRenderer = cfg.renderer === "d2" ? renderSheetD : renderSheet;
-    const groupsForSheet = cfg.numberAll || cfg.key.startsWith("D") ? dGroups : groups;
+    const groupsForSheet = cfg.numberAll || cfg.numberingAll || cfg.key.startsWith("D") ? dGroups : groups;
     const { svg, stats } = sheetRenderer(cfg, world, land, groupsForSheet, total);
     fs.writeFileSync(path.join(OUT_DIR, cfg.svgFile), svg, "utf-8");
     rendered.push({ cfg, svg, stats });
@@ -1934,6 +2205,23 @@ function render() {
     "utf-8"
   );
 
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b7-print.html"),
+    pageHtml("Карта топонимов книги — вариант B7: полная карта, истинные подписи, врезка-ядро в ЮВ углу", PAGE_W_MM, PAGE_H_MM, [rendered[16].svg, rendered[17].svg]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b7.html"),
+    reviewHtml(
+      "Карта топонимов — вариант B7: полный мир, атласная точность, единая нумерация 1–83",
+      [
+        { title: `B7 — страница (карта): полный мир без выносов, подписи у истинных мест (≤ 10 мм), врезка «Русь · Киев → Новгород» в ЮВ углу с рамочным заголовком, штриховая рамка-источник + линия · ${B7_STAMP}`, pageW: PAGE_W_MM, svg: rendered[16].svg },
+        { title: `B7 — соседняя страница: легенда, единый ряд 1–83 («номер строки = номер на карте») · ${B7_STAMP}`, pageW: PAGE_W_MM, svg: rendered[17].svg },
+      ]
+    ),
+    "utf-8"
+  );
+
   const A = byKey.A;
   const report = {
     total_toponyms: total,
@@ -2015,7 +2303,18 @@ function render() {
     byKey.B6map.max_leader_mm > 33 ||
     byKey.B6legend.legend_rows_drawn !== groups.length ||
     byKey.B6legend.legend_overflow > 0 ||
-    !byKey.B6legend.legend_parity_ok;
+    !byKey.B6legend.legend_parity_ok ||
+    byKey.B7map.chip_close_pairs > 0 ||
+    byKey.B7map.labels_without_slot > 0 ||
+    byKey.B7map.escapes > 0 ||
+    byKey.B7map.label_chip_violations > 0 ||
+    byKey.B7map.labels_last_resort > 0 ||
+    byKey.B7map.covered_relocated > 0 ||
+    byKey.B7map.max_leader_mm > 30 ||
+    byKey.B7map.labels_deferred > 50 ||
+    byKey.B7legend.legend_rows_drawn !== groups.length ||
+    byKey.B7legend.legend_overflow > 0 ||
+    !byKey.B7legend.legend_parity_ok;
   if (hardFail) {
     console.error("FAIL: see report fields above");
     process.exit(1);

@@ -128,6 +128,15 @@ const sections = [
       { label: "B6 — легенда (83 записи)", svg: readFile("toponyms-map-b6-legend.svg"), pageW: 145 },
     ],
   },
+  {
+    num: 12,
+    title: "B7 — полный мир без выносов, атласная точность (подписи у истинных мест ≤ 10 мм / ≤ 25 мм с лидером), единая нумерация 1–83, врезка-ядро в ЮВ углу с рамочным заголовком",
+    note: "v4.17.23 · <a href='toponyms-map-b7.html'>toponyms-map-b7.html</a>",
+    files: [
+      { label: "B7 — карта", svg: readFile("toponyms-map-b7-map.svg"), pageW: 145 },
+      { label: "B7 — легенда (83 записи, единый ряд с картой)", svg: readFile("toponyms-map-b7-legend.svg"), pageW: 145 },
+    ],
+  },
 ];
 
 const body = sections
