@@ -108,8 +108,16 @@ jobs:
       - name: Runtime smoke test (21/21)
         run: python runtime_test.py
 
-      - name: Ensure committed aaz-index.html is in sync
-        run: git diff --exit-code -- aaz-index.html
+      # "Build standalone artifact" above regenerates aaz-index.html AND every
+      # prerendered item page (all/ ethnonyms/ languages/ lexicon/
+      # lexicon_reverse/ lexicon_tech/ materials/ names/ scholar/ subject/
+      # toponyms/ - each inlines the runtime, CSP script hashes and the module
+      # manifest). 04-09-2026: 699 pages drifted for two days (stale runtime
+      # pre-H4025, stale manifests post-H4051-B10) with only aaz-index.html
+      # gated - deep links served the old bundle and stale CSP hashes. Diff the
+      # whole build output, not just the entry page.
+      - name: Ensure committed build output (aaz-index + prerendered pages) is in sync
+        run: git diff --exit-code -- aaz-index.html all ethnonyms languages lexicon lexicon_reverse lexicon_tech materials names scholar subject toponyms
 
       # H4051: the print pipeline had no CI at all - eleven revisions of MG
       # feedback landed in print/ with "frozen sheets are byte-identical"
@@ -124,7 +132,7 @@ jobs:
         run: |
           npm run build:vite
           npm run build
-          git diff --exit-code -- aaz-index.html
+          git diff --exit-code -- aaz-index.html all ethnonyms languages lexicon lexicon_reverse lexicon_tech materials names scholar subject toponyms
 
       - name: Install Playwright browser (Chromium)
         run: npx playwright install --with-deps chromium
