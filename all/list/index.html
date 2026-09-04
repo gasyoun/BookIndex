@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-UXw2RE9Ti6Jyi6hjNaFXIavbWoHlGXi0T9hm13GXCZo=' 'sha256-TWufAzLQmX5mYfcynObBqCA0iRmO0cxBvz/NIn9KXfA='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-bvgOuck7TPGYB4+xSntGXGwhB7p08rs+7b8cF9zvb3c=' 'sha256-XBlsozlNgBwOzlW7KctX1UZKvgXK3lReXNOIOZCbzd0='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -7347,7 +7347,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "1325a557ea2a",
+  "build_id": "12924c0f0815",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -7452,8 +7452,8 @@
       "keys": [
         "scholar"
       ],
-      "bytes": 48139,
-      "sha256": "nNck4TpH3Av23VNyYGI6OoauzNEUDRX8KU3rgqBApts="
+      "bytes": 47992,
+      "sha256": "dUnffibOWvoCBFihV5py4BW57+arlNV/aJSkWbr+uVU="
     },
     {
       "file": "99-extra.json",
@@ -7666,7 +7666,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "1325a557ea2a";
+	var APP_BUILD_ID$1 = "12924c0f0815";
 	var NORMALIZE_CACHE_LIMIT = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -8594,8 +8594,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "1325a557ea2a").trim();
-		if (buildId && buildId !== "1325a557ea2a") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "12924c0f0815").trim();
+		if (buildId && buildId !== "12924c0f0815") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule(manifest, file) {
@@ -12541,7 +12541,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "1325a557ea2a" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "12924c0f0815" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
