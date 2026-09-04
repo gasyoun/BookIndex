@@ -37,7 +37,8 @@
         "geonames": "6269131",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-f09a3a8f-bf41-50f6-865b-fc838bb915b4",
@@ -71,7 +72,8 @@
         "wikidata": "Q145694",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-6eca804c-367a-5d6f-9c7f-a8a61be0f4f3",
@@ -127,7 +129,8 @@
       "epoch_class": "modern",
       "lat": 25,
       "lon": 45,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-0eafbc9c-dce8-54e7-a820-8d98ec33b15e",
@@ -157,7 +160,8 @@
       "epoch_class": "modern",
       "lat": 64.5,
       "lon": 41,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-c29631f7-4f5d-540f-8242-94d7d38f89ba",
@@ -194,7 +198,8 @@
         "geonames": "6255146",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-34e82082-bebd-538e-9a79-1964165b77a2",
@@ -224,7 +229,8 @@
       "epoch_class": "medieval",
       "lat": 48.7,
       "lon": 11.5,
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-116fa4b7-d6b1-5af1-a920-29a77884dfe8",
@@ -258,7 +264,8 @@
         "wikidata": "Q20870818",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-9f1ae182-12e1-588a-ae62-4dcc7d5c834c",
@@ -297,7 +304,8 @@
         "geonames": "2633321",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-92510155-1662-56c3-8754-f4d9303a51a9",
@@ -349,7 +357,8 @@
       "epoch_class": "modern",
       "lat": 53.7,
       "lon": 27.95,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-77272b79-d2e2-5747-bf35-8da65ea8bf8b",
@@ -379,7 +388,8 @@
       "epoch_class": "ancient",
       "lat": 25.32,
       "lon": 83,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-4000b097-9469-5b18-85e2-62dd89e3b229",
@@ -416,7 +426,8 @@
         "geonames": "2944388",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-6fdbefeb-7f12-5252-8c61-5f30a6cd0d6a",
@@ -452,7 +463,8 @@
         "geonames": "8378485",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-f860da61-f5c8-50dd-bd70-3061ef18effb",
@@ -489,7 +501,8 @@
         "geonames": "2654669",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-05cef0ca-9a03-546a-be7c-6e56d003bdda",
@@ -521,7 +534,8 @@
       "epoch_class": "ancient",
       "lat": 21,
       "lon": 78,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-1102e670-1343-5951-b926-aa1bee3d5ab0",
@@ -558,7 +572,8 @@
         "geonames": "1253405",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-5ae4de51-6510-5277-8522-8ce0972083a1",
@@ -592,7 +607,8 @@
       "epoch_class": "modern",
       "lat": 56,
       "lon": 38,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-f00f53c4-b84a-5d70-9b8c-d6be1ffdea62",
@@ -633,7 +649,8 @@
         "geonames": "719819",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-4e91d042-2efb-5064-a534-e272c898dee9",
@@ -670,7 +687,8 @@
         "geonames": "6542284",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-6a1587d1-8457-5882-9ddb-93adc3994fa4",
@@ -706,7 +724,8 @@
         "gnd": "4009256-2",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-fe0c4f4b-369c-5491-a8c3-b1c21867ed15",
@@ -743,7 +762,8 @@
         "geonames": "473247",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-1b6a010c-35e4-5f09-a76b-ba46eeec35b4",
@@ -777,7 +797,8 @@
         "wikidata": "Q1540335",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-bcfcdd39-ce8b-5915-a1d2-e83207105f89",
@@ -813,7 +834,8 @@
         "geonames": "709034",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-8d792996-9f7a-5e2a-87de-baec282259cb",
@@ -853,7 +875,8 @@
         "gnd": "4019150-3",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-a7d29db9-1892-5d72-8fdb-8eb82bd6979a",
@@ -890,7 +913,8 @@
         "geonames": "2647356",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-1e3123bc-ec36-5486-9448-27a00c474fec",
@@ -927,7 +951,8 @@
         "geonames": "8354410",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-822cb45a-6005-588b-a80b-ea5706bf8fe4",
@@ -978,7 +1003,8 @@
         "geonames": "2921044",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-cd173c0a-21ae-56e6-a562-208d32b002a1",
@@ -1013,7 +1039,8 @@
         "gnd": "4133959-9",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-0a43c6a9-8be6-5d88-a7fa-11997c92afbe",
@@ -1052,7 +1079,8 @@
         "geonames": "390903",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-5d8961ab-3689-5971-8140-b202f9d7a397",
@@ -1075,7 +1103,8 @@
       "letter": "Г",
       "lat": 39.07,
       "lon": 21.82,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-f546ae3d-d62c-5e68-8ca6-eaa819cac193",
@@ -1162,7 +1191,8 @@
         "geonames": "6255148",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-4b2db9c2-762c-5388-9850-d8c5eee2b734",
@@ -1215,7 +1245,8 @@
         "geonames": "357994",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-1c425ad0-cccc-5b9d-bb5e-d3595c02bdec",
@@ -1247,7 +1278,8 @@
       "epoch_class": "modern",
       "lat": 40,
       "lon": -10,
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-fa477e79-360b-51f4-afa2-75144035939f",
@@ -1338,7 +1370,8 @@
         "geonames": "1269750",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-66946002-6134-56fc-9126-bd9cbe7934f4",
@@ -1376,7 +1409,8 @@
         "wikidata": "Q853968",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-ef67cea3-45e5-5afc-9faa-62fca9f25708",
@@ -1413,7 +1447,8 @@
         "geonames": "99237",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-8a39e323-c80f-51fe-86b5-036db4c01611",
@@ -1454,7 +1489,8 @@
         "geonames": "130758",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-a1f35106-b1df-576f-b860-3e9c9a798fe0",
@@ -1497,7 +1533,8 @@
         "geonames": "2629691",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-1ec53bd1-e8a3-5ce6-9fd9-7af2ec643935",
@@ -1534,7 +1571,8 @@
         "geonames": "2510769",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-f1336cd1-6b40-535e-8308-6aa3e5cf5ca5",
@@ -1583,7 +1621,8 @@
         "geonames": "3175395",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-5f1ad71b-a89b-55da-9d7f-1a53a9813c4a",
@@ -1619,7 +1658,8 @@
         "geonames": "615318",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-0935829a-38e2-5fde-ad2c-a377427ea5ec",
@@ -1672,7 +1712,8 @@
         "geonames": "703448",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-14109847-322c-5d0d-9585-edf11c03a03b",
@@ -1702,7 +1743,8 @@
       "epoch_class": "medieval",
       "lat": 50.45,
       "lon": 30.52,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-6266dc05-ee33-52d0-8ea7-0cfc4d1723a9",
@@ -1740,7 +1782,8 @@
         "geonames": "703446",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-b289c2b1-ac57-520c-b628-ab540ef679a7",
@@ -1796,7 +1839,8 @@
           49.6
         ]
       ],
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-6fce1aa1-0589-5729-afdc-77d48623ac92",
@@ -1826,7 +1870,8 @@
       "epoch_class": "modern",
       "lat": 58.6,
       "lon": 49.66,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-9eb89019-65f3-5237-9eef-e80e559e5002",
@@ -1863,7 +1908,8 @@
         "geonames": "1814991",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-d5642c98-da61-5dd7-9921-e33a36e0bc49",
@@ -1900,7 +1946,8 @@
         "geonames": "546085",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-1313d156-0ce7-5aae-a97b-0c6ca15ead99",
@@ -1930,7 +1977,8 @@
       },
       "lat": 37.88,
       "lon": -4.78,
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-6f5f100d-6524-5264-98c8-7026a666e1c0",
@@ -1975,7 +2023,8 @@
         "geonames": "258763",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-d89b0747-7d7d-5230-be3d-29b85b7a54c0",
@@ -2005,7 +2054,8 @@
       "epoch_class": "ancient",
       "lat": 35.24,
       "lon": 24.81,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-59fdc30f-ae9e-5e7a-9372-07268da16491",
@@ -2037,7 +2087,8 @@
       "epoch_class": "ancient",
       "lat": 45,
       "lon": 34,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-3b56f03c-a94e-518c-8b65-c95ea64eccd2",
@@ -2078,7 +2129,8 @@
         "lon": 60,
         "lat": 56.5
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-9ef4a94c-4b52-5a3b-95fc-1a0a5ba20e59",
@@ -2118,7 +2170,8 @@
         "lon": 68,
         "lat": 58.5
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-8a52c321-b90c-5915-b786-fb06d6b86971",
@@ -2152,7 +2205,8 @@
         "wikidata": "Q12824780",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-e9f56df4-3944-51d6-8e66-307100528ca8",
@@ -2193,7 +2247,8 @@
         "geonames": "2542007",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-826f7d2c-bb74-54e9-a8f6-b899311af6ee",
@@ -2295,7 +2350,8 @@
       "epoch_class": "medieval",
       "lat": 58.52,
       "lon": 31.27,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-e5428441-b01e-5f75-a7fa-aaacb109b030",
@@ -2332,7 +2388,8 @@
         "geonames": "6542281",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-0453e0cf-f2d3-5746-ac77-1146d7e21ffe",
@@ -2369,7 +2426,8 @@
         "geonames": "1168579",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-c78a86f8-bb8f-508a-beb9-392970cd8c7d",
@@ -2406,7 +2464,8 @@
         "geonames": "12047392",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-ae01f000-8da2-5044-9af4-30dc84b7d1e0",
@@ -2443,7 +2502,8 @@
         "geonames": "9062330",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-12dc3746-56ef-5567-a689-7fd797869b7c",
@@ -2475,7 +2535,8 @@
       "epoch_class": "medieval",
       "lat": 50.07,
       "lon": 31.45,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-38aaf6e5-132b-5f56-956d-78fc1c60664d",
@@ -2507,7 +2568,8 @@
       "epoch_class": "modern",
       "lat": 50.07,
       "lon": 31.45,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-9077330a-7128-508f-b253-d9fbbac2681c",
@@ -2544,7 +2606,8 @@
         "geonames": "255293",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-5b0c67b8-0f9d-5f8c-8cbd-5d7b3d38299b",
@@ -2586,7 +2649,8 @@
         "gnd": "4047194-9",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-35cf5915-4f58-5062-a9c5-b2d98919e15a",
@@ -2629,7 +2693,8 @@
         "geonames": "504341",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-b7f944b8-8c74-5f30-898f-35173fb15a9e",
@@ -2683,7 +2748,8 @@
           56.9
         ]
       ],
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-bf05209f-2ce0-5282-b5e0-97c3d6950fe1",
@@ -2720,7 +2786,8 @@
         "geonames": "3169070",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-12fea81a-8901-569d-8ff6-2323e25089d6",
@@ -2760,7 +2827,8 @@
         "geonames": "8354456",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-9340299e-4a45-593e-bb05-ca56b549cf6d",
@@ -2792,7 +2860,8 @@
       "epoch_class": "ancient",
       "lat": 41.9,
       "lon": 12.49,
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-c6afccc0-5672-53c3-bc49-136f8e834ea8",
@@ -2822,7 +2891,8 @@
       "epoch_class": "contemporary",
       "lat": 61.52,
       "lon": 105.32,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-8907d119-bf7a-51eb-b5ec-f9935bef9939",
@@ -2875,7 +2945,8 @@
         "geonames": "2017370",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-ce79fde5-29ce-5f33-b928-ba936710e5b3",
@@ -2919,7 +2990,8 @@
         "wikidata": "Q4398444",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-d5e2072b-a862-5d2c-b8a6-05e43a28a76f",
@@ -2949,7 +3021,8 @@
       "epoch_class": "medieval",
       "lat": 56.83,
       "lon": 40,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-0a8d96ed-156b-55a3-8097-250bfe4a36ad",
@@ -3017,7 +3090,8 @@
           54.6
         ]
       ],
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-e2d4b047-fa05-531f-99c6-2e0ddcfd7bdc",
@@ -3041,7 +3115,8 @@
       "lat": 49.6,
       "lon": 32.0,
       "coords_conditional": true,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-7c15526f-b19c-5577-830b-70df666df2e4",
@@ -3073,7 +3148,8 @@
       "epoch_class": "modern",
       "lat": 55.75,
       "lon": 37.62,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-e2aebd54-40f1-5284-bf45-87b0018f28d4",
@@ -3123,7 +3199,8 @@
       "epoch_class": "medieval",
       "lat": 54,
       "lon": 32,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-61bc11cc-84cc-5d36-8b8a-aacb6976d240",
@@ -3153,7 +3230,8 @@
       "epoch_class": "medieval",
       "lat": 62,
       "lon": 35,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-9d78577f-8da2-5b90-acfd-1cbb49e4f3f9",
@@ -3183,7 +3261,8 @@
       "epoch_class": "modern",
       "lat": 62,
       "lon": 60,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-9a9680ed-6f77-53a9-be8c-3bad5df0ef9c",
@@ -3231,7 +3310,8 @@
       "epoch_class": "medieval",
       "lat": 60,
       "lon": 30,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-97a8b855-c040-52de-8e74-d9ac55617da9",
@@ -3263,7 +3343,8 @@
       "epoch_class": "ancient",
       "lat": 24,
       "lon": 67,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-995f000d-55b6-5052-9571-2fa37ae0cdfc",
@@ -3297,7 +3378,8 @@
         "wikidata": "Q1211919",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-345175d3-150a-573e-a4e7-ebc6c9a2522f",
@@ -3344,7 +3426,8 @@
         "geonames": "485824",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-56cb6402-810e-5aaa-9680-234a69b77c98",
@@ -3419,7 +3502,8 @@
         "lon": 64,
         "lat": 51.5
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-8a8211f3-d4c0-588c-a940-3f24901950b3",
@@ -3442,7 +3526,8 @@
       "letter": "Ф",
       "lat": 40.64,
       "lon": 22.94,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-e6e25995-353f-593a-a57b-16ea2cf6fc8d",
@@ -3481,7 +3566,8 @@
         "geonames": "262531",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-457ed99f-9f87-5e9d-8f42-b1de4e086cc4",
@@ -3518,7 +3604,8 @@
         "geonames": "660013",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-8f8654be-bd11-51c3-8ca5-42b045b6327b",
@@ -3555,7 +3642,8 @@
         "geonames": "6542285",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-43681055-4246-5ce5-800c-694b4692e6b6",
@@ -3590,7 +3678,8 @@
         "viaf": "139024269",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-eff28ce8-01b5-5223-9774-f6358cb8b789",
@@ -3645,7 +3734,8 @@
         "geonames": "3017382",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-e5e5371c-2bce-5725-aa33-d18d57ff27da",
@@ -3681,7 +3771,8 @@
         "gnd": "19826-2",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-52597d61-c669-52a8-9a66-5176d62a7256",
@@ -3717,7 +3808,8 @@
         "geonames": "7729886",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "macro"
     },
     {
       "canonical_id": "toponyms-c1cf9e72-5f87-5340-b775-b305e3eda52d",
@@ -3747,7 +3839,8 @@
       "epoch_class": "medieval",
       "lat": 55.75,
       "lon": 37.62,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-af9cd53a-405f-51ac-8f58-2a77c71aeb76",
@@ -3794,7 +3887,8 @@
         "lon": 64,
         "lat": 54
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-e7b8b443-e7b3-561d-8834-3b91db9fe923",
@@ -3837,7 +3931,8 @@
         "geonames": "2661886",
         "src": "wikidata-auto"
       },
-      "line_class": "west"
+      "line_class": "west",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-8e309e7d-112e-5b37-8c94-c11d4f2b12a7",
@@ -3876,7 +3971,8 @@
         "geonames": "493970",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     },
     {
       "canonical_id": "toponyms-141c1b65-cbac-5eb7-b4e7-ec8c7eb906e8",
@@ -3913,7 +4009,8 @@
         "geonames": "1227603",
         "src": "wikidata-auto"
       },
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "region"
     },
     {
       "canonical_id": "toponyms-7a7e26eb-b198-5e11-9278-e80dfc59be94",
@@ -3943,7 +4040,8 @@
       "epoch_class": "medieval",
       "lat": 50.07,
       "lon": 31.45,
-      "line_class": "east"
+      "line_class": "east",
+      "scale_rank": "city"
     }
   ]
 }

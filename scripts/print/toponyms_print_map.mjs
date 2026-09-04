@@ -235,6 +235,14 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
 const B9_STAMP = "вариант B9 · v4.17.26 · 04-09-2026";
+// sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
+// except city-rank groups outside the Rus inset render as numbered chips
+// WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
+// 0.23 mm from Крит) leaves the name-placement arithmetic entirely. The
+// classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
+// review visually; the table lives in
+// docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
+const B10_STAMP = "вариант B10 · v4.17.27 · 04-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -394,6 +402,9 @@ function loadGroups() {
       members,
       names,
       primary,
+      // H4051 Unit B: feature scale of the group (= its primary's rank) -
+      // city names stop competing for world-sheet slots under scaleRankedNames
+      scaleRank: primary.scale_rank || null,
       display: names.join(" · "),
       mapName: names.length > 2 ? `${shortest} и др.` : names.join(" · "),
       pages,
@@ -745,6 +756,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
     label_offset_max_mm: 0,
     chip_ink_overlap_max: 0,
     chip_ink_overlap_pairs: 0,
+    names_policy_unnamed: 0,
   };
 
   // every drawn leader / stub / connector is counted here. Accounting is
@@ -929,9 +941,16 @@ function renderSheet(cfg, world, landObj, groups, total) {
   // the core stays chips-only (MG rev 8 ruling)
   // B7 nameMentioned: mentioned groups get true-place names too where a clean
   // slot exists (free-space regions - Китай, Индия, Цейлон...)
+  // H4051 Unit B: city-rank groups outside the inset keep their chips but
+  // stop competing for world-sheet name slots (the legend decodes them; the
+  // Rus core's cities are named in the inset). count what the policy drops.
+  stats.names_policy_unnamed = onMap.filter(
+    (x) => cfg.scaleRankedNames && x.scaleRank === "city" && !inInset(x) && (x.discussed || cfg.nameMentioned)
+  ).length;
   const mainLabeled = onMap
     .filter((x) => x.discussed || cfg.nameMentioned)
     .filter((x) => !(cfg.insetMirror && cfg.insetGeo && inInset(x)))
+    .filter((x) => !(cfg.scaleRankedNames && x.scaleRank === "city" && !inInset(x)))
     .map((g) => ({
       g,
       width: Math.max(
@@ -2504,6 +2523,73 @@ function render() {
       scaleBar: false,
       svgFile: "toponyms-map-b9-legend.svg",
     },
+    {
+      key: "B10map",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: B2_MAP_BOX,
+      fit: "all",
+      inset: { box: B8_INSET_BOX },
+      insetGeo: B7_INSET_GEO,
+      insetPad: B8_INSET_PAD,
+      insetChipR: 6.5,
+      insetChipFont: 6.8,
+      insetCaption: B7_INSET_CAPTION,
+      insetCaptionFramed: true,
+      insetReserveBar: true,
+      insetLabelsSoft: true,
+      insetMirror: true,
+      insetChipDiscussed: true,
+      insetRelax: true,
+      insetRelaxGap: 0,
+      coverRelocate: true,
+      insetSourceArrow: true,
+      legend: null,
+      nameOnlyLabels: true,
+      ignoreAnchors: true,
+      chipObstacles: true,
+      numberAll: true,
+      numberingAll: true,
+      truePlace: true,
+      truePlaceSecondTier: true,
+      cleanSlotsOnly: true,
+      noWholeFrameFallback: true,
+      nameMentioned: true,
+      pairMerge: true,
+      pairMergeList: B8_PAIR_MERGE,
+      labelStacks: B8_LABEL_STACKS,
+      labelBias: B8_LABEL_BIAS,
+      labelAir: true,
+      // H4051 Unit B (draft default, MG reviews the RENDERED sheet): city-
+      // rank groups outside the Rus inset render as chips without names
+      scaleRankedNames: true,
+      leaderDistThresholdU: 40,
+      relaxGap: 0,
+      displaceCap: 32,
+      displacedMinU: 16,
+      title: true,
+      subtitleOverride: `«Из жизни слов и языков» · ${total} названий мест: все точки на истинных местах, у каждой номер; города вне врезки — номера (легенда), ядро «Русь» крупно во врезке`,
+      stamp: B10_STAMP,
+      scaleBar: true,
+      svgFile: "toponyms-map-b10-map.svg",
+    },
+    {
+      key: "B10legend",
+      pageW: PAGE_W_MM,
+      pageH: PAGE_H_MM,
+      mapBox: { x0: 0, y0: 0, x1: PAGE_W_MM, y1: PAGE_H_MM },
+      fit: "all",
+      inset: null,
+      legend: "page-compact",
+      legendNumberAll: true,
+      numberingAll: true,
+      displayOrder: true,
+      noMap: true,
+      title: false,
+      stamp: B10_STAMP,
+      scaleBar: false,
+      svgFile: "toponyms-map-b10-legend.svg",
+    },
   ];
 
   // sheet D numbering: every group gets a legend number (alphabetical, 1..N)
@@ -2713,6 +2799,23 @@ function render() {
     "utf-8"
   );
 
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b10-print.html"),
+    pageHtml("Карта топонимов книги — вариант B10: города вне врезки — номера, регионы и макро — с именами", PAGE_W_MM, PAGE_H_MM, [sheetFile.B10map, sheetFile.B10legend]),
+    "utf-8"
+  );
+  fs.writeFileSync(
+    path.join(OUT_DIR, "toponyms-map-b10.html"),
+    reviewHtml(
+      "Карта топонимов — вариант B10: scale_rank (черновой разряд по умолчанию) — города вне врезки без имён",
+      [
+        { title: `B10 — страница (карта): как B9, но 12 городских имён вне ядра Руси убраны в легенду (Рим, Венеция, Флоренция… — чипы); их места освобождены для имён регионов · ${B10_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B10map },
+        { title: `B10 — соседняя страница: легенда, единый ряд 1–83, порядок имён «древнейшая форма первой» · ${B10_STAMP}`, pageW: PAGE_W_MM, file: sheetFile.B10legend },
+      ]
+    ),
+    "utf-8"
+  );
+
   const A = byKey.A;
   const report = {
     total_toponyms: total,
@@ -2754,6 +2857,7 @@ function render() {
           names_drawn: r.stats.names_drawn,
           names_not_drawn: r.stats.names_not_drawn,
           names_at_true_place: r.stats.names_at_true_place,
+          names_policy_unnamed: r.stats.names_policy_unnamed || 0,
           label_offset_p50_mm: r.stats.label_offset_p50_mm,
           label_offset_p90_mm: r.stats.label_offset_p90_mm,
           label_offset_max_mm: r.stats.label_offset_max_mm,
@@ -2870,7 +2974,25 @@ function render() {
     byKey.B9map.max_leader_mm > 31 ||
     byKey.B9legend.legend_rows_drawn !== groups.length ||
     byKey.B9legend.legend_overflow > 0 ||
-    !byKey.B9legend.legend_parity_ok;
+    !byKey.B9legend.legend_parity_ok ||
+    // H4051 Unit B (B10): the scale_rank default must drop exactly the city
+    // names outside the Rus inset (draft says 12), and everything else stays
+    // at B9's bars
+    byKey.B10map.names_policy_unnamed !== 12 ||
+    byKey.B10map.links_by_kind.chip_displacement > 8 ||
+    byKey.B10map.links_by_kind.inset_stub > 8 ||
+    byKey.B10map.label_offset_p90_mm > 25 ||
+    byKey.B10map.names_not_drawn > 25 ||
+    byKey.B10map.names_at_true_place < 13 ||
+    byKey.B10map.labels_without_slot > 0 ||
+    byKey.B10map.escapes > 0 ||
+    byKey.B10map.label_chip_violations > 0 ||
+    byKey.B10map.labels_last_resort > 0 ||
+    byKey.B10map.covered_relocated > 0 ||
+    byKey.B10map.max_leader_mm > 31 ||
+    byKey.B10legend.legend_rows_drawn !== groups.length ||
+    byKey.B10legend.legend_overflow > 0 ||
+    !byKey.B10legend.legend_parity_ok;
   if (hardFail) {
     console.error("FAIL: see report fields above");
     process.exit(1);

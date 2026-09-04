@@ -161,10 +161,19 @@ const sections = [
   {
     num: 14,
     title: "B9 — без разлёва: чипы касаются, но не наезжают; штрих только при дрейфе > 4 мм; подпись ≤ 10 мм от точки без лидера; источник врезки — штрихованный квадрат со стрелкой; рамочный заголовок врезки с запасом",
-    note: "v4.17.26 · <a href='toponyms-map-b9.html'>toponyms-map-b9.html</a>",
+    note: "v4.17.26 · <a href='toponyms-map-b9.html'>toponyms-map-b9.html</a> · ★ принят MG («go №14»)",
     files: [
       { label: "B9 — карта", file: have("toponyms-map-b9-map.svg"), pageW: 145 },
       { label: "B9 — легенда (83 записи, «древнейшая форма первой»)", file: have("toponyms-map-b9-legend.svg"), pageW: 145 },
+    ],
+  },
+  {
+    num: 15,
+    title: "B10 — scale_rank (черновой разряд по умолчанию): города вне ядра Руси — номера без имён (Рим, Венеция, Флоренция… — в легенде); регионы и макро — с именами; остальное как B9",
+    note: "v4.17.27 · <a href='toponyms-map-b10.html'>toponyms-map-b10.html</a> · разряды к ревью: [TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md](https://github.com/gasyoun/BookIndex/blob/main/docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md)",
+    files: [
+      { label: "B10 — карта", file: have("toponyms-map-b10-map.svg"), pageW: 145 },
+      { label: "B10 — легенда (83 записи, «древнейшая форма первой»)", file: have("toponyms-map-b10-legend.svg"), pageW: 145 },
     ],
   },
 ];
@@ -180,7 +189,7 @@ try {
 }
 const METRIC_SHEET = {
   1: "A", 2: "Bmap", 3: "C", 5: "Dmap", 6: "Dmap",
-  7: "B2map", 8: "B3map", 9: "B4map", 10: "B5map", 11: "B6map", 12: "B7map", 13: "B8map", 14: "B9map",
+  7: "B2map", 8: "B3map", 9: "B4map", 10: "B5map", 11: "B6map", 12: "B7map", 13: "B8map", 14: "B9map", 15: "B10map",
 };
 const metricRow = (num) => {
   const m = mg[METRIC_SHEET[num]];
