@@ -130,7 +130,15 @@ const DATA = JSON.parse(document.getElementById('data').textContent);
 const STAGE = {{}}; DATA.stages.forEach(s => STAGE[s.key] = s);
 const STAGE_COLOR = {{queued:'#b9ad9a',transcribed:'#9aa97f',review:'#c2a35a',read1:'#b78b4a',read2:'#a9763c',read3:'#9a6030',prelayout:'#7f6a8a',layout:'#6a7f8f',done:'#3f7a4f'}};
 const TQ_LABEL = {{ok:'готово',partial:'частично',no_audio:'без звука',unknown:'неизвестно'}};
-const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[c]));
+const safeUrl = u => {{
+  if (!u) return null;
+  try {{
+    const url = new URL(u);
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : null;
+  }} catch (e) {{
+    return null;
+  }}
+}};
 
 function firstAssignee(v) {{
   const ord = ['layout','prelayout','read3','read2','read1','review'];
@@ -155,24 +163,92 @@ const enriched = DATA.videos.map(v => ({{
 let sortK = 'stageOrder', sortDir = -1;
 const $ = id => document.getElementById(id);
 
-function rowHtml(v) {{
-  const yt = v.youtube_url ? `<a href="${{esc(v.youtube_url)}}" target="_blank" rel="noopener">YouTube</a>` : '';
-  const tx = v.links && v.links.text ? `<a href="${{esc(v.links.text)}}" target="_blank" rel="noopener">текст</a>` : '';
-  const links = [yt, tx].filter(Boolean).join(' · ');
-  const dur = v.duration_hms || '';
-  const stale = v._stale ? ' <span class="flag" title="выдано, но не сдано">⚠</span>' : '';
-  const notcat = !v.in_catalog ? ' <span class="muted" title="нет в каталоге приложения">∉</span>' : '';
-  const stageDot = `<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${{STAGE_COLOR[v.stage]||'#ccc'}};margin-right:6px"></span>`;
-  return `<tr>
-    <td>${{esc(v.title)}}${{notcat}}</td>
-    <td class="hide-sm muted">${{esc(v.theme||'')}}</td>
-    <td class="hide-sm muted">${{esc(v.priority||'')}}</td>
-    <td class="hide-sm muted">${{dur}}</td>
-    <td>${{stageDot}}${{esc(v.stageLabel)}}${{v.stage_inferred?' <span class="muted" title="стадия выведена автоматически">~</span>':''}}${{stale}}</td>
-    <td><span class="pill tq-${{esc(v.tq)}}">${{esc(TQ_LABEL[v.tq]||v.tq)}}</span></td>
-    <td class="hide-sm muted">${{esc(v.assignee||'')}}</td>
-    <td>${{links}}</td>
-  </tr>`;
+function rowRow(v) {{
+  const tr = document.createElement('tr');
+
+  const tdTitle = document.createElement('td');
+  tdTitle.textContent = v.title == null ? '' : v.title;
+  if (!v.in_catalog) {{
+    const notcat = document.createElement('span');
+    notcat.className = 'muted';
+    notcat.title = 'нет в каталоге приложения';
+    notcat.textContent = ' ∉';
+    tdTitle.appendChild(notcat);
+  }}
+  tr.appendChild(tdTitle);
+
+  const tdTheme = document.createElement('td');
+  tdTheme.className = 'hide-sm muted';
+  tdTheme.textContent = v.theme || '';
+  tr.appendChild(tdTheme);
+
+  const tdPriority = document.createElement('td');
+  tdPriority.className = 'hide-sm muted';
+  tdPriority.textContent = v.priority || '';
+  tr.appendChild(tdPriority);
+
+  const tdDur = document.createElement('td');
+  tdDur.className = 'hide-sm muted';
+  tdDur.textContent = v.duration_hms || '';
+  tr.appendChild(tdDur);
+
+  const tdStage = document.createElement('td');
+  const dot = document.createElement('span');
+  dot.style.display = 'inline-block';
+  dot.style.width = '9px';
+  dot.style.height = '9px';
+  dot.style.borderRadius = '50%';
+  dot.style.background = STAGE_COLOR[v.stage] || '#ccc';
+  dot.style.marginRight = '6px';
+  tdStage.appendChild(dot);
+  tdStage.appendChild(document.createTextNode(v.stageLabel == null ? '' : v.stageLabel));
+  if (v.stage_inferred) {{
+    const inf = document.createElement('span');
+    inf.className = 'muted';
+    inf.title = 'стадия выведена автоматически';
+    inf.textContent = ' ~';
+    tdStage.appendChild(inf);
+  }}
+  if (v._stale) {{
+    const stale = document.createElement('span');
+    stale.className = 'flag';
+    stale.title = 'выдано, но не сдано';
+    stale.textContent = ' ⚠';
+    tdStage.appendChild(stale);
+  }}
+  tr.appendChild(tdStage);
+
+  const tdTq = document.createElement('td');
+  const pill = document.createElement('span');
+  pill.className = 'pill tq-' + (v.tq || '');
+  pill.textContent = TQ_LABEL[v.tq] || v.tq || '';
+  tdTq.appendChild(pill);
+  tr.appendChild(tdTq);
+
+  const tdAssignee = document.createElement('td');
+  tdAssignee.className = 'hide-sm muted';
+  tdAssignee.textContent = v.assignee || '';
+  tr.appendChild(tdAssignee);
+
+  const tdLinks = document.createElement('td');
+  const addLink = (href, label) => {{
+    const u = safeUrl(href);
+    if (!u) return null;
+    const a = document.createElement('a');
+    a.href = u;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = label;
+    return a;
+  }};
+  const yt = addLink(v.youtube_url, 'YouTube');
+  const tx = addLink(v.links && v.links.text, 'текст');
+  if (yt) tdLinks.appendChild(yt);
+  if (yt && tx) tdLinks.appendChild(document.createTextNode(' · '));
+  if (tx) tdLinks.appendChild(tx);
+  tr.appendChild(tdLinks);
+
+  return tr;
 }}
 
 function render() {{
@@ -195,7 +271,9 @@ function render() {{
     if (typeof x === 'string') {{ x=x.toLowerCase(); y=(y||'').toLowerCase(); }}
     if (x<y) return -sortDir; if (x>y) return sortDir; return 0;
   }});
-  $('rows').innerHTML = list.map(rowHtml).join('');
+  const rows = $('rows');
+  rows.textContent = '';
+  list.forEach(v => rows.appendChild(rowRow(v)));
   $('count').textContent = `показано ${{list.length}} из ${{enriched.length}}`;
 }}
 
