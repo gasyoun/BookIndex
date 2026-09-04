@@ -2480,6 +2480,10 @@ function render() {
       legend: "page-compact",
       legendNumberAll: true,
       numberingAll: true,
+      // MG 04-09-2026 «исправь»: the legend follows the oldest-first name
+      // order the map stacks already use - the 2 rows («Бенарес · Варанаси»,
+      // «Цейлон · Шри-Ланка») now read the same on map and legend
+      displayOrder: true,
       noMap: true,
       title: false,
       stamp: B8_STAMP,

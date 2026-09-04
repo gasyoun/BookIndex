@@ -16,7 +16,7 @@
 <text x="32.00" y="261.79" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">10. Бремен — <tspan font-style="italic">стр.</tspan> 61</tspan></text>
 <text x="32.00" y="274.19" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">11. Британия — <tspan font-style="italic">стр.</tspan> 82</tspan></text>
 <text x="32.00" y="286.58" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">12. Британские острова — <tspan font-style="italic">стр.</tspan> 60</tspan></text>
-<text x="32.00" y="298.97" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">13. Бенарес · Варанаси — <tspan font-style="italic">стр.</tspan> 124</tspan></text>
+<text x="32.00" y="298.97" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">13. Варанаси · Бенарес — <tspan font-style="italic">стр.</tspan> 124</tspan></text>
 <text x="32.00" y="311.36" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">14. ● Великороссия — <tspan font-style="italic">стр.</tspan> 199-200</tspan></text>
 <text x="32.00" y="323.75" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">15. ● Венгрия — <tspan font-style="italic">стр.</tspan> 27, 135</tspan></text>
 <text x="32.00" y="336.15" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">16. Венеция — <tspan font-style="italic">стр.</tspan> 181</tspan></text>
@@ -86,6 +86,6 @@
 <text x="290.00" y="695.31" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">80. ● Чернигов — <tspan font-style="italic">стр.</tspan> 57, 179</tspan></text>
 <text x="290.00" y="707.70" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">81. ● Швеция — <tspan font-style="italic">стр.</tspan> 58, 248, 269</tspan></text>
 <text x="290.00" y="720.10" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">82. Шлиссельбург — <tspan font-style="italic">стр.</tspan> 269</tspan></text>
-<text x="290.00" y="732.49" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">83. Цейлон · Шри-Ланка — <tspan font-style="italic">стр.</tspan> 173-174</tspan></text>
+<text x="290.00" y="732.49" font-size="8.4" fill="#111111"><tspan x="290.00" dy="0">83. Шри-Ланка · Цейлон — <tspan font-style="italic">стр.</tspan> 173-174</tspan></text>
 <text x="32" y="780.00" font-size="7.6" fill="#33302b">Залитый маркер — обсуждается в книге, контурный — упоминается; штриховой контур — Русь, Византия, Восток · номер строки = номер на карте</text><text x="32" y="789.00" font-size="7.6" fill="#33302b">Штриховой ареал — языковая зона · пунктирное кольцо — условное расположение («Велесова книга») · «—» — без страниц</text><text x="32" y="798.00" font-size="7.4" fill="#55524c">Основа: Natural Earth (public domain) · коническая конформная проекция</text>
 </svg>
