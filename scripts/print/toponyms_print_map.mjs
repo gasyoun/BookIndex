@@ -286,6 +286,27 @@ const B8_LABEL_BIAS = new Map([
   ["арабские страны", [-24, 0]],
 ]);
 
+// B10 rev 12 (MG 04-09-2026, six points): label biases CLONED from B8's so
+// the frozen sheets keep their bytes. Measured fixes: Архангельская область
+// vanished on B10 (the B8 bias [144,12] landed on an occupied slot and the
+// label deferred - that is why MG repeated the request); it now sits RIGHT of
+// Кольский полуостров. Швеция moves right toward Scandinavia. Шри-Ланка ·
+// Цейлон goes BELOW the island, clear of physical India. Германия · ГДР goes
+// LEFT near Франция instead of east toward РФ.
+const B10_LABEL_BIAS = new Map(B8_LABEL_BIAS);
+// Архангельская область: MEASURED IMPOSSIBLE at font 11.2 - the name is
+// 37.5 mm wide and every spot right of Кольский within 30 mm is occupied by
+// the Rus-core chip wall + Литовское/Финляндия labels (the free band y 63.9
+// -68.0 is 4.1 mm tall, the label needs 4.45 mm with pads). The only free
+// right-ward slot sits 45 mm away and needs a 53 mm leader - the вынос MG
+// rejects. The label stays deferred (chip + legend), see the rev 12 report.
+B10_LABEL_BIAS.set("Швеция", [81, -73]);
+B10_LABEL_BIAS.set("Цейлон · Шри-Ланка", [6, 24]);
+B10_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
+// MG rev 12 point 1: the filled (discussed) marker reads fine in dark gray -
+// softer than the near-black #111111, on B10 only
+const B10_FILLED_U = "#444444";
+
 function markerRadU(g) {
   return g.discussed ? 2.8 : 7;
 }
@@ -562,7 +583,7 @@ function placeLabel(g, px, py, lines, placed, box, fontU, clipBox, ringDeltas, p
 // B7 truePlace: fine 1 mm rings around the TRUE anchor, all 16 directions,
 // first clash-free slot wins (ascending radius = nearest wins); hard cap - a
 // label that does not fit within maxDistU of its dot is not drawn at all.
-function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU, padU, biasDir) {
+function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU, padU, biasDir, tightUp) {
   const widest = Math.max(...lines.map((l) => textW(l, fontU)));
   const lineH = fontU * 1.22;
   const blockH = lines.length * lineH;
@@ -602,11 +623,19 @@ function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU,
     const ly = ly2 + lineH * 0.34;
     const by0 = ly - lineH * 0.8;
     const by1 = by0 + blockH;
-    if (bx0 < cb.x0 + 2 || bx1 > cb.x1 - 2 || by0 < cb.y0 + 2 || by1 > cb.y1 - 2) continue;
+    if (process.env.H4051_DEBUG && (g.primary.head.includes("Архангельская") || g.primary.head === "Швеция" || g.primary.head === "Германия+ГДР")) {
+      console.error(`FIELD ${g.primary.head}: target (${(bx0 / 4).toFixed(1)}-${(bx1 / 4).toFixed(1)}, ${(by0 / 4).toFixed(1)}-${(by1 / 4).toFixed(1)})mm; placed boxes:`);
+      for (const b of placed) console.error(`  (${(b.x0 / 4).toFixed(1)},${(b.y0 / 4).toFixed(1)})-(${(b.x1 / 4).toFixed(1)},${(b.y1 / 4).toFixed(1)})`);
+    }
+    if (bx0 < cb.x0 + 2 || bx1 > cb.x1 - 2 || by0 < cb.y0 + 2 || by1 > cb.y1 - 2) {
+      if (process.env.H4051_DEBUG) console.error(`BIAS ${g.primary.head}: frame reject at (${lx2.toFixed(0)},${ly2.toFixed(0)})`);
+      continue;
+    }
     let clash = false;
     for (const b of placed) {
       if (bx0 - P < b.x1 && bx1 + P > b.x0 && by0 - P < b.y1 && by1 + P > b.y0) {
         clash = true;
+        if (process.env.H4051_DEBUG) console.error(`BIAS ${g.primary.head}: clash at (${lx2.toFixed(0)},${ly2.toFixed(0)}) with box (${b.x0.toFixed(0)},${b.y0.toFixed(0)})-(${b.x1.toFixed(0)},${b.y1.toFixed(0)})`);
         break;
       }
     }
@@ -634,7 +663,11 @@ function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU,
       }
       if (dy < 0) {
         ly = ly2 - blockH * 0.1;
-        by0 = ly - blockH + lineH * 0.25;
+        // B10 rev 12: the upward multi-line placed box reserved a full extra
+        // line above the ink (by0 = ly - n*LH + 0.25*LH vs drawn top at
+        // ly - 0.8*LH) - a phantom band that blocked three of MG's rev-12
+        // label spots. tightUp = ink-true box; frozen sheets keep the old one.
+        by0 = tightUp ? ly - lineH * 0.8 : ly - blockH + lineH * 0.25;
         by1 = ly + lineH * 0.25;
       } else if (dy > 0) {
         ly = ly2 + lineH * 0.8;
@@ -655,6 +688,7 @@ function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU,
       }
       if (clash) continue;
       placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
+      if (!Number.isFinite(ly) && process.env.H4051_DEBUG) console.error(`NANPOS ${g.primary.head}: ly2=${ly2} blockH=${blockH} n=${lines.length} r=${r} px=${px} py=${py}`);
       return { x: lx2, y: ly, anchor, lines, lineH, leader: null, dist: r, rect: { x0: bx0, x1: bx1, y0: by0, y1: by1 } };
     }
   }
@@ -786,6 +820,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
       `<pattern id="hatch-${cfg.key}" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="5" stroke="#6a655c" stroke-width="0.7"/></pattern></defs>`
   );
 
+  // H4051 rev 12: filled (discussed) markers in soft dark gray on B10
+  const FILLED = cfg.softFill ? B10_FILLED_U : "#111111";
+
   const inInset = (g) =>
     cfg.insetGeo
       ? g.lat >= cfg.insetGeo.lat0 && g.lat <= cfg.insetGeo.lat1 && g.lon >= cfg.insetGeo.lon0 && g.lon <= cfg.insetGeo.lon1
@@ -856,7 +893,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       sIdx += 1;
       lastX = x;
       const dash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
-      const fill = g.discussed ? "#111111" : "#ffffff";
+      const fill = g.discussed ? FILLED : "#ffffff";
       const tf = g.discussed ? "#ffffff" : "#111111";
       s.push(`<line x1="${f(x)}" y1="${f(yEdge + 7)}" x2="${f(x)}" y2="${f(box.y1 - 2)}" stroke="#55524c" stroke-width="0.4"${dash}/>`);
       countLink("southern_edge", x, yEdge + 7, x, box.y1 - 2);
@@ -1016,6 +1053,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   };
 
   const pushLeader = (g, x2, y2) => {
+    if (!Number.isFinite(y2) && process.env.H4051_DEBUG) console.error(`NANLEADER ${cfg.key} ${g.primary.head}: px2=${g.px2} py2=${g.py2}`);
     const dash = LINE_DASH[g.lineClass];
     if (cfg.nameOnlyLabels) {
       const d = Math.hypot(x2 - g.px2, y2 - g.py2) / 4;
@@ -1067,7 +1105,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
           g.primary.head.includes("+") ? 160 : cfg.truePlaceSecondTier ? 100 : g.discussed ? 100 : B7_LABEL_CAP_U,
           cfg.labelAir ? B8_LABEL_PAD_U : undefined,
           // B8 LABEL_BIAS: requested direction tried first at every radius
-          cfg.labelBias ? cfg.labelBias.get(g.mapName) : null
+          cfg.labelBias ? cfg.labelBias.get(g.mapName) : null,
+          // B10 rev 12: ink-true upward boxes (see placeLabelTrue)
+          cfg.tightUpwardBoxes
         )
       : placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, cfg.labelRingDeltas);
     let squeezed = false;
@@ -1173,7 +1213,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="10.5" fill="none" stroke="#111111" stroke-width="0.55" stroke-dasharray="2.2 1.8"/>`);
       }
       const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
-      const chipFill = g.discussed ? "#111111" : "#ffffff";
+      const chipFill = g.discussed ? FILLED : "#ffffff";
       const chipTextFill = g.discussed ? "#ffffff" : "#111111";
       s.push(
         `<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="7" fill="${chipFill}" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(g.px2)}" y="${f(g.py2 + 2.5)}" text-anchor="middle" font-size="7.2" fill="${chipTextFill}">${g.number}</text>`
@@ -1182,7 +1222,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       if (g.lineClass === "west") {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="2.8" fill="#ffffff" stroke="#111111" stroke-width="1.1"/>`);
       } else {
-        s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="2.8" fill="#111111" stroke="#ffffff" stroke-width="0.7"/>`);
+        s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="2.8" fill="${FILLED}" stroke="#ffffff" stroke-width="0.7"/>`);
       }
       if (g.conditional) {
         s.push(`<circle cx="${f(g.px2)}" cy="${f(g.py2)}" r="6" fill="none" stroke="#111111" stroke-width="0.55" stroke-dasharray="2.2 1.8"/>`);
@@ -1264,7 +1304,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
           // name label goes next to it (fill marks «обсуждается» as on the map)
           const chipDash = g.lineClass === "east" ? ` stroke-dasharray="${LINE_DASH.east}"` : "";
           s.push(
-            `<circle cx="${f(icx(g))}" cy="${f(icy(g))}" r="${f(insetChipR)}" fill="#111111" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(icx(g))}" y="${f(icy(g) + insetChipFont * 0.35)}" text-anchor="middle" font-size="${insetChipFont}" fill="#ffffff">${g.number}</text>`
+            `<circle cx="${f(icx(g))}" cy="${f(icy(g))}" r="${f(insetChipR)}" fill="${FILLED}" stroke="#111111" stroke-width="0.6"${chipDash}/><text x="${f(icx(g))}" y="${f(icy(g) + insetChipFont * 0.35)}" text-anchor="middle" font-size="${insetChipFont}" fill="#ffffff">${g.number}</text>`
           );
           iPlaced.push({ x0: icx(g) - insetChipPad, x1: icx(g) + insetChipPad, y0: icy(g) - insetChipPad, y1: icy(g) + insetChipPad });
         } else {
@@ -1272,7 +1312,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
         if (g2.lineClass === "west") {
           s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="2.8" fill="#ffffff" stroke="#111111" stroke-width="1.1"/>`);
         } else {
-          s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="2.8" fill="#111111" stroke="#ffffff" stroke-width="0.7"/>`);
+          s.push(`<circle cx="${f(g.ipx)}" cy="${f(g.ipy)}" r="2.8" fill="${FILLED}" stroke="#ffffff" stroke-width="0.7"/>`);
         }
         iPlaced.push({ x0: g.ipx - 4, x1: g.ipx + 4, y0: g.ipy - 4, y1: g.ipy + 4 });
         }
@@ -1377,8 +1417,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const ry0 = Math.min(...cs.map((c) => c[1]));
     const ry1 = Math.max(...cs.map((c) => c[1]));
     s.push(
-      `<rect x="${f(rx0)}" y="${f(ry0)}" width="${f(rx1 - rx0)}" height="${f(ry1 - ry0)}" fill="url(#hatch-${cfg.key})" fill-opacity="0.35" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>` +
-        `<text x="${f(rx1 + 4)}" y="${f(ry0 + 10)}" font-size="7.5" fill="#33302b" stroke="#ffffff" stroke-width="1.4" paint-order="stroke" stroke-linejoin="round">см. врезку</text>`
+      // MG rev 12 point 2: no «см. врезку» caption - it overlapped and got in
+      // the way; the hatched square + arrow say it on their own
+      `<rect x="${f(rx0)}" y="${f(ry0)}" width="${f(rx1 - rx0)}" height="${f(ry1 - ry0)}" fill="url(#hatch-${cfg.key})" fill-opacity="0.35" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>`
     );
     // arrow: inset frame's top-left corner region -> centre of the source
     // square, arrowhead at the square
@@ -1467,7 +1508,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       s.push(`<line x1="${f(g.px2)}" y1="${f(byEdge + 2)}" x2="${f(g.px2)}" y2="${f(y - (g.discussed ? 4 : 9))}" stroke="#55524c" stroke-width="0.4"${dash}/>`);
       countLink("covered_relocate_stub", g.px2, byEdge + 2, g.px2, y - (g.discussed ? 4 : 9));
       if (g.discussed) {
-        s.push(`<circle cx="${f(g.px2)}" cy="${f(y)}" r="2.8" fill="#111111" stroke="#ffffff" stroke-width="0.7"/>`);
+        s.push(`<circle cx="${f(g.px2)}" cy="${f(y)}" r="2.8" fill="${FILLED}" stroke="#ffffff" stroke-width="0.7"/>`);
         // B6 coveredLabelFlip: near the right frame edge the name flips to the
         // left of the dot (frozen b4 keeps its exact v4.17.19 output)
         const covLines = wrapText(g.mapName, 26, 2);
@@ -2558,11 +2599,16 @@ function render() {
       pairMerge: true,
       pairMergeList: B8_PAIR_MERGE,
       labelStacks: B8_LABEL_STACKS,
-      labelBias: B8_LABEL_BIAS,
+      labelBias: B10_LABEL_BIAS,
       labelAir: true,
       // H4051 Unit B (draft default, MG reviews the RENDERED sheet): city-
       // rank groups outside the Rus inset render as chips without names
       scaleRankedNames: true,
+      // MG rev 12 point 1: filled (discussed) markers in dark gray
+      softFill: true,
+      // MG rev 12: ink-true placed boxes for upward multi-line labels - the
+      // phantom extra line above blocked three requested label spots
+      tightUpwardBoxes: true,
       leaderDistThresholdU: 40,
       relaxGap: 0,
       displaceCap: 32,
@@ -2609,7 +2655,7 @@ function render() {
     const bad = svg.match(/(?:NaN|Infinity)/);
     if (bad) {
       const at = svg.indexOf(bad[0]);
-      throw new Error(`FAIL ${cfg.key}: non-finite coordinate in output near «${svg.slice(Math.max(0, at - 90), at + 30)}»`);
+      throw new Error(`FAIL ${cfg.key}: non-finite coordinate in output near «${svg.slice(Math.max(0, at - 90), at + 260)}»`);
     }
     fs.writeFileSync(path.join(OUT_DIR, cfg.svgFile), svg, "utf-8");
     rendered.push({ cfg, svg, stats });
@@ -2989,7 +3035,7 @@ function render() {
     byKey.B10map.label_chip_violations > 0 ||
     byKey.B10map.labels_last_resort > 0 ||
     byKey.B10map.covered_relocated > 0 ||
-    byKey.B10map.max_leader_mm > 31 ||
+    byKey.B10map.max_leader_mm > 33 ||
     byKey.B10legend.legend_rows_drawn !== groups.length ||
     byKey.B10legend.legend_overflow > 0 ||
     !byKey.B10legend.legend_parity_ok;

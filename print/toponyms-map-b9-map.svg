@@ -160,7 +160,7 @@
 <text x="311.33" y="543.32" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="311.33" dy="0">Ирак</tspan></text>
 <text x="165.73" y="551.91" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="165.73" dy="0">Фест</tspan></text>
 </g>
-<rect x="221.22" y="336.70" width="41.75" height="49.11" fill="url(#hatch-B9map)" fill-opacity="0.35" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/><text x="266.97" y="346.70" font-size="7.5" fill="#33302b" stroke="#ffffff" stroke-width="1.4" paint-order="stroke" stroke-linejoin="round">см. врезку</text>
+<rect x="221.22" y="336.70" width="41.75" height="49.11" fill="url(#hatch-B9map)" fill-opacity="0.35" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>
 <line x1="264.00" y1="592.00" x2="242.95" y2="370.21" stroke="#33302b" stroke-width="0.9"/>
 <path d="M 242.09 361.25 L 246.71 369.86 L 239.18 370.57 Z" fill="#33302b"/>
 <rect x="216.00" y="592.00" width="208.00" height="216.00" fill="#ffffff"/>
