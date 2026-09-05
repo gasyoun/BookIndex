@@ -234,7 +234,7 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
-const B9_STAMP = "вариант B9 · v4.17.28 · 05-09-2026";
+const B9_STAMP = "вариант B9 · v4.17.29 · 05-09-2026";
 // sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
 // except city-rank groups outside the Rus inset render as numbered chips
 // WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
@@ -242,7 +242,7 @@ const B9_STAMP = "вариант B9 · v4.17.28 · 05-09-2026";
 // classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
 // review visually; the table lives in
 // docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
-const B10_STAMP = "вариант B10 · v4.17.28 · 05-09-2026";
+const B10_STAMP = "вариант B10 · v4.17.29 · 05-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -328,19 +328,22 @@ B9_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
 // RESERVED before the label walk (fail-loud on frame/clash), so no re-flow
 // can silently re-derive them - the «Кольский переехал левее» regression
 // class dies here.
+// H4144 (MG 05-09-2026, ruling verbatim: «Глобальный решатель»): the
+// fifth-round cluster IS pinned and the new globalPlace pass hill-climbs
+// every other label so the greedy cascade never happens. Pin values derive
+// from the LABELDOT dump: text_y = dot_y + dy + 0.34*lineH (lineH 13.664).
+// Кольский/Финляндия back at the v1 heights (spec-exact), РФ frozen at its
+// chip-obstacle boundary, Арх moved north of РФ (its old slot is walled by
+// Северный Урал's dot 299.13,321.16; the arrow is EXACTLY 25.0 mm),
+// Литовское keeps spec x (249.45) right of BOTH pair dots, Крым pinned in
+// the Чёрное море - the only chip-clear pocket (the western sea is walled).
 const NORTH_LABEL_PINS = new Map([
-  ["Кольский полуостров", { dx: 126, dy: 47, noLeader: true }],
-  ["Архангельская область", { dx: 103, dy: -2 }],
-  ["Финляндия", { dx: 166, dy: 42, noLeader: true }],
+  ["Кольский полуостров", { dx: 126, dy: 41, noLeader: true }],
+  ["Архангельская область", { dx: 39.66, dy: -91.92 }],
+  ["Финляндия", { dx: 104, dy: 35, noLeader: true }],
   ["Российская Федерация · Россия", { dx: 78, dy: 20 }],
-  // H4120 (05-09-2026): a fifth-round pin wave (trio to v1 heights +
-  // Литовское/Крым pins) was BUILT and MEASURED, then withdrawn: every
-  // feasible arrangement drops 1-4 accepted names (Швеция, Северный Урал,
-  // Вятская губерния, Ирак/Пакистан - their only slots are the ones the
-  // trio needs; РФ@{78,20} is immovable at its own chip-obstacle boundary
-  // and Северный Урал's dot (299.13,321.16) walls the corridor). Full
-  // numbers in the H4120 close summary. Unblocks only via an MG ruling
-  // (which names may drop / move) or a global label solver.
+  ["Литовское княжество Великое · Литва", { dx: 32.34, dy: -97.53 }],
+  ["Крым", { dx: 33.25, dy: 29.5 }],
 ]);
 // B9/B10-only stacks: the stack map is shared with the frozen B8 config, so
 // the Архангельская two-line stack goes into a clone - B8 keeps its bytes.
@@ -626,29 +629,31 @@ function placeLabel(g, px, py, lines, placed, box, fontU, clipBox, ringDeltas, p
 // B7 truePlace: fine 1 mm rings around the TRUE anchor, all 16 directions,
 // first clash-free slot wins (ascending radius = nearest wins); hard cap - a
 // label that does not fit within maxDistU of its dot is not drawn at all.
+// H4144: the direction set is shared with the global solver (TRUE_DIRS).
+const TRUE_DIRS = [
+  [1, 0, "start"],
+  [-1, 0, "end"],
+  [0, -1, "middle"],
+  [0, 1, "middle"],
+  [1, -1, "start"],
+  [-1, -1, "end"],
+  [1, 1, "start"],
+  [-1, 1, "end"],
+  [1, -0.45, "start"],
+  [-1, -0.45, "end"],
+  [1, 0.45, "start"],
+  [-1, 0.45, "end"],
+  [0.45, -1, "middle"],
+  [-0.45, -1, "middle"],
+  [0.45, 1, "middle"],
+  [-0.45, 1, "middle"],
+];
 function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU, padU, biasDir, tightUp) {
   const widest = Math.max(...lines.map((l) => textW(l, fontU)));
   const lineH = fontU * 1.22;
   const blockH = lines.length * lineH;
   const startR = markerRadU(g) + 4;
-  const dirs = [
-    [1, 0, "start"],
-    [-1, 0, "end"],
-    [0, -1, "middle"],
-    [0, 1, "middle"],
-    [1, -1, "start"],
-    [-1, -1, "end"],
-    [1, 1, "start"],
-    [-1, 1, "end"],
-    [1, -0.45, "start"],
-    [-1, -0.45, "end"],
-    [1, 0.45, "start"],
-    [-1, 0.45, "end"],
-    [0.45, -1, "middle"],
-    [-0.45, -1, "middle"],
-    [0.45, 1, "middle"],
-    [-0.45, 1, "middle"],
-  ];
+  const dirs = TRUE_DIRS;
   // B8 LABEL_BIAS: the requested spots are tried BEFORE the ring walk (see
   // biasList below) - the ring walk itself always uses the standard dirs
   const cb = clipBox || box;
@@ -1110,7 +1115,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
       const d = Math.hypot(x2 - g.px2, y2 - g.py2) / 4;
       stats.max_leader_mm = Math.max(stats.max_leader_mm || 0, d);
     }
-    leaders.push({ x1: g.px2, y1: g.py2, x2, y2, dash });
+    const obj = { x1: g.px2, y1: g.py2, x2, y2, dash };
+    leaders.push(obj);
+    return obj; // H4144: the solver re-targets moved labels' leaders
   };
 
   // B4: main-map chips/labels whose dots fall under the inset overlay
@@ -1133,6 +1140,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
   // the bias-branch box exactly; a pin that does not fit is a build error,
   // never a silent fallback (that fallback is the bug being fixed).
   const pinned = new Map();
+  // H4144 global solver: per-label walk context (leader object + squeeze
+  // flags) so the pass can re-target leaders after moving a label
+  const leaderTags = cfg.globalPlace ? new Map() : null;
   if (cfg.labelPins) {
     for (const [name, pin] of cfg.labelPins) {
       const entry = mainLabeled.find(({ g }) => g.mapName === name);
@@ -1268,12 +1278,126 @@ function renderSheet(cfg, world, landObj, groups, total) {
       // MG rejects and the straight lines would run through neighbor chips.
       const pinSkipLeader = pos.noLeader === true && !squeezed && !squeezed3 && !g.anchorPx && !g.displaced;
       const leaderDist = cfg.leaderDistThresholdU ?? 24;
+      let leaderObj = null;
       if (!pinSkipLeader && (squeezed || squeezed3 || g.anchorPx || Math.hypot(lx - g.px2, pos.y - g.py2) > leaderDist || g.displaced)) {
-        pushLeader(g, lx, pos.y - 2);
+        leaderObj = pushLeader(g, lx, pos.y - 2);
       }
+      if (leaderTags) leaderTags.set(g, { leaderObj, pinSkipLeader, squeezed, squeezed3 });
       if (squeezed3 || (squeezed && !cfg.cleanSlotsOnly)) stats.labels_last_resort += 1;
       else if (squeezed) stats.labels_squeezed += 1;
       else if (cfg.truePlace && pos && pos.dist > B7_LABEL_CAP_U) stats.labels_squeezed += 1;
+    }
+  }
+
+  // H4144 global label solver: the greedy walk places each label into the
+  // FIRST clean slot it sees, so moving one label re-rolls every later one
+  // (the H4120 bisection measured 12-14-label cascades reaching the Indian
+  // Ocean). This pass keeps the walk's result only as an INITIALIZATION and
+  // then hill-climbs: each label (fixed width-desc order, pinned excluded)
+  // is re-evaluated against ALL other boxes at once and moves only on a
+  // strict total-cost improvement. Deterministic: no randomness, fixed
+  // iteration order, ties keep the current slot; two runs render byte-ident
+  // SVGs. Far labels keep their slots (their cost is already ~0), so the
+  // cascade dies at the root instead of being frozen pin by pin.
+  if (cfg.globalPlace) {
+    const P = cfg.labelAir ? B8_LABEL_PAD_U : 2.5;
+    const movable = labels.filter((l) => !pinned.has(l.g));
+    const ownPlaced = new Map();
+    for (const l of movable) {
+      ownPlaced.set(l, placed.find((b) => Math.abs(b.x0 - (l.rect.x0 - P)) < 1e-6 && Math.abs(b.x1 - (l.rect.x1 + P)) < 1e-6 && Math.abs(b.y0 - (l.rect.y0 - P)) < 1e-6 && Math.abs(b.y1 - (l.rect.y1 + P)) < 1e-6) || null);
+    }
+    // chip obstacle boxes are HARD: the label_chip_violations gate is binary,
+    // so a candidate overlapping a chip's ±10 box costs a prohibitive penalty
+    const chipBoxSet = new Set();
+    if (cfg.chipObstacles) {
+      const pad = cfg.labelAir ? 10 : cfg.truePlace ? 9 : cfg.numberAll ? 11 : 11;
+      for (const g of onMap) {
+        const b = placed.find((q) => Math.abs(q.x0 - (g.px2 - pad)) < 1e-6 && Math.abs(q.x1 - (g.px2 + pad)) < 1e-6 && Math.abs(q.y0 - (g.py2 - pad)) < 1e-6 && Math.abs(q.y1 - (g.py2 + pad)) < 1e-6);
+        if (b) chipBoxSet.add(b);
+      }
+    }
+    const geomOf = (l, anchor, lx2, ly2, dy, tightUp, widest, lineH, blockH) => {
+      let bx0, bx1, by0, by1, ly;
+      if (anchor === "start") { bx0 = lx2; bx1 = lx2 + widest; }
+      else if (anchor === "end") { bx0 = lx2 - widest; bx1 = lx2; }
+      else { bx0 = lx2 - widest / 2; bx1 = lx2 + widest / 2; }
+      if (dy < 0) { ly = ly2 - blockH * 0.1; by0 = tightUp ? ly - lineH * 0.8 : ly - blockH + lineH * 0.25; by1 = ly + lineH * 0.25; }
+      else if (dy > 0) { ly = ly2 + lineH * 0.8; by0 = ly - lineH * 0.8; by1 = by0 + blockH; }
+      else { ly = ly2 + lineH * 0.34; by0 = ly - lineH * 0.8; by1 = by0 + blockH; }
+      return { x: lx2, y: ly, anchor, bx0, bx1, by0, by1 };
+    };
+    const costOf = (rect, others) => {
+      let c = 0;
+      for (const b of others) {
+        const ox = Math.min(rect.x1 + P, b.x1) - Math.max(rect.x0 - P, b.x0);
+        const oy = Math.min(rect.y1 + P, b.y1) - Math.max(rect.y0 - P, b.y0);
+        if (ox > 0 && oy > 0) c += chipBoxSet.has(b) ? 1e6 + ox * oy : (ox * oy) / 10000;
+      }
+      return c;
+    };
+    const distCost = (l, x, y) => {
+      const d = Math.hypot(x - l.g.px, y - l.g.py);
+      return d > B7_LABEL_CAP_U ? (d - B7_LABEL_CAP_U) * 0.05 : 0;
+    };
+    let stats_solver_moves = 0;
+    for (let sweep = 0; sweep < 10; sweep++) {
+      let moved = 0;
+      for (const l of movable) {
+        const own = ownPlaced.get(l);
+        const others = own ? placed.filter((b) => b !== own) : placed;
+        const widest = Math.max(...l.lines.map((t) => textW(t, LABEL_FONT_U)));
+        const lineH = l.lineH;
+        const blockH = l.lines.length * lineH;
+        const tightUp = !!cfg.tightUpwardBoxes;
+        const startR = markerRadU(l.g) + 4;
+        const maxDist = l.g.primary.head.includes("+") ? 160 : cfg.truePlaceSecondTier ? 100 : B7_LABEL_CAP_U;
+        const cands = [{ x: l.x, y: l.y, anchor: l.anchor, rect: { ...l.rect }, dy: 0 }];
+        for (let r = startR; r <= maxDist; r += B7_TRUE_RING_STEP) {
+          for (const [dx, dy, anchor] of TRUE_DIRS) {
+            const len = Math.hypot(dx, dy) || 1;
+            const lx2 = dx !== 0 ? l.g.px + (dx / len) * r : l.g.px;
+            const ly2 = dy !== 0 ? l.g.py + (dy / len) * r : l.g.py;
+            const gm = geomOf(l, anchor, lx2, ly2, dy, tightUp, widest, lineH, blockH);
+            if (gm.bx0 < box.x0 + 2 || gm.bx1 > box.x1 - 2 || gm.by0 < box.y0 + 2 || gm.by1 > box.y1 - 2) continue;
+            cands.push({ x: gm.x, y: gm.y, anchor, rect: { x0: gm.bx0, x1: gm.bx1, y0: gm.by0, y1: gm.by1 }, dy });
+          }
+        }
+        const baseCost = costOf(l.rect, others) + distCost(l, l.x, l.y);
+        let best = null;
+        for (const c of cands) {
+          const cost = costOf(c.rect, others) + distCost(l, c.x, c.y);
+          if (cost < baseCost - 1e-9 && (!best || cost < best.cost)) best = { ...c, cost };
+        }
+        if (best) {
+          l.x = best.x; l.y = best.y; l.anchor = best.anchor;
+          l.rect = best.rect;
+          l.dist = Math.hypot(best.x - l.g.px, best.y - l.g.py);
+          if (own) { own.x0 = best.rect.x0 - P; own.x1 = best.rect.x1 + P; own.y0 = best.rect.y0 - P; own.y1 = best.rect.y1 + P; }
+          moved += 1; stats_solver_moves += 1;
+        }
+      }
+      if (!moved) break;
+    }
+    stats.solver_moves = stats_solver_moves;
+    // leaders re-targeted to the FINAL anchor edges; the tier rule re-applied
+    for (const l of labels) {
+      const tag = leaderTags && leaderTags.get(l.g);
+      if (!tag) continue; // pinned labels keep their reserved leader state
+      const lx = cfg.nameOnlyLabels ? l.x : l.anchor === "end" ? l.x - textW(l.lines[0], LABEL_FONT_U) : l.anchor === "middle" ? l.x - textW(l.lines[0], LABEL_FONT_U) / 2 : l.x;
+      const leaderDist = cfg.leaderDistThresholdU ?? 24;
+      const want = !tag.pinSkipLeader && (tag.squeezed || tag.squeezed3 || l.g.anchorPx || Math.hypot(lx - l.g.px2, l.y - l.g.py2) > leaderDist || l.g.displaced);
+      if (tag.leaderObj && want) { tag.leaderObj.x2 = lx; tag.leaderObj.y2 = l.y - 2; }
+      else if (tag.leaderObj && !want) { leaders.splice(leaders.indexOf(tag.leaderObj), 1); tag.leaderObj = null; }
+      else if (!tag.leaderObj && want) { tag.leaderObj = pushLeader(l.g, lx, l.y - 2); }
+    }
+    // max_leader honest recompute from the FINAL leader geometry
+    stats.max_leader_mm = 0;
+    for (const l of labels) {
+      const tag = leaderTags && leaderTags.get(l.g);
+      if (tag && tag.leaderObj) {
+        const d = Math.hypot(tag.leaderObj.x2 - l.g.px2, tag.leaderObj.y2 - l.g.py2) / 4;
+        stats.max_leader_mm = Math.max(stats.max_leader_mm, d);
+      }
     }
   }
 
@@ -2637,6 +2761,10 @@ function render() {
       labelBias: B9_LABEL_BIAS,
       labelPins: NORTH_LABEL_PINS,
       labelAir: true,
+      // H4144 (MG ruling «Глобальный решатель»): the post-walk hill-climb -
+      // every drawn label re-evaluated against all boxes, strict-improve
+      // moves only; kills the greedy cascade at the root
+      globalPlace: true,
       // MG rev 12 point 1 ported to B9 (live accepted variant, not just B10)
       softFill: true,
       // B9 leader policy (MG tiers): no leader within 10 mm of the dot;
@@ -2714,6 +2842,8 @@ function render() {
       labelBias: B10_LABEL_BIAS,
       labelPins: NORTH_LABEL_PINS,
       labelAir: true,
+      // H4144 (MG ruling «Глобальный решатель»): same as B9
+      globalPlace: true,
       // H4051 Unit B (draft default, MG reviews the RENDERED sheet): city-
       // rank groups outside the Rus inset render as chips without names
       scaleRankedNames: true,

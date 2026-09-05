@@ -3,7 +3,7 @@
 <defs><clipPath id="map-clip-B9legend"><rect x="0.00" y="0.00" width="580.00" height="860.00"/></clipPath><pattern id="hatch-B9legend" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="5" stroke="#6a655c" stroke-width="0.7"/></pattern></defs>
 <rect x="24.00" y="24.00" width="532.00" height="812.00" fill="none" stroke="#111111" stroke-width="1.6"/><rect x="29.00" y="29.00" width="522.00" height="802.00" fill="none" stroke="#111111" stroke-width="0.45"/>
 <text x="32" y="80.00" font-size="13.5" font-weight="bold" fill="#111111">Легенда: топонимы по номерам</text><text x="548" y="104.00" text-anchor="end" font-size="8.2" fill="#33302b">залитый номер — обсуждается в книге · контурный — упоминается</text>
-<text x="548" y="80.00" text-anchor="end" font-size="7.2" fill="#55524c">вариант B9 · v4.17.28 · 05-09-2026</text>
+<text x="548" y="80.00" text-anchor="end" font-size="7.2" fill="#55524c">вариант B9 · v4.17.29 · 05-09-2026</text>
 <text x="32.00" y="128.00" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">1. Англия — <tspan font-style="italic">стр.</tspan> 82</tspan></text>
 <text x="32.00" y="140.39" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">2. Апеннинский полуостров — <tspan font-style="italic">стр.</tspan> 192</tspan></text>
 <text x="32.00" y="152.78" font-size="8.4" fill="#111111"><tspan x="32.00" dy="0">3. ● арабские страны — <tspan font-style="italic">стр.</tspan> 192, 210-211,</tspan><tspan x="32.00" dy="11.13">222-223</tspan></text>
