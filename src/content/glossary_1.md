@@ -8,6 +8,8 @@ source_index: 0
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Маленькое слово, у которого нет своего ударения и которое «прилипает» к предыдущему слову. В русском это «же», «ли», «бы»: в фразе «как же так» «же» произносится вместе с «как» как одно слово.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D1%8D%D0%BD%D0%BA%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0"
 }
 ```
+
+_Dr. Mārcis Gasūns_

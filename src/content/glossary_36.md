@@ -8,6 +8,8 @@ source_index: 35
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Морфологическая модель глагола в арабском языке. Всего пород около пятнадцати, и каждая придает корню свое значение: одна — «делать», другая — «заставлять делать», третья — «быть сделанным».
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%B0%D1%80%D0%B0%D0%B1%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BF%D0%BE%D1%80%D0%BE%D0%B4%D0%B0"
 }
 ```
+
+_Dr. Mārcis Gasūns_

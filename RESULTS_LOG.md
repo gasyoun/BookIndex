@@ -1,6 +1,6 @@
 # Results log
 
-_Created: 24-07-2026 · Last updated: 03-09-2026_
+_Created: 24-07-2026 · Last updated: 05-09-2026_
 
 ## H4028 — соответствия циклов сняты из печати, Полоса 5 = библиография (03-09-2026, вечер)
 
@@ -18,7 +18,7 @@ _Created: 24-07-2026 · Last updated: 03-09-2026_
 
 ## H4024 — карта соседств ЛЛШ перепроверена перед печатью (03-09-2026)
 
-Вопрос МГ накануне печати: «пять докладов на „О жизни слов“ — это точно?» Сверка каждой строки с [22-crosswalk.json](data/modules/22-crosswalk.json) (статусы после гейта v4):
+Вопрос МГ накануне печати: «пять докладов на „О жизни слов“ — это точно?» Сверка каждой строки с [22-crosswalk.json](https://github.com/gasyoun/BookIndex/blob/main/data/modules/22-crosswalk.json) (статусы после гейта v4):
 
 | Доклад ЛЛШ | Было | Стало | Заземление в кресте |
 |---|---|---|---|
@@ -41,7 +41,7 @@ _Created: 24-07-2026 · Last updated: 03-09-2026_
 
 ## H3657 — гид читателя «главы → видео» + сверка полос 4–5 (28-08-2026)
 
-Задача владельца «связать печатные лекции с видео и подсказать, что смотреть» закрыта двумя слоями: (1) верификация уже сделанной связки, (2) новый читательский гид. Полный разбор — [docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md](docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md); выходы — [guide.html](../guide.html) + [data/reader_guide.json](../data/reader_guide.json).
+Задача владельца «связать печатные лекции с видео и подсказать, что смотреть» закрыта двумя слоями: (1) верификация уже сделанной связки, (2) новый читательский гид. Полный разбор — [docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md](https://github.com/gasyoun/BookIndex/blob/main/docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md); выходы — [guide.html](../guide.html) + [data/reader_guide.json](../data/reader_guide.json).
 
 | Слой | Результат | Проверка |
 |---|---|---|

@@ -1,3 +1,5 @@
+_Created: 16-05-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash handoff: architecture and implementation plan
 
 Date: 2026-05-16
@@ -442,3 +444,5 @@ Expected output:
 ```
 
 This assignment is intentionally documentation-first. It reduces future confusion before any code or UI redesign begins.
+
+_Dr. Mārcis Gasūns_

@@ -1,3 +1,5 @@
+_Created: 04-05-2026 · Last updated: 05-09-2026_
+
 # data/imports/ — Import Pipeline
 
 Директория для подготовки новых корпусных источников перед публикацией в `app_data.json`.
@@ -44,3 +46,5 @@ app_data.json                       ← публикуется в корпус
 - Все новые сущности проходят `validate_content.py` перед merge
 - `schema_version` не меняется при добавлении книги
 - Маршруты `#v4/...` остаются совместимыми
+
+_Dr. Mārcis Gasūns_

@@ -8,6 +8,8 @@ source_index: 34
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Основа арабского слова, состоящая обычно из трех согласных. «Гласные пляшут» вокруг этого скелета, образуя разные формы: КТБ → катаба «он написал», китаб «книга», мактуб «написанное».
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%B0%D1%80%D0%B0%D0%B1%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BA%D0%BE%D1%80%D0%B5%D0%BD%D1%8C"
 }
 ```
+
+_Dr. Mārcis Gasūns_

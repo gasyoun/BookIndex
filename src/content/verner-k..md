@@ -8,6 +8,8 @@ source_index: 21
 tags: ["names"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Основное текстовое поле не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -62,3 +64,5 @@ _Основное текстовое поле не найдено; см. JSON н
   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Karl_Verner.jpg/220px-Karl_Verner.jpg"
 }
 ```
+
+_Dr. Mārcis Gasūns_

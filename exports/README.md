@@ -1,3 +1,5 @@
+_Created: 13-06-2026 · Last updated: 05-09-2026_
+
 # exports/ — генерируемые экспорты данных (A6)
 
 Машинонезависимые выгрузки указателя для интероперабельности и архивации
@@ -23,5 +25,7 @@ python scripts/export_tei.py --date 2026-06-13   # с датой в заголо
 
 ## Лицензия
 
-Данные указателя — CC BY 4.0; см. [LICENSE-DATA.md](../LICENSE-DATA.md). Цитаты из
+Данные указателя — CC BY 4.0; см. [LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md). Цитаты из
 книги/лекций не входят в эти выгрузки.
+
+_Dr. Mārcis Gasūns_

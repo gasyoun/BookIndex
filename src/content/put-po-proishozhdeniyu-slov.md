@@ -8,6 +8,8 @@ source_index: 5
 tags: ["routes"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Как меняется значение и форма слов от древних языков к современному русскому.
 
 ## Source JSON
@@ -38,3 +40,5 @@ tags: ["routes"]
   ]
 }
 ```
+
+_Dr. Mārcis Gasūns_

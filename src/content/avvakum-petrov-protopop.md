@@ -8,6 +8,8 @@ source_index: 1
 tags: ["names"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Основное текстовое поле не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -48,3 +50,5 @@ _Основное текстовое поле не найдено; см. JSON н
   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Avvakum_Petrov.jpg/220px-Avvakum_Petrov.jpg"
 }
 ```
+
+_Dr. Mārcis Gasūns_

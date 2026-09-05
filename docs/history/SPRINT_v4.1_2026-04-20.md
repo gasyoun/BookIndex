@@ -1,3 +1,5 @@
+_Created: 17-04-2026 · Last updated: 05-09-2026_
+
 # BookIndex v4.1 Sprint Board (2026-04-20 .. 2026-04-26)
 
 ## Цель спринта
@@ -78,3 +80,5 @@
 - `#44` закрыт после smoke и контрастного pass.
 - `#43` доведен до MVP и покрыт минимум одним e2e smoke.
 - CI green на `main`.
+
+_Dr. Mārcis Gasūns_

@@ -7,6 +7,8 @@ book_id: "mumintroll"
 tags: ["featured_quote"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Слово «вокзал» в русском языке — от названия английского парка Vauxhall, где была популярная железнодорожная станция. Это заимствование, которое пережило свой источник.
 
 ## Source JSON
@@ -18,3 +20,5 @@ tags: ["featured_quote"]
   "lecture": "О жизни слов"
 }
 ```
+
+_Dr. Mārcis Gasūns_

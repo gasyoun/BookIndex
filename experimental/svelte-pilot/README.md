@@ -1,3 +1,5 @@
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 # BookIndex Svelte Pilot
 
 Изолированный прототип декларативного UI для постепенной миграции с vanilla runtime.
@@ -27,3 +29,5 @@ npm run dev
 - это sandbox, не интегрирован в основной runtime;
 - не участвует в `scripts/build_aaz_index.py`;
 - нужен только как база для итераций по пункту «декларативный UI».
+
+_Dr. Mārcis Gasūns_
