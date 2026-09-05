@@ -18,9 +18,14 @@ import sys
 # (measured: drops 1-4 accepted names), so the seven labels must sit at
 # their BASE b0bf00aaa positions - any move > 0.5u is a regression.
 EXPECTED = {
-    "Кольский полуостров": (372.90, 349.23),
-    "Финляндия": (328.66, 369.40),
-    "Архангельская": (296.97, 231.11),
+    "Кольский полуостров": (246.90, 227.22),
+    "Финляндия": (328.66, 265.00),
+    "Архангельская": (371.10, 231.11),
+    "Британия · Англия": (200.00, 196.00),
+    "Европа": (85.00, 196.00),
+    "Кавказ": (380.15, 397.60),
+    "Марокко": (72.37, 447.19),
+    "Италия": (177.43, 545.00),
     "Российская Федерация": (456.38, 286.34),
     "Литва": (291.11, 305.00),
     "Германия · ГДР": (87.97, 318.08),
@@ -111,7 +116,7 @@ def main():
             print("    %-36s (%7.2f,%7.2f) -> (%7.2f,%7.2f)%s"
                   % (name, ox, oy, nx, ny, (" " + note) if note else ""))
         # H4144 rev 2: MG-approved renames/losses (see the meta doc)
-        accepted = {"Литовское княжество", "Малая Азия"}
+        accepted = {"Литовское княжество", "Малая Азия", "Британские острова"}
         for name in sorted(set(old) - set(new) - accepted):
             failures.append("%s: name lost: %s" % (new_path, name))
 

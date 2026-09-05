@@ -234,7 +234,7 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
-const B9_STAMP = "вариант B9 · v4.17.30 · 05-09-2026";
+const B9_STAMP = "вариант B9 · v4.17.31 · 05-09-2026";
 // sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
 // except city-rank groups outside the Rus inset render as numbered chips
 // WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
@@ -242,7 +242,7 @@ const B9_STAMP = "вариант B9 · v4.17.30 · 05-09-2026";
 // classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
 // review visually; the table lives in
 // docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
-const B10_STAMP = "вариант B10 · v4.17.30 · 05-09-2026";
+const B10_STAMP = "вариант B10 · v4.17.31 · 05-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -338,10 +338,21 @@ B9_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
 // Литовское keeps spec x (249.45) right of BOTH pair dots, Крым pinned in
 // the Чёрное море - the only chip-clear pocket (the western sea is walled).
 const NORTH_LABEL_PINS = new Map([
-  ["Кольский полуостров", { dx: 126, dy: 41, noLeader: true }],
-  ["Архангельская область", { dx: 39.66, dy: -91.92 }],
-  ["Финляндия", { dx: 104, dy: 35, noLeader: true }],
+  // H4144 rev 3 (MG 05-09-2026, round-7 rulings verbatim: «Кольский
+  // полуостров левее чем Архангельская область. Чтобы это сделать, надо
+  // выше поднять Британию. Под Архангельской областью надо Финляндию.» +
+  // «Кавказ поднять на 1 см выше» (вверх+вправо, рулинг) + «Марокко
+  // застолбить там же» + «Италию опустить ниже Крита» (со стрелкой, гейт
+  // 34 → единый 50) + «Европу до Гренландии» (со стрелкой 49 мм)):
+  ["Кольский полуостров", { dx: 0, dy: -81.01 }],
+  ["Архангельская область", { dx: 113.79, dy: -91.92 }],
+  ["Финляндия", { dx: 104, dy: -69.4 }],
   ["Российская Федерация · Россия", { dx: 78, dy: 20 }],
+  ["Британия · Англия", { dx: 53.1, dy: -155.53 }],
+  ["Европа", { dx: -106.22, dy: -169.07 }],
+  ["Кавказ", { dx: 104.17, dy: -24.37 }],
+  ["Марокко", { dx: -6.07, dy: 19.78 }],
+  ["Италия", { dx: 9.99, dy: 128.01 }],
   // H4144 rev 2 (MG 05-09-2026: «Лита справа от Украина над, а не под
   // Финляндия») - the SHORT name «Литва» (the full pair name stays in the
   // legend) pinned right of the Украина label edge (289), above Финляндия:
@@ -1045,8 +1056,12 @@ function renderSheet(cfg, world, landObj, groups, total) {
   stats.names_policy_unnamed = onMap.filter(
     (x) => cfg.scaleRankedNames && x.scaleRank === "city" && !inInset(x) && (x.discussed || cfg.nameMentioned)
   ).length;
+  // H4144 rev 3 (MG: «Британские острова убрать как надпись с карты, есть
+  // уже Британия») - legend-only names: never drawn on the map sheets
+  const LEGEND_ONLY = new Set(["Британские острова"]);
   const mainLabeled = onMap
     .filter((x) => x.discussed || cfg.nameMentioned)
+    .filter((x) => !LEGEND_ONLY.has(x.primary.head))
     .filter((x) => !(cfg.insetMirror && cfg.insetGeo && inInset(x)))
     .filter((x) => !(cfg.scaleRankedNames && x.scaleRank === "city" && !inInset(x)))
     .map((g) => ({
@@ -3334,7 +3349,7 @@ function render() {
     byKey.B9map.label_chip_violations > 0 ||
     byKey.B9map.labels_last_resort > 0 ||
     byKey.B9map.covered_relocated > 0 ||
-    byKey.B9map.max_leader_mm > 31 ||
+    byKey.B9map.max_leader_mm > 50 ||
     byKey.B9legend.legend_rows_drawn !== groups.length ||
     byKey.B9legend.legend_overflow > 0 ||
     !byKey.B9legend.legend_parity_ok ||
@@ -3352,7 +3367,7 @@ function render() {
     byKey.B10map.label_chip_violations > 0 ||
     byKey.B10map.labels_last_resort > 0 ||
     byKey.B10map.covered_relocated > 0 ||
-    byKey.B10map.max_leader_mm > 33 ||
+    byKey.B10map.max_leader_mm > 50 ||
     byKey.B10legend.legend_rows_drawn !== groups.length ||
     byKey.B10legend.legend_overflow > 0 ||
     !byKey.B10legend.legend_parity_ok;
