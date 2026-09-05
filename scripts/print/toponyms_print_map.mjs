@@ -234,7 +234,7 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
-const B9_STAMP = "вариант B9 · v4.17.31 · 05-09-2026";
+const B9_STAMP = "вариант B9 · v4.17.32 · 05-09-2026";
 // sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
 // except city-rank groups outside the Rus inset render as numbered chips
 // WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
@@ -242,7 +242,7 @@ const B9_STAMP = "вариант B9 · v4.17.31 · 05-09-2026";
 // classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
 // review visually; the table lives in
 // docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
-const B10_STAMP = "вариант B10 · v4.17.31 · 05-09-2026";
+const B10_STAMP = "вариант B10 · v4.17.32 · 05-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -1348,6 +1348,14 @@ function renderSheet(cfg, world, landObj, groups, total) {
         if (b) chipBoxSet.add(b);
       }
     }
+    // H4144 rev 4 (MG, round-8 screenshot: «Пруссия закрывает Европу» class):
+    // label-LABEL overlaps are HARD too - the soft area-cost let the hill-climb
+    // stack «Голландия/Галлия/западный мир/Кордова», «Венеция»/«Пилос» and
+    // «Греция»/«Грецколань» into unreadable jumbles. A candidate overlapping
+    // ANY other label's box is prohibitive; overlaps can no longer be created.
+    const labelBoxSet = new Set();
+    for (const b of ownPlaced.values()) if (b) labelBoxSet.add(b);
+    for (const b of pinBoxSet) labelBoxSet.add(b);
     const geomOf = (l, anchor, lx2, ly2, dy, tightUp, widest, lineH, blockH) => {
       let bx0, bx1, by0, by1, ly;
       if (anchor === "start") { bx0 = lx2; bx1 = lx2 + widest; }
@@ -1363,7 +1371,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       for (const b of others) {
         const ox = Math.min(rect.x1 + P, b.x1) - Math.max(rect.x0 - P, b.x0);
         const oy = Math.min(rect.y1 + P, b.y1) - Math.max(rect.y0 - P, b.y0);
-        if (ox > 0 && oy > 0) c += chipBoxSet.has(b) || pinBoxSet.has(b) ? 1e6 + ox * oy : (ox * oy) / 10000;
+        if (ox > 0 && oy > 0) c += chipBoxSet.has(b) || pinBoxSet.has(b) || labelBoxSet.has(b) ? 1e6 + ox * oy : (ox * oy) / 10000;
       }
       return c;
     };

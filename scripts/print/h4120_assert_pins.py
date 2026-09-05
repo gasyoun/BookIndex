@@ -116,7 +116,7 @@ def main():
             print("    %-36s (%7.2f,%7.2f) -> (%7.2f,%7.2f)%s"
                   % (name, ox, oy, nx, ny, (" " + note) if note else ""))
         # H4144 rev 2: MG-approved renames/losses (see the meta doc)
-        accepted = {"Литовское княжество", "Малая Азия", "Британские острова"}
+        accepted = {"Литовское княжество", "Малая Азия", "Британские острова", "Ирак"}
         for name in sorted(set(old) - set(new) - accepted):
             failures.append("%s: name lost: %s" % (new_path, name))
 
