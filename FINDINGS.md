@@ -98,7 +98,7 @@ correct; the committed export is carrying unsourced curator judgments.
 Two things generalise. First, **a red determinism gate is evidence, not a
 chore**: it is the only thing standing between six curated duplicate-identity
 links and a silent rebuild that erases them, and "make CI green" would have
-been the destructive option. Second, this is the same shape as [§3](#3-v3_appjs-stopped-being-build-output-and-became-the-source-of-record--rebuilding-it-silently-deletes-four-shipped-features)
+been the destructive option. Second, this is the same shape as [§3](#3-v3appjs-stopped-being-build-output-and-became-the-source-of-record-rebuilding-it-silently-deletes-four-shipped-features)
 one directory over — a *generated* artifact hand-edited without updating its
 input, so the generator and the artifact quietly disagree until someone runs
 the generator. Whenever this repo's derived files (`v3_app.js`,

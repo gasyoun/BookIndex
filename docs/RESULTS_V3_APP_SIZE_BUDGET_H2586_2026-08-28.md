@@ -14,7 +14,7 @@ executed by Opus 5 (`claude-opus-5`).
 
 Headroom is **2.05×** what it was. The handoff's stop condition asked for
 ≥3 KiB back (gzip ≤157 000 B); this pass returned 1 763 B. The section
-["What the remaining 1 559 B would cost"](#what-the-remaining-1559b-would-cost)
+["What the remaining 1 559 B would cost"](#what-the-remaining-1-559-b-would-cost)
 says exactly what the rest would take and why it was not spent here.
 
 Measured with `npm run check:perf`

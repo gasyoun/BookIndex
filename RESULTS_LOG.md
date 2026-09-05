@@ -272,7 +272,7 @@ Pipeline (`video_pipeline.json`) had the same single title per id — **no alter
 
 ## H2031 — KWIC lost-quote repair, issue #187 (2026-07-31)
 
-Follow-up to [H1482](#h1482--encoding-guard-mojibake-detector-redesign-2026-07-31): repairing the data defect the new detector found, then tightening CI to `--strict`.
+Follow-up to [H1482](#h1482-encoding-guard-mojibake-detector-redesign-2026-07-31): repairing the data defect the new detector found, then tightening CI to `--strict`.
 
 **Model:** Opus 5 1M (`claude-opus-5[1m]`).
 
