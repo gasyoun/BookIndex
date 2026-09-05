@@ -234,7 +234,7 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
-const B9_STAMP = "вариант B9 · v4.17.32 · 05-09-2026";
+const B9_STAMP = "вариант B9 · v4.17.33 · 05-09-2026";
 // sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
 // except city-rank groups outside the Rus inset render as numbered chips
 // WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
@@ -242,7 +242,7 @@ const B9_STAMP = "вариант B9 · v4.17.32 · 05-09-2026";
 // classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
 // review visually; the table lives in
 // docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
-const B10_STAMP = "вариант B10 · v4.17.32 · 05-09-2026";
+const B10_STAMP = "вариант B10 · v4.17.33 · 05-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -344,13 +344,14 @@ const NORTH_LABEL_PINS = new Map([
   // «Кавказ поднять на 1 см выше» (вверх+вправо, рулинг) + «Марокко
   // застолбить там же» + «Италию опустить ниже Крита» (со стрелкой, гейт
   // 34 → единый 50) + «Европу до Гренландии» (со стрелкой 49 мм)):
-  ["Кольский полуостров", { dx: 0, dy: -81.01 }],
-  ["Архангельская область", { dx: 113.79, dy: -91.92 }],
-  ["Финляндия", { dx: 104, dy: -69.4 }],
+  ["Кольский полуостров", { dx: 0.10, dy: -113.23 }],
+  ["Архангельская область", { dx: 72.69, dy: -96.03 }],
+  ["Финляндия", { dx: 15.34, dy: -69.40 }],
   ["Российская Федерация · Россия", { dx: 78, dy: 20 }],
-  ["Британия · Англия", { dx: 53.1, dy: -155.53 }],
+  ["Британия · Англия", { dx: 53.10, dy: -186.53 }],
   ["Европа", { dx: -106.22, dy: -169.07 }],
-  ["Кавказ", { dx: 104.17, dy: -24.37 }],
+  ["Кавказ", { dx: 94.12, dy: -50.17 }],
+  ["Средняя Азия", { dx: 95.62, dy: -6.59 }],
   ["Марокко", { dx: -6.07, dy: 19.78 }],
   ["Италия", { dx: 9.99, dy: 128.01 }],
   // H4144 rev 2 (MG 05-09-2026: «Лита справа от Украина над, а не под

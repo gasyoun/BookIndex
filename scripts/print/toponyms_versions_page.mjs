@@ -161,7 +161,7 @@ const sections = [
   {
     num: 14,
     title: "B9 — без разлёва: чипы касаются, но не наезжают; штрих только при дрейфе > 4 мм; подпись ≤ 10 мм от точки без лидера; источник врезки — штрихованный квадрат со стрелкой; рамочный заголовок врезки с запасом",
-    note: "v4.17.29 · <a href='toponyms-map-b9.html?v=4.17.32'>toponyms-map-b9.html</a> · ★ принят MG («go №14») · H4144: глобальный решатель раскладки (рулинг MG «Глобальный решатель») + пины пятого раунда: трио НАД (v1-высоты), Литовское справа (пин), Крым под Украиной в Чёрном море; подписи притянуты к точкам (p90 23.8→15.2 мм), 0 потерь имён",
+    note: "v4.17.29 · <a href='toponyms-map-b9.html?v=4.17.33'>toponyms-map-b9.html</a> · ★ принят MG («go №14») · H4144: глобальный решатель раскладки (рулинг MG «Глобальный решатель») + пины пятого раунда: трио НАД (v1-высоты), Литовское справа (пин), Крым под Украиной в Чёрном море; подписи притянуты к точкам (p90 23.8→15.2 мм), 0 потерь имён",
     files: [
       { label: "B9 — карта", file: have("toponyms-map-b9-map.svg"), pageW: 145 },
       { label: "B9 — легенда (83 записи, «древнейшая форма первой»)", file: have("toponyms-map-b9-legend.svg"), pageW: 145 },
@@ -170,7 +170,7 @@ const sections = [
   {
     num: 15,
     title: "B10 — scale_rank (черновой разряд по умолчанию): города вне ядра Руси — номера без имён (Рим, Венеция, Флоренция… — в легенде); регионы и макро — с именами; остальное как B9",
-    note: "v4.17.29 · <a href='toponyms-map-b10.html?v=4.17.32'>toponyms-map-b10.html</a> · H4144: глобальный решатель + пины пятого раунда (как B9) · разряды к ревью: [TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md](https://github.com/gasyoun/BookIndex/blob/main/docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md)",
+    note: "v4.17.29 · <a href='toponyms-map-b10.html?v=4.17.33'>toponyms-map-b10.html</a> · H4144: глобальный решатель + пины пятого раунда (как B9) · разряды к ревью: [TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md](https://github.com/gasyoun/BookIndex/blob/main/docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md)",
     files: [
       { label: "B10 — карта", file: have("toponyms-map-b10-map.svg"), pageW: 145 },
       { label: "B10 — легенда (83 записи, «древнейшая форма первой»)", file: have("toponyms-map-b10-legend.svg"), pageW: 145 },
