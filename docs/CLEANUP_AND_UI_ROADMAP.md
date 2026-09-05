@@ -1,3 +1,5 @@
+_Created: 16-05-2026 · Last updated: 05-09-2026_
+
 # BookIndex cleanup and UI roadmap
 
 Date: 2026-05-16
@@ -379,3 +381,5 @@ Notes on how the six checks are implemented:
 2. Do not delete committed artifacts before GitHub Pages and offline needs are re-confirmed.
 3. Do not rebuild `v3_app.js` from the current `src/` tree until parity is proven.
 4. Do not mix data-normalisation, visual redesign, and module extraction in one PR.
+
+_Dr. Mārcis Gasūns_

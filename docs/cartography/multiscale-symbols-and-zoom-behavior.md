@@ -1,3 +1,5 @@
+_Created: 05-09-2026 · Last updated: 05-09-2026_
+
 <!--
 Vendored verbatim from: https://github.com/openai/plugins/blob/1e285826e604f66f7208f7ac4dba0fe8341d1f57/plugins/build-web-data-visualization/skills/geospatial-and-cartographic-visualization/references/multiscale-symbols-and-zoom-behavior.md
 Upstream pin: openai/plugins@1e285826e604 (main) · vendored 2026-09-05 for H4051.
@@ -49,3 +51,5 @@ Use this when an interactive map feels harder to read as users zoom, especially 
 - [ArcGIS Pro: Symbol units and size](https://pro.arcgis.com/en/pro-app/latest/help/mapping/layer-properties/units-and-symbol-size.htm)
 - [MDN: vector-effect](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/vector-effect)
 - [MDN: SVG vector-effect attribute](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/vector-effect)
+
+_Dr. Mārcis Gasūns_

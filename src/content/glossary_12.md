@@ -8,6 +8,8 @@ source_index: 11
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Древнейшие священные тексты Индии (II тыс. до н. э.), написанные на санскрите. Передавались устно на протяжении тысячелетий, прежде чем были записаны.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%92%D0%B5%D0%B4%D1%8B"
 }
 ```
+
+_Dr. Mārcis Gasūns_

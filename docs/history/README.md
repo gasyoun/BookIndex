@@ -1,3 +1,5 @@
+_Created: 17-05-2026 · Last updated: 05-09-2026_
+
 # Архив документации (History)
 
 Этот каталог содержит исторические документы, отчеты и старые версии руководств проекта BookIndex.
@@ -7,8 +9,10 @@
 2. **Кодировка**: Некоторые старые файлы могут иметь кодировку, отличную от UTF-8.
 3. **Не для использования**: Не используйте команды или пути из этих документов для работы с текущей версией репозитория.
 
-Актуальная документация находится в корневой папке [`docs/`](../) и в файле [`README.md`](../../README.md).
+Актуальная документация находится в корневой папке [`docs/`](../) и в файле [`README.md`](https://github.com/gasyoun/BookIndex/blob/main/README.md).
 
 ### Archived build artifacts
 
-- [`v13_app_test.js`](v13_app_test.js) — concatenated output of the old `bundle.js` pipeline (2026-05-06). Not referenced by package.json, CI, or the live app; archived from repo root (H1506).
+- [`v13_app_test.js`](https://github.com/gasyoun/BookIndex/blob/main/docs/history/v13_app_test.js) — concatenated output of the old `bundle.js` pipeline (2026-05-06). Not referenced by package.json, CI, or the live app; archived from repo root (H1506).
+
+_Dr. Mārcis Gasūns_

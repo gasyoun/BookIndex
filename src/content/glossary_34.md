@@ -8,6 +8,8 @@ source_index: 33
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Изучение языка в одном временном срезе — каков он сейчас, без учета истории.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D1%8F"
 }
 ```
+
+_Dr. Mārcis Gasūns_

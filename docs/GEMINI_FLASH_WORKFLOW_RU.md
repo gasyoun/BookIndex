@@ -1,3 +1,5 @@
+_Created: 09-05-2026 · Last updated: 05-09-2026_
+
 # Архитектура дальнейшей работы с Gemini Flash для BookIndex
 
 Дата: 2026-05-09
@@ -565,3 +567,5 @@ Scope:
 4. Источником правды остаются репозиторий, валидаторы, GitHub Actions и опубликованный GitHub Pages маршрут.
 5. Навигационную реформу вести через отдельный context pack: `docs/NAVIGATION_RETHINK_RU.md` + route mapping + smoke-list.
 6. Следующее практическое действие: начать с одного ручного context pack для реальной задачи и сохранить результат как пример в issue или отдельном отчете.
+
+_Dr. Mārcis Gasūns_

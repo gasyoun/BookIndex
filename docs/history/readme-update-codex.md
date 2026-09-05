@@ -1,3 +1,5 @@
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 # Codex Task: BookIndex — привести README к фактическому составу репозитория
 
 Репозиторий: `gasyoun/BookIndex`
@@ -109,3 +111,5 @@ README после правки должен:
 - [ ] README не стал заметно длиннее и тяжелее для чтения
 - [ ] Не изменены runtime/code/data файлы
 - [ ] Сохранен стиль текущего README
+
+_Dr. Mārcis Gasūns_

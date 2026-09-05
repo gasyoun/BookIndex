@@ -1,3 +1,5 @@
+_Created: 17-04-2026 · Last updated: 05-09-2026_
+
 # Release Notes - v4.1.0 (2026-04-17)
 
 ## Highlights
@@ -57,3 +59,5 @@ node scripts/profile_kwic.js
 
 - Открыт PR [#48](https://github.com/gasyoun/BookIndex/pull/48) (Ready for review) из ветки `codex/v4.1-local-finalize`.
 - В `#44/#45/#46/#47` добавлены комментарии со ссылкой на PR `#48`; закрытие заведено через `Closes #...` в PR body.
+
+_Dr. Mārcis Gasūns_
