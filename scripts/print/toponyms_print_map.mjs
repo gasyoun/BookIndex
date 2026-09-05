@@ -302,6 +302,8 @@ const B10_LABEL_BIAS = new Map(B8_LABEL_BIAS);
 // (NORTH_LABEL_PINS) instead of re-derived; the [144,12] bias row is
 // superseded and deleted in the B9/B10 clones.
 B10_LABEL_BIAS.delete("Архангельская область");
+// H4110 v2: same RF-bias supersede as B9 (see there) - the label is pinned.
+B10_LABEL_BIAS.delete("Российская Федерация · Россия");
 B10_LABEL_BIAS.set("Швеция", [81, -73]);
 B10_LABEL_BIAS.set("Цейлон · Шри-Ланка", [6, 24]);
 B10_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
@@ -310,6 +312,10 @@ B10_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
 // H4051_DEBUG=1, NOT copied blindly from B10 (MG scope ruling).
 const B9_LABEL_BIAS = new Map(B8_LABEL_BIAS);
 B9_LABEL_BIAS.delete("Архангельская область"); // H4110: superseded by NORTH_LABEL_PINS
+// H4110 v2: РФ's 2-line bias box [48,32] hung over the corridor the
+// Архангельская pin now occupies; the label is PINNED instead
+// (NORTH_LABEL_PINS) and the bias row is superseded here.
+B9_LABEL_BIAS.delete("Российская Федерация · Россия");
 B9_LABEL_BIAS.set("Швеция", [81, -95]);
 B9_LABEL_BIAS.set("Цейлон · Шри-Ланка", [6, 24]);
 B9_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
@@ -323,9 +329,17 @@ B9_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
 // can silently re-derive them - the «Кольский переехал левее» regression
 // class dies here.
 const NORTH_LABEL_PINS = new Map([
-  ["Кольский полуостров", { dx: 126, dy: 41, noLeader: true }],
-  ["Архангельская область", { dx: 242, dy: 34, noLeader: true }],
-  ["Финляндия", { dx: 104, dy: 35, noLeader: true }],
+  ["Кольский полуостров", { dx: 126, dy: 47, noLeader: true }],
+  // H4110 v2 (MG 05-09-2026: «справа от Кольский полуостров и стрелочкой
+  // вести куда нужно»): the stack moves next to the PENINSULA (chip-clear
+  // slot above the Kolsky label) and its leader arrow is back.
+  ["Архангельская область", { dx: 103, dy: -2 }],
+  ["Финляндия", { dx: 166, dy: 42, noLeader: true }],
+  // H4110 v2: РФ's 2-line bias box hung over the same corridor - as a walk
+  // label its rejection cascaded (РФ walked north, Литовское followed,
+  // Швеция's bias slot was swallowed, the label reached the Atlantic).
+  // Pinned right of its own chip; the corridor stays free.
+  ["Российская Федерация · Россия", { dx: 78, dy: 20 }],
 ]);
 // B9/B10-only stacks: the stack map is shared with the frozen B8 config, so
 // the Архангельская two-line stack goes into a clone - B8 keeps its bytes.
@@ -652,7 +666,7 @@ function placeLabelTrue(g, px, py, lines, placed, box, fontU, clipBox, maxDistU,
     const by0 = ly - lineH * 0.8;
     const by1 = by0 + blockH;
     if (process.env.H4051_DEBUG && (g.primary.head.includes("Архангельская") || g.primary.head === "Швеция" || g.primary.head === "Германия+ГДР" || g.mapName === "Цейлон · Шри-Ланка")) {
-      console.error(`FIELD ${g.primary.head}: target (${(bx0 / 4).toFixed(1)}-${(bx1 / 4).toFixed(1)}, ${(by0 / 4).toFixed(1)}-${(by1 / 4).toFixed(1)})mm; placed boxes:`);
+      console.error(`FIELD ${g.primary.head}: bias target (${(bx0 / 4).toFixed(1)}-${(bx1 / 4).toFixed(1)}, ${(by0 / 4).toFixed(1)}-${(by1 / 4).toFixed(1)})mm; placed boxes:`);
       for (const b of placed) console.error(`  (${(b.x0 / 4).toFixed(1)},${(b.y0 / 4).toFixed(1)})-(${(b.x1 / 4).toFixed(1)},${(b.y1 / 4).toFixed(1)})`);
     }
     if (bx0 < cb.x0 + 2 || bx1 > cb.x1 - 2 || by0 < cb.y0 + 2 || by1 > cb.y1 - 2) {
@@ -1446,9 +1460,12 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const rx1 = Math.max(...xs);
     const ry0 = Math.min(...ys);
     const ry1 = Math.max(...ys);
+    // H4110 v2 (MG 05-09-2026: «убрать см. врезку — мешает, закрывает видимость»):
+    // the caption text is gone on every sheet - B9/B10 dropped it in rev 12,
+    // the refRect sheets (B3/B7/B8) lose it here; the dashed source box + the
+    // ref line still say what is magnified.
     s.push(
-      `<rect x="${f(rx0)}" y="${f(ry0)}" width="${f(rx1 - rx0)}" height="${f(ry1 - ry0)}" fill="none" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>` +
-        `<text x="${f(rx0 + 8)}" y="${f(ry0 + 16)}" font-size="7.5" fill="#33302b" stroke="#ffffff" stroke-width="1.4" paint-order="stroke" stroke-linejoin="round">см. врезку</text>`
+      `<rect x="${f(rx0)}" y="${f(ry0)}" width="${f(rx1 - rx0)}" height="${f(ry1 - ry0)}" fill="none" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>`
     );
   }
 
@@ -1484,8 +1501,12 @@ function renderSheet(cfg, world, landObj, groups, total) {
     const ry1 = Math.max(...cs.map((c) => c[1]));
     s.push(
       // MG rev 12 point 2: no «см. врезку» caption - it overlapped and got in
-      // the way; the hatched square + arrow say it on their own
-      `<rect x="${f(rx0)}" y="${f(ry0)}" width="${f(rx1 - rx0)}" height="${f(ry1 - ry0)}" fill="url(#hatch-${cfg.key})" fill-opacity="0.35" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>`
+      // the way; the hatched square + arrow say it on their own.
+      // H4110 v2 (MG 05-09-2026: only the bottom-right edge read over the
+      // Rus-core chip wall): white casing + border 0.7 -> 1.6 so the square
+      // reads as a square at a glance.
+      `<rect x="${f(rx0)}" y="${f(ry0)}" width="${f(rx1 - rx0)}" height="${f(ry1 - ry0)}" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-dasharray="3 2"/>`,
+      `<rect x="${f(rx0)}" y="${f(ry0)}" width="${f(rx1 - rx0)}" height="${f(ry1 - ry0)}" fill="url(#hatch-${cfg.key})" fill-opacity="0.35" stroke="#111111" stroke-width="1.6" stroke-dasharray="3 2"/>`
     );
     // arrow: inset frame's top-left corner region -> centre of the source
     // square, arrowhead at the square
@@ -1498,7 +1519,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
     // stop the shaft short of the head so the tip lands on the centre
     const bx = cx - ((cx - sx) / len) * head;
     const by = cy - ((cy - sy) / len) * head;
-    s.push(`<line x1="${f(sx)}" y1="${f(sy)}" x2="${f(bx)}" y2="${f(by)}" stroke="#33302b" stroke-width="0.9"/>`);
+    // H4110 v2: white casing + thicker shaft - the arrow crosses the chip wall.
+    s.push(`<line x1="${f(sx)}" y1="${f(sy)}" x2="${f(bx)}" y2="${f(by)}" stroke="#ffffff" stroke-width="3"/>`);
+    s.push(`<line x1="${f(sx)}" y1="${f(sy)}" x2="${f(bx)}" y2="${f(by)}" stroke="#33302b" stroke-width="1.3"/>`);
     const ux = (cx - sx) / len;
     const uy = (cy - sy) / len;
     const px = -uy;

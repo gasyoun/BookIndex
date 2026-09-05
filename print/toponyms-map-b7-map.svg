@@ -275,7 +275,7 @@
 <text x="167.37" y="548.26" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="167.37" dy="0">Фест</tspan></text>
 <text x="134.77" y="426.96" text-anchor="end" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="134.77" dy="0">ГДР</tspan></text>
 </g>
-<rect x="221.22" y="336.70" width="41.75" height="49.11" fill="none" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/><text x="229.22" y="352.70" font-size="7.5" fill="#33302b" stroke="#ffffff" stroke-width="1.4" paint-order="stroke" stroke-linejoin="round">см. врезку</text>
+<rect x="221.22" y="336.70" width="41.75" height="49.11" fill="none" stroke="#111111" stroke-width="0.7" stroke-dasharray="3 2"/>
 <line x1="280.00" y1="608.00" x2="262.97" y2="385.81" stroke="#55524c" stroke-width="0.45" stroke-dasharray="4 3"/>
 <rect x="232.00" y="608.00" width="184.00" height="192.00" fill="#ffffff"/>
 <g clip-path="url(#inset-clip-B7map)">
