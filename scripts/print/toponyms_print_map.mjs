@@ -294,12 +294,14 @@ const B8_LABEL_BIAS = new Map([
 // Цейлон goes BELOW the island, clear of physical India. Германия · ГДР goes
 // LEFT near Франция instead of east toward РФ.
 const B10_LABEL_BIAS = new Map(B8_LABEL_BIAS);
-// Архангельская область: MEASURED IMPOSSIBLE at font 11.2 - the name is
-// 37.5 mm wide and every spot right of Кольский within 30 mm is occupied by
-// the Rus-core chip wall + Литовское/Финляндия labels (the free band y 63.9
-// -68.0 is 4.1 mm tall, the label needs 4.45 mm with pads). The only free
-// right-ward slot sits 45 mm away and needs a 53 mm leader - the вынос MG
-// rejects. The label stays deferred (chip + legend), see the rev 12 report.
+// H4110 (MG 05-09-2026, fourth ask): the rev-12 note above declared the
+// «справа от Кольского» spot impossible and left the wish as a residual -
+// that is exactly why it kept returning every render. MG ruled the
+// arrangement explicitly (Кольский right, Архангельская next to it right,
+// Финляндия below Кольский), so the three north-Russia labels are PINNED
+// (NORTH_LABEL_PINS) instead of re-derived; the [144,12] bias row is
+// superseded and deleted in the B9/B10 clones.
+B10_LABEL_BIAS.delete("Архангельская область");
 B10_LABEL_BIAS.set("Швеция", [81, -73]);
 B10_LABEL_BIAS.set("Цейлон · Шри-Ланка", [6, 24]);
 B10_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
@@ -307,9 +309,28 @@ B10_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
 // obstacle field differs - offsets are re-derived per-label with
 // H4051_DEBUG=1, NOT copied blindly from B10 (MG scope ruling).
 const B9_LABEL_BIAS = new Map(B8_LABEL_BIAS);
+B9_LABEL_BIAS.delete("Архангельская область"); // H4110: superseded by NORTH_LABEL_PINS
 B9_LABEL_BIAS.set("Швеция", [81, -95]);
 B9_LABEL_BIAS.set("Цейлон · Шри-Ланка", [6, 24]);
 B9_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
+// H4110 (MG 05-09-2026, fourth ask): the north-Russia arrangement is PINNED.
+// Кольский returns right of the peninsula (the B8-approved slot, box
+// 315..451 × 338..352), Архангельская область sits next to it to the right
+// as a two-line stack (fits the frame where the 37.5 mm one-liner never
+// could), Финляндия goes below Кольский. Offsets are from the TRUE dot in
+// bias units; slots measured chip-free and identical on B9/B10. Pins are
+// RESERVED before the label walk (fail-loud on frame/clash), so no re-flow
+// can silently re-derive them - the «Кольский переехал левее» regression
+// class dies here.
+const NORTH_LABEL_PINS = new Map([
+  ["Кольский полуостров", { dx: 126, dy: 41, noLeader: true }],
+  ["Архангельская область", { dx: 242, dy: 34, noLeader: true }],
+  ["Финляндия", { dx: 104, dy: 35, noLeader: true }],
+]);
+// B9/B10-only stacks: the stack map is shared with the frozen B8 config, so
+// the Архангельская two-line stack goes into a clone - B8 keeps its bytes.
+const B9_NORTH_STACKS = new Map(B8_LABEL_STACKS);
+B9_NORTH_STACKS.set("Архангельская область", ["Архангельская", "область"]);
 // MG rev 12 point 1: the filled (discussed) marker reads fine in dark gray -
 // softer than the near-black #111111, on B10 only
 const B10_FILLED_U = "#444444";
@@ -1084,6 +1105,41 @@ function renderSheet(cfg, world, landObj, groups, total) {
   }
   stats.covered_relocated = covered.length;
 
+  // H4110 label pins: MG-ruled placements reserved BEFORE the walk - other
+  // labels route around them, re-flows cannot re-derive them. Geometry is
+  // the bias-branch box exactly; a pin that does not fit is a build error,
+  // never a silent fallback (that fallback is the bug being fixed).
+  const pinned = new Map();
+  if (cfg.labelPins) {
+    for (const [name, pin] of cfg.labelPins) {
+      const entry = mainLabeled.find(({ g }) => g.mapName === name);
+      if (!entry) continue;
+      const g = entry.g;
+      const lines = buildLines(g);
+      const widest = Math.max(...lines.map((l) => textW(l, LABEL_FONT_U)));
+      const lineH = LABEL_FONT_U * 1.22;
+      const blockH = lines.length * lineH;
+      const lx2 = g.px + pin.dx;
+      const ly2 = g.py + pin.dy;
+      const bx0 = lx2 - widest / 2;
+      const bx1 = lx2 + widest / 2;
+      const ly = ly2 + lineH * 0.34;
+      const by0 = ly - lineH * 0.8;
+      const by1 = by0 + blockH;
+      if (bx0 < box.x0 + 2 || bx1 > box.x1 - 2 || by0 < box.y0 + 2 || by1 > box.y1 - 2) {
+        throw new Error(`LABEL_PIN ${cfg.key} ${name}: box (${bx0.toFixed(1)},${by0.toFixed(1)})-(${bx1.toFixed(1)},${by1.toFixed(1)}) outside the map frame - re-derive the offsets`);
+      }
+      const P = cfg.labelAir ? B8_LABEL_PAD_U : 2.5;
+      for (const b of placed) {
+        if (bx0 - P < b.x1 && bx1 + P > b.x0 && by0 - P < b.y1 && by1 + P > b.y0) {
+          throw new Error(`LABEL_PIN ${cfg.key} ${name}: box clashes reserved box (${b.x0.toFixed(1)},${b.y0.toFixed(1)})-(${b.x1.toFixed(1)},${b.y1.toFixed(1)}) - re-derive the offsets`);
+        }
+      }
+      placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
+      pinned.set(g, { x: lx2, y: ly, anchor: "middle", lines, lineH, leader: null, noLeader: pin.noLeader === true, dist: Math.hypot(pin.dx, pin.dy), rect: { x0: bx0, x1: bx1, y0: by0, y1: by1 } });
+    }
+  }
+
   for (const { g } of mainLabeled) {
     if (coveredSet.has(g)) continue;
     const lines = buildLines(g);
@@ -1093,7 +1149,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       : !cfg.ignoreAnchors && g.anchorPx
         ? { x: g.anchorPx[0], y: g.anchorPx[1] }
         : { x: g.px2, y: g.py2 };
-    let pos = cfg.truePlace
+    let pos = pinned.get(g) ?? (cfg.truePlace
       ? placeLabelTrue(
           g,
           origin.x,
@@ -1116,7 +1172,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
           // B10 rev 12: ink-true upward boxes (see placeLabelTrue)
           cfg.tightUpwardBoxes
         )
-      : placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, cfg.labelRingDeltas);
+      : placeLabel(g, origin.x, origin.y, lines, placed, box, LABEL_FONT_U, null, cfg.labelRingDeltas));
     let squeezed = false;
     if (!pos && cfg.noWholeFrameFallback && !cfg.truePlace) {
       // second pass: wider radius - overlaps stay forbidden (frozen B2 keeps
@@ -1185,8 +1241,11 @@ function renderSheet(cfg, world, landObj, groups, total) {
       const lx = cfg.nameOnlyLabels ? pos.x : pos.anchor === "end" ? pos.x - textW(lines[0], LABEL_FONT_U) : pos.anchor === "middle" ? pos.x - textW(lines[0], LABEL_FONT_U) / 2 : pos.x;
       // B9 (MG rev 11 tiers): a label within 10 mm of its dot needs NO leader;
       // only the second tier (10-25 mm) is tied. Default 24u keeps frozen sheets.
+      // H4110 pins: noLeader skips the tie - the long leaders are the вынос
+      // MG rejects and the straight lines would run through neighbor chips.
+      const pinSkipLeader = pos.noLeader === true && !squeezed && !squeezed3 && !g.anchorPx && !g.displaced;
       const leaderDist = cfg.leaderDistThresholdU ?? 24;
-      if (squeezed || squeezed3 || g.anchorPx || Math.hypot(lx - g.px2, pos.y - g.py2) > leaderDist || g.displaced) {
+      if (!pinSkipLeader && (squeezed || squeezed3 || g.anchorPx || Math.hypot(lx - g.px2, pos.y - g.py2) > leaderDist || g.displaced)) {
         pushLeader(g, lx, pos.y - 2);
       }
       if (squeezed3 || (squeezed && !cfg.cleanSlotsOnly)) stats.labels_last_resort += 1;
@@ -2537,8 +2596,9 @@ function render() {
       nameMentioned: true,
       pairMerge: true,
       pairMergeList: B8_PAIR_MERGE,
-      labelStacks: B8_LABEL_STACKS,
+      labelStacks: B9_NORTH_STACKS,
       labelBias: B9_LABEL_BIAS,
+      labelPins: NORTH_LABEL_PINS,
       labelAir: true,
       // MG rev 12 point 1 ported to B9 (live accepted variant, not just B10)
       softFill: true,
@@ -2611,8 +2671,9 @@ function render() {
       nameMentioned: true,
       pairMerge: true,
       pairMergeList: B8_PAIR_MERGE,
-      labelStacks: B8_LABEL_STACKS,
+      labelStacks: B9_NORTH_STACKS,
       labelBias: B10_LABEL_BIAS,
+      labelPins: NORTH_LABEL_PINS,
       labelAir: true,
       // H4051 Unit B (draft default, MG reviews the RENDERED sheet): city-
       // rank groups outside the Rus inset render as chips without names
