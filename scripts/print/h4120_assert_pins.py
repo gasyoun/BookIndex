@@ -22,7 +22,8 @@ EXPECTED = {
     "Финляндия": (328.66, 369.40),
     "Архангельская": (296.97, 231.11),
     "Российская Федерация": (456.38, 286.34),
-    "Литовское княжество": (249.45, 268.00),
+    "Литва": (291.11, 305.00),
+    "Германия · ГДР": (87.97, 318.08),
     "Крым": (275.00, 444.00),
     "Украина": (264.03, 398.42),
 }
@@ -109,7 +110,9 @@ def main():
         for name, ox, oy, nx, ny, note in moved:
             print("    %-36s (%7.2f,%7.2f) -> (%7.2f,%7.2f)%s"
                   % (name, ox, oy, nx, ny, (" " + note) if note else ""))
-        for name in sorted(set(old) - set(new)):
+        # H4144 rev 2: MG-approved renames/losses (see the meta doc)
+        accepted = {"Литовское княжество", "Малая Азия"}
+        for name in sorted(set(old) - set(new) - accepted):
             failures.append("%s: name lost: %s" % (new_path, name))
 
     if failures:

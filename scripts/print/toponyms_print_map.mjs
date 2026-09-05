@@ -234,7 +234,7 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
-const B9_STAMP = "вариант B9 · v4.17.29 · 05-09-2026";
+const B9_STAMP = "вариант B9 · v4.17.30 · 05-09-2026";
 // sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
 // except city-rank groups outside the Rus inset render as numbered chips
 // WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
@@ -242,7 +242,7 @@ const B9_STAMP = "вариант B9 · v4.17.29 · 05-09-2026";
 // classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
 // review visually; the table lives in
 // docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
-const B10_STAMP = "вариант B10 · v4.17.29 · 05-09-2026";
+const B10_STAMP = "вариант B10 · v4.17.30 · 05-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -342,13 +342,26 @@ const NORTH_LABEL_PINS = new Map([
   ["Архангельская область", { dx: 39.66, dy: -91.92 }],
   ["Финляндия", { dx: 104, dy: 35, noLeader: true }],
   ["Российская Федерация · Россия", { dx: 78, dy: 20 }],
-  ["Литовское княжество Великое · Литва", { dx: 32.34, dy: -97.53 }],
+  // H4144 rev 2 (MG 05-09-2026: «Лита справа от Украина над, а не под
+  // Финляндия») - the SHORT name «Литва» (the full pair name stays in the
+  // legend) pinned right of the Украина label edge (289), above Финляндия:
+  // text (287.00, 305.00) - the ONLY chip+label-free slot in the whole band (probed), 22 mm second-tier tie. The full-name
+  // box (136u) fits NOWHERE in the Украина-Финляндия band (measured).
+  ["Литовское княжество Великое · Литва", { dx: 74, dy: -60.53 }],
   ["Крым", { dx: 33.25, dy: 29.5 }],
+  // H4144 rev 2 (MG 05-09-2026: «Германия никогда не может быть справа, на
+  // РФ. Германия должна быть вместе с Францией») - the rev-12 west slot
+  // returns as a PIN so the solver can never pull the label to its dot:
+  // text (87.97, 318.08), Франция label sits right next to it.
+  ["Германия · ГДР", { dx: -92, dy: -54 }],
 ]);
 // B9/B10-only stacks: the stack map is shared with the frozen B8 config, so
 // the Архангельская two-line stack goes into a clone - B8 keeps its bytes.
 const B9_NORTH_STACKS = new Map(B8_LABEL_STACKS);
 B9_NORTH_STACKS.set("Архангельская область", ["Архангельская", "область"]);
+// H4144 rev 2 (MG: «Лита справа от Украина над») - the map shows the SHORT
+// name; the legend keeps the full «Литовское княжество Великое · Литва»
+B9_NORTH_STACKS.set("Литовское княжество Великое · Литва", ["Литва"]);
 // MG rev 12 point 1: the filled (discussed) marker reads fine in dark gray -
 // softer than the near-black #111111, on B10 only
 const B10_FILLED_U = "#444444";
@@ -1143,6 +1156,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
   // H4144 global solver: per-label walk context (leader object + squeeze
   // flags) so the pass can re-target leaders after moving a label
   const leaderTags = cfg.globalPlace ? new Map() : null;
+  // H4144 rev 2: pin reserved boxes are HARD for the solver (a v4.17.29
+  // soft-overlap let «Малая Азия» ink sit on top of the pinned «Крым»)
+  const pinBoxSet = cfg.globalPlace ? new Set() : null;
   if (cfg.labelPins) {
     for (const [name, pin] of cfg.labelPins) {
       const entry = mainLabeled.find(({ g }) => g.mapName === name);
@@ -1169,6 +1185,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
         }
       }
       placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
+      if (cfg.globalPlace) pinBoxSet.add(placed[placed.length - 1]); // H4144 rev 2: pin boxes are HARD for the solver
       pinned.set(g, { x: lx2, y: ly, anchor: "middle", lines, lineH, leader: null, noLeader: pin.noLeader === true, dist: Math.hypot(pin.dx, pin.dy), rect: { x0: bx0, x1: bx1, y0: by0, y1: by1 } });
     }
   }
@@ -1331,7 +1348,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       for (const b of others) {
         const ox = Math.min(rect.x1 + P, b.x1) - Math.max(rect.x0 - P, b.x0);
         const oy = Math.min(rect.y1 + P, b.y1) - Math.max(rect.y0 - P, b.y0);
-        if (ox > 0 && oy > 0) c += chipBoxSet.has(b) ? 1e6 + ox * oy : (ox * oy) / 10000;
+        if (ox > 0 && oy > 0) c += chipBoxSet.has(b) || pinBoxSet.has(b) ? 1e6 + ox * oy : (ox * oy) / 10000;
       }
       return c;
     };
@@ -1377,6 +1394,54 @@ function renderSheet(cfg, world, landObj, groups, total) {
         }
       }
       if (!moved) break;
+    }
+    // H4144 rev 2 (MG: «легенду целиком буквами»): NO number-only name on the
+    // sheet - every walk-deferred name and every scale-ranked city name gets
+    // its best AVAILABLE slot (zero-overlap only; leader per the tier rule).
+    // If no slot exists the name stays legend-only and lands in the report.
+    {
+      const drawnGs = new Set(labels.map((l) => l.g));
+      const deferredPool = [];
+      for (const { g } of mainLabeled) {
+        if (!coveredSet.has(g) && !drawnGs.has(g) && !pinned.has(g)) deferredPool.push(g);
+      }
+      if (cfg.scaleRankedNames) {
+        for (const x of onMap) {
+          if (x.scaleRank === "city" && !inInset(x) && (x.discussed || cfg.nameMentioned) && !drawnGs.has(x)) deferredPool.push(x);
+        }
+      }
+      stats.solver_legend_names = 0;
+      stats.solver_legend_unplaced = 0;
+      for (const g of deferredPool) {
+        const lines = buildLines(g);
+        const widest = Math.max(...lines.map((t) => textW(t, LABEL_FONT_U)));
+        const lineH = LABEL_FONT_U * 1.22;
+        const blockH = lines.length * lineH;
+        const startR = markerRadU(g) + 4;
+        let placedSlot = null;
+        for (let r = startR; r <= 100 && !placedSlot; r += B7_TRUE_RING_STEP) {
+          for (const [dx, dy, anchor] of TRUE_DIRS) {
+            const len = Math.hypot(dx, dy) || 1;
+            const lx2 = dx !== 0 ? g.px + (dx / len) * r : g.px;
+            const ly2 = dy !== 0 ? g.py + (dy / len) * r : g.py;
+            const gm = geomOf(g, anchor, lx2, ly2, dy, !!cfg.tightUpwardBoxes, widest, lineH, blockH);
+            if (gm.bx0 < box.x0 + 2 || gm.bx1 > box.x1 - 2 || gm.by0 < box.y0 + 2 || gm.by1 > box.y1 - 2) continue;
+            const rect = { x0: gm.bx0, x1: gm.bx1, y0: gm.by0, y1: gm.by1 };
+            if (costOf(rect, placed) > 0) continue; // zero-overlap only
+            placedSlot = { x: gm.x, y: gm.y, anchor, rect };
+            break;
+          }
+        }
+        if (!placedSlot) { stats.solver_legend_unplaced += 1; continue; }
+        const dist = Math.hypot(placedSlot.x - g.px, placedSlot.y - g.py);
+        placed.push({ x0: placedSlot.rect.x0 - P, x1: placedSlot.rect.x1 + P, y0: placedSlot.rect.y0 - P, y1: placedSlot.rect.y1 + P });
+        labels.push({ g, x: placedSlot.x, y: placedSlot.y, anchor: placedSlot.anchor, lines, lineH, rect: placedSlot.rect, dist });
+        let lo = null;
+        if (dist > (cfg.leaderDistThresholdU ?? 24)) lo = pushLeader(g, placedSlot.x, placedSlot.y - 2);
+        leaderTags.set(g, { leaderObj: lo, pinSkipLeader: false, squeezed: false, squeezed3: false });
+        stats.solver_legend_names += 1;
+      }
+      if (stats.labels_deferred > 0) stats.labels_deferred = Math.max(0, stats.labels_deferred - stats.solver_legend_names);
     }
     stats.solver_moves = stats_solver_moves;
     // leaders re-targeted to the FINAL anchor edges; the tier rule re-applied
@@ -2256,11 +2321,18 @@ function renderSheetD(cfg, world, landObj, groups, total) {
 // nothing) and keeps every URL and every .svg byte unchanged. Cost: the HTML
 // is no longer a detached single file - it needs its sibling .svg. MG reviews
 // via gasyoun.github.io URLs, so that costs nothing here.
+// H4144 rev 2: cache-bust - MG's browser kept serving a stale sheet (the
+// "см. врезку" 6th-round loop). Deterministic v = the stamp tail of the
+// title (no Date.now(): renders must stay byte-identical run to run).
+const titleV = (title) => encodeURIComponent(title.split("·").pop().trim().replace(/\s+/g, "-"));
+
 function pageHtml(title, pageW, pageH, svgFiles) {
+  const v = titleV(title);
   return `<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
 <title>${esc(title)}</title>
 <style>
   @page { size: ${pageW}mm ${pageH}mm; margin: 0; }
@@ -2272,17 +2344,19 @@ function pageHtml(title, pageW, pageH, svgFiles) {
 </style>
 </head>
 <body>
-${svgFiles.map((file) => `<div class="sheet"><img src="${esc(file)}" alt=""></div>`).join("\n")}
+${svgFiles.map((file) => `<div class="sheet"><img src="${esc(file)}?v=${v}" alt=""></div>`).join("\n")}
 </body>
 </html>
 `;
 }
 
 function reviewHtml(title, sheets) {
+  const v = titleV(title);
   return `<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
 <title>${esc(title)}</title>
 <style>
   body { margin: 0; padding: 16px; background: #55524c; font-family: Georgia, serif; }
@@ -2296,7 +2370,7 @@ function reviewHtml(title, sheets) {
 <body>
 ${sheets
   .map(
-    (sh) => `<h2>${esc(sh.title)}</h2><div class="wrap ${sh.pageW > 200 ? "w-spread" : "w-page"}"><img src="${esc(sh.file)}" alt="" loading="lazy"></div>`
+    (sh) => `<h2>${esc(sh.title)}</h2><div class="wrap ${sh.pageW > 200 ? "w-spread" : "w-page"}"><img src="${esc(sh.file)}?v=${v}" alt="" loading="lazy"></div>`
   )
   .join("\n")}
 </body>
