@@ -234,7 +234,7 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
-const B9_STAMP = "вариант B9 · v4.17.26 · 04-09-2026";
+const B9_STAMP = "вариант B9 · v4.17.28 · 05-09-2026";
 // sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
 // except city-rank groups outside the Rus inset render as numbered chips
 // WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
@@ -242,7 +242,7 @@ const B9_STAMP = "вариант B9 · v4.17.26 · 04-09-2026";
 // classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
 // review visually; the table lives in
 // docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
-const B10_STAMP = "вариант B10 · v4.17.27 · 04-09-2026";
+const B10_STAMP = "вариант B10 · v4.17.28 · 05-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -330,16 +330,17 @@ B9_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
 // class dies here.
 const NORTH_LABEL_PINS = new Map([
   ["Кольский полуостров", { dx: 126, dy: 47, noLeader: true }],
-  // H4110 v2 (MG 05-09-2026: «справа от Кольский полуостров и стрелочкой
-  // вести куда нужно»): the stack moves next to the PENINSULA (chip-clear
-  // slot above the Kolsky label) and its leader arrow is back.
   ["Архангельская область", { dx: 103, dy: -2 }],
   ["Финляндия", { dx: 166, dy: 42, noLeader: true }],
-  // H4110 v2: РФ's 2-line bias box hung over the same corridor - as a walk
-  // label its rejection cascaded (РФ walked north, Литовское followed,
-  // Швеция's bias slot was swallowed, the label reached the Atlantic).
-  // Pinned right of its own chip; the corridor stays free.
   ["Российская Федерация · Россия", { dx: 78, dy: 20 }],
+  // H4120 (05-09-2026): a fifth-round pin wave (trio to v1 heights +
+  // Литовское/Крым pins) was BUILT and MEASURED, then withdrawn: every
+  // feasible arrangement drops 1-4 accepted names (Швеция, Северный Урал,
+  // Вятская губерния, Ирак/Пакистан - their only slots are the ones the
+  // trio needs; РФ@{78,20} is immovable at its own chip-obstacle boundary
+  // and Северный Урал's dot (299.13,321.16) walls the corridor). Full
+  // numbers in the H4120 close summary. Unblocks only via an MG ruling
+  // (which names may drop / move) or a global label solver.
 ]);
 // B9/B10-only stacks: the stack map is shared with the frozen B8 config, so
 // the Архангельская two-line stack goes into a clone - B8 keeps its bytes.
@@ -1072,6 +1073,14 @@ function renderSheet(cfg, world, landObj, groups, total) {
     }
   }
 
+  // H4120: measurement hook (same H4051_DEBUG convention as NANLEADER) - the
+  // pin offsets are derived from these TRUE dots, never guessed
+  if (process.env.H4051_DEBUG) {
+    for (const { g } of mainLabeled) {
+      console.error(`LABELDOT ${cfg.key} ${g.mapName} px=${g.px.toFixed(2)} py=${g.py.toFixed(2)}`);
+    }
+  }
+
   const buildLines = (g) => {
     // B2: name-only labels - pages live in the legend, not on the map
     if (cfg.nameOnlyLabels) {
@@ -1427,9 +1436,12 @@ function renderSheet(cfg, world, landObj, groups, total) {
         (() => {
           // B7 insetCaptionFramed: the caption is a framed title bar ON the
           // inset frame - «в рамочку и ближе» (MG rev 9), never floating
+          // H4120: insetCaptionItalic - the caption goes italic, B9/B10 only
+          // (cfg-gated, B7/B8 keep their upright bytes)
           if (cfg.insetCaptionFramed) {
             const barH = 30;
-            return `<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(barH)}" fill="#ffffff" stroke="#111111" stroke-width="0.7"/><text x="${f((ib.x0 + ib.x1) / 2)}" y="${f(ib.y0 + 20)}" text-anchor="middle" font-size="10" font-weight="bold" fill="#33302b">${esc(cfg.insetCaption || WEST_CAPTION)}</text>`;
+            const italic = cfg.insetCaptionItalic ? ' font-style="italic"' : "";
+            return `<rect x="${f(ib.x0)}" y="${f(ib.y0)}" width="${f(ib.x1 - ib.x0)}" height="${f(barH)}" fill="#ffffff" stroke="#111111" stroke-width="0.7"/><text x="${f((ib.x0 + ib.x1) / 2)}" y="${f(ib.y0 + 20)}" text-anchor="middle" font-size="10" font-weight="bold"${italic} fill="#33302b">${esc(cfg.insetCaption || WEST_CAPTION)}</text>`;
           }
           // B6 insetCaptionBelow: the core fills the box to its south edge -
           // an inside-bottom caption ran over chips 37/38; it moves below the
@@ -2592,6 +2604,8 @@ function render() {
       insetChipFont: 6.8,
       insetCaption: B7_INSET_CAPTION,
       insetCaptionFramed: true,
+      // H4120 (MG fifth round): «Русь · Киев → Новгород» bar goes italic
+      insetCaptionItalic: true,
       // MG rev 11: the framed bar is RESERVED before chip fitting - the top
       // row of chips never touches or clips under the caption
       insetReserveBar: true,
@@ -2673,6 +2687,8 @@ function render() {
       insetChipFont: 6.8,
       insetCaption: B7_INSET_CAPTION,
       insetCaptionFramed: true,
+      // H4120 (MG fifth round): «Русь · Киев → Новгород» bar goes italic
+      insetCaptionItalic: true,
       insetReserveBar: true,
       insetLabelsSoft: true,
       insetMirror: true,
