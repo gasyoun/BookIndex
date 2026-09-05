@@ -8,6 +8,8 @@ source_index: 2
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Правило, по которому древние согласные звуки в германских языках (английский, немецкий) изменились по сравнению с другими индоевропейскими. Например, латинское «p» стало германским «f»: pater → father.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%20%D0%93%D1%80%D0%B8%D0%BC%D0%BC%D0%B0"
 }
 ```
+
+_Dr. Mārcis Gasūns_

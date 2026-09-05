@@ -8,6 +8,8 @@ source_index: 530
 tags: ["lexicon_reverse"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Основное текстовое поле не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -36,3 +38,5 @@ _Основное текстовое поле не найдено; см. JSON н
   "pages": "17, 297"
 }
 ```
+
+_Dr. Mārcis Gasūns_

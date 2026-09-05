@@ -8,6 +8,8 @@ source_index: 18
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Когда слово со временем начинает значить совсем другое. «Прелесть» в древнерусском значило «обман, соблазн», а сейчас — «красота, очарование».
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D1%81%D0%B4%D0%B2%D0%B8%D0%B3%20%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D1%8F"
 }
 ```
+
+_Dr. Mārcis Gasūns_

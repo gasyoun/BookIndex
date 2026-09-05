@@ -8,6 +8,8 @@ source_index: 13
 tags: ["names"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Основное текстовое поле не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -47,3 +49,5 @@ _Основное текстовое поле не найдено; см. JSON н
   "wiki": "https://ru.wikipedia.org/wiki/Болотов,_Сергей_Геннадьевич"
 }
 ```
+
+_Dr. Mārcis Gasūns_

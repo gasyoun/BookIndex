@@ -7,6 +7,8 @@ book_id: "mumintroll"
 tags: ["schema_version"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Текстовое поле верхнего уровня не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -14,3 +16,5 @@ _Текстовое поле верхнего уровня не найдено; 
 ```json
 2
 ```
+
+_Dr. Mārcis Gasūns_

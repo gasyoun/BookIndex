@@ -1,3 +1,5 @@
+_Created: 20-04-2026 · Last updated: 05-09-2026_
+
 # CODEX_VIZ_INSTRUCTIONS_RU.md
 
 ## Цель
@@ -318,3 +320,5 @@ Labels: `priority:P1` `area:analytics` `type:feature` `phase:v4`
 5. Проверки из `CODEX_WORKFLOW_RU.md` раздел 5 пройдены
 6. Issue оформлен по `CODEX_WORKFLOW_RU.md` разделы 2–3
 7. Дана ссылка: `https://gasyoun.github.io/BookIndex/aaz-index.html?v=<short_sha>#viz`
+
+_Dr. Mārcis Gasūns_

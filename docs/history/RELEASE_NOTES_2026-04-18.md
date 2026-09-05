@@ -1,3 +1,5 @@
+_Created: 18-04-2026 · Last updated: 05-09-2026_
+
 # Release Notes - v4.2.0 (2026-04-18)
 
 ## Highlights
@@ -28,3 +30,5 @@
   - `#54` reduced motion support.
 - Closed issues:
   - `#49`, `#51`, `#53`.
+
+_Dr. Mārcis Gasūns_

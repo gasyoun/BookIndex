@@ -8,6 +8,8 @@ source_index: 29
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Раздел грамматики о том, как слова соединяются во фразы и предложения.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D1%81%D0%B8%D0%BD%D1%82%D0%B0%D0%BA%D1%81%D0%B8%D1%81"
 }
 ```
+
+_Dr. Mārcis Gasūns_

@@ -8,6 +8,8 @@ source_index: 21
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Древняя египетская плита с одинаковым текстом на трех системах письма: иероглифами, демотическим письмом и древнегреческим. Благодаря ей Шампольон в 1822 году расшифровал иероглифы.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%A0%D0%BE%D0%B7%D0%B5%D1%82%D1%82%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BA%D0%B0%D0%BC%D0%B5%D0%BD%D1%8C"
 }
 ```
+
+_Dr. Mārcis Gasūns_

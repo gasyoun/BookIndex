@@ -8,6 +8,8 @@ source_index: 4
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Древний язык-предок, от которого произошли несколько современных языков. Например, праиндоевропейский — предок русского, английского, латыни, санскрита и многих других.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%BF%D1%80%D0%B0%D1%8F%D0%B7%D1%8B%D0%BA"
 }
 ```
+
+_Dr. Mārcis Gasūns_

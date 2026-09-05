@@ -1,3 +1,5 @@
+_Created: 19-04-2026 · Last updated: 05-09-2026_
+
 # Codex Task: BookIndex v4 — Перелинковка и UX (Sprint v4.3)
 
 ## Контекст проекта
@@ -81,3 +83,5 @@ names→toponyms = 23/27, names→languages = 56/56.
 - `app_data.json` — **только чтение** в рамках этого задания
 - Новые e2e тесты — только в `tests/e2e/smoke.spec.new.js`
 - Функции-индексы строить лениво (с кэшем через `let VAR = null`) — не при старте приложения
+
+_Dr. Mārcis Gasūns_

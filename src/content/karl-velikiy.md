@@ -8,6 +8,8 @@ source_index: 48
 tags: ["names"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Основное текстовое поле не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -52,3 +54,5 @@ _Основное текстовое поле не найдено; см. JSON н
   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Albrecht_Dürer_-_Portrait_of_Charlemagne_-_WGA07041.jpg/220px-Albrecht_Dürer_-_Portrait_of_Charlemagne_-_WGA07041.jpg"
 }
 ```
+
+_Dr. Mārcis Gasūns_

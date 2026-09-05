@@ -1,6 +1,6 @@
 # Entity candidates (volume II, index-first)
 
-_Created: 24-07-2026 · Last updated: 24-07-2026_
+_Created: 24-07-2026 · Last updated: 05-09-2026_
 
 **Schema:** `entity_candidates/1` · **Source:** lectures-v2 transcripts · **Tool:**
 [`scripts/extract_entities_from_transcripts.py --candidates`](https://github.com/gasyoun/BookIndex/blob/main/scripts/extract_entities_from_transcripts.py)
@@ -11,8 +11,8 @@ work — **not** auto-merged into the published index.
 
 | Artifact | Role |
 |---|---|
-| [`entity_candidates.json`](entity_candidates.json) | Full structured list + first-mention + per-video counts |
-| [`entity_candidates.csv`](entity_candidates.csv) | Flat sheet for spreadsheet / review-sheet import |
+| [`entity_candidates.json`](https://github.com/gasyoun/BookIndex/blob/main/data/imports/lectures-v2/entity_candidates.json) | Full structured list + first-mention + per-video counts |
+| [`entity_candidates.csv`](https://github.com/gasyoun/BookIndex/blob/main/data/imports/lectures-v2/entity_candidates.csv) | Flat sheet for spreadsheet / review-sheet import |
 | This README | Review protocol + promotion path |
 
 ## Regenerate

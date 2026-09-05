@@ -8,6 +8,8 @@ source_index: 8
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Точная зарисовка надписи на берестяной грамоте: ученый обводит каждый штрих, чтобы стало видно, какие именно буквы написаны.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%BF%D1%80%D0%BE%D1%80%D0%B8%D1%81%D1%8C"
 }
 ```
+
+_Dr. Mārcis Gasūns_
