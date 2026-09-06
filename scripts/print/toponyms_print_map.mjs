@@ -234,7 +234,7 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
-const B9_STAMP = "вариант B9 · v4.17.34 · 05-09-2026";
+const B9_STAMP = "вариант B9 · v4.17.35 · 06-09-2026";
 // sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
 // except city-rank groups outside the Rus inset render as numbered chips
 // WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
@@ -242,7 +242,7 @@ const B9_STAMP = "вариант B9 · v4.17.34 · 05-09-2026";
 // classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
 // review visually; the table lives in
 // docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
-const B10_STAMP = "вариант B10 · v4.17.34 · 05-09-2026";
+const B10_STAMP = "вариант B10 · v4.17.35 · 06-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -307,6 +307,8 @@ B10_LABEL_BIAS.delete("Российская Федерация · Россия")
 B10_LABEL_BIAS.set("Швеция", [81, -73]);
 B10_LABEL_BIAS.set("Цейлон · Шри-Ланка", [6, 24]);
 B10_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
+B10_LABEL_BIAS.set("Венгрия", [-35.92, 42.20]); // H4223: home slot restored as soft bias (pin is pad-hard, v4.17.34 slot lived in solver-soft space)
+B10_LABEL_BIAS.set("Украина", [10, 60]); // H4223: see B9
 // H4109: B9 does not carry B10's scaleRankedNames/tightUpwardBoxes, so its
 // obstacle field differs - offsets are re-derived per-label with
 // H4051_DEBUG=1, NOT copied blindly from B10 (MG scope ruling).
@@ -317,6 +319,8 @@ B9_LABEL_BIAS.delete("Архангельская область"); // H4110: sup
 // (NORTH_LABEL_PINS) and the bias row is superseded here.
 B9_LABEL_BIAS.delete("Российская Федерация · Россия");
 B9_LABEL_BIAS.set("Швеция", [81, -95]);
+B9_LABEL_BIAS.set("Венгрия", [-35.92, 42.20]); // H4223: home slot restored as soft bias
+B9_LABEL_BIAS.set("Украина", [10, 60]); // H4223: v4.17.34 slot pad-sealed by the wave (Пilos/Крым/Кавказ-chip) - solver-nudged SE, exact slot needs MG ruling
 B9_LABEL_BIAS.set("Цейлон · Шри-Ланка", [6, 24]);
 B9_LABEL_BIAS.set("Германия · ГДР", [-92, -54]);
 // H4110 (MG 05-09-2026, fourth ask): the north-Russia arrangement is PINNED.
@@ -351,11 +355,23 @@ const NORTH_LABEL_PINS = new Map([
   ["Финляндия", { dx: 15.34, dy: -69.40 }],
   ["Российская Федерация · Россия", { dx: 78, dy: 20 }],
   ["Британия · Англия", { dx: 53.10, dy: -186.53 }],
-  ["Европа", { dx: -106.22, dy: -169.07 }],
+  ["Балканы", { dx: -140.55, dy: 80.14 }],
+  ["Греция · Грецколань", { dx: -90.53, dy: 106.94 }],
+  ["Крит · критские города", { dx: 67.16, dy: 71.92 }],
+  ["Пилос", { dx: 116.81, dy: -66.10 }],
+  ["Синдху", { dx: 29.05, dy: 39.13 }],
+  ["западный мир", { dx: -51.76, dy: -22.30, anchor: "start" }],
+  ["Кордова", { dx: -41.78, dy: 68.13 }],
+  ["Северный Урал", { dx: 9.47, dy: -27.01 }],
+  ["Малая Азия", { dx: 54.23, dy: -2.01, anchor: "start" }],
+  ["Пруссия", { dx: 0, dy: -72.82 }],
+  ["Венгрия", { dx: -66.69, dy: 42.20 }],
+  ["Галлия", { dx: -33.09, dy: -35.73, anchor: "end" }],
+      ["Европа", { dx: -106.22, dy: -169.07 }],
   ["Кавказ", { dx: 94.12, dy: -50.17 }],
   ["Средняя Азия", { dx: 59.62, dy: -77.59 }],
   ["Марокко", { dx: -6.07, dy: 19.78 }],
-  ["Италия", { dx: 9.99, dy: 128.01 }],
+  ["Италия", { dx: 17.56, dy: 92.01 }],
   // H4144 rev 2 (MG 05-09-2026: «Лита справа от Украина над, а не под
   // Финляндия») - the SHORT name «Литва» (the full pair name stays in the
   // legend) pinned right of the Украина label edge (289), above Финляндия:
@@ -1177,7 +1193,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   const pinBoxSet = cfg.globalPlace ? new Set() : null;
   if (cfg.labelPins) {
     for (const [name, pin] of cfg.labelPins) {
-      const entry = mainLabeled.find(({ g }) => g.mapName === name);
+      const entry = mainLabeled.find(({ g }) => g.mapName === name || g.mapName.startsWith(name) || g.mapName.includes(name)); // H4223: pair-merged heads still pin
       if (!entry) continue;
       const g = entry.g;
       const lines = buildLines(g);
