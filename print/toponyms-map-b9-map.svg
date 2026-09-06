@@ -93,11 +93,10 @@
 <circle cx="206.96" cy="329.63" r="7" fill="#444444" stroke="#111111" stroke-width="0.6"/><text x="206.96" y="332.13" text-anchor="middle" font-size="7.2" fill="#ffffff">81</text>
 <circle cx="239.64" cy="336.55" r="7" fill="#ffffff" stroke="#111111" stroke-width="0.6" stroke-dasharray="4.4 2.6"/><text x="239.64" y="339.05" text-anchor="middle" font-size="7.2" fill="#111111">82</text>
 <circle cx="501.56" cy="517.83" r="7" fill="#ffffff" stroke="#111111" stroke-width="0.6" stroke-dasharray="4.4 2.6"/><text x="501.56" y="520.33" text-anchor="middle" font-size="7.2" fill="#111111">83</text>
-<line x1="228.32" y1="401.51" x2="174.68" y2="461.25" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
 <line x1="192.01" y1="355.11" x2="85.00" y2="194.00" stroke="#55524c" stroke-width="0.4"/>
 <line x1="378.38" y1="261.69" x2="456.38" y2="284.34" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
 <line x1="209.81" y1="449.65" x2="272.00" y2="528.00" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
-<line x1="169.00" y1="415.23" x2="139.81" y2="481.97" stroke="#55524c" stroke-width="0.4"/>
+<line x1="169.00" y1="415.23" x2="144.73" y2="471.02" stroke="#55524c" stroke-width="0.4"/>
 <line x1="291.66" y1="504.15" x2="307.58" y2="548.46" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
 <line x1="225.99" y1="497.52" x2="225.99" y2="549.25" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
 <line x1="190.95" y1="428.96" x2="106.00" y2="542.99" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
@@ -120,18 +119,19 @@
 <line x1="146.90" y1="346.88" x2="200.00" y2="163.00" stroke="#55524c" stroke-width="0.4"/>
 <line x1="386.95" y1="445.53" x2="356.55" y2="484.87" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
 <line x1="200.14" y1="413.55" x2="60.00" y2="498.00" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
+<line x1="177.83" y1="397.08" x2="131.21" y2="495.33" stroke="#55524c" stroke-width="0.4"/>
 <line x1="101.78" y1="403.22" x2="60.42" y2="473.62" stroke="#55524c" stroke-width="0.4"/>
 <line x1="391.95" y1="479.22" x2="421.00" y2="520.99" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
 <line x1="164.44" y1="389.93" x2="75.42" y2="398.44" stroke="#55524c" stroke-width="0.4"/>
-<line x1="188.91" y1="447.64" x2="311.00" y2="379.99" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
 <line x1="280.55" y1="463.99" x2="313.78" y2="506.16" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
 <line x1="241.72" y1="409.91" x2="275.00" y2="441.99" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
+<line x1="202.91" y1="461.83" x2="240.78" y2="499.34" stroke="#55524c" stroke-width="0.4" stroke-dasharray="4.4 2.6"/>
 <text x="455.39" y="497.87" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="455.39" dy="0">Бхарат · Индия</tspan></text>
-<text x="174.68" y="463.25" text-anchor="end" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="174.68" dy="0">Украина</tspan></text>
+<text x="264.03" y="398.42" text-anchor="start" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="264.03" dy="0">Украина</tspan></text>
 <text x="85.00" y="196.00" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="85.00" dy="0">Европа</tspan></text>
 <text x="456.38" y="286.34" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="456.38" dy="0">Российская Федерация ·</tspan><tspan x="456.38" dy="13.66">Россия</tspan></text>
 <text x="272.00" y="530.00" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="272.00" dy="0">Крит · критские города</tspan></text>
-<text x="139.81" y="483.97" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="139.81" dy="0">Рим и др.</tspan></text>
+<text x="144.73" y="473.02" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="144.73" dy="0">Рим и др.</tspan></text>
 <text x="307.58" y="550.46" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="307.58" dy="0">арабские</tspan><tspan x="307.58" dy="13.66">страны</tspan></text>
 <text x="225.99" y="551.25" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="225.99" dy="0">Египет</tspan></text>
 <text x="106.00" y="544.99" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="106.00" dy="0">Греция · Грецколань</tspan></text>
@@ -164,14 +164,15 @@
 <text x="200.00" y="165.00" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="200.00" dy="0">Британия · Англия</tspan></text>
 <text x="356.55" y="486.87" text-anchor="end" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="356.55" dy="0">Пакистан</tspan></text>
 <text x="60.00" y="500.00" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="60.00" dy="0">Балканы</tspan></text>
+<text x="131.21" y="497.33" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="131.21" dy="0">Венеция</tspan></text>
 <text x="60.42" y="475.62" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="60.42" dy="0">Кордова</tspan></text>
 <text x="421.00" y="522.99" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="421.00" dy="0">Синдху</tspan></text>
 <text x="490.98" y="336.83" text-anchor="start" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="490.98" dy="0">Китай</tspan></text>
 <text x="75.42" y="400.44" text-anchor="end" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="75.42" dy="0">Падуя</tspan></text>
-<text x="311.00" y="381.99" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="311.00" dy="0">Пилос</tspan></text>
+<text x="172.00" y="568.00" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="172.00" dy="0">Пилос</tspan></text>
 <text x="313.78" y="508.16" text-anchor="start" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="313.78" dy="0">Ирак</tspan></text>
 <text x="275.00" y="443.99" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="275.00" dy="0">Крым</tspan></text>
-<text x="195.28" y="486.25" text-anchor="middle" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="195.28" dy="0">Фест</tspan></text>
+<text x="240.78" y="501.34" text-anchor="start" font-size="11.2" fill="#111111" stroke="#ffffff" stroke-width="1.8" paint-order="stroke" stroke-linejoin="round"><tspan x="240.78" dy="0">Фест</tspan></text>
 </g>
 <rect x="221.22" y="336.70" width="41.75" height="49.11" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-dasharray="3 2"/>
 <rect x="221.22" y="336.70" width="41.75" height="49.11" fill="url(#hatch-B9map)" fill-opacity="0.35" stroke="#111111" stroke-width="1.6" stroke-dasharray="3 2"/>
@@ -224,5 +225,5 @@
 <rect x="44.00" y="807.60" width="10.50" height="3" fill="#111111"/><rect x="54.50" y="807.60" width="10.50" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/><rect x="65.00" y="807.60" width="10.50" height="3" fill="#111111"/><rect x="75.50" y="807.60" width="10.50" height="3" fill="#ffffff" stroke="#111111" stroke-width="0.5"/><text x="44.00" y="818.50" font-size="7" fill="#111111">0</text><text x="65.00" y="818.50" text-anchor="middle" font-size="7" fill="#111111">500</text><text x="86.00" y="818.50" text-anchor="middle" font-size="7" fill="#111111">1000</text><text x="94.00" y="818.50" font-size="7" fill="#111111">км</text>
 <text x="32" y="33.6" font-size="23" font-weight="bold" fill="#111111">Карта топонимов книги</text>
 <text x="32" y="44.6" font-size="10" fill="#33302b"><tspan x="32" dy="0">«Из жизни слов и языков» · 98 названий мест: все точки на истинных</tspan><tspan x="32" dy="12.5">местах, у каждой номер; ядро «Русь» крупно во врезке</tspan></text>
-<text x="548" y="33.6" text-anchor="end" font-size="7.2" fill="#55524c">вариант B9 · v4.17.35 · 06-09-2026</text>
+<text x="548" y="33.6" text-anchor="end" font-size="7.2" fill="#55524c">вариант B9 · v4.17.36 · 06-09-2026</text>
 </svg>

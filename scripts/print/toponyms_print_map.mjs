@@ -234,7 +234,7 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
-const B9_STAMP = "вариант B9 · v4.17.35 · 06-09-2026";
+const B9_STAMP = "вариант B9 · v4.17.36 · 06-09-2026";
 // sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
 // except city-rank groups outside the Rus inset render as numbered chips
 // WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
@@ -242,7 +242,7 @@ const B9_STAMP = "вариант B9 · v4.17.35 · 06-09-2026";
 // classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
 // review visually; the table lives in
 // docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
-const B10_STAMP = "вариант B10 · v4.17.35 · 06-09-2026";
+const B10_STAMP = "вариант B10 · v4.17.36 · 06-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -384,6 +384,17 @@ const NORTH_LABEL_PINS = new Map([
   // text (87.97, 318.08), Франция label sits right next to it.
   ["Германия · ГДР", { dx: -92, dy: -54 }],
 ]);
+// H4224 (MG 06-09-2026, round-12: «Пилос — в Африку»): on B9 the label joins
+// the Greece cluster in Africa - right of «Греция · Грецколань», below the
+// «Палестина» row. The tie from the dot (188.9,447.6) is geometrically
+// impossible without slicing label ink: the descent corridor is sealed by
+// Италия (163..207 × 502..516), Палестина (124..188 × 516..530), Крит
+// (193..351 × 522..536) and Египет (205..248 × 543..554) - every straight
+// route crosses one of them, so the pin is noLeader per the H4110 rule
+// (lines through neighbor ink are the вынос MG rejects). B10 is a separate
+// projection: its Пилос already sits with the Greece row, pin unchanged.
+const B9_LABEL_PINS = new Map(NORTH_LABEL_PINS);
+B9_LABEL_PINS.set("Пилос", { dx: -22.19, dy: 119.91, noLeader: true });
 // B9/B10-only stacks: the stack map is shared with the frozen B8 config, so
 // the Архангельская two-line stack goes into a clone - B8 keeps its bytes.
 const B9_NORTH_STACKS = new Map(B8_LABEL_STACKS);
@@ -2886,7 +2897,7 @@ function render() {
       pairMergeList: B8_PAIR_MERGE,
       labelStacks: B9_NORTH_STACKS,
       labelBias: B9_LABEL_BIAS,
-      labelPins: NORTH_LABEL_PINS,
+      labelPins: B9_LABEL_PINS,
       labelAir: true,
       // H4144 (MG ruling «Глобальный решатель»): the post-walk hill-climb -
       // every drawn label re-evaluated against all boxes, strict-improve

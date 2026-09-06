@@ -36,7 +36,13 @@ EXPECTED = {
     "Балканы": (60.00, 500.00),
     "Греция · Грецколань": (106.00, 544.99),
     "Крит · критские города": (272.00, 530.00),
-    "Пилос": (311.00, 381.99),
+    # H4224 (round-12, MG: «Пилос — в Африку»): to the Greece cluster,
+    # right of Греция; noLeader pin (tie proven impossible without
+    # slicing label ink - see toponyms_print_map.mjs).
+    "Пилос": (172.00, 568.00),
+    # H4224 side effect (deterministic): freeing the old Пилос box let the
+    # solver move Украина to B10's accepted slot (cross-sheet match).
+    "Украина": (264.03, 398.42),
     "Синдху": (421.00, 522.99),
     "западный мир": (40.00, 365.99),
     "Кордова": (60.42, 475.62),
@@ -47,11 +53,12 @@ EXPECTED = {
     "Малая Азия": (299.30, 440.85),
 }
 
-# H4223: B10 is a separate projection - southern dots (and thus pins) land
+# H4224: B10 is a separate projection - southern dots (and thus pins) land
 # elsewhere; the b9 values above do not apply 1:1. Per-sheet overrides.
+# H4224 round-12: Пилос/Украина rows moved into EXPECTED (b9 joined b10's
+# accepted Украина slot; b10's Пилос is unchanged).
 EXPECTED_B10 = {
     "Пилос": (155.30, 493.27),
-    "Украина": (264.03, 398.42),
 }
 
 # H4223 (MG 06-09-2026 round-11): b10's Кордова group no longer resolves in
