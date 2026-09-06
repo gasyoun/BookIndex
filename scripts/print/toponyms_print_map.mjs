@@ -234,7 +234,7 @@ const B8_STAMP = "вариант B8 · v4.17.24 · 04-09-2026";
 // 10 mm of the true dot, second tier (10-25 mm) tied. The inset source is a
 // HATCHED square with an arrow from the inset frame; the framed caption bar
 // is reserved before chip fitting. Legend opts into oldest-first name order.
-const B9_STAMP = "вариант B9 · v4.17.33 · 05-09-2026";
+const B9_STAMP = "вариант B9 · v4.17.34 · 05-09-2026";
 // sheet B10 (H4051 Unit B, the draft scale_rank applied): identical to B9
 // except city-rank groups outside the Rus inset render as numbered chips
 // WITHOUT names - the mixed-scale co-location (Рим 0.08 mm from Италия, Фест
@@ -242,7 +242,7 @@ const B9_STAMP = "вариант B9 · v4.17.33 · 05-09-2026";
 // classification (8 macro / 56 region / 19 city) is the DEFAULT MG will
 // review visually; the table lives in
 // docs/TOPONYM_SCALE_RANK_DRAFT_2026-09-04.md.
-const B10_STAMP = "вариант B10 · v4.17.33 · 05-09-2026";
+const B10_STAMP = "вариант B10 · v4.17.34 · 05-09-2026";
 const B8_LABEL_PAD_U = 3.2;
 const B8_CHIP_OBSTACLE_PAD_U = 10;
 const B8_RELAX_GAP_U = 5.5;
@@ -345,13 +345,15 @@ const NORTH_LABEL_PINS = new Map([
   // застолбить там же» + «Италию опустить ниже Крита» (со стрелкой, гейт
   // 34 → единый 50) + «Европу до Гренландии» (со стрелкой 49 мм)):
   ["Кольский полуостров", { dx: 0.10, dy: -113.23 }],
+  ["Балтийское море", { dx: -2.23, dy: -107.5 }],
+  ["север [Руси]", { dx: 50.24, dy: 14.84, anchor: "start" }],
   ["Архангельская область", { dx: 72.69, dy: -96.03 }],
   ["Финляндия", { dx: 15.34, dy: -69.40 }],
   ["Российская Федерация · Россия", { dx: 78, dy: 20 }],
   ["Британия · Англия", { dx: 53.10, dy: -186.53 }],
   ["Европа", { dx: -106.22, dy: -169.07 }],
   ["Кавказ", { dx: 94.12, dy: -50.17 }],
-  ["Средняя Азия", { dx: 95.62, dy: -6.59 }],
+  ["Средняя Азия", { dx: 59.62, dy: -77.59 }],
   ["Марокко", { dx: -6.07, dy: 19.78 }],
   ["Италия", { dx: 9.99, dy: 128.01 }],
   // H4144 rev 2 (MG 05-09-2026: «Лита справа от Украина над, а не под
@@ -359,7 +361,6 @@ const NORTH_LABEL_PINS = new Map([
   // legend) pinned right of the Украина label edge (289), above Финляндия:
   // text (287.00, 305.00) - the ONLY chip+label-free slot in the whole band (probed), 22 mm second-tier tie. The full-name
   // box (136u) fits NOWHERE in the Украина-Финляндия band (measured).
-  ["Литовское княжество Великое · Литва", { dx: 74, dy: -60.53 }],
   ["Крым", { dx: 33.25, dy: 29.5 }],
   // H4144 rev 2 (MG 05-09-2026: «Германия никогда не может быть справа, на
   // РФ. Германия должна быть вместе с Францией») - the rev-12 west slot
@@ -373,7 +374,6 @@ const B9_NORTH_STACKS = new Map(B8_LABEL_STACKS);
 B9_NORTH_STACKS.set("Архангельская область", ["Архангельская", "область"]);
 // H4144 rev 2 (MG: «Лита справа от Украина над») - the map shows the SHORT
 // name; the legend keeps the full «Литовское княжество Великое · Литва»
-B9_NORTH_STACKS.set("Литовское княжество Великое · Литва", ["Литва"]);
 // MG rev 12 point 1: the filled (discussed) marker reads fine in dark gray -
 // softer than the near-black #111111, on B10 only
 const B10_FILLED_U = "#444444";
@@ -1059,7 +1059,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
   ).length;
   // H4144 rev 3 (MG: «Британские острова убрать как надпись с карты, есть
   // уже Британия») - legend-only names: never drawn on the map sheets
-  const LEGEND_ONLY = new Set(["Британские острова"]);
+  const LEGEND_ONLY = new Set(["Британские острова", "Литовское княжество Великое", "Литва"]);
   const mainLabeled = onMap
     .filter((x) => x.discussed || cfg.nameMentioned)
     .filter((x) => !LEGEND_ONLY.has(x.primary.head))
@@ -1186,8 +1186,9 @@ function renderSheet(cfg, world, landObj, groups, total) {
       const blockH = lines.length * lineH;
       const lx2 = g.px + pin.dx;
       const ly2 = g.py + pin.dy;
-      const bx0 = lx2 - widest / 2;
-      const bx1 = lx2 + widest / 2;
+      const anch = pin.anchor || "middle"; // H4193: start/end pins keep the swapped label's original geometry
+      const bx0 = anch === "middle" ? lx2 - widest / 2 : anch === "start" ? lx2 : lx2 - widest;
+      const bx1 = bx0 + widest;
       const ly = ly2 + lineH * 0.34;
       const by0 = ly - lineH * 0.8;
       const by1 = by0 + blockH;
@@ -1202,7 +1203,7 @@ function renderSheet(cfg, world, landObj, groups, total) {
       }
       placed.push({ x0: bx0 - P, x1: bx1 + P, y0: by0 - P, y1: by1 + P });
       if (cfg.globalPlace) pinBoxSet.add(placed[placed.length - 1]); // H4144 rev 2: pin boxes are HARD for the solver
-      pinned.set(g, { x: lx2, y: ly, anchor: "middle", lines, lineH, leader: null, noLeader: pin.noLeader === true, dist: Math.hypot(pin.dx, pin.dy), rect: { x0: bx0, x1: bx1, y0: by0, y1: by1 } });
+      pinned.set(g, { x: lx2, y: ly, anchor: anch, lines, lineH, leader: null, noLeader: pin.noLeader === true, dist: Math.hypot(pin.dx, pin.dy), rect: { x0: bx0, x1: bx1, y0: by0, y1: by1 } });
     }
   }
 
@@ -1641,6 +1642,18 @@ function renderSheet(cfg, world, landObj, groups, total) {
           )
         );
         drawInset._fb += 1;
+      }
+    }
+    // H4193 (MG: «Литва перенести на врезку, убрать из большой карты»):
+    // Lithuania sits just WEST of the inset geo box (lon 23.9 vs lon0 27) -
+    // its chip+short name drawn clamped to the inset west edge at its latitude
+    if (cfg.insetLitvaClamped) {
+      const lg = groups.find((x) => x.primary && x.primary.head === "Литва");
+      if (lg) {
+        const ly = ib.y0 + ((60.5 - 55.17) / (60.5 - 50)) * (ib.y1 - ib.y0);
+        const lx = ib.x0 + insetChipPad + 2;
+        s.push(`<circle cx="${f(lx)}" cy="${f(ly)}" r="${f(insetChipR)}" fill="${FILLED}" stroke="#111111" stroke-width="0.6"/><text x="${f(lx)}" y="${f(ly + insetChipFont * 0.35)}" text-anchor="middle" font-size="${insetChipFont}" fill="#ffffff">${lg.number}</text>`);
+        s.push(`<text x="${f(lx + insetChipPad + 3)}" y="${f(ly + 3)}" font-size="${INSET_LABEL_FONT_U}" fill="#111111" stroke="#ffffff" stroke-width="1.6" paint-order="stroke" stroke-linejoin="round">Литва</text>`);
       }
     }
     s.push(`</g>`);
@@ -2863,6 +2876,8 @@ function render() {
       // every drawn label re-evaluated against all boxes, strict-improve
       // moves only; kills the greedy cascade at the root
       globalPlace: true,
+      // H4193 (MG: «Литва перенести на врезку»)
+      insetLitvaClamped: true,
       // MG rev 12 point 1 ported to B9 (live accepted variant, not just B10)
       softFill: true,
       // B9 leader policy (MG tiers): no leader within 10 mm of the dot;
@@ -2942,6 +2957,8 @@ function render() {
       labelAir: true,
       // H4144 (MG ruling «Глобальный решатель»): same as B9
       globalPlace: true,
+      // H4193 (MG: «Литва перенести на врезку»)
+      insetLitvaClamped: true,
       // H4051 Unit B (draft default, MG reviews the RENDERED sheet): city-
       // rank groups outside the Rus inset render as chips without names
       scaleRankedNames: true,
