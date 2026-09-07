@@ -41,7 +41,7 @@ _Created: 24-07-2026 · Last updated: 03-09-2026_
 
 ## H3657 — гид читателя «главы → видео» + сверка полос 4–5 (28-08-2026)
 
-Задача владельца «связать печатные лекции с видео и подсказать, что смотреть» закрыта двумя слоями: (1) верификация уже сделанной связки, (2) новый читательский гид. Полный разбор — [docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md](docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md); выходы — [guide.html](../guide.html) + [data/reader_guide.json](../data/reader_guide.json).
+Задача владельца «связать печатные лекции с видео и подсказать, что смотреть» закрыта двумя слоями: (1) верификация уже сделанной связки, (2) новый читательский гид. Полный разбор — [docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md](docs/READER_GUIDE_CHAPTERS_TO_VIDEOS_2026.md); выходы — guide.html + data/reader_guide.json.
 
 | Слой | Результат | Проверка |
 |---|---|---|
