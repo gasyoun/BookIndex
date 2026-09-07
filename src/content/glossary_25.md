@@ -8,6 +8,8 @@ source_index: 24
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Наука о древних почерках и системах письма. Помогает датировать древние рукописи и грамоты.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%BF%D0%B0%D0%BB%D0%B5%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F"
 }
 ```
+
+_Dr. Mārcis Gasūns_

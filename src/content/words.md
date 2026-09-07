@@ -8,6 +8,8 @@ source_index: 0
 tags: ["routes"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Откуда берутся слова, как они меняются, почему «вокзал» от «Vauxhall», а «бутерброд» от «Butterbrot». Этимология, заимствования, значения слов.
 
 ## Source JSON
@@ -43,3 +45,5 @@ tags: ["routes"]
   ]
 }
 ```
+
+_Dr. Mārcis Gasūns_

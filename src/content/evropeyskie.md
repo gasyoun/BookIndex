@@ -8,6 +8,8 @@ source_index: 41
 tags: ["languages"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Основное текстовое поле не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -116,3 +118,5 @@ _Основное текстовое поле не найдено; см. JSON н
   "group": "разное"
 }
 ```
+
+_Dr. Mārcis Gasūns_

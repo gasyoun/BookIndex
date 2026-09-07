@@ -8,6 +8,8 @@ source_index: 5
 tags: ["non_content_pages"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Основное текстовое поле не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -17,3 +19,5 @@ _Основное текстовое поле не найдено; см. JSON н
   "value": 156
 }
 ```
+
+_Dr. Mārcis Gasūns_

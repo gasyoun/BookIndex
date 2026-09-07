@@ -8,6 +8,8 @@ source_index: 15
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Слово «энергия» — греческое, буквально означает «деятельность», «работа». Так и устроены многие наши научные термины — это древнегреческие слова, переехавшие в современные языки.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D1%8D%D0%BD%D0%B5%D1%80%D0%B3%D0%B8%D1%8F%20%28%D1%8D%D1%82%D0%B8%D0%BC%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F%29"
 }
 ```
+
+_Dr. Mārcis Gasūns_

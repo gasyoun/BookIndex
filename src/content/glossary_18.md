@@ -8,6 +8,8 @@ source_index: 17
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Слово, которое перевели буквально, по частям. Например, «небоскреб» — это калька с английского «sky-scraper» (sky=небо, scrape=скрести).
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%BA%D0%B0%D0%BB%D1%8C%D0%BA%D0%B0"
 }
 ```
+
+_Dr. Mārcis Gasūns_

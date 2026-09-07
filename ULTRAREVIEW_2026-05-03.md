@@ -1,3 +1,5 @@
+_Created: 03-05-2026 · Last updated: 05-09-2026_
+
 # BookIndex - Ultrareview & Roadmap Refresh
 
 - Original audit date: 2026-05-03
@@ -320,3 +322,5 @@ The project has achieved **Visual Excellence** and **Expeditionary Readiness**. 
 *   **Expeditionary Readiness**: 100% офлайн-доступ (PWA), мобильная оптимизация, фоновый поиск.
 *   **Repository Hygiene**: Очистка корня, создание `docs/history/`, обновление `README.md`.
 *   **Status**: Проект зафиксирован как стабильный монолит перед переходом к модульной архитектуре (v13.0).
+
+_Dr. Mārcis Gasūns_

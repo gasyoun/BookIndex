@@ -8,6 +8,8 @@ source_index: 22
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Древнейшая письменность Греции, использовавшаяся ок. 1400 г. до н. э. на Крите и в Микенах. Расшифровано в 1952 году архитектором Майклом Вентрисом — оказалось, это древнейшая форма греческого языка.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%BB%D0%B8%D0%BD%D0%B5%D0%B9%D0%BD%D0%BE%D0%B5%20%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%BE%20%D0%91"
 }
 ```
+
+_Dr. Mārcis Gasūns_

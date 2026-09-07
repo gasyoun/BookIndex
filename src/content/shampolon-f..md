@@ -8,6 +8,8 @@ source_index: 91
 tags: ["names"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Основное текстовое поле не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -44,3 +46,5 @@ _Основное текстовое поле не найдено; см. JSON н
   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Jean-Francois_Champollion_2.jpg/220px-Jean-Francois_Champollion_2.jpg"
 }
 ```
+
+_Dr. Mārcis Gasūns_

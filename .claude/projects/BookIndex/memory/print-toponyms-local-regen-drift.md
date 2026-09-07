@@ -1,3 +1,5 @@
+_Created: 05-09-2026 · Last updated: 05-09-2026_
+
 # Local regen of print/toponyms drifts vs CI (Node 26 vs Node 24)
 
 _Found 05-09-2026, H4051 drain session (OxAlpha/opencode, macOS, Node v26.7.0)._
@@ -15,3 +17,5 @@ CI (Ubuntu, Node 24) is byte-green on the same commit — verified on
 regen diffs for this lane; trust CI. If a real byte-drift investigation is
 needed, run it under Node 24 (or in CI). The gated fields (`chip_ink_overlap_max`,
 `chip_close_pairs`, `links_drawn`, offset percentiles) were unaffected.
+
+_Dr. Mārcis Gasūns_

@@ -1,3 +1,5 @@
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 # BookIndex v4.4: стабилизация + UI
 
 Актуализация на 2026-05-01 по локальному `main` и GitHub `gasyoun/BookIndex`.
@@ -115,3 +117,5 @@ Viewport:
 - Hash routes `#v4/...` остаются совместимыми.
 - `aaz-index.html` остается коммитимым standalone-артефактом.
 - Большой UI-framework migration не входит в v4.4; возможен только после стабилизационного цикла.
+
+_Dr. Mārcis Gasūns_

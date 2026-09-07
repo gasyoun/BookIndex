@@ -8,6 +8,8 @@ source_index: 1
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Правило о том, что энклитики (слова вроде «же», «ли», «бы») должны стоять во фразе на втором месте — после первого ударного слова. Открыл это швейцарский лингвист Якоб Вакернагель в 1892 году.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%20%D0%92%D0%B0%D0%BA%D0%B5%D1%80%D0%BD%D0%B0%D0%B3%D0%B5%D0%BB%D1%8F"
 }
 ```
+
+_Dr. Mārcis Gasūns_

@@ -8,6 +8,8 @@ source_index: 0
 tags: ["lecture_summaries"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 История подготовки книги: цикл лекций, расшифровка, авторизация и редактирование.
 
 ## Source JSON
@@ -23,3 +25,5 @@ tags: ["lecture_summaries"]
   "terms": []
 }
 ```
+
+_Dr. Mārcis Gasūns_
