@@ -1,0 +1,5 @@
+# 2026-09-15 — CodeQL alert triage contract + boot-catch exploit regression (H4790)
+
+Added `docs/SECURITY_ALERT_TRIAGE_2026-09-15.md`: baseline (32/32 CodeQL alerts `fixed`, 0 open, as of 2026-09-15), the source→sink model for this repo, helpers of record (`escapeHtml`/`safeUrl`/`safeImageUrl` + DOM-assembly rule), the triage ladder for new alerts (artifact-dup check → flow map → disposition → named regression → close-the-loop), the reopen policy (new evidence only), and the regression ledger with the worked example.
+
+Added `tests/e2e/security-alert-regression.spec.js` (5 passing): the representative classified path — boot-catch error panel (`src/runtime/entry.js:135`, alerts #25/#27) renders attacker-influenced exception text inert (404-echo flavor + `JSON.parse`-preview flavor: payload text reaches the panel as a text node, 0 `script`/`img`/`iframe` elements, `window.__pwned` never set), plus `safeUrl`/`safeImageUrl` scheme allow-list probes (`javascript:`/`data:`/`vbscript:`/`file:` → fallback) and a normal-boot hydration control.
