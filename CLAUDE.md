@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 09-05-2026 · Last updated: 03-09-2026_
+_Created: 09-05-2026 · Last updated: 16-09-2026_
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -131,5 +131,9 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 - Do not add ESM `import`/`export` syntax that the regex stripper in `bundle.js` cannot handle (default exports, `export *`, dynamic `import()` of local modules).
 - Do not commit `v3_app.js` or `aaz-index.html` out of sync with their inputs — CI rebuilds and `git diff --exit-code`s both. `npm run build:all` regenerates the pair.
 - Do not bypass the modules split: editing `app_data.json` without re-running `data:split` (or vice versa) will fail the "Ensure split modules are in sync" CI step.
+
+## Memory store
+
+This repo keeps a committed memory store at [`.claude/projects/BookIndex/memory/`](https://github.com/gasyoun/BookIndex/tree/main/.claude/projects/BookIndex/memory) per the org Memory-routing rule ([`/danger-memory`](https://github.com/gasyoun/claude-config/blob/main/commands/danger-memory.md)) — write dangerous/durable facts there and index each in its `MEMORY.md` (H4547).
 
 _Dr. Mārcis Gasūns_
