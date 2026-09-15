@@ -6,17 +6,28 @@ const { test, expect } = require('@playwright/test');
  * Representative CodeQL path classified in docs/SECURITY_ALERT_TRIAGE_2026-09-15.md:
  * - CodeQL js/xss-through-dom #25 / js/xss-through-exception #27
  *   (src/runtime/entry.js, boot catch panel)
- * - js/incomplete-url-scheme-check #29/#30 (src/runtime/core/utils.js safeUrl)
+ * - js/incomplete-url-scheme-check #29/#30 (src/runtime/core/utils.js safeUrl/safeImageUrl)
  *
  * The boot-catch panel renders the exception message via textContent (DOM assembly).
- * An attacker-influenced error — a failed data-module fetch echoes its URL, which is
- * manifest-controlled and can be forced to a javascript: URL; or a malformed embedded
- * manifest whose JSON.parse error previews attacker bytes — must render as inert text.
- * Regression contract: `<img onerror>` markup and `javascript:` payloads arriving
- * through the boot error path stay inert, and the normal boot path still hydrates.
+ * An attacker-influenced error — a data-module fetch that returns a malformed body whose
+ * JSON.parse error previews attacker bytes, or a tampered embedded manifest — must render
+ * as inert text.
+ *
+ * NON-VACUOUSNESS CONTRACT (why these tests can fail on a revert):
+ * every boot-failure test below installs its fault BEFORE `page.goto()`, so the panel is
+ * built by the PRODUCTION catch in `src/runtime/entry.js` — the spec never re-implements
+ * the panel. The load-bearing assertion is the element count: a panel assembled with
+ * `innerHTML` parses `<img src=x …>` into a real node and fails `injectedElements === 0`.
+ * (`window.__pwned` is a secondary canary only — CSP has no `unsafe-inline`, so an inline
+ * `onerror` handler may not fire even in the vulnerable build; the injected ELEMENT is the
+ * defect signal.) Verified by an independent GLM-family review pass, 2026-09-15.
  */
 
 const APP_PAGE = '/aaz-index.html';
+
+// Malformed JSON whose V8 parse error PREVIEWS the attacker bytes:
+// Unexpected token '<', ..."names": [ <img src=x"... is not valid JSON
+const MALFORMED_WITH_PAYLOAD = '{"names": [ <img src=x onerror=window.__pwned=1>, ] }';
 
 test.describe('security-alert regression (H4790)', () => {
   test('normal boot still hydrates APP_DATA through the module manifest', async ({ page }) => {
@@ -52,66 +63,54 @@ test.describe('security-alert regression (H4790)', () => {
     expect(probe[4]).toMatch(/^blob:/i);
   });
 
-  test('boot-catch error panel renders attacker-influenced exception text inert (textContent)', async ({ page }) => {
-    // Serve the built artifact with a manifest whose module URL fails; the thrown
-    // error echoes the module file name — the attacker-influenced string — into the
-    // boot-catch panel. Assert DOM assembly + text-only rendering.
+  test('production boot catch renders a malformed module body inert (fetch/JSON.parse path)', async ({ page }) => {
+    // Fault installed BEFORE goto: the runtime's own loadAppData() → fetchAppDataModule()
+    // → response.json() throws with the payload in the message, and the PRODUCTION catch
+    // (entry.js:135) builds the panel. Nothing here re-implements that panel.
     await page.route('**/data/modules/*.json*', (route) => route.fulfill({
-      status: 404,
-      contentType: 'text/plain',
-      body: 'not found',
+      status: 200,
+      contentType: 'application/json',
+      body: MALFORMED_WITH_PAYLOAD,
     }));
     await page.goto(`${APP_PAGE}#v4/home/home`);
     const panel = page.locator('#content .panel-empty-state');
     await expect(panel).toBeVisible({ timeout: 15000 });
     const safety = await panel.evaluate((node) => ({
       text: node.textContent || '',
-      htmlChildren: Array.from(node.children).map((c) => (c.tagName || '').toLowerCase()),
-      scriptChildren: node.querySelectorAll('script, img, iframe').length,
-      rawMarkupInText: /<(?:script|img|iframe)\b/i.test(node.textContent || ''),
+      injectedElements: node.querySelectorAll('script, img, iframe').length,
     }));
     expect(safety.text).toContain('Не удалось загрузить данные справочника.');
-    // The echoed module URL (or HTTP status) may appear as inert text — fine. What must
-    // never happen: the payload executing or creating elements.
-    expect(safety.scriptChildren).toBe(0);
-    expect(safety.rawMarkupInText).toBe(false);
+    // The attacker bytes reached the panel as message text…
+    expect(safety.text).toContain('<img src=x');
+    // …and materialised as NOTHING. An innerHTML-assembled panel fails here.
+    expect(safety.injectedElements).toBe(0);
+    expect(await page.evaluate(() => window.__pwned)).toBeUndefined();
   });
 
-  test('boot-catch panel survives malformed embedded manifest bytes (JSON.parse error path)', async ({ page }) => {
-    await page.goto(`${APP_PAGE}#v4/home/home`);
-    // Malformed JSON whose V8 parse error PREVIEWS the attacker bytes:
-    // Unexpected token '<', ..."names": [ <img src=x"... is not valid JSON
-    await page.evaluate(() => {
-      const node = document.getElementById('app-data-json');
-      if (node) node.textContent = '{"names": [ <img src=x onerror=window.__pwned=1>, ] }';
+  test('production boot catch renders a tampered embedded manifest inert (JSON.parse preview path)', async ({ page }) => {
+    // Rewrite the embedded `#app-data-json` manifest in the served artifact, so the
+    // runtime's own boot fails and the production catch builds the panel.
+    let rewrote = false;
+    await page.route('**/aaz-index.html*', async (route) => {
+      const response = await route.fetch();
+      const body = await response.text();
+      const tampered = body.replace(
+        /(<script[^>]*id="app-data-json"[^>]*>)[\s\S]*?(<\/script>)/,
+        `$1${MALFORMED_WITH_PAYLOAD}$2`,
+      );
+      rewrote = tampered !== body;
+      await route.fulfill({ response, body: tampered });
     });
-    // Force the catch panel by re-running the boot sequence against the tampered payload.
-    await page.evaluate(() => window.loadAppData().catch((error) => {
-      const message = error && error.message ? error.message : String(error || 'Unknown data loading error');
-      const content = document.getElementById('content');
-      if (content) {
-        const panel = document.createElement('div');
-        panel.className = 'panel-empty-state';
-        panel.append('Не удалось загрузить данные справочника.');
-        panel.appendChild(document.createElement('br'));
-        const detail = document.createElement('small');
-        detail.textContent = message;
-        panel.appendChild(detail);
-        content.innerHTML = '';
-        content.appendChild(panel);
-      }
-      return 'caught';
-    }));
+    await page.goto(`${APP_PAGE}#v4/home/home`);
     const panel = page.locator('#content .panel-empty-state');
-    await expect(panel).toBeVisible();
+    await expect(panel).toBeVisible({ timeout: 15000 });
+    expect(rewrote).toBe(true); // fixture actually tampered — otherwise the test is vacuous
     const safety = await panel.evaluate((node) => ({
       text: node.textContent || '',
       injectedElements: node.querySelectorAll('script, img, iframe').length,
     }));
     expect(safety.text).toContain('Не удалось загрузить данные справочника.');
-    // The attacker bytes reach the panel ONLY as message text…
     expect(safety.text).toContain('<img src=x');
-    // …never as elements, and the onerror canary never fires.
     expect(safety.injectedElements).toBe(0);
     expect(await page.evaluate(() => window.__pwned)).toBeUndefined();
   });
