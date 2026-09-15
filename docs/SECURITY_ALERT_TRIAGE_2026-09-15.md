@@ -22,11 +22,12 @@ gh api repos/gasyoun/BookIndex/code-scanning/alerts --paginate \
 
 | Rule | Count | Sites (representative) | State |
 |---|---|---|---|
-| `js/xss-through-dom` | 13 | `src/runtime/entry.js:135`, `src/renderers/multimedia.js:22,46`, `pipeline/index.html:174`, artifact copies (`v3_app.js`, `aaz-index.html`) | fixed |
-| `js/xss-through-exception` | 2 | `src/runtime/entry.js:135`, `v3_app.js:15171` (artifact) | fixed |
-| `js/incomplete-sanitization` | 8 | `v3_app.js:3932-3935,11328` + `aaz-index.html` copies | fixed |
-| `js/incomplete-url-scheme-check` | 4 | `src/runtime/core/utils.js:410,415` (`safeUrl`/`safeImageUrl`), artifact copies | fixed |
-| `js/incomplete-multi-character-sanitization` | 1 | `v3_app.js:2706` (artifact) | fixed |
+| `js/xss-through-dom` | 17 | `src/runtime/entry.js:135`, `src/renderers/multimedia.js:22,46`, `pipeline/index.html:174`, artifact copies (`v3_app.js` #6,7,10,11,12,22,26; `aaz-index.html` #3,4,5,8,9,21) | fixed |
+| `js/xss-through-exception` | 2 | `src/runtime/entry.js:135` (#27), `v3_app.js:15171` (#28, artifact) | fixed |
+| `js/incomplete-sanitization` | 8 | `v3_app.js:3932,3934,3935,11328` (#16,17,18,20) + `aaz-index.html:221812,221814,221815,229208` (#13,14,15,19) | fixed |
+| `js/incomplete-url-scheme-check` | 4 | `src/runtime/core/utils.js:410,415` (#29,30 — `safeUrl`/`safeImageUrl`), `v3_app.js:964,969` (#31,32, artifact) | fixed |
+| `js/incomplete-multi-character-sanitization` | 1 | `v3_app.js:2706` (#33, artifact) | fixed |
+| **total** | **32** | (counts sum to 32 — recompute with the §1 query) | — |
 
 Fix provenance (commits, not per-alert attribution):
 
