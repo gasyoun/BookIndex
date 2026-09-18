@@ -1,0 +1,148 @@
+{
+  "drill": "H5106 DOM XSS source-to-sink mutation corpus",
+  "evidence_prs": [
+    "https://github.com/gasyoun/BookIndex/pull/141",
+    "https://github.com/gasyoun/BookIndex/pull/294",
+    "https://github.com/gasyoun/BookIndex/pull/299"
+  ],
+  "severity_scale": {
+    "P1": "script execution reachable from attacker-controlled input",
+    "P2": "script execution reachable but requiring an attacker-triggered error/event path",
+    "P3": "no script execution; external load / navigation / privacy at most",
+    "SAFE": "no exploitable sink; safe by construction (textContent/DOM API, proper sanitizer, or constant)"
+  },
+  "cases": [
+    {
+      "id": "A1",
+      "family": "data-bearing innerHTML",
+      "fixture": "fixtures/a1_search_highlight.js",
+      "source": "search index row (query-echoed match text)",
+      "transforms": ["string concat, no escape"],
+      "sink": "el.innerHTML",
+      "expected": "P1",
+      "pr_citation": "PR #141 (search head/snippet: el.innerHTML = highlightSearchMatch(...))",
+      "mutation": "pre-C3 shape: highlight fragment built by raw concatenation of index row text; escapeHtml dropped (the exact class C3 removed)"
+    },
+    {
+      "id": "A2",
+      "family": "data-bearing innerHTML (attribute context)",
+      "fixture": "fixtures/a2_accent_span.js",
+      "source": "entity item fields (head + class)",
+      "transforms": ["escapeHtml on text content only"],
+      "sink": "el.innerHTML",
+      "expected": "P2",
+      "pr_citation": "PR #141 (head.innerHTML = renderAccentSafe(it.head); accent spans)",
+      "mutation": "content escaped but class attribute value concatenated raw — context break around a partially-escaped builder"
+    },
+    {
+      "id": "A3",
+      "family": "data-bearing innerHTML (near-miss safe)",
+      "fixture": "fixtures/a3_kwic_empty_state.js",
+      "source": "none — constant string",
+      "transforms": ["none needed"],
+      "sink": "resultsEl.innerHTML",
+      "expected": "SAFE",
+      "pr_citation": "PR #141 (KWIC empty states: resultsEl.innerHTML = \"...\")",
+      "mutation": "retained constant-only innerHTML: no data path; control case against false positives"
+    },
+    {
+      "id": "A4",
+      "family": "data-bearing innerHTML (card shell)",
+      "fixture": "fixtures/a4_card_quote.js",
+      "source": "card record (contexts + source quote)",
+      "transforms": ["escapeHtml on contexts", "raw quote concatenation"],
+      "sink": "right.innerHTML",
+      "expected": "P1",
+      "pr_citation": "PR #141 (card contexts + \u201c${escapeHtml(quote)}\u201d card-shell shape)",
+      "mutation": "one residual field (quote) left unescaped inside an otherwise-sanitized shell"
+    },
+    {
+      "id": "B1",
+      "family": "URL allow-list gap",
+      "fixture": "fixtures/b1_denylist_iframe.js",
+      "source": "config/hash-borne URL",
+      "transforms": ["safeUrlDenylist (blocks 'javascript:' prefix only)"],
+      "sink": "frame.src",
+      "expected": "P1",
+      "pr_citation": "PR #294 \u00a71 (core/utils.js one-line deny-list safeUrl; misses data:text/html, vbscript:)",
+      "mutation": "deny-list sanitizer feeding an executing sink (iframe)"
+    },
+    {
+      "id": "B2",
+      "family": "URL allow-list gap (control chars)",
+      "fixture": "fixtures/b2_controlchar_scheme.js",
+      "source": "location.hash (percent-decoded)",
+      "transforms": ["safeUrlDenylist (startsWith('javascript:'))"],
+      "sink": "location.href",
+      "expected": "P1",
+      "pr_citation": "PR #294 \u00a71 (java<TAB>script: bypass — browser strips control chars from scheme)",
+      "mutation": "percent-encoded tab inside scheme defeats prefix deny-list"
+    },
+    {
+      "id": "B3",
+      "family": "URL allow-list gap (near-miss safe)",
+      "fixture": "fixtures/b3_protocol_relative_img.js",
+      "source": "referrer string",
+      "transforms": ["safeUrlAllowlist with protocol-relative check removed"],
+      "sink": "img.src",
+      "expected": "P3",
+      "pr_citation": "PR #294 \u00a71 (legacy allow-list rejects protocol-relative //)",
+      "mutation": "//host URL allowed through into an image sink — external load/privacy only, never script execution"
+    },
+    {
+      "id": "B4",
+      "family": "URL allow-list gap (near-miss safe, image context)",
+      "fixture": "fixtures/b4_svg_data_img.js",
+      "source": "data URL string",
+      "transforms": ["safeUrlAllowlist (data:image/* permitted)"],
+      "sink": "img.src",
+      "expected": "P3",
+      "pr_citation": "PR #294 \u00a71 (allow-list permits data:image/* for images)",
+      "mutation": "SVG data URL with onload payload into <img>: scripts do not execute in image context — safe here, would be P1 in an iframe (context sensitivity control)"
+    },
+    {
+      "id": "C1",
+      "family": "bootstrap catch sink",
+      "fixture": "fixtures/c1_boot_catch_innerhtml.js",
+      "source": "location.hash \u2192 fetch URL \u2192 err.message echo",
+      "transforms": ["template concat, no escape"],
+      "sink": "content.innerHTML",
+      "expected": "P1",
+      "pr_citation": "PR #294 \u00a72 (entry.js bootstrap catch: content.innerHTML = `...<small>${message}</small>...`)",
+      "mutation": "pre-fix shape retained: error message echoing attacker URL into innerHTML"
+    },
+    {
+      "id": "C2",
+      "family": "bootstrap catch sink (near-miss safe)",
+      "fixture": "fixtures/c2_boot_catch_textcontent.js",
+      "source": "location.hash \u2192 fetch URL \u2192 err.message echo",
+      "transforms": ["DOM construction + textContent"],
+      "sink": "none (textContent)",
+      "expected": "SAFE",
+      "pr_citation": "PR #294 \u00a72 (post-fix shape: panel assembled as DOM, message via textContent)",
+      "mutation": "post-fix shape: identical data path, safe sink construction"
+    },
+    {
+      "id": "C3",
+      "family": "bootstrap catch sink (global handler)",
+      "fixture": "fixtures/c3_onerror_statusbar.js",
+      "source": "window.onerror message (attacker-triggerable)",
+      "transforms": ["string concat, no escape"],
+      "sink": "statusbar.innerHTML",
+      "expected": "P2",
+      "pr_citation": "PR #294 \u00a72 (xss-through-exception class on the same line as #2)",
+      "mutation": "sibling sink of C1: global error handler rendering message into a status bar"
+    },
+    {
+      "id": "D1",
+      "family": "dashboard DOM assembly",
+      "fixture": "fixtures/d1_dashboard_catalog_row.js",
+      "source": "catalog JSON title field",
+      "transforms": ["template-string row build, no escape"],
+      "sink": "container.innerHTML",
+      "expected": "P2",
+      "pr_citation": "PR #299 (scripts/build_pipeline_dashboard.py pre-fix: rows built via template string into innerHTML; fixed to createElement/textContent + safeUrl)",
+      "mutation": "generator-side row assembly with a data-bearing title left unescaped"
+    }
+  ]
+}

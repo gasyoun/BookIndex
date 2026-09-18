@@ -1,0 +1,93 @@
+# H5106 goal runs — 2026-09-18T19:37:16Z
+## Canary (pre-improvement naive method — expected FAIL)
+== H5106 DOM XSS taint drill — mode: naive — 12 cases ==
+   A1 FINDING  expected=P1   innerHTML sink present (pattern match, no taint)
+   A2 FINDING  expected=P2   innerHTML sink present (pattern match, no taint)
+   A3 FINDING  expected=SAFE innerHTML sink present (pattern match, no taint)
+   A4 FINDING  expected=P1   innerHTML sink present (pattern match, no taint)
+   B1 PASS     expected=P1   no innerHTML pattern
+   B2 PASS     expected=P1   no innerHTML pattern
+   B3 PASS     expected=P3   no innerHTML pattern
+   B4 PASS     expected=P3   no innerHTML pattern
+   C1 FINDING  expected=P1   innerHTML sink present (pattern match, no taint)
+   C2 PASS     expected=SAFE no innerHTML pattern
+   C3 FINDING  expected=P2   innerHTML sink present (pattern match, no taint)
+   D1 FINDING  expected=P2   innerHTML sink present (pattern match, no taint)
+  FP    A3: safe near-miss labeled P1
+  MISS  B1: exploitable sink not detected
+  MISS  B2: exploitable sink not detected
+  exploitable detected: 6/8
+GOAL FAIL (mode=naive: 12 mutations, all exploitable sinks detected, no safe near-miss labeled P1/P2)
+naive exit=1
+
+## Improved run 1/4
+== H5106 DOM XSS taint drill — mode: improved — 12 cases ==
+   A1 FINDING  expected=P1   sink head.innerHTML @L5 caps=∅ hits=frag | trace q (SOURCE) -> row@L3 -> frag@L4
+   A2 FINDING  expected=P2   sink head.innerHTML @L4 caps=∅ hits=span | trace it (SOURCE) -> span@L3
+   A3 PASS     expected=SAFE no tainted data reaches an executing sink
+   A4 FINDING  expected=P1   sink right.innerHTML @L5 caps=∅ hits=html | trace card (SOURCE) -> html@L3
+   B1 FINDING  expected=P1   sink frame.src @L4 caps=∅ hits=u | trace confUrl (SOURCE) -> u@L3
+   B2 FINDING  expected=P1   sink location.href @L4 caps=∅ hits=u | trace hash (SOURCE) -> u@L3
+   B3 INFO     expected=P3   load-only sink (no script execution) — correctly not P1/P2
+   B4 INFO     expected=P3   load-only sink (no script execution) — correctly not P1/P2
+   C1 FINDING  expected=P1   sink content.innerHTML @L8 caps=∅ hits=err | trace hash (SOURCE) -> err@L7
+   C2 PASS     expected=SAFE no tainted data reaches an executing sink
+   C3 FINDING  expected=P2   sink statusbar.innerHTML @L4 caps=∅ hits=msg | trace msg (SOURCE)
+   D1 FINDING  expected=P2   sink container.innerHTML @L5 caps=∅ hits=row | trace entry (SOURCE) -> row@L4
+  exploitable detected: 8/8
+GOAL PASS (mode=improved: 12 mutations, all exploitable sinks detected, no safe near-miss labeled P1/P2)
+run1 exit=0
+
+## Improved run 2/4
+== H5106 DOM XSS taint drill — mode: improved — 12 cases ==
+   A1 FINDING  expected=P1   sink head.innerHTML @L5 caps=∅ hits=frag | trace q (SOURCE) -> row@L3 -> frag@L4
+   A2 FINDING  expected=P2   sink head.innerHTML @L4 caps=∅ hits=span | trace it (SOURCE) -> span@L3
+   A3 PASS     expected=SAFE no tainted data reaches an executing sink
+   A4 FINDING  expected=P1   sink right.innerHTML @L5 caps=∅ hits=html | trace card (SOURCE) -> html@L3
+   B1 FINDING  expected=P1   sink frame.src @L4 caps=∅ hits=u | trace confUrl (SOURCE) -> u@L3
+   B2 FINDING  expected=P1   sink location.href @L4 caps=∅ hits=u | trace hash (SOURCE) -> u@L3
+   B3 INFO     expected=P3   load-only sink (no script execution) — correctly not P1/P2
+   B4 INFO     expected=P3   load-only sink (no script execution) — correctly not P1/P2
+   C1 FINDING  expected=P1   sink content.innerHTML @L8 caps=∅ hits=err | trace hash (SOURCE) -> err@L7
+   C2 PASS     expected=SAFE no tainted data reaches an executing sink
+   C3 FINDING  expected=P2   sink statusbar.innerHTML @L4 caps=∅ hits=msg | trace msg (SOURCE)
+   D1 FINDING  expected=P2   sink container.innerHTML @L5 caps=∅ hits=row | trace entry (SOURCE) -> row@L4
+  exploitable detected: 8/8
+GOAL PASS (mode=improved: 12 mutations, all exploitable sinks detected, no safe near-miss labeled P1/P2)
+run2 exit=0
+
+## Improved run 3/4
+== H5106 DOM XSS taint drill — mode: improved — 12 cases ==
+   A1 FINDING  expected=P1   sink head.innerHTML @L5 caps=∅ hits=frag | trace q (SOURCE) -> row@L3 -> frag@L4
+   A2 FINDING  expected=P2   sink head.innerHTML @L4 caps=∅ hits=span | trace it (SOURCE) -> span@L3
+   A3 PASS     expected=SAFE no tainted data reaches an executing sink
+   A4 FINDING  expected=P1   sink right.innerHTML @L5 caps=∅ hits=html | trace card (SOURCE) -> html@L3
+   B1 FINDING  expected=P1   sink frame.src @L4 caps=∅ hits=u | trace confUrl (SOURCE) -> u@L3
+   B2 FINDING  expected=P1   sink location.href @L4 caps=∅ hits=u | trace hash (SOURCE) -> u@L3
+   B3 INFO     expected=P3   load-only sink (no script execution) — correctly not P1/P2
+   B4 INFO     expected=P3   load-only sink (no script execution) — correctly not P1/P2
+   C1 FINDING  expected=P1   sink content.innerHTML @L8 caps=∅ hits=err | trace hash (SOURCE) -> err@L7
+   C2 PASS     expected=SAFE no tainted data reaches an executing sink
+   C3 FINDING  expected=P2   sink statusbar.innerHTML @L4 caps=∅ hits=msg | trace msg (SOURCE)
+   D1 FINDING  expected=P2   sink container.innerHTML @L5 caps=∅ hits=row | trace entry (SOURCE) -> row@L4
+  exploitable detected: 8/8
+GOAL PASS (mode=improved: 12 mutations, all exploitable sinks detected, no safe near-miss labeled P1/P2)
+run3 exit=0
+
+## Improved run 4/4
+== H5106 DOM XSS taint drill — mode: improved — 12 cases ==
+   A1 FINDING  expected=P1   sink head.innerHTML @L5 caps=∅ hits=frag | trace q (SOURCE) -> row@L3 -> frag@L4
+   A2 FINDING  expected=P2   sink head.innerHTML @L4 caps=∅ hits=span | trace it (SOURCE) -> span@L3
+   A3 PASS     expected=SAFE no tainted data reaches an executing sink
+   A4 FINDING  expected=P1   sink right.innerHTML @L5 caps=∅ hits=html | trace card (SOURCE) -> html@L3
+   B1 FINDING  expected=P1   sink frame.src @L4 caps=∅ hits=u | trace confUrl (SOURCE) -> u@L3
+   B2 FINDING  expected=P1   sink location.href @L4 caps=∅ hits=u | trace hash (SOURCE) -> u@L3
+   B3 INFO     expected=P3   load-only sink (no script execution) — correctly not P1/P2
+   B4 INFO     expected=P3   load-only sink (no script execution) — correctly not P1/P2
+   C1 FINDING  expected=P1   sink content.innerHTML @L8 caps=∅ hits=err | trace hash (SOURCE) -> err@L7
+   C2 PASS     expected=SAFE no tainted data reaches an executing sink
+   C3 FINDING  expected=P2   sink statusbar.innerHTML @L4 caps=∅ hits=msg | trace msg (SOURCE)
+   D1 FINDING  expected=P2   sink container.innerHTML @L5 caps=∅ hits=row | trace entry (SOURCE) -> row@L4
+  exploitable detected: 8/8
+GOAL PASS (mode=improved: 12 mutations, all exploitable sinks detected, no safe near-miss labeled P1/P2)
+run4 exit=0
