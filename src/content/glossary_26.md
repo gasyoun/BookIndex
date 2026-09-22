@@ -8,6 +8,8 @@ source_index: 25
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Выделение одного слога в слове силой голоса, длительностью или высотой. В русском ударение свободное — может стоять на любом слоге.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D1%83%D0%B4%D0%B0%D1%80%D0%B5%D0%BD%D0%B8%D0%B5"
 }
 ```
+
+_Dr. Mārcis Gasūns_

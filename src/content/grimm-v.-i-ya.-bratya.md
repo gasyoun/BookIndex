@@ -8,6 +8,8 @@ source_index: 29
 tags: ["names"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 _Основное текстовое поле не найдено; см. JSON ниже._
 
 ## Source JSON
@@ -48,3 +50,5 @@ _Основное текстовое поле не найдено; см. JSON н
   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Grimm1.jpg/220px-Grimm1.jpg"
 }
 ```
+
+_Dr. Mārcis Gasūns_

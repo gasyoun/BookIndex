@@ -8,6 +8,8 @@ source_index: 30
 tags: ["glossary"]
 ---
 
+_Created: 21-04-2026 · Last updated: 05-09-2026_
+
 Раздел грамматики о формах слова: склонениях, спряжениях, изменениях по числам и падежам.
 
 ## Source JSON
@@ -19,3 +21,5 @@ tags: ["glossary"]
   "url": "https://samskrtam.ru/sanskrit-lexicon/les-1990/?s=%D0%BC%D0%BE%D1%80%D1%84%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F"
 }
 ```
+
+_Dr. Mārcis Gasūns_

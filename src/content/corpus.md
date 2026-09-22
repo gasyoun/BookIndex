@@ -7,6 +7,8 @@ book_id: "mumintroll"
 tags: ["corpus"]
 ---
 
+_Created: 02-05-2026 · Last updated: 05-09-2026_
+
 Active book: Из жизни слов и языков (mumintroll).
 
 ## Books
@@ -102,3 +104,5 @@ Active book: Из жизни слов и языков (mumintroll).
   ]
 }
 ```
+
+_Dr. Mārcis Gasūns_

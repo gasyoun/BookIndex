@@ -1,3 +1,5 @@
+_Created: 13-06-2026 · Last updated: 05-09-2026_
+
 # lectures-v2 — корпус расшифровок лекций (C1)
 
 Таймкодированный текстовый корпус расшифровок видеолекций А. А. Зализняка —
@@ -12,9 +14,9 @@ BookIndex. Это **отдельный корпус**, он НЕ вливает�
 | Путь | Что это |
 |---|---|
 | [`transcripts/<video_id>.json`](transcripts/) | Одна расшифровка: сегменты `{t, text}` с таймкодами, провенанс-стадия, источник. Ревьюируемо. |
-| [`index.json`](index.json) | Индекс корпуса: список расшифровок, статистика по стадиям. |
+| [`index.json`](https://github.com/gasyoun/BookIndex/blob/main/data/imports/lectures-v2/index.json) | Индекс корпуса: список расшифровок, статистика по стадиям. |
 | `raw/` | Скачанные `.docx`/`.srt` (не в git — перекачиваются скриптом). |
-| [`status.json`](status.json) | Состояние корпуса. |
+| [`status.json`](https://github.com/gasyoun/BookIndex/blob/main/data/imports/lectures-v2/status.json) | Состояние корпуса. |
 
 ## Как собирается
 
@@ -26,7 +28,7 @@ python scripts/ingest_transcripts.py --offline  # пере-извлечь из r
 ```
 
 Источник правды о том, *какие* расшифровки есть и на какой они стадии вычитки —
-[`data/video_pipeline.json`](../../video_pipeline.json) (поле `links.text` →
+[`data/video_pipeline.json`](https://github.com/gasyoun/BookIndex/blob/main/data/video_pipeline.json) (поле `links.text` →
 публичная ссылка Яндекс.Диска, поле `stage` → стадия). Скрипт резолвит публичную
 ссылку, скачивает `.docx`/`.srt`, извлекает таймкодированные сегменты и пишет JSON.
 
@@ -59,9 +61,9 @@ python scripts/ingest_transcripts.py --offline  # пере-извлечь из r
    - **linking** known index heads → lecture minutes
      (`scripts/extract_entities_from_transcripts.py --report` / `--write`);
    - **new-head candidates** for volume II (heads *absent* from `app_data`) →
-     [`entity_candidates.json`](entity_candidates.json) /
-     [`entity_candidates.csv`](entity_candidates.csv) via `--candidates`
-     (review protocol: [`ENTITY_CANDIDATES_README.md`](ENTITY_CANDIDATES_README.md)).
+     [`entity_candidates.json`](https://github.com/gasyoun/BookIndex/blob/main/data/imports/lectures-v2/entity_candidates.json) /
+     [`entity_candidates.csv`](https://github.com/gasyoun/BookIndex/blob/main/data/imports/lectures-v2/entity_candidates.csv) via `--candidates`
+     (review protocol: [`ENTITY_CANDIDATES_README.md`](https://github.com/gasyoun/BookIndex/blob/main/data/imports/lectures-v2/ENTITY_CANDIDATES_README.md)).
      Promotion only through a validated `import_source.py` draft — never auto-merge.
 3. **KWIC по корпусу лекций**: поиск термина → минута в лекции.
 
@@ -83,3 +85,5 @@ python scripts/ingest_transcripts.py --offline  # пере-извлечь из r
 - Полнотекст публичен (видео и так открыты на YouTube; решение владельца).
 - Этот корпус — НЕ «книга» в смысле `import_source.py`; через `--merge` он не
   идёт. Через merge идут только сущности, извлечённые в C3.
+
+_Dr. Mārcis Gasūns_

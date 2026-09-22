@@ -1,3 +1,5 @@
+_Created: 14-04-2026 · Last updated: 05-09-2026_
+
 # Зализнякиада — релизный срез (2026-04-14)
 
 ## Статус
@@ -18,3 +20,5 @@
 - `node --check v3_app.js` — OK.
 - `python runtime_test.py` — `20/20` (OK).
 - `gh issue list --state open` — пусто (открытых задач нет).
+
+_Dr. Mārcis Gasūns_

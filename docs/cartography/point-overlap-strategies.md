@@ -1,3 +1,5 @@
+_Created: 05-09-2026 · Last updated: 05-09-2026_
+
 <!--
 Vendored verbatim from: https://github.com/openai/plugins/blob/1e285826e604f66f7208f7ac4dba0fe8341d1f57/plugins/build-web-data-visualization/skills/geospatial-and-cartographic-visualization/references/point-overlap-strategies.md
 Upstream pin: openai/plugins@1e285826e604 (main) · vendored 2026-09-05 for H4051.
@@ -61,3 +63,5 @@ Use this when individual point symbols collide, stack, or become unreadable at t
 - [ArcGIS Pro: Position and place marker symbol layers](https://pro.arcgis.com/en/pro-app/3.5/help/mapping/layer-properties/position-and-place-marker-symbol-layers.htm)
 - [ArcGIS Pro: Disperse Markers](https://pro.arcgis.com/en/pro-app/latest/tool-reference/cartography/disperse-markers.htm)
 - [Liu et al. 2019: Real-Time Displacement of Point Symbols Based on Spatial Distribution Characteristics](https://www.mdpi.com/2220-9964/8/10/426)
+
+_Dr. Mārcis Gasūns_

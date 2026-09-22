@@ -1,3 +1,5 @@
+_Created: 15-04-2026 · Last updated: 05-09-2026_
+
 # Release Notes — v2.1.0 (2026-04-15)
 
 ## Highlights
@@ -23,3 +25,4 @@
 
 - `aaz-index.html` (standalone SPA build for browser use).
 
+_Dr. Mārcis Gasūns_
