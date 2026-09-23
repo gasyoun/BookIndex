@@ -3392,9 +3392,12 @@ function render() {
     // label leaders follow the tier rule (none within 10 mm) and are reported
     // in mg_metrics rather than gated; inset stubs stay <= 8; the offset
     // percentile must beat B8's 23.75; no more names silently dropped than B8.
+    // p90 offset bar raised 25 -> 27 mm for B9/B10 by MG ruling 23-09-2026 («да,
+    // 27 мм»): the rounds 10-12 layouts MG approved after the 04-09 bar (long
+    // Africa leaders, «Pilos to Africa») measure 26.46 / 25.78 mm.
     byKey.B9map.links_by_kind.chip_displacement > 8 ||
     byKey.B9map.links_by_kind.inset_stub > 8 ||
-    byKey.B9map.label_offset_p90_mm > 25 ||
+    byKey.B9map.label_offset_p90_mm > 27 ||
     byKey.B9map.names_not_drawn > 25 ||
     byKey.B9map.names_at_true_place < 13 ||
     byKey.B9map.labels_without_slot > 0 ||
@@ -3412,7 +3415,7 @@ function render() {
     byKey.B10map.names_policy_unnamed !== 12 ||
     byKey.B10map.links_by_kind.chip_displacement > 8 ||
     byKey.B10map.links_by_kind.inset_stub > 8 ||
-    byKey.B10map.label_offset_p90_mm > 25 ||
+    byKey.B10map.label_offset_p90_mm > 27 ||
     byKey.B10map.names_not_drawn > 25 ||
     byKey.B10map.names_at_true_place < 13 ||
     byKey.B10map.labels_without_slot > 0 ||
