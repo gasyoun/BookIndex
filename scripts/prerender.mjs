@@ -169,12 +169,20 @@ function adaptRelativePaths(htmlText, relativePrefix) {
 }
 
 // 4. Citation Widget pre-renderer
+//
+// The access date in the prerendered GOST citation is a pinned constant, NOT
+// `new Date()`: CI regenerates every prerendered page and diffs it against the
+// committed copy, so a wall-clock date made all 689 item pages drift on every
+// calendar day after the last regen (main was red 04-09..23-09-2026). The
+// static text only serves no-JS readers and crawlers; in the browser
+// wireCitationWidget() (src/runtime/legacy.js) replaces it with the visitor's
+// own current date on hydration. Bump this constant only together with a full
+// `npm run build` and a commit of the regenerated pages.
+const PRERENDER_CITATION_ACCESS_DATE = '04.09.2026';
+
 function renderCitationWidget(type, id, title, book, url) {
   const containerId = `citation-widget-${type}-${id || 'card'}`;
-  const d = new Date();
-  const day = d.getDate();
-  const year = d.getFullYear();
-  const dateFormatted = `${String(day).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${year}`;
+  const dateFormatted = PRERENDER_CITATION_ACCESS_DATE;
 
   const tEsc = escapeHtml(title);
   const uEsc = escapeHtml(url);

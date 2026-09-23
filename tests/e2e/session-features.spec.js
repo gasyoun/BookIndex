@@ -286,8 +286,9 @@ test.describe('boot tracing is opt-in (H4023)', () => {
     const seen = bootMessages(page);
     await page.goto('/aaz-index.html?bootlog=1#v4/home/home');
     await expect(page.locator('#content')).toBeVisible();
-    await expect.poll(() => seen.length).toBeGreaterThan(0);
+    // The trace streams in over the async boot: wait for the closing line itself,
+    // not merely the first one (polling on seen.length raced 'Complete.').
+    await expect.poll(() => seen.some((line) => line.includes('Complete.'))).toBe(true);
     expect(seen.some((line) => line.includes('Starting loadAppData'))).toBe(true);
-    expect(seen.some((line) => line.includes('Complete.'))).toBe(true);
   });
 });

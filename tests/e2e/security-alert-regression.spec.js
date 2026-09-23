@@ -32,8 +32,10 @@ const MALFORMED_WITH_PAYLOAD = '{"names": [ <img src=x onerror=window.__pwned=1>
 test.describe('security-alert regression (H4790)', () => {
   test('normal boot still hydrates APP_DATA through the module manifest', async ({ page }) => {
     await page.goto(`${APP_PAGE}#v4/home/home`);
-    await expect(page.evaluate(() => Array.isArray(window.APP_DATA?.names) && window.APP_DATA.names.length > 0))
-      .resolves.toBe(true);
+    // APP_DATA is hydrated asynchronously from the module manifest after the load
+    // event, so a one-shot page.evaluate() races the fetches - poll instead.
+    await expect.poll(() => page.evaluate(() => Array.isArray(window.APP_DATA?.names) && window.APP_DATA.names.length > 0))
+      .toBe(true);
     await expect(page.locator('#entity-switcher .entity-btn').first()).toBeVisible();
   });
 
