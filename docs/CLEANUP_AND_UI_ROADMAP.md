@@ -1,8 +1,28 @@
-_Created: 16-05-2026 · Last updated: 05-09-2026_
+_Created: 16-05-2026 · Last updated: 25-09-2026_
 
 # BookIndex cleanup and UI roadmap
 
 Date: 2026-05-16
+
+> **Truth-pass 25-09-2026 (H5393, OxAlpha `opencode/z-ai/glm-5.3-flash`) — verdict: REFRESH.**
+> Из work-документа от 16-05-2026 shipped почти всё: **C1/C2** — модульная сборка
+> восстановлена (src/core + src/renderers + src/runtime + src/entry.js) и гейтится
+> [`scripts/check_runtime_parity.mjs`](https://github.com/gasyoun/BookIndex/blob/main/scripts/check_runtime_parity.mjs)
+> ([H3874](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3874-Opus_BookIndex_v3-runtime-source-parity-reconcile_02.09.26.md),
+> [RESULTS_RUNTIME_SOURCE_PARITY_H3874_2026-09-03.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_RUNTIME_SOURCE_PARITY_H3874_2026-09-03.md));
+> **V1** (H1605), **V2** (H1822), **V3** — research map жив как viz08
+> ([scripts/viz/research-map.js](https://github.com/gasyoun/BookIndex/blob/main/scripts/viz/research-map.js), `v3_app.js:2321`);
+> **U1.1** (H2127), **U4** (H1823, `npm run check:redesign`); **D1–D3**
+> ([docs/history/README.md](https://github.com/gasyoun/BookIndex/blob/main/docs/history/README.md),
+> [docs/ENCODING_GUARD.md](https://github.com/gasyoun/BookIndex/blob/main/docs/ENCODING_GUARD.md),
+> `npm run content:audit`, stats.md v4.3.1 единообразен); «первые три PR» — все три.
+> Незаминированная прозаическая работа осталась (C3 innerHTML, C4.2 lexicon-счётчик,
+> U1.2–U1.6 поверхности, U3) — переписана в
+> [What is left](#what-is-left-truth-pass-25-09-2026) как gated-чекбоксы.
+> Человеческих ворот нет (все остатки agent-doable), GTD-строки не заводятся
+> (рулинг 2, [GRILL_ROADMAP_CLOSEOUT_OXALPHA_MASS_MINT_21-09-2026](https://github.com/gasyoun/Uprava/blob/main/docs/GRILL_ROADMAP_CLOSEOUT_OXALPHA_MASS_MINT_21-09-2026.md)).
+> Потомок-дорожная карта [ROADMAP_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https://github.com/gasyoun/BookIndex/blob/main/docs/ROADMAP_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md)
+> (truth-pass H5395 24-09-2026) ведёт video-first дорожку.
 
 Purpose: capture the current repository analysis and convert it into a practical cleanup plan, followed by a visualisation and UI redesign roadmap. This document is intentionally scoped to planning. It does not rename files, delete artifacts, or change runtime behaviour.
 
@@ -90,6 +110,12 @@ Gaps worth closing:
 
 ### Phase C1 - Stabilise the build contract
 
+**Status (truth-pass 25-09-2026, H5393): shipped/superseded.** README и CLAUDE.md
+больше не маршрутизируют через `scripts/bundle.js` (grep — ноль упоминаний в README);
+parity `src/runtime` ↔ `v3_app.js` восстановлена H3874 и гейтится CI-скриптом
+`scripts/check_runtime_parity.mjs`, так что доктрина «не запускать bundle до parity»
+исполнена по существу. Задача 4 закрыта H1506 (см. ниже).
+
 Goal: make every maintainer understand which files are live.
 
 Tasks:
@@ -106,6 +132,12 @@ Acceptance checks:
 3. `git diff --exit-code -- aaz-index.html` after a clean rebuild
 
 ### Phase C2 - Reconcile runtime modules
+
+**Status (truth-pass 25-09-2026, H5393): shipped (H3874).** Дерево пересобрано:
+src/core (data/router/search/state/storage/…), src/renderers (home/lists/cards/
+materials/multimedia/scholar/viz-panels), src/runtime, src/entry.js; parity
+доказана [RESULTS_RUNTIME_SOURCE_PARITY_H3874_2026-09-03.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_RUNTIME_SOURCE_PARITY_H3874_2026-09-03.md)
+и гейтится `scripts/check_runtime_parity.mjs`.
 
 Goal: turn `src/` back into a trustworthy source tree.
 
@@ -124,6 +156,11 @@ Acceptance checks:
 4. Route smoke for `#v4/home/home`, `#v4/all/list`, `#v4/materials/sources`, `#v4/scholar/viz/module/viz03`
 
 ### Phase C3 - Reduce risky HTML string rendering
+
+**Status (truth-pass 25-09-2026, H5393): UNMINTED — остаток в
+[What is left](#what-is-left-truth-pass-25-09-2026).** Дата-несущие `innerHTML`
+строки в путях поиска/списков/KWIC/карточек остались (escapeHtml — 267 вхождений
+в v3_app.js); живого H### нет на 25-09-2026.
 
 Goal: keep rich templates where they are harmless, but remove data-bearing `innerHTML` from high-risk paths.
 
@@ -144,6 +181,12 @@ Pattern:
 
 ### Phase C4 - Data and script hygiene
 
+**Status (truth-pass 25-09-2026, H5393): в основном shipped.** Канонический
+путь правки данных (data/modules ↔ app_data.json) закреплён CI sync-гейтом и
+`npm run content:audit` (`scripts/content_report.py`); задача 2 (пояснение
+расхождения счётчиков lexicon/lexicon_reverse) — UNMINTED, остаток в
+[What is left](#what-is-left-truth-pass-25-09-2026).
+
 Goal: make generated data workflows easy to review.
 
 Tasks:
@@ -157,6 +200,13 @@ Tasks:
 
 ### Phase D1 - Current docs only
 
+**Status (truth-pass 25-09-2026, H5393): shipped** — все пять документов набора
+живы (README, [docs/CODEX_WORKFLOW_RU.md](https://github.com/gasyoun/BookIndex/blob/main/docs/CODEX_WORKFLOW_RU.md),
+[docs/NAVIGATION_RETHINK_RU.md](https://github.com/gasyoun/BookIndex/blob/main/docs/NAVIGATION_RETHINK_RU.md),
+этот roadmap, [KIDS_GUIDE_RU.md](https://github.com/gasyoun/BookIndex/blob/main/KIDS_GUIDE_RU.md));
+docs/history/ помечен архивным
+([docs/history/README.md](https://github.com/gasyoun/BookIndex/blob/main/docs/history/README.md)).
+
 Create a clear current-docs set:
 
 1. `README.md`: public overview, commands, source/artifact map.
@@ -169,6 +219,10 @@ Everything in `docs/history/` should be labeled archival.
 
 ### Phase D2 - Encoding and stale-command cleanup
 
+**Status (truth-pass 25-09-2026, H5393): shipped** — контракт кодирования
+вынесен в [docs/ENCODING_GUARD.md](https://github.com/gasyoun/BookIndex/blob/main/docs/ENCODING_GUARD.md),
+docs/history/ получил архивный README, stale-команды из текущих доков убраны.
+
 Tasks:
 
 1. Convert or quarantine invalid UTF-8 files:
@@ -179,6 +233,10 @@ Tasks:
 4. Add a docs encoding check that can scan Markdown without false positives for intentional examples.
 
 ### Phase D3 - Generated stats
+
+**Status (truth-pass 25-09-2026, H5393): shipped** — stats.md регенерируется в
+единой версии (v4.3.1, согласована с README/CLAUDE; см. зачёркнутый пункт 2 в
+«Key findings»); команда аудита контента `npm run content:audit` в README.
 
 Tasks:
 
@@ -238,6 +296,12 @@ filters with stable colours, bump-chart leader lines + clamped URL state).
 
 ### Phase V3 - Add one integrative visualisation
 
+**Status (truth-pass 25-09-2026, H5393): shipped** — «Research map» жив как
+viz08: [scripts/viz/research-map.js](https://github.com/gasyoun/BookIndex/blob/main/scripts/viz/research-map.js)
+зарегистрирован в `v3_app.js:2321`, URL-state (центр + глубина раскрытия) несёт
+`scripts/viz/viz-state.js`; gzip-потолок под его стили поднят H1821
+([scripts/check_performance_budget.mjs](https://github.com/gasyoun/BookIndex/blob/main/scripts/check_performance_budget.mjs)).
+
 Add a "Research map" module after the shell is stable.
 
 Concept:
@@ -283,7 +347,15 @@ rather than showcase-first. `#home-tasks-grid` joined the U4 home control set be
 task surface is what the harness protects. Items 2–6 (indexes/materials/apparatus/tools/practice
 surfaces) are untouched by H2127.
 
+**Status items 2–6 (truth-pass 25-09-2026, H5393): UNMINTED** — живого H### нет
+на 25-09-2026, video-first потомок 2026Q3 их не несёт; остаток переписан в
+[What is left](#what-is-left-truth-pass-25-09-2026) (agent-doable, человеческих ворот нет).
+
 ### Phase U2 - Visual system
+
+**Status (truth-pass 25-09-2026, H5393): guidance, не work-items** — направление
+воплощено в текущей палитре (архивная база + сдержанные аналитические акценты)
+и правилах карточек; отдельных незакрытых задач фаза не несёт.
 
 Current palette is warm archival brown/cream. It suits the subject, but it can become visually flat.
 
@@ -297,6 +369,10 @@ Direction:
 6. Prefer dense, quiet, scan-friendly panels for repeated research use.
 
 ### Phase U3 - Layout and component cleanup
+
+**Status (truth-pass 25-09-2026, H5393): UNMINTED — остаток в
+[What is left](#what-is-left-truth-pass-25-09-2026).** Цели не тронуты как набор;
+живого H### нет на 25-09-2026.
 
 Targets:
 
@@ -360,6 +436,13 @@ Notes on how the six checks are implemented:
 
 ## Recommended first three PRs
 
+**Status (truth-pass 25-09-2026, H5393): все три shipped.** 1) Docs truth pass —
+README/CLAUDE/CODEX_WORKFLOW переписаны под `npm run build`, bundle помечен
+устаревшим (позже закрыт по существу parity-гейтом H3874). 2) Archive hygiene —
+[docs/history/README.md](https://github.com/gasyoun/BookIndex/blob/main/docs/history/README.md)
+создан, кодирование гейтится [docs/ENCODING_GUARD.md](https://github.com/gasyoun/BookIndex/blob/main/docs/ENCODING_GUARD.md).
+3) VIZ shell polish — H1605 (shell) + H1823 (route-харнесс `npm run check:redesign`).
+
 1. Documentation truth pass:
    - Update `README.md`, `CLAUDE.md`, and `docs/CODEX_WORKFLOW_RU.md`.
    - Make `npm run build` the primary command.
@@ -374,6 +457,37 @@ Notes on how the six checks are implemented:
    - Standardise the VIZ header and module controls.
    - Add Playwright checks for VIZ routes at desktop/mobile widths.
    - Keep individual chart redesigns out of this PR unless needed for consistency.
+
+## What is left (truth-pass 25-09-2026)
+
+Переписанный остаток после verdict-прохода H5393 (рулинг 2,
+[GRILL_ROADMAP_CLOSEOUT_OXALPHA_MASS_MINT_21-09-2026](https://github.com/gasyoun/Uprava/blob/main/docs/GRILL_ROADMAP_CLOSEOUT_OXALPHA_MASS_MINT_21-09-2026.md)):
+все пункты unminted (живых H### нет на 25-09-2026), agent-doable,
+человеческих ворот нет — GTD-строки не заводятся.
+
+- [ ] **C3 — убрать дата-несущие `innerHTML` из путей с ненадёжными данными**
+  (глобальный поиск, строки списков сущностей, KWIC-строки, source/context в
+  карточках, tooltips/legends визуализаций): статические шаблоны оболочки +
+  DOM-API/`textContent` для данных, `escapeHtml` остаётся защитным слоем,
+  route-регрессионные тесты там, где меняется рендер. Точка входа — пути из
+  исходного списка выше; харнесс-защита уже стоит (`npm run check:redesign`, H1823).
+- [ ] **C4.2 — скрипт/отчёт, объясняющий расхождение счётчиков
+  `lexicon` и `lexicon_reverse`** (маленькая механическая задача; существующий
+  `npm run content:audit` этого пояснения не даёт).
+- [ ] **U1.2 — Указатели: фильтрация/сортировка/превью выбранной карточки как
+  одно рабочее пространство** (контракт навигации первого уровня не менять).
+- [ ] **U1.3 — Материалы: приоритет читательского потока и доверия к источнику.**
+- [ ] **U1.4 — Аппарат: развести учёные таблицы и исследовательские визуализации.**
+- [ ] **U1.5 — Инструменты: собрать KWIC, глоссарий, карты и экспорт в одном месте.**
+- [ ] **U1.6 — Практикум: квиз/прогресс компактно и сфокусированно.**
+- [ ] **U3 — layout/component cleanup** (компактный хедер с предсказуемым
+  мобильным свёртыванием; стабильная высота строк списков без прыжков;
+  единая анатомия карточек; единые размеры контролов тулбаров
+  materials/scholar/VIZ; мобильный bottom-sheet для карточек без скрытого
+  горизонтального переполнения и двойных навигационных рядов).
+
+U2 (визуальная система) не несёт отдельных work-items: направление воплощено в
+текущей палитре/карточках и остаётся ориентиром, а не задачей.
 
 ## Non-goals for the next cleanup wave
 
