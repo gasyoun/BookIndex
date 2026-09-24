@@ -1,6 +1,25 @@
-_Created: 12-06-2026 · Last updated: 05-09-2026_
+_Created: 12-06-2026 · Last updated: 24-09-2026_
 
 # Дорожная карта DH-стандартизации и UX (2026–2027)
+
+> **✅ Truth-pass 24-09-2026 ([H5394](https://github.com/gasyoun/Uprava/blob/main/handoffs/H5394-OxAlpha_BookIndex_rm-verdict-dh-roadmap-2026_24.09.26.md), волна E015 Tier-2 close-out) — вердикт: REFRESHED, дорожная карта жива: найдена незаминированная проза-работа (2 пункта, см. «What is left» ниже).**
+> Основной объём отгружен. Трек A: A1-инфраструктура (`CITATION.cff`, `.zenodo.json`, `LICENSE-DATA.md`, README-разделы; остались только владельческие ORCID/Zenodo-шаги), A2 вкл. книжный скоуп копируемой ссылки ([H769](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H769-Sonnet_BookIndex_a2-4-book-scoped-copy-link_12.07.26.md)), A3-тулинг ([H1600, PR #160](https://github.com/gasyoun/BookIndex/pull/160); остаток — человеческое голосование по decide-уровню), A4, A5-первая волна, A6. Трек B: B1–B5 — B3.1 закрыт корпусным линкингом C3 (807 связей, блок «Видео» на ~239 карточках), B3.2 — `build_transcript_timecodes.py` (прыжок на минуту), B3.3 — таймкоды в модалке плеера ([H2125, PR #250](https://github.com/gasyoun/BookIndex/pull/250)). Трек C: C1 ([H1598](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1598-Sonnet_BookIndex_lecture-transcript-ingest-wave_24.07.26.md) + предыдущие волны), C2 (`data/video_pipeline.json` + дашборд [pipeline/index.html](https://github.com/gasyoun/BookIndex/blob/main/pipeline/index.html) + `migrate_video_pipeline.py`, `video-archive.xlsx` выведен из git), C4 ([PR #125](https://github.com/gasyoun/BookIndex/pull/125)). Диагностическая таблица, пометки «✅/осталось» и поквартальные планы в теле ниже — **исторические**, актуальный остаток перечислен только в секции «What is left» под баннером. Каждые человеческие ворота зарегистрированы одной датированной GTD-строкой в [Uprava/GTD_NEXT_ACTIONS.md](https://github.com/gasyoun/Uprava/blob/main/GTD_NEXT_ACTIONS.md) (24-09-2026, секция H5394), чекбоксы указывают на них.
+
+## What is left (truth-pass 24-09-2026, H5394)
+
+Незаминированная агентная работа — минтится следующей волной (эпик [E015](https://github.com/gasyoun/Uprava/blob/main/handoffs/epics/E015-Uprava_roadmap-closeout-2026q3_24.09.26.md)):
+
+1. [ ] **A3, вторая волна** — разбор `data/authority_review.{json,csv}` уровней **research (139)** и **none (36)** сверх decide-уровня H1600 (агентная, незаминирована).
+2. [ ] **B5, вторичный хвост** — вынести diary/экспорт/копировать-ссылку из шапки карточки в выпадающее «меню действий» (кнопки пока остаются в `card-actions`; агентная, незаминирована).
+
+Человеческие ворота — каждая одной GTD-строкой от 24-09-2026 (секция H5394 в [Uprava/GTD_NEXT_ACTIONS.md](https://github.com/gasyoun/Uprava/blob/main/GTD_NEXT_ACTIONS.md)):
+
+3. [ ] **A1 — владелец:** вписать реальный ORCID в `CITATION.cff`/`.zenodo.json`, включить Zenodo и нарезать релиз → DOI. → GTD `@DO`.
+4. [ ] **A3 — владелец:** проголосовать 34 decide-строки (review-sheet готов, H1600) → `apply_authority_decisions.py --apply` → `data:split && build && export:tei`. → GTD `@DO`.
+5. [ ] **A5 — специалист-лингвист:** построчная сверка акцентных форм, список ять/юс-корней, изоляция `[иллюстративно]`-пунктов, точные `source_ref`. → GTD `@WAITING`.
+6. [ ] **C1 — внешний гейт:** доингест транскриптов по мере появления `links.text` в `video_pipeline.json` (волонтёрский конвейер вычитки). → GTD `@WAITING`.
+7. [ ] **C3 — заморозка снятием (MG):** том II — извлечение новых сущностей, новый `book_id`, номера страниц на верстке, печатный указатель; действует ❄ [FROZEN_2026H2 R3](https://github.com/gasyoun/Uprava/blob/main/FROZEN_2026H2_WIP_CAP.md) («MG schedules the vol. II push»). → GTD `@WAITING`.
+8. [ ] **B2.3 — опционально, владелец:** внутренняя служебная карта «страница → имя файла PDF». → GTD `@WAITING`.
 
 Дата: 2026-06-12. Дополняет [CLEANUP_AND_UI_ROADMAP.md](https://github.com/gasyoun/BookIndex/blob/main/docs/CLEANUP_AND_UI_ROADMAP.md) (инженерная гигиена, VIZ, редизайн) — здесь только научный слой (digital humanities) и продуктовый слой «спутник печатной книги + видеогалерея».
 
