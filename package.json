@@ -57,7 +57,7 @@
     "chrome-launcher": "^1.2.1",
     "lighthouse": "^13.4.1",
     "typescript": "^7.0.2",
-    "vite": "^8.3.0",
+    "vite": "^8.3.1",
     "vite-plugin-singlefile": "^2.3.3"
   },
   "dependencies": {
