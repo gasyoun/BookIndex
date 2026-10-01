@@ -150,10 +150,17 @@
 
     function renderTabs() {
       if (!tabs) return;
-      tabs.innerHTML = narratives.map((n) => {
-        const active = n.id === activeId ? ' active' : '';
-        return `<button type="button" class="viz-module-btn${active}" data-id="${n.id}">${n.label}</button>`;
-      }).join('');
+      // C3: narrative labels are knowledge-base data — build tabs via DOM APIs,
+      // never through data-bearing innerHTML template joins.
+      tabs.textContent = '';
+      for (const n of narratives) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `viz-module-btn${n.id === activeId ? ' active' : ''}`;
+        btn.dataset.id = String(n.id);
+        btn.textContent = String(n.label);
+        tabs.appendChild(btn);
+      }
       const buttons = Array.from(tabs.querySelectorAll('button[data-id]'));
       for (let i = 0; i < buttons.length; i += 1) {
         buttons[i].onclick = () => {
@@ -166,24 +173,37 @@
 
     function renderDetail(node, detailsByNode) {
       if (!detail) return;
+      // C3: node labels, detail/context text and page refs are knowledge-base
+      // data — mount the detail panel via DOM APIs (textContent), never through
+      // data-bearing innerHTML template joins.
+      detail.textContent = '';
+      const heading = document.createElement('h4');
+      heading.textContent = String(node.label || '');
+      detail.appendChild(heading);
       const data = detailsByNode[node.id];
       if (!data) {
-        detail.innerHTML = [
-          `<h4>${node.label}</h4>`,
-          '<p>Для этого узла в данных лекции нет отдельного аргумента — источник не привязан.</p>',
-        ].join('');
+        const note = document.createElement('p');
+        note.textContent = 'Для этого узла в данных лекции нет отдельного аргумента — источник не привязан.';
+        detail.appendChild(note);
         return;
       }
       const text = String(data.detail || data.context || 'Описание отсутствует.');
       const page = String(data.page || '');
       const href = pageToUrl(data.url || page);
-      const linkHtml = href ? `<a href="${href}" class="related-link">Открыть источник</a>` : '';
-      detail.innerHTML = [
-        `<h4>${node.label}</h4>`,
-        `<p>${text}</p>`,
-        `<div class="viz-muted">Стр.: ${page || '—'}</div>`,
-        linkHtml,
-      ].join('');
+      const body = document.createElement('p');
+      body.textContent = text;
+      detail.appendChild(body);
+      const pageRow = document.createElement('div');
+      pageRow.className = 'viz-muted';
+      pageRow.textContent = `Стр.: ${page || '—'}`;
+      detail.appendChild(pageRow);
+      if (href) {
+        const link = document.createElement('a');
+        link.href = href;
+        link.className = 'related-link';
+        link.textContent = 'Открыть источник';
+        detail.appendChild(link);
+      }
     }
 
     function redraw() {

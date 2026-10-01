@@ -123,20 +123,34 @@
       const byTerm = cache.termPagesByLecture && cache.termPagesByLecture[term];
       const pages = byTerm && Array.isArray(byTerm[chapterIndex]) ? byTerm[chapterIndex] : [];
       const chapterName = String((chapters[chapterIndex] && chapters[chapterIndex].name) || `Лекция ${chapterIndex + 1}`);
+      // C3: terms and chapter names are knowledge-base data — mount the detail
+      // panel via DOM APIs (textContent), never through data-bearing innerHTML
+      // template joins.
+      detail.textContent = '';
+      const heading = document.createElement('h4');
+      heading.textContent = String(term || '');
+      detail.appendChild(heading);
+      const chapterRow = document.createElement('p');
+      chapterRow.textContent = chapterName;
+      detail.appendChild(chapterRow);
       if (!pages.length) {
-        detail.innerHTML = [
-          `<h4>${term}</h4>`,
-          `<p>${chapterName}</p>`,
-          '<p>В этой лекции нет зафиксированных страниц для выбранного термина.</p>',
-        ].join('');
+        const emptyRow = document.createElement('p');
+        emptyRow.textContent = 'В этой лекции нет зафиксированных страниц для выбранного термина.';
+        detail.appendChild(emptyRow);
         return;
       }
-      const links = pages.map((p) => `<a href="#" class="related-link bump-page-link" data-page="${String(p)}">стр. ${String(p)}</a>`).join(' · ');
-      detail.innerHTML = [
-        `<h4>${term}</h4>`,
-        `<p>${chapterName}</p>`,
-        `<p>Страницы в этой лекции: ${links}</p>`,
-      ].join('');
+      const pagesRow = document.createElement('p');
+      pagesRow.appendChild(document.createTextNode('Страницы в этой лекции: '));
+      pages.forEach((p, i) => {
+        if (i > 0) pagesRow.appendChild(document.createTextNode(' · '));
+        const link = document.createElement('a');
+        link.href = '#';
+        link.className = 'related-link bump-page-link';
+        link.dataset.page = String(p);
+        link.textContent = `стр. ${String(p)}`;
+        pagesRow.appendChild(link);
+      });
+      detail.appendChild(pagesRow);
       const pageLinks = Array.from(detail.querySelectorAll('.bump-page-link'));
       for (let i = 0; i < pageLinks.length; i += 1) {
         pageLinks[i].onclick = (e) => {

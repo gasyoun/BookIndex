@@ -125,11 +125,23 @@
       card.className = `tl-item tl-item-${item.type}`;
       card.dataset.type = item.type;
       card.dataset.era = String(era);
-      card.innerHTML = [
-        `<div class="tl-year">${String(item.year)}</div>`,
-        `<div class="tl-label">${String(item.label || '')}</div>`,
-        item.sub ? `<div class="tl-sub">${String(item.sub)}</div>` : '',
-      ].join('');
+      // C3: entry labels and subtitles are knowledge-base data — mount card
+      // fields via DOM APIs (textContent), never through data-bearing
+      // innerHTML template joins.
+      const yearEl = document.createElement('div');
+      yearEl.className = 'tl-year';
+      yearEl.textContent = String(item.year);
+      card.appendChild(yearEl);
+      const labelEl = document.createElement('div');
+      labelEl.className = 'tl-label';
+      labelEl.textContent = String(item.label || '');
+      card.appendChild(labelEl);
+      if (item.sub) {
+        const subEl = document.createElement('div');
+        subEl.className = 'tl-sub';
+        subEl.textContent = String(item.sub);
+        card.appendChild(subEl);
+      }
 
       if (item.type === 'linguist' || item.type === 'historical') {
         card.classList.add('clickable');

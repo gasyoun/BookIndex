@@ -80,10 +80,18 @@
     };
 
     if (lectureSelect) {
-      lectureSelect.innerHTML = [
-        '<option value="all">Все лекции</option>',
-        ...lectureMeta.map((l) => `<option value="${String(l.id)}">${String(l.name || `Лекция ${Number(l.index) + 1}`)}</option>`),
-      ].join('');
+      // C3: lecture names are knowledge-base data — build options via DOM APIs,
+      // never through data-bearing innerHTML template joins.
+      const allOption = document.createElement('option');
+      allOption.value = 'all';
+      allOption.textContent = 'Все лекции';
+      lectureSelect.appendChild(allOption);
+      for (const l of lectureMeta) {
+        const opt = document.createElement('option');
+        opt.value = String(l.id);
+        opt.textContent = String(l.name || `Лекция ${Number(l.index) + 1}`);
+        lectureSelect.appendChild(opt);
+      }
       if (!lectureMeta.some((l) => String(l.id) === currentLectureId)) currentLectureId = 'all';
       lectureSelect.value = currentLectureId;
     }
