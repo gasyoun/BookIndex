@@ -16,9 +16,10 @@ Date: 2026-05-16
 > ([docs/history/README.md](https://github.com/gasyoun/BookIndex/blob/main/docs/history/README.md),
 > [docs/ENCODING_GUARD.md](https://github.com/gasyoun/BookIndex/blob/main/docs/ENCODING_GUARD.md),
 > `npm run content:audit`, stats.md v4.3.1 единообразен); «первые три PR» — все три.
-> Незаминированная прозаическая работа осталась (C3 innerHTML, C4.2 lexicon-счётчик,
+> Незаминированная прозаическая работа осталась (C4.2 lexicon-счётчик,
 > U1.2–U1.6 поверхности, U3) — переписана в
-> [What is left](#what-is-left-truth-pass-25-09-2026) как gated-чекбоксы.
+> [What is left](#what-is-left-truth-pass-25-09-2026) как gated-чекбоксы
+> (C3 закрыт 01-10-2026: H1607/PR #141 + PR #334).
 > Человеческих ворот нет (все остатки agent-doable), GTD-строки не заводятся
 > (рулинг 2, [GRILL_ROADMAP_CLOSEOUT_OXALPHA_MASS_MINT_21-09-2026](https://github.com/gasyoun/Uprava/blob/main/docs/GRILL_ROADMAP_CLOSEOUT_OXALPHA_MASS_MINT_21-09-2026.md)).
 > Потомок-дорожная карта [ROADMAP_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https://github.com/gasyoun/BookIndex/blob/main/docs/ROADMAP_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md)
@@ -161,6 +162,13 @@ Acceptance checks:
 [What is left](#what-is-left-truth-pass-25-09-2026).** Дата-несущие `innerHTML`
 строки в путях поиска/списков/KWIC/карточек остались (escapeHtml — 267 вхождений
 в v3_app.js); живого H### нет на 25-09-2026.
+**Исполнено в два захода:** пути 1–4 (поиск/списки/KWIC/карточки) — H1607
+([PR #141](https://github.com/gasyoun/BookIndex/pull/141), 27-07-2026, серия
+`dom-render-harden`); путь 5 (легенды/табы/детали/карточки визуализаций) —
+[PR #334](https://github.com/gasyoun/BookIndex/pull/334) (01-10-2026): 6 файлов
+`scripts/viz/` переведены на DOM-API/`textContent` для данных базы знаний,
+`escapeHtml` остался защитным слоем, секция VIZ в `dom-render-harden.spec.js`
+добавлена (viz02/viz03/viz05/viz06).
 
 Goal: keep rich templates where they are harmless, but remove data-bearing `innerHTML` from high-risk paths.
 
@@ -465,12 +473,16 @@ README/CLAUDE/CODEX_WORKFLOW переписаны под `npm run build`, bundle
 все пункты unminted (живых H### нет на 25-09-2026), agent-doable,
 человеческих ворот нет — GTD-строки не заводятся.
 
-- [ ] **C3 — убрать дата-несущие `innerHTML` из путей с ненадёжными данными**
+- [x] **C3 — убрать дата-несущие `innerHTML` из путей с ненадёжными данными**
   (глобальный поиск, строки списков сущностей, KWIC-строки, source/context в
   карточках, tooltips/legends визуализаций): статические шаблоны оболочки +
   DOM-API/`textContent` для данных, `escapeHtml` остаётся защитным слоем,
   route-регрессионные тесты там, где меняется рендер. Точка входа — пути из
   исходного списка выше; харнесс-защита уже стоит (`npm run check:redesign`, H1823).
+  ✅ Закрыто в два захода: пути 1–4 —
+  [PR #141](https://github.com/gasyoun/BookIndex/pull/141) (H1607, 27-07-2026);
+  путь 5 (viz-легенды/табы/детали/карточки, 6 файлов `scripts/viz/`) —
+  [PR #334](https://github.com/gasyoun/BookIndex/pull/334) (01-10-2026, drain A06).
 - [ ] **C4.2 — скрипт/отчёт, объясняющий расхождение счётчиков
   `lexicon` и `lexicon_reverse`** (маленькая механическая задача; существующий
   `npm run content:audit` этого пояснения не даёт).
