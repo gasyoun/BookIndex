@@ -3,6 +3,9 @@ const { test, expect } = require('@playwright/test');
 /**
  * C3 / H1607: priority paths must render untrusted text via textContent/DOM APIs,
  * not data-bearing innerHTML. Markup in heads/snippets/contexts must stay text.
+ * C3 viz wave (A06): VIZ legends, tabs, detail panels and timeline cards must
+ * mount knowledge-base data via DOM APIs too (search/list/KWIC/card rows are
+ * covered above; VIZ modules are lazy-loaded scripts under scripts/viz/).
  */
 
 test.describe('DOM render harden (C3 / H1607)', () => {
@@ -122,6 +125,112 @@ test.describe('DOM render harden (C3 / H1607)', () => {
     expect(helperOk.hasScript).toBe(false);
     expect(helperOk.text).toContain('<img');
     expect(helperOk.markText).toBe('sanskrit');
+  });
+});
+
+test.describe('VIZ data mounts (C3 viz wave / A06)', () => {
+  async function openVizModule(page, moduleId) {
+    const pageErrors = [];
+    page.on('pageerror', (err) => pageErrors.push(String(err && err.message ? err.message : err)));
+    await page.goto(`/aaz-index.html#v4/scholar/viz/module/${moduleId}`);
+    await expect(page.locator('.viz-shell')).toBeVisible({ timeout: 30000 });
+    await expect(page.locator('.viz-module-header .viz-module-title')).toBeVisible({ timeout: 30000 });
+    return pageErrors;
+  }
+
+  test('viz02 cooccurrence lecture select is option elements, no injected markup', async ({ page }) => {
+    await openVizModule(page, 'viz02');
+    const select = page.locator('#viz-cograph-lecture');
+    await expect(select).toBeVisible({ timeout: 30000 });
+    const probe = await select.evaluate((el) => ({
+      optionCount: el.querySelectorAll('option').length,
+      firstText: el.querySelector('option') && el.querySelector('option').textContent,
+      badTags: Array.from(el.querySelectorAll('script,img,iframe')).length,
+      emptyTexts: Array.from(el.querySelectorAll('option')).filter((o) => !(o.textContent || '').trim()).length,
+    }));
+    expect(probe.optionCount).toBeGreaterThan(1);
+    expect(probe.firstText).toBe('Все лекции');
+    expect(probe.badTags).toBe(0);
+    expect(probe.emptyTexts).toBe(0);
+  });
+
+  test('viz03 discovery timeline cards mount label/sub as text nodes', async ({ page }) => {
+    await openVizModule(page, 'viz03');
+    const labels = page.locator('.tl-item .tl-label');
+    await expect(labels.first()).toBeVisible({ timeout: 30000 });
+    const probe = await page.evaluate(() => {
+      const cards = Array.from(document.querySelectorAll('.tl-item')).slice(0, 40);
+      let badInCards = 0;
+      let labelsWithChildren = 0;
+      let subsWithChildren = 0;
+      for (const card of cards) {
+        if (card.querySelector('script,iframe')) badInCards += 1;
+        const label = card.querySelector('.tl-label');
+        if (label && label.childElementCount > 0) labelsWithChildren += 1;
+        const sub = card.querySelector('.tl-sub');
+        if (sub && sub.childElementCount > 0) subsWithChildren += 1;
+      }
+      return { cards: cards.length, badInCards, labelsWithChildren, subsWithChildren };
+    });
+    expect(probe.cards).toBeGreaterThan(0);
+    expect(probe.badInCards).toBe(0);
+    expect(probe.labelsWithChildren).toBe(0);
+    expect(probe.subsWithChildren).toBe(0);
+  });
+
+  test('viz05 sankey tabs are text buttons and detail panel never injects markup', async ({ page }) => {
+    const pageErrors = await openVizModule(page, 'viz05');
+    const tabs = page.locator('#viz-sankey-tabs .viz-module-btn');
+    await expect(tabs.first()).toBeVisible({ timeout: 30000 });
+    const probe = await page.evaluate(() => {
+      const tabHost = document.querySelector('#viz-sankey-tabs');
+      const detail = document.querySelector('#viz-sankey-detail');
+      const badTabs = tabHost ? tabHost.querySelectorAll('script,img,iframe').length : -1;
+      const tabButtons = tabHost ? Array.from(tabHost.querySelectorAll('button[data-id]')) : [];
+      const badDetail = detail ? detail.querySelectorAll('script,img,iframe').length : 0;
+      return {
+        badTabs,
+        tabCount: tabButtons.length,
+        emptyTabs: tabButtons.filter((b) => !(b.textContent || '').trim()).length,
+        badDetail,
+      };
+    });
+    expect(pageErrors).toEqual([]);
+    expect(probe.badTabs).toBe(0);
+    expect(probe.tabCount).toBeGreaterThan(0);
+    expect(probe.emptyTabs).toBe(0);
+    expect(probe.badDetail).toBe(0);
+  });
+
+  test('viz06 lang-chord legend items are DOM-mounted and still toggle', async ({ page }) => {
+    await openVizModule(page, 'viz06');
+    const items = page.locator('#viz-chord-legend .viz-legend-item.toggleable');
+    await expect(items.first()).toBeVisible({ timeout: 30000 });
+    const before = await page.evaluate(() => {
+      const legend = document.querySelector('#viz-chord-legend');
+      const items = Array.from(legend.querySelectorAll('.viz-legend-item.toggleable'));
+      return {
+        count: items.length,
+        badTags: legend.querySelectorAll('script,img,iframe').length,
+        noLangAttr: items.filter((el) => !(el.dataset.lang || '').length).length,
+        firstInactive: items[0].classList.contains('inactive'),
+        firstLang: items[0].dataset.lang || '',
+      };
+    });
+    expect(before.count).toBeGreaterThan(0);
+    expect(before.badTags).toBe(0);
+    expect(before.noLangAttr).toBe(0);
+    expect(before.firstLang.length).toBeGreaterThan(0);
+
+    // Toggle behaviour survives the DOM rewrite: clicking the first item
+    // flips its inactive state (hidden-set toggle → redraw → renderLegend).
+    await items.first().click();
+    await page.waitForTimeout(600);
+    const after = await page.evaluate(() => {
+      const items = Array.from(document.querySelectorAll('#viz-chord-legend .viz-legend-item.toggleable'));
+      return items.length ? items[0].classList.contains('inactive') : null;
+    });
+    expect(after).toBe(!before.firstInactive);
   });
 });
 

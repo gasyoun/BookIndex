@@ -153,7 +153,11 @@
 
     function renderLegend(activeLangs) {
       if (!legend) return;
-      legend.innerHTML = topLangs.map((lang, idx) => {
+      // C3: language names and families are knowledge-base data — build legend
+      // items via DOM APIs (textContent + setAttribute), never through
+      // data-bearing innerHTML template joins.
+      legend.textContent = '';
+      topLangs.forEach((lang, idx) => {
         const isActive = activeLangs.indexOf(lang) >= 0;
         const disabledByFreq = Number(langFreq[lang] || 0) < currentMinFreq;
         const disabledByFamily = !!currentFamily && familyByLang[lang] !== currentFamily;
@@ -161,12 +165,16 @@
         const family = familyByLang[lang];
         const title = `${lang} · freq ${Number(langFreq[lang] || 0)}${family ? ` · ${family}` : ''}`;
         const suffix = disabledByFamily ? ' (другая семья)' : (disabledByFreq ? ' (ниже порога)' : '');
-        return [
-          `<span class="viz-legend-item toggleable${inactive ? ' inactive' : ''}" data-lang="${lang}" title="${title}">`,
-          `  <span class="viz-legend-dot viz-legend-color-${idx % 22}"></span>${lang}${suffix}`,
-          '</span>',
-        ].join('');
-      }).join('');
+        const item = document.createElement('span');
+        item.className = `viz-legend-item toggleable${inactive ? ' inactive' : ''}`;
+        item.dataset.lang = String(lang);
+        item.title = title;
+        const dot = document.createElement('span');
+        dot.className = `viz-legend-dot viz-legend-color-${idx % 22}`;
+        item.appendChild(dot);
+        item.appendChild(document.createTextNode(`${lang}${suffix}`));
+        legend.appendChild(item);
+      });
       const items = Array.from(legend.querySelectorAll('.viz-legend-item.toggleable[data-lang]'));
       for (let i = 0; i < items.length; i += 1) {
         const el = items[i];
