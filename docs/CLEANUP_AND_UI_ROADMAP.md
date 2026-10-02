@@ -192,8 +192,9 @@ Pattern:
 **Status (truth-pass 25-09-2026, H5393): в основном shipped.** Канонический
 путь правки данных (data/modules ↔ app_data.json) закреплён CI sync-гейтом и
 `npm run content:audit` (`scripts/content_report.py`); задача 2 (пояснение
-расхождения счётчиков lexicon/lexicon_reverse) — UNMINTED, остаток в
-[What is left](#what-is-left-truth-pass-25-09-2026).
+расхождения счётчиков lexicon/lexicon_reverse) — закрыта
+[PR #335](https://github.com/gasyoun/BookIndex/pull/335) 02-10-2026
+(`npm run content:divergence`, см. тик в «What is left» ниже).
 
 Goal: make generated data workflows easy to review.
 
@@ -483,9 +484,18 @@ README/CLAUDE/CODEX_WORKFLOW переписаны под `npm run build`, bundle
   [PR #141](https://github.com/gasyoun/BookIndex/pull/141) (H1607, 27-07-2026);
   путь 5 (viz-легенды/табы/детали/карточки, 6 файлов `scripts/viz/`) —
   [PR #334](https://github.com/gasyoun/BookIndex/pull/334) (01-10-2026, drain A06).
-- [ ] **C4.2 — скрипт/отчёт, объясняющий расхождение счётчиков
+- [x] **C4.2 — скрипт/отчёт, объясняющий расхождение счётчиков
   `lexicon` и `lexicon_reverse`** (маленькая механическая задача; существующий
   `npm run content:audit` этого пояснения не даёт).
+  ✅ Закрыто [PR #335](https://github.com/gasyoun/BookIndex/pull/335)
+  (02-10-2026, drain A12): `npm run content:divergence`
+  (`scripts/explain_lexicon_reverse_divergence.py` + отчёт
+  [docs/LEXICON_REVERSE_COUNT_DIVERGENCE.md](https://github.com/BookIndex/blob/main/docs/LEXICON_REVERSE_COUNT_DIVERGENCE.md)).
+  Δ +36 замыкается тождеством в обоих представлениях: буквальные заголовки —
+  чисто края множеств (+40 reverse-only, −4 lexicon-only, дубляжа нет);
+  рантайм-нормализация перераспределяет часть краёв в +8 «дублей»-вариантов
+  ударения. `lexicon_reverse` — самостоятельный указатель (пересечение
+  `canonical_id` = 0). Юнит-тесты (14) в `tests/unit/`.
 - [ ] **U1.2 — Указатели: фильтрация/сортировка/превью выбранной карточки как
   одно рабочее пространство** (контракт навигации первого уровня не менять).
 - [ ] **U1.3 — Материалы: приоритет читательского потока и доверия к источнику.**
