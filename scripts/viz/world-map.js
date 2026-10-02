@@ -12,6 +12,13 @@
 
   function renderWorldMap(container) {
     if (!container) return;
+    // H5623: tooltip content is data-bearing and Leaflet renders bindTooltip
+    // strings as HTML — route it through the viz-shell escapeHtml helper
+    // (same defense-in-depth pattern research-map.js documents).
+    const shell = root.VizShell;
+    const escape = shell && typeof shell.escapeHtml === 'function'
+      ? shell.escapeHtml
+      : (value) => String(value == null ? '' : value);
     if (!root.L) {
       container.innerHTML = '<div class="viz-card">Leaflet not found.</div>';
       return;
@@ -70,7 +77,7 @@
         fillOpacity: 0.8
       }).addTo(markers);
 
-      marker.bindTooltip(`<strong>${e.head}</strong><br><small>${e.type}</small>`, { sticky: true });
+      marker.bindTooltip(`<strong>${escape(e.head)}</strong><br><small>${escape(e.type)}</small>`, { sticky: true });
       marker.on('click', () => openEntityCard(e.type, e.head));
     });
 
