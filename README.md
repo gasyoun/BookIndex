@@ -93,6 +93,7 @@ _Created: 14-04-2026 · Last updated: 28-08-2026_
 *   **CSP hardening**: inline scripts and style blocks use SHA-256 CSP hashes generated at build time; inline style attributes are denied, and the static/post-deploy checks fail if CSP regresses to `unsafe-inline`.
 *   **Performance budget**: `npm run check:perf`
 *   **Контент-аудит**: `npm run content:audit` (пишет `tests/index-audit-queue.json` и очередь ручной вычитки контекстов)
+*   **Расхождение счётчиков лексиконов**: `npm run content:divergence` (регенерирует [`docs/LEXICON_REVERSE_COUNT_DIVERGENCE.md`](https://github.com/gasyoun/BookIndex/blob/main/docs/LEXICON_REVERSE_COUNT_DIVERGENCE.md) — объясняет, почему у `lexicon` и `lexicon_reverse` разное число записей)
 *   **Статистика проекта**: `npm run stats` (регенерирует [`stats.md`](https://github.com/gasyoun/BookIndex/blob/main/stats.md) из `app_data.json`)
 *   **Post-deploy gates**: `npm run check:postdeploy` проверяет live GitHub Pages, Lighthouse и axe accessibility (`0` critical / `0` serious).
 
