@@ -234,3 +234,90 @@ test.describe('VIZ data mounts (C3 viz wave / A06)', () => {
   });
 });
 
+test.describe('world-map tooltip escape (H5623)', () => {
+  // world-map.js registers VIZ_MODULES.renderWorldMap but is not in the viz
+  // catalog tabs, so the harness loads viz-shell.js (escapeHtml source) and
+  // the module directly, then mounts into a fixed host above the app chrome.
+  async function mountWorldMap(page) {
+    await page.addScriptTag({ url: '/scripts/viz/viz-shell.js' });
+    await page.addScriptTag({ url: '/scripts/viz/world-map.js' });
+    return page.evaluate(() => {
+      const host = document.createElement('div');
+      host.className = 'viz-host';
+      host.style.cssText = 'position:fixed;left:0;top:0;width:900px;height:600px;background:#fff;z-index:99999;';
+      document.body.appendChild(host);
+      window.VIZ_MODULES.renderWorldMap(host);
+      return !!host.querySelector('.viz-world-map-leaflet');
+    });
+  }
+
+  async function hoverFirstMarker(page) {
+    const marker = page.locator('.viz-world-map-leaflet path.leaflet-interactive').first();
+    await expect(marker).toBeVisible({ timeout: 15000 });
+    await marker.hover();
+    await expect(page.locator('.leaflet-tooltip')).toBeVisible({ timeout: 10000 });
+  }
+
+  async function tooltipProbe(page) {
+    return page.evaluate(() => {
+      const tip = document.querySelector('.leaflet-tooltip');
+      if (!tip) return null;
+      return {
+        text: tip.textContent || '',
+        html: tip.innerHTML || '',
+        badTags: tip.querySelectorAll('script,img,iframe').length,
+        strongText: tip.querySelector('strong') ? tip.querySelector('strong').textContent : '',
+        smallText: tip.querySelector('small') ? tip.querySelector('small').textContent : '',
+      };
+    });
+  }
+
+  test('poisoned tooltip head renders as text, img/onerror never mount', async ({ page }) => {
+    await page.goto('/aaz-index.html');
+    await page.waitForFunction(() => window.APP_DATA && Array.isArray(window.APP_DATA.toponyms) && window.APP_DATA.toponyms.length > 0);
+    await page.evaluate(() => {
+      window.APP_DATA = {
+        toponyms: [{ head: '<img src=x onerror=window.__worldMapPwned=1>', lat: '50.45', lng: '30.52', description: '' }],
+        languages: [],
+        names: [],
+        ethnonyms: [],
+      };
+    });
+    expect(await mountWorldMap(page)).toBe(true);
+    await hoverFirstMarker(page);
+    const probe = await tooltipProbe(page);
+    expect(probe).not.toBeNull();
+    expect(probe.badTags).toBe(0);
+    expect(probe.strongText).toBe('<img src=x onerror=window.__worldMapPwned=1>');
+    expect(probe.text).toContain('<img');
+    expect(probe.html).not.toMatch(/<img\b/i);
+    expect(await page.evaluate(() => window.__worldMapPwned)).toBeUndefined();
+  });
+
+  test('real app_data entity tooltip renders unchanged (text equals data head)', async ({ page }) => {
+    await page.goto('/aaz-index.html');
+    await page.waitForFunction(() => window.APP_DATA && Array.isArray(window.APP_DATA.toponyms) && window.APP_DATA.toponyms.length > 0);
+    expect(await mountWorldMap(page)).toBe(true);
+    const marker = page.locator('.viz-world-map-leaflet path.leaflet-interactive').first();
+    await expect(marker).toBeVisible({ timeout: 15000 });
+    // Real data clusters entities tightly, so the first marker is often
+    // covered by a sibling circle; drive the mouse directly (no hover()
+    // actionability checks) and verify whichever real entity the tooltip names.
+    const box = await marker.boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.move(box.x + box.width / 2 + 1, box.y + box.height / 2);
+    await expect(page.locator('.leaflet-tooltip')).toBeVisible({ timeout: 10000 });
+    const probe = await tooltipProbe(page);
+    expect(probe).not.toBeNull();
+    expect(probe.badTags).toBe(0);
+    expect(probe.strongText.length).toBeGreaterThan(0);
+    const matched = await page.evaluate(({ type, head }) => {
+      const types = ['toponyms', 'languages', 'names', 'ethnonyms'];
+      return types.includes(type) &&
+        (window.APP_DATA[type] || []).some((x) => x && x.head === head && x.lat && (x.lng || x.lon));
+    }, { type: probe.smallText, head: probe.strongText });
+    expect(matched).toBe(true);
+    expect(probe.html).not.toMatch(/<img\b/i);
+  });
+});
+
