@@ -28,7 +28,7 @@ remote ([GitHub tree](https://github.com/gasyoun/BookIndex/tree/main/scholar/viz
 
 - `scholar/viz/` contains exactly **one file**: a prerendered SEO landing page that
   redirects into the SPA route `#v4/scholar/viz`. It is **not** a module tree.
-- `scripts/viz/` holds the real 21-file module tree (8 active + 7 inactive modules,
+- `scripts/viz/` holds the real 20-file module tree (8 active + 7 inactive modules,
   `viz-shell.js`, `viz-state.js`, cache builders, css) — the canonical side.
 - No second byte-copy of the modules exists anywhere in the repo; the actual mirrored
   payload is the **inline bundle copy inside the 699 prerendered pages** (see table).
