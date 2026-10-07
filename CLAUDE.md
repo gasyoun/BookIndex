@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 09-05-2026 · Last updated: 16-09-2026_
+_Created: 09-05-2026 · Last updated: 07-10-2026_
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 BookIndex / Zalizniakiada — single-page PWA reference for A. A. Zaliznyak's scholarly legacy. UI strings, issues, commit messages, and docs are written in **Russian**; code identifiers and tooling are English.
 
-The shipped artifact is one self-contained file: `aaz-index.html`. It inlines `app_data.json` and `v3_app.js` through `v3_template.html`; there is no runtime fetch of the knowledge base.
+The entry artifact is the self-contained `aaz-index.html`: it inlines `app_data.json` and `v3_app.js` through `v3_template.html`; there is no runtime fetch of the knowledge base. Since v4.17.30 the same build also emits **699 prerendered deep-link pages** (`all/ ethnonyms/ languages/ lexicon/ lexicon_reverse/ lexicon_tech/ materials/ names/ scholar/ subject/ toponyms/`), each inlining the whole runtime — one `npm run build` regenerates all ~700 files.
 
 ## Build pipeline
 
@@ -21,7 +21,7 @@ npm run build:all                    # both, in that order
 npm run build:vite                   # Vite smoke build + deploy asset copy from public/
 ```
 
-**Both `v3_app.js` and `aaz-index.html` are generated and committed.** Since H4013 the chain is `src/runtime/` → `v3_app.js` → `aaz-index.html`, and CI enforces each link with a `git diff --exit-code` after rebuilding it. A runtime change therefore needs `npm run build:all` and both generated files in the same commit; editing `v3_template.html`, `app_data.json` or copied public assets needs `npm run build` alone.
+**Both `v3_app.js` and `aaz-index.html` are generated and committed.** Since H4013 the chain is `src/runtime/` → `v3_app.js` → `aaz-index.html`, and CI enforces each link with a `git diff --exit-code` after rebuilding it. A runtime change therefore needs `npm run build:all` and both generated files in the same commit; editing `v3_template.html`, `app_data.json` or copied public assets needs `npm run build` alone. The CI gate `Ensure committed build output (aaz-index + prerendered pages) is in sync` diffs the **entire** build output — the 699 prerendered pages go stale silently without it, and every one of them must be committed rebuilt too. The prerendered «дата обращения» is made deterministic on purpose; a live date there turned `main` red for days (#325).
 
 `npm run build:vite` uses `vite.config.mjs` to render the same standalone template and copy deploy assets (`manifest*`, service workers, icons, `robots.txt`, `sitemap.xml`, `vendor/`, portrait image). It is a smoke/deploy wrapper, not a replacement for the tested runtime contract.
 
@@ -67,7 +67,7 @@ Rules that follow from this:
 
 ## Data: `app_data.json` ↔ `data/modules/`
 
-`app_data.json` (~6.4 MB) is the single source of truth at runtime, but it is **split into `data/modules/*.json`** for reviewable diffs. CI enforces that the split and reassembly are byte-identical to the committed monolith:
+`app_data.json` (~6.5 MB) is the single source of truth at runtime, but it is **split into `data/modules/*.json`** for reviewable diffs. CI enforces that the split and reassembly are byte-identical to the committed monolith:
 
 ```sh
 npm run data:split       # app_data.json  ->  data/modules/*.json
@@ -76,7 +76,7 @@ npm run data:assemble    # data/modules/*.json  ->  app_data.json
 
 When editing `app_data.json` directly, run `npm run data:split` and commit both. When editing modules, run `npm run data:assemble` and commit both. `data/modules/manifest.json` defines key ownership and the canonical `key_order` for assembly — modify it deliberately, not as a side-effect.
 
-New corpora come in through `scripts/import_source.py` (draft → validate → merge) with sources living under `data/imports/<book_id>/draft.json`. The active book is selected via `app_data.corpus.active_book_id`.
+New corpora come in through `scripts/import_source.py` (draft → validate → merge) with sources living under `data/imports/<book_id>/draft.json`. The active book is selected via `app_data.corpus.active_book_id`. `npm run content:divergence` explains the known lexicon/lexicon_reverse counter divergence and rewrites [docs/LEXICON_REVERSE_COUNT_DIVERGENCE.md](https://github.com/gasyoun/BookIndex/blob/main/docs/LEXICON_REVERSE_COUNT_DIVERGENCE.md) (roadmap C4.2, #335).
 
 ## Required checks before publish
 
@@ -98,7 +98,7 @@ npm run check                             # typecheck + JS/UI guards + full Play
 
 The optional Gemini Flash workflow is documented in `docs/GEMINI_FLASH_WORKFLOW_RU.md`. Treat Gemini Flash as a fast analysis/drafting loop only: context pack in, findings/checks/risks out, with all file edits and publishing still going through Codex, local diffs, and the checks above.
 
-`runtime_test.py` checks the current artifact and infrastructure contracts: package scripts, generated HTML, service workers, manifest, data shape, and Node syntax. `npm run check:ui` enforces the inline-style policy via `scripts/check_inline_styles.mjs`.
+`runtime_test.py` checks the current artifact and infrastructure contracts: package scripts, generated HTML, service workers, manifest, data shape, and Node syntax. `npm run check:ui` enforces the inline-style policy via `scripts/check_inline_styles.mjs`. DOM-XSS hardening is regression-pinned by `tests/e2e/dom-render-harden.spec.js` and the mutation drill in `tests/security/dom_xss_drill/` (H5106): data-bearing `innerHTML` → `textContent`/DOM APIs, URL allow-list sanitizers — keep new sinks inside those rules.
 
 ## E2E (Playwright)
 
@@ -116,7 +116,7 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 
 - Python: 3.12 (CI). Ensure `sys.stdout.reconfigure(encoding='utf-8')` and `encoding='utf-8'` on subprocess calls per global rule.
 - Node: 24 (CI).
-- Current release is `v4.17.3` in [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md), [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff), and [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) (2026-09-03). Keep all four — `package-lock.json` included — in the same release sweep; they have drifted three times now (H1825, H3566, and again at v4.17.2, where `cut_release.py` synced CHANGELOG + CITATION but left `package.json`/`-lock` behind by hand-fix). Entries land as one file per change under `changelog_queue/`, consumed by `cut_release.py` at the cut; direct bullets under `## [Unreleased]` are hook-blocked.
+- Current release is `v4.17.30` in [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md), [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff), and [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) (2026-09-04). Keep all four — `package-lock.json` included — in the same release sweep; they have drifted three times now (H1825, H3566, and again at v4.17.2, where `cut_release.py` synced CHANGELOG + CITATION but left `package.json`/`-lock` behind by hand-fix). Entries land as one file per change under `changelog_queue/`, consumed by `cut_release.py` at the cut; direct bullets under `## [Unreleased]` are hook-blocked.
 
 ## Issue conventions (Codex regulation)
 
@@ -129,7 +129,7 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 
 - Do not edit `aaz-index.html` or `v3_app.js` directly — both are generated. Edit `v3_template.html`, `src/runtime/`, or `app_data.json` and rebuild.
 - Do not add ESM `import`/`export` syntax that the regex stripper in `bundle.js` cannot handle (default exports, `export *`, dynamic `import()` of local modules).
-- Do not commit `v3_app.js` or `aaz-index.html` out of sync with their inputs — CI rebuilds and `git diff --exit-code`s both. `npm run build:all` regenerates the pair.
+- Do not commit `v3_app.js` or `aaz-index.html` out of sync with their inputs — CI rebuilds and `git diff --exit-code`s both, plus the whole prerendered-page tree. `npm run build:all` regenerates the pair; `npm run build` regenerates the pages.
 - Do not bypass the modules split: editing `app_data.json` without re-running `data:split` (or vice versa) will fail the "Ensure split modules are in sync" CI step.
 
 ## Memory store
