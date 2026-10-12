@@ -54,7 +54,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.64.0",
-    "acorn": "^8.18.0",
+    "acorn": "^8.19.0",
     "chrome-launcher": "^1.2.2",
     "lighthouse": "^13.5.0",
     "typescript": "^7.0.2",
