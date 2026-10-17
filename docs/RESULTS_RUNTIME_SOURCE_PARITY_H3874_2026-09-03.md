@@ -2,7 +2,7 @@
 
 _Created: 03-09-2026 · Last updated: 03-09-2026_
 
-Result note for [H3874 (Opus 5, 🔴3 hard) — reconcile src/runtime with v3_app.js before bundler work](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3874-Opus_BookIndex_v3-runtime-source-parity-reconcile_02.09.26.md),
+Result note for [H3874 (Opus 5, 🔴3 hard) — reconcile src/runtime with v3_app.js before bundler work](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3874-Opus_BookIndex_v3-runtime-source-parity-reconcile_02.09.26.md),
 executed by Opus 5 (`claude-opus-5`).
 
 ## What was wrong

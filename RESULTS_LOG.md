@@ -14,7 +14,7 @@ _Created: 24-07-2026 · Last updated: 05-09-2026_
 | guide.html / гид | — | не регенерировались (`--check` байт-паритет ОК) |
 
 **Model:** OxAlpha (`z-ai/glm-5.3-flash`).
-**Handoff:** [H4028 (OxAlpha) — print: drop LLSH correspondence map](https://github.com/gasyoun/Uprava/blob/main/handoffs/H4028-OxAlpha_BookIndex_print-llsh-bibliography-only_03.09.26.md).
+**Handoff:** [H4028 (OxAlpha) — print: drop LLSH correspondence map](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H4028-OxAlpha_BookIndex_print-llsh-bibliography-only_03.09.26.md).
 
 ## H4024 — карта соседств ЛЛШ перепроверена перед печатью (03-09-2026)
 
@@ -37,7 +37,7 @@ _Created: 24-07-2026 · Last updated: 05-09-2026_
 Глав без своего доклада ЛЛШ — четыре: «Порядок слов», «Историческая лингвистика», «Древняя Индия», «Или и уже» (раньше строка называла три, без «Исторической лингвистики»). Правки: камера-реди (соседства + колонка «Основание» + печатная фраза Полосы 5), `LLSH_TOPIC_NEIGHBOR` в генераторе, сводный столбец «Соседний доклад ЛЛШ» теперь называет всех соседей главы. Крест 142/106/129 и `EXPECTED_APPROVED` не тронуты. Проверки: `build_reader_guide.py --check` (байт-паритет), census 1878/2072 (коридор 1800–2200), e2e `reader-guide.spec.js` 5/5.
 
 **Model:** OxAlpha (`z-ai/glm-5.3-flash`).
-**Handoff:** [H4024 (OxAlpha) — print: honest LLSH neighbor map + Полоса 5 prose before press](https://github.com/gasyoun/Uprava/blob/main/handoffs/H4024-OxAlpha_BookIndex_print-llsh-neighbor-fix_03.09.26.md).
+**Handoff:** [H4024 (OxAlpha) — print: honest LLSH neighbor map + Полоса 5 prose before press](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H4024-OxAlpha_BookIndex_print-llsh-neighbor-fix_03.09.26.md).
 
 ## H3657 — гид читателя «главы → видео» + сверка полос 4–5 (28-08-2026)
 
@@ -50,7 +50,7 @@ _Created: 24-07-2026 · Last updated: 05-09-2026_
 | Дефекты, пойманные по пути | каталог ключуется `001`, не `acc001`; минута `0:00` фальсится в truthiness-проверках; длительности ЛЛШ — округление минут (2 ч 12 мин), не усечение | починены в генераторе; паритет с полосой 5 восстановлен |
 
 **Model:** OxAlpha (`opencode`, Z.ai `glm`).
-**Handoff:** [H3657 (OxAlpha) — reader guide chapters-to-videos](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3657-OxAlpha_BookIndex_reader-guide-chapters-videos_28.08.26.md).
+**Handoff:** [H3657 (OxAlpha) — reader guide chapters-to-videos](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3657-OxAlpha_BookIndex_reader-guide-chapters-videos_28.08.26.md).
 
 ## H3238 — две карты полос 4–5 (21-08-2026)
 
@@ -140,7 +140,7 @@ Implementation Step 3 (V1b) of [PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https
 - `tests/e2e/session-features.spec.js` (`video gallery (B3.5)` describe block): 2 new cases — dense-default/toggle/persist-across-reload, and a 390px-viewport no-horizontal-overflow check for both dense and thumbs modes. Full `video gallery` slice: 5/5 passed locally (Playwright, chromium); full repo `npm run check` run alongside this PR.
 
 **Model:** Sonnet 5 (`claude-sonnet-5`).
-**Handoff:** [H2124](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2124-Sonnet_BookIndex_video-gallery-dense-list-thumbs_01.08.26.md).
+**Handoff:** [H2124](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2124-Sonnet_BookIndex_video-gallery-dense-list-thumbs_01.08.26.md).
 
 ## H2123 — video gallery V1a: labels, focus-visible, live meta, empty state, honest copy (2026-08-06)
 
@@ -156,14 +156,14 @@ Implementation Step 2 (V1a) of [PLAN_BOOKINDEX_UI_CLEANUP_VIDEO_2026Q3.md](https
 - `tests/e2e/session-features.spec.js`: 2 new cases (`video gallery (B3.5)` describe block) — accessible-name/live-region assertions, and empty-state + reset-focus assertion. Full `session-features` suite: 13/13 passed locally (Playwright, chromium).
 
 **Model:** Sonnet 5 (`claude-sonnet-5`).
-**Handoff:** [H2123](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2123-Sonnet_BookIndex_video-gallery-a11y-focus-empty_01.08.26.md).
+**Handoff:** [H2123](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2123-Sonnet_BookIndex_video-gallery-a11y-focus-empty_01.08.26.md).
 
 ## H1825 — stratified context-coverage drain batch ×339 (2026-08-02)
 
 One stratified batch of **339** missing-context items received direct `contexts` glosses in `data/modules/*` (assembled into `app_data.json`). Editorial glosses only (house style of H1602 / `inject_mega_pack*`): each gloss grounded in the lecture-chapter map (`data/modules/20-lectures.json`), same-page glossed neighbours and lecture-transcript KWIC hits where available; no invented page numbers, no fabricated quotes. Opaque OCR heads (`mwlsm`, `d??f`, `öLsz̲9`…) carry an honest «требует сверки» note instead of an invented meaning (precedent: `RgH`/`Tj`/`UJ` in H1602).
 
 **Model:** Fable 5 (`claude-fable-5`).
-**Handoff:** [H1825](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1825-Fable_BookIndex_stratified-context-coverage-batch_29.07.26.md) — Fable-locked, `/next-task` pick 02-08-2026.
+**Handoff:** [H1825](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1825-Fable_BookIndex_stratified-context-coverage-batch_29.07.26.md) — Fable-locked, `/next-task` pick 02-08-2026.
 **Injection script (archived):** [docs/history/scripts/inject_contexts_h1825.py](https://github.com/gasyoun/BookIndex/blob/main/docs/history/scripts/inject_contexts_h1825.py)
 
 ### Before / after (`npm run content:audit` / `scripts/content_report.py`)
@@ -209,7 +209,7 @@ _Dr. Mārcis Gasūns_
 ## H2122 — V0 video_catalog unique ids (2026-08-01)
 
 **Model:** Grok 4.5 (`grok-4.5`) — override dual-run of Sonnet-locked handoff; residual compare handoff minted for Sonnet.  
-**Handoff:** [H2122](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2122-Sonnet_BookIndex_video-catalog-id-collisions-v0_01.08.26.md)
+**Handoff:** [H2122](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2122-Sonnet_BookIndex_video-catalog-id-collisions-v0_01.08.26.md)
 
 ### Census → after survivor collapse
 
@@ -494,7 +494,7 @@ One stratified batch of **88** missing-context items received direct `contexts` 
 ## H2137 — H2122 dual-run compare (Sonnet independent re-check) (2026-08-06)
 
 **Model:** Sonnet 5 (`claude-sonnet-5`).
-**Handoff:** [H2137](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2137-Sonnet_BookIndex_h2122-grok-dual-run-compare_01.08.26.md) — dual-run residual for [H2122](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2122-Sonnet_BookIndex_video-catalog-id-collisions-v0_01.08.26.md) (Grok 4.5 override lane, [#193](https://github.com/gasyoun/BookIndex/pull/193)).
+**Handoff:** [H2137](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2137-Sonnet_BookIndex_h2122-grok-dual-run-compare_01.08.26.md) — dual-run residual for [H2122](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2122-Sonnet_BookIndex_video-catalog-id-collisions-v0_01.08.26.md) (Grok 4.5 override lane, [#193](https://github.com/gasyoun/BookIndex/pull/193)).
 
 ### Independent re-execution on current `main` (post-#193, post-#213, post-4.11.2)
 

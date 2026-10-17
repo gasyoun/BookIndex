@@ -2,7 +2,7 @@
 
 _Created: 28-08-2026 · Last updated: 28-08-2026_
 
-Result note for [H2586 (Opus 5, 🟡2 medium) — optimize the v3_app.js home panel to meet its gzip size budget](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2586-Opus_BookIndex_optimize-home-panel-size-budget_11.08.26.md),
+Result note for [H2586 (Opus 5, 🟡2 medium) — optimize the v3_app.js home panel to meet its gzip size budget](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2586-Opus_BookIndex_optimize-home-panel-size-budget_11.08.26.md),
 executed by Opus 5 (`claude-opus-5`).
 
 ## Where the budget stands

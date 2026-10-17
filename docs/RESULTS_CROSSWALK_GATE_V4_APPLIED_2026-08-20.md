@@ -2,7 +2,7 @@
 
 _Created: 20-08-2026 · Last updated: 20-08-2026_
 
-Экспорт листа `bookindex-crosswalk-video-chapter-v4` (файл скачан как `*_decisions_partial.json`, но `undecided: 0` и 160/160 карточек с голосом) применён к кресту 20-08-2026. Handoff: [H3198](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3198-Grok_BookIndex_crosswalk-gate-v4-votes-apply_20.08.26.md) (Grok 4.6 `grok-4.6`). Источник голосов: [data/crosswalk/gate_decisions_v4.json](https://github.com/gasyoun/BookIndex/blob/main/data/crosswalk/gate_decisions_v4.json). Конвейер: `python scripts/crosswalk/apply_gate_decisions.py` → `npm run data:assemble`.
+Экспорт листа `bookindex-crosswalk-video-chapter-v4` (файл скачан как `*_decisions_partial.json`, но `undecided: 0` и 160/160 карточек с голосом) применён к кресту 20-08-2026. Handoff: [H3198](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3198-Grok_BookIndex_crosswalk-gate-v4-votes-apply_20.08.26.md) (Grok 4.6 `grok-4.6`). Источник голосов: [data/crosswalk/gate_decisions_v4.json](https://github.com/gasyoun/BookIndex/blob/main/data/crosswalk/gate_decisions_v4.json). Конвейер: `python scripts/crosswalk/apply_gate_decisions.py` → `npm run data:assemble`.
 
 ## Голоса
 
@@ -31,7 +31,7 @@ _Created: 20-08-2026 · Last updated: 20-08-2026_
 
 Шесть пар дублей получили `duplicate_of` в [data/video_catalog_public.v2.json](https://github.com/gasyoun/BookIndex/blob/main/data/video_catalog_public.v2.json) (плюс ранее стоявший acc040→005 волны 0): 012→008, 018→017, 034→023, 054→007, 107→088, 173→119.
 
-Печатный разворот 4–5 ([H3135](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3135-Fable_BookIndex_h2707-residual-spread-4-5-print-prose_19.08.26.md), Fable 5) теперь может читать только `status: approved`. H2707 сам по себе заперт precheck exit 4 (PR #267) — не перезапускать.
+Печатный разворот 4–5 ([H3135](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3135-Fable_BookIndex_h2707-residual-spread-4-5-print-prose_19.08.26.md), Fable 5) теперь может читать только `status: approved`. H2707 сам по себе заперт precheck exit 4 (PR #267) — не перезапускать.
 
 ## Замечание куратора на acc050 (Крит ⊂ санскритская)
 

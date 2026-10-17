@@ -2,7 +2,7 @@
 
 _Created: 15-09-2026 · Last updated: 15-09-2026_
 
-_Contract handoff: [H4790](https://github.com/gasyoun/Uprava/blob/main/handoffs/H4790-Codex_BookIndex_security-alert-baseline-exploit-contract_14.09.26.md). Executor: ox-alpha (`z-ai/glm-5.3-flash`)._
+_Contract handoff: [H4790](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H4790-Codex_BookIndex_security-alert-baseline-exploit-contract_14.09.26.md). Executor: ox-alpha (`z-ai/glm-5.3-flash`)._
 
 Purpose: every remaining or future CodeQL runtime alert on this repo gets ONE
 compact classification — baseline → source → sink → disposition → proof — and a

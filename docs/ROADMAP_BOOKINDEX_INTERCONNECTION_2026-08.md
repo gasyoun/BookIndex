@@ -9,7 +9,7 @@ Programme roadmap: [ROADMAP_SPINE_INTERCONNECTION_2026H2.md](https://github.com/
 
 ## Wave 1 — BookIndex's wiring change
 
-- [ ] [H3566 (Sonnet 5)](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3566-Sonnet_BookIndex_interconnect-bookindex-findings-readme-wiring_26.08.26.md) · medium
+- [ ] [H3566 (Sonnet 5)](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3566-Sonnet_BookIndex_interconnect-bookindex-findings-readme-wiring_26.08.26.md) · medium
 
 ## Order and prerequisites
 

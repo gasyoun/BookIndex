@@ -2,7 +2,7 @@ _Created: 28-05-2026 · Last updated: 05-09-2026_
 
 # Contributing to BookIndex
 
-> Part of the [Sanskrit Lexicon](https://github.com/sanskrit-lexicon) project. Inherits the [org-wide contribution standard](https://github.com/sanskrit-lexicon/COLOGNE/blob/master/CONTRIBUTING.md).
+> Part of the [Sanskrit Lexicon](https://github.com/sanskrit-lexicon) project. Inherits the [org-wide contribution standard](https://github.com/sanskrit-lexicon/COLOGNE/blob/main/CONTRIBUTING.md).
 
 1. Fork the repository
 2. Create a feature branch

@@ -8,7 +8,7 @@ Date: 2026-05-16
 > Из work-документа от 16-05-2026 shipped почти всё: **C1/C2** — модульная сборка
 > восстановлена (src/core + src/renderers + src/runtime + src/entry.js) и гейтится
 > [`scripts/check_runtime_parity.mjs`](https://github.com/gasyoun/BookIndex/blob/main/scripts/check_runtime_parity.mjs)
-> ([H3874](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3874-Opus_BookIndex_v3-runtime-source-parity-reconcile_02.09.26.md),
+> ([H3874](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3874-Opus_BookIndex_v3-runtime-source-parity-reconcile_02.09.26.md),
 > [RESULTS_RUNTIME_SOURCE_PARITY_H3874_2026-09-03.md](https://github.com/gasyoun/BookIndex/blob/main/docs/RESULTS_RUNTIME_SOURCE_PARITY_H3874_2026-09-03.md));
 > **V1** (H1605), **V2** (H1822), **V3** — research map жив как viz08
 > ([scripts/viz/research-map.js](https://github.com/gasyoun/BookIndex/blob/main/scripts/viz/research-map.js), `v3_app.js:2321`);

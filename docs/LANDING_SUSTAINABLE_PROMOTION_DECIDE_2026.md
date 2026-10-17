@@ -13,7 +13,7 @@ _Created: 26-07-2026 · Last updated: 26-07-2026_
   назначил BookIndex направление «sustainable» («huge page count → lightest wins»);
   [H654](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H654-Fable_BookIndex_landing-sustainable-mockup_11.07.26.md)
   поставил недеструктивный макет ([PR #124](https://github.com/gasyoun/BookIndex/pull/124), 11-07-2026).
-- [H1603](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1603-Fable_BookIndex_landing-sustainable-adopt_24.07.26.md)
+- [H1603](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1603-Fable_BookIndex_landing-sustainable-adopt_24.07.26.md)
   запущен 26-07-2026; визы adopt/hybrid/reject нигде не зафиксировано (GTD, архив GTD,
   `.ai_state.md`, история коммитов проверены) → по шагу 2 хендоффа сессия остановлена
   этим брифом, без принудительного adopt.

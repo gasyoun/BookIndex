@@ -54,7 +54,7 @@ Full rulings table with every fork:
 
 ## Handoff
 
-- [H3566 (Sonnet 5) — interconnect bookindex findings readme wiring](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3566-Sonnet_BookIndex_interconnect-bookindex-findings-readme-wiring_26.08.26.md) · medium · 🟡 queued
+- [H3566 (Sonnet 5) — interconnect bookindex findings readme wiring](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3566-Sonnet_BookIndex_interconnect-bookindex-findings-readme-wiring_26.08.26.md) · medium · 🟡 queued
 
 ## Autonomy contract
 

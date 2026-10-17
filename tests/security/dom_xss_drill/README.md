@@ -3,7 +3,7 @@
 _Created: 18-09-2026 · Last updated: 18-09-2026_
 
 Mutation-based review drill distilled from three merged security PRs (handoff
-[H5106](https://github.com/gasyoun/Uprava/blob/main/handoffs/H5106-OxAlpha_Uprava_skill-growth-dom-xss-taint-tracing_18.09.26.md)):
+[H5106](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H5106-OxAlpha_Uprava_skill-growth-dom-xss-taint-tracing_18.09.26.md)):
 
 - [PR #141](https://github.com/gasyoun/BookIndex/pull/141) — data-bearing `innerHTML` → textContent/DOM APIs (search/KWIC/cards)
 - [PR #294](https://github.com/gasyoun/BookIndex/pull/294) — URL allow-list vs deny-list sanitizers; bootstrap `catch` sink

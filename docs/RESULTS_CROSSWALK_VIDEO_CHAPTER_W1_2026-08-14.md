@@ -175,7 +175,7 @@ acc042 «Венгрия 60-х годов глазами А. А. Зализняк
 Куратор открывает `review/crosswalk_gate.html`, голосует и отдаёт
 `decisions.json`. Без него ни одно ребро от LLM не попадает на бумагу, а семь
 пар дублей остаются неразобранными. **Данные и приложение этого не ждут** —
-ждёт только печать: [H2707 (Fable 5)](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2707-Fable_BookIndex_print-spread-4-5-video-lecture-llsh_14.08.26.md),
+ждёт только печать: [H2707 (Fable 5)](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2707-Fable_BookIndex_print-spread-4-5-video-lecture-llsh_14.08.26.md),
 печатный разворот полос 4–5, читает только `status: approved`.
 
 _Dr. Mārcis Gasūns_

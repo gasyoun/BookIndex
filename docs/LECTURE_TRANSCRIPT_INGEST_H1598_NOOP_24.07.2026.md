@@ -2,7 +2,7 @@
 
 _Created: 24-07-2026 · Last updated: 24-07-2026_
 
-**Handoff:** [H1598](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1598-Sonnet_BookIndex_lecture-transcript-ingest-wave_24.07.26.md)  
+**Handoff:** [H1598](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1598-Sonnet_BookIndex_lecture-transcript-ingest-wave_24.07.26.md)  
 **Executor:** Grok 4.5 (`grok-4.5`) — override of Sonnet filename lock by explicit "run"  
 **Verdict:** **NO-OP** — no new Yandex-Disk `links.text` since the last successful ingest.
 
