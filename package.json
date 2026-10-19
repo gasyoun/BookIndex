@@ -53,7 +53,7 @@
     "build:all": "npm run build:runtime && npm run build"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.13.0",
+    "@axe-core/playwright": "^4.14.0",
     "@playwright/test": "^1.64.0",
     "acorn": "^8.19.0",
     "chrome-launcher": "^1.2.2",
