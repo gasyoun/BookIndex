@@ -13,18 +13,10 @@ const AUDIT_LEVEL = 'moderate';
 
 // advisory id -> { reason, devOnly, reviewBy }
 // devOnly asserts the vulnerable chain never ships inside a built artifact.
-const EXCEPTIONS = {
-  'GHSA-vfj7-8cjw-p6xm': {
-    reason:
-      'braces stack-exhaustion DoS; advisory covers <=3.0.3 and 3.0.3 is the ' +
-      'latest published release, so no patched version exists upstream yet. ' +
-      'Chain: vite-plugin-singlefile -> micromatch -> braces (build-time glob ' +
-      'matching on CI; never bundled into any shipped artifact). Pick up the ' +
-      'upstream fix (braces >3.0.3 or a micromatch bump) as soon as it publishes.',
-    devOnly: true,
-    reviewBy: '2027-01-11',
-  },
-};
+// GHSA-vfj7-8cjw-p6xm (braces) exception dropped 27-10-2026 (H7317): upstream
+// fix landed (braces no longer in a vulnerable range in package-lock.json),
+// and an exception matching no live vuln fails this gate by design.
+const EXCEPTIONS = {};
 
 function canon(id) {
   // Canonical GHSA form: uppercase prefix, lowercase base32 groups.
