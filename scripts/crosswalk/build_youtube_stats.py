@@ -146,8 +146,7 @@ def main() -> int:
     print(f"самый длинный acc{c['longest']['accession']} ({c['longest']['minutes']} мин), "
           f"самый короткий acc{c['shortest']['accession']} ({c['shortest']['minutes']} мин)")
     y = stats["youtube"]
-    print(f"YouTube: {'снято ' + str(y['covered']) + ' записей, ' + str(y['total_views']) + ' просмотров'
-                      if y['fetched_at'] else 'не снималось (--live)'}")
+    print(f"YouTube: {'снято ' + str(y['covered']) + ' записей, ' + str(y['total_views']) + ' просмотров' if y['fetched_at'] else 'не снималось (--live)'}")
     print("записано data/crosswalk/youtube_stats.json")
     return 0
 
