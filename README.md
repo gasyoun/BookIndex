@@ -2,14 +2,14 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21630473.svg)](https://doi.org/10.5281/zenodo.21630473)
 
-_Created: 14-04-2026 · Last updated: 28-08-2026_
+_Created: 14-04-2026 · Last updated: 05-11-2026_
 
 **BookIndex** — автономный интерактивный веб-справочник, корпусная лаборатория и интеллектуальная база знаний по научному наследию **А. А. Зализняка**.
 
 Проект эволюционировал из простого индекса в полноценную исследовательскую платформу для цифровых гуманитарных наук: единый автономный HTML-артефакт, корпусная навигация, KWIC-конкорданс, карты, графы и научный аппарат.
 
 - **Демо**: [gasyoun.github.io/BookIndex/index.html](https://gasyoun.github.io/BookIndex/index.html)
-- **Текущая версия**: 4.9.0 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)) — `v4.3.0` был первым тегированным релизом GitHub с `v4.2.0`, закрывающим треки A/B/C (авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) и цитируемую инфраструктуру (CITATION.cff/.zenodo.json); `v4.3.1` дописывает настоящий Zenodo DOI; `v4.4.0` — брейнсторм печатного спутника; `v4.5.0` — VIZ-08 «Исследовательская карта»; `v4.6.0` — её режим «Центр: сущность»; `v4.7.0` — Phase U4, верификационная обвязка маршрутов перед редизайном; `v4.8.0` — палитра команд Ctrl+K; `v4.9.0` — Phase V2, UX-доработки семи модулей VIZ. Подробности — [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
+- **Текущая версия**: 4.17.31 (см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) и [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json)) — `v4.3.0` был первым тегированным релизом GitHub с `v4.2.0`, закрывающим треки A/B/C (авторитетные ID, каноничные URI, KWIC по лекциям, TEI-экспорт, дашборд конвейера) и цитируемую инфраструктуру (CITATION.cff/.zenodo.json); `v4.3.1` дописывает настоящий Zenodo DOI; `v4.4.0` — брейнсторм печатного спутника; `v4.5.0` — VIZ-08 «Исследовательская карта»; `v4.6.0` — её режим «Центр: сущность»; `v4.7.0` — Phase U4, верификационная обвязка маршрутов перед редизайном; `v4.8.0` — палитра команд Ctrl+K; `v4.9.0` — Phase V2, UX-доработки семи модулей VIZ. Подробности — [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
 - **Руководство для детей**: [KIDS_GUIDE_RU.md](https://github.com/gasyoun/BookIndex/blob/main/KIDS_GUIDE_RU.md)
 - **Лицензии**: код — [Apache License 2.0](https://github.com/gasyoun/BookIndex/blob/main/LICENSE); данные указателя — CC BY 4.0; цитаты из книг — с разрешения правообладателей ([LICENSE-DATA.md](https://github.com/gasyoun/BookIndex/blob/main/LICENSE-DATA.md))
 - **Как цитировать**: см. [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff) (кнопка «Cite this repository» на GitHub) и раздел [«Как цитировать»](#как-цитировать) ниже
@@ -99,9 +99,9 @@ _Created: 14-04-2026 · Last updated: 28-08-2026_
 
 ## Конвейер видео (производство II тома)
 
-Статус расшифровки и многостадийной вычитки лекций (≈213 ч) ведется в репозитории:
+Статус расшифровки и многостадийной вычитки лекций (≈214 ч) ведется в репозитории:
 
-*   **Источник правды**: [`data/video_pipeline.json`](https://github.com/gasyoun/BookIndex/blob/main/data/video_pipeline.json) — по видео: стадия вычитки, качество автотранскрибации, исполнители, даты, ссылки. Заменил `video-archive.xlsx` (выведена из обращения). На текущий момент расшифровано и вычитано 27 из ~191 видео; остальные еще в работе.
+*   **Источник правды**: [`data/video_pipeline.json`](https://github.com/gasyoun/BookIndex/blob/main/data/video_pipeline.json) — по видео: стадия вычитки, качество автотранскрибации, исполнители, даты, ссылки. Заменил `video-archive.xlsx` (выведена из обращения). На 05-11-2026 в пайплайне 177 видео; вычитанных до стадии «готово» — 0. Распределение по стадиям: в очереди 54, автотранскрибация 98, сверка 12, 1-я читка 5, 2-я читка 1, 3-я читка 3, предверстка 3, верстка 1.
 *   **Дашборд**: [`pipeline/index.html`](https://github.com/gasyoun/BookIndex/blob/main/pipeline/index.html) — самодостаточная страница (данные встроены, работает офлайн); фильтры по стадии/теме, подсветка висящих заданий и проблем транскрибации. Регенерация: `npm run pipeline:dashboard`.
 *   **Стадии**: `в очереди → автотранскрибация → сверка → 1/2/3-я читка → предверстка → верстка → готово`.
 
@@ -128,7 +128,7 @@ GitHub Release чеканит свой отдельный version DOI, указ�
 (GitHub показывает кнопку «Cite this repository»).
 
 > Gasūns, M. (2026). *BookIndex (Zalizniakiada): an interactive reference and
-> corpus laboratory for the scholarly legacy of A. A. Zaliznyak* (version 4.6.0)
+> corpus laboratory for the scholarly legacy of A. A. Zaliznyak* (version 4.17.31)
 > [Software]. Zenodo. https://doi.org/10.5281/zenodo.21630473
 
 Для цитирования **конкретной справочной статьи или лекции** используйте виджет
@@ -172,6 +172,9 @@ Zalizniakiada/KWIC/crosswalk — самодостаточна и это зафи
 санскритского [SanskritLexicography/FINDINGS.md](https://github.com/gasyoun/SanskritLexicography/blob/master/FINDINGS.md).
 
 ## История версий (Major Milestones)
+
+Примечание: список ниже доведён до v4.8.0; выпуски v4.10.x–v4.17.31 (сентябрь–октябрь 2026) в него не включены — полная история в [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md).
+
 *   **v4.8.0**: Палитра команд (Ctrl+K / ⌘K) и быстрый переключатель (H1824): 24 маршрута навигации и 5 действий в одном окне, недавно открытые записи без запроса, содержание указателя тем же полем ввода; поиск по подпоследовательности, полная клавиатурная обвязка и `role="dialog"`/`aria-activedescendant`. Кнопка «⌘K» в шапке даёт тот же вход без клавиатуры.
 *   **v4.7.0**: Phase U4 — верификационная обвязка маршрутов перед редизайном интерфейса (H1823): восемь маршрутов дорожной карты проверяются на ширинах 1366×900 и 390×844 на переполнение, видимость и непересечение основных элементов управления, непустые поверхности отрисовки и нулевой бюджет ошибок консоли; скриншоты — артефакты для сравнения «до/после», плюс контрактный тест против расхождения обвязки и дорожной карты.
 *   **v4.6.0**: VIZ-08, второй центр карты — режим «Центр: сущность» (H1821): центр на любой сущности индекса, первый круг связей по умолчанию и второй по требованию, тип связей `cross_links` / `semantic_links`, обход графа кликом с воспроизводимой ссылкой (`mode`/`entity`/`rel`/`depth`).

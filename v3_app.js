@@ -1,6 +1,6 @@
 var BookIndex = (function(exports) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-	//#region \0rolldown/runtime.js
+	// \0rolldown/runtime.js
 	var __defProp = Object.defineProperty;
 	var __exportAll = (all, no_symbols) => {
 		let target = {};
@@ -11,8 +11,7 @@ var BookIndex = (function(exports) {
 		if (!no_symbols) __defProp(target, Symbol.toStringTag, { value: "Module" });
 		return target;
 	};
-	//#endregion
-	//#region src/runtime/core/state.js
+	// src/runtime/core/state.js
 	var state_exports = /* @__PURE__ */ __exportAll({
 		AGGREGATE_CACHE_MAX: () => 100,
 		APP_BUILD_ID: () => APP_BUILD_ID$1,
@@ -547,8 +546,7 @@ var BookIndex = (function(exports) {
 		currentVideoId = String(val || "");
 		if (typeof window !== "undefined") window.currentVideoId = currentVideoId;
 	}
-	//#endregion
-	//#region src/runtime/core/utils.js
+	// src/runtime/core/utils.js
 	var utils_exports = /* @__PURE__ */ __exportAll({
 		ACCENT_SAFE_TOKEN_RE: () => ACCENT_SAFE_TOKEN_RE$1,
 		CYRILLIC_TO_LATIN_MAP: () => CYRILLIC_TO_LATIN_MAP,
@@ -1002,8 +1000,7 @@ var BookIndex = (function(exports) {
 		window.safeUrl = safeUrl$1;
 		window.safeImageUrl = safeImageUrl$1;
 	}
-	//#endregion
-	//#region src/runtime/core/data.js
+	// src/runtime/core/data.js
 	var data_exports = /* @__PURE__ */ __exportAll({
 		DESCRIPTION_FIELDS_WITH_NORMALIZED_YO: () => DESCRIPTION_FIELDS_WITH_NORMALIZED_YO,
 		LECTURE_WHY_READ_BROTHER_BRAT: () => LECTURE_WHY_READ_BROTHER_BRAT,
@@ -1671,8 +1668,7 @@ var BookIndex = (function(exports) {
 		window.indexItems = indexItems;
 		window.buildDataIndexes = buildDataIndexes;
 	}
-	//#endregion
-	//#region src/runtime/core/router.js
+	// src/runtime/core/router.js
 	var router_exports = /* @__PURE__ */ __exportAll({
 		ROUTE_SEO_METADATA: () => ROUTE_SEO_METADATA,
 		applyHash: () => applyHash$1,
@@ -2150,8 +2146,7 @@ var BookIndex = (function(exports) {
 		window.syncNavigationState = syncNavigationState$1;
 		window.updateStructuredData = updateStructuredData;
 	}
-	//#endregion
-	//#region src/runtime/legacy.js
+	// src/runtime/legacy.js
 	var REPLACEMENT_CHAR = String.fromCharCode(65533);
 	var HOME_DECL_FACTORY_KEY = "__bookindexHomeDeclarativeFactory";
 	var TAB_LABELS = {
@@ -15440,8 +15435,7 @@ var BookIndex = (function(exports) {
 	};
 	var LECTURES_KWIC_CACHE = null;
 	var lecturesKwicLoadPromise = null;
-	//#endregion
-	//#region src/runtime/entry.js
+	// src/runtime/entry.js
 	var SMOKE_TEST_CONTRACTS = [
 		"function safeUrl(url, fallback = '#')",
 		"function safeImageUrl(url, fallback = '')",
@@ -15556,7 +15550,6 @@ var BookIndex = (function(exports) {
 			console.error("[app-data] Boot failed:", error);
 		});
 	}, 10);
-	//#endregion
 	exports.SMOKE_TEST_CONTRACTS = SMOKE_TEST_CONTRACTS;
 	return exports;
 })({});

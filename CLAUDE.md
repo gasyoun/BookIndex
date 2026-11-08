@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 09-05-2026 · Last updated: 07-10-2026_
+_Created: 09-05-2026 · Last updated: 30-10-2026_
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -114,9 +114,9 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 
 ## Version & status
 
-- Python: 3.12 (CI). Ensure `sys.stdout.reconfigure(encoding='utf-8')` and `encoding='utf-8'` on subprocess calls per global rule.
+- Python: 3.12 in `ci.yml` (`changelog-lint.yml` pins 3.11). Ensure `sys.stdout.reconfigure(encoding='utf-8')` and `encoding='utf-8'` on subprocess calls per global rule.
 - Node: 24 (CI).
-- Current release is `v4.17.30` in [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md), [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff), and [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) (2026-09-04). Keep all four — `package-lock.json` included — in the same release sweep; they have drifted three times now (H1825, H3566, and again at v4.17.2, where `cut_release.py` synced CHANGELOG + CITATION but left `package.json`/`-lock` behind by hand-fix). Entries land as one file per change under `changelog_queue/`, consumed by `cut_release.py` at the cut; direct bullets under `## [Unreleased]` are hook-blocked.
+- Current release is `v4.17.31` (2026-10-12) per [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md) and [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff); [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) and `package-lock.json` still read `4.17.30` as of 30-10-2026 — the sweep drift warned about below has recurred. Keep all four — `package-lock.json` included — in the same release sweep; they have drifted four times now (H1825, H3566, at v4.17.2 where a release script synced CHANGELOG + CITATION but left `package.json`/`-lock` behind by hand-fix, and at v4.17.31). Entries land as one file per change under `changelog_queue/`, consumed at the release cut; direct bullets under `## [Unreleased]` are hook-blocked (org-level hook, not in this repo; the in-repo guard is `.github/workflows/changelog-lint.yml`).
 
 ## Issue conventions (Codex regulation)
 

@@ -17,7 +17,7 @@
 <meta name="citation_language" content="ru" />
 <meta name="citation_publisher" content="BookIndex Digital Humanities Project" />
 <meta name="citation_technical_report_number" content="v4.3.1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-nz+MSXrBs4H3oXwaX13qconWwFSOgzh+jGnEimd9DnU=' 'sha256-IJQqUCgtwrXJhQaY7TzEbwCcIChT7aWOtKAucpbu85o='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-E/4HjrZVtGxrtvRYm3cfin5KaE5aeJWknjkZOytjZO8=' 'sha256-RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=' 'sha256-K1SPykMBldADh5gh64GOx3bh9wUjYOhsK+R3BSmXRIQ=' 'sha256-jJMz0l5iwBvF32VgUGOeBQISjMTDvuKf4sto6j8GZgA='; worker-src 'self' blob:; style-src 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-elem 'self' 'sha256-GB7KCH3nrzNWhQ1hI1NuXjHI2y3bXLy3b7gQiJe4lY0='; style-src-attr 'none'; img-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data: https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#5a3818">
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="BookIndex">
@@ -6773,7 +6773,7 @@
 {
   "mode": "modules",
   "version": 1,
-  "build_id": "dacdad3d7eaa",
+  "build_id": "6cb7b74223ae",
   "base_url": "./data/modules/",
   "modules": [
     {
@@ -6938,7 +6938,7 @@
 <script>
 var BookIndex = (function(exports) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-	//#region \0rolldown/runtime.js
+	// \0rolldown/runtime.js
 	var __defProp = Object.defineProperty;
 	var __exportAll = (all, no_symbols) => {
 		let target = {};
@@ -6949,8 +6949,7 @@ var BookIndex = (function(exports) {
 		if (!no_symbols) __defProp(target, Symbol.toStringTag, { value: "Module" });
 		return target;
 	};
-	//#endregion
-	//#region src/runtime/core/state.js
+	// src/runtime/core/state.js
 	var state_exports = /* @__PURE__ */ __exportAll({
 		AGGREGATE_CACHE_MAX: () => 100,
 		APP_BUILD_ID: () => APP_BUILD_ID$1,
@@ -7092,7 +7091,7 @@ var BookIndex = (function(exports) {
 	var APP_DATA_GLOBAL_FALLBACK_KEY = "__APP_DATA_STRING__";
 	var APP_DATA_MODULES_BASE_URL = "./data/modules/";
 	var KWIC_MAX_ROWS$1 = 1200;
-	var APP_BUILD_ID$1 = "dacdad3d7eaa";
+	var APP_BUILD_ID$1 = "6cb7b74223ae";
 	var NORMALIZE_CACHE_LIMIT = 5e3;
 	var APP_DATA$1 = null;
 	var LABELS$1 = null;
@@ -7485,8 +7484,7 @@ var BookIndex = (function(exports) {
 		currentVideoId = String(val || "");
 		if (typeof window !== "undefined") window.currentVideoId = currentVideoId;
 	}
-	//#endregion
-	//#region src/runtime/core/utils.js
+	// src/runtime/core/utils.js
 	var utils_exports = /* @__PURE__ */ __exportAll({
 		ACCENT_SAFE_TOKEN_RE: () => ACCENT_SAFE_TOKEN_RE$1,
 		CYRILLIC_TO_LATIN_MAP: () => CYRILLIC_TO_LATIN_MAP,
@@ -7940,8 +7938,7 @@ var BookIndex = (function(exports) {
 		window.safeUrl = safeUrl$1;
 		window.safeImageUrl = safeImageUrl$1;
 	}
-	//#endregion
-	//#region src/runtime/core/data.js
+	// src/runtime/core/data.js
 	var data_exports = /* @__PURE__ */ __exportAll({
 		DESCRIPTION_FIELDS_WITH_NORMALIZED_YO: () => DESCRIPTION_FIELDS_WITH_NORMALIZED_YO,
 		LECTURE_WHY_READ_BROTHER_BRAT: () => LECTURE_WHY_READ_BROTHER_BRAT,
@@ -8020,8 +8017,8 @@ var BookIndex = (function(exports) {
 		const base = String(manifest && manifest.base_url || "./data/modules/");
 		const rootUrl = typeof document !== "undefined" && document.baseURI ? document.baseURI : typeof location !== "undefined" && location.href ? location.href : "http://localhost/";
 		const url = new URL(String(file || ""), new URL(base, rootUrl));
-		const buildId = String(manifest && manifest.build_id || "dacdad3d7eaa").trim();
-		if (buildId && buildId !== "dacdad3d7eaa") url.searchParams.set("v", buildId);
+		const buildId = String(manifest && manifest.build_id || "6cb7b74223ae").trim();
+		if (buildId && buildId !== "6cb7b74223ae") url.searchParams.set("v", buildId);
 		return url.href;
 	}
 	async function fetchAppDataModule(manifest, file) {
@@ -8609,8 +8606,7 @@ var BookIndex = (function(exports) {
 		window.indexItems = indexItems;
 		window.buildDataIndexes = buildDataIndexes;
 	}
-	//#endregion
-	//#region src/runtime/core/router.js
+	// src/runtime/core/router.js
 	var router_exports = /* @__PURE__ */ __exportAll({
 		ROUTE_SEO_METADATA: () => ROUTE_SEO_METADATA,
 		applyHash: () => applyHash$1,
@@ -9088,8 +9084,7 @@ var BookIndex = (function(exports) {
 		window.syncNavigationState = syncNavigationState$1;
 		window.updateStructuredData = updateStructuredData;
 	}
-	//#endregion
-	//#region src/runtime/legacy.js
+	// src/runtime/legacy.js
 	var REPLACEMENT_CHAR = String.fromCharCode(65533);
 	var HOME_DECL_FACTORY_KEY = "__bookindexHomeDeclarativeFactory";
 	var TAB_LABELS = {
@@ -11967,7 +11962,7 @@ var BookIndex = (function(exports) {
 		if (typeof window === "undefined" || typeof navigator === "undefined") return;
 		if (!("serviceWorker" in navigator)) return;
 		const buildIdRaw = String(APP_BUILD_ID || "").trim();
-		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "dacdad3d7eaa" ? buildIdRaw : "dev")}`;
+		const swUrl = `./sw.js?v=${encodeURIComponent(buildIdRaw && buildIdRaw !== "6cb7b74223ae" ? buildIdRaw : "dev")}`;
 		const register = () => {
 			const hadController = !!navigator.serviceWorker.controller;
 			navigator.serviceWorker.register(swUrl, {
@@ -22378,8 +22373,7 @@ var BookIndex = (function(exports) {
 	};
 	var LECTURES_KWIC_CACHE = null;
 	var lecturesKwicLoadPromise = null;
-	//#endregion
-	//#region src/runtime/entry.js
+	// src/runtime/entry.js
 	var SMOKE_TEST_CONTRACTS = [
 		"function safeUrl(url, fallback = '#')",
 		"function safeImageUrl(url, fallback = '')",
@@ -22494,7 +22488,6 @@ var BookIndex = (function(exports) {
 			console.error("[app-data] Boot failed:", error);
 		});
 	}, 10);
-	//#endregion
 	exports.SMOKE_TEST_CONTRACTS = SMOKE_TEST_CONTRACTS;
 	return exports;
 })({});
