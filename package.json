@@ -54,12 +54,12 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
-    "@playwright/test": "^1.64.1",
+    "@playwright/test": "^1.65.0",
     "acorn": "^8.19.0",
     "chrome-launcher": "^1.2.2",
     "lighthouse": "^13.6.0",
     "typescript": "^7.0.2",
-    "vite": "^8.3.5",
+    "vite": "^8.3.6",
     "vite-plugin-singlefile": "^2.3.4"
   },
   "dependencies": {
