@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 09-05-2026 · Last updated: 30-10-2026_
+_Created: 09-05-2026 · Last updated: 14-11-2026 (YE4 truth refresh: how-to-run section added, F821 + scorecard CI gates named, version-drift date bumped)_
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -9,6 +9,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 BookIndex / Zalizniakiada — single-page PWA reference for A. A. Zaliznyak's scholarly legacy. UI strings, issues, commit messages, and docs are written in **Russian**; code identifiers and tooling are English.
 
 The entry artifact is the self-contained `aaz-index.html`: it inlines `app_data.json` and `v3_app.js` through `v3_template.html`; there is no runtime fetch of the knowledge base. Since v4.17.30 the same build also emits **699 prerendered deep-link pages** (`all/ ethnonyms/ languages/ lexicon/ lexicon_reverse/ lexicon_tech/ materials/ names/ scholar/ subject/ toponyms/`), each inlining the whole runtime — one `npm run build` regenerates all ~700 files.
+
+## How to run (dev)
+
+There is no dev server for the committed artifact: `npm run build:all`, then `npm run serve:static` (port 4173, `scripts/dev/static-server.mjs`) serves `aaz-index.html` the way the Playwright suite sees it. `npm run dev:vite` / `npm run preview:vite` are the Vite workbench only, not the tested runtime contract. Fast local subset: `npm run check:e2e:smoke`; full gates: `npm run check` and `npm run e2e` (there is no bare `npm test`).
 
 ## Build pipeline
 
@@ -96,7 +100,7 @@ python scripts/validate_content.py app_data.json
 npm run check                             # typecheck + JS/UI guards + full Playwright suite
 ```
 
-The optional Gemini Flash workflow is documented in `docs/GEMINI_FLASH_WORKFLOW_RU.md`. Treat Gemini Flash as a fast analysis/drafting loop only: context pack in, findings/checks/risks out, with all file edits and publishing still going through Codex, local diffs, and the checks above.
+The optional Gemini Flash workflow is documented in `docs/GEMINI_FLASH_WORKFLOW_RU.md`. CI additionally runs the pinned F821 undefined-name gate ([f821-gate.yml](https://github.com/gasyoun/BookIndex/blob/main/.github/workflows/f821-gate.yml), H7243) and the weekly OSSF Scorecard badge ([scorecard-weekly.yml](https://github.com/gasyoun/BookIndex/blob/main/.github/workflows/scorecard-weekly.yml), Saturdays 01:30 UTC, #364). Treat Gemini Flash as a fast analysis/drafting loop only: context pack in, findings/checks/risks out, with all file edits and publishing still going through Codex, local diffs, and the checks above.
 
 `runtime_test.py` checks the current artifact and infrastructure contracts: package scripts, generated HTML, service workers, manifest, data shape, and Node syntax. `npm run check:ui` enforces the inline-style policy via `scripts/check_inline_styles.mjs`. DOM-XSS hardening is regression-pinned by `tests/e2e/dom-render-harden.spec.js` and the mutation drill in `tests/security/dom_xss_drill/` (H5106): data-bearing `innerHTML` → `textContent`/DOM APIs, URL allow-list sanitizers — keep new sinks inside those rules.
 
@@ -116,7 +120,7 @@ The static server resolves `/` to `aaz-index.html` and sets `Cache-Control: no-s
 
 - Python: 3.12 in `ci.yml` (`changelog-lint.yml` pins 3.11). Ensure `sys.stdout.reconfigure(encoding='utf-8')` and `encoding='utf-8'` on subprocess calls per global rule.
 - Node: 24 (CI).
-- Current release is `v4.17.31` (2026-10-12) per [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md) and [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff); [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) and `package-lock.json` still read `4.17.30` as of 30-10-2026 — the sweep drift warned about below has recurred. Keep all four — `package-lock.json` included — in the same release sweep; they have drifted four times now (H1825, H3566, at v4.17.2 where a release script synced CHANGELOG + CITATION but left `package.json`/`-lock` behind by hand-fix, and at v4.17.31). Entries land as one file per change under `changelog_queue/`, consumed at the release cut; direct bullets under `## [Unreleased]` are hook-blocked (org-level hook, not in this repo; the in-repo guard is `.github/workflows/changelog-lint.yml`).
+- Current release is `v4.17.31` (2026-10-12) per [CHANGELOG.md](https://github.com/gasyoun/BookIndex/blob/main/CHANGELOG.md) and [CITATION.cff](https://github.com/gasyoun/BookIndex/blob/main/CITATION.cff); [package.json](https://github.com/gasyoun/BookIndex/blob/main/package.json) and `package-lock.json` still read `4.17.30` as of 14-11-2026 — the sweep drift warned about below has recurred and is now five weeks old. Keep all four — `package-lock.json` included — in the same release sweep; they have drifted four times now (H1825, H3566, at v4.17.2 where a release script synced CHANGELOG + CITATION but left `package.json`/`-lock` behind by hand-fix, and at v4.17.31). Entries land as one file per change under `changelog_queue/`, consumed at the release cut; direct bullets under `## [Unreleased]` are hook-blocked (org-level hook, not in this repo; the in-repo guard is `.github/workflows/changelog-lint.yml`).
 
 ## Issue conventions (Codex regulation)
 
