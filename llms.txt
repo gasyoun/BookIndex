@@ -1,0 +1,11 @@
+# Зализнякиада · BookIndex
+
+> Companion site to A. A. Zalizniak's book «Из жизни слов и языков»: the aaz-index app (indices, materials, lectures, sources, tasks) and a reader guide.
+
+## Pages
+
+- [Зализнякиада home](https://gasyoun.github.io/BookIndex/)
+- [AAZ index app](https://gasyoun.github.io/BookIndex/aaz-index.html): index browser with #v4/… routes (all/list, home, materials/kwic, materials/lectures, materials/sources, materials/tasks, scholar, video).
+- [Reader guide](https://gasyoun.github.io/BookIndex/guide.html)
+
+Source: https://github.com/gasyoun/BookIndex
