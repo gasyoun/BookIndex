@@ -127,6 +127,23 @@ function firstTextField(entity) {
   return '';
 }
 
+// H8479 (F7, vote uprava-docs-fixwaves_judgment-links_05-09-26): every exported
+// page is machine-generated — carry the «Auto-generated» marker so docs tooling
+// (Uprava tools/md_hygiene.py AUTO_GEN_MARK) classifies src/content pages as
+// generated content, never as authored repo docs.
+const AUTOGEN_MARK = '_Auto-generated from app_data.json via scripts/export_app_data_to_markdown.mjs — do not edit by hand._';
+
+function withAutoGenMark(content) {
+  const text = String(content);
+  if (text.includes(AUTOGEN_MARK)) return text;
+  const fmEnd = text.indexOf('\n---\n');
+  if (text.startsWith('---\n') && fmEnd !== -1) {
+    const after = fmEnd + '\n---\n'.length;
+    return text.slice(0, after) + '\n' + AUTOGEN_MARK + '\n' + text.slice(after);
+  }
+  return AUTOGEN_MARK + '\n\n' + text;
+}
+
 function formatFrontmatter(meta) {
   const lines = ['---'];
   lines.push(`id: ${JSON.stringify(meta.id)}`);
@@ -298,7 +315,7 @@ function exportToMarkdown({ inputPath, outDir, clean }) {
           index: null,
           tags: [key],
         })}\n\n_Раздел пуст._\n`;
-        fs.writeFileSync(path.join(outDir, fileName), emptyMd, 'utf-8');
+        fs.writeFileSync(path.join(outDir, fileName), withAutoGenMark(emptyMd), 'utf-8');
         stats.files += 1;
         continue;
       }
@@ -315,7 +332,7 @@ function exportToMarkdown({ inputPath, outDir, clean }) {
         const fileName = buildUniqueFileName(identity, usedFileNames);
         const filePath = path.join(outDir, fileName);
         const content = buildEntityMarkdown({ data, sourceKey: key, entity: objectEntity, index });
-        fs.writeFileSync(filePath, content, 'utf-8');
+        fs.writeFileSync(filePath, withAutoGenMark(content), 'utf-8');
         stats.files += 1;
       });
       continue;
