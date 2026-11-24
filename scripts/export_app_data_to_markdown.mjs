@@ -341,7 +341,9 @@ function exportToMarkdown({ inputPath, outDir, clean }) {
     const fileName = buildUniqueFileName(key, usedFileNames);
     const filePath = path.join(outDir, fileName);
     const content = buildTopLevelMarkdown({ data, key, value });
-    fs.writeFileSync(filePath, content, 'utf-8');
+    // H8479 verifier-caught (DeepSeek V4.1 Flash): the third export site —
+    // non-array top-level sections (13 live) — was unwrapped in PR #371.
+    fs.writeFileSync(filePath, withAutoGenMark(content), 'utf-8');
     stats.files += 1;
   }
 
